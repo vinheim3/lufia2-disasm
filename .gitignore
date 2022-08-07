@@ -1,0 +1,7 @@
+.vscode/
+build/
+*.sfc
+__pycache__/
+*.bst
+*.srm
+*.sym

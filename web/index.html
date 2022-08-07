@@ -1,0 +1,306 @@
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    </head>
+
+    <body>
+        <div id="root">
+            <div class="section">
+                <div class="box container is-flex" style="flex-wrap:wrap">
+                    <div v-for="screen of screens">
+                        <div>{{ screen.name }}</div>
+                        <canvas :id="screen.name+' map'" width="800" height="800"></canvas>
+                        <canvas :id="screen.name+' data'" width="128" height="440"></canvas>
+                        <canvas :id="screen.name+' metatiles'" width="256" height="640"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let greyCols = [];
+            for (let i = 0; i < 16; i++) {
+                let greyCol = i * 17;
+                greyCols.push([greyCol, greyCol, greyCol]);
+            }
+
+            let bankConv = function(bank, addr) {
+                return bank * 0x8000 + (addr % 0x8000)
+            }
+
+            let printBytes = function(bytes) {
+                console.log(bytes.map(i => i.toString(16)).join(' '));
+            }
+
+            let wordIn = function(rom, addr) {
+                return (rom[addr+1]<<8)+rom[addr];
+            }
+
+            let longIn = function(rom, addr) {
+                return (rom[addr+2]<<16)+(rom[addr+1]<<8)+rom[addr];
+            }
+
+            let getCanvas = function(canvas_id) {
+                let canvas = document.getElementById(canvas_id);
+                if (!canvas) return null;
+                let ctx = canvas.getContext("2d");
+
+                let width = canvas.width, height = canvas.height;
+                let myImageData = ctx.createImageData(width, height);
+                return [ctx, myImageData, width, height];
+            }
+
+            let plotPx = function(data, col, row, width, r, g, b) {
+                let offs = 4 * (row*width+col);
+                data[offs] = r;
+                data[offs+1] = g;
+                data[offs+2] = b;
+                data[offs+3] = 0xff;
+            }
+
+            let drawRow = function(data, col, pxrow, width, bitp0, bitp1, bitp2, bitp3, hflip) {
+                for (let pxcol = 7; pxcol >= 0; pxcol--) {
+                    let color = (bitp0&1) + 2*(bitp1&1) + 4*(bitp2&1) + 8*(bitp3&1);
+                    let [r,g,b] = greyCols[color];
+                    bitp0>>=1;
+                    bitp1>>=1;
+                    bitp2>>=1;
+                    bitp3>>=1;
+                    let _col;
+                    if (hflip) _col = col+7-pxcol;
+                    else _col = col+pxcol;
+                    plotPx(data, _col, pxrow, width, r, g, b);
+                }
+            }
+
+            let drawTile = function(data, col, row, width, tileBytes, vflip, hflip) {
+                for (let pxrow = 0; pxrow < 8; pxrow++) {
+                    let _row;
+                    if (vflip) _row = row+7-pxrow;
+                    else _row = row+pxrow;
+                    drawRow(
+                        data, col, _row, width,
+                        tileBytes[pxrow*2],
+                        tileBytes[pxrow*2+1],
+                        tileBytes[pxrow*2+16],
+                        tileBytes[pxrow*2+17],
+                        hflip,
+                    )
+                }
+            }
+
+            class Screen {
+                constructor(screenSpec, rom) {
+                    this.memory = new Array(0x10000).fill(0);
+                    this.mem7eh = new Array(0x10000).fill(0);
+                    this.mem7fh = new Array(0x10000).fill(0);
+                    this.screenSpec = screenSpec;
+                    this.rom = rom;
+                }
+
+                name() {
+                    return this.screenSpec.name;
+                }
+
+                drawMetatile(data, col, row, width, metatileIdx) {
+                    let start = metatileIdx * 8 + 0x259e;
+                    for (let j = 0; j < 4; j++) {
+                        let tileVal = wordIn(this.mem7fh, start);
+                        let tileIdx = tileVal & 0x3ff;
+                        let vflip = tileVal & 0x8000;
+                        let hflip = tileVal & 0x4000;
+                        start += 2;
+                        let base = 0x4000+tileIdx*0x20;
+                        let colAdd = (j >= 2) ? 8 : 0;
+                        let rowAdd = (j & 1) ? 8 : 0;
+                        drawTile(
+                            data, col+colAdd, row+rowAdd, width, 
+                            this.mem7eh.slice(base, base+0x20),
+                            vflip, hflip,
+                        );
+                    }
+                }
+
+                DecompressData(idx, memRegion, dest) {
+                    let offs = this.longIn(bankConv(0x27, idx*3));
+                    let src = bankConv(0x27, 0) + offs;
+                    this.numBytes = this.wordIn(src);
+                    src += 2;
+                    let origDest = dest;
+                    while (1) {
+                        let ctrlByte = this.rom[src++];
+                        let ctrlBits = 8;
+                        while (ctrlBits != 0) {
+                            let newByte = this.rom[src++];
+                            if ((newByte & 0x80) === 0) {
+                                this[memRegion][dest++] = newByte;
+                            } else {
+                                if ((ctrlByte & 0x80) === 0) {
+                                    this[memRegion][dest++] = newByte;
+                                } else {
+                                    let lowByte = this.rom[src++];
+                                    let numBytesToCopy, offset;
+                                    if ((lowByte & 0xf) === 0) {
+                                        let nextByte = this.rom[src++];
+                                        numBytesToCopy = (nextByte & 0x3f) + 3;
+                                        let offsByte = (lowByte + (newByte * 0x100))>>4;
+                                        offset = (offsByte<<2) + (nextByte>>6) + 0xc000;
+                                    } else {
+                                        numBytesToCopy = (lowByte & 0xf) + 2;
+                                        let offsByte = (lowByte + (newByte * 0x100))>>4;
+                                        offset = offsByte + 0xf000;
+                                    }
+                                    let startSrc = dest - (0x10000-offset);
+                                    while (numBytesToCopy-- !== 0) {
+                                        this[memRegion][dest++] = this[memRegion][startSrc++];
+                                    }
+                                }
+                                ctrlByte <<= 1;
+                                ctrlBits -= 1;
+                            }
+                            if (dest == origDest+this.numBytes) {
+                                console.log(this.screenSpec.name, this.numBytes.toString(16), (src-bankConv(0x27,0)).toString(16));
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                TileData() {
+                    // temp
+                    let [ctx, imgData, width, height] = this.getCanvas(' data');
+                    let data = imgData.data;
+                    let numTiles = Math.floor(this.numBytes / 0x20);
+                    let tilesPerRow = Math.floor(width / 8);
+                    for (let i = 0; i < numTiles; i++) {
+                        let row = Math.floor(i / tilesPerRow) * 8;
+                        let col = Math.floor(i % tilesPerRow) * 8;
+                        let tileBytes = this.mem7eh.slice(0x4000+i * 0x20, 0x4000+(i+1) * 0x20);
+                        drawTile(data, col, row, width, tileBytes);
+                    }
+                    ctx.putImageData(imgData, 0, 0);
+                }
+
+                Metatiles() {
+                    // temp
+                    let [ctx, imgData, width, height] = this.getCanvas(' metatiles');
+                    let data = imgData.data;
+                    let numMetatiles = Math.floor(this.numBytes / 8);
+                    let tilesPerRow = Math.floor(width / 16);
+                    let start = 0x259e;
+                    for (let i = 0; i < numMetatiles; i++) {
+                        let row = Math.floor(i / tilesPerRow) * 16;
+                        let col = Math.floor(i % tilesPerRow) * 16;
+
+                        this.drawMetatile(data, col, row, width, i);
+                    }
+                    ctx.putImageData(imgData, 0, 0);
+                }
+
+                Map() {
+                    // temp
+                    let [ctx, imgData, width, height] = this.getCanvas(' map');
+                    let data = imgData.data;
+                    let start = 10;
+                    for (let row = 0; row < 0x32; row++) {
+                        for (let col = 0; col < 0x30; col++) {
+                            let metatileIdx = wordIn(this.mem7fh, start); // & 0x3ff
+                            start += 2;
+                            this.drawMetatile(data, col*16, row*16, width, metatileIdx);
+                        }
+                    }
+                    ctx.putImageData(imgData, 0, 0);
+                }
+
+                drawScreen() {
+                    let screen = this.screenSpec;
+
+                    // set vram sources
+                    for (let i = 0; i < screen.sources.length; i++) {
+                        let [algo, ...args] = screen.sources[i];
+                        this[algo](...args);
+                    }
+                }
+
+                wordIn(addr) {
+                    return wordIn(this.rom, addr);
+                }
+
+                longIn(addr) {
+                    return longIn(this.rom, addr);
+                }
+
+                getTileData(idx) {
+                    return this.mem7eh.slice(idx * 0x20, (idx+1) * 0x20);
+                }
+
+                getCanvas(suffix) {
+                    return getCanvas(this.screenSpec.name + suffix);
+                }
+
+                populateLayout() {
+                    return this.memory.slice(0x9800, 0x9c00).reduce(
+                        (prev, curr) => [...prev, ...this.getTileData(curr)],
+                        []
+                    );
+                }
+            }
+
+            let app = new Vue({
+                el: '#root',
+                data: {
+                    uint8view: null,
+                    screenMap: {},
+                    screens: [
+                        {
+                            name: "test",
+                            sources: [
+                                ["DecompressData", 0x14d, 'mem7eh', 0x4000], // tiledata
+                                ["TileData"],
+                                ["DecompressData", 0x132, 'mem7fh', 0x258e], // metatile tiles
+                                ["Metatiles"],
+                                ["DecompressData", 0x42, 'mem7fh', 0x0000], // metatiles
+                                ["Map"],
+                            ],
+                        },
+                    ],
+                },
+                methods: {
+                    loadData: function() {
+                        fetch('/lufia2.sfc')
+                            .then(response => checkStatus(response) && response.arrayBuffer())
+                            .then(buffer => {
+                                this.uint8view = new Uint8Array(buffer);
+
+                                setTimeout(this.loadScreens, 10);
+                            });
+                    },
+
+                    loadScreens: function() {
+                        if (this.uint8view === null) return;
+
+                        let newScreenMap = {};
+                        for (let screenData of this.screens) {
+                            let screenName = screenData.name;
+                            let screen = new Screen(screenData, this.uint8view);
+                            newScreenMap[screenName] = screen;
+                            screen.drawScreen();
+                        }
+                        this.screenMap = newScreenMap;
+                    },
+                },
+                computed: {},
+            });
+
+            app.loadData();
+
+            function checkStatus(response) {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} - ${response.statusText}`);
+                }
+                return response;
+            }
+        </script>
+    </body>
+</html>

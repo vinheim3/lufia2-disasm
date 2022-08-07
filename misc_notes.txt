@@ -1,0 +1,30 @@
+City layout
+-----------
+city tile data at 8000.b
+0:f05c writes there from 7e:4000 to 4000.w
+7e:4000 is populated from DecompressData with idx 0x14d from 0:f058
+(14b + 2) 2 being idx 3 from table 4f:f81e
+3 from 05ac
+
+tilemap at 800.b
+vmain = 80 (+1 after writing)
+dmap6 = 1 (2 regs, write once)
+at a143 from 7e:2800 to vram:800
+e:be2a -> 0:f589 -> todo_CopyRowOf2x2Metatiles
+65.w (addr of metatile tiles 7f:259e)
+BP: 7f25b6 (value = 16 0c)
+  - metatile tiles (163f bytes from 7f:258e) (really 0x277 metatiles)
+  - decompress idx 0x132
+  - called from 0:eca8 (idx 132 due to $24 being 3 (130+2 from table idxed 3))
+BP: 7f0c20 (value = 30 00)
+  - metatiles (258e bytes from 7f:0000)
+  - decompress idx 42
+  - called from 0:eb34 (idx 42 due to $24 being 3 (3f+3))
+
+$24 seems to start from 2
+
+
+Sprites
+-------
+0:870c does the hdma to oam from 00:0100 $220 bytes
+3:a461 -> Add16x32SpriteToShadowOam
