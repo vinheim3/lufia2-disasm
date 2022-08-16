@@ -1,6 +1,6 @@
 .include "includes.s"
         
-.bank $015 slot 1
+.bank $015 slot 2
 .org $0
 
 	adc [$87], Y                                                  ; $8000 : $77, $87

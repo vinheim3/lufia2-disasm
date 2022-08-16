@@ -18,7 +18,7 @@ bank = 0x27
 srcoffs = 0x7fb
 
 def bankStr(bank):
-    return f".bank ${bank:03x} slot 1\n.org $0"
+    return f".bank ${bank:03x} slot 2\n.org $0"
 
 for i, byteLen in enumerate(byteMap):
     end = srcoffs + byteLen

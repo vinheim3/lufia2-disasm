@@ -1,6 +1,6 @@
 .include "includes.s"
         
-.bank $00f slot 1
+.bank $00f slot 2
 .org $0
 
 	sbc $ffffff.l, X                                                  ; $8000 : $ff, $ff, $ff, $ff

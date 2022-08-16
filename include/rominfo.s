@@ -1,11 +1,14 @@
 .memorymap
-	defaultslot 1
+	defaultslot 2
 
 	slotsize $2000
 	slot 0 $0000
 
+	slotsize $e000
+    slot 1 $2000
+
 	slotsize $8000
-    slot 1 $8000
+    slot 2 $8000
 .endme
 
 .banksize $8000

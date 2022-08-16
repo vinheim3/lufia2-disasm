@@ -1,6 +1,6 @@
 .include "includes.s"
         
-.bank $014 slot 1
+.bank $014 slot 2
 .org $0
 
 	lda #$2d01.w                                                  ; $8000 : $a9, $01, $2d

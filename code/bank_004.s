@@ -1,6 +1,6 @@
 .include "includes.s"
         
-.bank $004 slot 1
+.bank $004 slot 2
 .org $0
 
 	lda $1261.w                                                  ; $8000 : $ad, $61, $12
@@ -325,8 +325,8 @@ br_04_825c:
 	jsr $83d416.l                                                  ; $8260 : $22, $16, $d4, $83
 	jsr $83aa30.l                                                  ; $8264 : $22, $30, $aa, $83
 	ldx $a7                                                  ; $8268 : $a6, $a7
-	lda $0692.w                                                  ; $826a : $ad, $92, $06
-	sta $0692.w, X                                                  ; $826d : $9d, $92, $06
+	lda wEntityMovementDirs.w                                                  ; $826a : $ad, $92, $06
+	sta wEntityMovementDirs.w, X                                                  ; $826d : $9d, $92, $06
 	lda #$08.b                                                  ; $8270 : $a9, $08
 	sta $7fe4de.l, X                                                  ; $8272 : $9f, $de, $e4, $7f
 	stz $0736.w, X                                                  ; $8276 : $9e, $36, $07
@@ -351,7 +351,7 @@ br_04_8299:
 	sta $0736.w, Y                                                  ; $829f : $99, $36, $07
 	tyx                                                  ; $82a2 : $bb
 	lda #$20.b                                                  ; $82a3 : $a9, $20
-	sta $7fe316.l, X                                                  ; $82a5 : $9f, $16, $e3, $7f
+	sta wEntityPriorityAttrBits.l, X                                                  ; $82a5 : $9f, $16, $e3, $7f
 	lda $8482d0.l, X                                                  ; $82a9 : $bf, $d0, $82, $84
 	sta $070a.w, X                                                  ; $82ad : $9d, $0a, $07
 	tya                                                  ; $82b0 : $98

@@ -1,6 +1,6 @@
 .include "includes.s"
         
-.bank $01b slot 1
+.bank $01b slot 2
 .org $0
 
 	.db $00                                                  ; $8000 : $00

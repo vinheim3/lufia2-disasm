@@ -1,6 +1,6 @@
 .include "includes.s"
         
-.bank $027 slot 1
+.bank $027 slot 2
 .org $0
 
 .macro CompressedSrc
@@ -778,7 +778,7 @@ CompressedData_01b:
 CompressedData_01c:
 	.incbin "data/compressed_01c.bin" READ $0288
 
-.bank $028 slot 1
+.bank $028 slot 2
 .org $0
 
 	.incbin "data/compressed_01c.bin" SKIP $0288
@@ -903,7 +903,7 @@ CompressedData_043:
 CompressedData_044:
 	.incbin "data/compressed_044.bin" READ $0579
 
-.bank $029 slot 1
+.bank $029 slot 2
 .org $0
 
 	.incbin "data/compressed_044.bin" SKIP $0579
@@ -950,7 +950,7 @@ CompressedData_051:
 CompressedData_052:
 	.incbin "data/compressed_052.bin" READ $0939
 
-.bank $02a slot 1
+.bank $02a slot 2
 .org $0
 
 	.incbin "data/compressed_052.bin" SKIP $0939
@@ -1000,7 +1000,7 @@ CompressedData_060:
 CompressedData_061:
 	.incbin "data/compressed_061.bin" READ $0603
 
-.bank $02b slot 1
+.bank $02b slot 2
 .org $0
 
 	.incbin "data/compressed_061.bin" SKIP $0603
@@ -1056,7 +1056,7 @@ CompressedData_071:
 CompressedData_072:
 	.incbin "data/compressed_072.bin" READ $004d
 
-.bank $02c slot 1
+.bank $02c slot 2
 .org $0
 
 	.incbin "data/compressed_072.bin" SKIP $004d
@@ -1118,7 +1118,7 @@ CompressedData_084:
 CompressedData_085:
 	.incbin "data/compressed_085.bin" READ $0419
 
-.bank $02d slot 1
+.bank $02d slot 2
 .org $0
 
 	.incbin "data/compressed_085.bin" SKIP $0419
@@ -1177,7 +1177,7 @@ CompressedData_096:
 CompressedData_097:
 	.incbin "data/compressed_097.bin" READ $0266
 
-.bank $02e slot 1
+.bank $02e slot 2
 .org $0
 
 	.incbin "data/compressed_097.bin" SKIP $0266
@@ -1236,7 +1236,7 @@ CompressedData_0a8:
 CompressedData_0a9:
 	.incbin "data/compressed_0a9.bin" READ $00c3
 
-.bank $02f slot 1
+.bank $02f slot 2
 .org $0
 
 	.incbin "data/compressed_0a9.bin" SKIP $00c3
@@ -1295,7 +1295,7 @@ CompressedData_0ba:
 CompressedData_0bb:
 	.incbin "data/compressed_0bb.bin" READ $03fd
 
-.bank $030 slot 1
+.bank $030 slot 2
 .org $0
 
 	.incbin "data/compressed_0bb.bin" SKIP $03fd
@@ -1354,7 +1354,7 @@ CompressedData_0cc:
 CompressedData_0cd:
 	.incbin "data/compressed_0cd.bin" READ $0481
 
-.bank $031 slot 1
+.bank $031 slot 2
 .org $0
 
 	.incbin "data/compressed_0cd.bin" SKIP $0481
@@ -1419,7 +1419,7 @@ CompressedData_0e0:
 CompressedData_0e1:
 	.incbin "data/compressed_0e1.bin" READ $026a
 
-.bank $032 slot 1
+.bank $032 slot 2
 .org $0
 
 	.incbin "data/compressed_0e1.bin" SKIP $026a
@@ -1475,7 +1475,7 @@ CompressedData_0f1:
 CompressedData_0f2:
 	.incbin "data/compressed_0f2.bin" READ $0215
 
-.bank $033 slot 1
+.bank $033 slot 2
 .org $0
 
 	.incbin "data/compressed_0f2.bin" SKIP $0215
@@ -1528,7 +1528,7 @@ CompressedData_101:
 CompressedData_102:
 	.incbin "data/compressed_102.bin" READ $052b
 
-.bank $034 slot 1
+.bank $034 slot 2
 .org $0
 
 	.incbin "data/compressed_102.bin" SKIP $052b
@@ -1599,7 +1599,7 @@ CompressedData_117:
 CompressedData_118:
 	.incbin "data/compressed_118.bin" READ $03a3
 
-.bank $035 slot 1
+.bank $035 slot 2
 .org $0
 
 	.incbin "data/compressed_118.bin" SKIP $03a3
@@ -1661,7 +1661,7 @@ CompressedData_12a:
 CompressedData_12b:
 	.incbin "data/compressed_12b.bin" READ $08e6
 
-.bank $036 slot 1
+.bank $036 slot 2
 .org $0
 
 	.incbin "data/compressed_12b.bin" SKIP $08e6
@@ -1708,7 +1708,7 @@ CompressedData_138:
 CompressedData_139:
 	.incbin "data/compressed_139.bin" READ $0487
 
-.bank $037 slot 1
+.bank $037 slot 2
 .org $0
 
 	.incbin "data/compressed_139.bin" SKIP $0487
@@ -1737,7 +1737,7 @@ CompressedData_140:
 CompressedData_141:
 	.incbin "data/compressed_141.bin" READ $07e7
 
-.bank $038 slot 1
+.bank $038 slot 2
 .org $0
 
 	.incbin "data/compressed_141.bin" SKIP $07e7
@@ -1775,7 +1775,7 @@ CompressedData_14b:
 CompressedData_14c:
 	.incbin "data/compressed_14c.bin" READ $0628
 
-.bank $039 slot 1
+.bank $039 slot 2
 .org $0
 
 	.incbin "data/compressed_14c.bin" SKIP $0628
@@ -1786,7 +1786,7 @@ CompressedData_14d:
 CompressedData_14e:
 	.incbin "data/compressed_14e.bin" READ $0594
 
-.bank $03a slot 1
+.bank $03a slot 2
 .org $0
 
 	.incbin "data/compressed_14e.bin" SKIP $0594
@@ -1794,7 +1794,7 @@ CompressedData_14e:
 CompressedData_14f:
 	.incbin "data/compressed_14f.bin" READ $4468
 
-.bank $03b slot 1
+.bank $03b slot 2
 .org $0
 
 	.incbin "data/compressed_14f.bin" SKIP $4468
@@ -1808,7 +1808,7 @@ CompressedData_151:
 CompressedData_152:
 	.incbin "data/compressed_152.bin" READ $110e
 
-.bank $03c slot 1
+.bank $03c slot 2
 .org $0
 
 	.incbin "data/compressed_152.bin" SKIP $110e
@@ -1819,7 +1819,7 @@ CompressedData_153:
 CompressedData_154:
 	.incbin "data/compressed_154.bin" READ $0a07
 
-.bank $03d slot 1
+.bank $03d slot 2
 .org $0
 
 	.incbin "data/compressed_154.bin" SKIP $0a07
@@ -1830,7 +1830,7 @@ CompressedData_155:
 CompressedData_156:
 	.incbin "data/compressed_156.bin" READ $324f
 
-.bank $03e slot 1
+.bank $03e slot 2
 .org $0
 
 	.incbin "data/compressed_156.bin" SKIP $324f
@@ -1841,7 +1841,7 @@ CompressedData_157:
 CompressedData_158:
 	.incbin "data/compressed_158.bin" READ $20f2
 
-.bank $03f slot 1
+.bank $03f slot 2
 .org $0
 
 	.incbin "data/compressed_158.bin" SKIP $20f2
@@ -1855,7 +1855,7 @@ CompressedData_15a:
 CompressedData_15b:
 	.incbin "data/compressed_15b.bin" READ $2db4
 
-.bank $040 slot 1
+.bank $040 slot 2
 .org $0
 
 	.incbin "data/compressed_15b.bin" SKIP $2db4
@@ -1866,7 +1866,7 @@ CompressedData_15c:
 CompressedData_15d:
 	.incbin "data/compressed_15d.bin" READ $275c
 
-.bank $041 slot 1
+.bank $041 slot 2
 .org $0
 
 	.incbin "data/compressed_15d.bin" SKIP $275c
@@ -1877,7 +1877,7 @@ CompressedData_15e:
 CompressedData_15f:
 	.incbin "data/compressed_15f.bin" READ $2478
 
-.bank $042 slot 1
+.bank $042 slot 2
 .org $0
 
 	.incbin "data/compressed_15f.bin" SKIP $2478
@@ -1927,7 +1927,7 @@ CompressedData_16d:
 CompressedData_16e:
 	.incbin "data/compressed_16e.bin" READ $0461
 
-.bank $043 slot 1
+.bank $043 slot 2
 .org $0
 
 	.incbin "data/compressed_16e.bin" SKIP $0461
@@ -1956,7 +1956,7 @@ CompressedData_175:
 CompressedData_176:
 	.incbin "data/compressed_176.bin" READ $0b95
 
-.bank $044 slot 1
+.bank $044 slot 2
 .org $0
 
 	.incbin "data/compressed_176.bin" SKIP $0b95
@@ -2096,7 +2096,7 @@ CompressedData_1a2:
 CompressedData_1a3:
 	.incbin "data/compressed_1a3.bin" READ $00ca
 
-.bank $045 slot 1
+.bank $045 slot 2
 .org $0
 
 	.incbin "data/compressed_1a3.bin" SKIP $00ca
@@ -2236,7 +2236,7 @@ CompressedData_1cf:
 CompressedData_1d0:
 	.incbin "data/compressed_1d0.bin" READ $00d4
 
-.bank $046 slot 1
+.bank $046 slot 2
 .org $0
 
 	.incbin "data/compressed_1d0.bin" SKIP $00d4
@@ -2382,7 +2382,7 @@ CompressedData_1fe:
 CompressedData_1ff:
 	.incbin "data/compressed_1ff.bin" READ $015b
 
-.bank $047 slot 1
+.bank $047 slot 2
 .org $0
 
 	.incbin "data/compressed_1ff.bin" SKIP $015b
@@ -2489,7 +2489,7 @@ CompressedData_220:
 CompressedData_221:
 	.incbin "data/compressed_221.bin" READ $03dd
 
-.bank $048 slot 1
+.bank $048 slot 2
 .org $0
 
 	.incbin "data/compressed_221.bin" SKIP $03dd
@@ -2563,7 +2563,7 @@ CompressedData_237:
 CompressedData_238:
 	.incbin "data/compressed_238.bin" READ $037c
 
-.bank $049 slot 1
+.bank $049 slot 2
 .org $0
 
 	.incbin "data/compressed_238.bin" SKIP $037c
@@ -2634,7 +2634,7 @@ CompressedData_24d:
 CompressedData_24e:
 	.incbin "data/compressed_24e.bin" READ $05a7
 
-.bank $04a slot 1
+.bank $04a slot 2
 .org $0
 
 	.incbin "data/compressed_24e.bin" SKIP $05a7
@@ -2735,7 +2735,7 @@ CompressedData_26d:
 CompressedData_26e:
 	.incbin "data/compressed_26e.bin" READ $03c4
 
-.bank $04b slot 1
+.bank $04b slot 2
 .org $0
 
 	.incbin "data/compressed_26e.bin" SKIP $03c4
@@ -2803,7 +2803,7 @@ CompressedData_282:
 CompressedData_283:
 	.incbin "data/compressed_283.bin" READ $049b
 
-.bank $04c slot 1
+.bank $04c slot 2
 .org $0
 
 	.incbin "data/compressed_283.bin" SKIP $049b
@@ -2832,7 +2832,7 @@ CompressedData_28a:
 CompressedData_28b:
 	.incbin "data/compressed_28b.bin" READ $243e
 
-.bank $04d slot 1
+.bank $04d slot 2
 .org $0
 
 	.incbin "data/compressed_28b.bin" SKIP $243e
@@ -2849,7 +2849,7 @@ CompressedData_28e:
 CompressedData_28f:
 	.incbin "data/compressed_28f.bin" READ $180d
 
-.bank $04e slot 1
+.bank $04e slot 2
 .org $0
 
 	.incbin "data/compressed_28f.bin" SKIP $180d
@@ -2887,7 +2887,7 @@ CompressedData_299:
 CompressedData_29a:
 	.incbin "data/compressed_29a.bin" READ $0cea
 
-.bank $04f slot 1
+.bank $04f slot 2
 .org $0
 
 	.incbin "data/compressed_29a.bin" SKIP $0cea

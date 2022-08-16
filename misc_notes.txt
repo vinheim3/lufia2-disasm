@@ -28,3 +28,20 @@ Sprites
 -------
 0:870c does the hdma to oam from 00:0100 $220 bytes
 3:a461 -> Add16x32SpriteToShadowOam
+tile idx
+--------
+eg sprite tile 48 in 7f:e25e (entity tile idxes)
+set from 3:aa50 which calls ReserveSpriteSlotsForEntity
+y
+-
+ys stored in 7f:de3e
+3:dc45 adjusts Y from $32
+its called from todo_NextEntityCmd as byte read in 11:8144 = $f0
+
+
+Entity size types
+-----------------
+0 - 1 square
+1 - 2 squares (vert)
+2 - 2 squares (horiz)
+3 - 4 squares (square)

@@ -1,6 +1,6 @@
 .include "includes.s"
         
-.bank $00e slot 1
+.bank $00e slot 2
 .org $0
 
 	sta $2088.w, X                                                  ; $8000 : $9d, $88, $20
@@ -6688,21 +6688,21 @@ br_0e_b087:
 	sep #IDX_8                                                  ; $b09c : $e2, $10
 	rep #ACCU_8                                                  ; $b09e : $c2, $20
 	ldx $0734.w                                                  ; $b0a0 : $ae, $34, $07
-	lda $7fddae.l                                                  ; $b0a3 : $af, $ae, $dd, $7f
+	lda wEntityXs.l                                                  ; $b0a3 : $af, $ae, $dd, $7f
 	sec                                                  ; $b0a7 : $38
 	sbc #$0080.w                                                  ; $b0a8 : $e9, $80, $00
 	sta $05a4.w                                                  ; $b0ab : $8d, $a4, $05
-	lda $7fde3e.l                                                  ; $b0ae : $af, $3e, $de, $7f
+	lda wEntityYs.l                                                  ; $b0ae : $af, $3e, $de, $7f
 	sec                                                  ; $b0b2 : $38
 	sbc #$0070.w                                                  ; $b0b3 : $e9, $70, $00
 	sta $05a6.w                                                  ; $b0b6 : $8d, $a6, $05
-	lda $7fddae.l, X                                                  ; $b0b9 : $bf, $ae, $dd, $7f
+	lda wEntityXs.l, X                                                  ; $b0b9 : $bf, $ae, $dd, $7f
 	lsr                                                  ; $b0bd : $4a
 	lsr                                                  ; $b0be : $4a
 	lsr                                                  ; $b0bf : $4a
 	lsr                                                  ; $b0c0 : $4a
 	sta $56                                                  ; $b0c1 : $85, $56
-	lda $7fde3e.l, X                                                  ; $b0c3 : $bf, $3e, $de, $7f
+	lda wEntityYs.l, X                                                  ; $b0c3 : $bf, $3e, $de, $7f
 	lsr                                                  ; $b0c7 : $4a
 	lsr                                                  ; $b0c8 : $4a
 	lsr                                                  ; $b0c9 : $4a
@@ -8444,7 +8444,7 @@ br_0e_bbfb:
 	sta $7fdc8c.l, X                                                  ; $bc6d : $9f, $8c, $dc, $7f
 	lda #$ff.b                                                  ; $bc71 : $a9, $ff
 	sta $7fdc8d.l, X                                                  ; $bc73 : $9f, $8d, $dc, $7f
-	lda $0692.w                                                  ; $bc77 : $ad, $92, $06
+	lda wEntityMovementDirs.w                                                  ; $bc77 : $ad, $92, $06
 	sta $05bf.w                                                  ; $bc7a : $8d, $bf, $05
 	lda $8f                                                  ; $bc7d : $a5, $8f
 	sta $05bd.w                                                  ; $bc7f : $8d, $bd, $05
@@ -8617,11 +8617,11 @@ Func_0e_bd77:
 
 br_0e_bd90:
 	ldx $0734.w                                                  ; $bd90 : $ae, $34, $07
-	lda $7fddae.l, X                                                  ; $bd93 : $bf, $ae, $dd, $7f
+	lda wEntityXs.l, X                                                  ; $bd93 : $bf, $ae, $dd, $7f
 	sec                                                  ; $bd97 : $38
 	sbc #$0080.w                                                  ; $bd98 : $e9, $80, $00
 	sta $05a4.w                                                  ; $bd9b : $8d, $a4, $05
-	lda $7fde3e.l, X                                                  ; $bd9e : $bf, $3e, $de, $7f
+	lda wEntityYs.l, X                                                  ; $bd9e : $bf, $3e, $de, $7f
 	sec                                                  ; $bda2 : $38
 	sbc #$0070.w                                                  ; $bda3 : $e9, $70, $00
 	sta $05a6.w                                                  ; $bda6 : $8d, $a6, $05
@@ -9397,7 +9397,7 @@ br_0e_c258:
 	inc $8093.w, X                                                  ; $c26f : $fe, $93, $80
 	jsr $838e66.l                                                  ; $c272 : $22, $66, $8e, $83
 	tdc                                                  ; $c276 : $7b
-	lda $0692.w                                                  ; $c277 : $ad, $92, $06
+	lda wEntityMovementDirs.w                                                  ; $c277 : $ad, $92, $06
 	tax                                                  ; $c27a : $aa
 	lda $83c1a5.l, X                                                  ; $c27b : $bf, $a5, $c1, $83
 	clc                                                  ; $c27f : $18

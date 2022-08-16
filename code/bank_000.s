@@ -1,6 +1,6 @@
 .include "includes.s"
         
-.bank $000 slot 1
+.bank $000 slot 2
 .org $0
 
 
@@ -6117,9 +6117,9 @@ br_00_a636:
 	lda $0622.w, X                                                  ; $a647 : $bd, $22, $06
 	and #$fb.b                                                  ; $a64a : $29, $fb
 	sta $0622.w, X                                                  ; $a64c : $9d, $22, $06
-	lda $7fe316.l, X                                                  ; $a64f : $bf, $16, $e3, $7f
+	lda wEntityPriorityAttrBits.l, X                                                  ; $a64f : $bf, $16, $e3, $7f
 	and #$7f.b                                                  ; $a653 : $29, $7f
-	sta $7fe316.l, X                                                  ; $a655 : $9f, $16, $e3, $7f
+	sta wEntityPriorityAttrBits.l, X                                                  ; $a655 : $9f, $16, $e3, $7f
 	jsr $83fa3f.l                                                  ; $a659 : $22, $3f, $fa, $83
 	lda $54                                                  ; $a65d : $a5, $54
 	cmp #$10.b                                                  ; $a65f : $c9, $10
@@ -6270,9 +6270,9 @@ Call_00_a74d:
 	sep #ACCU_8                                                  ; $a764 : $e2, $20
 	jsr $83a71c.l                                                  ; $a766 : $22, $1c, $a7, $83
 	ldx $a7                                                  ; $a76a : $a6, $a7
-	lda $7fe316.l, X                                                  ; $a76c : $bf, $16, $e3, $7f
+	lda wEntityPriorityAttrBits.l, X                                                  ; $a76c : $bf, $16, $e3, $7f
 	and #$7f.b                                                  ; $a770 : $29, $7f
-	sta $7fe316.l, X                                                  ; $a772 : $9f, $16, $e3, $7f
+	sta wEntityPriorityAttrBits.l, X                                                  ; $a772 : $9f, $16, $e3, $7f
 	lda $0622.w, X                                                  ; $a776 : $bd, $22, $06
 	ora #$01.b                                                  ; $a779 : $09, $01
 	and #$7f.b                                                  ; $a77b : $29, $7f
@@ -6300,7 +6300,7 @@ br_00_a78e:
 	cmp $066a.w, X                                                  ; $a7a6 : $dd, $6a, $06
 	beq br_00_a7b1                                                  ; $a7a9 : $f0, $06
 
-	sta $0692.w, X                                                  ; $a7ab : $9d, $92, $06
+	sta wEntityMovementDirs.w, X                                                  ; $a7ab : $9d, $92, $06
 	sta $066a.w, X                                                  ; $a7ae : $9d, $6a, $06
 
 br_00_a7b1:
@@ -6511,7 +6511,7 @@ br_00_a91f:
 
 	jsr Call_00_a986.w                                                  ; $a936 : $20, $86, $a9
 	tdc                                                  ; $a939 : $7b
-	lda $0692.w                                                  ; $a93a : $ad, $92, $06
+	lda wEntityMovementDirs.w                                                  ; $a93a : $ad, $92, $06
 	tax                                                  ; $a93d : $aa
 	lda $83c1a5.l, X                                                  ; $a93e : $bf, $a5, $c1, $83
 	clc                                                  ; $a942 : $18
@@ -6597,9 +6597,9 @@ Call_00_a9e3:
 	jsr Call_00_bf6f.l                                                  ; $a9eb : $22, $6f, $bf, $80
 	ldx $a9                                                  ; $a9ef : $a6, $a9
 	rep #ACCU_8                                                  ; $a9f1 : $c2, $20
-	lda $7fddae.l, X                                                  ; $a9f3 : $bf, $ae, $dd, $7f
+	lda wEntityXs.l, X                                                  ; $a9f3 : $bf, $ae, $dd, $7f
 	sta $02                                                  ; $a9f7 : $85, $02
-	lda $7fde3e.l, X                                                  ; $a9f9 : $bf, $3e, $de, $7f
+	lda wEntityYs.l, X                                                  ; $a9f9 : $bf, $3e, $de, $7f
 	sta $04                                                  ; $a9fd : $85, $04
 	sep #ACCU_8                                                  ; $a9ff : $e2, $20
 	rts                                                  ; $aa01 : $60
@@ -6973,7 +6973,7 @@ br_00_ac84:
 
 	ldx $a7                                                  ; $ac9c : $a6, $a7
 	lda $57                                                  ; $ac9e : $a5, $57
-	sta $7fe316.l, X                                                  ; $aca0 : $9f, $16, $e3, $7f
+	sta wEntityPriorityAttrBits.l, X                                                  ; $aca0 : $9f, $16, $e3, $7f
 
 br_00_aca4:
 	brl br_00_9d00                                                  ; $aca4 : $82, $59, $f0
@@ -7012,9 +7012,9 @@ br_00_acdc:
 	lda $000736.l, X                                                  ; $aceb : $bf, $36, $07, $00
 	and #$7f.b                                                  ; $acef : $29, $7f
 	sta $000736.l, X                                                  ; $acf1 : $9f, $36, $07, $00
-	lda $7fe316.l, X                                                  ; $acf5 : $bf, $16, $e3, $7f
+	lda wEntityPriorityAttrBits.l, X                                                  ; $acf5 : $bf, $16, $e3, $7f
 	and #$7f.b                                                  ; $acf9 : $29, $7f
-	sta $7fe316.l, X                                                  ; $acfb : $9f, $16, $e3, $7f
+	sta wEntityPriorityAttrBits.l, X                                                  ; $acfb : $9f, $16, $e3, $7f
 
 br_00_acff:
 	brl br_00_9d00                                                  ; $acff : $82, $fe, $ef
@@ -7130,7 +7130,7 @@ br_00_adad:
 
 br_00_adb1:
 	ldx $5a                                                  ; $adb1 : $a6, $5a
-	lda $0692.w, X                                                  ; $adb3 : $bd, $92, $06
+	lda wEntityMovementDirs.w, X                                                  ; $adb3 : $bd, $92, $06
 	ldx $a7                                                  ; $adb6 : $a6, $a7
 	cmp #$04.b                                                  ; $adb8 : $c9, $04
 	beq br_00_ada5                                                  ; $adba : $f0, $e9
@@ -7149,7 +7149,7 @@ br_00_adc8:
 	lda #$06.b                                                  ; $adc8 : $a9, $06
 
 br_00_adca:
-	sta $0692.w, X                                                  ; $adca : $9d, $92, $06
+	sta wEntityMovementDirs.w, X                                                  ; $adca : $9d, $92, $06
 	sta $066a.w, X                                                  ; $adcd : $9d, $6a, $06
 
 br_00_add0:
@@ -7513,7 +7513,7 @@ br_00_b01b:
 	sta $7fdd1c.l, X                                                  ; $b097 : $9f, $1c, $dd, $7f
 	sep #ACCU_8                                                  ; $b09b : $e2, $20
 	ldx $a7                                                  ; $b09d : $a6, $a7
-	lda $7fe216.l, X                                                  ; $b09f : $bf, $16, $e2, $7f
+	lda wEntitySizeTypes.l, X                                                  ; $b09f : $bf, $16, $e2, $7f
 	ina                                                  ; $b0a3 : $1a
 	bit #$01.b                                                  ; $b0a4 : $89, $01
 	beq br_00_b0ba                                                  ; $b0a6 : $f0, $12
@@ -7535,13 +7535,13 @@ br_00_b0ba:
 	jsr Call_00_b0eb.w                                                  ; $b0c3 : $20, $eb, $b0
 	ldx $a9                                                  ; $b0c6 : $a6, $a9
 	rep #ACCU_8                                                  ; $b0c8 : $c2, $20
-	lda $7fddae.l, X                                                  ; $b0ca : $bf, $ae, $dd, $7f
+	lda wEntityXs.l, X                                                  ; $b0ca : $bf, $ae, $dd, $7f
 	lsr                                                  ; $b0ce : $4a
 	lsr                                                  ; $b0cf : $4a
 	lsr                                                  ; $b0d0 : $4a
 	lsr                                                  ; $b0d1 : $4a
 	sta $54                                                  ; $b0d2 : $85, $54
-	lda $7fde3e.l, X                                                  ; $b0d4 : $bf, $3e, $de, $7f
+	lda wEntityYs.l, X                                                  ; $b0d4 : $bf, $3e, $de, $7f
 	lsr                                                  ; $b0d8 : $4a
 	lsr                                                  ; $b0d9 : $4a
 	lsr                                                  ; $b0da : $4a
@@ -7560,14 +7560,14 @@ Call_00_b0eb:
 	jsr Call_00_c0b7.w                                                  ; $b0f4 : $20, $b7, $c0
 	jsr Call_00_c0da.w                                                  ; $b0f7 : $20, $da, $c0
 	clc                                                  ; $b0fa : $18
-	adc $7fddae.l, X                                                  ; $b0fb : $7f, $ae, $dd, $7f
-	sta $7fddae.l, X                                                  ; $b0ff : $9f, $ae, $dd, $7f
+	adc wEntityXs.l, X                                                  ; $b0fb : $7f, $ae, $dd, $7f
+	sta wEntityXs.l, X                                                  ; $b0ff : $9f, $ae, $dd, $7f
 	sep #ACCU_8                                                  ; $b103 : $e2, $20
 	jsr Call_00_c0b7.w                                                  ; $b105 : $20, $b7, $c0
 	jsr Call_00_c0da.w                                                  ; $b108 : $20, $da, $c0
 	clc                                                  ; $b10b : $18
-	adc $7fde3e.l, X                                                  ; $b10c : $7f, $3e, $de, $7f
-	sta $7fde3e.l, X                                                  ; $b110 : $9f, $3e, $de, $7f
+	adc wEntityYs.l, X                                                  ; $b10c : $7f, $3e, $de, $7f
+	sta wEntityYs.l, X                                                  ; $b110 : $9f, $3e, $de, $7f
 	sep #ACCU_8                                                  ; $b114 : $e2, $20
 	rts                                                  ; $b116 : $60
 
@@ -8268,11 +8268,11 @@ Call_00_b5e6:
 	bne br_00_b629                                                  ; $b5f6 : $d0, $31
 
 	rep #ACCU_8                                                  ; $b5f8 : $c2, $20
-	lda $7fddae.l                                                  ; $b5fa : $af, $ae, $dd, $7f
+	lda wEntityXs.l                                                  ; $b5fa : $af, $ae, $dd, $7f
 	sec                                                  ; $b5fe : $38
 	sbc #$0080.w                                                  ; $b5ff : $e9, $80, $00
 	sta $54                                                  ; $b602 : $85, $54
-	lda $7fde3e.l                                                  ; $b604 : $af, $3e, $de, $7f
+	lda wEntityYs.l                                                  ; $b604 : $af, $3e, $de, $7f
 	sec                                                  ; $b608 : $38
 	sbc #$0070.w                                                  ; $b609 : $e9, $70, $00
 	sta $56                                                  ; $b60c : $85, $56
@@ -10207,7 +10207,7 @@ br_00_c33f:
 	sta $54                                                  ; $c34c : $85, $54
 	ldx $a9                                                  ; $c34e : $a6, $a9
 	rep #ACCU_8                                                  ; $c350 : $c2, $20
-	lda $7fde3e.l, X                                                  ; $c352 : $bf, $3e, $de, $7f
+	lda wEntityYs.l, X                                                  ; $c352 : $bf, $3e, $de, $7f
 	sec                                                  ; $c356 : $38
 	sbc $05a6.w                                                  ; $c357 : $ed, $a6, $05
 	and #$fff0.w                                                  ; $c35a : $29, $f0, $ff
@@ -10215,7 +10215,7 @@ br_00_c33f:
 	lsr                                                  ; $c35e : $4a
 	lsr                                                  ; $c35f : $4a
 	pha                                                  ; $c360 : $48
-	lda $7fddae.l, X                                                  ; $c361 : $bf, $ae, $dd, $7f
+	lda wEntityXs.l, X                                                  ; $c361 : $bf, $ae, $dd, $7f
 	sec                                                  ; $c365 : $38
 	sbc $05a4.w                                                  ; $c366 : $ed, $a4, $05
 	lsr                                                  ; $c369 : $4a
@@ -10227,7 +10227,7 @@ br_00_c33f:
 	sep #ACCU_8                                                  ; $c372 : $e2, $20
 	sta $5e                                                  ; $c374 : $85, $5e
 	ldx $a7                                                  ; $c376 : $a6, $a7
-	lda $0692.w, X                                                  ; $c378 : $bd, $92, $06
+	lda wEntityMovementDirs.w, X                                                  ; $c378 : $bd, $92, $06
 	cmp #$04.b                                                  ; $c37b : $c9, $04
 	beq br_00_c38f                                                  ; $c37d : $f0, $10
 
@@ -10298,7 +10298,7 @@ br_00_c3cf:
 br_00_c3d5:
 	inc $5d                                                  ; $c3d5 : $e6, $5d
 	ldx $a7                                                  ; $c3d7 : $a6, $a7
-	lda $7fe216.l, X                                                  ; $c3d9 : $bf, $16, $e2, $7f
+	lda wEntitySizeTypes.l, X                                                  ; $c3d9 : $bf, $16, $e2, $7f
 	bit #$02.b                                                  ; $c3dd : $89, $02
 	beq br_00_c3e5                                                  ; $c3df : $f0, $04
 
@@ -10306,7 +10306,7 @@ br_00_c3d5:
 	inc $5d                                                  ; $c3e3 : $e6, $5d
 
 br_00_c3e5:
-	lda $0692.w, X                                                  ; $c3e5 : $bd, $92, $06
+	lda wEntityMovementDirs.w, X                                                  ; $c3e5 : $bd, $92, $06
 	cmp #$06.b                                                  ; $c3e8 : $c9, $06
 	bne br_00_c403                                                  ; $c3ea : $d0, $17
 
@@ -10316,7 +10316,7 @@ br_00_c3e5:
 	sta $5d                                                  ; $c3f1 : $85, $5d
 	lda #$40.b                                                  ; $c3f3 : $a9, $40
 	trb $5b                                                  ; $c3f5 : $14, $5b
-	lda $7fe216.l, X                                                  ; $c3f7 : $bf, $16, $e2, $7f
+	lda wEntitySizeTypes.l, X                                                  ; $c3f7 : $bf, $16, $e2, $7f
 	bit #$02.b                                                  ; $c3fb : $89, $02
 	beq br_00_c403                                                  ; $c3fd : $f0, $04
 
@@ -12435,7 +12435,7 @@ br_00_d2b2:
 	brl br_00_cc35                                                  ; $d2c2 : $82, $70, $f9
 
 	jsr Call_00_e8b9.w                                                  ; $d2c5 : $20, $b9, $e8
-	cmp $0692.w                                                  ; $d2c8 : $cd, $92, $06
+	cmp wEntityMovementDirs.w                                                  ; $d2c8 : $cd, $92, $06
 	bne br_00_d2d0                                                  ; $d2cb : $d0, $03
 
 	brl br_00_d2a2                                                  ; $d2cd : $82, $d2, $ff
@@ -12444,7 +12444,7 @@ br_00_d2d0:
 	brl br_00_d2b2                                                  ; $d2d0 : $82, $df, $ff
 
 	jsr Call_00_e8b9.w                                                  ; $d2d3 : $20, $b9, $e8
-	cmp $0692.w                                                  ; $d2d6 : $cd, $92, $06
+	cmp wEntityMovementDirs.w                                                  ; $d2d6 : $cd, $92, $06
 	beq br_00_d2de                                                  ; $d2d9 : $f0, $03
 
 	brl br_00_d2a2                                                  ; $d2db : $82, $c4, $ff
@@ -12643,7 +12643,7 @@ br_00_d438:
 	jsr Call_00_e8b9.w                                                  ; $d442 : $20, $b9, $e8
 	sta $54                                                  ; $d445 : $85, $54
 	tdc                                                  ; $d447 : $7b
-	lda $0692.w                                                  ; $d448 : $ad, $92, $06
+	lda wEntityMovementDirs.w                                                  ; $d448 : $ad, $92, $06
 	tax                                                  ; $d44b : $aa
 	lda $83c1a5.l, X                                                  ; $d44c : $bf, $a5, $c1, $83
 	clc                                                  ; $d450 : $18
@@ -12820,7 +12820,7 @@ Call_00_d583:
 
 
 	jsr Call_00_e8b9.w                                                  ; $d5a5 : $20, $b9, $e8
-	sta $7fe316.l                                                  ; $d5a8 : $8f, $16, $e3, $7f
+	sta wEntityPriorityAttrBits.l                                                  ; $d5a8 : $8f, $16, $e3, $7f
 	brl br_00_cc35                                                  ; $d5ac : $82, $86, $f6
 
 	phy                                                  ; $d5af : $5a
@@ -13652,12 +13652,12 @@ br_00_dbda:
 	beq br_00_dc75                                                  ; $dc12 : $f0, $61
 
 	rep #ACCU_8                                                  ; $dc14 : $c2, $20
-	lda $7fddae.l                                                  ; $dc16 : $af, $ae, $dd, $7f
+	lda wEntityXs.l                                                  ; $dc16 : $af, $ae, $dd, $7f
 	sec                                                  ; $dc1a : $38
 	sbc #$0080.w                                                  ; $dc1b : $e9, $80, $00
 	sta $00121e.l                                                  ; $dc1e : $8f, $1e, $12, $00
 	sta $001220.l                                                  ; $dc22 : $8f, $20, $12, $00
-	lda $7fde3e.l                                                  ; $dc26 : $af, $3e, $de, $7f
+	lda wEntityYs.l                                                  ; $dc26 : $af, $3e, $de, $7f
 	sec                                                  ; $dc2a : $38
 	sbc #$0070.w                                                  ; $dc2b : $e9, $70, $00
 	sta $001226.l                                                  ; $dc2e : $8f, $26, $12, $00
@@ -13779,7 +13779,7 @@ br_00_dd06:
 	sta $7fd72c.l, X                                                  ; $dd12 : $9f, $2c, $d7, $7f
 	ldx $a7                                                  ; $dd16 : $a6, $a7
 	lda #$01.b                                                  ; $dd18 : $a9, $01
-	sta $7fe216.l, X                                                  ; $dd1a : $9f, $16, $e2, $7f
+	sta wEntitySizeTypes.l, X                                                  ; $dd1a : $9f, $16, $e2, $7f
 	lda $9f                                                  ; $dd1e : $a5, $9f
 	sta $06ba.w, X                                                  ; $dd20 : $9d, $ba, $06
 	sta $8f                                                  ; $dd23 : $85, $8f
@@ -13789,7 +13789,7 @@ br_00_dd06:
 	jsr $83a746.l                                                  ; $dd2c : $22, $46, $a7, $83
 	ldx $a7                                                  ; $dd30 : $a6, $a7
 	lda $23                                                  ; $dd32 : $a5, $23
-	sta $0692.w, X                                                  ; $dd34 : $9d, $92, $06
+	sta wEntityMovementDirs.w, X                                                  ; $dd34 : $9d, $92, $06
 	lda $22                                                  ; $dd37 : $a5, $22
 	sta $7fe4de.l, X                                                  ; $dd39 : $9f, $de, $e4, $7f
 	lda #$01.b                                                  ; $dd3d : $a9, $01
@@ -14013,7 +14013,7 @@ br_00_dec4:
 	jsr $83d350.l                                                  ; $df06 : $22, $50, $d3, $83
 	jsr Call_00_e8b9.w                                                  ; $df0a : $20, $b9, $e8
 	ldx $a7                                                  ; $df0d : $a6, $a7
-	sta $7fe316.l, X                                                  ; $df0f : $9f, $16, $e3, $7f
+	sta wEntityPriorityAttrBits.l, X                                                  ; $df0f : $9f, $16, $e3, $7f
 	jsr Call_00_ea50.w                                                  ; $df13 : $20, $50, $ea
 	brl br_00_cc35                                                  ; $df16 : $82, $1c, $ed
 
@@ -14031,7 +14031,7 @@ br_00_df25:
 	jsr $83d350.l                                                  ; $df2d : $22, $50, $d3, $83
 	ldx $a7                                                  ; $df31 : $a6, $a7
 	jsr Call_00_e8b9.w                                                  ; $df33 : $20, $b9, $e8
-	sta $7fe316.l, X                                                  ; $df36 : $9f, $16, $e3, $7f
+	sta wEntityPriorityAttrBits.l, X                                                  ; $df36 : $9f, $16, $e3, $7f
 	jsr Call_00_ea50.w                                                  ; $df3a : $20, $50, $ea
 	brl br_00_cc35                                                  ; $df3d : $82, $f5, $ec
 
@@ -14045,7 +14045,7 @@ br_00_df25:
 	jsr Call_00_dfc2.w                                                  ; $df51 : $20, $c2, $df
 	jsr Call_00_e8b9.w                                                  ; $df54 : $20, $b9, $e8
 	ldx $a7                                                  ; $df57 : $a6, $a7
-	sta $7fe316.l, X                                                  ; $df59 : $9f, $16, $e3, $7f
+	sta wEntityPriorityAttrBits.l, X                                                  ; $df59 : $9f, $16, $e3, $7f
 	phy                                                  ; $df5d : $5a
 	jsr $83f5ea.l                                                  ; $df5e : $22, $ea, $f5, $83
 	ply                                                  ; $df62 : $7a
@@ -14117,7 +14117,7 @@ Call_00_dfc2:
 	lda $23                                                  ; $dfe9 : $a5, $23
 	bmi br_00_dff0                                                  ; $dfeb : $30, $03
 
-	sta $0692.w, X                                                  ; $dfed : $9d, $92, $06
+	sta wEntityMovementDirs.w, X                                                  ; $dfed : $9d, $92, $06
 
 br_00_dff0:
 	lda $0736.w, X                                                  ; $dff0 : $bd, $36, $07
@@ -15279,7 +15279,7 @@ br_00_e816:
 	sta $8f                                                  ; $e81a : $85, $8f
 	lda $06e2.w                                                  ; $e81c : $ad, $e2, $06
 	sta $91                                                  ; $e81f : $85, $91
-	lda $0692.w                                                  ; $e821 : $ad, $92, $06
+	lda wEntityMovementDirs.w                                                  ; $e821 : $ad, $92, $06
 	jsr $83fb12.l                                                  ; $e824 : $22, $12, $fb, $83
 	ldx #$20.b                                                  ; $e828 : $a2, $20
 	.db $00                                                  ; $e82a : $00
@@ -16361,7 +16361,7 @@ br_00_ef34:
 	sta WRMPYB.w                                                  ; $ef44 : $8d, $03, $42
 	tyx                                                  ; $ef47 : $bb
 	stz $9a                                                  ; $ef48 : $64, $9a
-	lda $7fe216.l, X                                                  ; $ef4a : $bf, $16, $e2, $7f
+	lda wEntitySizeTypes.l, X                                                  ; $ef4a : $bf, $16, $e2, $7f
 	cmp #$02.b                                                  ; $ef4e : $c9, $02
 	bcc br_00_ef65                                                  ; $ef50 : $90, $13
 
@@ -16579,7 +16579,7 @@ br_00_f0a9:
 	sta $7fd80c.l, X                                                  ; $f0c7 : $9f, $0c, $d8, $7f
 	sty $8b                                                  ; $f0cb : $84, $8b
 	tax                                                  ; $f0cd : $aa
-	lda $83abf4.l, X                                                  ; $f0ce : $bf, $f4, $ab, $83
+	lda OamSlotsPerEntitySizeType.l, X                                                  ; $f0ce : $bf, $f4, $ab, $83
 	sep #IDX_8                                                  ; $f0d2 : $e2, $10
 	jsr $83ab7c.l                                                  ; $f0d4 : $22, $7c, $ab, $83
 	rep #IDX_8                                                  ; $f0d8 : $c2, $10
