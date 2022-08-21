@@ -122,7 +122,10 @@ wOam: ; $0100
     ds $100
 
 w0200:
-    ds $55a-$200
+    ds $559-$200
+
+wCounterTilSlowlyUpdatingRNG: ; $0559
+    db
 
 wJoy1StickyCounter: ; $055a
     dw

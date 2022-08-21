@@ -177,7 +177,7 @@ br_04_8144:
 	bcs br_04_8192                                                  ; $814f : $b0, $41
 
 	lda $7fd07f.l                                                  ; $8151 : $af, $7f, $d0, $7f
-	jsr $808299.l                                                  ; $8155 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $8155 : $22, $99, $82, $80
 	sta $54                                                  ; $8159 : $85, $54
 	stz $55                                                  ; $815b : $64, $55
 	tdc                                                  ; $815d : $7b
@@ -188,7 +188,7 @@ br_04_8144:
 	sbc $54                                                  ; $8166 : $e5, $54
 	sta $54                                                  ; $8168 : $85, $54
 	lda #$0002.w                                                  ; $816a : $a9, $02, $00
-	jsr $808299.l                                                  ; $816d : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $816d : $22, $99, $82, $80
 	ora #$0000.w                                                  ; $8171 : $09, $00, $00
 	rep #ACCU_8                                                  ; $8174 : $c2, $20
 	beq br_04_8185                                                  ; $8176 : $f0, $0d
@@ -5932,7 +5932,7 @@ br_04_a7e6:
 
 br_04_a7f4:
 	lda #$0064.w                                                  ; $a7f4 : $a9, $64, $00
-	jsr $808299.l                                                  ; $a7f7 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $a7f7 : $22, $99, $82, $80
 	cmp #$0046.w                                                  ; $a7fb : $c9, $46, $00
 	bmi br_04_a810                                                  ; $a7fe : $30, $10
 
@@ -5961,7 +5961,7 @@ br_04_a819:
 	bmi br_04_a83d                                                  ; $a825 : $30, $16
 
 	lda #$0064.w                                                  ; $a827 : $a9, $64, $00
-	jsr $808299.l                                                  ; $a82a : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $a82a : $22, $99, $82, $80
 	cmp #$0000.w                                                  ; $a82e : $c9, $00, $00
 	beq br_04_a842                                                  ; $a831 : $f0, $0f
 
@@ -7203,7 +7203,7 @@ Call_04_b027:
 	sta $22                                                  ; $b08f : $85, $22
 	jsr Call_04_b11e.w                                                  ; $b091 : $20, $1e, $b1
 	lda #$0002.w                                                  ; $b094 : $a9, $02, $00
-	jsr $808299.l                                                  ; $b097 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $b097 : $22, $99, $82, $80
 	ldx #$b785.w                                                  ; $b09b : $a2, $85, $b7
 	stx $08                                                  ; $b09e : $86, $08
 	ldx #$fffe.w                                                  ; $b0a0 : $a2, $fe, $ff
@@ -7911,12 +7911,12 @@ Call_04_b4d9:
 
 br_04_b4de:
 	lda #$0034.w                                                  ; $b4de : $a9, $34, $00
-	jsr $808299.l                                                  ; $b4e1 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $b4e1 : $22, $99, $82, $80
 	clc                                                  ; $b4e5 : $18
 	rol                                                  ; $b4e6 : $2a
 	tax                                                  ; $b4e7 : $aa
 	lda #$0034.w                                                  ; $b4e8 : $a9, $34, $00
-	jsr $808299.l                                                  ; $b4eb : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $b4eb : $22, $99, $82, $80
 	clc                                                  ; $b4ef : $18
 	rol                                                  ; $b4f0 : $2a
 	tay                                                  ; $b4f1 : $a8
@@ -9305,7 +9305,7 @@ br_04_bdde:
 	ror                                                  ; $bdf6 : $6a
 	ror                                                  ; $bdf7 : $6a
 	ror                                                  ; $bdf8 : $6a
-	jsr $808299.l                                                  ; $bdf9 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $bdf9 : $22, $99, $82, $80
 	clc                                                  ; $bdfd : $18
 	adc $00                                                  ; $bdfe : $65, $00
 	cmp $711f.w                                                  ; $be00 : $cd, $1f, $71
@@ -9338,7 +9338,7 @@ br_04_be15:
 	rol                                                  ; $be2c : $2a
 	sta $00                                                  ; $be2d : $85, $00
 	lda $711f.w                                                  ; $be2f : $ad, $1f, $71
-	jsr $808299.l                                                  ; $be32 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $be32 : $22, $99, $82, $80
 	clc                                                  ; $be36 : $18
 	adc $00                                                  ; $be37 : $65, $00
 	sta $00                                                  ; $be39 : $85, $00
@@ -9365,7 +9365,7 @@ br_04_be48:
 	rol                                                  ; $be5a : $2a
 	sta $00                                                  ; $be5b : $85, $00
 	lda #$0064.w                                                  ; $be5d : $a9, $64, $00
-	jsr $808299.l                                                  ; $be60 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $be60 : $22, $99, $82, $80
 	clc                                                  ; $be64 : $18
 	adc $00                                                  ; $be65 : $65, $00
 	cmp $711f.w                                                  ; $be67 : $cd, $1f, $71
@@ -9385,7 +9385,7 @@ br_04_be78:
 	beq br_04_be6c                                                  ; $be7e : $f0, $ec
 
 	lda $711f.w                                                  ; $be80 : $ad, $1f, $71
-	jsr $808299.l                                                  ; $be83 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $be83 : $22, $99, $82, $80
 	sta $00                                                  ; $be87 : $85, $00
 	ldy $713d.w                                                  ; $be89 : $ac, $3d, $71
 	cpy #$0002.w                                                  ; $be8c : $c0, $02, $00
@@ -9542,7 +9542,7 @@ br_04_bf7b:
 	bne br_04_bf91                                                  ; $bf83 : $d0, $0c
 
 	lda #$0064.w                                                  ; $bf85 : $a9, $64, $00
-	jsr $808299.l                                                  ; $bf88 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $bf88 : $22, $99, $82, $80
 	cmp $711f.w                                                  ; $bf8c : $cd, $1f, $71
 	bmi br_04_bfc8                                                  ; $bf8f : $30, $37
 
@@ -9562,7 +9562,7 @@ br_04_bf91:
 	rol                                                  ; $bfa5 : $2a
 	sta $00                                                  ; $bfa6 : $85, $00
 	lda $711f.w                                                  ; $bfa8 : $ad, $1f, $71
-	jsr $808299.l                                                  ; $bfab : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $bfab : $22, $99, $82, $80
 	clc                                                  ; $bfaf : $18
 	adc $00                                                  ; $bfb0 : $65, $00
 	sta $00                                                  ; $bfb2 : $85, $00
@@ -12854,11 +12854,11 @@ br_04_d5d7:
 	and #$00ff.w                                                  ; $d5f0 : $29, $ff, $00
 	sta $22                                                  ; $d5f3 : $85, $22
 	lda #$0004.w                                                  ; $d5f5 : $a9, $04, $00
-	jsr $808299.l                                                  ; $d5f8 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d5f8 : $22, $99, $82, $80
 	ina                                                  ; $d5fc : $1a
 	tay                                                  ; $d5fd : $a8
 	lda #$0002.w                                                  ; $d5fe : $a9, $02, $00
-	jsr $808299.l                                                  ; $d601 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d601 : $22, $99, $82, $80
 	dea                                                  ; $d605 : $3a
 	bne br_04_d60b                                                  ; $d606 : $d0, $03
 
@@ -12875,10 +12875,10 @@ br_04_d614:
 	tya                                                  ; $d614 : $98
 	sta $703c.w, X                                                  ; $d615 : $9d, $3c, $70
 	lda #$0010.w                                                  ; $d618 : $a9, $10, $00
-	jsr $808299.l                                                  ; $d61b : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d61b : $22, $99, $82, $80
 	tay                                                  ; $d61f : $a8
 	lda #$0007.w                                                  ; $d620 : $a9, $07, $00
-	jsr $808299.l                                                  ; $d623 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d623 : $22, $99, $82, $80
 	dey                                                  ; $d627 : $88
 	bpl br_04_d636                                                  ; $d628 : $10, $0c
 
@@ -13085,14 +13085,14 @@ Call_04_d765:
 
 br_04_d770:
 	lda #$0060.w                                                  ; $d770 : $a9, $60, $00
-	jsr $808299.l                                                  ; $d773 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d773 : $22, $99, $82, $80
 	sta $7000.w, Y                                                  ; $d777 : $99, $00, $70
 	lda #$0005.w                                                  ; $d77a : $a9, $05, $00
-	jsr $808299.l                                                  ; $d77d : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d77d : $22, $99, $82, $80
 	ina                                                  ; $d781 : $1a
 	tax                                                  ; $d782 : $aa
 	lda #$0001.w                                                  ; $d783 : $a9, $01, $00
-	jsr $808299.l                                                  ; $d786 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d786 : $22, $99, $82, $80
 	dea                                                  ; $d78a : $3a
 	bne br_04_d790                                                  ; $d78b : $d0, $03
 
@@ -13109,10 +13109,10 @@ br_04_d799:
 	txa                                                  ; $d799 : $8a
 	sta $703c.w, Y                                                  ; $d79a : $99, $3c, $70
 	lda #$0010.w                                                  ; $d79d : $a9, $10, $00
-	jsr $808299.l                                                  ; $d7a0 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d7a0 : $22, $99, $82, $80
 	tax                                                  ; $d7a4 : $aa
 	lda #$0007.w                                                  ; $d7a5 : $a9, $07, $00
-	jsr $808299.l                                                  ; $d7a8 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d7a8 : $22, $99, $82, $80
 	dex                                                  ; $d7ac : $ca
 	bpl br_04_d7bb                                                  ; $d7ad : $10, $0c
 
@@ -13239,12 +13239,12 @@ Call_04_d860:
 
 br_04_d868:
 	lda #$0019.w                                                  ; $d868 : $a9, $19, $00
-	jsr $808299.l                                                  ; $d86b : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d86b : $22, $99, $82, $80
 	clc                                                  ; $d86f : $18
 	rol                                                  ; $d870 : $2a
 	tax                                                  ; $d871 : $aa
 	lda #$0019.w                                                  ; $d872 : $a9, $19, $00
-	jsr $808299.l                                                  ; $d875 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d875 : $22, $99, $82, $80
 	clc                                                  ; $d879 : $18
 	rol                                                  ; $d87a : $2a
 	tay                                                  ; $d87b : $a8
@@ -13270,12 +13270,12 @@ Call_04_d892:
 
 br_04_d89d:
 	lda #$0019.w                                                  ; $d89d : $a9, $19, $00
-	jsr $808299.l                                                  ; $d8a0 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d8a0 : $22, $99, $82, $80
 	clc                                                  ; $d8a4 : $18
 	rol                                                  ; $d8a5 : $2a
 	tax                                                  ; $d8a6 : $aa
 	lda #$0019.w                                                  ; $d8a7 : $a9, $19, $00
-	jsr $808299.l                                                  ; $d8aa : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d8aa : $22, $99, $82, $80
 	clc                                                  ; $d8ae : $18
 	rol                                                  ; $d8af : $2a
 	tay                                                  ; $d8b0 : $a8
@@ -13299,12 +13299,12 @@ br_04_d8cb:
 	bpl br_04_d8cb                                                  ; $d8d1 : $10, $f8
 
 	lda #$001e.w                                                  ; $d8d3 : $a9, $1e, $00
-	jsr $808299.l                                                  ; $d8d6 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d8d6 : $22, $99, $82, $80
 	clc                                                  ; $d8da : $18
 	rol                                                  ; $d8db : $2a
 	sta $71fe.w                                                  ; $d8dc : $8d, $fe, $71
 	lda #$003c.w                                                  ; $d8df : $a9, $3c, $00
-	jsr $808299.l                                                  ; $d8e2 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d8e2 : $22, $99, $82, $80
 	clc                                                  ; $d8e6 : $18
 	rol                                                  ; $d8e7 : $2a
 	sta $7200.w                                                  ; $d8e8 : $8d, $00, $72
@@ -13796,7 +13796,7 @@ br_04_dc34:
 
 
 Call_04_dc55:
-	jsr $808299.l                                                  ; $dc55 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $dc55 : $22, $99, $82, $80
 	jsr Call_04_e9b1.w                                                  ; $dc59 : $20, $b1, $e9
 	jsr $9f1a.w                                                  ; $dc5c : $20, $1a, $9f
 	rts                                                  ; $dc5f : $60
@@ -13857,7 +13857,7 @@ br_04_dcad:
 	tsb $7170.w                                                  ; $dcb6 : $0c, $70, $71
 	lda #$06.b                                                  ; $dcb9 : $a9, $06
 	.db $00                                                  ; $dcbb : $00
-	jsr $808299.l                                                  ; $dcbc : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $dcbc : $22, $99, $82, $80
 	clc                                                  ; $dcc0 : $18
 	adc #$04.b                                                  ; $dcc1 : $69, $04
 	.db $00                                                  ; $dcc3 : $00
@@ -13894,7 +13894,7 @@ br_04_dcd9:
 
 	lda #$0c.b                                                  ; $dcf1 : $a9, $0c
 	.db $00                                                  ; $dcf3 : $00
-	jsr $808299.l                                                  ; $dcf4 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $dcf4 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $dcf8 : $c9, $00
 	.db $00                                                  ; $dcfa : $00
 	bne br_04_dd10                                                  ; $dcfb : $d0, $13
@@ -13992,7 +13992,7 @@ br_04_dd90:
 	jsr Call_04_de6e.w                                                  ; $dd90 : $20, $6e, $de
 	lda #$04.b                                                  ; $dd93 : $a9, $04
 	.db $00                                                  ; $dd95 : $00
-	jsr $808299.l                                                  ; $dd96 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $dd96 : $22, $99, $82, $80
 	sta $02                                                  ; $dd9a : $85, $02
 	stz $04                                                  ; $dd9c : $64, $04
 	lda #$02.b                                                  ; $dd9e : $a9, $02
@@ -14270,14 +14270,14 @@ br_04_df17:
 
 	lda #$05.b                                                  ; $df29 : $a9, $05
 	.db $00                                                  ; $df2b : $00
-	jsr $808299.l                                                  ; $df2c : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $df2c : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $df30 : $c9, $00
 	.db $00                                                  ; $df32 : $00
 	bne br_04_df96                                                  ; $df33 : $d0, $61
 
 	lda #$07.b                                                  ; $df35 : $a9, $07
 	.db $00                                                  ; $df37 : $00
-	jsr $808299.l                                                  ; $df38 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $df38 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $df3c : $c9, $00
 	.db $00                                                  ; $df3e : $00
 	beq br_04_df7b                                                  ; $df3f : $f0, $3a
@@ -14295,7 +14295,7 @@ br_04_df17:
 br_04_df4d:
 	lda #$06.b                                                  ; $df4d : $a9, $06
 	.db $00                                                  ; $df4f : $00
-	jsr $808299.l                                                  ; $df50 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $df50 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $df54 : $c9, $00
 	.db $00                                                  ; $df56 : $00
 	beq br_04_df90                                                  ; $df57 : $f0, $37
@@ -14306,7 +14306,7 @@ br_04_df4d:
 
 	lda #$03.b                                                  ; $df5e : $a9, $03
 	.db $00                                                  ; $df60 : $00
-	jsr $808299.l                                                  ; $df61 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $df61 : $22, $99, $82, $80
 	cmp #$01.b                                                  ; $df65 : $c9, $01
 	.db $00                                                  ; $df67 : $00
 	bmi br_04_df71                                                  ; $df68 : $30, $07
@@ -14352,7 +14352,7 @@ br_04_df96:
 	rol                                                  ; $df9a : $2a
 	tax                                                  ; $df9b : $aa
 	lda $84f2f0.l, X                                                  ; $df9c : $bf, $f0, $f2, $84
-	jsr $808299.l                                                  ; $dfa0 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $dfa0 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $dfa4 : $c9, $00
 	.db $00                                                  ; $dfa6 : $00
 	bne br_04_e022                                                  ; $dfa7 : $d0, $79
@@ -14361,7 +14361,7 @@ br_04_df96:
 	.db $00                                                  ; $dfab : $00
 	sec                                                  ; $dfac : $38
 	sbc $7184.w                                                  ; $dfad : $ed, $84, $71
-	jsr $808299.l                                                  ; $dfb0 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $dfb0 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $dfb4 : $c9, $00
 	.db $00                                                  ; $dfb6 : $00
 	bne br_04_e022                                                  ; $dfb7 : $d0, $69
@@ -14373,7 +14373,7 @@ br_04_df96:
 
 	lda #$02.b                                                  ; $dfc1 : $a9, $02
 	.db $00                                                  ; $dfc3 : $00
-	jsr $808299.l                                                  ; $dfc4 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $dfc4 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $dfc8 : $c9, $00
 	.db $00                                                  ; $dfca : $00
 	bne br_04_e022                                                  ; $dfcb : $d0, $55
@@ -14393,7 +14393,7 @@ br_04_dfd0:
 
 	lda #$03.b                                                  ; $dfe4 : $a9, $03
 	.db $00                                                  ; $dfe6 : $00
-	jsr $808299.l                                                  ; $dfe7 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $dfe7 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $dfeb : $c9, $00
 	.db $00                                                  ; $dfed : $00
 	beq br_04_e01f                                                  ; $dfee : $f0, $2f
@@ -14408,7 +14408,7 @@ br_04_dff5:
 
 	lda #$05.b                                                  ; $dffa : $a9, $05
 	.db $00                                                  ; $dffc : $00
-	jsr $808299.l                                                  ; $dffd : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $dffd : $22, $99, $82, $80
 	cmp #$02.b                                                  ; $e001 : $c9, $02
 	.db $00                                                  ; $e003 : $00
 	bmi br_04_e01f                                                  ; $e004 : $30, $19
@@ -14423,7 +14423,7 @@ br_04_e00b:
 
 	lda #$05.b                                                  ; $e010 : $a9, $05
 	.db $00                                                  ; $e012 : $00
-	jsr $808299.l                                                  ; $e013 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e013 : $22, $99, $82, $80
 	cmp #$02.b                                                  ; $e017 : $c9, $02
 	.db $00                                                  ; $e019 : $00
 	bmi br_04_e01f                                                  ; $e01a : $30, $03
@@ -14439,7 +14439,7 @@ br_04_e022:
 	rol                                                  ; $e026 : $2a
 	tax                                                  ; $e027 : $aa
 	lda $84f2fc.l, X                                                  ; $e028 : $bf, $fc, $f2, $84
-	jsr $808299.l                                                  ; $e02c : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e02c : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $e030 : $c9, $00
 
 br_04_e032:
@@ -14450,7 +14450,7 @@ br_04_e032:
 	.db $00                                                  ; $e037 : $00
 	sec                                                  ; $e038 : $38
 	sbc $7184.w                                                  ; $e039 : $ed, $84, $71
-	jsr $808299.l                                                  ; $e03c : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e03c : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $e040 : $c9, $00
 	.db $00                                                  ; $e042 : $00
 	bne br_04_e098                                                  ; $e043 : $d0, $53
@@ -14462,7 +14462,7 @@ br_04_e032:
 
 	lda #$02.b                                                  ; $e04d : $a9, $02
 	.db $00                                                  ; $e04f : $00
-	jsr $808299.l                                                  ; $e050 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e050 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $e054 : $c9, $00
 	.db $00                                                  ; $e056 : $00
 	bne br_04_e098                                                  ; $e057 : $d0, $3f
@@ -14482,7 +14482,7 @@ br_04_e05c:
 
 	lda #$03.b                                                  ; $e070 : $a9, $03
 	.db $00                                                  ; $e072 : $00
-	jsr $808299.l                                                  ; $e073 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e073 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $e077 : $c9, $00
 	.db $00                                                  ; $e079 : $00
 	beq br_04_e095                                                  ; $e07a : $f0, $19
@@ -14497,7 +14497,7 @@ br_04_e081:
 
 	lda #$0a.b                                                  ; $e086 : $a9, $0a
 	.db $00                                                  ; $e088 : $00
-	jsr $808299.l                                                  ; $e089 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e089 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $e08d : $c9, $00
 	.db $00                                                  ; $e08f : $00
 	bne br_04_e095                                                  ; $e090 : $d0, $03
@@ -14515,7 +14515,7 @@ br_04_e098:
 
 	lda #$96.b                                                  ; $e0a0 : $a9, $96
 	.db $00                                                  ; $e0a2 : $00
-	jsr $808299.l                                                  ; $e0a3 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e0a3 : $22, $99, $82, $80
 	cmp #$04.b                                                  ; $e0a7 : $c9, $04
 	.db $00                                                  ; $e0a9 : $00
 	bne br_04_e0e4                                                  ; $e0aa : $d0, $38
@@ -14524,7 +14524,7 @@ br_04_e098:
 	.db $00                                                  ; $e0ae : $00
 	sec                                                  ; $e0af : $38
 	sbc $7184.w                                                  ; $e0b0 : $ed, $84, $71
-	jsr $808299.l                                                  ; $e0b3 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e0b3 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $e0b7 : $c9, $00
 	.db $00                                                  ; $e0b9 : $00
 	bne br_04_e0e4                                                  ; $e0ba : $d0, $28
@@ -14532,7 +14532,7 @@ br_04_e098:
 br_04_e0bc:
 	lda #$04.b                                                  ; $e0bc : $a9, $04
 	.db $00                                                  ; $e0be : $00
-	jsr $808299.l                                                  ; $e0bf : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e0bf : $22, $99, $82, $80
 	tax                                                  ; $e0c3 : $aa
 	lda #$0a.b                                                  ; $e0c4 : $a9, $0a
 	.db $00                                                  ; $e0c6 : $00
@@ -14559,7 +14559,7 @@ br_04_e0d9:
 br_04_e0e4:
 	lda #$08.b                                                  ; $e0e4 : $a9, $08
 	.db $00                                                  ; $e0e6 : $00
-	jsr $808299.l                                                  ; $e0e7 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e0e7 : $22, $99, $82, $80
 	cmp #$04.b                                                  ; $e0eb : $c9, $04
 	.db $00                                                  ; $e0ed : $00
 	bne br_04_e15d                                                  ; $e0ee : $d0, $6d
@@ -14568,7 +14568,7 @@ br_04_e0e4:
 	.db $00                                                  ; $e0f2 : $00
 	sec                                                  ; $e0f3 : $38
 	sbc $7184.w                                                  ; $e0f4 : $ed, $84, $71
-	jsr $808299.l                                                  ; $e0f7 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e0f7 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $e0fb : $c9, $00
 	.db $00                                                  ; $e0fd : $00
 	bne br_04_e15d                                                  ; $e0fe : $d0, $5d
@@ -14579,14 +14579,14 @@ br_04_e0e4:
 	sta $716e.w                                                  ; $e106 : $8d, $6e, $71
 	lda #$04.b                                                  ; $e109 : $a9, $04
 	.db $00                                                  ; $e10b : $00
-	jsr $808299.l                                                  ; $e10c : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e10c : $22, $99, $82, $80
 	cmp #$02.b                                                  ; $e110 : $c9, $02
 	.db $00                                                  ; $e112 : $00
 	bne br_04_e121                                                  ; $e113 : $d0, $0c
 
 	lda #$fa.b                                                  ; $e115 : $a9, $fa
 	.db $00                                                  ; $e117 : $00
-	jsr $808299.l                                                  ; $e118 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e118 : $22, $99, $82, $80
 	cmp #$64.b                                                  ; $e11c : $c9, $64
 	.db $00                                                  ; $e11e : $00
 	beq br_04_e0bc                                                  ; $e11f : $f0, $9b
@@ -14594,14 +14594,14 @@ br_04_e0e4:
 br_04_e121:
 	lda #$02.b                                                  ; $e121 : $a9, $02
 	.db $00                                                  ; $e123 : $00
-	jsr $808299.l                                                  ; $e124 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e124 : $22, $99, $82, $80
 	clc                                                  ; $e128 : $18
 	adc #$03.b                                                  ; $e129 : $69, $03
 	.db $00                                                  ; $e12b : $00
 	sta $716c.w                                                  ; $e12c : $8d, $6c, $71
 	lda #$32.b                                                  ; $e12f : $a9, $32
 	.db $00                                                  ; $e131 : $00
-	jsr $808299.l                                                  ; $e132 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e132 : $22, $99, $82, $80
 	cmp #$04.b                                                  ; $e136 : $c9, $04
 	.db $00                                                  ; $e138 : $00
 	bne br_04_e143                                                  ; $e139 : $d0, $08
@@ -14614,14 +14614,14 @@ br_04_e121:
 br_04_e143:
 	lda #$32.b                                                  ; $e143 : $a9, $32
 	.db $00                                                  ; $e145 : $00
-	jsr $808299.l                                                  ; $e146 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e146 : $22, $99, $82, $80
 	cmp #$04.b                                                  ; $e14a : $c9, $04
 	.db $00                                                  ; $e14c : $00
 	bne br_04_e15d                                                  ; $e14d : $d0, $0e
 
 	lda #$02.b                                                  ; $e14f : $a9, $02
 	.db $00                                                  ; $e151 : $00
-	jsr $808299.l                                                  ; $e152 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e152 : $22, $99, $82, $80
 	clc                                                  ; $e156 : $18
 	adc #$05.b                                                  ; $e157 : $69, $05
 	.db $00                                                  ; $e159 : $00
@@ -15185,7 +15185,7 @@ br_04_e51b:
 	sta $71bc.w                                                  ; $e530 : $8d, $bc, $71
 	clc                                                  ; $e533 : $18
 	ror                                                  ; $e534 : $6a
-	jsr $808299.l                                                  ; $e535 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e535 : $22, $99, $82, $80
 	clc                                                  ; $e539 : $18
 	adc #$0004.w                                                  ; $e53a : $69, $04, $00
 	sta $7176.w                                                  ; $e53d : $8d, $76, $71
@@ -15244,7 +15244,7 @@ Call_04_e5b5:
 	lda #$000a.w                                                  ; $e5bb : $a9, $0a, $00
 	sta $71be.w                                                  ; $e5be : $8d, $be, $71
 	lda $04                                                  ; $e5c1 : $a5, $04
-	jsr $808299.l                                                  ; $e5c3 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $e5c3 : $22, $99, $82, $80
 	clc                                                  ; $e5c7 : $18
 	adc $02                                                  ; $e5c8 : $65, $02
 	sta $02                                                  ; $e5ca : $85, $02
@@ -16333,17 +16333,17 @@ Call_04_ec4f:
 	php                                                  ; $ec4f : $08
 	rep #ACCU_8                                                  ; $ec50 : $c2, $20
 	lda #$0015.w                                                  ; $ec52 : $a9, $15, $00
-	jsr $808299.l                                                  ; $ec55 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $ec55 : $22, $99, $82, $80
 	clc                                                  ; $ec59 : $18
 	adc #$0005.w                                                  ; $ec5a : $69, $05, $00
 	sta $7000.w                                                  ; $ec5d : $8d, $00, $70
 	lda #$0015.w                                                  ; $ec60 : $a9, $15, $00
-	jsr $808299.l                                                  ; $ec63 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $ec63 : $22, $99, $82, $80
 	clc                                                  ; $ec67 : $18
 	adc #$0005.w                                                  ; $ec68 : $69, $05, $00
 	sta $7002.w                                                  ; $ec6b : $8d, $02, $70
 	lda #$0015.w                                                  ; $ec6e : $a9, $15, $00
-	jsr $808299.l                                                  ; $ec71 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $ec71 : $22, $99, $82, $80
 	clc                                                  ; $ec75 : $18
 	adc #$0005.w                                                  ; $ec76 : $69, $05, $00
 	sta $7004.w                                                  ; $ec79 : $8d, $04, $70
@@ -16468,7 +16468,7 @@ br_04_ed30:
 	beq br_04_ed6c                                                  ; $ed3d : $f0, $2d
 
 	lda #$0005.w                                                  ; $ed3f : $a9, $05, $00
-	jsr $808299.l                                                  ; $ed42 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $ed42 : $22, $99, $82, $80
 	cmp #$0002.w                                                  ; $ed46 : $c9, $02, $00
 	bpl br_04_ed6c                                                  ; $ed49 : $10, $21
 
@@ -17567,7 +17567,7 @@ br_04_f471:
 br_04_f482:
 	jsr Call_04_e92a.w                                                  ; $f482 : $20, $2a, $e9
 	lda #$000a.w                                                  ; $f485 : $a9, $0a, $00
-	jsr $808299.l                                                  ; $f488 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $f488 : $22, $99, $82, $80
 	clc                                                  ; $f48c : $18
 	adc #$000a.w                                                  ; $f48d : $69, $0a, $00
 	tay                                                  ; $f490 : $a8
@@ -17612,7 +17612,7 @@ br_04_f4ce:
 	tax                                                  ; $f4d3 : $aa
 	lda #$05.b                                                  ; $f4d4 : $a9, $05
 	.db $00                                                  ; $f4d6 : $00
-	jsr $808299.l                                                  ; $f4d7 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $f4d7 : $22, $99, $82, $80
 	clc                                                  ; $f4db : $18
 	adc #$05.b                                                  ; $f4dc : $69, $05
 	.db $00                                                  ; $f4de : $00

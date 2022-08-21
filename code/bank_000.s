@@ -387,7 +387,8 @@ br_00_81fb:
 	rtl                                                  ; $8298 : $6b
 
 
-Call_00_8299:
+; A -
+AequRNGtimesA:
 	phb                                                  ; $8299 : $8b
 	phk                                                  ; $829a : $4b
 	plb                                                  ; $829b : $ab
@@ -396,16 +397,19 @@ Call_00_8299:
 	php                                                  ; $829e : $08
 	sep #ACCU_8|IDX_8                                                  ; $829f : $e2, $30
 	xba                                                  ; $82a1 : $eb
-	ldx $0559.w                                                  ; $82a2 : $ae, $59, $05
+
+; check counter to updating RNG
+	ldx wCounterTilSlowlyUpdatingRNG.w                                                  ; $82a2 : $ae, $59, $05
 	inx                                                  ; $82a5 : $e8
 	cpx #$37.b                                                  ; $82a6 : $e0, $37
-	bcc br_00_82af                                                  ; $82a8 : $90, $05
+	bcc +                                                  ; $82a8 : $90, $05
 
-	jsr Call_00_832d.w                                                  ; $82aa : $20, $2d, $83
+	jsr UpdateRNGvars.w                                                  ; $82aa : $20, $2d, $83
 	ldx #$00.b                                                  ; $82ad : $a2, $00
 
-br_00_82af:
-	stx $0559.w                                                  ; $82af : $8e, $59, $05
++	stx wCounterTilSlowlyUpdatingRNG.w                                                  ; $82af : $8e, $59, $05
+
+; mult orig A with rng()
 	xba                                                  ; $82b2 : $eb
 	sta WRMPYA.w                                                  ; $82b3 : $8d, $02, $42
 	lda $0521.w, X                                                  ; $82b6 : $bd, $21, $05
@@ -427,16 +431,16 @@ br_00_82af:
 	phy                                                  ; $82cb : $5a
 	php                                                  ; $82cc : $08
 	sep #ACCU_8|IDX_8                                                  ; $82cd : $e2, $30
-	ldx $0559.w                                                  ; $82cf : $ae, $59, $05
+	ldx wCounterTilSlowlyUpdatingRNG.w                                                  ; $82cf : $ae, $59, $05
 	inx                                                  ; $82d2 : $e8
 	cpx #$37.b                                                  ; $82d3 : $e0, $37
 	bcc br_00_82dc                                                  ; $82d5 : $90, $05
 
-	jsr Call_00_832d.w                                                  ; $82d7 : $20, $2d, $83
+	jsr UpdateRNGvars.w                                                  ; $82d7 : $20, $2d, $83
 	ldx #$00.b                                                  ; $82da : $a2, $00
 
 br_00_82dc:
-	stx $0559.w                                                  ; $82dc : $8e, $59, $05
+	stx wCounterTilSlowlyUpdatingRNG.w                                                  ; $82dc : $8e, $59, $05
 	lda $0521.w, X                                                  ; $82df : $bd, $21, $05
 	plp                                                  ; $82e2 : $28
 	ply                                                  ; $82e3 : $7a
@@ -481,34 +485,34 @@ br_00_8304:
 	bne br_00_82fa                                                  ; $8318 : $d0, $e0
 
 	lda #$36.b                                                  ; $831a : $a9, $36
-	sta $0559.w                                                  ; $831c : $8d, $59, $05
-	jsr Call_00_832d.w                                                  ; $831f : $20, $2d, $83
-	jsr Call_00_832d.w                                                  ; $8322 : $20, $2d, $83
-	jsr Call_00_832d.w                                                  ; $8325 : $20, $2d, $83
+	sta wCounterTilSlowlyUpdatingRNG.w                                                  ; $831c : $8d, $59, $05
+	jsr UpdateRNGvars.w                                                  ; $831f : $20, $2d, $83
+	jsr UpdateRNGvars.w                                                  ; $8322 : $20, $2d, $83
+	jsr UpdateRNGvars.w                                                  ; $8325 : $20, $2d, $83
 	pla                                                  ; $8328 : $68
 	sta $00                                                  ; $8329 : $85, $00
 	plp                                                  ; $832b : $28
 	rtl                                                  ; $832c : $6b
 
 
-Call_00_832d:
+UpdateRNGvars:
 	ldx #$00.b                                                  ; $832d : $a2, $00
 
-br_00_832f:
+@loop_832f:
 	lda $0521.w, X                                                  ; $832f : $bd, $21, $05
 	eor $0540.w, X                                                  ; $8332 : $5d, $40, $05
 	sta $0521.w, X                                                  ; $8335 : $9d, $21, $05
 	inx                                                  ; $8338 : $e8
 	cpx #$18.b                                                  ; $8339 : $e0, $18
-	bne br_00_832f                                                  ; $833b : $d0, $f2
+	bne @loop_832f                                                  ; $833b : $d0, $f2
 
-br_00_833d:
+@loop_833d:
 	lda $0521.w, X                                                  ; $833d : $bd, $21, $05
 	eor $0509.w, X                                                  ; $8340 : $5d, $09, $05
 	sta $0521.w, X                                                  ; $8343 : $9d, $21, $05
 	inx                                                  ; $8346 : $e8
 	cpx #$37.b                                                  ; $8347 : $e0, $37
-	bne br_00_833d                                                  ; $8349 : $d0, $f2
+	bne @loop_833d                                                  ; $8349 : $d0, $f2
 
 	rts                                                  ; $834b : $60
 
@@ -3017,7 +3021,7 @@ Call_00_914b:
 
 br_00_9166:
 	lda #$ff.b                                                  ; $9166 : $a9, $ff
-	jsr Call_00_8299.l                                                  ; $9168 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $9168 : $22, $99, $82, $80
 	sec                                                  ; $916c : $38
 	sbc [$60], Y                                                  ; $916d : $f7, $60
 	eor #$ff.b                                                  ; $916f : $49, $ff
@@ -3040,7 +3044,7 @@ Call_00_9184:
 	lda #$70.b                                                  ; $918b : $a9, $70
 	sta $62                                                  ; $918d : $85, $62
 	ldy #$0001.w                                                  ; $918f : $a0, $01, $00
-	jsr Call_00_8299.l                                                  ; $9192 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $9192 : $22, $99, $82, $80
 	sta [$60], Y                                                  ; $9196 : $97, $60
 	sta $0558.w                                                  ; $9198 : $8d, $58, $05
 	jsr Call_00_82e7.l                                                  ; $919b : $22, $e7, $82, $80
@@ -3049,7 +3053,7 @@ Call_00_9184:
 
 br_00_91a3:
 	lda #$ff.b                                                  ; $91a3 : $a9, $ff
-	jsr Call_00_8299.l                                                  ; $91a5 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $91a5 : $22, $99, $82, $80
 	clc                                                  ; $91a9 : $18
 	adc $7e3800.l, X                                                  ; $91aa : $7f, $00, $38, $7e
 	sta [$60], Y                                                  ; $91ae : $97, $60
@@ -12856,10 +12860,10 @@ br_00_d547:
 Call_00_d583:
 	sta $54                                                  ; $d583 : $85, $54
 	xba                                                  ; $d585 : $eb
-	jsr Call_00_8299.l                                                  ; $d586 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d586 : $22, $99, $82, $80
 	sta $55                                                  ; $d58a : $85, $55
 	lda #$10.b                                                  ; $d58c : $a9, $10
-	jsr Call_00_8299.l                                                  ; $d58e : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $d58e : $22, $99, $82, $80
 	sta $56                                                  ; $d592 : $85, $56
 	stz $57                                                  ; $d594 : $64, $57
 	tdc                                                  ; $d596 : $7b

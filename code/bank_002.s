@@ -10395,7 +10395,7 @@ Call_02_c554:
 	lda $95ff16.l, X                                                  ; $c55a : $bf, $16, $ff, $95
 	pha                                                  ; $c55e : $48
 	lda $95ff18.l, X                                                  ; $c55f : $bf, $18, $ff, $95
-	jsr $808299.l                                                  ; $c563 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $c563 : $22, $99, $82, $80
 	and #$ff.b                                                  ; $c567 : $29, $ff
 	.db $00                                                  ; $c569 : $00
 	asl                                                  ; $c56a : $0a
@@ -11180,11 +11180,11 @@ Call_02_cab1:
 	tsb $c2                                                  ; $cab4 : $04, $c2
 	jsr $08a9.w                                                  ; $cab6 : $20, $a9, $08
 	.db $00                                                  ; $cab9 : $00
-	jsr $808299.l                                                  ; $caba : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $caba : $22, $99, $82, $80
 	and #$00ff.w                                                  ; $cabe : $29, $ff, $00
 	tay                                                  ; $cac1 : $a8
 	lda #$0008.w                                                  ; $cac2 : $a9, $08, $00
-	jsr $808299.l                                                  ; $cac5 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $cac5 : $22, $99, $82, $80
 	and #$00ff.w                                                  ; $cac9 : $29, $ff, $00
 	tax                                                  ; $cacc : $aa
 	sep #ACCU_8                                                  ; $cacd : $e2, $20
@@ -11279,7 +11279,7 @@ br_02_cb38:
 
 Call_02_cb55:
 	lda #$30.b                                                  ; $cb55 : $a9, $30
-	jsr $808299.l                                                  ; $cb57 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $cb57 : $22, $99, $82, $80
 	sta $00                                                  ; $cb5b : $85, $00
 	lda $1388.w                                                  ; $cb5d : $ad, $88, $13
 	sec                                                  ; $cb60 : $38
@@ -11288,7 +11288,7 @@ Call_02_cb55:
 	adc $00                                                  ; $cb64 : $65, $00
 	sta $1388.w, X                                                  ; $cb66 : $9d, $88, $13
 	lda #$20.b                                                  ; $cb69 : $a9, $20
-	jsr $808299.l                                                  ; $cb6b : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $cb6b : $22, $99, $82, $80
 	sta $00                                                  ; $cb6f : $85, $00
 	lda $13e8.w                                                  ; $cb71 : $ad, $e8, $13
 	sec                                                  ; $cb74 : $38
@@ -11542,12 +11542,12 @@ br_02_cd19:
 
 
 	lda #$08.b                                                  ; $cd1f : $a9, $08
-	jsr $808299.l                                                  ; $cd21 : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $cd21 : $22, $99, $82, $80
 	cmp #$00.b                                                  ; $cd25 : $c9, $00
 	bne br_02_cd3f                                                  ; $cd27 : $d0, $16
 
 	lda #$03.b                                                  ; $cd29 : $a9, $03
-	jsr $808299.l                                                  ; $cd2b : $22, $99, $82, $80
+	jsr AequRNGtimesA.l                                                  ; $cd2b : $22, $99, $82, $80
 	cmp #$03.b                                                  ; $cd2f : $c9, $03
 	bcs br_02_cd3f                                                  ; $cd31 : $b0, $0c
 
