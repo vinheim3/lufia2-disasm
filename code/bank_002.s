@@ -32,7 +32,7 @@ br_02_801c:
 	rtl                                                  ; $8027 : $6b
 
 
-Call_02_8028:
+JumpTable:
 	rep #ACCU_8                                                  ; $8028 : $c2, $20
 	and #$00ff.w                                                  ; $802a : $29, $ff, $00
 	asl                                                  ; $802d : $0a
@@ -1130,7 +1130,7 @@ Call_02_86e5:
 	phx                                                  ; $86e5 : $da
 	sta $17                                                  ; $86e6 : $85, $17
 	jsr Call_02_fc3f.w                                                  ; $86e8 : $20, $3f, $fc
-	bcs br_02_8701                                                  ; $86eb : $b0, $14
+	bcs @done                                                  ; $86eb : $b0, $14
 
 	sta $00                                                  ; $86ed : $85, $00
 	sep #ACCU_8                                                  ; $86ef : $e2, $20
@@ -1141,7 +1141,7 @@ Call_02_86e5:
 	ldx $17                                                  ; $86fb : $a6, $17
 	jsr $808878.l                                                  ; $86fd : $22, $78, $88, $80
 
-br_02_8701:
+@done:
 	plx                                                  ; $8701 : $fa
 	inx                                                  ; $8702 : $e8
 	rts                                                  ; $8703 : $60
@@ -4983,7 +4983,7 @@ Call_02_a0c7:
 	sta $01                                                  ; $a0cc : $85, $01
 	sta $02                                                  ; $a0ce : $85, $02
 	pla                                                  ; $a0d0 : $68
-	jsr Call_02_8028.w                                                  ; $a0d1 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $a0d1 : $20, $28, $80
 	phx                                                  ; $a0d4 : $da
 	ldy #$a0dd.w                                                  ; $a0d5 : $a0, $dd, $a0
 	cpx #$64a0.w                                                  ; $a0d8 : $e0, $a0, $64
@@ -5230,7 +5230,7 @@ Call_02_a318:
 	lda #$20.b                                                  ; $a319 : $a9, $20
 	sta $0564.w                                                  ; $a31b : $8d, $64, $05
 	pla                                                  ; $a31e : $68
-	jsr Call_02_8028.w                                                  ; $a31f : $20, $28, $80
+	jsr JumpTable.w                                                  ; $a31f : $20, $28, $80
 	bit $45a3.w                                                  ; $a322 : $2c, $a3, $45
 	lda $73, S                                                  ; $a325 : $a3, $73
 	lda $d6, S                                                  ; $a327 : $a3, $d6
@@ -5446,7 +5446,7 @@ br_02_a4b4:
 
 
 Call_02_a4be:
-	jsr Call_02_8028.w                                                  ; $a4be : $20, $28, $80
+	jsr JumpTable.w                                                  ; $a4be : $20, $28, $80
 	cli                                                  ; $a4c1 : $58
 	ldx $fe                                                  ; $a4c2 : $a6, $fe
 	lda ($70)                                                  ; $a4c4 : $b2, $70
@@ -7438,7 +7438,7 @@ br_02_b143:
 	bra br_02_b126                                                  ; $b149 : $80, $db
 
 Call_02_b14b:
-	jsr Call_02_8028.w                                                  ; $b14b : $20, $28, $80
+	jsr JumpTable.w                                                  ; $b14b : $20, $28, $80
 	dec $83b1.w                                                  ; $b14e : $ce, $b1, $83
 	lda ($11), Y                                                  ; $b151 : $b1, $11
 	lda [$b5]                                                  ; $b153 : $a7, $b5
@@ -8416,7 +8416,7 @@ br_02_b802:
 	lda #$02.b                                                  ; $b802 : $a9, $02
 	jsr $80953b.l                                                  ; $b804 : $22, $3b, $95, $80
 	lda $14b3.w                                                  ; $b808 : $ad, $b3, $14
-	jsr Call_02_8028.w                                                  ; $b80b : $20, $28, $80
+	jsr JumpTable.w                                                  ; $b80b : $20, $28, $80
 	clc                                                  ; $b80e : $18
 	clv                                                  ; $b80f : $b8
 	bit $b8                                                  ; $b810 : $24, $b8
@@ -9489,11 +9489,11 @@ br_02_bf3f:
 
 br_02_bf4c:
 	lda $14b3.w                                                  ; $bf4c : $ad, $b3, $14
-	jsr Call_02_8028.w                                                  ; $bf4f : $20, $28, $80
+	jsr JumpTable.w                                                  ; $bf4f : $20, $28, $80
 	adc $99bf.w, Y                                                  ; $bf52 : $79, $bf, $99
 	lda $adbfa3.l, X                                                  ; $bf55 : $bf, $a3, $bf, $ad
 	lda ($14, S), Y                                                  ; $bf59 : $b3, $14
-	jsr Call_02_8028.w                                                  ; $bf5b : $20, $28, $80
+	jsr JumpTable.w                                                  ; $bf5b : $20, $28, $80
 	dey                                                  ; $bf5e : $88
 	lda $a3bf99.l, X                                                  ; $bf5f : $bf, $99, $bf, $a3
 	lda $a9bfad.l, X                                                  ; $bf63 : $bf, $ad, $bf, $a9
@@ -9633,7 +9633,7 @@ br_02_c029:
 
 
 Call_02_c044:
-	jsr Call_02_8028.w                                                  ; $c044 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $c044 : $20, $28, $80
 	eor $51c0.w                                                  ; $c047 : $4d, $c0, $51
 	cpy #$c055.w                                                  ; $c04a : $c0, $55, $c0
 	jsr Call_02_c0ac.w                                                  ; $c04d : $20, $ac, $c0
@@ -9753,7 +9753,7 @@ br_02_c0fb:
 
 br_02_c101:
 	lda $14b3.w                                                  ; $c101 : $ad, $b3, $14
-	jsr Call_02_8028.w                                                  ; $c104 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $c104 : $20, $28, $80
 	ora $15c1.w                                                  ; $c107 : $0d, $c1, $15
 	cmp ($1a, X)                                                  ; $c10a : $c1, $1a
 	cmp ($20, X)                                                  ; $c10c : $c1, $20
@@ -11522,7 +11522,7 @@ Call_02_ccfe:
 	and #$00ff.w                                                  ; $cd00 : $29, $ff, $00
 	asl                                                  ; $cd03 : $0a
 	tax                                                  ; $cd04 : $aa
-	lda $8ed8c3.l, X                                                  ; $cd05 : $bf, $c3, $d8, $8e
+	lda Data_e_d8c3.l, X                                                  ; $cd05 : $bf, $c3, $d8, $8e
 	sta $11                                                  ; $cd09 : $85, $11
 	lda $11a4.w                                                  ; $cd0b : $ad, $a4, $11
 	and #$00ff.w                                                  ; $cd0e : $29, $ff, $00
@@ -13531,7 +13531,7 @@ Jump_02_dba9:
 
 
 Call_02_dbc9:
-	jsr Call_02_8028.w                                                  ; $dbc9 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $dbc9 : $20, $28, $80
 	ldy $de                                                  ; $dbcc : $a4, $de
 	eor $df                                                  ; $dbce : $45, $df
 	adc [$e1]                                                  ; $dbd0 : $67, $e1
@@ -13575,7 +13575,7 @@ br_02_dbed:
 
 Call_02_dc10:
 	lda $1544.w                                                  ; $dc10 : $ad, $44, $15
-	jsr Call_02_8028.w                                                  ; $dc13 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $dc13 : $20, $28, $80
 	and [$dc]                                                  ; $dc16 : $27, $dc
 	asl $28dc.w, X                                                  ; $dc18 : $1e, $dc, $28
 	jml [$dc1e.w]                                                  ; $dc1b : $dc, $1e, $dc
@@ -13609,7 +13609,7 @@ br_02_dc46:
 
 
 Call_02_dc49:
-	jsr Call_02_8028.w                                                  ; $dc49 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $dc49 : $20, $28, $80
 	mvn $5a, $dc                                                  ; $dc4c : $54, $dc, $5a
 	jml [$dc60.w]                                                  ; $dc4f : $dc, $60, $dc
 
@@ -13663,7 +13663,7 @@ Call_02_dc8a:
 
 
 Call_02_dca3:
-	jsr Call_02_8028.w                                                  ; $dca3 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $dca3 : $20, $28, $80
 	ldx $c1dc.w                                                  ; $dca6 : $ae, $dc, $c1
 	jml [$dccf.w]                                                  ; $dca9 : $dc, $cf, $dc
 
@@ -13741,7 +13741,7 @@ Call_02_dd18:
 br_02_dd22:
 	sep #ACCU_8                                                  ; $dd22 : $e2, $20
 	lda $1544.w                                                  ; $dd24 : $ad, $44, $15
-	jsr Call_02_8028.w                                                  ; $dd27 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $dd27 : $20, $28, $80
 	and ($dd)                                                  ; $dd2a : $32, $dd
 	eor ($dd, X)                                                  ; $dd2c : $41, $dd
 	.db $50, $dd                                                  ; $dd2e : $50, $dd
@@ -13818,7 +13818,7 @@ Call_02_ddae:
 br_02_ddbb:
 	sep #ACCU_8                                                  ; $ddbb : $e2, $20
 	lda $1544.w                                                  ; $ddbd : $ad, $44, $15
-	jsr Call_02_8028.w                                                  ; $ddc0 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $ddc0 : $20, $28, $80
 	wai                                                  ; $ddc3 : $cb
 	cmp $ddde.w, X                                                  ; $ddc4 : $dd, $de, $dd
 	sbc ($dd), Y                                                  ; $ddc7 : $f1, $dd
@@ -14095,7 +14095,7 @@ br_02_df90:
 	bra br_02_df80                                                  ; $dfa3 : $80, $db
 
 Call_02_dfa5:
-	jsr Call_02_8028.w                                                  ; $dfa5 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $dfa5 : $20, $28, $80
 	bit $2ce0.w                                                  ; $dfa8 : $2c, $e0, $2c
 	cpx #$e0a9.w                                                  ; $dfab : $e0, $a9, $e0
 
@@ -14554,7 +14554,7 @@ br_02_e275:
 
 
 Call_02_e290:
-	jsr Call_02_8028.w                                                  ; $e290 : $20, $28, $80
+	jsr JumpTable.w                                                  ; $e290 : $20, $28, $80
 	and $9d98.w, X                                                  ; $e293 : $3d, $98, $9d
 	tya                                                  ; $e296 : $98
 
@@ -15315,18 +15315,18 @@ Call_02_e729:
 
 Call_02_e746:
 	lda $30                                                  ; $e746 : $a5, $30
-	jsr Call_02_8028.w                                                  ; $e748 : $20, $28, $80
-	eor $7ce7.w, X                                                  ; $e74b : $5d, $e7, $7c
-	sbc [$8d]                                                  ; $e74e : $e7, $8d
-	sbc [$aa]                                                  ; $e750 : $e7, $aa
-	sbc [$0c]                                                  ; $e752 : $e7, $0c
-	inx                                                  ; $e754 : $e8
-	adc ($e8, X)                                                  ; $e755 : $61, $e8
-	tdc                                                  ; $e757 : $7b
-	inx                                                  ; $e758 : $e8
-	tdc                                                  ; $e759 : $7b
-	inx                                                  ; $e75a : $e8
-	sta ($e8, S), Y                                                  ; $e75b : $93, $e8
+	jsr JumpTable.w                                                  ; $e748 : $20, $28, $80
+	.dw $e75d
+	.dw $e77c
+	.dw $e78d
+	.dw $e7aa
+	.dw Func_2_e80c
+	.dw $e861
+	.dw $e87b
+	.dw $e87b
+	.dw $e893
+
+
 	jsr Call_02_e8de.w                                                  ; $e75d : $20, $de, $e8
 	jsr $8ee6ea.l                                                  ; $e760 : $22, $ea, $e6, $8e
 	ldx #$0000.w                                                  ; $e764 : $a2, $00, $00
@@ -15408,6 +15408,7 @@ br_02_e801:
 	rtl                                                  ; $e80b : $6b
 
 
+Func_2_e80c:
 	rep #ACCU_8                                                  ; $e80c : $c2, $20
 	jsr Call_02_f9f2.w                                                  ; $e80e : $20, $f2, $f9
 	bcc br_02_e85e                                                  ; $e811 : $90, $4b
@@ -15502,7 +15503,7 @@ Call_02_e8b2:
 
 
 Call_02_e8cb:
-	jsr Call_02_8028.w                                                  ; $e8cb : $20, $28, $80
+	jsr JumpTable.w                                                  ; $e8cb : $20, $28, $80
 	eor ($e9, X)                                                  ; $e8ce : $41, $e9
 	sbc ($eb)                                                  ; $e8d0 : $f2, $eb
 	eor $f2e9.w, X                                                  ; $e8d2 : $5d, $e9, $f2
@@ -18001,12 +18002,12 @@ Call_02_f9e8:
 
 Call_02_f9f2:
 	lda $09cf.w                                                  ; $f9f2 : $ad, $cf, $09
-	and #$ff.b                                                  ; $f9f5 : $29, $ff
-	ora ($8d, X)                                                  ; $f9f7 : $01, $8d
-	cmp $2e2009.l                                                  ; $f9f9 : $cf, $09, $20, $2e
-	plx                                                  ; $f9fd : $fa
-	cmp #$02.b                                                  ; $f9fe : $c9, $02
-	.db $00                                                  ; $fa00 : $00
+	and #$01ff.w                                                  ; $f9f5 : $29, $ff, $01
+	sta $09cf.w                                                  ; $f9f8 : $8d, $cf, $09
+	jsr SetScenarioItemFlag.w                                                  ; $f9fb : $20, $2e, $fa
+
+;
+	cmp #$0002.w                                                  ; $f9fe : $c9, $02, $00
 	bne br_02_fa27                                                  ; $fa01 : $d0, $24
 
 	lda $09cf.w                                                  ; $fa03 : $ad, $cf, $09
@@ -18039,39 +18040,34 @@ br_02_fa2c:
 	rts                                                  ; $fa2d : $60
 
 
+SetScenarioItemFlag:
 	lda $09cf.w                                                  ; $fa2e : $ad, $cf, $09
 	jsr Call_02_fb51.w                                                  ; $fa31 : $20, $51, $fb
-	cmp #$02.b                                                  ; $fa34 : $c9, $02
-	.db $00                                                  ; $fa36 : $00
-	beq br_02_fa52                                                  ; $fa37 : $f0, $19
+	cmp #$0002.w                                                  ; $fa34 : $c9, $02, $00
+	beq @ret2                                                  ; $fa37 : $f0, $19
 
-	cmp #$00.b                                                  ; $fa39 : $c9, $00
-	.db $00                                                  ; $fa3b : $00
-	beq br_02_fa4d                                                  ; $fa3c : $f0, $0f
+	cmp #$0000.w                                                  ; $fa39 : $c9, $00, $00
+	beq @ret1                                                  ; $fa3c : $f0, $0f
 
-	lda $8ed8c3.l, X                                                  ; $fa3e : $bf, $c3, $d8, $8e
-	ora $091e.w, Y                                                  ; $fa42 : $19, $1e, $09
-	sta $091e.w, Y                                                  ; $fa45 : $99, $1e, $09
-	lda #$00.b                                                  ; $fa48 : $a9, $00
-	.db $00                                                  ; $fa4a : $00
+	lda Data_e_d8c3.l, X                                                  ; $fa3e : $bf, $c3, $d8, $8e
+	ora wScenarioItemsBitsSet.w, Y                                                  ; $fa42 : $19, $1e, $09
+	sta wScenarioItemsBitsSet.w, Y                                                  ; $fa45 : $99, $1e, $09
+	lda #$0000.w                                                  ; $fa48 : $a9, $00, $00
 	clc                                                  ; $fa4b : $18
 	rts                                                  ; $fa4c : $60
 
-
-br_02_fa4d:
-	lda #$01.b                                                  ; $fa4d : $a9, $01
-	.db $00                                                  ; $fa4f : $00
+@ret1:
+	lda #$0001.w                                                  ; $fa4d : $a9, $01, $00
 	sec                                                  ; $fa50 : $38
 	rts                                                  ; $fa51 : $60
 
-
-br_02_fa52:
-	lda #$02.b                                                  ; $fa52 : $a9, $02
-	.db $00                                                  ; $fa54 : $00
+@ret2:
+	lda #$0002.w                                                  ; $fa52 : $a9, $02, $00
 	sec                                                  ; $fa55 : $38
 	rts                                                  ; $fa56 : $60
 
 
+;
 	jsr Call_02_fa77.w                                                  ; $fa57 : $20, $77, $fa
 	cmp #$02.b                                                  ; $fa5a : $c9, $02
 	.db $00                                                  ; $fa5c : $00
@@ -18107,9 +18103,9 @@ Call_02_fa77:
 	.db $00                                                  ; $fa84 : $00
 	beq br_02_fa96                                                  ; $fa85 : $f0, $0f
 
-	lda $8ed8c3.l, X                                                  ; $fa87 : $bf, $c3, $d8, $8e
-	eor $091e.w, Y                                                  ; $fa8b : $59, $1e, $09
-	sta $091e.w, Y                                                  ; $fa8e : $99, $1e, $09
+	lda Data_e_d8c3.l, X                                                  ; $fa87 : $bf, $c3, $d8, $8e
+	eor wScenarioItemsBitsSet.w, Y                                                  ; $fa8b : $59, $1e, $09
+	sta wScenarioItemsBitsSet.w, Y                                                  ; $fa8e : $99, $1e, $09
 	lda #$00.b                                                  ; $fa91 : $a9, $00
 	.db $00                                                  ; $fa93 : $00
 	clc                                                  ; $fa94 : $18
@@ -18270,24 +18266,29 @@ br_02_fb32:
 	rtl                                                  ; $fb50 : $6b
 
 
+; A - scenario item's item idx
 Call_02_fb51:
-	and #$ff.b                                                  ; $fb51 : $29, $ff
-	ora ($85, X)                                                  ; $fb53 : $01, $85
-	mvn $00, $a2                                                  ; $fb55 : $54, $a2, $00
-	.db $00                                                  ; $fb58 : $00
+	and #$01ff.w                                                  ; $fb51 : $29, $ff, $01
+	sta $54                                                  ; $fb54 : $85, $54
+	ldx #$0000.w                                                  ; $fb56 : $a2, $00, $00
 
-br_02_fb59:
-	lda $97fda0.l, X                                                  ; $fb59 : $bf, $a0, $fd, $97
-	cmp #$ff.b                                                  ; $fb5d : $c9, $ff
-	sbc $c52df0.l, X                                                  ; $fb5f : $ff, $f0, $2d, $c5
-	mvn $09, $f0                                                  ; $fb63 : $54, $f0, $09
+@loop_fb59:
+	lda ScenarioItemsIdxes.l, X                                                  ; $fb59 : $bf, $a0, $fd, $97
+	cmp #$ffff.w                                                  ; $fb5d : $c9, $ff, $ff
+	beq @ret2                                                  ; $fb60 : $f0, $2d
+
+	cmp $54                                                  ; $fb62 : $c5, $54
+	beq @br_fb6f                                                  ; $fb64 : $f0, $09
+
 	inx                                                  ; $fb66 : $e8
 	inx                                                  ; $fb67 : $e8
 	cpx #$0080.w                                                  ; $fb68 : $e0, $80, $00
-	bne br_02_fb59                                                  ; $fb6b : $d0, $ec
+	bne @loop_fb59                                                  ; $fb6b : $d0, $ec
 
-	bra br_02_fb8f                                                  ; $fb6d : $80, $20
+	bra @ret2                                                  ; $fb6d : $80, $20
 
+@br_fb6f:
+; found entry
 	txa                                                  ; $fb6f : $8a
 	lsr                                                  ; $fb70 : $4a
 	lsr                                                  ; $fb71 : $4a
@@ -18297,29 +18298,24 @@ br_02_fb59:
 	asl                                                  ; $fb75 : $0a
 	tay                                                  ; $fb76 : $a8
 	txa                                                  ; $fb77 : $8a
-	and #$1f.b                                                  ; $fb78 : $29, $1f
-	.db $00                                                  ; $fb7a : $00
+	and #$001f.w                                                  ; $fb78 : $29, $1f, $00
 	tax                                                  ; $fb7b : $aa
-	lda $8ed8c3.l, X                                                  ; $fb7c : $bf, $c3, $d8, $8e
-	and $091e.w, Y                                                  ; $fb80 : $39, $1e, $09
-	beq br_02_fb8a                                                  ; $fb83 : $f0, $05
+	lda Data_e_d8c3.l, X                                                  ; $fb7c : $bf, $c3, $d8, $8e
+	and wScenarioItemsBitsSet.w, Y                                                  ; $fb80 : $39, $1e, $09
+	beq @ret1                                                  ; $fb83 : $f0, $05
 
-	lda #$00.b                                                  ; $fb85 : $a9, $00
-	.db $00                                                  ; $fb87 : $00
+	lda #$0000.w                                                  ; $fb85 : $a9, $00, $00
 	clc                                                  ; $fb88 : $18
 	rts                                                  ; $fb89 : $60
 
-
-br_02_fb8a:
-	lda #$01.b                                                  ; $fb8a : $a9, $01
-	.db $00                                                  ; $fb8c : $00
+@ret1:
+	lda #$0001.w                                                  ; $fb8a : $a9, $01, $00
 	sec                                                  ; $fb8d : $38
 	rts                                                  ; $fb8e : $60
 
-
-br_02_fb8f:
-	lda #$02.b                                                  ; $fb8f : $a9, $02
-	.db $00                                                  ; $fb91 : $00
+@ret2:
+; could not find var
+	lda #$0002.w                                                  ; $fb8f : $a9, $02, $00
 	sec                                                  ; $fb92 : $38
 	rts                                                  ; $fb93 : $60
 
@@ -18461,28 +18457,28 @@ Call_02_fc3f:
 	stz $56                                                  ; $fc42 : $64, $56
 	ldy #$0000.w                                                  ; $fc44 : $a0, $00, $00
 
-br_02_fc47:
-	lda $091e.w, Y                                                  ; $fc47 : $b9, $1e, $09
-	beq br_02_fc5e                                                  ; $fc4a : $f0, $12
+@loop_fc47:
+	lda wScenarioItemsBitsSet.w, Y                                                  ; $fc47 : $b9, $1e, $09
+	beq @cont_fc5e                                                  ; $fc4a : $f0, $12
 
 	sty $58                                                  ; $fc4c : $84, $58
 	ldy #$0010.w                                                  ; $fc4e : $a0, $10, $00
 
-br_02_fc51:
+@loop_fc51:
 	inc $54                                                  ; $fc51 : $e6, $54
 	lsr                                                  ; $fc53 : $4a
-	bcc br_02_fc59                                                  ; $fc54 : $90, $03
+	bcc @br_fc59                                                  ; $fc54 : $90, $03
 
 	dex                                                  ; $fc56 : $ca
-	beq br_02_fc71                                                  ; $fc57 : $f0, $18
+	beq @br_fc71                                                  ; $fc57 : $f0, $18
 
-br_02_fc59:
+@br_fc59:
 	dey                                                  ; $fc59 : $88
-	bne br_02_fc51                                                  ; $fc5a : $d0, $f5
+	bne @loop_fc51                                                  ; $fc5a : $d0, $f5
 
 	ldy $58                                                  ; $fc5c : $a4, $58
 
-br_02_fc5e:
+@cont_fc5e:
 	lda $56                                                  ; $fc5e : $a5, $56
 	clc                                                  ; $fc60 : $18
 	adc #$0010.w                                                  ; $fc61 : $69, $10, $00
@@ -18491,17 +18487,16 @@ br_02_fc5e:
 	iny                                                  ; $fc68 : $c8
 	iny                                                  ; $fc69 : $c8
 	cpy #$0008.w                                                  ; $fc6a : $c0, $08, $00
-	bne br_02_fc47                                                  ; $fc6d : $d0, $d8
+	bne @loop_fc47                                                  ; $fc6d : $d0, $d8
 
 	sec                                                  ; $fc6f : $38
 	rts                                                  ; $fc70 : $60
 
-
-br_02_fc71:
+@br_fc71:
 	dec $54                                                  ; $fc71 : $c6, $54
 	asl $54                                                  ; $fc73 : $06, $54
 	ldx $54                                                  ; $fc75 : $a6, $54
-	lda $97fda0.l, X                                                  ; $fc77 : $bf, $a0, $fd, $97
+	lda ScenarioItemsIdxes.l, X                                                  ; $fc77 : $bf, $a0, $fd, $97
 	clc                                                  ; $fc7b : $18
 	rts                                                  ; $fc7c : $60
 
@@ -18744,7 +18739,7 @@ br_02_fdce:
 
 Call_02_fdec:
 	lda $1511.w                                                  ; $fdec : $ad, $11, $15
-	jsr Call_02_8028.w                                                  ; $fdef : $20, $28, $80
+	jsr JumpTable.w                                                  ; $fdef : $20, $28, $80
 	inc $fd, X                                                  ; $fdf2 : $f6, $fd
 	mvp $c2, $fe                                                  ; $fdf4 : $44, $fe, $c2
 	jsr $42a9.w                                                  ; $fdf7 : $20, $a9, $42

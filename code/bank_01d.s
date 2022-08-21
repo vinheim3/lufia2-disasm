@@ -18369,7 +18369,7 @@ br_1d_dd17:
 	.db $00                                                  ; $dd49 : $00
 	ora [$08], Y                                                  ; $dd4a : $17, $08
 	ora $070c06.l                                                  ; $dd4c : $0f, $06, $0c, $07
-	asl $091e.w, X                                                  ; $dd50 : $1e, $1e, $09
+	asl wScenarioItemsBitsSet.w, X                                                  ; $dd50 : $1e, $1e, $09
 	ora #$1b1f.w                                                  ; $dd53 : $09, $1f, $1b
 	phd                                                  ; $dd56 : $0b
 	phd                                                  ; $dd57 : $0b

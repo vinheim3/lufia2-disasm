@@ -22482,7 +22482,7 @@ br_1c_edaa:
 	bra br_1c_edaa                                                  ; $edbc : $80, $ec
 
 	.db $00                                                  ; $edbe : $00
-	cpx $091e.w                                                  ; $edbf : $ec, $1e, $09
+	cpx wScenarioItemsBitsSet.w                                                  ; $edbf : $ec, $1e, $09
 	and ($0a)                                                  ; $edc2 : $32, $0a
 	ply                                                  ; $edc4 : $7a
 	asl $f9                                                  ; $edc5 : $06, $f9
@@ -23646,7 +23646,7 @@ br_1c_f3aa:
 	bra br_1c_f3aa                                                  ; $f3bc : $80, $ec
 
 	.db $00                                                  ; $f3be : $00
-	cpx $091e.w                                                  ; $f3bf : $ec, $1e, $09
+	cpx wScenarioItemsBitsSet.w                                                  ; $f3bf : $ec, $1e, $09
 	and ($0a)                                                  ; $f3c2 : $32, $0a
 	ply                                                  ; $f3c4 : $7a
 	asl $f9                                                  ; $f3c5 : $06, $f9
@@ -24799,7 +24799,7 @@ br_1c_f9aa:
 	bra br_1c_f9aa                                                  ; $f9bc : $80, $ec
 
 	.db $00                                                  ; $f9be : $00
-	cpx $091e.w                                                  ; $f9bf : $ec, $1e, $09
+	cpx wScenarioItemsBitsSet.w                                                  ; $f9bf : $ec, $1e, $09
 	and ($0a)                                                  ; $f9c2 : $32, $0a
 	ply                                                  ; $f9c4 : $7a
 	asl $f9                                                  ; $f9c5 : $06, $f9

@@ -537,7 +537,7 @@ Call_03_8386:
 	stz $6a                                                  ; $838a : $64, $6a
 	lda #$05.b                                                  ; $838c : $a9, $05
 	sta $30                                                  ; $838e : $85, $30
-	jsr $82e746.l                                                  ; $8390 : $22, $46, $e7, $82
+	jsr Call_02_e746.l                                                  ; $8390 : $22, $46, $e7, $82
 	stz $05b3.w                                                  ; $8394 : $9c, $b3, $05
 	jsr Call_03_85dc.l                                                  ; $8397 : $22, $dc, $85, $83
 	jsr Call_03_afcd.l                                                  ; $839b : $22, $cd, $af, $83
@@ -7041,7 +7041,7 @@ br_03_acef:
 	jsr Call_03_900c.w                                                  ; $ad11 : $20, $0c, $90
 	stz $30                                                  ; $ad14 : $64, $30
 	stz $31                                                  ; $ad16 : $64, $31
-	jsr $82e746.l                                                  ; $ad18 : $22, $46, $e7, $82
+	jsr Call_02_e746.l                                                  ; $ad18 : $22, $46, $e7, $82
 	lda $0b51.w                                                  ; $ad1c : $ad, $51, $0b
 	bit #$80.b                                                  ; $ad1f : $89, $80
 	beq br_03_ad7a                                                  ; $ad21 : $f0, $57
@@ -7208,7 +7208,7 @@ br_03_ae5b:
 	ldx #$0007.w                                                  ; $ae66 : $a2, $07, $00
 
 br_03_ae69:
-	stz $091e.w, X                                                  ; $ae69 : $9e, $1e, $09
+	stz wScenarioItemsBitsSet.w, X                                                  ; $ae69 : $9e, $1e, $09
 	dex                                                  ; $ae6c : $ca
 	bpl br_03_ae69                                                  ; $ae6d : $10, $fa
 

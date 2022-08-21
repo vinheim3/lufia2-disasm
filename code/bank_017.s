@@ -17589,40 +17589,47 @@ br_17_fd84:
 	ora ($0a, S), Y                                                  ; $fd9c : $13, $0a
 	asl                                                  ; $fd9e : $0a
 	.db $00                                                  ; $fd9f : $00
-	ldy $ad01.w                                                  ; $fda0 : $ac, $01, $ad
-	ora ($ae, X)                                                  ; $fda3 : $01, $ae
-	ora ($af, X)                                                  ; $fda5 : $01, $af
-	ora ($b0, X)                                                  ; $fda7 : $01, $b0
-	ora ($b1, X)                                                  ; $fda9 : $01, $b1
-	ora ($b2, X)                                                  ; $fdab : $01, $b2
-	ora ($b3, X)                                                  ; $fdad : $01, $b3
-	ora ($b4, X)                                                  ; $fdaf : $01, $b4
-	ora ($b5, X)                                                  ; $fdb1 : $01, $b5
-	ora ($b6, X)                                                  ; $fdb3 : $01, $b6
-	ora ($b7, X)                                                  ; $fdb5 : $01, $b7
-	ora ($b8, X)                                                  ; $fdb7 : $01, $b8
-	ora ($b9, X)                                                  ; $fdb9 : $01, $b9
-	ora ($ba, X)                                                  ; $fdbb : $01, $ba
-	ora ($bb, X)                                                  ; $fdbd : $01, $bb
-	ora ($bc, X)                                                  ; $fdbf : $01, $bc
-	ora ($bd, X)                                                  ; $fdc1 : $01, $bd
-	ora ($be, X)                                                  ; $fdc3 : $01, $be
-	ora ($bf, X)                                                  ; $fdc5 : $01, $bf
-	ora ($c0, X)                                                  ; $fdc7 : $01, $c0
-	ora ($c1, X)                                                  ; $fdc9 : $01, $c1
-	ora ($c2, X)                                                  ; $fdcb : $01, $c2
-	ora ($c3, X)                                                  ; $fdcd : $01, $c3
-	ora ($c4, X)                                                  ; $fdcf : $01, $c4
-	ora ($c5, X)                                                  ; $fdd1 : $01, $c5
-	ora ($c6, X)                                                  ; $fdd3 : $01, $c6
-	ora ($c7, X)                                                  ; $fdd5 : $01, $c7
-	ora ($c8, X)                                                  ; $fdd7 : $01, $c8
-	ora ($c9, X)                                                  ; $fdd9 : $01, $c9
-	ora ($ca, X)                                                  ; $fddb : $01, $ca
-	ora ($cb, X)                                                  ; $fddd : $01, $cb
-	ora ($cc, X)                                                  ; $fddf : $01, $cc
-	ora ($cd, X)                                                  ; $fde1 : $01, $cd
-	ora ($ff, X)                                                  ; $fde3 : $01, $ff
+
+
+ScenarioItemsIdxes:
+	.dw $01ac
+	.dw $01ad
+	.dw $01ae
+	.dw $01af
+	.dw $01b0
+	.dw $01b1
+	.dw $01b2
+	.dw $01b3
+	.dw $01b4
+	.dw $01b5
+	.dw $01b6
+	.dw $01b7
+	.dw $01b8
+	.dw $01b9
+	.dw $01ba
+	.dw $01bb
+	.dw $01bc
+	.dw $01bd
+	.dw $01be
+	.dw $01bf
+	.dw $01c0
+	.dw $01c1
+	.dw $01c2
+	.dw $01c3
+	.dw $01c4
+	.dw $01c5
+	.dw $01c6
+	.dw $01c7
+	.dw $01c8
+	.dw $01c9
+	.dw $01ca
+	.dw $01cb
+	.dw $01cc
+	.dw $01cd
+
+
+;
+	.db $ff                                                  ; $fde4 : $ff
 	sbc $8c0000.l, X                                                  ; $fde5 : $ff, $00, $00, $8c
 	and ($d6), Y                                                  ; $fde9 : $31, $d6
 	phy                                                  ; $fdeb : $5a

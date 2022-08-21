@@ -165,7 +165,14 @@ wEntityMovementDirs: ; $0692
     db
 
 w0693:
-    ds $9b7-$693
+    ds $91e-$693
+
+; todo: unknown size
+wScenarioItemsBitsSet: ; $091e
+    db
+
+w091f:
+    ds $b7-$1f
 
 wCurrScriptAddr: ; $09b7
     dw
