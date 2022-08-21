@@ -424,6 +424,7 @@ AequRNGtimesA:
 	rtl                                                  ; $82c6 : $6b
 
 
+AequRNGval:
 	phb                                                  ; $82c7 : $8b
 	phk                                                  ; $82c8 : $4b
 	plb                                                  ; $82c9 : $ab
@@ -434,13 +435,12 @@ AequRNGtimesA:
 	ldx wCounterTilSlowlyUpdatingRNG.w                                                  ; $82cf : $ae, $59, $05
 	inx                                                  ; $82d2 : $e8
 	cpx #$37.b                                                  ; $82d3 : $e0, $37
-	bcc br_00_82dc                                                  ; $82d5 : $90, $05
+	bcc +                                                  ; $82d5 : $90, $05
 
 	jsr UpdateRNGvars.w                                                  ; $82d7 : $20, $2d, $83
 	ldx #$00.b                                                  ; $82da : $a2, $00
 
-br_00_82dc:
-	stx wCounterTilSlowlyUpdatingRNG.w                                                  ; $82dc : $8e, $59, $05
++	stx wCounterTilSlowlyUpdatingRNG.w                                                  ; $82dc : $8e, $59, $05
 	lda $0521.w, X                                                  ; $82df : $bd, $21, $05
 	plp                                                  ; $82e2 : $28
 	ply                                                  ; $82e3 : $7a
@@ -8712,7 +8712,7 @@ br_00_b8e7:
 	lda #$ff.b                                                  ; $b910 : $a9, $ff
 	sta $7ff8a3.l                                                  ; $b912 : $8f, $a3, $f8, $7f
 	jsr AequNextScriptByte.w                                                  ; $b916 : $20, $b7, $c0
-	sta $7ff8a4.l                                                  ; $b919 : $8f, $a4, $f8, $7f
+	sta wOverworldEnemySetupIdx.l                                                  ; $b919 : $8f, $a4, $f8, $7f
 	jsr $83845b.l                                                  ; $b91d : $22, $5b, $84, $83
 	jsr Call_00_a368.w                                                  ; $b921 : $20, $68, $a3
 	lda #$80.b                                                  ; $b924 : $a9, $80
@@ -9819,6 +9819,8 @@ br_00_c0b6:
 	rts                                                  ; $c0b6 : $60
 
 
+; Y - curr script address
+; wCurrScriptBank - curr script bank
 AequNextScriptByte:
 	lda $0000.w, Y                                                  ; $c0b7 : $b9, $00, $00
 	iny                                                  ; $c0ba : $c8

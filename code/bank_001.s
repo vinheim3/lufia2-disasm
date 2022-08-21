@@ -102,7 +102,7 @@ Call_01_8000:
 	bne -                                                  ; $80d4 : $d0, $f2
 
 	sep #ACCU_8                                                  ; $80d6 : $e2, $20
-	jsr Call_01_81e6.w                                                  ; $80d8 : $20, $e6, $81
+	jsr todo_LoadAnOverworlEnemySetup.w                                                  ; $80d8 : $20, $e6, $81
 	ldx #$0000.w                                                  ; $80db : $a2, $00, $00
 	txy                                                  ; $80de : $9b
 
@@ -234,7 +234,7 @@ Call_01_8000:
 	rts                                                  ; $81e5 : $60
 
 
-Call_01_81e6:
+todo_LoadAnOverworlEnemySetup:
 	jsr $85de8e.l                                                  ; $81e6 : $22, $8e, $de, $85
 	lda $7ff8a0.l                                                  ; $81ea : $af, $a0, $f8, $7f
 	sta $11e1.w                                                  ; $81ee : $8d, $e1, $11
@@ -247,14 +247,14 @@ Call_01_81e6:
 	jmp @bigBr_82bd.w                                                  ; $81fa : $4c, $bd, $82
 
 @br_81fd:
-	lda $7ff8a4.l                                                  ; $81fd : $af, $a4, $f8, $7f
+	lda wOverworldEnemySetupIdx.l                                                  ; $81fd : $af, $a4, $f8, $7f
 	ldx #$0000.w                                                  ; $8201 : $a2, $00, $00
 	jsr AddAnEnemySetup.w                                                  ; $8204 : $20, $9f, $83
 	lda #$00.b                                                  ; $8207 : $a9, $00
 	bra +                                                  ; $8209 : $80, $04
 
 @br_820b:
-	lda $7ff8a4.l                                                  ; $820b : $af, $a4, $f8, $7f
+	lda wOverworldEnemySetupIdx.l                                                  ; $820b : $af, $a4, $f8, $7f
 
 +	sta WRMPYA.w                                                  ; $820f : $8d, $02, $42
 	lda #$0a.b                                                  ; $8212 : $a9, $0a
@@ -357,7 +357,7 @@ Call_01_81e6:
 
 @bigBr_82bd:
 	tdc                                                  ; $82bd : $7b
-	lda $7ff8a4.l                                                  ; $82be : $af, $a4, $f8, $7f
+	lda wOverworldEnemySetupIdx.l                                                  ; $82be : $af, $a4, $f8, $7f
 	rep #ACCU_8                                                  ; $82c2 : $c2, $20
 	asl                                                  ; $82c4 : $0a
 	tax                                                  ; $82c5 : $aa
@@ -1048,7 +1048,7 @@ Call_01_876b:
 	lda $7ff8a3.l                                                  ; $877b : $af, $a3, $f8, $7f
 	bpl br_01_878d                                                  ; $877f : $10, $0c
 
-	lda $7ff8a4.l                                                  ; $8781 : $af, $a4, $f8, $7f
+	lda wOverworldEnemySetupIdx.l                                                  ; $8781 : $af, $a4, $f8, $7f
 	cmp #$0b.b                                                  ; $8785 : $c9, $0b
 	beq br_01_8793                                                  ; $8787 : $f0, $0a
 

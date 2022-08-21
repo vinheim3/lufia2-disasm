@@ -3427,9 +3427,9 @@ Call_06_9766:
 	cmp #$08.b                                                  ; $9774 : $c9, $08
 	bne br_06_9763                                                  ; $9776 : $d0, $eb
 
-	ldy $11f2.w                                                  ; $9778 : $ac, $f2, $11
+	ldy wCurrOverworldPlayerX.w                                                  ; $9778 : $ac, $f2, $11
 	sty $58                                                  ; $977b : $84, $58
-	ldy $11f4.w                                                  ; $977d : $ac, $f4, $11
+	ldy wCurrOverworldPlayerY.w                                                  ; $977d : $ac, $f4, $11
 	sty $5a                                                  ; $9780 : $84, $5a
 	lda $11de.w                                                  ; $9782 : $ad, $de, $11
 	beq br_06_97d1                                                  ; $9785 : $f0, $4a
@@ -3796,7 +3796,7 @@ Call_06_995b:
 	lsr                                                  ; $99a0 : $4a
 	lsr                                                  ; $99a1 : $4a
 	lsr                                                  ; $99a2 : $4a
-	sta $11f2.w                                                  ; $99a3 : $8d, $f2, $11
+	sta wCurrOverworldPlayerX.w                                                  ; $99a3 : $8d, $f2, $11
 	lda $11ea.w                                                  ; $99a6 : $ad, $ea, $11
 	sta $06                                                  ; $99a9 : $85, $06
 	clc                                                  ; $99ab : $18
@@ -3807,7 +3807,7 @@ Call_06_995b:
 	lsr                                                  ; $99b6 : $4a
 	lsr                                                  ; $99b7 : $4a
 	lsr                                                  ; $99b8 : $4a
-	sta $11f4.w                                                  ; $99b9 : $8d, $f4, $11
+	sta wCurrOverworldPlayerY.w                                                  ; $99b9 : $8d, $f4, $11
 	sep #ACCU_8                                                  ; $99bc : $e2, $20
 	rts                                                  ; $99be : $60
 
@@ -3815,13 +3815,13 @@ Call_06_995b:
 Call_06_99bf:
 	stz $59                                                  ; $99bf : $64, $59
 	stz $5b                                                  ; $99c1 : $64, $5b
-	lda $11f4.w                                                  ; $99c3 : $ad, $f4, $11
+	lda wCurrOverworldPlayerY.w                                                  ; $99c3 : $ad, $f4, $11
 	sec                                                  ; $99c6 : $38
 	sbc #$20.b                                                  ; $99c7 : $e9, $20
 	sta $5a                                                  ; $99c9 : $85, $5a
-	lda $11f2.w                                                  ; $99cb : $ad, $f2, $11
+	lda wCurrOverworldPlayerX.w                                                  ; $99cb : $ad, $f2, $11
 	sec                                                  ; $99ce : $38
-	sbc $11f6.w                                                  ; $99cf : $ed, $f6, $11
+	sbc wPrevOverworldPlayerXLo.w                                                  ; $99cf : $ed, $f6, $11
 	beq @cont_99f4                                                  ; $99d2 : $f0, $20
 
 	bcs @br_99e1                                                  ; $99d4 : $b0, $0b
@@ -3830,7 +3830,7 @@ Call_06_99bf:
 	bcc @br_99e5                                                  ; $99d8 : $90, $0b
 
 @loop_99da:
-	lda $11f2.w                                                  ; $99da : $ad, $f2, $11
+	lda wCurrOverworldPlayerX.w                                                  ; $99da : $ad, $f2, $11
 	sbc #$1f.b                                                  ; $99dd : $e9, $1f
 	bra @cont_99ea                                                  ; $99df : $80, $09
 
@@ -3839,7 +3839,7 @@ Call_06_99bf:
 	bcs @loop_99da                                                  ; $99e3 : $b0, $f5
 
 @br_99e5:
-	lda $11f2.w                                                  ; $99e5 : $ad, $f2, $11
+	lda wCurrOverworldPlayerX.w                                                  ; $99e5 : $ad, $f2, $11
 	adc #$1f.b                                                  ; $99e8 : $69, $1f
 
 @cont_99ea:
@@ -3849,13 +3849,13 @@ Call_06_99bf:
 	sta $1711.w                                                  ; $99f1 : $8d, $11, $17
 
 @cont_99f4:
-	lda $11f2.w                                                  ; $99f4 : $ad, $f2, $11
+	lda wCurrOverworldPlayerX.w                                                  ; $99f4 : $ad, $f2, $11
 	sec                                                  ; $99f7 : $38
 	sbc #$20.b                                                  ; $99f8 : $e9, $20
 	sta $58                                                  ; $99fa : $85, $58
-	lda $11f4.w                                                  ; $99fc : $ad, $f4, $11
+	lda wCurrOverworldPlayerY.w                                                  ; $99fc : $ad, $f4, $11
 	sec                                                  ; $99ff : $38
-	sbc $11f7.w                                                  ; $9a00 : $ed, $f7, $11
+	sbc wPrevOverworldPlayerYLo.w                                                  ; $9a00 : $ed, $f7, $11
 	beq @cont_9a25                                                  ; $9a03 : $f0, $20
 
 	bcs @br_9a12                                                  ; $9a05 : $b0, $0b
@@ -3864,7 +3864,7 @@ Call_06_99bf:
 	bcc @br_9a16                                                  ; $9a09 : $90, $0b
 
 @loop_9a0b:
-	lda $11f4.w                                                  ; $9a0b : $ad, $f4, $11
+	lda wCurrOverworldPlayerY.w                                                  ; $9a0b : $ad, $f4, $11
 	sbc #$1f.b                                                  ; $9a0e : $e9, $1f
 	bra @cont_9a1b                                                  ; $9a10 : $80, $09
 
@@ -3873,7 +3873,7 @@ Call_06_99bf:
 	bcs @loop_9a0b                                                  ; $9a14 : $b0, $f5
 
 @br_9a16:
-	lda $11f4.w                                                  ; $9a16 : $ad, $f4, $11
+	lda wCurrOverworldPlayerY.w                                                  ; $9a16 : $ad, $f4, $11
 	adc #$1f.b                                                  ; $9a19 : $69, $1f
 
 @cont_9a1b:
@@ -3883,12 +3883,12 @@ Call_06_99bf:
 	sta $1710.w                                                  ; $9a22 : $8d, $10, $17
 
 @cont_9a25:
-	lda $11f2.w                                                  ; $9a25 : $ad, $f2, $11
-	cmp $11f6.w                                                  ; $9a28 : $cd, $f6, $11
+	lda wCurrOverworldPlayerX.w                                                  ; $9a25 : $ad, $f2, $11
+	cmp wPrevOverworldPlayerXLo.w                                                  ; $9a28 : $cd, $f6, $11
 	bne @br_9a35                                                  ; $9a2b : $d0, $08
 
-	lda $11f4.w                                                  ; $9a2d : $ad, $f4, $11
-	cmp $11f7.w                                                  ; $9a30 : $cd, $f7, $11
+	lda wCurrOverworldPlayerY.w                                                  ; $9a2d : $ad, $f4, $11
+	cmp wPrevOverworldPlayerYLo.w                                                  ; $9a30 : $cd, $f7, $11
 	beq @cont_9a40                                                  ; $9a33 : $f0, $0b
 
 @br_9a35:
@@ -3901,18 +3901,19 @@ Call_06_99bf:
 	sta $11e3.w                                                  ; $9a3d : $8d, $e3, $11
 
 @cont_9a40:
-	jsr Call_06_9a44.w                                                  ; $9a40 : $20, $44, $9a
+	jsr SetNewPrevOverworldCoords.w                                                  ; $9a40 : $20, $44, $9a
 	rts                                                  ; $9a43 : $60
 
 
-Call_06_9a44:
-	lda $11f2.w                                                  ; $9a44 : $ad, $f2, $11
-	sta $11f6.w                                                  ; $9a47 : $8d, $f6, $11
-	lda $11f4.w                                                  ; $9a4a : $ad, $f4, $11
-	sta $11f7.w                                                  ; $9a4d : $8d, $f7, $11
-	rts                                                  ; $9a50 : $60
+SetNewPrevOverworldCoords:
+	lda wCurrOverworldPlayerX.w                                               ; $9a44 : $ad, $f2, $11
+	sta wPrevOverworldPlayerXLo.w                                             ; $9a47 : $8d, $f6, $11
+	lda wCurrOverworldPlayerY.w                                               ; $9a4a : $ad, $f4, $11
+	sta wPrevOverworldPlayerYLo.w                                             ; $9a4d : $8d, $f7, $11
+	rts                                                                       ; $9a50 : $60
 
 
+;
 	sbc $c000ff.l, X                                                  ; $9a51 : $ff, $ff, $00, $c0
 	.db $00                                                  ; $9a55 : $00
 	rti                                                  ; $9a56 : $40
@@ -4037,9 +4038,9 @@ br_06_9aeb:
 	jsr Call_06_d32d.w                                                  ; $9af1 : $20, $2d, $d3
 	lda $1478.w                                                  ; $9af4 : $ad, $78, $14
 	pha                                                  ; $9af7 : $48
-	lda $11f2.w                                                  ; $9af8 : $ad, $f2, $11
+	lda wCurrOverworldPlayerX.w                                                  ; $9af8 : $ad, $f2, $11
 	pha                                                  ; $9afb : $48
-	lda $11f4.w                                                  ; $9afc : $ad, $f4, $11
+	lda wCurrOverworldPlayerY.w                                                  ; $9afc : $ad, $f4, $11
 	pha                                                  ; $9aff : $48
 	php                                                  ; $9b00 : $08
 	phb                                                  ; $9b01 : $8b
@@ -4316,18 +4317,21 @@ Call_06_9c71:
 	adc $00                                                  ; $9ce0 : $65, $00
 	tax                                                  ; $9ce2 : $aa
 	lda $9dc7.w, X                                                  ; $9ce3 : $bd, $c7, $9d
-	sta $7ff8a4.l                                                  ; $9ce6 : $8f, $a4, $f8, $7f
+	sta wOverworldEnemySetupIdx.l                                                  ; $9ce6 : $8f, $a4, $f8, $7f
 	lda #$03.b                                                  ; $9cea : $a9, $03
 	sta $7ff8a0.l                                                  ; $9cec : $8f, $a0, $f8, $7f
 	brl @bigBr_9d7d                                                  ; $9cf0 : $82, $8a, $00
 
 @br_9cf3:
+; store X/4 in 0, ie every 4 Xs = +1
 	rep #ACCU_8                                                  ; $9cf3 : $c2, $20
-	lda $11f2.w                                                  ; $9cf5 : $ad, $f2, $11
+	lda wCurrOverworldPlayerX.w                                                  ; $9cf5 : $ad, $f2, $11
 	lsr                                                  ; $9cf8 : $4a
 	lsr                                                  ; $9cf9 : $4a
 	sta $00                                                  ; $9cfa : $85, $00
-	lda $11f4.w                                                  ; $9cfc : $ad, $f4, $11
+
+; player Y<<4, mask into 0fc0, add to above into X. ie every 4 Ys = +$20
+	lda wCurrOverworldPlayerY.w                                                  ; $9cfc : $ad, $f4, $11
 	and #$00fc.w                                                  ; $9cff : $29, $fc, $00
 	asl                                                  ; $9d02 : $0a
 	asl                                                  ; $9d03 : $0a
@@ -4335,19 +4339,25 @@ Call_06_9c71:
 	asl                                                  ; $9d05 : $0a
 	adc $00                                                  ; $9d06 : $65, $00
 	tax                                                  ; $9d08 : $aa
+
+; get relevant byte for world map data, * 10
 	sep #ACCU_8                                                  ; $9d09 : $e2, $20
 	lda $7fe000.l, X                                                  ; $9d0b : $bf, $00, $e0, $7f
 	sta WRMPYA.w                                                  ; $9d0f : $8d, $02, $42
+
 	lda #$0a.b                                                  ; $9d12 : $a9, $0a
 	sta WRMPYB.w                                                  ; $9d14 : $8d, $03, $42
+
+; eg X = bce after leaving 2nd cave, gives 2*10 = 20 or $14 (pointing to 06 50)
 	rep #ACCU_8                                                  ; $9d17 : $c2, $20
 	stz $04                                                  ; $9d19 : $64, $04
 	ldy #$0005.w                                                  ; $9d1b : $a0, $05, $00
 	ldx RDMPYL.w                                                  ; $9d1e : $ae, $16, $42
 	phx                                                  ; $9d21 : $da
 
+; add 5 2nd bytes from table from X (available chance pool of setups)
 @loop_9d22:
-	lda $97c494.l, X                                                  ; $9d22 : $bf, $94, $c4, $97
+	lda Data_17_c493.l+1, X                                                  ; $9d22 : $bf, $94, $c4, $97
 	and #$00ff.w                                                  ; $9d26 : $29, $ff, $00
 	clc                                                  ; $9d29 : $18
 	adc $04                                                  ; $9d2a : $65, $04
@@ -4357,39 +4367,48 @@ Call_06_9c71:
 	dey                                                  ; $9d30 : $88
 	bne @loop_9d22                                                  ; $9d31 : $d0, $ef
 
+; get total pool value, and multiply with RNG (chosen pool val in 01.w)
 	lda $04                                                  ; $9d33 : $a5, $04
 	beq @done_9d53                                                  ; $9d35 : $f0, $1c
 
-	jsr Call_06_9e3b.l                                                  ; $9d37 : $22, $3b, $9e, $86
+	jsr MultiplyPoolValueWithRNG.l                                                  ; $9d37 : $22, $3b, $9e, $86
+
+; pull offset into Data_17_c493
 	plx                                                  ; $9d3b : $fa
 	stz $04                                                  ; $9d3c : $64, $04
 
-@loop_9d3e:
-	lda $97c494.l, X                                                  ; $9d3e : $bf, $94, $c4, $97
+@nextSetup:
+; get 2nd byte of entry in A
+	lda Data_17_c493.l+1, X                                                  ; $9d3e : $bf, $94, $c4, $97
 	and #$00ff.w                                                  ; $9d42 : $29, $ff, $00
+
+; add to total pool value, choosing the setup that is >= our random value <pool value
 	clc                                                  ; $9d45 : $18
 	adc $04                                                  ; $9d46 : $65, $04
 	sta $04                                                  ; $9d48 : $85, $04
 	dea                                                  ; $9d4a : $3a
 	cmp $02                                                  ; $9d4b : $c5, $02
-	bcs @br_9d57                                                  ; $9d4d : $b0, $08
+	bcs @choseSetup                                                  ; $9d4d : $b0, $08
 
 	inx                                                  ; $9d4f : $e8
 	inx                                                  ; $9d50 : $e8
-	bra @loop_9d3e                                                  ; $9d51 : $80, $eb
+	bra @nextSetup                                                  ; $9d51 : $80, $eb
 
 @done_9d53:
 	sep #ACCU_8                                                  ; $9d53 : $e2, $20
 	plx                                                  ; $9d55 : $fa
 	rts                                                  ; $9d56 : $60
 
-@br_9d57:
+@choseSetup:
+;
 	sep #ACCU_8                                                  ; $9d57 : $e2, $20
-	lda $97c493.l, X                                                  ; $9d59 : $bf, $93, $c4, $97
-	sta $7ff8a4.l                                                  ; $9d5d : $8f, $a4, $f8, $7f
-	ldy $11f2.w                                                  ; $9d61 : $ac, $f2, $11
+	lda Data_17_c493.l, X                                                  ; $9d59 : $bf, $93, $c4, $97
+	sta wOverworldEnemySetupIdx.l                                                  ; $9d5d : $8f, $a4, $f8, $7f
+
+;
+	ldy wCurrOverworldPlayerX.w                                                  ; $9d61 : $ac, $f2, $11
 	sty $58                                                  ; $9d64 : $84, $58
-	ldy $11f4.w                                                  ; $9d66 : $ac, $f4, $11
+	ldy wCurrOverworldPlayerY.w                                                  ; $9d66 : $ac, $f4, $11
 	sty $5a                                                  ; $9d69 : $84, $5a
 	jsr $9a71.w                                                  ; $9d6b : $20, $71, $9a
 	ldy #$0000.w                                                  ; $9d6e : $a0, $00, $00
@@ -4408,9 +4427,9 @@ Call_06_9c71:
 	jsr Call_06_d32d.w                                                  ; $9d8b : $20, $2d, $d3
 	lda $1478.w                                                  ; $9d8e : $ad, $78, $14
 	pha                                                  ; $9d91 : $48
-	lda $11f2.w                                                  ; $9d92 : $ad, $f2, $11
+	lda wCurrOverworldPlayerX.w                                                  ; $9d92 : $ad, $f2, $11
 	pha                                                  ; $9d95 : $48
-	lda $11f4.w                                                  ; $9d96 : $ad, $f4, $11
+	lda wCurrOverworldPlayerY.w                                                  ; $9d96 : $ad, $f4, $11
 	pha                                                  ; $9d99 : $48
 	jsr $818821.l                                                  ; $9d9a : $22, $21, $88, $81
 	lda $7ff8a2.l                                                  ; $9d9e : $af, $a2, $f8, $7f
@@ -4495,51 +4514,52 @@ br_06_9e3a:
 	rts                                                  ; $9e3a : $60
 
 
-Call_06_9e3b:
+; $04 - 'pool' value
+; returns 32bit result in 00.2w
+MultiplyPoolValueWithRNG:
+; store 2 rng vals in 00.w
 	php                                                  ; $9e3b : $08
 	sep #ACCU_8                                                  ; $9e3c : $e2, $20
-	jsr $8082c7.l                                                  ; $9e3e : $22, $c7, $82, $80
+	jsr AequRNGval.l                                                  ; $9e3e : $22, $c7, $82, $80
 	sta $00                                                  ; $9e42 : $85, $00
-	jsr $8082c7.l                                                  ; $9e44 : $22, $c7, $82, $80
+	jsr AequRNGval.l                                                  ; $9e44 : $22, $c7, $82, $80
 	sta $01                                                  ; $9e48 : $85, $01
-	jsr Call_06_a52f.w                                                  ; $9e4a : $20, $2f, $a5
+	jsr Multiply2wordsIntoA32BitVal.w                                                  ; $9e4a : $20, $2f, $a5
 	plp                                                  ; $9e4d : $28
 	rtl                                                  ; $9e4e : $6b
 
 
 Call_06_9e4f:
 	lda $09e1.w                                                  ; $9e4f : $ad, $e1, $09
-	beq br_06_9e5b                                                  ; $9e52 : $f0, $07
+	beq @br_9e5b                                                  ; $9e52 : $f0, $07
 
 	lda $09e0.w                                                  ; $9e54 : $ad, $e0, $09
 	cmp #$02.b                                                  ; $9e57 : $c9, $02
-	beq br_06_9e70                                                  ; $9e59 : $f0, $15
+	beq @done_1                                                  ; $9e59 : $f0, $15
 
-br_06_9e5b:
-	ldy $11f2.w                                                  ; $9e5b : $ac, $f2, $11
+@br_9e5b:
+	ldy wCurrOverworldPlayerX.w                                                  ; $9e5b : $ac, $f2, $11
 	sty $58                                                  ; $9e5e : $84, $58
-	ldy $11f4.w                                                  ; $9e60 : $ac, $f4, $11
+	ldy wCurrOverworldPlayerY.w                                                  ; $9e60 : $ac, $f4, $11
 	sty $5a                                                  ; $9e63 : $84, $5a
 	jsr Call_06_9edd.w                                                  ; $9e65 : $20, $dd, $9e
-	bcc br_06_9e7a                                                  ; $9e68 : $90, $10
+	bcc @br_9e7a                                                  ; $9e68 : $90, $10
 
 	lda #$00.b                                                  ; $9e6a : $a9, $00
 	sta $0009ed.l                                                  ; $9e6c : $8f, $ed, $09, $00
 
-br_06_9e70:
+@done_1:
 	rts                                                  ; $9e70 : $60
 
-
-br_06_9e71:
+@loop_9e71:
 	lda $0000.w, X                                                  ; $9e71 : $bd, $00, $00
 	sta $0009ed.l                                                  ; $9e74 : $8f, $ed, $09, $00
 
-br_06_9e78:
+@done_2:
 	plb                                                  ; $9e78 : $ab
 	rts                                                  ; $9e79 : $60
 
-
-br_06_9e7a:
+@br_9e7a:
 	stz $11e3.w                                                  ; $9e7a : $9c, $e3, $11
 	phx                                                  ; $9e7d : $da
 	lda $11e7.w                                                  ; $9e7e : $ad, $e7, $11
@@ -4556,28 +4576,27 @@ br_06_9e7a:
 	pha                                                  ; $9e94 : $48
 	plb                                                  ; $9e95 : $ab
 	lda $0009ed.l                                                  ; $9e96 : $af, $ed, $09, $00
-	bmi br_06_9e71                                                  ; $9e9a : $30, $d5
+	bmi @loop_9e71                                                  ; $9e9a : $30, $d5
 
 	cmp $0000.w, X                                                  ; $9e9c : $dd, $00, $00
-	beq br_06_9e78                                                  ; $9e9f : $f0, $d7
+	beq @done_2                                                  ; $9e9f : $f0, $d7
 
 	lda $0008.w, X                                                  ; $9ea1 : $bd, $08, $00
 	sta $0005ac.l                                                  ; $9ea4 : $8f, $ac, $05, $00
 	lda $0005.w, X                                                  ; $9ea8 : $bd, $05, $00
 	cmp #$f0.b                                                  ; $9eab : $c9, $f0
-	bcc br_06_9eb3                                                  ; $9ead : $90, $04
+	bcc +                                                  ; $9ead : $90, $04
 
 	and #$0f.b                                                  ; $9eaf : $29, $0f
 	ora $00                                                  ; $9eb1 : $05, $00
 
-br_06_9eb3:
-	ldy $0006.w, X                                                  ; $9eb3 : $bc, $06, $00
++	ldy $0006.w, X                                                  ; $9eb3 : $bc, $06, $00
 	plb                                                  ; $9eb6 : $ab
 	sta $05b2.w                                                  ; $9eb7 : $8d, $b2, $05
 	sty $05b0.w                                                  ; $9eba : $8c, $b0, $05
-	lda $11f2.w                                                  ; $9ebd : $ad, $f2, $11
+	lda wCurrOverworldPlayerX.w                                                  ; $9ebd : $ad, $f2, $11
 	sta $09e6.w                                                  ; $9ec0 : $8d, $e6, $09
-	lda $11f4.w                                                  ; $9ec3 : $ad, $f4, $11
+	lda wCurrOverworldPlayerY.w                                                  ; $9ec3 : $ad, $f4, $11
 	sta $09e7.w                                                  ; $9ec6 : $8d, $e7, $09
 	jsr Call_06_d37d.w                                                  ; $9ec9 : $20, $7d, $d3
 	jsr Call_06_d397.w                                                  ; $9ecc : $20, $97, $d3
@@ -4589,6 +4608,7 @@ br_06_9eb3:
 	rtl                                                  ; $9ed8 : $6b
 
 
+;
 	rti                                                  ; $9ed9 : $40
 
 
@@ -5539,41 +5559,63 @@ br_06_a52e:
 	rts                                                  ; $a52e : $60
 
 
-Call_06_a52f:
+; $00.w - 1st word
+; $04.w - 2nd word
+Multiply2wordsIntoA32BitVal:
 	php                                                  ; $a52f : $08
+
+; multiply low bytes
 	sep #ACCU_8                                                  ; $a530 : $e2, $20
 	lda $00                                                  ; $a532 : $a5, $00
 	sta WRMPYA.w                                                  ; $a534 : $8d, $02, $42
 	lda $04                                                  ; $a537 : $a5, $04
 	sta WRMPYB.w                                                  ; $a539 : $8d, $03, $42
+
+; push random_num.hi, save result in 00.w
 	lda $01                                                  ; $a53c : $a5, $01
 	pha                                                  ; $a53e : $48
+
 	rep #ACCU_8                                                  ; $a53f : $c2, $20
 	lda RDMPYL.w                                                  ; $a541 : $ad, $16, $42
 	sta $00                                                  ; $a544 : $85, $00
+
+; multiply random_num.lo with pool_val.hi
 	sep #ACCU_8                                                  ; $a546 : $e2, $20
 	lda $05                                                  ; $a548 : $a5, $05
 	sta WRMPYB.w                                                  ; $a54a : $8d, $03, $42
+
+; add high byte of lo*lo result, with the lo*hi above, into 01.w
 	rep #ACCU_8                                                  ; $a54d : $c2, $20
 	stz $02                                                  ; $a54f : $64, $02
 	lda $01                                                  ; $a551 : $a5, $01
 	clc                                                  ; $a553 : $18
 	adc RDMPYL.w                                                  ; $a554 : $6d, $16, $42
 	sta $01                                                  ; $a557 : $85, $01
+
+; pull random_num.hi and multiply with pool_val.lo
 	sep #ACCU_8                                                  ; $a559 : $e2, $20
 	pla                                                  ; $a55b : $68
+
 	sta WRMPYA.w                                                  ; $a55c : $8d, $02, $42
 	lda $04                                                  ; $a55f : $a5, $04
 	sta WRMPYB.w                                                  ; $a561 : $8d, $03, $42
+
+; add onto 01.w, result now in 00.l
 	rep #ACCU_8                                                  ; $a564 : $c2, $20
 	lda $01                                                  ; $a566 : $a5, $01
 	clc                                                  ; $a568 : $18
 	adc RDMPYL.w                                                  ; $a569 : $6d, $16, $42
 	sta $01                                                  ; $a56c : $85, $01
+
+; save carry in 03, result now in 00.2w
 	sep #ACCU_8                                                  ; $a56e : $e2, $20
 	rol $03                                                  ; $a570 : $26, $03
+
+; finally, multiply hi*hi
 	lda $05                                                  ; $a572 : $a5, $05
 	sta WRMPYB.w                                                  ; $a574 : $8d, $03, $42
+
+; put in 02.w
 	rep #ACCU_8                                                  ; $a577 : $c2, $20
 	lda $02                                                  ; $a579 : $a5, $02
 	clc                                                  ; $a57b : $18
@@ -6274,7 +6316,7 @@ Call_06_a913:
 	sta $04                                                  ; $a929 : $85, $04
 	lda $11fc.w                                                  ; $a92b : $ad, $fc, $11
 	sta $00                                                  ; $a92e : $85, $00
-	jsr Call_06_a52f.w                                                  ; $a930 : $20, $2f, $a5
+	jsr Multiply2wordsIntoA32BitVal.w                                                  ; $a930 : $20, $2f, $a5
 	pla                                                  ; $a933 : $68
 	sep #ACCU_8                                                  ; $a934 : $e2, $20
 	sta WRMPYA.w                                                  ; $a936 : $8d, $02, $42
@@ -6986,7 +7028,7 @@ br_06_ada6:
 	sta VMAIN.w                                                  ; $ade2 : $8d, $15, $21
 	lda #$81.b                                                  ; $ade5 : $a9, $81
 	sta $4200.w                                                  ; $ade7 : $8d, $00, $42
-	jsr Call_06_9a44.w                                                  ; $adea : $20, $44, $9a
+	jsr SetNewPrevOverworldCoords.w                                                  ; $adea : $20, $44, $9a
 	rts                                                  ; $aded : $60
 
 
@@ -11518,7 +11560,7 @@ br_06_cb3e:
 	tax                                                  ; $cb71 : $aa
 	lda $dbb9.w, X                                                  ; $cb72 : $bd, $b9, $db
 	sta $00                                                  ; $cb75 : $85, $00
-	jsr Call_06_a52f.w                                                  ; $cb77 : $20, $2f, $a5
+	jsr Multiply2wordsIntoA32BitVal.w                                                  ; $cb77 : $20, $2f, $a5
 	lda $15                                                  ; $cb7a : $a5, $15
 	sec                                                  ; $cb7c : $38
 	sbc $01                                                  ; $cb7d : $e5, $01
@@ -11564,7 +11606,7 @@ Call_06_cb9e:
 	tax                                                  ; $cbb0 : $aa
 	lda $dbb9.w, X                                                  ; $cbb1 : $bd, $b9, $db
 	sta $00                                                  ; $cbb4 : $85, $00
-	jsr Call_06_a52f.w                                                  ; $cbb6 : $20, $2f, $a5
+	jsr Multiply2wordsIntoA32BitVal.w                                                  ; $cbb6 : $20, $2f, $a5
 	lda $17                                                  ; $cbb9 : $a5, $17
 	sec                                                  ; $cbbb : $38
 	sbc $01                                                  ; $cbbc : $e5, $01

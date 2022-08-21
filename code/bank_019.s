@@ -3077,7 +3077,7 @@ br_19_978a:
 	jsr ($aa05.w, X)                                                  ; $97c5 : $fc, $05, $aa
 	eor $00f0.w                                                  ; $97c8 : $4d, $f0, $00
 	sbc ($34, X)                                                  ; $97cb : $e1, $34
-	cpx $11f2.w                                                  ; $97cd : $ec, $f2, $11
+	cpx wCurrOverworldPlayerX.w                                                  ; $97cd : $ec, $f2, $11
 	tax                                                  ; $97d0 : $aa
 	sbc ($2f)                                                  ; $97d1 : $f2, $2f
 	cmp $0f42.w                                                  ; $97d3 : $cd, $42, $0f

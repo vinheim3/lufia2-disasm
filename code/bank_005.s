@@ -15763,7 +15763,7 @@ br_05_e85d:
 
 Call_05_e85f:
 br_05_e85f:
-	jsr $8082c7.l                                                  ; $e85f : $22, $c7, $82, $80
+	jsr AequRNGval.l                                                  ; $e85f : $22, $c7, $82, $80
 	sta $22                                                  ; $e863 : $85, $22
 	ldy $1c                                                  ; $e865 : $a4, $1c
 	tdc                                                  ; $e867 : $7b
@@ -16797,7 +16797,7 @@ br_05_eef0:
 
 	lsr $00                                                  ; $eef5 : $46, $00
 	lsr $00                                                  ; $eef7 : $46, $00
-	lda $7ff8a4.l                                                  ; $eef9 : $af, $a4, $f8, $7f
+	lda wOverworldEnemySetupIdx.l                                                  ; $eef9 : $af, $a4, $f8, $7f
 	sta WRMPYA.w                                                  ; $eefd : $8d, $02, $42
 	lda #$0a.b                                                  ; $ef00 : $a9, $0a
 	sta WRMPYB.w                                                  ; $ef02 : $8d, $03, $42

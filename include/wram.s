@@ -236,7 +236,22 @@ wNotInCode_PlayerHealth: ; $0bbe
     db
 
 w0bbf:
-    ds $1345-$bbf
+    ds $11f2-$bbf
+
+wCurrOverworldPlayerX: ; $11f2
+    dw
+
+wCurrOverworldPlayerY: ; $11f4
+    dw
+
+wPrevOverworldPlayerXLo: ; $11f6
+    db
+
+wPrevOverworldPlayerYLo: ; $11f7
+    db
+
+w11f8:
+    ds $345-$1f8
 
 wInBattleEnemyIdxes: ; $1345
     ds NUM_ENEMIES_IN_BATTLE
@@ -302,6 +317,12 @@ w7fe3ef:
     ds $f462-$e3ef
 
 wPlayerDamageTaken: ; $f462
+    db
+
+w7ff463:
+    ds $8a4-$463
+
+wOverworldEnemySetupIdx: ; $f8a4
     db
 
 .ends
