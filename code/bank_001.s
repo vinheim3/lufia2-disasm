@@ -5850,11 +5850,11 @@ br_01_a961:
 
 
 	lda $7ff456.l                                                  ; $a968 : $af, $56, $f4, $7f
-	sta $0a0b.w                                                  ; $a96c : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $a96c : $8d, $0b, $0a
 	jsr Call_01_f414.l                                                  ; $a96f : $22, $14, $f4, $81
 	jsr $859510.l                                                  ; $a973 : $22, $10, $95, $85
 	lda $7ff456.l                                                  ; $a977 : $af, $56, $f4, $7f
-	sta $0a0b.w                                                  ; $a97b : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $a97b : $8d, $0b, $0a
 	jsr Call_01_f3f4.l                                                  ; $a97e : $22, $f4, $f3, $81
 	rep #ACCU_8                                                  ; $a982 : $c2, $20
 	and #$00ff.w                                                  ; $a984 : $29, $ff, $00
@@ -5881,7 +5881,7 @@ br_01_a9ae:
 	sta $0013.w, X                                                  ; $a9ae : $9d, $13, $00
 	sep #ACCU_8                                                  ; $a9b1 : $e2, $20
 	lda $7ff456.l                                                  ; $a9b3 : $af, $56, $f4, $7f
-	sta $0a0b.w                                                  ; $a9b7 : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $a9b7 : $8d, $0b, $0a
 	clc                                                  ; $a9ba : $18
 	adc #$12.b                                                  ; $a9bb : $69, $12
 	sta $1262.w                                                  ; $a9bd : $8d, $62, $12
@@ -6647,7 +6647,7 @@ br_01_af5e:
 
 
 	lda $7ff456.l                                                  ; $af7a : $af, $56, $f4, $7f
-	sta $0a0b.w                                                  ; $af7e : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $af7e : $8d, $0b, $0a
 	jsr Call_01_f414.l                                                  ; $af81 : $22, $14, $f4, $81
 	jsr $859510.l                                                  ; $af85 : $22, $10, $95, $85
 	lda $7ff44e.l                                                  ; $af89 : $af, $4e, $f4, $7f
@@ -6657,7 +6657,7 @@ br_01_af5e:
 	sta $7ff45a.l                                                  ; $af96 : $8f, $5a, $f4, $7f
 	sep #ACCU_8                                                  ; $af9a : $e2, $20
 	lda $7ff456.l                                                  ; $af9c : $af, $56, $f4, $7f
-	sta $0a0b.w                                                  ; $afa0 : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $afa0 : $8d, $0b, $0a
 	clc                                                  ; $afa3 : $18
 	adc #$12.b                                                  ; $afa4 : $69, $12
 	sta $1262.w                                                  ; $afa6 : $8d, $62, $12
@@ -9373,7 +9373,7 @@ Jump_01_c085:
 
 
 br_01_c08f:
-	sta $0a0b.w                                                  ; $c08f : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $c08f : $8d, $0b, $0a
 	phx                                                  ; $c092 : $da
 	jsr Call_01_f414.l                                                  ; $c093 : $22, $14, $f4, $81
 	plx                                                  ; $c097 : $fa
@@ -17043,7 +17043,7 @@ LoadItemName:
 	phx                                                  ; $f2ec : $da
 	phy                                                  ; $f2ed : $5a
 	sep #ACCU_8                                                  ; $f2ee : $e2, $20
-	lda $0a0b.w                                                  ; $f2f0 : $ad, $0b, $0a
+	lda wCurrSpellIdx.w                                                  ; $f2f0 : $ad, $0b, $0a
 	pha                                                  ; $f2f3 : $48
 	ldx #$0000.w                                                  ; $f2f4 : $a2, $00, $00
 	lda $0a03.w                                                  ; $f2f7 : $ad, $03, $0a
@@ -17070,7 +17070,7 @@ LoadItemName:
 	jsr $85ce21.l                                                  ; $f339 : $22, $21, $ce, $85
 	jsr $85cd10.l                                                  ; $f33d : $22, $10, $cd, $85
 	pla                                                  ; $f341 : $68
-	sta $0a0b.w                                                  ; $f342 : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $f342 : $8d, $0b, $0a
 	rep #ACCU_8|IDX_8                                                  ; $f345 : $c2, $30
 	ply                                                  ; $f347 : $7a
 	plx                                                  ; $f348 : $fa
@@ -17164,7 +17164,7 @@ br_01_f3bb:
 	rtl                                                  ; $f3e3 : $6b
 
 
-	jsr Call_01_f446.w                                                  ; $f3e4 : $20, $46, $f4
+	jsr LoadCurrSpellDataSrc.w                                                  ; $f3e4 : $20, $46, $f4
 	ldy $0a0d.w                                                  ; $f3e7 : $ac, $0d, $0a
 	phb                                                  ; $f3ea : $8b
 	lda #$4895.w                                                  ; $f3eb : $a9, $95, $48
@@ -17175,7 +17175,7 @@ br_01_f3bb:
 
 
 Call_01_f3f4:
-	jsr Call_01_f446.w                                                  ; $f3f4 : $20, $46, $f4
+	jsr LoadCurrSpellDataSrc.w                                                  ; $f3f4 : $20, $46, $f4
 	ldy $0a0d.w                                                  ; $f3f7 : $ac, $0d, $0a
 	phb                                                  ; $f3fa : $8b
 	lda #$4895.w                                                  ; $f3fb : $a9, $95, $48
@@ -17185,7 +17185,7 @@ Call_01_f3f4:
 	rtl                                                  ; $f403 : $6b
 
 
-	jsr Call_01_f446.w                                                  ; $f404 : $20, $46, $f4
+	jsr LoadCurrSpellDataSrc.w                                                  ; $f404 : $20, $46, $f4
 	ldy $0a0d.w                                                  ; $f407 : $ac, $0d, $0a
 	phb                                                  ; $f40a : $8b
 	lda #$4895.w                                                  ; $f40b : $a9, $95, $48
@@ -17196,46 +17196,52 @@ Call_01_f3f4:
 
 
 Call_01_f414:
+; data bank is 15
 	phb                                                  ; $f414 : $8b
-	lda #$4895.w                                                  ; $f415 : $a9, $95, $48
+	lda #$95.b                                                  ; $f415 : $a9, $95
+	pha                                                  ; $f417 : $48
 	plb                                                  ; $f418 : $ab
-	jsr Call_01_f446.w                                                  ; $f419 : $20, $46, $f4
+
+;
+	jsr LoadCurrSpellDataSrc.w                                                  ; $f419 : $20, $46, $f4
+
+;
 	ldy $0a0d.w                                                  ; $f41c : $ac, $0d, $0a
 	ldx #$0000.w                                                  ; $f41f : $a2, $00, $00
 
-br_01_f422:
-	lda $0000.w, Y                                                  ; $f422 : $b9, $00, $00
-	sta $000b77.l, X                                                  ; $f425 : $9f, $77, $0b, $00
+-	lda $0000.w, Y                                                  ; $f422 : $b9, $00, $00
+	sta wBufferedTextToDisplay.l, X                                                  ; $f425 : $9f, $77, $0b, $00
 	iny                                                  ; $f429 : $c8
 	inx                                                  ; $f42a : $e8
 	cpx #$0008.w                                                  ; $f42b : $e0, $08, $00
-	bne br_01_f422                                                  ; $f42e : $d0, $f2
+	bne -                                                  ; $f42e : $d0, $f2
 
 	tdc                                                  ; $f430 : $7b
-	sta $000b77.l, X                                                  ; $f431 : $9f, $77, $0b, $00
+	sta wBufferedTextToDisplay.l, X                                                  ; $f431 : $9f, $77, $0b, $00
 	inx                                                  ; $f435 : $e8
 
-br_01_f436:
-	lda $0000.w, Y                                                  ; $f436 : $b9, $00, $00
-	sta $000b77.l, X                                                  ; $f439 : $9f, $77, $0b, $00
+-	lda $0000.w, Y                                                  ; $f436 : $b9, $00, $00
+	sta wBufferedTextToDisplay.l, X                                                  ; $f439 : $9f, $77, $0b, $00
 	iny                                                  ; $f43d : $c8
 	inx                                                  ; $f43e : $e8
 	cpx #$0014.w                                                  ; $f43f : $e0, $14, $00
-	bne br_01_f436                                                  ; $f442 : $d0, $f2
+	bne -                                                  ; $f442 : $d0, $f2
 
 	plb                                                  ; $f444 : $ab
 	rtl                                                  ; $f445 : $6b
 
 
-Call_01_f446:
+; wCurrSpellIdx - spell idx
+; Returns curr spell address in 0a0d.w
+LoadCurrSpellDataSrc:
 	rep #ACCU_8                                                  ; $f446 : $c2, $20
-	lda $0a0b.w                                                  ; $f448 : $ad, $0b, $0a
+	lda wCurrSpellIdx.w                                                  ; $f448 : $ad, $0b, $0a
 	and #$00ff.w                                                  ; $f44b : $29, $ff, $00
 	asl                                                  ; $f44e : $0a
 	tax                                                  ; $f44f : $aa
-	lda $95fa5b.l, X                                                  ; $f450 : $bf, $5b, $fa, $95
+	lda SpellsData.l, X                                                  ; $f450 : $bf, $5b, $fa, $95
 	clc                                                  ; $f454 : $18
-	adc #$fa5b.w                                                  ; $f455 : $69, $5b, $fa
+	adc #SpellsData.w                                                  ; $f455 : $69, $5b, $fa
 	sta $0a0d.w                                                  ; $f458 : $8d, $0d, $0a
 	sep #ACCU_8                                                  ; $f45b : $e2, $20
 	rts                                                  ; $f45d : $60

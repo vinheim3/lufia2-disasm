@@ -198,7 +198,13 @@ wCurrItemIdx: ; $0a06
     dw
 
 w0a08:
-    ds $8d-8
+    ds $b-8
+
+wCurrSpellIdx: ; $0a0b
+    db
+
+w0a0c:
+    ds $8d-$c
 
 ; todo: unknown size, word-sized
 ; low 9 bits is inventory item, upper 7 bits>>1 = count
@@ -207,7 +213,14 @@ wInventoryItemsAndCounts: ; $0a8d
     db
 
 w0a8e:
-    ds $bbe-$a8e
+    ds $b77-$a8e
+
+; todo: unknown size
+wBufferedTextToDisplay: ; $0b77
+    db
+
+w0b78:
+    ds $be-$78
 
 wNotInCode_PlayerHealth: ; $0bbe
     db

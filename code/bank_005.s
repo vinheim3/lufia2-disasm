@@ -3945,7 +3945,7 @@ br_05_996a:
 	sep #ACCU_8                                                  ; $9971 : $e2, $20
 	lda $0096.w, X                                                  ; $9973 : $bd, $96, $00
 	sta $0a11.w                                                  ; $9976 : $8d, $11, $0a
-	sta $0a0b.w                                                  ; $9979 : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $9979 : $8d, $0b, $0a
 	lda #$02.b                                                  ; $997c : $a9, $02
 	sta $0a12.w                                                  ; $997e : $8d, $12, $0a
 	jsr $81f414.l                                                  ; $9981 : $22, $14, $f4, $81
@@ -8661,7 +8661,7 @@ br_05_b8e2:
 
 
 	jsr Call_05_bfbf.w                                                  ; $baa6 : $20, $bf, $bf
-	sta $0a0b.w                                                  ; $baa9 : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $baa9 : $8d, $0b, $0a
 	jsr $81f3f4.l                                                  ; $baac : $22, $f4, $f3, $81
 	sta $00                                                  ; $bab0 : $85, $00
 	stz $01                                                  ; $bab2 : $64, $01
@@ -8674,7 +8674,7 @@ br_05_b8e2:
 	cop $d0.b                                                  ; $bac4 : $02, $d0
 	bmi br_05_bb43                                                  ; $bac6 : $30, $7b
 
-	lda $0a0b.w                                                  ; $bac8 : $ad, $0b, $0a
+	lda wCurrSpellIdx.w                                                  ; $bac8 : $ad, $0b, $0a
 	rep #ACCU_8                                                  ; $bacb : $c2, $20
 	sta $7ff456.l                                                  ; $bacd : $8f, $56, $f4, $7f
 	lda #$0012.w                                                  ; $bad1 : $a9, $12, $00
@@ -8682,7 +8682,7 @@ br_05_b8e2:
 	tdc                                                  ; $bad8 : $7b
 	sta $7ff42e.l                                                  ; $bad9 : $8f, $2e, $f4, $7f
 	lda $7ff456.l                                                  ; $badd : $af, $56, $f4, $7f
-	sta $0a0b.w                                                  ; $bae1 : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $bae1 : $8d, $0b, $0a
 	sep #ACCU_8                                                  ; $bae4 : $e2, $20
 	jsr $81f414.l                                                  ; $bae6 : $22, $14, $f4, $81
 	jsr Call_05_9510.l                                                  ; $baea : $22, $10, $95, $85
@@ -8694,7 +8694,7 @@ br_05_b8e2:
 br_05_baf7:
 	tdc                                                  ; $baf7 : $7b
 	stz $1269.w                                                  ; $baf8 : $9c, $69, $12
-	lda $0a0b.w                                                  ; $bafb : $ad, $0b, $0a
+	lda wCurrSpellIdx.w                                                  ; $bafb : $ad, $0b, $0a
 	rep #ACCU_8                                                  ; $bafe : $c2, $20
 	sta $7ff456.l                                                  ; $bb00 : $8f, $56, $f4, $7f
 	lda #$0002.w                                                  ; $bb04 : $a9, $02, $00

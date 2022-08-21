@@ -1920,7 +1920,7 @@ Call_00_8b3f:
 Call_00_8b57:
 	rep #ACCU_8                                                  ; $8b57 : $c2, $20
 	lda ($56)                                                  ; $8b59 : $b2, $56
-	sta $0a0b.w                                                  ; $8b5b : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $8b5b : $8d, $0b, $0a
 	sep #ACCU_8                                                  ; $8b5e : $e2, $20
 	phy                                                  ; $8b60 : $5a
 	jsr $81f414.l                                                  ; $8b61 : $22, $14, $f4, $81
@@ -5916,7 +5916,7 @@ br_00_a46e:
 	jsr AequNextScriptByte.w                                                  ; $a489 : $20, $b7, $c0
 	pha                                                  ; $a48c : $48
 	jsr AequNextScriptByte.w                                                  ; $a48d : $20, $b7, $c0
-	sta $0a0b.w                                                  ; $a490 : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $a490 : $8d, $0b, $0a
 	pla                                                  ; $a493 : $68
 	phy                                                  ; $a494 : $5a
 	jsr $82fd3d.l                                                  ; $a495 : $22, $3d, $fd, $82

@@ -16726,7 +16726,7 @@ br_23_dc3f:
 	ora $041700.l                                                  ; $dc48 : $0f, $00, $17, $04
 	asl                                                  ; $dc4c : $0a
 	ora ($1c, X)                                                  ; $dc4d : $01, $1c
-	asl $0a0b.w                                                  ; $dc4f : $0e, $0b, $0a
+	asl wCurrSpellIdx.w                                                  ; $dc4f : $0e, $0b, $0a
 	tcs                                                  ; $dc52 : $1b
 	tcs                                                  ; $dc53 : $1b
 	phd                                                  ; $dc54 : $0b

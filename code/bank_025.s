@@ -10351,7 +10351,7 @@ br_25_b800:
 	pha                                                  ; $b827 : $48
 	lda ($c0, S), Y                                                  ; $b828 : $b3, $c0
 	lda [$85]                                                  ; $b82a : $a7, $85
-	stz $0a0b.w                                                  ; $b82c : $9c, $0b, $0a
+	stz wCurrSpellIdx.w                                                  ; $b82c : $9c, $0b, $0a
 	asl $9f, X                                                  ; $b82f : $16, $9f
 
 br_25_b831:

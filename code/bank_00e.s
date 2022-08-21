@@ -9175,7 +9175,7 @@ br_0e_c0c5:
 
 br_0e_c0e1:
 	lda $7fd4ef.l                                                  ; $c0e1 : $af, $ef, $d4, $7f
-	sta $0a0b.w                                                  ; $c0e5 : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $c0e5 : $8d, $0b, $0a
 	txa                                                  ; $c0e8 : $8a
 	phx                                                  ; $c0e9 : $da
 	jsr $82fd3d.l                                                  ; $c0ea : $22, $3d, $fd, $82
@@ -9346,7 +9346,7 @@ Call_0e_c1de:
 	bpl br_0e_c20a                                                  ; $c1f8 : $10, $10
 
 	lda $7fd4ef.l                                                  ; $c1fa : $af, $ef, $d4, $7f
-	sta $0a0b.w                                                  ; $c1fe : $8d, $0b, $0a
+	sta wCurrSpellIdx.w                                                  ; $c1fe : $8d, $0b, $0a
 	jsr $81f414.l                                                  ; $c201 : $22, $14, $f4, $81
 
 Call_0e_c205:
@@ -12221,7 +12221,7 @@ br_0e_d4c1:
 	ora ($00, X)                                                  ; $d595 : $01, $00
 	tax                                                  ; $d597 : $aa
 	cmp $09, X                                                  ; $d598 : $d5, $09
-	and $0a0b.w, X                                                  ; $d59a : $3d, $0b, $0a
+	and wCurrSpellIdx.w, X                                                  ; $d59a : $3d, $0b, $0a
 	.db $30, $7a                                                  ; $d59d : $30, $7a
 
 	tdc                                                  ; $d59f : $7b

@@ -3754,7 +3754,7 @@ br_14_9d3d:
 	ora [$0e], Y                                                  ; $9d73 : $17, $0e
 	asl $0d18.w                                                  ; $9d75 : $0e, $18, $0d
 	asl                                                  ; $9d78 : $0a
-	ora $0a0b.w, Y                                                  ; $9d79 : $19, $0b, $0a
+	ora wCurrSpellIdx.w, Y                                                  ; $9d79 : $19, $0b, $0a
 	ina                                                  ; $9d7c : $1a
 	asl $1b12.w                                                  ; $9d7d : $0e, $12, $1b
 	ora ($16)                                                  ; $9d80 : $12, $16

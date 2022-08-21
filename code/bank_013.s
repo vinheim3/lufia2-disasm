@@ -2333,7 +2333,7 @@ br_13_9104:
 	.db $00                                                  ; $9209 : $00
 	.db $00                                                  ; $920a : $00
 	sbc $14023f.l, X                                                  ; $920b : $ff, $3f, $02, $14
-	ora $0a0b.w, X                                                  ; $920f : $1d, $0b, $0a
+	ora wCurrSpellIdx.w, X                                                  ; $920f : $1d, $0b, $0a
 	sbc $ff0000.l, X                                                  ; $9212 : $ff, $00, $00, $ff
 	rti                                                  ; $9216 : $40
 
@@ -15421,7 +15421,7 @@ br_13_fca4:
 	rol $0908.w                                                  ; $fcaa : $2e, $08, $09
 	bit $0a09.w                                                  ; $fcad : $2c, $09, $0a
 	bit $0b0a.w                                                  ; $fcb0 : $2c, $0a, $0b
-	bit $0a0b.w                                                  ; $fcb3 : $2c, $0b, $0a
+	bit wCurrSpellIdx.w                                                  ; $fcb3 : $2c, $0b, $0a
 	rol                                                  ; $fcb6 : $2a
 	tsb $2a0b.w                                                  ; $fcb7 : $0c, $0b, $2a
 	ora $290b.w                                                  ; $fcba : $0d, $0b, $29
