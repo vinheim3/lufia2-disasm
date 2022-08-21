@@ -6653,7 +6653,7 @@ br_0e_b04f:
 	tsb $05b5.w                                                  ; $b061 : $0c, $b5, $05
 	lda #$40.b                                                  ; $b064 : $a9, $40
 	tsb $05b3.w                                                  ; $b066 : $0c, $b3, $05
-	lda $05ac.w                                                  ; $b069 : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $b069 : $ad, $ac, $05
 	cmp #$f1.b                                                  ; $b06c : $c9, $f1
 	beq br_0e_b074                                                  ; $b06e : $f0, $04
 
@@ -6671,7 +6671,7 @@ br_0e_b07c:
 
 
 br_0e_b081:
-	lda $05ac.w                                                  ; $b081 : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $b081 : $ad, $ac, $05
 	sta $09ca.w                                                  ; $b084 : $8d, $ca, $09
 
 br_0e_b087:
@@ -7847,7 +7847,7 @@ br_0e_b7e1:
 	stz $58                                                  ; $b7e6 : $64, $58
 	stz $59                                                  ; $b7e8 : $64, $59
 	tdc                                                  ; $b7ea : $7b
-	lda $05ac.w                                                  ; $b7eb : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $b7eb : $ad, $ac, $05
 	cmp #$02.b                                                  ; $b7ee : $c9, $02
 	bcc br_0e_b840                                                  ; $b7f0 : $90, $4e
 
@@ -8128,7 +8128,7 @@ br_0e_b970:
 	lda $3bba.w                                                  ; $b9ee : $ad, $ba, $3b
 	sta $7ff8a0.l                                                  ; $b9f1 : $8f, $a0, $f8, $7f
 	lda $3810.w                                                  ; $b9f5 : $ad, $10, $38
-	sta $05ac.w                                                  ; $b9f8 : $8d, $ac, $05
+	sta wCurrRoomIdx.w                                                  ; $b9f8 : $8d, $ac, $05
 	stz $05ad.w                                                  ; $b9fb : $9c, $ad, $05
 	lda $3811.w                                                  ; $b9fe : $ad, $11, $38
 	sta $05aa.w                                                  ; $ba01 : $8d, $aa, $05
@@ -8179,7 +8179,7 @@ br_0e_b970:
 	sta $3bb9.w                                                  ; $ba65 : $8d, $b9, $3b
 	lda $7ff8a0.l                                                  ; $ba68 : $af, $a0, $f8, $7f
 	sta $3bba.w                                                  ; $ba6c : $8d, $ba, $3b
-	lda $05ac.w                                                  ; $ba6f : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $ba6f : $ad, $ac, $05
 	sta $3810.w                                                  ; $ba72 : $8d, $10, $38
 	lda $05aa.w                                                  ; $ba75 : $ad, $aa, $05
 	sta $3811.w                                                  ; $ba78 : $8d, $11, $38
@@ -8259,7 +8259,7 @@ Call_0e_bb05:
 	lda $05fa.w, X                                                  ; $bb0c : $bd, $fa, $05
 	sec                                                  ; $bb0f : $38
 	sbc #$50.b                                                  ; $bb10 : $e9, $50
-	jsr $818351.l                                                  ; $bb12 : $22, $51, $83, $81
+	jsr FillAnEnemySetupSlot.l                                                  ; $bb12 : $22, $51, $83, $81
 
 br_0e_bb16:
 	rtl                                                  ; $bb16 : $6b
@@ -8384,7 +8384,7 @@ br_0e_bbd1:
 	bne br_0e_bbfb                                                  ; $bbd5 : $d0, $24
 
 	lda $089d.w                                                  ; $bbd7 : $ad, $9d, $08
-	cmp $05ac.w                                                  ; $bbda : $cd, $ac, $05
+	cmp wCurrRoomIdx.w                                                  ; $bbda : $cd, $ac, $05
 	bne br_0e_bbcf                                                  ; $bbdd : $d0, $f0
 
 	lda $08dd.w                                                  ; $bbdf : $ad, $dd, $08
@@ -8403,7 +8403,7 @@ br_0e_bbd1:
 	brl br_0e_bc97                                                  ; $bbf8 : $82, $9c, $00
 
 br_0e_bbfb:
-	lda $05ac.w                                                  ; $bbfb : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $bbfb : $ad, $ac, $05
 	sta $089d.w                                                  ; $bbfe : $8d, $9d, $08
 	lda $7fd0fe.l                                                  ; $bc01 : $af, $fe, $d0, $7f
 	sta $091d.w                                                  ; $bc05 : $8d, $1d, $09

@@ -11821,8 +11821,8 @@ Call_06_cd67:
 
 Call_06_cd91:
 	ldy #$0320.w                                                  ; $cd91 : $a0, $20, $03
-	sty $2181.w                                                  ; $cd94 : $8c, $81, $21
-	stz $2183.w                                                  ; $cd97 : $9c, $83, $21
+	sty WMADDL.w                                                  ; $cd94 : $8c, $81, $21
+	stz WMADDH.w                                                  ; $cd97 : $9c, $83, $21
 	stz $4370.w                                                  ; $cd9a : $9c, $70, $43
 	lda #$80.b                                                  ; $cd9d : $a9, $80
 	sta $4371.w                                                  ; $cd9f : $8d, $71, $43
@@ -11848,7 +11848,7 @@ Call_06_cd91:
 
 br_06_cdd8:
 	ldy #$0500.w                                                  ; $cdd8 : $a0, $00, $05
-	sty $2181.w                                                  ; $cddb : $8c, $81, $21
+	sty WMADDL.w                                                  ; $cddb : $8c, $81, $21
 	ldy #$c000.w                                                  ; $cdde : $a0, $00, $c0
 	sty $4372.w                                                  ; $cde1 : $8c, $72, $43
 	lda #$a6.b                                                  ; $cde4 : $a9, $a6
@@ -11958,8 +11958,8 @@ Call_06_ce68:
 	lda #$80.b                                                  ; $cea2 : $a9, $80
 	sta MDMAEN.w                                                  ; $cea4 : $8d, $0b, $42
 	ldy #$0320.w                                                  ; $cea7 : $a0, $20, $03
-	sty $2181.w                                                  ; $ceaa : $8c, $81, $21
-	stz $2183.w                                                  ; $cead : $9c, $83, $21
+	sty WMADDL.w                                                  ; $ceaa : $8c, $81, $21
+	stz WMADDH.w                                                  ; $cead : $9c, $83, $21
 	stz $4370.w                                                  ; $ceb0 : $9c, $70, $43
 	lda #$80.b                                                  ; $ceb3 : $a9, $80
 	sta $4371.w                                                  ; $ceb5 : $8d, $71, $43

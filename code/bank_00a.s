@@ -7670,7 +7670,7 @@ Call_0a_bca8:
 	jsr $208d.w                                                  ; $be37 : $20, $8d, $20
 	asl $47                                                  ; $be3a : $06, $47
 	ora $c0, S                                                  ; $be3c : $03, $c0
-	ror $2180.w                                                  ; $be3e : $6e, $80, $21
+	ror WMDATA.w                                                  ; $be3e : $6e, $80, $21
 	ora ($13, X)                                                  ; $be41 : $01, $13
 	eor ($05)                                                  ; $be43 : $52, $05
 	cpy $8a                                                  ; $be45 : $c4, $8a

@@ -137,7 +137,13 @@ wJoy2PrevHeld: ; $0560
     dw
 
 w0562:
-    ds $692-$562
+    ds $ac-$62
+
+wCurrRoomIdx: ; $05ac
+    db
+
+w05ad:
+    ds $692-$5ad
 
 ; todo: unknown size
 wEntityMovementDirs: ; $0692
@@ -152,7 +158,13 @@ wCurrScriptBank: ; $09b9
     db
 
 w09ba:
-    ds $a06-$9ba
+    ds $f2-$ba
+
+wCurrInBattleEnemyIdx: ; $09f2
+    db
+
+w09f3:
+    ds $a06-$9f3
 
 wCurrItemIdx: ; $0a06
     dw
@@ -169,6 +181,12 @@ w0a8e:
 
 wNotInCode_PlayerHealth: ; $0bbe
     db
+
+w0bbf:
+    ds $1345-$bbf
+
+wInBattleEnemyIdxes: ; $1345
+    ds NUM_ENEMIES_IN_BATTLE
 
 .ends
 

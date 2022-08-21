@@ -45,10 +45,10 @@ br_03_8036:
 	beq br_03_8062                                                  ; $803b : $f0, $25
 
 	rep #ACCU_8                                                  ; $803d : $c2, $20
-	lda $05ac.w                                                  ; $803f : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $803f : $ad, $ac, $05
 	pha                                                  ; $8042 : $48
 	lda $05ae.w                                                  ; $8043 : $ad, $ae, $05
-	sta $05ac.w                                                  ; $8046 : $8d, $ac, $05
+	sta wCurrRoomIdx.w                                                  ; $8046 : $8d, $ac, $05
 	pla                                                  ; $8049 : $68
 	sta $05ae.w                                                  ; $804a : $8d, $ae, $05
 	sep #ACCU_8                                                  ; $804d : $e2, $20
@@ -604,7 +604,7 @@ br_03_83eb:
 	cmp #$01.b                                                  ; $8405 : $c9, $01
 	bne br_03_8425                                                  ; $8407 : $d0, $1c
 
-	lda $05ac.w                                                  ; $8409 : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $8409 : $ad, $ac, $05
 	cmp #$f1.b                                                  ; $840c : $c9, $f1
 	beq br_03_8414                                                  ; $840e : $f0, $04
 
@@ -4781,7 +4781,7 @@ br_03_9e75:
 	lda #$40.b                                                  ; $9e91 : $a9, $40
 	sta $0005b2.l                                                  ; $9e93 : $8f, $b2, $05, $00
 	lda #$f1.b                                                  ; $9e97 : $a9, $f1
-	sta $05ac.w                                                  ; $9e99 : $8d, $ac, $05
+	sta wCurrRoomIdx.w                                                  ; $9e99 : $8d, $ac, $05
 	lda #$01.b                                                  ; $9e9c : $a9, $01
 	trb $05b6.w                                                  ; $9e9e : $1c, $b6, $05
 	rtl                                                  ; $9ea1 : $6b
@@ -6331,7 +6331,7 @@ br_03_a8de:
 	sbc #$10.b                                                  ; $a8f1 : $e9, $10
 	tax                                                  ; $a8f3 : $aa
 	lda $085e.w, X                                                  ; $a8f4 : $bd, $5e, $08
-	cmp $05ac.w                                                  ; $a8f7 : $cd, $ac, $05
+	cmp wCurrRoomIdx.w                                                  ; $a8f7 : $cd, $ac, $05
 	bne br_03_a96b                                                  ; $a8fa : $d0, $6f
 
 	lda $089e.w, X                                                  ; $a8fc : $bd, $9e, $08
@@ -7007,7 +7007,7 @@ br_03_aca1:
 	bne br_03_acef                                                  ; $accb : $d0, $22
 
 	lda #$02.b                                                  ; $accd : $a9, $02
-	sta $05ac.w                                                  ; $accf : $8d, $ac, $05
+	sta wCurrRoomIdx.w                                                  ; $accf : $8d, $ac, $05
 	sta $05ae.w                                                  ; $acd2 : $8d, $ae, $05
 	stz $05b2.w                                                  ; $acd5 : $9c, $b2, $05
 	lda #$01.b                                                  ; $acd8 : $a9, $01
@@ -7086,7 +7086,7 @@ br_03_ad7a:
 	lda #$01.b                                                  ; $ad8c : $a9, $01
 	jsr $82c352.l                                                  ; $ad8e : $22, $52, $c3, $82
 	lda #$68.b                                                  ; $ad92 : $a9, $68
-	sta $05ac.w                                                  ; $ad94 : $8d, $ac, $05
+	sta wCurrRoomIdx.w                                                  ; $ad94 : $8d, $ac, $05
 	stz $05b2.w                                                  ; $ad97 : $9c, $b2, $05
 	lda #$02.b                                                  ; $ad9a : $a9, $02
 	sta $05b8.w                                                  ; $ad9c : $8d, $b8, $05
@@ -7098,7 +7098,7 @@ br_03_ad7a:
 
 br_03_adab:
 	lda #$03.b                                                  ; $adab : $a9, $03
-	sta $05ac.w                                                  ; $adad : $8d, $ac, $05
+	sta wCurrRoomIdx.w                                                  ; $adad : $8d, $ac, $05
 	stz $05b2.w                                                  ; $adb0 : $9c, $b2, $05
 	lda #$02.b                                                  ; $adb3 : $a9, $02
 	sta $05b8.w                                                  ; $adb5 : $8d, $b8, $05
@@ -7697,7 +7697,7 @@ br_03_b1da:
 	brl br_03_b2b1                                                  ; $b1f3 : $82, $bb, $00
 
 br_03_b1f6:
-	lda $05ac.w                                                  ; $b1f6 : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $b1f6 : $ad, $ac, $05
 	cmp #$02.b                                                  ; $b1f9 : $c9, $02
 	bcs br_03_b254                                                  ; $b1fb : $b0, $57
 
@@ -7880,7 +7880,7 @@ br_03_b34f:
 
 	jsr Call_03_ab4f.l                                                  ; $b356 : $22, $4f, $ab, $83
 	lda $085e.w, X                                                  ; $b35a : $bd, $5e, $08
-	cmp $05ac.w                                                  ; $b35d : $cd, $ac, $05
+	cmp wCurrRoomIdx.w                                                  ; $b35d : $cd, $ac, $05
 	bne br_03_b39f                                                  ; $b360 : $d0, $3d
 
 	ldy $a7                                                  ; $b362 : $a4, $a7
@@ -7917,7 +7917,7 @@ br_03_b39f:
 	bpl br_03_b34f                                                  ; $b3a0 : $10, $ad
 
 	lda $089d.w                                                  ; $b3a2 : $ad, $9d, $08
-	cmp $05ac.w                                                  ; $b3a5 : $cd, $ac, $05
+	cmp wCurrRoomIdx.w                                                  ; $b3a5 : $cd, $ac, $05
 	bne br_03_b3cf                                                  ; $b3a8 : $d0, $25
 
 	jsr $8ebc99.l                                                  ; $b3aa : $22, $99, $bc, $8e
@@ -8083,7 +8083,7 @@ br_03_b500:
 
 Call_03_b503:
 	tdc                                                  ; $b503 : $7b
-	lda $05ac.w                                                  ; $b504 : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $b504 : $ad, $ac, $05
 	jsr $80e898.l                                                  ; $b507 : $22, $98, $e8, $80
 	ora $097b.w, X                                                  ; $b50b : $1d, $7b, $09
 	sta $097b.w, X                                                  ; $b50e : $9d, $7b, $09
@@ -8132,7 +8132,7 @@ Call_03_b53b:
 	bit #$01.b                                                  ; $b541 : $89, $01
 	bne br_03_b57f                                                  ; $b543 : $d0, $3a
 
-	lda $05ac.w                                                  ; $b545 : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $b545 : $ad, $ac, $05
 	jsr $80eae7.l                                                  ; $b548 : $22, $e7, $ea, $80
 	lda $7fd012.l                                                  ; $b54c : $af, $12, $d0, $7f
 	sta WRMPYA.w                                                  ; $b550 : $8d, $02, $42
@@ -8194,7 +8194,7 @@ Call_03_b5ad:
 	php                                                  ; $b5ad : $08
 	sep #ACCU_8                                                  ; $b5ae : $e2, $20
 	tdc                                                  ; $b5b0 : $7b
-	lda $05ac.w                                                  ; $b5b1 : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $b5b1 : $ad, $ac, $05
 	rep #ACCU_8|IDX_8                                                  ; $b5b4 : $c2, $30
 	asl                                                  ; $b5b6 : $0a
 	asl                                                  ; $b5b7 : $0a
@@ -8232,9 +8232,9 @@ Call_03_b5d3:
 	bra br_03_b610                                                  ; $b5f5 : $80, $19
 
 br_03_b5f7:
-	lda $05ac.w                                                  ; $b5f7 : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $b5f7 : $ad, $ac, $05
 	asl                                                  ; $b5fa : $0a
-	adc $05ac.w                                                  ; $b5fb : $6d, $ac, $05
+	adc wCurrRoomIdx.w                                                  ; $b5fb : $6d, $ac, $05
 	tax                                                  ; $b5fe : $aa
 	sep #ACCU_8                                                  ; $b5ff : $e2, $20
 	lda $cffcbe.l, X                                                  ; $b601 : $bf, $be, $fc, $cf
@@ -8450,7 +8450,7 @@ Call_03_b76e:
 	lda #$7e.b                                                  ; $b76f : $a9, $7e
 	pha                                                  ; $b771 : $48
 	plb                                                  ; $b772 : $ab
-	lda $05ac.w                                                  ; $b773 : $ad, $ac, $05
+	lda wCurrRoomIdx.w                                                  ; $b773 : $ad, $ac, $05
 	sta $05b4.w                                                  ; $b776 : $8d, $b4, $05
 	lda $f006.w, X                                                  ; $b779 : $bd, $06, $f0
 	sta $0005b0.l                                                  ; $b77c : $8f, $b0, $05, $00

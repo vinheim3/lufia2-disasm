@@ -1114,9 +1114,9 @@ br_04_8789:
 	plb                                                  ; $878c : $ab
 	rep #IDX_8                                                  ; $878d : $c2, $10
 	ldx #$b000.w                                                  ; $878f : $a2, $00, $b0
-	stx $2181.w                                                  ; $8792 : $8e, $81, $21
+	stx WMADDL.w                                                  ; $8792 : $8e, $81, $21
 	lda #$7f.b                                                  ; $8795 : $a9, $7f
-	sta $2183.w                                                  ; $8797 : $8d, $83, $21
+	sta WMADDH.w                                                  ; $8797 : $8d, $83, $21
 	lda #$08.b                                                  ; $879a : $a9, $08
 	trb $09a7.w                                                  ; $879c : $1c, $a7, $09
 	ldx $0b6a.w                                                  ; $879f : $ae, $6a, $0b
@@ -1219,7 +1219,7 @@ br_04_882f:
 
 br_04_884a:
 	lda [$5d], Y                                                  ; $884a : $b7, $5d
-	sta $2180.w                                                  ; $884c : $8d, $80, $21
+	sta WMDATA.w                                                  ; $884c : $8d, $80, $21
 	iny                                                  ; $884f : $c8
 	cpy $58                                                  ; $8850 : $c4, $58
 	bcc br_04_884a                                                  ; $8852 : $90, $f6
@@ -1284,17 +1284,17 @@ br_04_888e:
 	cmp #$ffff.w                                                  ; $8893 : $c9, $ff, $ff
 	beq br_04_88bb                                                  ; $8896 : $f0, $23
 
-	sta $2181.w                                                  ; $8898 : $8d, $81, $21
+	sta WMADDL.w                                                  ; $8898 : $8d, $81, $21
 	lda $8b5c.w, X                                                  ; $889b : $bd, $5c, $8b
 	sta $58                                                  ; $889e : $85, $58
 	sep #ACCU_8                                                  ; $88a0 : $e2, $20
 	lda $8b5b.w, X                                                  ; $88a2 : $bd, $5b, $8b
-	sta $2183.w                                                  ; $88a5 : $8d, $83, $21
+	sta WMADDH.w                                                  ; $88a5 : $8d, $83, $21
 	ldy #$0000.w                                                  ; $88a8 : $a0, $00, $00
 	tdc                                                  ; $88ab : $7b
 
 br_04_88ac:
-	sta $2180.w                                                  ; $88ac : $8d, $80, $21
+	sta WMDATA.w                                                  ; $88ac : $8d, $80, $21
 	iny                                                  ; $88af : $c8
 	cpy $58                                                  ; $88b0 : $c4, $58
 	bcc br_04_88ac                                                  ; $88b2 : $90, $f8
@@ -1394,9 +1394,9 @@ br_04_894b:
 
 br_04_8959:
 	ldx #$e202.w                                                  ; $8959 : $a2, $02, $e2
-	stx $2181.w                                                  ; $895c : $8e, $81, $21
+	stx WMADDL.w                                                  ; $895c : $8e, $81, $21
 	lda #$7e.b                                                  ; $895f : $a9, $7e
-	sta $2183.w                                                  ; $8961 : $8d, $83, $21
+	sta WMADDH.w                                                  ; $8961 : $8d, $83, $21
 	rep #ACCU_8                                                  ; $8964 : $c2, $20
 	ldy #$0000.w                                                  ; $8966 : $a0, $00, $00
 	sty $58                                                  ; $8969 : $84, $58
@@ -1413,10 +1413,10 @@ br_04_8974:
 	phx                                                  ; $897a : $da
 	inc $58                                                  ; $897b : $e6, $58
 	sep #ACCU_8                                                  ; $897d : $e2, $20
-	sta $2180.w                                                  ; $897f : $8d, $80, $21
+	sta WMDATA.w                                                  ; $897f : $8d, $80, $21
 	xba                                                  ; $8982 : $eb
 	ora #$02.b                                                  ; $8983 : $09, $02
-	sta $2180.w                                                  ; $8985 : $8d, $80, $21
+	sta WMDATA.w                                                  ; $8985 : $8d, $80, $21
 	txa                                                  ; $8988 : $8a
 	lsr                                                  ; $8989 : $4a
 	clc                                                  ; $898a : $18
@@ -1480,9 +1480,9 @@ br_04_89c5:
 br_04_89fa:
 	sep #ACCU_8                                                  ; $89fa : $e2, $20
 	ldx #$b000.w                                                  ; $89fc : $a2, $00, $b0
-	stx $2181.w                                                  ; $89ff : $8e, $81, $21
+	stx WMADDL.w                                                  ; $89ff : $8e, $81, $21
 	lda #$7f.b                                                  ; $8a02 : $a9, $7f
-	sta $2183.w                                                  ; $8a04 : $8d, $83, $21
+	sta WMADDH.w                                                  ; $8a04 : $8d, $83, $21
 	ldx #$0000.w                                                  ; $8a07 : $a2, $00, $00
 
 br_04_8a0a:
@@ -1500,7 +1500,7 @@ br_04_8a0a:
 	ldy #$0000.w                                                  ; $8a22 : $a0, $00, $00
 
 br_04_8a25:
-	lda $2180.w                                                  ; $8a25 : $ad, $80, $21
+	lda WMDATA.w                                                  ; $8a25 : $ad, $80, $21
 	sta [$5d], Y                                                  ; $8a28 : $97, $5d
 	iny                                                  ; $8a2a : $c8
 	cpy $58                                                  ; $8a2b : $c4, $58
@@ -1642,9 +1642,9 @@ br_04_8b0f:
 	inc $58                                                  ; $8b0f : $e6, $58
 	lda $54                                                  ; $8b11 : $a5, $54
 	sep #ACCU_8                                                  ; $8b13 : $e2, $20
-	sta $2180.w                                                  ; $8b15 : $8d, $80, $21
+	sta WMDATA.w                                                  ; $8b15 : $8d, $80, $21
 	xba                                                  ; $8b18 : $eb
-	sta $2180.w                                                  ; $8b19 : $8d, $80, $21
+	sta WMDATA.w                                                  ; $8b19 : $8d, $80, $21
 	rep #ACCU_8                                                  ; $8b1c : $c2, $20
 	sec                                                  ; $8b1e : $38
 
@@ -4368,13 +4368,13 @@ br_04_9d3d:
 	sta $00b2.w                                                  ; $9d4a : $8d, $b2, $00
 	sep #ACCU_8                                                  ; $9d4d : $e2, $20
 	lda $0a38.w                                                  ; $9d4f : $ad, $38, $0a
-	sta $09f2.w                                                  ; $9d52 : $8d, $f2, $09
+	sta wCurrInBattleEnemyIdx.w                                                  ; $9d52 : $8d, $f2, $09
 	jsr $81fc0b.l                                                  ; $9d55 : $22, $0b, $fc, $81
 	ldy #$0000.w                                                  ; $9d59 : $a0, $00, $00
 	tdc                                                  ; $9d5c : $7b
 	sta $134b.w, Y                                                  ; $9d5d : $99, $4b, $13
 	lda $0a38.w                                                  ; $9d60 : $ad, $38, $0a
-	sta $1345.w, Y                                                  ; $9d63 : $99, $45, $13
+	sta wInBattleEnemyIdxes.w, Y                                                  ; $9d63 : $99, $45, $13
 	jsr $81fbc6.l                                                  ; $9d66 : $22, $c6, $fb, $81
 	jsr $81fb8e.l                                                  ; $9d6a : $22, $8e, $fb, $81
 	sta $1339.w, Y                                                  ; $9d6e : $99, $39, $13
@@ -4429,13 +4429,13 @@ br_04_9da0:
 br_04_9dd2:
 	ldx #$2800.w                                                  ; $9dd2 : $a2, $00, $28
 	ldy #$0200.w                                                  ; $9dd5 : $a0, $00, $02
-	stx $2181.w                                                  ; $9dd8 : $8e, $81, $21
-	stz $2183.w                                                  ; $9ddb : $9c, $83, $21
+	stx WMADDL.w                                                  ; $9dd8 : $8e, $81, $21
+	stz WMADDH.w                                                  ; $9ddb : $9c, $83, $21
 	lda #$01.b                                                  ; $9dde : $a9, $01
 
 br_04_9de0:
-	stz $2180.w                                                  ; $9de0 : $9c, $80, $21
-	sta $2180.w                                                  ; $9de3 : $8d, $80, $21
+	stz WMDATA.w                                                  ; $9de0 : $9c, $80, $21
+	sta WMDATA.w                                                  ; $9de3 : $8d, $80, $21
 	dey                                                  ; $9de6 : $88
 	bne br_04_9de0                                                  ; $9de7 : $d0, $f7
 
