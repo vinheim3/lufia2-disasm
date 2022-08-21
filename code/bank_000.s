@@ -513,33 +513,45 @@ br_00_833d:
 	rts                                                  ; $834b : $60
 
 
-Call_00_834c:
+; wWordInMultWordByByte.w - multiplicand 1
+; wByteInMultWordByByte.b - multiplicand 2
+; Returns result in wResultOfMultWordByByte.l
+MultplyWordByByte:
 	pha                                                  ; $834c : $48
 	phx                                                  ; $834d : $da
 	php                                                  ; $834e : $08
 	sep #ACCU_8                                                  ; $834f : $e2, $20
-	stz $53                                                  ; $8351 : $64, $53
-	lda $50                                                  ; $8353 : $a5, $50
+	stz wResultOfMultWordByByte+2                                                  ; $8351 : $64, $53
+
+; Set 2 multiplicands
+	lda wByteInMultWordByByte                                                  ; $8353 : $a5, $50
 	sta WRMPYA.w                                                  ; $8355 : $8d, $02, $42
-	lda $4e                                                  ; $8358 : $a5, $4e
+	lda wWordInMultWordByByte                                                  ; $8358 : $a5, $4e
 	sta WRMPYB.w                                                  ; $835a : $8d, $03, $42
-	lda $4f                                                  ; $835d : $a5, $4f
+
+; Load another 2 multiplicands
+	lda wWordInMultWordByByte+1                                                  ; $835d : $a5, $4f
 	xba                                                  ; $835f : $eb
-	lda $50                                                  ; $8360 : $a5, $50
+	lda wByteInMultWordByByte                                                  ; $8360 : $a5, $50
+
+; store 1st result in 51.w, while setting 2nd multiplicands
 	rep #ACCU_8|IDX_8                                                  ; $8362 : $c2, $30
 	ldx RDMPYL.w                                                  ; $8364 : $ae, $16, $42
 	sta WRMPYA.w                                                  ; $8367 : $8d, $02, $42
-	stx $51                                                  ; $836a : $86, $51
-	lda $52                                                  ; $836c : $a5, $52
+	stx wResultOfMultWordByByte                                                  ; $836a : $86, $51
+
+; add on high result
+	lda wResultOfMultWordByByte+1                                                  ; $836c : $a5, $52
 	clc                                                  ; $836e : $18
 	adc RDMPYL.w                                                  ; $836f : $6d, $16, $42
-	sta $52                                                  ; $8372 : $85, $52
+	sta wResultOfMultWordByByte+1                                                 ; $8372 : $85, $52
 	plp                                                  ; $8374 : $28
 	plx                                                  ; $8375 : $fa
 	pla                                                  ; $8376 : $68
 	rtl                                                  ; $8377 : $6b
 
 
+;
 	php                                                  ; $8378 : $08
 	rep #ACCU_8|IDX_8                                                  ; $8379 : $c2, $30
 	lda #$0000.w                                                  ; $837b : $a9, $00, $00
@@ -6009,7 +6021,7 @@ br_00_a508:
 	sep #ACCU_8                                                  ; $a577 : $e2, $20
 	jsr AequNextScriptByte.w                                                  ; $a579 : $20, $b7, $c0
 	sta $50                                                  ; $a57c : $85, $50
-	jsr Call_00_834c.l                                                  ; $a57e : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $a57e : $22, $4c, $83, $80
 	rep #ACCU_8                                                  ; $a582 : $c2, $20
 	lda $52                                                  ; $a584 : $a5, $52
 	clc                                                  ; $a586 : $18

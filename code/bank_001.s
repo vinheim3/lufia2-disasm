@@ -14570,7 +14570,7 @@ br_01_e308:
 	sta $50                                                  ; $e314 : $85, $50
 	phk                                                  ; $e316 : $4b
 	plb                                                  ; $e317 : $ab
-	jsr $80834c.l                                                  ; $e318 : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $e318 : $22, $4c, $83, $80
 	lda #$7e.b                                                  ; $e31c : $a9, $7e
 	pha                                                  ; $e31e : $48
 	plb                                                  ; $e31f : $ab

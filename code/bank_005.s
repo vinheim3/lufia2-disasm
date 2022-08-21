@@ -8498,7 +8498,7 @@ br_05_b8e2:
 	txa                                                  ; $b958 : $8a
 	eor #$ffff.w                                                  ; $b959 : $49, $ff, $ff
 	ina                                                  ; $b95c : $1a
-	sta $7ff462.l                                                  ; $b95d : $8f, $62, $f4, $7f
+	sta wPlayerDamageTaken.l                                                  ; $b95d : $8f, $62, $f4, $7f
 	lda #$0020.w                                                  ; $b961 : $a9, $20, $00
 	sta $7ff464.l                                                  ; $b964 : $8f, $64, $f4, $7f
 	jsr Call_05_bfbf.w                                                  ; $b968 : $20, $bf, $bf
@@ -8529,7 +8529,7 @@ br_05_b8e2:
 	sta $ca                                                  ; $b9a1 : $85, $ca
 	eor #$ffff.w                                                  ; $b9a3 : $49, $ff, $ff
 	ina                                                  ; $b9a6 : $1a
-	sta $7ff462.l                                                  ; $b9a7 : $8f, $62, $f4, $7f
+	sta wPlayerDamageTaken.l                                                  ; $b9a7 : $8f, $62, $f4, $7f
 	lda #$0020.w                                                  ; $b9ab : $a9, $20, $00
 	sta $7ff464.l                                                  ; $b9ae : $8f, $64, $f4, $7f
 	jsr Call_05_bfbf.w                                                  ; $b9b2 : $20, $bf, $bf
@@ -8541,7 +8541,7 @@ br_05_b8e2:
 	txa                                                  ; $b9bd : $8a
 	eor #$ffff.w                                                  ; $b9be : $49, $ff, $ff
 	ina                                                  ; $b9c1 : $1a
-	sta $7ff462.l                                                  ; $b9c2 : $8f, $62, $f4, $7f
+	sta wPlayerDamageTaken.l                                                  ; $b9c2 : $8f, $62, $f4, $7f
 	lda #$0020.w                                                  ; $b9c6 : $a9, $20, $00
 	sta $7ff464.l                                                  ; $b9c9 : $8f, $64, $f4, $7f
 	lda #$0020.w                                                  ; $b9cd : $a9, $20, $00
@@ -8942,7 +8942,7 @@ br_05_bcea:
 	sta $7ff454.l                                                  ; $bcf2 : $8f, $54, $f4, $7f
 	tdc                                                  ; $bcf6 : $7b
 	sta $7ff456.l                                                  ; $bcf7 : $8f, $56, $f4, $7f
-	lda $7ff462.l                                                  ; $bcfb : $af, $62, $f4, $7f
+	lda wPlayerDamageTaken.l                                                  ; $bcfb : $af, $62, $f4, $7f
 	bne br_05_bd21                                                  ; $bcff : $d0, $20
 
 	lda #$0004.w                                                  ; $bd01 : $a9, $04, $00
@@ -8958,7 +8958,7 @@ br_05_bcea:
 	adc $01, S                                                  ; $bd16 : $63, $01
 	eor #$ffff.w                                                  ; $bd18 : $49, $ff, $ff
 	ina                                                  ; $bd1b : $1a
-	sta $7ff462.l                                                  ; $bd1c : $8f, $62, $f4, $7f
+	sta wPlayerDamageTaken.l                                                  ; $bd1c : $8f, $62, $f4, $7f
 	pla                                                  ; $bd20 : $68
 
 br_05_bd21:
@@ -8971,7 +8971,7 @@ br_05_bd21:
 	lda #$2008.w                                                  ; $bd2c : $a9, $08, $20
 	eor $ca86c0.l, X                                                  ; $bd2f : $5f, $c0, $86, $ca
 	rep #ACCU_8                                                  ; $bd33 : $c2, $20
-	lda $7ff462.l                                                  ; $bd35 : $af, $62, $f4, $7f
+	lda wPlayerDamageTaken.l                                                  ; $bd35 : $af, $62, $f4, $7f
 	beq br_05_bd51                                                  ; $bd39 : $f0, $16
 
 	bpl br_05_bd4a                                                  ; $bd3b : $10, $0d
@@ -8989,7 +8989,7 @@ br_05_bd4a:
 	adc $ca                                                  ; $bd4b : $65, $ca
 
 br_05_bd4d:
-	sta $7ff462.l                                                  ; $bd4d : $8f, $62, $f4, $7f
+	sta wPlayerDamageTaken.l                                                  ; $bd4d : $8f, $62, $f4, $7f
 
 br_05_bd51:
 	jmp Jump_05_b45e.w                                                  ; $bd51 : $4c, $5e, $b4
@@ -9285,7 +9285,7 @@ Call_05_bf73:
 	sep #ACCU_8                                                  ; $bf75 : $e2, $20
 	lda $09fa.w                                                  ; $bf77 : $ad, $fa, $09
 	sta $50                                                  ; $bf7a : $85, $50
-	jsr $80834c.l                                                  ; $bf7c : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $bf7c : $22, $4c, $83, $80
 	lda $51                                                  ; $bf80 : $a5, $51
 	xba                                                  ; $bf82 : $eb
 	rep #ACCU_8                                                  ; $bf83 : $c2, $20
@@ -11762,7 +11762,7 @@ br_05_cec2:
 	tax                                                  ; $cece : $aa
 	lda $859e9b.l, X                                                  ; $cecf : $bf, $9b, $9e, $85
 	sta $50                                                  ; $ced3 : $85, $50
-	jsr $80834c.l                                                  ; $ced5 : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $ced5 : $22, $4c, $83, $80
 	rep #ACCU_8                                                  ; $ced9 : $c2, $20
 	lda $52                                                  ; $cedb : $a5, $52
 	eor #$ffff.w                                                  ; $cedd : $49, $ff, $ff
@@ -12069,63 +12069,61 @@ Call_05_d0cd:
 	jsr Call_05_c168.w                                                  ; $d0d7 : $20, $68, $c1
 	lda $7ff45a.l                                                  ; $d0da : $af, $5a, $f4, $7f
 	bit #$01.b                                                  ; $d0de : $89, $01
-	bne br_05_d116                                                  ; $d0e0 : $d0, $34
+	bne @br_d116                                                  ; $d0e0 : $d0, $34
 
 	bit #$10.b                                                  ; $d0e2 : $89, $10
-	beq br_05_d0f4                                                  ; $d0e4 : $f0, $0e
+	beq @br_d0f4                                                  ; $d0e4 : $f0, $0e
 
 	lda $000f.w, X                                                  ; $d0e6 : $bd, $0f, $00
 	bit #$80.b                                                  ; $d0e9 : $89, $80
-	beq br_05_d0f4                                                  ; $d0eb : $f0, $07
+	beq @br_d0f4                                                  ; $d0eb : $f0, $07
 
 	lda #$03.b                                                  ; $d0ed : $a9, $03
 	sta $0a2d.w                                                  ; $d0ef : $8d, $2d, $0a
-	bra br_05_d10a                                                  ; $d0f2 : $80, $16
+	bra @end_d10a                                                  ; $d0f2 : $80, $16
 
-br_05_d0f4:
+@br_d0f4:
 	lda $7ff45a.l                                                  ; $d0f4 : $af, $5a, $f4, $7f
 	bit #$20.b                                                  ; $d0f8 : $89, $20
-	beq br_05_d116                                                  ; $d0fa : $f0, $1a
+	beq @br_d116                                                  ; $d0fa : $f0, $1a
 
 	lda $000f.w, X                                                  ; $d0fc : $bd, $0f, $00
 	bit #$40.b                                                  ; $d0ff : $89, $40
-	beq br_05_d116                                                  ; $d101 : $f0, $13
+	beq @br_d116                                                  ; $d101 : $f0, $13
 
 	lda #$02.b                                                  ; $d103 : $a9, $02
 	sta $0a2d.w                                                  ; $d105 : $8d, $2d, $0a
-	bra br_05_d10a                                                  ; $d108 : $80, $00
+	bra @end_d10a                                                  ; $d108 : $80, $00
 
-Jump_05_d10a:
-br_05_d10a:
+@end_d10a:
 	lda $7ff45a.l                                                  ; $d10a : $af, $5a, $f4, $7f
 	ora #$01.b                                                  ; $d10e : $09, $01
 	sta $7ff45a.l                                                  ; $d110 : $8f, $5a, $f4, $7f
 	sec                                                  ; $d114 : $38
 	rts                                                  ; $d115 : $60
 
-
-br_05_d116:
+@br_d116:
 	lda $7ff463.l                                                  ; $d116 : $af, $63, $f4, $7f
-	bpl br_05_d13c                                                  ; $d11a : $10, $20
+	bpl @cont_d13c                                                  ; $d11a : $10, $20
 
 	lda $7ff44e.l                                                  ; $d11c : $af, $4e, $f4, $7f
 	eor $7ff450.l                                                  ; $d120 : $4f, $50, $f4, $7f
-	bmi br_05_d132                                                  ; $d124 : $30, $0c
+	bmi @br_d132                                                  ; $d124 : $30, $0c
 
 	lda #$64.b                                                  ; $d126 : $a9, $64
 	sta $7ff4bc.l                                                  ; $d128 : $8f, $bc, $f4, $7f
 	sta $7ff4c0.l                                                  ; $d12c : $8f, $c0, $f4, $7f
-	bra br_05_d13c                                                  ; $d130 : $80, $0a
+	bra @cont_d13c                                                  ; $d130 : $80, $0a
 
-br_05_d132:
+@br_d132:
 	lda #$14.b                                                  ; $d132 : $a9, $14
 	sta $7ff4bc.l                                                  ; $d134 : $8f, $bc, $f4, $7f
 	sta $7ff4c0.l                                                  ; $d138 : $8f, $c0, $f4, $7f
 
-br_05_d13c:
+@cont_d13c:
 	lda $7ff45a.l                                                  ; $d13c : $af, $5a, $f4, $7f
 	bit #$08.b                                                  ; $d140 : $89, $08
-	beq br_05_d17d                                                  ; $d142 : $f0, $39
+	beq @br_d17d                                                  ; $d142 : $f0, $39
 
 	rep #ACCU_8                                                  ; $d144 : $c2, $20
 	lda $0035.w, X                                                  ; $d146 : $bd, $35, $00
@@ -12134,10 +12132,10 @@ br_05_d13c:
 	sta $7ff4cc.l                                                  ; $d14d : $8f, $cc, $f4, $7f
 	sep #ACCU_8                                                  ; $d151 : $e2, $20
 	ldy $0045.w, X                                                  ; $d153 : $bc, $45, $00
-	beq br_05_d177                                                  ; $d156 : $f0, $1f
+	beq @br_d177                                                  ; $d156 : $f0, $1f
 
 	lda $0a13.w                                                  ; $d158 : $ad, $13, $0a
-	beq br_05_d17b                                                  ; $d15b : $f0, $1e
+	beq @cont_d17b                                                  ; $d15b : $f0, $1e
 
 	lda #$ff.b                                                  ; $d15d : $a9, $ff
 	sta $0a52.w                                                  ; $d15f : $8d, $52, $0a
@@ -12147,18 +12145,18 @@ br_05_d13c:
 	ldy $004c.w, X                                                  ; $d16b : $bc, $4c, $00
 	jsr $81fac9.l                                                  ; $d16e : $22, $c9, $fa, $81
 	stz $0a52.w                                                  ; $d172 : $9c, $52, $0a
-	bra br_05_d17b                                                  ; $d175 : $80, $04
+	bra @cont_d17b                                                  ; $d175 : $80, $04
 
-br_05_d177:
+@br_d177:
 	jsr Call_05_da11.l                                                  ; $d177 : $22, $11, $da, $85
 
-br_05_d17b:
-	bra br_05_d1bc                                                  ; $d17b : $80, $3f
+@cont_d17b:
+	bra @cont_d1bc                                                  ; $d17b : $80, $3f
 
-br_05_d17d:
+@br_d17d:
 	lda $7ff454.l                                                  ; $d17d : $af, $54, $f4, $7f
 	cmp #$0d.b                                                  ; $d181 : $c9, $0d
-	beq br_05_d1bc                                                  ; $d183 : $f0, $37
+	beq @cont_d1bc                                                  ; $d183 : $f0, $37
 
 	rep #ACCU_8                                                  ; $d185 : $c2, $20
 	lda $002b.w, X                                                  ; $d187 : $bd, $2b, $00
@@ -12167,10 +12165,10 @@ br_05_d17d:
 	sta $7ff4cc.l                                                  ; $d18e : $8f, $cc, $f4, $7f
 	sep #ACCU_8                                                  ; $d192 : $e2, $20
 	ldy $0045.w, X                                                  ; $d194 : $bc, $45, $00
-	beq br_05_d1b8                                                  ; $d197 : $f0, $1f
+	beq @br_d1b8                                                  ; $d197 : $f0, $1f
 
 	lda $0a13.w                                                  ; $d199 : $ad, $13, $0a
-	beq br_05_d1bc                                                  ; $d19c : $f0, $1e
+	beq @cont_d1bc                                                  ; $d19c : $f0, $1e
 
 	lda #$ff.b                                                  ; $d19e : $a9, $ff
 	sta $0a52.w                                                  ; $d1a0 : $8d, $52, $0a
@@ -12180,22 +12178,21 @@ br_05_d17d:
 	ldy $004c.w, X                                                  ; $d1ac : $bc, $4c, $00
 	jsr $81fac9.l                                                  ; $d1af : $22, $c9, $fa, $81
 	stz $0a52.w                                                  ; $d1b3 : $9c, $52, $0a
-	bra br_05_d1bc                                                  ; $d1b6 : $80, $04
+	bra @cont_d1bc                                                  ; $d1b6 : $80, $04
 
-br_05_d1b8:
+@br_d1b8:
 	jsr Call_05_da11.l                                                  ; $d1b8 : $22, $11, $da, $85
 
-br_05_d1bc:
+@cont_d1bc:
 	lda $7ff4d0.l                                                  ; $d1bc : $af, $d0, $f4, $7f
 	bit #$02.b                                                  ; $d1c0 : $89, $02
-	beq br_05_d1cc                                                  ; $d1c2 : $f0, $08
+	beq @br_d1cc                                                  ; $d1c2 : $f0, $08
 
 	lda #$03.b                                                  ; $d1c4 : $a9, $03
 	sta $0a2d.w                                                  ; $d1c6 : $8d, $2d, $0a
-	jmp Jump_05_d10a.w                                                  ; $d1c9 : $4c, $0a, $d1
+	jmp @end_d10a.w                                                  ; $d1c9 : $4c, $0a, $d1
 
-
-br_05_d1cc:
+@br_d1cc:
 	lda $7ff464.l                                                  ; $d1cc : $af, $64, $f4, $7f
 	jsr $808299.l                                                  ; $d1d0 : $22, $99, $82, $80
 	sta $7ff464.l                                                  ; $d1d4 : $8f, $64, $f4, $7f
@@ -12205,14 +12202,14 @@ br_05_d1cc:
 	lda #$64.b                                                  ; $d1e4 : $a9, $64
 	jsr $808299.l                                                  ; $d1e6 : $22, $99, $82, $80
 	cmp $7ff45e.l                                                  ; $d1ea : $cf, $5e, $f4, $7f
-	bcc br_05_d1fb                                                  ; $d1ee : $90, $0b
+	bcc @br_d1fb                                                  ; $d1ee : $90, $0b
 
 	rep #ACCU_8                                                  ; $d1f0 : $c2, $20
 	lda #$0010.w                                                  ; $d1f2 : $a9, $10, $00
 	sta $7ff460.l                                                  ; $d1f5 : $8f, $60, $f4, $7f
-	bra br_05_d20b                                                  ; $d1f9 : $80, $10
+	bra @cont_d20b                                                  ; $d1f9 : $80, $10
 
-br_05_d1fb:
+@br_d1fb:
 	lda $7ffab7.l                                                  ; $d1fb : $af, $b7, $fa, $7f
 	ina                                                  ; $d1ff : $1a
 	sta $7ffab7.l                                                  ; $d200 : $8f, $b7, $fa, $7f
@@ -12220,81 +12217,94 @@ br_05_d1fb:
 	tdc                                                  ; $d206 : $7b
 	sta $7ff4cc.l                                                  ; $d207 : $8f, $cc, $f4, $7f
 
-br_05_d20b:
+@cont_d20b:
+; eg 10 into 56.w
 	phx                                                  ; $d20b : $da
 	lda $7ff460.l                                                  ; $d20c : $af, $60, $f4, $7f
 	sta $56                                                  ; $d210 : $85, $56
-	lda $7ff462.l                                                  ; $d212 : $af, $62, $f4, $7f
-	sta $5a                                                  ; $d216 : $85, $5a
-	bpl br_05_d286                                                  ; $d218 : $10, $6c
 
+; eg -c, dont jump, put in 5a
+	lda wPlayerDamageTaken.l                                                  ; $d212 : $af, $62, $f4, $7f
+	sta $5a                                                  ; $d216 : $85, $5a
+	bpl @br_d286                                                  ; $d218 : $10, $6c
+
+; eg 000c * eg 10 just above = 0000c0
 	eor #$ffff.w                                                  ; $d21a : $49, $ff, $ff
 	ina                                                  ; $d21d : $1a
-	sta $4e                                                  ; $d21e : $85, $4e
+	sta wWordInMultWordByByte                                                  ; $d21e : $85, $4e
 	sep #ACCU_8                                                  ; $d220 : $e2, $20
 	lda $56                                                  ; $d222 : $a5, $56
-	sta $50                                                  ; $d224 : $85, $50
-	jsr $80834c.l                                                  ; $d226 : $22, $4c, $83, $80
+	sta wByteInMultWordByByte                                                  ; $d224 : $85, $50
+	jsr MultplyWordByByte.l                                                  ; $d226 : $22, $4c, $83, $80
+
+; divide result by 16
 	tdc                                                  ; $d22a : $7b
-	lda $53                                                  ; $d22b : $a5, $53
+	lda wResultOfMultWordByByte+2                                                  ; $d22b : $a5, $53
 	rep #ACCU_8                                                  ; $d22d : $c2, $20
 	lsr                                                  ; $d22f : $4a
-	ror $51                                                  ; $d230 : $66, $51
+	ror wResultOfMultWordByByte                                                  ; $d230 : $66, $51
 	lsr                                                  ; $d232 : $4a
-	ror $51                                                  ; $d233 : $66, $51
+	ror wResultOfMultWordByByte                                                  ; $d233 : $66, $51
 	lsr                                                  ; $d235 : $4a
-	ror $51                                                  ; $d236 : $66, $51
+	ror wResultOfMultWordByByte                                                  ; $d236 : $66, $51
 	lsr                                                  ; $d238 : $4a
-	ror $51                                                  ; $d239 : $66, $51
+	ror wResultOfMultWordByByte                                                  ; $d239 : $66, $51
 	sep #ACCU_8                                                  ; $d23b : $e2, $20
-	sta $53                                                  ; $d23d : $85, $53
-	bit #$ff.b                                                  ; $d23f : $89, $ff
-	beq br_05_d244                                                  ; $d241 : $f0, $01
+	sta wResultOfMultWordByByte+2                                                  ; $d23d : $85, $53
 
+; highest byte must be 0 or we brk
+	bit #$ff.b                                                  ; $d23f : $89, $ff
+	beq +                                                  ; $d241 : $f0, $01
+; todo: unknown
 	.db $00                                                  ; $d243 : $00
 
-br_05_d244:
-	ldx $51                                                  ; $d244 : $a6, $51
+; do above /16 val * $7ff464.b(eg 27) = eg 1d4
++	ldx wResultOfMultWordByByte                                                  ; $d244 : $a6, $51
 	stx $54                                                  ; $d246 : $86, $54
-	stx $4e                                                  ; $d248 : $86, $4e
+	stx wWordInMultWordByByte                                                  ; $d248 : $86, $4e
 	lda $7ff464.l                                                  ; $d24a : $af, $64, $f4, $7f
-	sta $50                                                  ; $d24e : $85, $50
-	jsr $80834c.l                                                  ; $d250 : $22, $4c, $83, $80
+	sta wByteInMultWordByByte                                                  ; $d24e : $85, $50
+	jsr MultplyWordByByte.l                                                  ; $d250 : $22, $4c, $83, $80
 	rep #ACCU_8                                                  ; $d254 : $c2, $20
+
+; eg 10, putting 8 in ca
 	lda $7ff4cc.l                                                  ; $d256 : $af, $cc, $f4, $7f
 	lsr                                                  ; $d25a : $4a
 	sta $ca                                                  ; $d25b : $85, $ca
+
+; get above /16 val, eg c + 1 from mult - 8 = 5, /2 to give 2
 	lda $54                                                  ; $d25d : $a5, $54
 	clc                                                  ; $d25f : $18
-	adc $52                                                  ; $d260 : $65, $52
+	adc wResultOfMultWordByByte+1                                                  ; $d260 : $65, $52
 	sta $54                                                  ; $d262 : $85, $54
 	sec                                                  ; $d264 : $38
 	sbc $ca                                                  ; $d265 : $e5, $ca
-	bcs br_05_d26a                                                  ; $d267 : $b0, $01
-
+	bcs +                                                  ; $d267 : $b0, $01
 	tdc                                                  ; $d269 : $7b
++	lsr                                                  ; $d26a : $4a
+	sta wWordInMultWordByByte                                                  ; $d26b : $85, $4e
 
-br_05_d26a:
-	lsr                                                  ; $d26a : $4a
-	sta $4e                                                  ; $d26b : $85, $4e
+; do word above * 7ff452 (eg 60 to give c0)
 	sep #ACCU_8                                                  ; $d26d : $e2, $20
 	lda $7ff452.l                                                  ; $d26f : $af, $52, $f4, $7f
-	sta $50                                                  ; $d273 : $85, $50
-	jsr $80834c.l                                                  ; $d275 : $22, $4c, $83, $80
+	sta wByteInMultWordByByte                                                 ; $d273 : $85, $50
+	jsr MultplyWordByByte.l                                                  ; $d275 : $22, $4c, $83, $80
+
+; do word above (eg 2) - high of result (eg 0 to give 2)
 	rep #ACCU_8                                                  ; $d279 : $c2, $20
-	lda $4e                                                  ; $d27b : $a5, $4e
+	lda wWordInMultWordByByte                                                  ; $d27b : $a5, $4e
 	sec                                                  ; $d27d : $38
-	sbc $52                                                  ; $d27e : $e5, $52
+	sbc wResultOfMultWordByByte+1                                                  ; $d27e : $e5, $52
 	eor #$ffff.w                                                  ; $d280 : $49, $ff, $ff
 	ina                                                  ; $d283 : $1a
-	bra br_05_d2c5                                                  ; $d284 : $80, $3f
+	bra @cont_d2c5                                                  ; $d284 : $80, $3f
 
-br_05_d286:
-	sta $4e                                                  ; $d286 : $85, $4e
+@br_d286:
+	sta wWordInMultWordByByte                                                  ; $d286 : $85, $4e
 	sep #ACCU_8                                                  ; $d288 : $e2, $20
 	lda $56                                                  ; $d28a : $a5, $56
-	sta $50                                                  ; $d28c : $85, $50
-	jsr $80834c.l                                                  ; $d28e : $22, $4c, $83, $80
+	sta wByteInMultWordByByte                                                  ; $d28c : $85, $50
+	jsr MultplyWordByByte.l                                                  ; $d28e : $22, $4c, $83, $80
 	tdc                                                  ; $d292 : $7b
 	lda $53                                                  ; $d293 : $a5, $53
 	rep #ACCU_8                                                  ; $d295 : $c2, $20
@@ -12309,29 +12319,27 @@ br_05_d286:
 	sep #ACCU_8                                                  ; $d2a3 : $e2, $20
 	sta $53                                                  ; $d2a5 : $85, $53
 	bit #$ff.b                                                  ; $d2a7 : $89, $ff
-	beq br_05_d2ac                                                  ; $d2a9 : $f0, $01
-
+	beq +                                                  ; $d2a9 : $f0, $01
+; todo: unknown
 	.db $00                                                  ; $d2ab : $00
-
-br_05_d2ac:
-	ldx $51                                                  ; $d2ac : $a6, $51
++	ldx $51                                                  ; $d2ac : $a6, $51
 	stx $54                                                  ; $d2ae : $86, $54
-	stx $4e                                                  ; $d2b0 : $86, $4e
+	stx wWordInMultWordByByte                                                  ; $d2b0 : $86, $4e
 	lda $7ff464.l                                                  ; $d2b2 : $af, $64, $f4, $7f
-	sta $50                                                  ; $d2b6 : $85, $50
-	jsr $80834c.l                                                  ; $d2b8 : $22, $4c, $83, $80
+	sta wByteInMultWordByByte                                                 ; $d2b6 : $85, $50
+	jsr MultplyWordByByte.l                                                  ; $d2b8 : $22, $4c, $83, $80
 	rep #ACCU_8                                                  ; $d2bc : $c2, $20
 	lda $54                                                  ; $d2be : $a5, $54
 	clc                                                  ; $d2c0 : $18
-	adc $52                                                  ; $d2c1 : $65, $52
+	adc wResultOfMultWordByByte+1                                                 ; $d2c1 : $65, $52
 	sta $54                                                  ; $d2c3 : $85, $54
 
-br_05_d2c5:
-	sta $7ff462.l                                                  ; $d2c5 : $8f, $62, $f4, $7f
+@cont_d2c5:
+	sta wPlayerDamageTaken.l                                                  ; $d2c5 : $8f, $62, $f4, $7f
 	rep #ACCU_8                                                  ; $d2c9 : $c2, $20
 	lda $7ff468.l                                                  ; $d2cb : $af, $68, $f4, $7f
 	sta $5a                                                  ; $d2cf : $85, $5a
-	bpl br_05_d302                                                  ; $d2d1 : $10, $2f
+	bpl @br_d302                                                  ; $d2d1 : $10, $2f
 
 	eor #$ffff.w                                                  ; $d2d3 : $49, $ff, $ff
 	sta $54                                                  ; $d2d6 : $85, $54
@@ -12339,7 +12347,7 @@ br_05_d2c5:
 	sep #ACCU_8                                                  ; $d2da : $e2, $20
 	lda $7ff46a.l                                                  ; $d2dc : $af, $6a, $f4, $7f
 	sta $50                                                  ; $d2e0 : $85, $50
-	jsr $80834c.l                                                  ; $d2e2 : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $d2e2 : $22, $4c, $83, $80
 	rep #ACCU_8                                                  ; $d2e6 : $c2, $20
 	lda $7ff4cc.l                                                  ; $d2e8 : $af, $cc, $f4, $7f
 	lsr                                                  ; $d2ec : $4a
@@ -12350,33 +12358,30 @@ br_05_d2c5:
 	sta $54                                                  ; $d2f4 : $85, $54
 	sec                                                  ; $d2f6 : $38
 	sbc $ca                                                  ; $d2f7 : $e5, $ca
-	bcs br_05_d2fc                                                  ; $d2f9 : $b0, $01
-
+	bcs +                                                  ; $d2f9 : $b0, $01
 	tdc                                                  ; $d2fb : $7b
-
-br_05_d2fc:
-	eor #$ffff.w                                                  ; $d2fc : $49, $ff, $ff
++	eor #$ffff.w                                                  ; $d2fc : $49, $ff, $ff
 	ina                                                  ; $d2ff : $1a
-	bra br_05_d31b                                                  ; $d300 : $80, $19
+	bra @cont_d31b                                                  ; $d300 : $80, $19
 
-br_05_d302:
+@br_d302:
 	sta $54                                                  ; $d302 : $85, $54
 	sta $4e                                                  ; $d304 : $85, $4e
 	sep #ACCU_8                                                  ; $d306 : $e2, $20
 	lda $7ff46a.l                                                  ; $d308 : $af, $6a, $f4, $7f
 	sta $50                                                  ; $d30c : $85, $50
-	jsr $80834c.l                                                  ; $d30e : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $d30e : $22, $4c, $83, $80
 	rep #ACCU_8                                                  ; $d312 : $c2, $20
 	lda $54                                                  ; $d314 : $a5, $54
 	clc                                                  ; $d316 : $18
 	adc $52                                                  ; $d317 : $65, $52
 	sta $54                                                  ; $d319 : $85, $54
 
-br_05_d31b:
+@cont_d31b:
 	sta $7ff468.l                                                  ; $d31b : $8f, $68, $f4, $7f
 	ldy #$0028.w                                                  ; $d31f : $a0, $28, $00
 
-br_05_d322:
+@loop_d322:
 	lda [$b8], Y                                                  ; $d322 : $b7, $b8
 	jsr $808299.l                                                  ; $d324 : $22, $99, $82, $80
 	dey                                                  ; $d328 : $88
@@ -12389,23 +12394,22 @@ br_05_d322:
 	dey                                                  ; $d331 : $88
 	dey                                                  ; $d332 : $88
 	cpy #$001c.w                                                  ; $d333 : $c0, $1c, $00
-	bne br_05_d322                                                  ; $d336 : $d0, $ea
+	bne @loop_d322                                                  ; $d336 : $d0, $ea
 
 	plx                                                  ; $d338 : $fa
 	phx                                                  ; $d339 : $da
 	ldy #$0030.w                                                  ; $d33a : $a0, $30, $00
 
-Jump_05_d33d:
+@bigLoop_d33d:
 	lda [$b8], Y                                                  ; $d33d : $b7, $b8
-	bne br_05_d344                                                  ; $d33f : $d0, $03
+	bne @br_d344                                                  ; $d33f : $d0, $03
 
-	jmp Jump_05_d3ed.w                                                  ; $d341 : $4c, $ed, $d3
+	jmp @bigCont_d3ed.w                                                  ; $d341 : $4c, $ed, $d3
 
-
-br_05_d344:
+@br_d344:
 	sep #ACCU_8                                                  ; $d344 : $e2, $20
 	bit #$80.b                                                  ; $d346 : $89, $80
-	beq br_05_d3a8                                                  ; $d348 : $f0, $5e
+	beq @br_d3a8                                                  ; $d348 : $f0, $5e
 
 	phy                                                  ; $d34a : $5a
 	eor #$ff.b                                                  ; $d34b : $49, $ff
@@ -12413,16 +12417,13 @@ br_05_d344:
 	sta $50                                                  ; $d34e : $85, $50
 	rep #ACCU_8                                                  ; $d350 : $c2, $20
 	lda $0037.w, X                                                  ; $d352 : $bd, $37, $00
-	bpl br_05_d358                                                  ; $d355 : $10, $01
-
+	bpl +                                                  ; $d355 : $10, $01
 	tdc                                                  ; $d357 : $7b
-
-br_05_d358:
-	clc                                                  ; $d358 : $18
++	clc                                                  ; $d358 : $18
 	adc $0029.w, X                                                  ; $d359 : $7d, $29, $00
 	sta $09fa.w                                                  ; $d35c : $8d, $fa, $09
 	sta $4e                                                  ; $d35f : $85, $4e
-	jsr $80834c.l                                                  ; $d361 : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $d361 : $22, $4c, $83, $80
 	lda $51                                                  ; $d365 : $a5, $51
 	sta $5d                                                  ; $d367 : $85, $5d
 	sep #ACCU_8                                                  ; $d369 : $e2, $20
@@ -12443,12 +12444,9 @@ br_05_d358:
 	adc $0037.w, X                                                  ; $d387 : $7d, $37, $00
 	sec                                                  ; $d38a : $38
 	sbc $ca                                                  ; $d38b : $e5, $ca
-	bcs br_05_d390                                                  ; $d38d : $b0, $01
-
+	bcs +                                                  ; $d38d : $b0, $01
 	tdc                                                  ; $d38f : $7b
-
-br_05_d390:
-	lsr                                                  ; $d390 : $4a
++	lsr                                                  ; $d390 : $4a
 	adc #$0000.w                                                  ; $d391 : $69, $00, $00
 	ply                                                  ; $d394 : $7a
 	phy                                                  ; $d395 : $5a
@@ -12464,15 +12462,15 @@ br_05_d390:
 	tdc                                                  ; $d3a2 : $7b
 	sta [$b8], Y                                                  ; $d3a3 : $97, $b8
 	ply                                                  ; $d3a5 : $7a
-	bra br_05_d3ed                                                  ; $d3a6 : $80, $45
+	bra @bigCont_d3ed                                                  ; $d3a6 : $80, $45
 
-br_05_d3a8:
+@br_d3a8:
 	phy                                                  ; $d3a8 : $5a
 	sta $50                                                  ; $d3a9 : $85, $50
 	rep #ACCU_8                                                  ; $d3ab : $c2, $20
 	lda $0029.w, X                                                  ; $d3ad : $bd, $29, $00
 	sta $4e                                                  ; $d3b0 : $85, $4e
-	jsr $80834c.l                                                  ; $d3b2 : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $d3b2 : $22, $4c, $83, $80
 	lda $51                                                  ; $d3b6 : $a5, $51
 	sta $5d                                                  ; $d3b8 : $85, $5d
 	sep #ACCU_8                                                  ; $d3ba : $e2, $20
@@ -12487,19 +12485,19 @@ br_05_d3a8:
 	lda $5d                                                  ; $d3cc : $a5, $5d
 	sec                                                  ; $d3ce : $38
 	sbc $0037.w, X                                                  ; $d3cf : $fd, $37, $00
-	bpl br_05_d3d8                                                  ; $d3d2 : $10, $04
+	bpl @br_d3d8                                                  ; $d3d2 : $10, $04
 
-	bvs br_05_d3db                                                  ; $d3d4 : $70, $05
+	bvs @cont_d3db                                                  ; $d3d4 : $70, $05
 
-	bra br_05_d3da                                                  ; $d3d6 : $80, $02
+	bra @br_d3da                                                  ; $d3d6 : $80, $02
 
-br_05_d3d8:
-	bvc br_05_d3db                                                  ; $d3d8 : $50, $01
+@br_d3d8:
+	bvc @cont_d3db                                                  ; $d3d8 : $50, $01
 
-br_05_d3da:
+@br_d3da:
 	tdc                                                  ; $d3da : $7b
 
-br_05_d3db:
+@cont_d3db:
 	lsr                                                  ; $d3db : $4a
 	adc #$0000.w                                                  ; $d3dc : $69, $00, $00
 	ply                                                  ; $d3df : $7a
@@ -12515,8 +12513,7 @@ br_05_d3db:
 	sta [$b8], Y                                                  ; $d3ea : $97, $b8
 	ply                                                  ; $d3ec : $7a
 
-Jump_05_d3ed:
-br_05_d3ed:
+@bigCont_d3ed:
 	inx                                                  ; $d3ed : $e8
 	inx                                                  ; $d3ee : $e8
 	iny                                                  ; $d3ef : $c8
@@ -12526,19 +12523,18 @@ br_05_d3ed:
 	iny                                                  ; $d3f3 : $c8
 	iny                                                  ; $d3f4 : $c8
 	cpy #$005a.w                                                  ; $d3f5 : $c0, $5a, $00
-	beq br_05_d3fd                                                  ; $d3f8 : $f0, $03
+	beq @br_d3fd                                                  ; $d3f8 : $f0, $03
 
-	jmp Jump_05_d33d.w                                                  ; $d3fa : $4c, $3d, $d3
+	jmp @bigLoop_d33d.w                                                  ; $d3fa : $4c, $3d, $d3
 
-
-br_05_d3fd:
+@br_d3fd:
 	plx                                                  ; $d3fd : $fa
 	sep #ACCU_8                                                  ; $d3fe : $e2, $20
 	lda #$01.b                                                  ; $d400 : $a9, $01
 	sta $54                                                  ; $d402 : $85, $54
 	ldy #$007a.w                                                  ; $d404 : $a0, $7a, $00
 
-br_05_d407:
+@loop_d407:
 	lda #$64.b                                                  ; $d407 : $a9, $64
 	jsr $808299.l                                                  ; $d409 : $22, $99, $82, $80
 	sec                                                  ; $d40d : $38
@@ -12548,7 +12544,7 @@ br_05_d407:
 	dey                                                  ; $d412 : $88
 	dey                                                  ; $d413 : $88
 	rol $54                                                  ; $d414 : $26, $54
-	bcc br_05_d407                                                  ; $d416 : $90, $ef
+	bcc @loop_d407                                                  ; $d416 : $90, $ef
 
 	lda $54                                                  ; $d418 : $a5, $54
 	eor #$ff.b                                                  ; $d41a : $49, $ff
@@ -12558,17 +12554,16 @@ br_05_d407:
 	sta $000f.w, X                                                  ; $d425 : $9d, $0f, $00
 	lda $000f.w, X                                                  ; $d428 : $bd, $0f, $00
 	bit #$04.b                                                  ; $d42b : $89, $04
-	beq br_05_d432                                                  ; $d42d : $f0, $03
+	beq @br_d432                                                  ; $d42d : $f0, $03
 
-	jmp Jump_05_d70a.w                                                  ; $d42f : $4c, $0a, $d7
+	jmp @end_d70a.w                                                  ; $d42f : $4c, $0a, $d7
 
-
-br_05_d432:
+@br_d432:
 	lda #$01.b                                                  ; $d432 : $a9, $01
 	sta $54                                                  ; $d434 : $85, $54
 	ldy #$0078.w                                                  ; $d436 : $a0, $78, $00
 
-br_05_d439:
+@loop_d439:
 	lda #$64.b                                                  ; $d439 : $a9, $64
 	jsr $808299.l                                                  ; $d43b : $22, $99, $82, $80
 	sec                                                  ; $d43f : $38
@@ -12578,7 +12573,7 @@ br_05_d439:
 	dey                                                  ; $d444 : $88
 	dey                                                  ; $d445 : $88
 	rol $54                                                  ; $d446 : $26, $54
-	bcc br_05_d439                                                  ; $d448 : $90, $ef
+	bcc @loop_d439                                                  ; $d448 : $90, $ef
 
 	lda $54                                                  ; $d44a : $a5, $54
 	ora $000f.w, X                                                  ; $d44c : $1d, $0f, $00
@@ -12587,45 +12582,40 @@ br_05_d439:
 	eor $000f.w, X                                                  ; $d454 : $5d, $0f, $00
 	sta $000f.w, X                                                  ; $d457 : $9d, $0f, $00
 	bit #$04.b                                                  ; $d45a : $89, $04
-	beq br_05_d461                                                  ; $d45c : $f0, $03
+	beq @br_d461                                                  ; $d45c : $f0, $03
 
-	jmp Jump_05_d690.w                                                  ; $d45e : $4c, $90, $d6
+	jmp @bigBr_d690.w                                                  ; $d45e : $4c, $90, $d6
 
-
-br_05_d461:
+@br_d461:
 	lda $0a35.w                                                  ; $d461 : $ad, $35, $0a
 	bit #$80.b                                                  ; $d464 : $89, $80
-	bne br_05_d46e                                                  ; $d466 : $d0, $06
+	bne @br_d46e                                                  ; $d466 : $d0, $06
 
 	lda $54                                                  ; $d468 : $a5, $54
 	bit #$80.b                                                  ; $d46a : $89, $80
-	bne br_05_d4a5                                                  ; $d46c : $d0, $37
+	bne @cont_d4a5                                                  ; $d46c : $d0, $37
 
-br_05_d46e:
+@br_d46e:
 	phx                                                  ; $d46e : $da
 	lda $7ff450.l                                                  ; $d46f : $af, $50, $f4, $7f
 	sta $59                                                  ; $d473 : $85, $59
 	bit #$3f.b                                                  ; $d475 : $89, $3f
-	beq br_05_d48b                                                  ; $d477 : $f0, $12
+	beq @cont_d48b                                                  ; $d477 : $f0, $12
 
 	and #$80.b                                                  ; $d479 : $29, $80
-	beq br_05_d47f                                                  ; $d47b : $f0, $02
-
+	beq +                                                  ; $d47b : $f0, $02
 	lda #$05.b                                                  ; $d47d : $a9, $05
-
-br_05_d47f:
-	sta $58                                                  ; $d47f : $85, $58
++	sta $58                                                  ; $d47f : $85, $58
 	lda #$ff.b                                                  ; $d481 : $a9, $ff
 
-br_05_d483:
-	ina                                                  ; $d483 : $1a
+-	ina                                                  ; $d483 : $1a
 	lsr $59                                                  ; $d484 : $46, $59
-	bcc br_05_d483                                                  ; $d486 : $90, $fb
+	bcc -                                                  ; $d486 : $90, $fb
 
 	clc                                                  ; $d488 : $18
 	adc $58                                                  ; $d489 : $65, $58
 
-br_05_d48b:
+@cont_d48b:
 	sta WRMPYA.w                                                  ; $d48b : $8d, $02, $42
 	lda #$07.b                                                  ; $d48e : $a9, $07
 	sta WRMPYB.w                                                  ; $d490 : $8d, $03, $42
@@ -12639,58 +12629,54 @@ br_05_d48b:
 	sta $0006.w, X                                                  ; $d4a1 : $9d, $06, $00
 	plx                                                  ; $d4a4 : $fa
 
-br_05_d4a5:
+@cont_d4a5:
 	rep #ACCU_8                                                  ; $d4a5 : $c2, $20
 	lda $0011.w, X                                                  ; $d4a7 : $bd, $11, $00
 	sta $58                                                  ; $d4aa : $85, $58
-	lda $7ff462.l                                                  ; $d4ac : $af, $62, $f4, $7f
-	bne br_05_d4b5                                                  ; $d4b0 : $d0, $03
+	lda wPlayerDamageTaken.l                                                  ; $d4ac : $af, $62, $f4, $7f
+	bne @br_d4b5                                                  ; $d4b0 : $d0, $03
 
-	jmp Jump_05_d5d2.w                                                  ; $d4b2 : $4c, $d2, $d5
+	jmp @bigBr_d5d2.w                                                  ; $d4b2 : $4c, $d2, $d5
 
-
-br_05_d4b5:
+@br_d4b5:
 	sta $0a2e.w                                                  ; $d4b5 : $8d, $2e, $0a
-	bmi br_05_d4da                                                  ; $d4b8 : $30, $20
+	bmi @br_d4da                                                  ; $d4b8 : $30, $20
 
 	clc                                                  ; $d4ba : $18
 	adc $0011.w, X                                                  ; $d4bb : $7d, $11, $00
 	cmp $0025.w, X                                                  ; $d4be : $dd, $25, $00
-	bcc br_05_d4cc                                                  ; $d4c1 : $90, $09
+	bcc @br_d4cc                                                  ; $d4c1 : $90, $09
 
 	lda $0025.w, X                                                  ; $d4c3 : $bd, $25, $00
 	sec                                                  ; $d4c6 : $38
 	sbc $0011.w, X                                                  ; $d4c7 : $fd, $11, $00
-	bra br_05_d4d0                                                  ; $d4ca : $80, $04
+	bra +                                                  ; $d4ca : $80, $04
 
-br_05_d4cc:
-	lda $7ff462.l                                                  ; $d4cc : $af, $62, $f4, $7f
+@br_d4cc:
+	lda wPlayerDamageTaken.l                                                  ; $d4cc : $af, $62, $f4, $7f
 
-br_05_d4d0:
-	clc                                                  ; $d4d0 : $18
++	clc                                                  ; $d4d0 : $18
 	adc $0011.w, X                                                  ; $d4d1 : $7d, $11, $00
 	sta $0011.w, X                                                  ; $d4d4 : $9d, $11, $00
-	jmp Jump_05_d5d2.w                                                  ; $d4d7 : $4c, $d2, $d5
+	jmp @bigBr_d5d2.w                                                  ; $d4d7 : $4c, $d2, $d5
 
-
-br_05_d4da:
+@br_d4da:
 	clc                                                  ; $d4da : $18
 	adc $0011.w, X                                                  ; $d4db : $7d, $11, $00
-	bcs br_05_d4e9                                                  ; $d4de : $b0, $09
+	bcs @br_d4e9                                                  ; $d4de : $b0, $09
 
 	lda $0011.w, X                                                  ; $d4e0 : $bd, $11, $00
 	eor #$ffff.w                                                  ; $d4e3 : $49, $ff, $ff
 	ina                                                  ; $d4e6 : $1a
-	bra br_05_d4ed                                                  ; $d4e7 : $80, $04
+	bra +                                                  ; $d4e7 : $80, $04
 
-br_05_d4e9:
-	lda $7ff462.l                                                  ; $d4e9 : $af, $62, $f4, $7f
+@br_d4e9:
+	lda wPlayerDamageTaken.l                                                  ; $d4e9 : $af, $62, $f4, $7f
 
-br_05_d4ed:
-	clc                                                  ; $d4ed : $18
++	clc                                                  ; $d4ed : $18
 	adc $0011.w, X                                                  ; $d4ee : $7d, $11, $00
 	sta $0011.w, X                                                  ; $d4f1 : $9d, $11, $00
-	bne br_05_d508                                                  ; $d4f4 : $d0, $12
+	bne @br_d508                                                  ; $d4f4 : $d0, $12
 
 	sep #ACCU_8                                                  ; $d4f6 : $e2, $20
 	lda $000f.w, X                                                  ; $d4f8 : $bd, $0f, $00
@@ -12698,37 +12684,32 @@ br_05_d4ed:
 	sta $000f.w, X                                                  ; $d4fd : $9d, $0f, $00
 	lda #$04.b                                                  ; $d500 : $a9, $04
 	tsb $0a35.w                                                  ; $d502 : $0c, $35, $0a
-	jmp Jump_05_d699.w                                                  ; $d505 : $4c, $99, $d6
+	jmp @bigBr_d699.w                                                  ; $d505 : $4c, $99, $d6
 
-
-br_05_d508:
+@br_d508:
 	lda $7ff44e.l                                                  ; $d508 : $af, $4e, $f4, $7f
-	and #$80.b                                                  ; $d50c : $29, $80
-	.db $00                                                  ; $d50e : $00
-	bne br_05_d514                                                  ; $d50f : $d0, $03
+	and #$0080.w                                                  ; $d50c : $29, $80, $00
+	bne @br_d514                                                  ; $d50f : $d0, $03
 
-	jmp Jump_05_d5d2.w                                                  ; $d511 : $4c, $d2, $d5
+	jmp @bigBr_d5d2.w                                                  ; $d511 : $4c, $d2, $d5
 
-
-br_05_d514:
+@br_d514:
 	lda $7ff450.l                                                  ; $d514 : $af, $50, $f4, $7f
-	bit #$80.b                                                  ; $d518 : $89, $80
-	.db $00                                                  ; $d51a : $00
-	beq br_05_d520                                                  ; $d51b : $f0, $03
+	bit #$0080.w                                                  ; $d518 : $89, $80, $00
+	beq @br_d520                                                  ; $d51b : $f0, $03
 
-	jmp Jump_05_d5d2.w                                                  ; $d51d : $4c, $d2, $d5
+	jmp @bigBr_d5d2.w                                                  ; $d51d : $4c, $d2, $d5
 
+@br_d520:
+	lda wPlayerDamageTaken.l                                                  ; $d520 : $af, $62, $f4, $7f
+	bmi @br_d529                                                  ; $d524 : $30, $03
 
-br_05_d520:
-	lda $7ff462.l                                                  ; $d520 : $af, $62, $f4, $7f
-	bmi br_05_d529                                                  ; $d524 : $30, $03
+	jmp @bigBr_d5d2.w                                                  ; $d526 : $4c, $d2, $d5
 
-	jmp Jump_05_d5d2.w                                                  ; $d526 : $4c, $d2, $d5
-
-
-br_05_d529:
-	eor #$ff.b                                                  ; $d529 : $49, $ff
-	sbc $65851a.l, X                                                  ; $d52b : $ff, $1a, $85, $65
+@br_d529:
+	eor #$ffff.w                                                  ; $d529 : $49, $ff, $ff
+	ina                                                  ; $d52c : $1a
+	sta $65                                                  ; $d52d : $85, $65
 	clc                                                  ; $d52f : $18
 	adc $0011.w, X                                                  ; $d530 : $7d, $11, $00
 	phx                                                  ; $d533 : $da
@@ -12740,7 +12721,7 @@ br_05_d529:
 	sep #ACCU_8                                                  ; $d540 : $e2, $20
 	lda #$40.b                                                  ; $d542 : $a9, $40
 	sta $50                                                  ; $d544 : $85, $50
-	jsr $80834c.l                                                  ; $d546 : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $d546 : $22, $4c, $83, $80
 	lda $51                                                  ; $d54a : $a5, $51
 	clc                                                  ; $d54c : $18
 	adc #$80.b                                                  ; $d54d : $69, $80
@@ -12763,19 +12744,18 @@ br_05_d529:
 	lda $0033.w, X                                                  ; $d572 : $bd, $33, $00
 	sep #ACCU_8                                                  ; $d575 : $e2, $20
 	xba                                                  ; $d577 : $eb
-	beq br_05_d582                                                  ; $d578 : $f0, $08
+	beq @br_d582                                                  ; $d578 : $f0, $08
 
 	cmp #$c8.b                                                  ; $d57a : $c9, $c8
-	bcc br_05_d582                                                  ; $d57c : $90, $04
+	bcc @br_d582                                                  ; $d57c : $90, $04
 
 	lda #$c7.b                                                  ; $d57e : $a9, $c7
-	bra br_05_d583                                                  ; $d580 : $80, $01
+	bra +                                                  ; $d580 : $80, $01
 
-br_05_d582:
+@br_d582:
 	xba                                                  ; $d582 : $eb
 
-br_05_d583:
-	sta WRMPYA.w                                                  ; $d583 : $8d, $02, $42
++	sta WRMPYA.w                                                  ; $d583 : $8d, $02, $42
 	lda #$80.b                                                  ; $d586 : $a9, $80
 	sta WRMPYB.w                                                  ; $d588 : $8d, $03, $42
 	nop                                                  ; $d58b : $ea
@@ -12792,105 +12772,94 @@ br_05_d583:
 	rep #ACCU_8                                                  ; $d59d : $c2, $20
 	lda $4214.w                                                  ; $d59f : $ad, $14, $42
 	bit #$ff00.w                                                  ; $d5a2 : $89, $00, $ff
-	beq br_05_d5aa                                                  ; $d5a5 : $f0, $03
-
+	beq +                                                  ; $d5a5 : $f0, $03
 	lda #$00ff.w                                                  ; $d5a7 : $a9, $ff, $00
-
-br_05_d5aa:
-	sep #ACCU_8                                                  ; $d5aa : $e2, $20
++	sep #ACCU_8                                                  ; $d5aa : $e2, $20
 	sta $50                                                  ; $d5ac : $85, $50
-	jsr $80834c.l                                                  ; $d5ae : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $d5ae : $22, $4c, $83, $80
 	rep #ACCU_8                                                  ; $d5b2 : $c2, $20
 	lda $52                                                  ; $d5b4 : $a5, $52
 	clc                                                  ; $d5b6 : $18
 	adc #$000c.w                                                  ; $d5b7 : $69, $0c, $00
 	cmp #$0100.w                                                  ; $d5ba : $c9, $00, $01
-	bcc br_05_d5c2                                                  ; $d5bd : $90, $03
-
+	bcc +                                                  ; $d5bd : $90, $03
 	lda #$00ff.w                                                  ; $d5bf : $a9, $ff, $00
-
-br_05_d5c2:
-	sep #ACCU_8                                                  ; $d5c2 : $e2, $20
++	sep #ACCU_8                                                  ; $d5c2 : $e2, $20
 	plx                                                  ; $d5c4 : $fa
 	clc                                                  ; $d5c5 : $18
 	adc $00bc.w, X                                                  ; $d5c6 : $7d, $bc, $00
-	bcc br_05_d5cd                                                  ; $d5c9 : $90, $02
-
+	bcc +                                                  ; $d5c9 : $90, $02
 	lda #$ff.b                                                  ; $d5cb : $a9, $ff
-
-br_05_d5cd:
-	sta $00bc.w, X                                                  ; $d5cd : $9d, $bc, $00
++	sta $00bc.w, X                                                  ; $d5cd : $9d, $bc, $00
 	rep #ACCU_8                                                  ; $d5d0 : $c2, $20
 
-Jump_05_d5d2:
+@bigBr_d5d2:
 	lda $7ff468.l                                                  ; $d5d2 : $af, $68, $f4, $7f
-	beq br_05_d623                                                  ; $d5d6 : $f0, $4b
+	beq @cont_d623                                                  ; $d5d6 : $f0, $4b
 
 	sta $0a30.w                                                  ; $d5d8 : $8d, $30, $0a
-	bmi br_05_d600                                                  ; $d5db : $30, $23
+	bmi @br_d600                                                  ; $d5db : $30, $23
 
 	clc                                                  ; $d5dd : $18
 	adc $0013.w, X                                                  ; $d5de : $7d, $13, $00
 	cmp $0027.w, X                                                  ; $d5e1 : $dd, $27, $00
-	bcc br_05_d5f3                                                  ; $d5e4 : $90, $0d
+	bcc @br_d5f3                                                  ; $d5e4 : $90, $0d
 
 	lda $0027.w, X                                                  ; $d5e6 : $bd, $27, $00
 	sec                                                  ; $d5e9 : $38
 	sbc $0013.w, X                                                  ; $d5ea : $fd, $13, $00
 	sta $7ff468.l                                                  ; $d5ed : $8f, $68, $f4, $7f
-	bra br_05_d5f7                                                  ; $d5f1 : $80, $04
+	bra +                                                  ; $d5f1 : $80, $04
 
-br_05_d5f3:
+@br_d5f3:
 	lda $7ff468.l                                                  ; $d5f3 : $af, $68, $f4, $7f
 
-br_05_d5f7:
-	clc                                                  ; $d5f7 : $18
++	clc                                                  ; $d5f7 : $18
 	adc $0013.w, X                                                  ; $d5f8 : $7d, $13, $00
 	sta $0013.w, X                                                  ; $d5fb : $9d, $13, $00
-	bra br_05_d623                                                  ; $d5fe : $80, $23
+	bra @cont_d623                                                  ; $d5fe : $80, $23
 
-br_05_d600:
+@br_d600:
 	clc                                                  ; $d600 : $18
 	adc $0013.w, X                                                  ; $d601 : $7d, $13, $00
-	bcs br_05_d613                                                  ; $d604 : $b0, $0d
+	bcs @br_d613                                                  ; $d604 : $b0, $0d
 
 	lda $0013.w, X                                                  ; $d606 : $bd, $13, $00
 	eor #$ffff.w                                                  ; $d609 : $49, $ff, $ff
 	ina                                                  ; $d60c : $1a
 
-br_05_d60d:
+@loop_d60d:
 	sta $7ff468.l                                                  ; $d60d : $8f, $68, $f4, $7f
-	bra br_05_d61c                                                  ; $d611 : $80, $09
+	bra @cont_d61c                                                  ; $d611 : $80, $09
 
-br_05_d613:
+@br_d613:
 	lda $0013.w, X                                                  ; $d613 : $bd, $13, $00
-	beq br_05_d60d                                                  ; $d616 : $f0, $f5
+	beq @loop_d60d                                                  ; $d616 : $f0, $f5
 
 	lda $7ff468.l                                                  ; $d618 : $af, $68, $f4, $7f
 
-br_05_d61c:
+@cont_d61c:
 	clc                                                  ; $d61c : $18
 	adc $0013.w, X                                                  ; $d61d : $7d, $13, $00
 	sta $0013.w, X                                                  ; $d620 : $9d, $13, $00
 
-br_05_d623:
+@cont_d623:
 	sep #ACCU_8                                                  ; $d623 : $e2, $20
 	lda $0a13.w                                                  ; $d625 : $ad, $13, $0a
-	beq br_05_d653                                                  ; $d628 : $f0, $29
+	beq @br_d653                                                  ; $d628 : $f0, $29
 
 	rep #ACCU_8                                                  ; $d62a : $c2, $20
 	phx                                                  ; $d62c : $da
 	tdc                                                  ; $d62d : $7b
 	ldy #$0020.w                                                  ; $d62e : $a0, $20, $00
 
-br_05_d631:
-	sta [$b8], Y                                                  ; $d631 : $97, $b8
+-	sta [$b8], Y                                                  ; $d631 : $97, $b8
 	iny                                                  ; $d633 : $c8
 	iny                                                  ; $d634 : $c8
 	cpy #$002c.w                                                  ; $d635 : $c0, $2c, $00
-	bne br_05_d631                                                  ; $d638 : $d0, $f7
+	bne -                                                  ; $d638 : $d0, $f7
 
-br_05_d63a:
+@loop_d63a:
 	lda [$b8], Y                                                  ; $d63a : $b7, $b8
 	clc                                                  ; $d63c : $18
 	adc $0037.w, X                                                  ; $d63d : $7d, $37, $00
@@ -12904,17 +12873,17 @@ br_05_d63a:
 	iny                                                  ; $d649 : $c8
 	iny                                                  ; $d64a : $c8
 	cpy #$0056.w                                                  ; $d64b : $c0, $56, $00
-	bne br_05_d63a                                                  ; $d64e : $d0, $ea
+	bne @loop_d63a                                                  ; $d64e : $d0, $ea
 
 	plx                                                  ; $d650 : $fa
-	bra br_05_d688                                                  ; $d651 : $80, $35
+	bra @end_d688                                                  ; $d651 : $80, $35
 
-br_05_d653:
+@br_d653:
 	rep #ACCU_8                                                  ; $d653 : $c2, $20
 	phx                                                  ; $d655 : $da
 	ldy #$0020.w                                                  ; $d656 : $a0, $20, $00
 
-br_05_d659:
+@loop_d659:
 	lda [$b8], Y                                                  ; $d659 : $b7, $b8
 	sta $54                                                  ; $d65b : $85, $54
 	clc                                                  ; $d65d : $18
@@ -12929,9 +12898,9 @@ br_05_d659:
 	iny                                                  ; $d66a : $c8
 	iny                                                  ; $d66b : $c8
 	cpy #$002c.w                                                  ; $d66c : $c0, $2c, $00
-	bne br_05_d659                                                  ; $d66f : $d0, $e8
+	bne @loop_d659                                                  ; $d66f : $d0, $e8
 
-br_05_d671:
+@loop_d671:
 	lda [$b8], Y                                                  ; $d671 : $b7, $b8
 	clc                                                  ; $d673 : $18
 	adc $0074.w, X                                                  ; $d674 : $7d, $74, $00
@@ -12945,24 +12914,23 @@ br_05_d671:
 	iny                                                  ; $d680 : $c8
 	iny                                                  ; $d681 : $c8
 	cpy #$0056.w                                                  ; $d682 : $c0, $56, $00
-	bne br_05_d671                                                  ; $d685 : $d0, $ea
+	bne @loop_d671                                                  ; $d685 : $d0, $ea
 
 	plx                                                  ; $d687 : $fa
 
-br_05_d688:
+@end_d688:
 	sep #ACCU_8                                                  ; $d688 : $e2, $20
 	jsr $81f4d5.l                                                  ; $d68a : $22, $d5, $f4, $81
 	clc                                                  ; $d68e : $18
 	rts                                                  ; $d68f : $60
 
-
-Jump_05_d690:
+@bigBr_d690:
 	rep #ACCU_8                                                  ; $d690 : $c2, $20
 	tdc                                                  ; $d692 : $7b
-	sta $7ff462.l                                                  ; $d693 : $8f, $62, $f4, $7f
+	sta wPlayerDamageTaken.l                                                  ; $d693 : $8f, $62, $f4, $7f
 	sep #ACCU_8                                                  ; $d697 : $e2, $20
 
-Jump_05_d699:
+@bigBr_d699:
 	lda #$04.b                                                  ; $d699 : $a9, $04
 	sta $000f.w, X                                                  ; $d69b : $9d, $0f, $00
 	rep #ACCU_8                                                  ; $d69e : $c2, $20
@@ -12975,7 +12943,7 @@ Jump_05_d699:
 	sta $0a2d.w                                                  ; $d6b2 : $8d, $2d, $0a
 	lda $7ff450.l                                                  ; $d6b5 : $af, $50, $f4, $7f
 	bit #$80.b                                                  ; $d6b9 : $89, $80
-	beq br_05_d6fe                                                  ; $d6bb : $f0, $41
+	beq @br_d6fe                                                  ; $d6bb : $f0, $41
 
 	lda $0050.w, X                                                  ; $d6bd : $bd, $50, $00
 	sta $09fa.w                                                  ; $d6c0 : $8d, $fa, $09
@@ -12985,22 +12953,16 @@ Jump_05_d699:
 	clc                                                  ; $d6cc : $18
 	adc $1605.w                                                  ; $d6cd : $6d, $05, $16
 	sta $1605.w                                                  ; $d6d0 : $8d, $05, $16
-	bcc br_05_d6d8                                                  ; $d6d3 : $90, $03
-
+	bcc +                                                  ; $d6d3 : $90, $03
 	inc $1607.w                                                  ; $d6d5 : $ee, $07, $16
-
-br_05_d6d8:
-	lda $09fe.w                                                  ; $d6d8 : $ad, $fe, $09
++	lda $09fe.w                                                  ; $d6d8 : $ad, $fe, $09
 	clc                                                  ; $d6db : $18
 	adc $1608.w                                                  ; $d6dc : $6d, $08, $16
 	sta $1608.w                                                  ; $d6df : $8d, $08, $16
-	bcc br_05_d6e7                                                  ; $d6e2 : $90, $03
-
+	bcc +                                                  ; $d6e2 : $90, $03
 	inc $160a.w                                                  ; $d6e4 : $ee, $0a, $16
-
-br_05_d6e7:
-	lda $160b.w                                                  ; $d6e7 : $ad, $0b, $16
-	bne br_05_d6fa                                                  ; $d6ea : $d0, $0e
++	lda $160b.w                                                  ; $d6e7 : $ad, $0b, $16
+	bne @cont_d6fa                                                  ; $d6ea : $d0, $0e
 
 	sep #ACCU_8                                                  ; $d6ec : $e2, $20
 	jsr $81fb1a.l                                                  ; $d6ee : $22, $1a, $fb, $81
@@ -13008,28 +12970,28 @@ br_05_d6e7:
 	lda $09fe.w                                                  ; $d6f4 : $ad, $fe, $09
 	sta $160b.w                                                  ; $d6f7 : $8d, $0b, $16
 
-br_05_d6fa:
+@cont_d6fa:
 	sep #ACCU_8                                                  ; $d6fa : $e2, $20
-	bra br_05_d708                                                  ; $d6fc : $80, $0a
+	bra @done_d708                                                  ; $d6fc : $80, $0a
 
-br_05_d6fe:
+@br_d6fe:
 	rep #ACCU_8                                                  ; $d6fe : $c2, $20
 	stz $00bc.w, X                                                  ; $d700 : $9e, $bc, $00
 	inc $00ba.w, X                                                  ; $d703 : $fe, $ba, $00
 	sep #ACCU_8                                                  ; $d706 : $e2, $20
 
-br_05_d708:
+@done_d708:
 	clc                                                  ; $d708 : $18
 	rts                                                  ; $d709 : $60
 
-
-Jump_05_d70a:
+@end_d70a:
 	lda #$80.b                                                  ; $d70a : $a9, $80
 	sta $0a2d.w                                                  ; $d70c : $8d, $2d, $0a
 	clc                                                  ; $d70f : $18
 	rts                                                  ; $d710 : $60
 
 
+;
 	phb                                                  ; $d711 : $8b
 	phk                                                  ; $d712 : $4b
 	plb                                                  ; $d713 : $ab
@@ -14021,7 +13983,7 @@ Call_05_dcea:
 	sta $50                                                  ; $dd1e : $85, $50
 	ldx $56                                                  ; $dd20 : $a6, $56
 	stx $4e                                                  ; $dd22 : $86, $4e
-	jsr $80834c.l                                                  ; $dd24 : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $dd24 : $22, $4c, $83, $80
 	rep #ACCU_8                                                  ; $dd28 : $c2, $20
 	lda $52                                                  ; $dd2a : $a5, $52
 	ina                                                  ; $dd2c : $1a
@@ -14138,7 +14100,7 @@ br_05_ddc0:
 	phb                                                  ; $ddc8 : $8b
 	phk                                                  ; $ddc9 : $4b
 	plb                                                  ; $ddca : $ab
-	jsr $80834c.l                                                  ; $ddcb : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $ddcb : $22, $4c, $83, $80
 	plb                                                  ; $ddcf : $ab
 	lda $64                                                  ; $ddd0 : $a5, $64
 	bpl br_05_dde2                                                  ; $ddd2 : $10, $0e
@@ -14173,7 +14135,7 @@ br_05_ddf6:
 	phb                                                  ; $ddfe : $8b
 	phk                                                  ; $ddff : $4b
 	plb                                                  ; $de00 : $ab
-	jsr $80834c.l                                                  ; $de01 : $22, $4c, $83, $80
+	jsr MultplyWordByByte.l                                                  ; $de01 : $22, $4c, $83, $80
 	plb                                                  ; $de05 : $ab
 	lda $64                                                  ; $de06 : $a5, $64
 	bpl br_05_de18                                                  ; $de08 : $10, $0e

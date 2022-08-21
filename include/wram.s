@@ -20,7 +20,16 @@ wJoy2CurrHeld: ; $48
     dw
 
 w04a:
-    ds $54-$4a
+    ds $e-$a
+
+wWordInMultWordByByte: ; $4e
+    dw
+
+wByteInMultWordByByte: ; $50
+    db
+
+wResultOfMultWordByByte: ; $51
+    dl
 
 .union
 
@@ -155,6 +164,12 @@ w0a08:
 wInventoryItemsAndCounts: ; $0a8d
     db
 
+w0a8e:
+    ds $bbe-$a8e
+
+wNotInCode_PlayerHealth: ; $0bbe
+    db
+
 .ends
 
 .ramsection "Ram 7eh" bank $7e slot 1
@@ -201,6 +216,12 @@ wEntityPriorityAttrBits: ; $e316
 
 ; todo: unknown size
 wEntityMovePatternLongAddrs: ; $e3ee
+    db
+
+w7fe3ef:
+    ds $f462-$e3ef
+
+wPlayerDamageTaken: ; $f462
     db
 
 .ends
