@@ -11053,7 +11053,7 @@ br_07_cbdd:
 	ora #$cd0a.w                                                  ; $cbde : $09, $0a, $cd
 	jsr $b327.w                                                  ; $cbe1 : $20, $27, $b3
 	jsr $208f.w                                                  ; $cbe4 : $20, $8f, $20
-	ora $46                                                  ; $cbe7 : $05, $46
+	ora wJoy1CurrHeld                                                  ; $cbe7 : $05, $46
 	rol $3801.w                                                  ; $cbe9 : $2e, $01, $38
 	cop $6d.b                                                  ; $cbec : $02, $6d
 	sty $00                                                  ; $cbee : $84, $00
@@ -16944,7 +16944,7 @@ Call_07_fc05:
 	ora $3541.w, Y                                                  ; $fc7b : $19, $41, $35
 	jsr $02cd.w                                                  ; $fc7e : $20, $cd, $02
 	sbc $009f95.l, X                                                  ; $fc81 : $ff, $95, $9f, $00
-	bit $055a.w, X                                                  ; $fc85 : $3c, $5a, $05
+	bit wJoy1StickyCounter.w, X                                                  ; $fc85 : $3c, $5a, $05
 	php                                                  ; $fc88 : $08
 	adc $370d4c.l, X                                                  ; $fc89 : $7f, $4c, $0d, $37
 	asl $4397.w, X                                                  ; $fc8d : $1e, $97, $43

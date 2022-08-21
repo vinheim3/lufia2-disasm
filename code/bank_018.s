@@ -8010,7 +8010,7 @@ br_18_bef3:
 	phy                                                  ; $bf11 : $5a
 	and ($20)                                                  ; $bf12 : $32, $20
 	sbc $3414.w                                                  ; $bf14 : $ed, $14, $34
-	asl $4212.w, X                                                  ; $bf17 : $1e, $12, $42
+	asl HVBJOY.w, X                                                  ; $bf17 : $1e, $12, $42
 	ror                                                  ; $bf1a : $6a
 	jsr $0fff.w                                                  ; $bf1b : $20, $ff, $0f
 	and ($0f, X)                                                  ; $bf1e : $21, $0f
@@ -14825,7 +14825,7 @@ br_18_f48e:
 	cmp $c1, X                                                  ; $f546 : $d5, $c1
 	and ($e2), Y                                                  ; $f548 : $31, $e2
 	trb $9aef.w                                                  ; $f54a : $1c, $ef, $9a
-	inc $2140.w, X                                                  ; $f54d : $fe, $40, $21
+	inc APUIO0.w, X                                                  ; $f54d : $fe, $40, $21
 	asl $2fed.w, X                                                  ; $f550 : $1e, $ed, $2f
 	bit $03                                                  ; $f553 : $24, $03
 	txa                                                  ; $f555 : $8a

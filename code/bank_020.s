@@ -17658,7 +17658,7 @@ br_20_de53:
 	ora ($00, S), Y                                                  ; $debe : $13, $00
 	cmp [$40]                                                  ; $dec0 : $c7, $40
 	cmp [$46], Y                                                  ; $dec2 : $d7, $46
-	lda $46                                                  ; $dec4 : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $dec4 : $a5, $46
 	lda $3c, S                                                  ; $dec6 : $a3, $3c
 	cmp $b904.w                                                  ; $dec8 : $cd, $04, $b9
 	asl                                                  ; $decb : $0a

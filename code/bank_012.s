@@ -9054,7 +9054,7 @@ br_12_c77f:
 	ora #$045c.w                                                  ; $c79e : $09, $5c, $04
 	sbc $ffffff.l, X                                                  ; $c7a1 : $ff, $ff, $ff, $ff
 	sbc ($1c), Y                                                  ; $c7a5 : $f1, $1c
-	tsb $055a.w                                                  ; $c7a7 : $0c, $5a, $05
+	tsb wJoy1StickyCounter.w                                                  ; $c7a7 : $0c, $5a, $05
 	ina                                                  ; $c7aa : $1a
 	and ($1b, X)                                                  ; $c7ab : $21, $1b
 	jsr $0721f7.l                                                  ; $c7ad : $22, $f7, $21, $07

@@ -5,3 +5,4 @@ __pycache__/
 *.bst
 *.srm
 *.sym
+temp.s

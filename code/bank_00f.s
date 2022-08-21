@@ -5014,7 +5014,7 @@ br_0f_a645:
 	ldy $b3bf.w                                                  ; $a71a : $ac, $bf, $b3
 	sbc $213f.w                                                  ; $a71d : $ed, $3f, $21
 	and $b3bfad.l                                                  ; $a720 : $2f, $ad, $bf, $b3
-	inc $2140.w                                                  ; $a724 : $ee, $40, $21
+	inc APUIO0.w                                                  ; $a724 : $ee, $40, $21
 	and $b3bfae.l                                                  ; $a727 : $2f, $ae, $bf, $b3
 	sbc $2f2141.l                                                  ; $a72b : $ef, $41, $21, $2f
 	lda $11b9bf.l                                                  ; $a72f : $af, $bf, $b9, $11

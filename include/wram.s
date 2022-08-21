@@ -11,7 +11,16 @@ wCurrEntityMovePatternAddr: ; $2a
     dw
 
 w2c:
-    ds $54-$2c
+    ds $46-$2c
+
+wJoy1CurrHeld: ; $46
+    dw
+
+wJoy2CurrHeld: ; $48
+    dw
+
+w04a:
+    ds $54-$4a
 
 .union
 
@@ -104,18 +113,50 @@ wOam: ; $0100
     ds $100
 
 w0200:
-    ds $692-$200
+    ds $55a-$200
+
+wJoy1StickyCounter: ; $055a
+    dw
+
+wJoy2StickyCounter: ; $055c
+    dw
+
+wJoy1PrevHeld: ; $055e
+    dw
+
+wJoy2PrevHeld: ; $0560
+    dw
+
+w0562:
+    ds $692-$562
 
 ; todo: unknown size
 wEntityMovementDirs: ; $0692
     db
+
+w0693:
+    ds $9b7-$693
+
+wCurrScriptAddr: ; $09b7
+    dw
+wCurrScriptBank: ; $09b9
+    db
+
+w09ba:
+    ds $a06-$9ba
+
+wCurrItemIdx: ; $0a06
+    dw
 
 .ends
 
 .ramsection "Ram 7eh" bank $7e slot 1
 
 w7e2000:
-    ds $e100-$2000
+    ds $1800
+
+w7e3800:
+    ds $e100-$3800
 
 wEntitiesReservingSpriteSlots: ; $e100
     ds $80

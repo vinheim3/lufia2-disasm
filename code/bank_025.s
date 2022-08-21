@@ -8479,7 +8479,7 @@ br_25_ae07:
 	bvs br_25_ae14                                                  ; $ae0a : $70, $08
 
 	cpx #$c314.w                                                  ; $ae0c : $e0, $14, $c3
-	trb $0a06.w                                                  ; $ae0f : $1c, $06, $0a
+	trb wCurrItemIdx.w                                                  ; $ae0f : $1c, $06, $0a
 
 br_25_ae12:
 	.db $00                                                  ; $ae12 : $00

@@ -2923,7 +2923,7 @@ Call_06_944e:
 	bit #$90.b                                                  ; $945a : $89, $90
 	bne br_06_9464                                                  ; $945c : $d0, $06
 
-	lda $46                                                  ; $945e : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $945e : $a5, $46
 	bit #$80.b                                                  ; $9460 : $89, $80
 	beq br_06_946c                                                  ; $9462 : $f0, $08
 
@@ -3296,7 +3296,7 @@ br_06_96ce:
 
 
 br_06_96cf:
-	lda $46                                                  ; $96cf : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $96cf : $a5, $46
 	bit #$80.b                                                  ; $96d1 : $89, $80
 	beq br_06_96f1                                                  ; $96d3 : $f0, $1c
 
@@ -3437,7 +3437,7 @@ Call_06_9766:
 	lda $09ea.w                                                  ; $9787 : $ad, $ea, $09
 	bne br_06_97d1                                                  ; $978a : $d0, $45
 
-	lda $46                                                  ; $978c : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $978c : $a5, $46
 	bit #$10.b                                                  ; $978e : $89, $10
 	bne br_06_9796                                                  ; $9790 : $d0, $04
 
@@ -3497,7 +3497,7 @@ br_06_97d1:
 	dea                                                  ; $97d8 : $3a
 	bne br_06_980c                                                  ; $97d9 : $d0, $31
 
-	lda $46                                                  ; $97db : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $97db : $a5, $46
 	bit #$20.b                                                  ; $97dd : $89, $20
 	bne br_06_97e5                                                  ; $97df : $d0, $04
 
@@ -3515,14 +3515,14 @@ br_06_97ef:
 	lda $09e1.w                                                  ; $97ef : $ad, $e1, $09
 	beq br_06_980c                                                  ; $97f2 : $f0, $18
 
-	lda $46                                                  ; $97f4 : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $97f4 : $a5, $46
 	bit #$10.b                                                  ; $97f6 : $89, $10
 	beq br_06_9801                                                  ; $97f8 : $f0, $07
 
 	lda $09df.w                                                  ; $97fa : $ad, $df, $09
 	bne br_06_9829                                                  ; $97fd : $d0, $2a
 
-	lda $46                                                  ; $97ff : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $97ff : $a5, $46
 
 br_06_9801:
 	bit #$20.b                                                  ; $9801 : $89, $20
@@ -3533,7 +3533,7 @@ br_06_9801:
 	bcs br_06_982c                                                  ; $980a : $b0, $20
 
 br_06_980c:
-	lda $46                                                  ; $980c : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $980c : $a5, $46
 
 br_06_980e:
 	bit #$80.b                                                  ; $980e : $89, $80
@@ -4020,7 +4020,7 @@ br_06_9ad9:
 
 
 Call_06_9adb:
-	lda $46                                                  ; $9adb : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $9adb : $a5, $46
 	bit #$40.b                                                  ; $9add : $89, $40
 	beq br_06_9b2f                                                  ; $9adf : $f0, $4e
 
@@ -5207,7 +5207,7 @@ br_06_a307:
 	lda $1242.w                                                  ; $a316 : $ad, $42, $12
 	beq br_06_a325                                                  ; $a319 : $f0, $0a
 
-	lda $46                                                  ; $a31b : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $a31b : $a5, $46
 	bit #$80.b                                                  ; $a31d : $89, $80
 	beq br_06_a325                                                  ; $a31f : $f0, $04
 
@@ -11590,7 +11590,7 @@ Call_06_cbbf:
 	stz $420c.w                                                  ; $cbc5 : $9c, $0c, $42
 	ldx #$0000.w                                                  ; $cbc8 : $a2, $00, $00
 	stx $0320.w                                                  ; $cbcb : $8e, $20, $03
-	stz $2121.w                                                  ; $cbce : $9c, $21, $21
+	stz CGADD.w                                                  ; $cbce : $9c, $21, $21
 	ldx #$0320.w                                                  ; $cbd1 : $a2, $20, $03
 	stx $4372.w                                                  ; $cbd4 : $8e, $72, $43
 	lda #$00.b                                                  ; $cbd7 : $a9, $00
@@ -12064,7 +12064,7 @@ br_06_cf86:
 
 	stx $4375.w                                                  ; $cf90 : $8e, $75, $43
 	lda $1701.w                                                  ; $cf93 : $ad, $01, $17
-	sta $2121.w                                                  ; $cf96 : $8d, $21, $21
+	sta CGADD.w                                                  ; $cf96 : $8d, $21, $21
 	rep #ACCU_8                                                  ; $cf99 : $c2, $20
 	and #$00ff.w                                                  ; $cf9b : $29, $ff, $00
 	asl                                                  ; $cf9e : $0a
@@ -12096,7 +12096,7 @@ br_06_cfc8:
 
 	stz $04, X                                                  ; $cfd1 : $74, $04
 	lda $00, X                                                  ; $cfd3 : $b5, $00
-	sta $2121.w                                                  ; $cfd5 : $8d, $21, $21
+	sta CGADD.w                                                  ; $cfd5 : $8d, $21, $21
 	lda $03, X                                                  ; $cfd8 : $b5, $03
 	ina                                                  ; $cfda : $1a
 	cmp $01, X                                                  ; $cfdb : $d5, $01

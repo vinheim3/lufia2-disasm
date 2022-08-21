@@ -344,7 +344,7 @@ br_0e_820a:
 	asl $cf                                                  ; $82b1 : $06, $cf
 	sta [$06]                                                  ; $82b3 : $87, $06
 	cmp [$20]                                                  ; $82b5 : $c7, $20
-	ora $46                                                  ; $82b7 : $05, $46
+	ora wJoy1CurrHeld                                                  ; $82b7 : $05, $46
 	rol $9e01.w                                                  ; $82b9 : $2e, $01, $9e
 	asl $04                                                  ; $82bc : $06, $04
 	cop $05.b                                                  ; $82be : $02, $05
@@ -2417,7 +2417,7 @@ Call_0e_9270:
 	cop $37.b                                                  ; $92c3 : $02, $37
 	ora $4b                                                  ; $92c5 : $05, $4b
 	asl $4c, X                                                  ; $92c7 : $16, $4c
-	ora $055a.w                                                  ; $92c9 : $0d, $5a, $05
+	ora wJoy1StickyCounter.w                                                  ; $92c9 : $0d, $5a, $05
 	ora $7f                                                  ; $92cc : $05, $7f
 	sec                                                  ; $92ce : $38
 	ora ($9c, X)                                                  ; $92cf : $01, $9c
@@ -2711,7 +2711,7 @@ br_0e_9530:
 	ora ($37, X)                                                  ; $9537 : $01, $37
 	asl                                                  ; $9539 : $0a
 	adc ($06, X)                                                  ; $953a : $61, $06
-	ror $2121.w, X                                                  ; $953c : $7e, $21, $21
+	ror CGADD.w, X                                                  ; $953c : $7e, $21, $21
 	and ($01, X)                                                  ; $953f : $21, $01
 	ora ($50, S), Y                                                  ; $9541 : $13, $50
 	asl $bf                                                  ; $9543 : $06, $bf
@@ -7718,7 +7718,7 @@ br_0e_b6ef:
 
 	jsr Call_0e_b7cd.w                                                  ; $b6fd : $20, $cd, $b7
 	sta $09cf.w                                                  ; $b700 : $8d, $cf, $09
-	sta $0a06.w                                                  ; $b703 : $8d, $06, $0a
+	sta wCurrItemIdx.w                                                  ; $b703 : $8d, $06, $0a
 	jsr Call_0e_b7cd.w                                                  ; $b706 : $20, $cd, $b7
 	sta $09d0.w                                                  ; $b709 : $8d, $d0, $09
 	sta $0a07.w                                                  ; $b70c : $8d, $07, $0a
@@ -7759,7 +7759,7 @@ br_0e_b73a:
 	ldx #$8007.w                                                  ; $b741 : $a2, $07, $80
 	stx $09b7.w                                                  ; $b744 : $8e, $b7, $09
 	lda #$85.b                                                  ; $b747 : $a9, $85
-	sta $09b9.w                                                  ; $b749 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $b749 : $8d, $b9, $09
 	ldx #$0180.w                                                  ; $b74c : $a2, $80, $01
 
 Call_0e_b74f:
@@ -7779,7 +7779,7 @@ Call_0e_b760:
 	ldx #$e000.w                                                  ; $b770 : $a2, $00, $e0
 	stx $09b7.w                                                  ; $b773 : $8e, $b7, $09
 	lda #$7e.b                                                  ; $b776 : $a9, $7e
-	sta $09b9.w                                                  ; $b778 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $b778 : $8d, $b9, $09
 	ldx #$0180.w                                                  ; $b77b : $a2, $80, $01
 	stx $125d.w                                                  ; $b77e : $8e, $5d, $12
 	jsr Call_0e_b550.w                                                  ; $b781 : $20, $50, $b5
@@ -7828,9 +7828,9 @@ Call_0e_b7cd:
 	bmi br_0e_b7e1                                                  ; $b7d1 : $30, $0e
 
 	pha                                                  ; $b7d3 : $48
-	lda $09b9.w                                                  ; $b7d4 : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $b7d4 : $ad, $b9, $09
 	ina                                                  ; $b7d7 : $1a
-	sta $09b9.w                                                  ; $b7d8 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $b7d8 : $8d, $b9, $09
 	pha                                                  ; $b7db : $48
 	plb                                                  ; $b7dc : $ab
 	pla                                                  ; $b7dd : $68
@@ -8570,7 +8570,7 @@ br_0e_bd21:
 	bcc br_0e_bd0e                                                  ; $bd48 : $90, $c4
 
 	lda #$002b.w                                                  ; $bd4a : $a9, $2b, $00
-	sta $0a06.w                                                  ; $bd4d : $8d, $06, $0a
+	sta wCurrItemIdx.w                                                  ; $bd4d : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $bd50 : $e2, $20
 	jsr $81f057.l                                                  ; $bd52 : $22, $57, $f0, $81
 	tdc                                                  ; $bd56 : $7b
@@ -9355,7 +9355,7 @@ Call_0e_c205:
 
 br_0e_c20a:
 	lda $7fd4ef.l                                                  ; $c20a : $af, $ef, $d4, $7f
-	sta $0a06.w                                                  ; $c20e : $8d, $06, $0a
+	sta wCurrItemIdx.w                                                  ; $c20e : $8d, $06, $0a
 	lda $7fd4f0.l                                                  ; $c211 : $af, $f0, $d4, $7f
 	and #$8f01.w                                                  ; $c215 : $29, $01, $8f
 	.db $f0, $d4                                                  ; $c218 : $f0, $d4
@@ -9408,7 +9408,7 @@ br_0e_c258:
 	.db $00                                                  ; $c287 : $00
 	cpx #$b78e.w                                                  ; $c288 : $e0, $8e, $b7
 	ora #$7ea9.w                                                  ; $c28b : $09, $a9, $7e
-	sta $09b9.w                                                  ; $c28e : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $c28e : $8d, $b9, $09
 	ldx #$0440.w                                                  ; $c291 : $a2, $40, $04
 	stx $125d.w                                                  ; $c294 : $8e, $5d, $12
 	phb                                                  ; $c297 : $8b

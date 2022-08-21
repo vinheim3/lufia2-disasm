@@ -1013,7 +1013,7 @@ Call_04_86d7:
 
 br_04_8703:
 	jsr Call_04_86c0.w                                                  ; $8703 : $20, $c0, $86
-	sta $0a06.w                                                  ; $8706 : $8d, $06, $0a
+	sta wCurrItemIdx.w                                                  ; $8706 : $8d, $06, $0a
 	xba                                                  ; $8709 : $eb
 	sta $0a07.w                                                  ; $870a : $8d, $07, $0a
 	jsr $81f1c5.l                                                  ; $870d : $22, $c5, $f1, $81
@@ -4110,7 +4110,7 @@ br_04_9b62:
 
 br_04_9b74:
 	jsr $85ec81.l                                                  ; $9b74 : $22, $81, $ec, $85
-	lda $46                                                  ; $9b78 : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $9b78 : $a5, $46
 	lsr                                                  ; $9b7a : $4a
 	and $47                                                  ; $9b7b : $25, $47
 	and #$08.b                                                  ; $9b7d : $29, $08
@@ -4122,7 +4122,7 @@ br_04_9b74:
 
 
 br_04_9b8b:
-	lda $46                                                  ; $9b8b : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $9b8b : $a5, $46
 	bit #$20.b                                                  ; $9b8d : $89, $20
 	beq br_04_9c0c                                                  ; $9b8f : $f0, $7b
 
@@ -4148,7 +4148,7 @@ br_04_9b8b:
 
 br_04_9bc3:
 	jsr $85ec81.l                                                  ; $9bc3 : $22, $81, $ec, $85
-	lda $46                                                  ; $9bc7 : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $9bc7 : $a5, $46
 	bit #$10.b                                                  ; $9bc9 : $89, $10
 	beq br_04_9be6                                                  ; $9bcb : $f0, $19
 
@@ -4160,7 +4160,7 @@ br_04_9bc3:
 	sta $0f61.w                                                  ; $9bdb : $8d, $61, $0f
 	sta $101f.w                                                  ; $9bde : $8d, $1f, $10
 	sta $10dd.w                                                  ; $9be1 : $8d, $dd, $10
-	lda $46                                                  ; $9be4 : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $9be4 : $a5, $46
 
 br_04_9be6:
 	bit #$20.b                                                  ; $9be6 : $89, $20

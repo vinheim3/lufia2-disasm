@@ -3566,7 +3566,7 @@ br_05_96b3:
 	sbc $7f, X                                                  ; $96d8 : $f5, $7f
 	and #$01ff.w                                                  ; $96da : $29, $ff, $01
 	ora #$0200.w                                                  ; $96dd : $09, $00, $02
-	sta $0a06.w                                                  ; $96e0 : $8d, $06, $0a
+	sta wCurrItemIdx.w                                                  ; $96e0 : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $96e3 : $e2, $20
 	jsr $81f15b.l                                                  ; $96e5 : $22, $5b, $f1, $81
 	dec $54                                                  ; $96e9 : $c6, $54
@@ -3580,7 +3580,7 @@ br_05_96b3:
 	lda $7ff572.l                                                  ; $96f7 : $af, $72, $f5, $7f
 	and #$01ff.w                                                  ; $96fb : $29, $ff, $01
 	ora #$0200.w                                                  ; $96fe : $09, $00, $02
-	sta $0a06.w                                                  ; $9701 : $8d, $06, $0a
+	sta wCurrItemIdx.w                                                  ; $9701 : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $9704 : $e2, $20
 	jsr $81f15b.l                                                  ; $9706 : $22, $5b, $f1, $81
 
@@ -3596,7 +3596,7 @@ br_05_970a:
 	lda $7ff57e.l                                                  ; $9718 : $af, $7e, $f5, $7f
 	and #$01ff.w                                                  ; $971c : $29, $ff, $01
 	ora #$0200.w                                                  ; $971f : $09, $00, $02
-	sta $0a06.w                                                  ; $9722 : $8d, $06, $0a
+	sta wCurrItemIdx.w                                                  ; $9722 : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $9725 : $e2, $20
 	jsr $81f15b.l                                                  ; $9727 : $22, $5b, $f1, $81
 
@@ -3942,7 +3942,7 @@ br_05_998b:
 	rep #ACCU_8                                                  ; $998b : $c2, $20
 	lda $7edf01.l, X                                                  ; $998d : $bf, $01, $df, $7e
 	sta $0a11.w                                                  ; $9991 : $8d, $11, $0a
-	sta $0a06.w                                                  ; $9994 : $8d, $06, $0a
+	sta wCurrItemIdx.w                                                  ; $9994 : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $9997 : $e2, $20
 	jsr $81f1c5.l                                                  ; $9999 : $22, $c5, $f1, $81
 	jsr Call_05_9510.l                                                  ; $999d : $22, $10, $95, $85
@@ -13490,7 +13490,7 @@ br_05_da42:
 
 
 Call_05_da43:
-	sty $0a06.w                                                  ; $da43 : $8c, $06, $0a
+	sty wCurrItemIdx.w                                                  ; $da43 : $8c, $06, $0a
 	phx                                                  ; $da46 : $da
 	jsr $81f1c5.l                                                  ; $da47 : $22, $c5, $f1, $81
 	plx                                                  ; $da4b : $fa
@@ -16447,7 +16447,7 @@ br_05_ecb9:
 
 br_05_ecce:
 	rep #ACCU_8                                                  ; $ecce : $c2, $20
-	lda $46                                                  ; $ecd0 : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $ecd0 : $a5, $46
 	and $4a                                                  ; $ecd2 : $25, $4a
 	trb $4a                                                  ; $ecd4 : $14, $4a
 	sta $dd                                                  ; $ecd6 : $85, $dd

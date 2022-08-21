@@ -3,10 +3,17 @@ OAMDATA = $2104 ; OAM Data Write Register
 VMAIN = $2115 ; Video Port Control Register
 VMADDL = $2116 ; VRAM Address Registers (Low)
 VMDATAL = $2118 ; VRAM Data Write Registers (Low)
+CGADD = $2121 ; CGRAM Address Register
+APUIO0 = $2140 ; APU IO Registers
+APUIO1 = $2141 ; APU IO Registers
+APUIO2 = $2142 ; APU IO Registers
+APUIO3 = $2143 ; APU IO Registers
 WRMPYA = $4202 ; Multiplicand Registers
 WRMPYB = $4203 ; Multiplicand Registers
 MDMAEN = $420b ; DMA Enable Register
+HVBJOY = $4212 ; PPU Status Register
 RDMPYL = $4216 ; Multiplication Or Divide Result Registers (Low)
+JOY1L = $4218 ; Controller Port Data Registers (Pad 1 - Low)
 
 ; Bit 7 - set: PPU to CPU. clear: CPU to PPU
 ; Bit 6 - set: src has pointers to data. clear: src has data
@@ -14,8 +21,10 @@ RDMPYL = $4216 ; Multiplication Or Divide Result Registers (Low)
 ; Bit 3 - set: bit 4 does not take effect. clear: bit 4 takes effect
 ; Bits 2-0 - transfer mode:
 ;   - 000 - 1 register write once
+;   - 001 - 2 registers write once
 DMAP0 = $4300 ; DMA Control Register
 DMAP6 = $4360 ; DMA Control Register
+DMAP_2_REGS_WRITE_ONCE = $01
 
 BBAD0 = $4301 ; DMA Destination Register
 BBAD6 = $4361 ; DMA Destination Register

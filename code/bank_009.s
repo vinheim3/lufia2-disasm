@@ -2102,7 +2102,7 @@ Call_09_9073:
 	jsr $6de7.w                                                  ; $9095 : $20, $e7, $6d
 	.db $90, $cf                                                  ; $9098 : $90, $cf
 
-	ora $46                                                  ; $909a : $05, $46
+	ora wJoy1CurrHeld                                                  ; $909a : $05, $46
 	rol $3301.w                                                  ; $909c : $2e, $01, $33
 
 br_09_909f:
@@ -3305,7 +3305,7 @@ Call_09_9961:
 
 br_09_998b:
 	lda ($86, S), Y                                                  ; $998b : $b3, $86
-	ora $46                                                  ; $998d : $05, $46
+	ora wJoy1CurrHeld                                                  ; $998d : $05, $46
 	and ($3f, X)                                                  ; $998f : $21, $3f
 	.db $00                                                  ; $9991 : $00
 	.db $30, $01                                                  ; $9992 : $30, $01
@@ -8513,7 +8513,7 @@ Call_09_c506:
 
 br_09_c5c3:
 	asl $4b                                                  ; $c5c3 : $06, $4b
-	jsr $0a06.w                                                  ; $c5c5 : $20, $06, $0a
+	jsr wCurrItemIdx.w                                                  ; $c5c5 : $20, $06, $0a
 	jsr $5506.w                                                  ; $c5c8 : $20, $06, $55
 	sta [$49]                                                  ; $c5cb : $87, $49
 	ror $0603.w                                                  ; $c5cd : $6e, $03, $06
@@ -8753,7 +8753,7 @@ Call_09_c706:
 	tsb $82                                                  ; $c7da : $04, $82
 	eor #$068e.w                                                  ; $c7dc : $49, $8e, $06
 	and $03, X                                                  ; $c7df : $35, $03
-	ora $46                                                  ; $c7e1 : $05, $46
+	ora wJoy1CurrHeld                                                  ; $c7e1 : $05, $46
 	jsr $3c06.w                                                  ; $c7e3 : $20, $06, $3c
 	jsr $be06.w                                                  ; $c7e6 : $20, $06, $be
 	stx $05                                                  ; $c7e9 : $86, $05
@@ -12985,7 +12985,7 @@ br_09_ea71:
 	ora ($61, X)                                                  ; $eae7 : $01, $61
 	asl $da                                                  ; $eae9 : $06, $da
 	stx $06                                                  ; $eaeb : $86, $06
-	ldx $2121.w, Y                                                  ; $eaed : $be, $21, $21
+	ldx CGADD.w, Y                                                  ; $eaed : $be, $21, $21
 	ora ($13, X)                                                  ; $eaf0 : $01, $13
 	ina                                                  ; $eaf2 : $1a
 	asl $cb                                                  ; $eaf3 : $06, $cb

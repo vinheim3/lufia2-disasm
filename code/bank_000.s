@@ -51,7 +51,7 @@ Jump_00_8035:
 	lda #$81.b                                                  ; $8056 : $a9, $81
 	sta $4200.w                                                  ; $8058 : $8d, $00, $42
 	jsr Call_00_91df.w                                                  ; $805b : $20, $df, $91
-	jsr Call_00_9383.l                                                  ; $805e : $22, $83, $93, $80
+	jsr InitSound.l                                                  ; $805e : $22, $83, $93, $80
 	lda #$96.b                                                  ; $8062 : $a9, $96
 	sta $0558.w                                                  ; $8064 : $8d, $58, $05
 	jsr Call_00_82e7.l                                                  ; $8067 : $22, $e7, $82, $80
@@ -92,7 +92,7 @@ br_00_80af:
 	sta $700000.l                                                  ; $80b1 : $8f, $00, $00, $70
 	stz $057c.w                                                  ; $80b5 : $9c, $7c, $05
 	rep #ACCU_8                                                  ; $80b8 : $c2, $20
-	lda $46                                                  ; $80ba : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $80ba : $a5, $46
 	cmp #$3000.w                                                  ; $80bc : $c9, $00, $30
 	sep #ACCU_8                                                  ; $80bf : $e2, $20
 	bne br_00_80cf                                                  ; $80c1 : $d0, $0c
@@ -227,7 +227,7 @@ br_00_8158:
 	stz $4314.w                                                  ; $8194 : $9c, $14, $43
 	ldx #$2020.w                                                  ; $8197 : $a2, $20, $20
 	stx $4315.w                                                  ; $819a : $8e, $15, $43
-	stz $2121.w                                                  ; $819d : $9c, $21, $21
+	stz CGADD.w                                                  ; $819d : $9c, $21, $21
 	lda #$00.b                                                  ; $81a0 : $a9, $00
 	sta $4320.w                                                  ; $81a2 : $8d, $20, $43
 	lda #$22.b                                                  ; $81a5 : $a9, $22
@@ -378,7 +378,7 @@ br_00_81fb:
 	rep #IDX_8                                                  ; $828c : $c2, $10
 	phk                                                  ; $828e : $4b
 	plb                                                  ; $828f : $ab
-	jsr Call_00_87fc.w                                                  ; $8290 : $20, $fc, $87
+	jsr DmaTileMapBuffers.w                                                  ; $8290 : $20, $fc, $87
 	plp                                                  ; $8293 : $28
 	plb                                                  ; $8294 : $ab
 	ply                                                  ; $8295 : $7a
@@ -1121,7 +1121,7 @@ br_00_8699:
 	and #$00ff.w                                                  ; $86a3 : $29, $ff, $00
 	beq br_00_86b5                                                  ; $86a6 : $f0, $0d
 
-	lda $46                                                  ; $86a8 : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $86a8 : $a5, $46
 	cmp #$3030.w                                                  ; $86aa : $c9, $30, $30
 	sep #ACCU_8                                                  ; $86ad : $e2, $20
 	bne br_00_86b5                                                  ; $86af : $d0, $04
@@ -1219,7 +1219,7 @@ Call_00_8703:
 	lda #$80.b                                                  ; $873c : $a9, $80
 	trb $73                                                  ; $873e : $14, $73
 	lda #$00.b                                                  ; $8740 : $a9, $00
-	sta $2121.w                                                  ; $8742 : $8d, $21, $21
+	sta CGADD.w                                                  ; $8742 : $8d, $21, $21
 	lda #$00.b                                                  ; $8745 : $a9, $00
 	sta DMAP6.w                                                  ; $8747 : $8d, $60, $43
 	ldx #$0320.w                                                  ; $874a : $a2, $20, $03
@@ -1234,45 +1234,54 @@ Call_00_8703:
 	sta MDMAEN.w                                                  ; $8762 : $8d, $0b, $42
 
 @cont_8765:
--	lda $4212.w                                                  ; $8765 : $ad, $12, $42
+-	lda HVBJOY.w                                                  ; $8765 : $ad, $12, $42
 	lsr                                                  ; $8768 : $4a
 	bcs -                                                  ; $8769 : $b0, $fa
 
-	rep #ACCU_8                                                  ; $876b : $c2, $20
-	ldx #$0002.w                                                  ; $876d : $a2, $02, $00
+; Poll input, start with JOY2L
+	rep #ACCU_8                                                               ; $876b : $c2, $20
+	ldx #$0002.w                                                              ; $876d : $a2, $02, $00
 
-@loop_8770:
-	lda $4218.w, X                                                  ; $8770 : $bd, $18, $42
-	sta $46, X                                                  ; $8773 : $95, $46
-	cmp $055e.w, X                                                  ; $8775 : $dd, $5e, $05
-	bne @br_8791                                                  ; $8778 : $d0, $17
+@prevJoypad:
+; Save new joypad held, and jump if not the same as the previous
+	lda JOY1L.w, X                                                            ; $8770 : $bd, $18, $42
+	sta wJoy1CurrHeld, X                                                      ; $8773 : $95, $46
+	cmp wJoy1PrevHeld.w, X                                                    ; $8775 : $dd, $5e, $05
+	bne @notStickyHeld                                                        ; $8778 : $d0, $17
 
-	dec $055a.w, X                                                  ; $877a : $de, $5a, $05
-	bne @cont_87a1                                                  ; $877d : $d0, $22
+; Ignore below code if sticky counter not yet 0
+	dec wJoy1StickyCounter.w, X                                               ; $877a : $de, $5a, $05
+	bne @toPrevJoypad                                                         ; $877d : $d0, $22
 
-	lda $055e.w, X                                                  ; $877f : $bd, $5e, $05
+;
+	lda wJoy1PrevHeld.w, X                                                  ; $877f : $bd, $5e, $05
 	and $0562.w                                                  ; $8782 : $2d, $62, $05
 	ora $4a, X                                                  ; $8785 : $15, $4a
 	sta $4a, X                                                  ; $8787 : $95, $4a
-	lda #$0004.w                                                  ; $8789 : $a9, $04, $00
-	sta $055a.w, X                                                  ; $878c : $9d, $5a, $05
-	bra @cont_87a1                                                  ; $878f : $80, $10
 
-@br_8791:
-	sta $055e.w, X                                                  ; $8791 : $9d, $5e, $05
+; Set a shorter sticky counter from here
+	lda #$0004.w                                                  ; $8789 : $a9, $04, $00
+	sta wJoy1StickyCounter.w, X                                                  ; $878c : $9d, $5a, $05
+	bra @toPrevJoypad                                                  ; $878f : $80, $10
+
+@notStickyHeld:
+;
+	sta wJoy1PrevHeld.w, X                                                  ; $8791 : $9d, $5e, $05
 	eor #$ffff.w                                                  ; $8794 : $49, $ff, $ff
 	ora $4a, X                                                  ; $8797 : $15, $4a
 	sta $4a, X                                                  ; $8799 : $95, $4a
-	lda #$0010.w                                                  ; $879b : $a9, $10, $00
-	sta $055a.w, X                                                  ; $879e : $9d, $5a, $05
 
-@cont_87a1:
-	dex                                                  ; $87a1 : $ca
-	dex                                                  ; $87a2 : $ca
-	bpl @loop_8770                                                  ; $87a3 : $10, $cb
+; Set a longer sticky counter for the 1st repeat btns held
+	lda #$0010.w                                                              ; $879b : $a9, $10, $00
+	sta wJoy1StickyCounter.w, X                                               ; $879e : $9d, $5a, $05
 
-	plp                                                  ; $87a5 : $28
-	rts                                                  ; $87a6 : $60
+@toPrevJoypad:
+	dex                                                                       ; $87a1 : $ca
+	dex                                                                       ; $87a2 : $ca
+	bpl @prevJoypad                                                           ; $87a3 : $10, $cb
+
+	plp                                                                       ; $87a5 : $28
+	rts                                                                       ; $87a6 : $60
 
 
 Call_00_87a7:
@@ -1325,7 +1334,7 @@ br_00_87e5:
 	jsr Call_00_884f.w                                                  ; $87ed : $20, $4f, $88
 
 br_00_87f0:
-	jsr Call_00_87fc.w                                                  ; $87f0 : $20, $fc, $87
+	jsr DmaTileMapBuffers.w                                                  ; $87f0 : $20, $fc, $87
 	lda $81                                                  ; $87f3 : $a5, $81
 	beq br_00_87fa                                                  ; $87f5 : $f0, $03
 
@@ -1336,47 +1345,54 @@ br_00_87fa:
 	rts                                                  ; $87fb : $60
 
 
-Call_00_87fc:
+DmaTileMapBuffers:
 	lda $74                                                  ; $87fc : $a5, $74
 	bit #$c0.b                                                  ; $87fe : $89, $c0
-	beq br_00_880d                                                  ; $8800 : $f0, $0b
+	beq @cont_880d                                                  ; $8800 : $f0, $0b
 
-	ldx #$2000.w                                                  ; $8802 : $a2, $00, $20
+; BG1
+	ldx #w7e2000.w                                                  ; $8802 : $a2, $00, $20
 	ldy #$0000.w                                                  ; $8805 : $a0, $00, $00
-	jsr Call_00_882e.w                                                  ; $8808 : $20, $2e, $88
+	jsr DMA6_800hBytes.w                                                  ; $8808 : $20, $2e, $88
+
 	lda $74                                                  ; $880b : $a5, $74
 
-br_00_880d:
+@cont_880d:
 	bit #$30.b                                                  ; $880d : $89, $30
-	beq br_00_881c                                                  ; $880f : $f0, $0b
+	beq @cont_881c                                                  ; $880f : $f0, $0b
 
-	ldx #$2800.w                                                  ; $8811 : $a2, $00, $28
+; BG2
+	ldx #w7e2000+$800.w                                                  ; $8811 : $a2, $00, $28
 	ldy #$0400.w                                                  ; $8814 : $a0, $00, $04
-	jsr Call_00_882e.w                                                  ; $8817 : $20, $2e, $88
+	jsr DMA6_800hBytes.w                                                  ; $8817 : $20, $2e, $88
+
 	lda $74                                                  ; $881a : $a5, $74
 
-br_00_881c:
+@cont_881c:
 	bit #$0c.b                                                  ; $881c : $89, $0c
-	beq br_00_8829                                                  ; $881e : $f0, $09
+	beq @end                                                  ; $881e : $f0, $09
 
-	ldx #$3000.w                                                  ; $8820 : $a2, $00, $30
+; BG1
+	ldx #w7e2000+$1000.w                                                  ; $8820 : $a2, $00, $30
 	ldy #$0800.w                                                  ; $8823 : $a0, $00, $08
-	jsr Call_00_882e.w                                                  ; $8826 : $20, $2e, $88
+	jsr DMA6_800hBytes.w                                                  ; $8826 : $20, $2e, $88
 
-br_00_8829:
+@end:
 	lda #$aa.b                                                  ; $8829 : $a9, $aa
 	trb $74                                                  ; $882b : $14, $74
 	rts                                                  ; $882d : $60
 
 
-Call_00_882e:
+; X - src address
+; Y - vram address
+DMA6_800hBytes:
 	sty VMADDL.w                                                  ; $882e : $8c, $16, $21
 	stx A1T6L.w                                                  ; $8831 : $8e, $62, $43
-	lda #$01.b                                                  ; $8834 : $a9, $01
+	lda #DMAP_2_REGS_WRITE_ONCE.b                                                  ; $8834 : $a9, $01
 	sta DMAP6.w                                                  ; $8836 : $8d, $60, $43
-	lda #$7e.b                                                  ; $8839 : $a9, $7e
+	lda #:w7e2000.b                                                  ; $8839 : $a9, $7e
 	sta A1B6.w                                                  ; $883b : $8d, $64, $43
-	lda #$18.b                                                  ; $883e : $a9, $18
+	lda #<VMDATAL.b                                                  ; $883e : $a9, $18
 	sta BBAD6.w                                                  ; $8840 : $8d, $61, $43
 	ldx #$0800.w                                                  ; $8843 : $a2, $00, $08
 	stx DAS6L.w                                                  ; $8846 : $8e, $65, $43
@@ -1396,7 +1412,7 @@ Call_00_884f:
 
 br_00_885b:
 	txa                                                  ; $885b : $8a
-	sta $2121.w                                                  ; $885c : $8d, $21, $21
+	sta CGADD.w                                                  ; $885c : $8d, $21, $21
 
 br_00_885f:
 	pla                                                  ; $885f : $68
@@ -1448,19 +1464,20 @@ Call_00_888c:
 	sep #ACCU_8                                                  ; $88a5 : $e2, $20
 	ldy #$0000.w                                                  ; $88a7 : $a0, $00, $00
 
-br_00_88aa:
+Func_0_88aa:
 	ldx $0575.w                                                  ; $88aa : $ae, $75, $05
 
-br_00_88ad:
+Func_0_88ad:
+@loop_88ad:
 	lda [$5d], Y                                                  ; $88ad : $b7, $5d
 	iny                                                  ; $88af : $c8
 	cmp #$10.b                                                  ; $88b0 : $c9, $10
-	bcc br_00_88b9                                                  ; $88b2 : $90, $05
+	bcc @br_88b9                                                  ; $88b2 : $90, $05
 
 	jsr Call_00_88da.w                                                  ; $88b4 : $20, $da, $88
-	bra br_00_88ad                                                  ; $88b7 : $80, $f4
+	bra @loop_88ad                                                  ; $88b7 : $80, $f4
 
-br_00_88b9:
+@br_88b9:
 	stx $0575.w                                                  ; $88b9 : $8e, $75, $05
 	jsr Call_00_88c8.w                                                  ; $88bc : $20, $c8, $88
 	xba                                                  ; $88bf : $eb
@@ -1468,7 +1485,7 @@ br_00_88b9:
 	xba                                                  ; $88c2 : $eb
 	asl                                                  ; $88c3 : $0a
 	tax                                                  ; $88c4 : $aa
-	jmp ($8e7c.w, X)                                                  ; $88c5 : $7c, $7c, $8e
+	jmp (Funcs_0_8e7c.w, X)                                                  ; $88c5 : $7c, $7c, $8e
 
 
 Call_00_88c8:
@@ -1492,15 +1509,15 @@ br_00_88d7:
 Call_00_88da:
 	jsr Call_00_8db3.w                                                  ; $88da : $20, $b3, $8d
 	dec $0566.w                                                  ; $88dd : $ce, $66, $05
-	bne br_00_88e8                                                  ; $88e0 : $d0, $06
+	bne +                                                  ; $88e0 : $d0, $06
 
 	jsr Call_00_8df9.w                                                  ; $88e2 : $20, $f9, $8d
 	jsr Call_00_8df9.w                                                  ; $88e5 : $20, $f9, $8d
 
-br_00_88e8:
-	rts                                                  ; $88e8 : $60
++	rts                                                  ; $88e8 : $60
 
 
+;
 	ldx $0575.w                                                  ; $88e9 : $ae, $75, $05
 	plb                                                  ; $88ec : $ab
 	rts                                                  ; $88ed : $60
@@ -1624,7 +1641,7 @@ br_00_899f:
 	stz $62                                                  ; $89a1 : $64, $62
 	jsr Call_00_8bca.w                                                  ; $89a3 : $20, $ca, $8b
 	ply                                                  ; $89a6 : $7a
-	brl br_00_88ad                                                  ; $89a7 : $82, $03, $ff
+	brl Func_0_88ad                                                  ; $89a7 : $82, $03, $ff
 
 Call_00_89aa:
 	phy                                                  ; $89aa : $5a
@@ -1744,7 +1761,7 @@ br_00_8a55:
 
 	wdm                                                  ; $8a5b : $42
 	ora $0186a0.l                                                  ; $8a5c : $0f, $a0, $86, $01
-	bpl br_00_8a89                                                  ; $8a60 : $10, $27
+	.db $10, $27
 
 	.db $00                                                  ; $8a62 : $00
 	inx                                                  ; $8a63 : $e8
@@ -1754,6 +1771,9 @@ br_00_8a55:
 	asl                                                  ; $8a69 : $0a
 	.db $00                                                  ; $8a6a : $00
 	.db $00                                                  ; $8a6b : $00
+
+
+Func_0_8a6c:
 	lda #$00.b                                                  ; $8a6c : $a9, $00
 	xba                                                  ; $8a6e : $eb
 	lda [$5d], Y                                                  ; $8a6f : $b7, $5d
@@ -1764,24 +1784,24 @@ br_00_8a55:
 	asl                                                  ; $8a7a : $0a
 	tax                                                  ; $8a7b : $aa
 	sep #ACCU_8                                                  ; $8a7c : $e2, $20
-	jmp ($8a81.w, X)                                                  ; $8a7e : $7c, $81, $8a
+	jmp (@funcs.w, X)                                                  ; $8a7e : $7c, $81, $8a
+
+@funcs:
+	.dw $8a99
+	.dw $8aad
+	.dw $8ac5
+	.dw $8ada
+	.dw $8b09
+	.dw Func_0_8b1b
+	.dw $8b2d
+	.dw $8b12
+	.dw $8b24
+	.dw $8b36
+	.dw Call_00_8b3f
+	.dw Call_00_8b3f
 
 
-	sta $ad8a.w, Y                                                  ; $8a81 : $99, $8a, $ad
-	txa                                                  ; $8a84 : $8a
-	cmp $8a                                                  ; $8a85 : $c5, $8a
-	phx                                                  ; $8a87 : $da
-	txa                                                  ; $8a88 : $8a
-
-br_00_8a89:
-	ora #$8b.b                                                  ; $8a89 : $09, $8b
-	tcs                                                  ; $8a8b : $1b
-	phb                                                  ; $8a8c : $8b
-	and $128b.w                                                  ; $8a8d : $2d, $8b, $12
-	phb                                                  ; $8a90 : $8b
-	bit $8b                                                  ; $8a91 : $24, $8b
-	rol $8b, X                                                  ; $8a93 : $36, $8b
-	and $8b3f8b.l, X                                                  ; $8a95 : $3f, $8b, $3f, $8b
+;
 	rep #ACCU_8                                                  ; $8a99 : $c2, $20
 	lda [$5d], Y                                                  ; $8a9b : $b7, $5d
 	sta $60                                                  ; $8a9d : $85, $60
@@ -1791,7 +1811,7 @@ br_00_8a89:
 	lda $5f                                                  ; $8aa3 : $a5, $5f
 	sta $62                                                  ; $8aa5 : $85, $62
 	jsr Call_00_8bca.w                                                  ; $8aa7 : $20, $ca, $8b
-	brl br_00_88ad                                                  ; $8aaa : $82, $00, $fe
+	brl Func_0_88ad                                                  ; $8aaa : $82, $00, $fe
 
 	rep #ACCU_8                                                  ; $8aad : $c2, $20
 	lda [$5d], Y                                                  ; $8aaf : $b7, $5d
@@ -1804,7 +1824,7 @@ br_00_8a89:
 	lda $5f                                                  ; $8abb : $a5, $5f
 	sta $62                                                  ; $8abd : $85, $62
 	jsr Call_00_8bca.w                                                  ; $8abf : $20, $ca, $8b
-	brl br_00_88ad                                                  ; $8ac2 : $82, $e8, $fd
+	brl Func_0_88ad                                                  ; $8ac2 : $82, $e8, $fd
 
 	rep #ACCU_8                                                  ; $8ac5 : $c2, $20
 	lda [$5d], Y                                                  ; $8ac7 : $b7, $5d
@@ -1816,7 +1836,7 @@ br_00_8a89:
 	sta $62                                                  ; $8ad1 : $85, $62
 	iny                                                  ; $8ad3 : $c8
 	jsr Call_00_8bca.w                                                  ; $8ad4 : $20, $ca, $8b
-	brl br_00_88ad                                                  ; $8ad7 : $82, $d3, $fd
+	brl Func_0_88ad                                                  ; $8ad7 : $82, $d3, $fd
 
 	rep #ACCU_8                                                  ; $8ada : $c2, $20
 	lda [$5d], Y                                                  ; $8adc : $b7, $5d
@@ -1832,7 +1852,7 @@ br_00_8a89:
 	sta $62                                                  ; $8aee : $85, $62
 	ply                                                  ; $8af0 : $7a
 	jsr Call_00_8bca.w                                                  ; $8af1 : $20, $ca, $8b
-	brl br_00_88ad                                                  ; $8af4 : $82, $b6, $fd
+	brl Func_0_88ad                                                  ; $8af4 : $82, $b6, $fd
 
 	rep #ACCU_8                                                  ; $8af7 : $c2, $20
 	lda [$5d], Y                                                  ; $8af9 : $b7, $5d
@@ -1849,27 +1869,29 @@ br_00_8a89:
 
 	jsr Call_00_8ba7.w                                                  ; $8b09 : $20, $a7, $8b
 	jsr Call_00_8b3f.w                                                  ; $8b0c : $20, $3f, $8b
-	brl br_00_88aa                                                  ; $8b0f : $82, $98, $fd
+	brl Func_0_88aa                                                  ; $8b0f : $82, $98, $fd
 
 	jsr Call_00_8bb2.w                                                  ; $8b12 : $20, $b2, $8b
 	jsr Call_00_8b3f.w                                                  ; $8b15 : $20, $3f, $8b
-	brl br_00_88aa                                                  ; $8b18 : $82, $8f, $fd
+	brl Func_0_88aa                                                  ; $8b18 : $82, $8f, $fd
 
+
+Func_0_8b1b:
 	jsr Call_00_8ba7.w                                                  ; $8b1b : $20, $a7, $8b
 	jsr Call_00_8b73.w                                                  ; $8b1e : $20, $73, $8b
-	brl br_00_88aa                                                  ; $8b21 : $82, $86, $fd
+	brl Func_0_88aa                                                  ; $8b21 : $82, $86, $fd
 
 	jsr Call_00_8bb2.w                                                  ; $8b24 : $20, $b2, $8b
 	jsr Call_00_8b73.w                                                  ; $8b27 : $20, $73, $8b
-	brl br_00_88aa                                                  ; $8b2a : $82, $7d, $fd
+	brl Func_0_88aa                                                  ; $8b2a : $82, $7d, $fd
 
 	jsr Call_00_8ba7.w                                                  ; $8b2d : $20, $a7, $8b
 	jsr Call_00_8b57.w                                                  ; $8b30 : $20, $57, $8b
-	brl br_00_88aa                                                  ; $8b33 : $82, $74, $fd
+	brl Func_0_88aa                                                  ; $8b33 : $82, $74, $fd
 
 	jsr Call_00_8bb2.w                                                  ; $8b36 : $20, $b2, $8b
 	jsr Call_00_8b57.w                                                  ; $8b39 : $20, $57, $8b
-	brl br_00_88aa                                                  ; $8b3c : $82, $6b, $fd
+	brl Func_0_88aa                                                  ; $8b3c : $82, $6b, $fd
 
 Call_00_8b3f:
 	lda #$00.b                                                  ; $8b3f : $a9, $00
@@ -1906,7 +1928,7 @@ Call_00_8b57:
 Call_00_8b73:
 	rep #ACCU_8                                                  ; $8b73 : $c2, $20
 	lda ($56)                                                  ; $8b75 : $b2, $56
-	sta $0a06.w                                                  ; $8b77 : $8d, $06, $0a
+	sta wCurrItemIdx.w                                                  ; $8b77 : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $8b7a : $e2, $20
 	phy                                                  ; $8b7c : $5a
 	jsr $81f1c5.l                                                  ; $8b7d : $22, $c5, $f1, $81
@@ -2028,7 +2050,7 @@ Call_00_8bca:
 br_00_8c39:
 	iny                                                  ; $8c39 : $c8
 	iny                                                  ; $8c3a : $c8
-	brl br_00_88aa                                                  ; $8c3b : $82, $6c, $fc
+	brl Func_0_88aa                                                  ; $8c3b : $82, $6c, $fc
 
 	jsr Call_00_8c9e.w                                                  ; $8c3e : $20, $9e, $8c
 	rep #ACCU_8                                                  ; $8c41 : $c2, $20
@@ -2054,7 +2076,7 @@ br_00_8c5e:
 	sta $5d                                                  ; $8c62 : $85, $5d
 	sep #ACCU_8                                                  ; $8c64 : $e2, $20
 	ldy #$0000.w                                                  ; $8c66 : $a0, $00, $00
-	brl br_00_88aa                                                  ; $8c69 : $82, $3e, $fc
+	brl Func_0_88aa                                                  ; $8c69 : $82, $3e, $fc
 
 Call_00_8c6c:
 	stz $0570.w                                                  ; $8c6c : $9c, $70, $05
@@ -2158,11 +2180,11 @@ br_00_8cfb:
 
 	lda #$ff.b                                                  ; $8cfc : $a9, $ff
 	sta $0578.w                                                  ; $8cfe : $8d, $78, $05
-	brl br_00_88aa                                                  ; $8d01 : $82, $a6, $fb
+	brl Func_0_88aa                                                  ; $8d01 : $82, $a6, $fb
 
 	jsr Call_00_8df9.w                                                  ; $8d04 : $20, $f9, $8d
 	jsr Call_00_8e0f.w                                                  ; $8d07 : $20, $0f, $8e
-	brl br_00_88ad                                                  ; $8d0a : $82, $a0, $fb
+	brl Func_0_88ad                                                  ; $8d0a : $82, $a0, $fb
 
 	rep #ACCU_8                                                  ; $8d0d : $c2, $20
 	lda [$5d], Y                                                  ; $8d0f : $b7, $5d
@@ -2173,12 +2195,12 @@ br_00_8cfb:
 	tax                                                  ; $8d19 : $aa
 	sep #ACCU_8                                                  ; $8d1a : $e2, $20
 	jsr Call_00_8e0f.w                                                  ; $8d1c : $20, $0f, $8e
-	brl br_00_88ad                                                  ; $8d1f : $82, $8b, $fb
+	brl Func_0_88ad                                                  ; $8d1f : $82, $8b, $fb
 
 	lda [$5d], Y                                                  ; $8d22 : $b7, $5d
 	iny                                                  ; $8d24 : $c8
 	jsr Call_00_8d5d.w                                                  ; $8d25 : $20, $5d, $8d
-	brl br_00_88aa                                                  ; $8d28 : $82, $7f, $fb
+	brl Func_0_88aa                                                  ; $8d28 : $82, $7f, $fb
 
 	rep #ACCU_8                                                  ; $8d2b : $c2, $20
 	lda [$5d], Y                                                  ; $8d2d : $b7, $5d
@@ -2198,7 +2220,7 @@ br_00_8cfb:
 	lda ($56), Y                                                  ; $8d42 : $b1, $56
 	jsr Call_00_8d5d.w                                                  ; $8d44 : $20, $5d, $8d
 	ply                                                  ; $8d47 : $7a
-	brl br_00_88aa                                                  ; $8d48 : $82, $5f, $fb
+	brl Func_0_88aa                                                  ; $8d48 : $82, $5f, $fb
 
 	rep #ACCU_8                                                  ; $8d4b : $c2, $20
 	lda [$5d], Y                                                  ; $8d4d : $b7, $5d
@@ -2208,7 +2230,7 @@ br_00_8cfb:
 	sep #ACCU_8                                                  ; $8d53 : $e2, $20
 	lda ($56)                                                  ; $8d55 : $b2, $56
 	jsr Call_00_8d5d.w                                                  ; $8d57 : $20, $5d, $8d
-	brl br_00_88aa                                                  ; $8d5a : $82, $4d, $fb
+	brl Func_0_88aa                                                  ; $8d5a : $82, $4d, $fb
 
 Call_00_8d5d:
 	asl                                                  ; $8d5d : $0a
@@ -2226,7 +2248,7 @@ Call_00_8d5d:
 	lda $0575.w                                                  ; $8d6e : $ad, $75, $05
 	sta $0579.w                                                  ; $8d71 : $8d, $79, $05
 	sep #ACCU_8                                                  ; $8d74 : $e2, $20
-	brl br_00_88aa                                                  ; $8d76 : $82, $31, $fb
+	brl Func_0_88aa                                                  ; $8d76 : $82, $31, $fb
 
 	rep #ACCU_8                                                  ; $8d79 : $c2, $20
 	lda $0579.w                                                  ; $8d7b : $ad, $79, $05
@@ -2238,52 +2260,52 @@ Call_00_8d5d:
 	sta $0573.w                                                  ; $8d86 : $8d, $73, $05
 	sep #ACCU_8                                                  ; $8d89 : $e2, $20
 	jsr Call_00_8e0f.w                                                  ; $8d8b : $20, $0f, $8e
-	brl br_00_88aa                                                  ; $8d8e : $82, $19, $fb
+	brl Func_0_88aa                                                  ; $8d8e : $82, $19, $fb
 
 	lda $0564.w                                                  ; $8d91 : $ad, $64, $05
 	lsr                                                  ; $8d94 : $4a
 	lsr                                                  ; $8d95 : $4a
 	and #$07.b                                                  ; $8d96 : $29, $07
 	sta $0577.w                                                  ; $8d98 : $8d, $77, $05
-	brl br_00_88aa                                                  ; $8d9b : $82, $0c, $fb
+	brl Func_0_88aa                                                  ; $8d9b : $82, $0c, $fb
 
 	lda $0577.w                                                  ; $8d9e : $ad, $77, $05
 	jsr Call_00_8d5d.w                                                  ; $8da1 : $20, $5d, $8d
-	brl br_00_88aa                                                  ; $8da4 : $82, $03, $fb
+	brl Func_0_88aa                                                  ; $8da4 : $82, $03, $fb
 
 	lda [$5d], Y                                                  ; $8da7 : $b7, $5d
 	sta $0564.w                                                  ; $8da9 : $8d, $64, $05
 	iny                                                  ; $8dac : $c8
-	brl br_00_88aa                                                  ; $8dad : $82, $fa, $fa
+	brl Func_0_88aa                                                  ; $8dad : $82, $fa, $fa
 
-	brl br_00_88aa                                                  ; $8db0 : $82, $f7, $fa
+	brl Func_0_88aa                                                  ; $8db0 : $82, $f7, $fa
+
 
 Call_00_8db3:
 	xba                                                  ; $8db3 : $eb
 	lda $0578.w                                                  ; $8db4 : $ad, $78, $05
-	bne br_00_8dca                                                  ; $8db7 : $d0, $11
+	bne @br_8dca                                                  ; $8db7 : $d0, $11
 
 	xba                                                  ; $8db9 : $eb
 	cmp #$cc.b                                                  ; $8dba : $c9, $cc
-	bcs br_00_8dd0                                                  ; $8dbc : $b0, $12
+	bcs @br_8dd0                                                  ; $8dbc : $b0, $12
 
-br_00_8dbe:
+@loop_8dbe:
 	sta $0040.w, X                                                  ; $8dbe : $9d, $40, $00
 	lda $0564.w                                                  ; $8dc1 : $ad, $64, $05
 	sta $0041.w, X                                                  ; $8dc4 : $9d, $41, $00
 
-br_00_8dc7:
+@done:
 	inx                                                  ; $8dc7 : $e8
 	inx                                                  ; $8dc8 : $e8
 	rts                                                  ; $8dc9 : $60
 
-
-br_00_8dca:
+@br_8dca:
 	stz $0578.w                                                  ; $8dca : $9c, $78, $05
 	xba                                                  ; $8dcd : $eb
-	bra br_00_8dbe                                                  ; $8dce : $80, $ee
+	bra @loop_8dbe                                                  ; $8dce : $80, $ee
 
-br_00_8dd0:
+@br_8dd0:
 	phx                                                  ; $8dd0 : $da
 	xba                                                  ; $8dd1 : $eb
 	lda #$00.b                                                  ; $8dd2 : $a9, $00
@@ -2303,7 +2325,8 @@ br_00_8dd0:
 	sta $0000.w, X                                                  ; $8dee : $9d, $00, $00
 	lda $0564.w                                                  ; $8df1 : $ad, $64, $05
 	sta $0001.w, X                                                  ; $8df4 : $9d, $01, $00
-	bra br_00_8dc7                                                  ; $8df7 : $80, $ce
+	bra @done                                                  ; $8df7 : $80, $ce
+
 
 Call_00_8df9:
 	rep #ACCU_8                                                  ; $8df9 : $c2, $20
@@ -2367,20 +2390,29 @@ Call_00_8e0f:
 	cmp $cdcd.w                                                  ; $8e71 : $cd, $cd, $cd
 	cmp $cecd.w                                                  ; $8e74 : $cd, $cd, $ce
 	dec $cece.w                                                  ; $8e77 : $ce, $ce, $ce
-	dec $e9cd.w                                                  ; $8e7a : $ce, $cd, $e9
-	dey                                                  ; $8e7d : $88
-	inc $6c88.w                                                  ; $8e7e : $ee, $88, $6c
-	txa                                                  ; $8e81 : $8a
-	sbc $fc8b.w, X                                                  ; $8e82 : $fd, $8b, $fc
-	sty $8d6c.w                                                  ; $8e85 : $8c, $6c, $8d
-	adc $918d.w, Y                                                  ; $8e88 : $79, $8d, $91
-	sta $8d9e.w                                                  ; $8e8b : $8d, $9e, $8d
-	lda [$8d]                                                  ; $8e8e : $a7, $8d
-	tsb $8d                                                  ; $8e90 : $04, $8d
-	ora $228d.w                                                  ; $8e92 : $0d, $8d, $22
-	sta $8d2b.w                                                  ; $8e95 : $8d, $2b, $8d
-	phk                                                  ; $8e98 : $4b
-	sta $8db0.w                                                  ; $8e99 : $8d, $b0, $8d
+	.db $ce, $cd
+
+
+Funcs_0_8e7c:
+	.dw $88e9
+	.dw $88ee
+	.dw Func_0_8a6c
+	.dw $8bfd
+	.dw $8cfc
+	.dw $8d6c
+	.dw $8d79
+	.dw $8d91
+	.dw $8d9e
+	.dw $8da7
+	.dw $8d04
+	.dw $8d0d
+	.dw $8d22
+	.dw $8d2b
+	.dw $8d4b
+	.dw $8db0
+
+
+;
 	.db $00                                                  ; $8e9c : $00
 
 
@@ -3297,50 +3329,47 @@ br_00_937d:
 	rts                                                  ; $9382 : $60
 
 
-Call_00_9383:
+InitSound:
 	php                                                  ; $9383 : $08
 	phb                                                  ; $9384 : $8b
 	sep #ACCU_8                                                  ; $9385 : $e2, $20
 	rep #IDX_8                                                  ; $9387 : $c2, $10
 	phk                                                  ; $9389 : $4b
 	plb                                                  ; $938a : $ab
-	ldx #$c000.w                                                  ; $938b : $a2, $00, $c0
+	ldx #Data_10_c000.w                                                  ; $938b : $a2, $00, $c0
 	stx $5d                                                  ; $938e : $86, $5d
-	lda #$90.b                                                  ; $9390 : $a9, $90
+	lda #:Data_10_c000.b                                                  ; $9390 : $a9, $90
 	sta $5f                                                  ; $9392 : $85, $5f
-	jsr $9c0f.w                                                  ; $9394 : $20, $0f, $9c
-	lda #$ab.b                                                  ; $9397 : $a9, $ab
+	jsr SendInitialSPCcode.w                                                  ; $9394 : $20, $0f, $9c
 
-br_00_9399:
-	cmp $002140.l                                                  ; $9399 : $cf, $40, $21, $00
-	bne br_00_9399                                                  ; $939d : $d0, $fa
+;
+	lda #$ab.b                                                  ; $9397 : $a9, $ab
+-	cmp APUIO0.l                                                  ; $9399 : $cf, $40, $21, $00
+	bne -                                                  ; $939d : $d0, $fa
 
 	lda #$cd.b                                                  ; $939f : $a9, $cd
-
-br_00_93a1:
-	cmp $002141.l                                                  ; $93a1 : $cf, $41, $21, $00
-	bne br_00_93a1                                                  ; $93a5 : $d0, $fa
+-	cmp APUIO1.l                                                  ; $93a1 : $cf, $41, $21, $00
+	bne -                                                  ; $93a5 : $d0, $fa
 
 	lda #$67.b                                                  ; $93a7 : $a9, $67
-	sta $002142.l                                                  ; $93a9 : $8f, $42, $21, $00
+	sta APUIO2.l                                                  ; $93a9 : $8f, $42, $21, $00
 	lda #$89.b                                                  ; $93ad : $a9, $89
-	sta $002143.l                                                  ; $93af : $8f, $43, $21, $00
-	jsr Call_00_9a0a.w                                                  ; $93b3 : $20, $0a, $9a
+	sta APUIO3.l                                                  ; $93af : $8f, $43, $21, $00
+	jsr WaitUntilSPCdone.w                                                  ; $93b3 : $20, $0a, $9a
 	rep #ACCU_8                                                  ; $93b6 : $c2, $20
-	lda $004218.l                                                  ; $93b8 : $af, $18, $42, $00
+	lda JOY1L.l                                                  ; $93b8 : $af, $18, $42, $00
 	cmp #$3000.w                                                  ; $93bc : $c9, $00, $30
 	sep #ACCU_8                                                  ; $93bf : $e2, $20
-	bne br_00_93c9                                                  ; $93c1 : $d0, $06
+	bne @br_93c9                                                  ; $93c1 : $d0, $06
 
 	lda #$00.b                                                  ; $93c3 : $a9, $00
 	eor #$01.b                                                  ; $93c5 : $49, $01
-	bra br_00_93cb                                                  ; $93c7 : $80, $02
+	bra +                                                  ; $93c7 : $80, $02
 
-br_00_93c9:
+@br_93c9:
 	lda #$00.b                                                  ; $93c9 : $a9, $00
 
-br_00_93cb:
-	jsr Call_00_9623.l                                                  ; $93cb : $22, $23, $96, $80
++	jsr Call_00_9623.l                                                  ; $93cb : $22, $23, $96, $80
 	jsr Call_00_93d6.l                                                  ; $93cf : $22, $d6, $93, $80
 	plb                                                  ; $93d3 : $ab
 	plp                                                  ; $93d4 : $28
@@ -3385,8 +3414,8 @@ Call_00_93fe:
 	bcs br_00_9414                                                  ; $940a : $b0, $08
 
 	lda #$02.b                                                  ; $940c : $a9, $02
-	jsr Call_00_99fd.w                                                  ; $940e : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9411 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $940e : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9411 : $20, $0a, $9a
 
 br_00_9414:
 	plb                                                  ; $9414 : $ab
@@ -3433,10 +3462,10 @@ br_00_944e:
 
 	sta $0588.w                                                  ; $9454 : $8d, $88, $05
 	ldx #$5800.w                                                  ; $9457 : $a2, $00, $58
-	stx $2140.w                                                  ; $945a : $8e, $40, $21
+	stx APUIO0.w                                                  ; $945a : $8e, $40, $21
 	lda #$11.b                                                  ; $945d : $a9, $11
-	jsr Call_00_99fd.w                                                  ; $945f : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9462 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $945f : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9462 : $20, $0a, $9a
 	bra br_00_947f                                                  ; $9465 : $80, $18
 
 br_00_9467:
@@ -3448,10 +3477,10 @@ br_00_9467:
 
 br_00_9471:
 	ldx $0584.w                                                  ; $9471 : $ae, $84, $05
-	stx $2140.w                                                  ; $9474 : $8e, $40, $21
+	stx APUIO0.w                                                  ; $9474 : $8e, $40, $21
 	lda #$11.b                                                  ; $9477 : $a9, $11
-	jsr Call_00_99fd.w                                                  ; $9479 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $947c : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9479 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $947c : $20, $0a, $9a
 
 br_00_947f:
 	lda #$20.b                                                  ; $947f : $a9, $20
@@ -3465,10 +3494,10 @@ br_00_9486:
 
 	pha                                                  ; $948e : $48
 	lda $54                                                  ; $948f : $a5, $54
-	sta $2140.w                                                  ; $9491 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $9491 : $8d, $40, $21
 	lda #$13.b                                                  ; $9494 : $a9, $13
-	jsr Call_00_99fd.w                                                  ; $9496 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9499 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9496 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9499 : $20, $0a, $9a
 	pla                                                  ; $949c : $68
 	jsr Call_00_9886.w                                                  ; $949d : $20, $86, $98
 	inc $54                                                  ; $94a0 : $e6, $54
@@ -3527,10 +3556,10 @@ br_00_94de:
 	sta $7e2000.l, X                                                  ; $94e9 : $9f, $00, $20, $7e
 	inc $58                                                  ; $94ed : $e6, $58
 	pha                                                  ; $94ef : $48
-	sta $2140.w                                                  ; $94f0 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $94f0 : $8d, $40, $21
 	lda #$13.b                                                  ; $94f3 : $a9, $13
-	jsr Call_00_99fd.w                                                  ; $94f5 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $94f8 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $94f5 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $94f8 : $20, $0a, $9a
 	pla                                                  ; $94fb : $68
 	jsr Call_00_9886.w                                                  ; $94fc : $20, $86, $98
 
@@ -3549,9 +3578,9 @@ br_00_9506:
 	stx $56                                                  ; $9512 : $86, $56
 	jsr Call_00_9911.l                                                  ; $9514 : $22, $11, $99, $80
 	lda #$12.b                                                  ; $9518 : $a9, $12
-	jsr Call_00_99fd.w                                                  ; $951a : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $951d : $20, $0a, $9a
-	ldx $2140.w                                                  ; $9520 : $ae, $40, $21
+	jsr SetAPUIO2and3toA.w                                                  ; $951a : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $951d : $20, $0a, $9a
+	ldx APUIO0.w                                                  ; $9520 : $ae, $40, $21
 	stx $0586.w                                                  ; $9523 : $8e, $86, $05
 	clc                                                  ; $9526 : $18
 	rts                                                  ; $9527 : $60
@@ -3565,8 +3594,8 @@ Call_00_9528:
 	phk                                                  ; $952d : $4b
 	plb                                                  ; $952e : $ab
 	lda #$03.b                                                  ; $952f : $a9, $03
-	jsr Call_00_99fd.w                                                  ; $9531 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9534 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9531 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9534 : $20, $0a, $9a
 	pla                                                  ; $9537 : $68
 	plb                                                  ; $9538 : $ab
 	plp                                                  ; $9539 : $28
@@ -3580,10 +3609,10 @@ Call_00_9528:
 	cmp #$8f.b                                                  ; $9541 : $c9, $8f
 	bcs br_00_9551                                                  ; $9543 : $b0, $0c
 
-	sta $002140.l                                                  ; $9545 : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $9545 : $8f, $40, $21, $00
 	lda #$04.b                                                  ; $9549 : $a9, $04
-	jsr Call_00_99fd.w                                                  ; $954b : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $954e : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $954b : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $954e : $20, $0a, $9a
 
 br_00_9551:
 	plp                                                  ; $9551 : $28
@@ -3615,10 +3644,10 @@ br_00_9564:
 	pha                                                  ; $956a : $48
 	php                                                  ; $956b : $08
 	sep #ACCU_8                                                  ; $956c : $e2, $20
-	sta $002140.l                                                  ; $956e : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $956e : $8f, $40, $21, $00
 	lda #$04.b                                                  ; $9572 : $a9, $04
-	jsr Call_00_99fd.w                                                  ; $9574 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9577 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9574 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9577 : $20, $0a, $9a
 	plp                                                  ; $957a : $28
 	pla                                                  ; $957b : $68
 	rtl                                                  ; $957c : $6b
@@ -3628,10 +3657,10 @@ Call_00_957d:
 	phk                                                  ; $957d : $4b
 	plb                                                  ; $957e : $ab
 	pha                                                  ; $957f : $48
-	sta $2140.w                                                  ; $9580 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $9580 : $8d, $40, $21
 	lda #$19.b                                                  ; $9583 : $a9, $19
-	jsr Call_00_99fd.w                                                  ; $9585 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9588 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9585 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9588 : $20, $0a, $9a
 	xba                                                  ; $958b : $eb
 	lda #$00.b                                                  ; $958c : $a9, $00
 	xba                                                  ; $958e : $eb
@@ -3654,15 +3683,15 @@ Call_00_957d:
 
 
 br_00_95a6:
-	sta $2140.w                                                  ; $95a6 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $95a6 : $8d, $40, $21
 	lda #$13.b                                                  ; $95a9 : $a9, $13
-	jsr Call_00_99fd.w                                                  ; $95ab : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $95ae : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $95ab : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $95ae : $20, $0a, $9a
 	ldy $0586.w                                                  ; $95b1 : $ac, $86, $05
-	sty $2140.w                                                  ; $95b4 : $8c, $40, $21
+	sty APUIO0.w                                                  ; $95b4 : $8c, $40, $21
 	lda #$11.b                                                  ; $95b7 : $a9, $11
-	jsr Call_00_99fd.w                                                  ; $95b9 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $95bc : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $95b9 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $95bc : $20, $0a, $9a
 	ldy #$0000.w                                                  ; $95bf : $a0, $00, $00
 
 br_00_95c2:
@@ -3684,8 +3713,8 @@ Call_00_95d2:
 	php                                                  ; $95d2 : $08
 	sep #ACCU_8                                                  ; $95d3 : $e2, $20
 	lda #$05.b                                                  ; $95d5 : $a9, $05
-	jsr Call_00_99fd.w                                                  ; $95d7 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $95da : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $95d7 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $95da : $20, $0a, $9a
 	plp                                                  ; $95dd : $28
 	rtl                                                  ; $95de : $6b
 
@@ -3693,9 +3722,9 @@ Call_00_95d2:
 	php                                                  ; $95df : $08
 	sep #ACCU_8                                                  ; $95e0 : $e2, $20
 	lda #$1e.b                                                  ; $95e2 : $a9, $1e
-	jsr Call_00_99fd.w                                                  ; $95e4 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $95e7 : $20, $0a, $9a
-	lda $002140.l                                                  ; $95ea : $af, $40, $21, $00
+	jsr SetAPUIO2and3toA.w                                                  ; $95e4 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $95e7 : $20, $0a, $9a
+	lda APUIO0.l                                                  ; $95ea : $af, $40, $21, $00
 	plp                                                  ; $95ee : $28
 	rtl                                                  ; $95ef : $6b
 
@@ -3704,29 +3733,29 @@ Call_00_95f0:
 	php                                                  ; $95f0 : $08
 	sep #ACCU_8                                                  ; $95f1 : $e2, $20
 	lda #$0f.b                                                  ; $95f3 : $a9, $0f
-	jsr Call_00_99fd.w                                                  ; $95f5 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $95f8 : $20, $0a, $9a
-	lda $002140.l                                                  ; $95fb : $af, $40, $21, $00
+	jsr SetAPUIO2and3toA.w                                                  ; $95f5 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $95f8 : $20, $0a, $9a
+	lda APUIO0.l                                                  ; $95fb : $af, $40, $21, $00
 	plp                                                  ; $95ff : $28
 	rtl                                                  ; $9600 : $6b
 
 
 	php                                                  ; $9601 : $08
 	sep #ACCU_8                                                  ; $9602 : $e2, $20
-	sta $002140.l                                                  ; $9604 : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $9604 : $8f, $40, $21, $00
 	lda #$0b.b                                                  ; $9608 : $a9, $0b
-	jsr Call_00_99fd.w                                                  ; $960a : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $960d : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $960a : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $960d : $20, $0a, $9a
 	plp                                                  ; $9610 : $28
 	rtl                                                  ; $9611 : $6b
 
 
 	php                                                  ; $9612 : $08
 	sep #ACCU_8                                                  ; $9613 : $e2, $20
-	sta $002140.l                                                  ; $9615 : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $9615 : $8f, $40, $21, $00
 	lda #$0c.b                                                  ; $9619 : $a9, $0c
-	jsr Call_00_99fd.w                                                  ; $961b : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $961e : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $961b : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $961e : $20, $0a, $9a
 	plp                                                  ; $9621 : $28
 	rtl                                                  ; $9622 : $6b
 
@@ -3734,10 +3763,10 @@ Call_00_95f0:
 Call_00_9623:
 	php                                                  ; $9623 : $08
 	sep #ACCU_8                                                  ; $9624 : $e2, $20
-	sta $002140.l                                                  ; $9626 : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $9626 : $8f, $40, $21, $00
 	lda #$0d.b                                                  ; $962a : $a9, $0d
-	jsr Call_00_99fd.w                                                  ; $962c : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $962f : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $962c : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $962f : $20, $0a, $9a
 	plp                                                  ; $9632 : $28
 	rtl                                                  ; $9633 : $6b
 
@@ -3745,19 +3774,19 @@ Call_00_9623:
 	php                                                  ; $9634 : $08
 	sep #ACCU_8                                                  ; $9635 : $e2, $20
 	lda #$18.b                                                  ; $9637 : $a9, $18
-	jsr Call_00_99fd.w                                                  ; $9639 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $963c : $20, $0a, $9a
-	lda $2140.w                                                  ; $963f : $ad, $40, $21
+	jsr SetAPUIO2and3toA.w                                                  ; $9639 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $963c : $20, $0a, $9a
+	lda APUIO0.w                                                  ; $963f : $ad, $40, $21
 	plp                                                  ; $9642 : $28
 	rtl                                                  ; $9643 : $6b
 
 
 	php                                                  ; $9644 : $08
 	sep #ACCU_8                                                  ; $9645 : $e2, $20
-	sta $002140.l                                                  ; $9647 : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $9647 : $8f, $40, $21, $00
 	lda #$09.b                                                  ; $964b : $a9, $09
-	jsr Call_00_99fd.w                                                  ; $964d : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9650 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $964d : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9650 : $20, $0a, $9a
 	plp                                                  ; $9653 : $28
 	rtl                                                  ; $9654 : $6b
 
@@ -3769,11 +3798,11 @@ Call_00_9623:
 	bne br_00_966d                                                  ; $965c : $d0, $0f
 
 	xba                                                  ; $965e : $eb
-	sta $002140.l                                                  ; $965f : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $965f : $8f, $40, $21, $00
 	txa                                                  ; $9663 : $8a
-	sta $002141.l                                                  ; $9664 : $8f, $41, $21, $00
+	sta APUIO1.l                                                  ; $9664 : $8f, $41, $21, $00
 	lda #$1a.b                                                  ; $9668 : $a9, $1a
-	jsr Call_00_99fd.w                                                  ; $966a : $20, $fd, $99
+	jsr SetAPUIO2and3toA.w                                                  ; $966a : $20, $fd, $99
 
 br_00_966d:
 	plp                                                  ; $966d : $28
@@ -3782,12 +3811,12 @@ br_00_966d:
 
 	php                                                  ; $966f : $08
 	sep #ACCU_8|IDX_8                                                  ; $9670 : $e2, $30
-	sta $002140.l                                                  ; $9672 : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $9672 : $8f, $40, $21, $00
 	txa                                                  ; $9676 : $8a
-	sta $002141.l                                                  ; $9677 : $8f, $41, $21, $00
+	sta APUIO1.l                                                  ; $9677 : $8f, $41, $21, $00
 	lda #$1b.b                                                  ; $967b : $a9, $1b
-	jsr Call_00_99fd.w                                                  ; $967d : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9680 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $967d : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9680 : $20, $0a, $9a
 	plp                                                  ; $9683 : $28
 	rtl                                                  ; $9684 : $6b
 
@@ -3795,8 +3824,8 @@ br_00_966d:
 	php                                                  ; $9685 : $08
 	sep #ACCU_8                                                  ; $9686 : $e2, $20
 	lda #$15.b                                                  ; $9688 : $a9, $15
-	jsr Call_00_99fd.w                                                  ; $968a : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $968d : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $968a : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $968d : $20, $0a, $9a
 	plp                                                  ; $9690 : $28
 	rtl                                                  ; $9691 : $6b
 
@@ -3805,8 +3834,8 @@ Call_00_9692:
 	php                                                  ; $9692 : $08
 	sep #ACCU_8                                                  ; $9693 : $e2, $20
 	lda #$06.b                                                  ; $9695 : $a9, $06
-	jsr Call_00_99fd.w                                                  ; $9697 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $969a : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9697 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $969a : $20, $0a, $9a
 	plp                                                  ; $969d : $28
 	rtl                                                  ; $969e : $6b
 
@@ -3822,8 +3851,8 @@ Call_00_969f:
 	bcs br_00_96b3                                                  ; $96a9 : $b0, $08
 
 	lda #$07.b                                                  ; $96ab : $a9, $07
-	jsr Call_00_99fd.w                                                  ; $96ad : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $96b0 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $96ad : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $96b0 : $20, $0a, $9a
 
 br_00_96b3:
 	plb                                                  ; $96b3 : $ab
@@ -3855,10 +3884,10 @@ br_00_96c0:
 Call_00_96cc:
 	php                                                  ; $96cc : $08
 	sep #ACCU_8                                                  ; $96cd : $e2, $20
-	sta $002140.l                                                  ; $96cf : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $96cf : $8f, $40, $21, $00
 	lda #$0a.b                                                  ; $96d3 : $a9, $0a
-	jsr Call_00_99fd.w                                                  ; $96d5 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $96d8 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $96d5 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $96d8 : $20, $0a, $9a
 	plp                                                  ; $96db : $28
 	rtl                                                  ; $96dc : $6b
 
@@ -3867,10 +3896,10 @@ Call_00_96cc:
 	php                                                  ; $96de : $08
 	sep #ACCU_8                                                  ; $96df : $e2, $20
 	eor #$ff.b                                                  ; $96e1 : $49, $ff
-	sta $002140.l                                                  ; $96e3 : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $96e3 : $8f, $40, $21, $00
 	lda #$10.b                                                  ; $96e7 : $a9, $10
-	jsr Call_00_99fd.w                                                  ; $96e9 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $96ec : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $96e9 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $96ec : $20, $0a, $9a
 	plp                                                  ; $96ef : $28
 	pla                                                  ; $96f0 : $68
 	rtl                                                  ; $96f1 : $6b
@@ -3880,9 +3909,9 @@ Call_00_96f2:
 	php                                                  ; $96f2 : $08
 	sep #ACCU_8                                                  ; $96f3 : $e2, $20
 	lda #$08.b                                                  ; $96f5 : $a9, $08
-	jsr Call_00_99fd.w                                                  ; $96f7 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $96fa : $20, $0a, $9a
-	lda $002140.l                                                  ; $96fd : $af, $40, $21, $00
+	jsr SetAPUIO2and3toA.w                                                  ; $96f7 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $96fa : $20, $0a, $9a
+	lda APUIO0.l                                                  ; $96fd : $af, $40, $21, $00
 	plp                                                  ; $9701 : $28
 	rtl                                                  ; $9702 : $6b
 
@@ -3895,15 +3924,15 @@ Call_00_9703:
 	sep #ACCU_8                                                  ; $9707 : $e2, $20
 	rep #IDX_8                                                  ; $9709 : $c2, $10
 	ldx #$5800.w                                                  ; $970b : $a2, $00, $58
-	stx $2140.w                                                  ; $970e : $8e, $40, $21
+	stx APUIO0.w                                                  ; $970e : $8e, $40, $21
 	lda #$11.b                                                  ; $9711 : $a9, $11
-	jsr Call_00_99fd.w                                                  ; $9713 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9716 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9713 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9716 : $20, $0a, $9a
 	lda #$00.b                                                  ; $9719 : $a9, $00
-	sta $2140.w                                                  ; $971b : $8d, $40, $21
+	sta APUIO0.w                                                  ; $971b : $8d, $40, $21
 	lda #$13.b                                                  ; $971e : $a9, $13
-	jsr Call_00_99fd.w                                                  ; $9720 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9723 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9720 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9723 : $20, $0a, $9a
 	ldx #$0020.w                                                  ; $9726 : $a2, $20, $00
 	lda #$00.b                                                  ; $9729 : $a9, $00
 
@@ -3916,9 +3945,9 @@ br_00_972b:
 	bne br_00_972b                                                  ; $9732 : $d0, $f7
 
 	lda #$12.b                                                  ; $9734 : $a9, $12
-	jsr Call_00_99fd.w                                                  ; $9736 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9739 : $20, $0a, $9a
-	ldx $2140.w                                                  ; $973c : $ae, $40, $21
+	jsr SetAPUIO2and3toA.w                                                  ; $9736 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9739 : $20, $0a, $9a
+	ldx APUIO0.w                                                  ; $973c : $ae, $40, $21
 	stx $0584.w                                                  ; $973f : $8e, $84, $05
 	plp                                                  ; $9742 : $28
 	ply                                                  ; $9743 : $7a
@@ -3933,13 +3962,13 @@ Call_00_9747:
 	jsr Call_00_99f4.w                                                  ; $974b : $20, $f4, $99
 	sta $54                                                  ; $974e : $85, $54
 	lda #$12.b                                                  ; $9750 : $a9, $12
-	jsr Call_00_99fd.w                                                  ; $9752 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9755 : $20, $0a, $9a
-	ldx $2140.w                                                  ; $9758 : $ae, $40, $21
+	jsr SetAPUIO2and3toA.w                                                  ; $9752 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9755 : $20, $0a, $9a
+	ldx APUIO0.w                                                  ; $9758 : $ae, $40, $21
 	phx                                                  ; $975b : $da
 	lda #$1d.b                                                  ; $975c : $a9, $1d
-	jsr Call_00_99fd.w                                                  ; $975e : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9761 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $975e : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9761 : $20, $0a, $9a
 	lda $54                                                  ; $9764 : $a5, $54
 	jsr Call_00_98a5.w                                                  ; $9766 : $20, $a5, $98
 	stx $058c.w                                                  ; $9769 : $8e, $8c, $05
@@ -3947,10 +3976,10 @@ Call_00_9747:
 	lda $5f                                                  ; $976f : $a5, $5f
 	sta $058b.w                                                  ; $9771 : $8d, $8b, $05
 	plx                                                  ; $9774 : $fa
-	stx $2140.w                                                  ; $9775 : $8e, $40, $21
+	stx APUIO0.w                                                  ; $9775 : $8e, $40, $21
 	lda #$16.b                                                  ; $9778 : $a9, $16
-	jsr Call_00_99fd.w                                                  ; $977a : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $977d : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $977a : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $977d : $20, $0a, $9a
 	lda #$ff.b                                                  ; $9780 : $a9, $ff
 	sta $058e.w                                                  ; $9782 : $8d, $8e, $05
 	rts                                                  ; $9785 : $60
@@ -3996,10 +4025,10 @@ br_00_97af:
 	cmp #$ff.b                                                  ; $97c0 : $c9, $ff
 	beq br_00_97d4                                                  ; $97c2 : $f0, $10
 
-	sta $2140.w                                                  ; $97c4 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $97c4 : $8d, $40, $21
 	lda #$04.b                                                  ; $97c7 : $a9, $04
-	jsr Call_00_99fd.w                                                  ; $97c9 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $97cc : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $97c9 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $97cc : $20, $0a, $9a
 	bra br_00_97d4                                                  ; $97cf : $80, $03
 
 br_00_97d1:
@@ -4040,13 +4069,13 @@ br_00_97f5:
 	plb                                                  ; $97fb : $ab
 	ldy $0589.w                                                  ; $97fc : $ac, $89, $05
 	lda #$17.b                                                  ; $97ff : $a9, $17
-	jsr Call_00_99fd.w                                                  ; $9801 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9804 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9801 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9804 : $20, $0a, $9a
 	lda #$ff.b                                                  ; $9807 : $a9, $ff
-	sta $002142.l                                                  ; $9809 : $8f, $42, $21, $00
+	sta APUIO2.l                                                  ; $9809 : $8f, $42, $21, $00
 
 br_00_980d:
-	lda $002142.l                                                  ; $980d : $af, $42, $21, $00
+	lda APUIO2.l                                                  ; $980d : $af, $42, $21, $00
 	beq br_00_980d                                                  ; $9811 : $f0, $fa
 
 	stz $62                                                  ; $9813 : $64, $62
@@ -4069,12 +4098,12 @@ br_00_9823:
 
 br_00_9831:
 	lda $60                                                  ; $9831 : $a5, $60
-	sta $002140.l                                                  ; $9833 : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $9833 : $8f, $40, $21, $00
 	lda $61                                                  ; $9837 : $a5, $61
-	sta $002141.l                                                  ; $9839 : $8f, $41, $21, $00
+	sta APUIO1.l                                                  ; $9839 : $8f, $41, $21, $00
 	lda $62                                                  ; $983d : $a5, $62
 	and #$7f.b                                                  ; $983f : $29, $7f
-	sta $002142.l                                                  ; $9841 : $8f, $42, $21, $00
+	sta APUIO2.l                                                  ; $9841 : $8f, $42, $21, $00
 	sty $0589.w                                                  ; $9845 : $8c, $89, $05
 	lda $0000.w, Y                                                  ; $9848 : $b9, $00, $00
 	sta $60                                                  ; $984b : $85, $60
@@ -4098,7 +4127,7 @@ br_00_9864:
 	ora #$80.b                                                  ; $9866 : $09, $80
 
 br_00_9868:
-	cmp $002142.l                                                  ; $9868 : $cf, $42, $21, $00
+	cmp APUIO2.l                                                  ; $9868 : $cf, $42, $21, $00
 	bne br_00_9868                                                  ; $986c : $d0, $fa
 
 	inc $62                                                  ; $986e : $e6, $62
@@ -4109,8 +4138,8 @@ br_00_9868:
 	bcs br_00_9831                                                  ; $9877 : $b0, $b8
 
 	lda #$ff.b                                                  ; $9879 : $a9, $ff
-	sta $002143.l                                                  ; $987b : $8f, $43, $21, $00
-	jsr Call_00_9a0a.w                                                  ; $987f : $20, $0a, $9a
+	sta APUIO3.l                                                  ; $987b : $8f, $43, $21, $00
+	jsr WaitUntilSPCdone.w                                                  ; $987f : $20, $0a, $9a
 	dec $058d.w                                                  ; $9882 : $ce, $8d, $05
 	rts                                                  ; $9885 : $60
 
@@ -4123,8 +4152,8 @@ Call_00_9886:
 	sep #ACCU_8                                                  ; $988a : $e2, $20
 	pha                                                  ; $988c : $48
 	lda #$14.b                                                  ; $988d : $a9, $14
-	jsr Call_00_99fd.w                                                  ; $988f : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9892 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $988f : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9892 : $20, $0a, $9a
 	pla                                                  ; $9895 : $68
 	jsr Call_00_98a5.w                                                  ; $9896 : $20, $a5, $98
 	lda $5f                                                  ; $9899 : $a5, $5f
@@ -4187,13 +4216,13 @@ br_00_98e3:
 
 br_00_98ec:
 	lda [$5d], Y                                                  ; $98ec : $b7, $5d
-	sta $2140.w                                                  ; $98ee : $8d, $40, $21
+	sta APUIO0.w                                                  ; $98ee : $8d, $40, $21
 	txa                                                  ; $98f1 : $8a
-	sta $2142.w                                                  ; $98f2 : $8d, $42, $21
+	sta APUIO2.w                                                  ; $98f2 : $8d, $42, $21
 	ora #$80.b                                                  ; $98f5 : $09, $80
 
 br_00_98f7:
-	cmp $2142.w                                                  ; $98f7 : $cd, $42, $21
+	cmp APUIO2.w                                                  ; $98f7 : $cd, $42, $21
 	bne br_00_98f7                                                  ; $98fa : $d0, $fb
 
 	iny                                                  ; $98fc : $c8
@@ -4208,8 +4237,8 @@ br_00_9904:
 
 	plx                                                  ; $9907 : $fa
 	lda #$ff.b                                                  ; $9908 : $a9, $ff
-	sta $2142.w                                                  ; $990a : $8d, $42, $21
-	jsr Call_00_9a0a.w                                                  ; $990d : $20, $0a, $9a
+	sta APUIO2.w                                                  ; $990a : $8d, $42, $21
+	jsr WaitUntilSPCdone.w                                                  ; $990d : $20, $0a, $9a
 	rts                                                  ; $9910 : $60
 
 
@@ -4218,7 +4247,7 @@ Call_00_9911:
 	phb                                                  ; $9912 : $8b
 	rep #ACCU_8                                                  ; $9913 : $c2, $20
 	lda $56                                                  ; $9915 : $a5, $56
-	sta $2140.w                                                  ; $9917 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $9917 : $8d, $40, $21
 	ldy $5d                                                  ; $991a : $a4, $5d
 	stz $5d                                                  ; $991c : $64, $5d
 	lda [$5d], Y                                                  ; $991e : $b7, $5d
@@ -4239,8 +4268,8 @@ br_00_992b:
 
 br_00_9933:
 	lda #$01.b                                                  ; $9933 : $a9, $01
-	jsr Call_00_99fd.w                                                  ; $9935 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $9938 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $9935 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $9938 : $20, $0a, $9a
 	lda $5f                                                  ; $993b : $a5, $5f
 	pha                                                  ; $993d : $48
 	plb                                                  ; $993e : $ab
@@ -4252,10 +4281,10 @@ br_00_9933:
 
 Call_00_9945:
 	lda #$ff.b                                                  ; $9945 : $a9, $ff
-	sta $002142.l                                                  ; $9947 : $8f, $42, $21, $00
+	sta APUIO2.l                                                  ; $9947 : $8f, $42, $21, $00
 
 br_00_994b:
-	cmp $002142.l                                                  ; $994b : $cf, $42, $21, $00
+	cmp APUIO2.l                                                  ; $994b : $cf, $42, $21, $00
 	bne br_00_994b                                                  ; $994f : $d0, $fa
 
 	stz $62                                                  ; $9951 : $64, $62
@@ -4276,12 +4305,12 @@ br_00_995e:
 
 br_00_9969:
 	lda $60                                                  ; $9969 : $a5, $60
-	sta $002140.l                                                  ; $996b : $8f, $40, $21, $00
+	sta APUIO0.l                                                  ; $996b : $8f, $40, $21, $00
 	lda $61                                                  ; $996f : $a5, $61
-	sta $002141.l                                                  ; $9971 : $8f, $41, $21, $00
+	sta APUIO1.l                                                  ; $9971 : $8f, $41, $21, $00
 	lda $62                                                  ; $9975 : $a5, $62
 	and #$7f.b                                                  ; $9977 : $29, $7f
-	sta $002142.l                                                  ; $9979 : $8f, $42, $21, $00
+	sta APUIO2.l                                                  ; $9979 : $8f, $42, $21, $00
 	lda $0000.w, Y                                                  ; $997d : $b9, $00, $00
 	sta $60                                                  ; $9980 : $85, $60
 	iny                                                  ; $9982 : $c8
@@ -4302,7 +4331,7 @@ br_00_9993:
 	ora #$80.b                                                  ; $9995 : $09, $80
 
 br_00_9997:
-	cmp $002142.l                                                  ; $9997 : $cf, $42, $21, $00
+	cmp APUIO2.l                                                  ; $9997 : $cf, $42, $21, $00
 	bne br_00_9997                                                  ; $999b : $d0, $fa
 
 	inc $62                                                  ; $999d : $e6, $62
@@ -4313,8 +4342,8 @@ br_00_9997:
 	bcs br_00_9969                                                  ; $99a6 : $b0, $c1
 
 	lda #$ff.b                                                  ; $99a8 : $a9, $ff
-	sta $002143.l                                                  ; $99aa : $8f, $43, $21, $00
-	jsr Call_00_9a0a.w                                                  ; $99ae : $20, $0a, $9a
+	sta APUIO3.l                                                  ; $99aa : $8f, $43, $21, $00
+	jsr WaitUntilSPCdone.w                                                  ; $99ae : $20, $0a, $9a
 	rts                                                  ; $99b1 : $60
 
 
@@ -4324,7 +4353,7 @@ Call_00_99b2:
 	php                                                  ; $99b4 : $08
 	rep #ACCU_8                                                  ; $99b5 : $c2, $20
 	lda #$bbaa.w                                                  ; $99b7 : $a9, $aa, $bb
-	cmp $2140.w                                                  ; $99ba : $cd, $40, $21
+	cmp APUIO0.w                                                  ; $99ba : $cd, $40, $21
 	beq br_00_99c7                                                  ; $99bd : $f0, $08
 
 	sep #ACCU_8                                                  ; $99bf : $e2, $20
@@ -4339,28 +4368,28 @@ br_00_99c7:
 
 
 	pha                                                  ; $99ca : $48
-	sta $2140.w                                                  ; $99cb : $8d, $40, $21
+	sta APUIO0.w                                                  ; $99cb : $8d, $40, $21
 	lda #$1f.b                                                  ; $99ce : $a9, $1f
-	jsr Call_00_99fd.w                                                  ; $99d0 : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $99d3 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $99d0 : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $99d3 : $20, $0a, $9a
 	pla                                                  ; $99d6 : $68
 	rtl                                                  ; $99d7 : $6b
 
 
 	pha                                                  ; $99d8 : $48
-	sta $2140.w                                                  ; $99d9 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $99d9 : $8d, $40, $21
 	lda #$20.b                                                  ; $99dc : $a9, $20
-	jsr Call_00_99fd.w                                                  ; $99de : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $99e1 : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $99de : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $99e1 : $20, $0a, $9a
 	pla                                                  ; $99e4 : $68
 	rtl                                                  ; $99e5 : $6b
 
 
 	pha                                                  ; $99e6 : $48
-	sta $2140.w                                                  ; $99e7 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $99e7 : $8d, $40, $21
 	lda #$21.b                                                  ; $99ea : $a9, $21
-	jsr Call_00_99fd.w                                                  ; $99ec : $20, $fd, $99
-	jsr Call_00_9a0a.w                                                  ; $99ef : $20, $0a, $9a
+	jsr SetAPUIO2and3toA.w                                                  ; $99ec : $20, $fd, $99
+	jsr WaitUntilSPCdone.w                                                  ; $99ef : $20, $0a, $9a
 	pla                                                  ; $99f2 : $68
 	rtl                                                  ; $99f3 : $6b
 
@@ -4368,51 +4397,47 @@ br_00_99c7:
 Call_00_99f4:
 	xba                                                  ; $99f4 : $eb
 	lda #$ff.b                                                  ; $99f5 : $a9, $ff
-	sta $002143.l                                                  ; $99f7 : $8f, $43, $21, $00
+	sta APUIO3.l                                                  ; $99f7 : $8f, $43, $21, $00
 	xba                                                  ; $99fb : $eb
 	rts                                                  ; $99fc : $60
 
 
-Call_00_99fd:
+SetAPUIO2and3toA:
 	php                                                  ; $99fd : $08
 	sep #ACCU_8                                                  ; $99fe : $e2, $20
-	sta $002142.l                                                  ; $9a00 : $8f, $42, $21, $00
-	sta $002143.l                                                  ; $9a04 : $8f, $43, $21, $00
+	sta APUIO2.l                                                  ; $9a00 : $8f, $42, $21, $00
+	sta APUIO3.l                                                  ; $9a04 : $8f, $43, $21, $00
 	plp                                                  ; $9a08 : $28
 	rts                                                  ; $9a09 : $60
 
 
-Call_00_9a0a:
+WaitUntilSPCdone:
 	php                                                  ; $9a0a : $08
 	sep #ACCU_8                                                  ; $9a0b : $e2, $20
-	lda #$cd.b                                                  ; $9a0d : $a9, $cd
 
-br_00_9a0f:
-	cmp $002142.l                                                  ; $9a0f : $cf, $42, $21, $00
-	bne br_00_9a0f                                                  ; $9a13 : $d0, $fa
+	lda #$cd.b                                                  ; $9a0d : $a9, $cd
+-	cmp APUIO2.l                                                  ; $9a0f : $cf, $42, $21, $00
+	bne -                                                  ; $9a13 : $d0, $fa
 
 	lda #$ef.b                                                  ; $9a15 : $a9, $ef
-
-br_00_9a17:
-	cmp $002143.l                                                  ; $9a17 : $cf, $43, $21, $00
-	bne br_00_9a17                                                  ; $9a1b : $d0, $fa
+-	cmp APUIO3.l                                                  ; $9a17 : $cf, $43, $21, $00
+	bne -                                                  ; $9a1b : $d0, $fa
 
 	tdc                                                  ; $9a1d : $7b
-	sta $002142.l                                                  ; $9a1e : $8f, $42, $21, $00
-	sta $002143.l                                                  ; $9a22 : $8f, $43, $21, $00
+	sta APUIO2.l                                                  ; $9a1e : $8f, $42, $21, $00
+	sta APUIO3.l                                                  ; $9a22 : $8f, $43, $21, $00
 
-br_00_9a26:
-	lda $002142.l                                                  ; $9a26 : $af, $42, $21, $00
-	bne br_00_9a26                                                  ; $9a2a : $d0, $fa
+-	lda APUIO2.l                                                  ; $9a26 : $af, $42, $21, $00
+	bne -                                                  ; $9a2a : $d0, $fa
 
-br_00_9a2c:
-	lda $002143.l                                                  ; $9a2c : $af, $43, $21, $00
-	bne br_00_9a2c                                                  ; $9a30 : $d0, $fa
+-	lda APUIO3.l                                                  ; $9a2c : $af, $43, $21, $00
+	bne -                                                  ; $9a30 : $d0, $fa
 
 	plp                                                  ; $9a32 : $28
 	rts                                                  ; $9a33 : $60
 
 
+;
 	bit $26                                                  ; $9a34 : $24, $26
 	rol                                                  ; $9a36 : $2a
 	rol $2d30.w                                                  ; $9a37 : $2e, $30, $2d
@@ -4661,54 +4686,54 @@ br_00_9a99:
 	sbc $ffffff.l, X                                                  ; $9c00 : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $9c04 : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $9c08 : $ff, $ff, $ff, $ff
-	sbc $08ffff.l, X                                                  ; $9c0c : $ff, $ff, $ff, $08
+	.db $ff, $ff, $ff
+
+
+SendInitialSPCcode:
+	php                                                  ; $9c0f : $08
 	rep #ACCU_8|IDX_8                                                  ; $9c10 : $c2, $30
 	ldy #$0000.w                                                  ; $9c12 : $a0, $00, $00
-	lda #$bbaa.w                                                  ; $9c15 : $a9, $aa, $bb
 
-br_00_9c18:
-	cmp $2140.w                                                  ; $9c18 : $cd, $40, $21
-	bne br_00_9c18                                                  ; $9c1b : $d0, $fb
+	lda #$bbaa.w                                                  ; $9c15 : $a9, $aa, $bb
+-	cmp APUIO0.w                                                  ; $9c18 : $cd, $40, $21
+	bne -                                                  ; $9c1b : $d0, $fb
 
 	sep #ACCU_8                                                  ; $9c1d : $e2, $20
 	lda #$cc.b                                                  ; $9c1f : $a9, $cc
-	bra br_00_9c49                                                  ; $9c21 : $80, $26
+	bra @cont_9c49                                                  ; $9c21 : $80, $26
 
-br_00_9c23:
+@bigLoop_9c23:
 	lda [$5d], Y                                                  ; $9c23 : $b7, $5d
 	iny                                                  ; $9c25 : $c8
 	xba                                                  ; $9c26 : $eb
 	lda #$00.b                                                  ; $9c27 : $a9, $00
-	bra br_00_9c36                                                  ; $9c29 : $80, $0b
+	bra @cont_9c36                                                  ; $9c29 : $80, $0b
 
-br_00_9c2b:
+@loop_9c2b:
 	xba                                                  ; $9c2b : $eb
 	lda [$5d], Y                                                  ; $9c2c : $b7, $5d
 	iny                                                  ; $9c2e : $c8
 	xba                                                  ; $9c2f : $eb
 
-br_00_9c30:
-	cmp $2140.w                                                  ; $9c30 : $cd, $40, $21
-	bne br_00_9c30                                                  ; $9c33 : $d0, $fb
+-	cmp APUIO0.w                                                  ; $9c30 : $cd, $40, $21
+	bne -                                                  ; $9c33 : $d0, $fb
 
 	ina                                                  ; $9c35 : $1a
 
-br_00_9c36:
+@cont_9c36:
 	rep #ACCU_8                                                  ; $9c36 : $c2, $20
-	sta $2140.w                                                  ; $9c38 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $9c38 : $8d, $40, $21
 	sep #ACCU_8                                                  ; $9c3b : $e2, $20
 	dex                                                  ; $9c3d : $ca
-	bne br_00_9c2b                                                  ; $9c3e : $d0, $eb
+	bne @loop_9c2b                                                  ; $9c3e : $d0, $eb
 
-br_00_9c40:
-	cmp $2140.w                                                  ; $9c40 : $cd, $40, $21
-	bne br_00_9c40                                                  ; $9c43 : $d0, $fb
+-	cmp APUIO0.w                                                  ; $9c40 : $cd, $40, $21
+	bne -                                                  ; $9c43 : $d0, $fb
 
-br_00_9c45:
-	adc #$03.b                                                  ; $9c45 : $69, $03
-	beq br_00_9c45                                                  ; $9c47 : $f0, $fc
+-	adc #$03.b                                                  ; $9c45 : $69, $03
+	beq -                                                  ; $9c47 : $f0, $fc
 
-br_00_9c49:
+@cont_9c49:
 	pha                                                  ; $9c49 : $48
 	rep #ACCU_8                                                  ; $9c4a : $c2, $20
 	lda [$5d], Y                                                  ; $9c4c : $b7, $5d
@@ -4718,21 +4743,20 @@ br_00_9c49:
 	lda [$5d], Y                                                  ; $9c51 : $b7, $5d
 	iny                                                  ; $9c53 : $c8
 	iny                                                  ; $9c54 : $c8
-	sta $2142.w                                                  ; $9c55 : $8d, $42, $21
+	sta APUIO2.w                                                  ; $9c55 : $8d, $42, $21
 	sep #ACCU_8                                                  ; $9c58 : $e2, $20
 	cpx #$0001.w                                                  ; $9c5a : $e0, $01, $00
 	lda #$00.b                                                  ; $9c5d : $a9, $00
 	rol                                                  ; $9c5f : $2a
-	sta $2141.w                                                  ; $9c60 : $8d, $41, $21
+	sta APUIO1.w                                                  ; $9c60 : $8d, $41, $21
 	adc #$7f.b                                                  ; $9c63 : $69, $7f
 	pla                                                  ; $9c65 : $68
-	sta $2140.w                                                  ; $9c66 : $8d, $40, $21
+	sta APUIO0.w                                                  ; $9c66 : $8d, $40, $21
 
-br_00_9c69:
-	cmp $2140.w                                                  ; $9c69 : $cd, $40, $21
-	bne br_00_9c69                                                  ; $9c6c : $d0, $fb
+-	cmp APUIO0.w                                                  ; $9c69 : $cd, $40, $21
+	bne -                                                  ; $9c6c : $d0, $fb
 
-	bvs br_00_9c23                                                  ; $9c6e : $70, $b3
+	bvs @bigLoop_9c23                                                  ; $9c6e : $70, $b3
 
 	plp                                                  ; $9c70 : $28
 	rts                                                  ; $9c71 : $60
@@ -4808,7 +4832,7 @@ br_00_9ccd:
 	stz $125e.w                                                  ; $9cd6 : $9c, $5e, $12
 
 br_00_9cd9:
-	lda $09b9.w                                                  ; $9cd9 : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $9cd9 : $ad, $b9, $09
 	pha                                                  ; $9cdc : $48
 	plb                                                  ; $9cdd : $ab
 	ldy $09b7.w                                                  ; $9cde : $ac, $b7, $09
@@ -4823,7 +4847,7 @@ br_00_9cd9:
 	sta $09b7.w                                                  ; $9cf0 : $8d, $b7, $09
 	sep #ACCU_8                                                  ; $9cf3 : $e2, $20
 	lda $1259.w                                                  ; $9cf5 : $ad, $59, $12
-	sta $09b9.w                                                  ; $9cf8 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $9cf8 : $8d, $b9, $09
 	stz $1259.w                                                  ; $9cfb : $9c, $59, $12
 	bra br_00_9cd9                                                  ; $9cfe : $80, $d9
 
@@ -4847,7 +4871,7 @@ br_00_9d00:
 	brl br_00_bce4                                                  ; $9d1f : $82, $c2, $1f
 
 br_00_9d22:
-	jsr Call_00_c0b7.w                                                  ; $9d22 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $9d22 : $20, $b7, $c0
 	sec                                                  ; $9d25 : $38
 	sbc #$80.b                                                  ; $9d26 : $e9, $80
 	xba                                                  ; $9d28 : $eb
@@ -4859,12 +4883,12 @@ br_00_9d2e:
 
 br_00_9d31:
 	tdc                                                  ; $9d31 : $7b
-	jsr Call_00_c0b7.w                                                  ; $9d32 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $9d32 : $20, $b7, $c0
 	rep #ACCU_8                                                  ; $9d35 : $c2, $20
 	asl                                                  ; $9d37 : $0a
 	tax                                                  ; $9d38 : $aa
 	sep #ACCU_8                                                  ; $9d39 : $e2, $20
-	jmp ($ca14.w, X)                                                  ; $9d3b : $7c, $14, $ca
+	jmp (ScriptCommands.w, X)                                                  ; $9d3b : $7c, $14, $ca
 
 
 br_00_9d3e:
@@ -4877,7 +4901,7 @@ br_00_9d3e:
 	lda $1254.w                                                  ; $9d4c : $ad, $54, $12
 	beq br_00_9d69                                                  ; $9d4f : $f0, $18
 
-	sta $09b9.w                                                  ; $9d51 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $9d51 : $8d, $b9, $09
 	lda #$10.b                                                  ; $9d54 : $a9, $10
 	trb $099b.w                                                  ; $9d56 : $1c, $9b, $09
 	rep #ACCU_8                                                  ; $9d59 : $c2, $20
@@ -4972,7 +4996,7 @@ Call_00_9ddb:
 	lda $0000.w, Y                                                  ; $9dfa : $b9, $00, $00
 	bmi br_00_9e0b                                                  ; $9dfd : $30, $0c
 
-	jsr Call_00_c0b7.w                                                  ; $9dff : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $9dff : $20, $b7, $c0
 	clc                                                  ; $9e02 : $18
 	adc #$45.b                                                  ; $9e03 : $69, $45
 	sta $1260.w                                                  ; $9e05 : $8d, $60, $12
@@ -4999,7 +5023,7 @@ br_00_9e15:
 
 	lda #$08.b                                                  ; $9e27 : $a9, $08
 	trb $099c.w                                                  ; $9e29 : $1c, $9c, $09
-	jsr Call_00_c0b7.w                                                  ; $9e2c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $9e2c : $20, $b7, $c0
 	lda $7fd0c0.l                                                  ; $9e2f : $af, $c0, $d0, $7f
 	and #$fe.b                                                  ; $9e33 : $29, $fe
 	sta $7fd0c0.l                                                  ; $9e35 : $8f, $c0, $d0, $7f
@@ -5010,12 +5034,12 @@ br_00_9e3c:
 	jsr Call_00_c0ec.w                                                  ; $9e3f : $20, $ec, $c0
 	brl br_00_9db0                                                  ; $9e42 : $82, $6b, $ff
 
-	jsr Call_00_c0b7.w                                                  ; $9e45 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $9e45 : $20, $b7, $c0
 	xba                                                  ; $9e48 : $eb
 	lda #$00.b                                                  ; $9e49 : $a9, $00
 	brl br_00_9e54                                                  ; $9e4b : $82, $06, $00
 
-	jsr Call_00_c0b7.w                                                  ; $9e4e : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $9e4e : $20, $b7, $c0
 	xba                                                  ; $9e51 : $eb
 	lda #$01.b                                                  ; $9e52 : $a9, $01
 
@@ -5024,7 +5048,7 @@ br_00_9e54:
 	xba                                                  ; $9e57 : $eb
 	sta $09af.w                                                  ; $9e58 : $8d, $af, $09
 	sty $1252.w                                                  ; $9e5b : $8c, $52, $12
-	lda $09b9.w                                                  ; $9e5e : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $9e5e : $ad, $b9, $09
 	sta $1254.w                                                  ; $9e61 : $8d, $54, $12
 	rep #ACCU_8                                                  ; $9e64 : $c2, $20
 	lda $09af.w                                                  ; $9e66 : $ad, $af, $09
@@ -5037,14 +5061,14 @@ br_00_9e54:
 	tay                                                  ; $9e76 : $a8
 	sep #ACCU_8                                                  ; $9e77 : $e2, $20
 	lda #$8e.b                                                  ; $9e79 : $a9, $8e
-	sta $09b9.w                                                  ; $9e7b : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $9e7b : $8d, $b9, $09
 	pha                                                  ; $9e7e : $48
 	plb                                                  ; $9e7f : $ab
 	brl br_00_9d00                                                  ; $9e80 : $82, $7d, $fe
 
-	jsr Call_00_c0b7.w                                                  ; $9e83 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $9e83 : $20, $b7, $c0
 	sta $54                                                  ; $9e86 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $9e88 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $9e88 : $20, $b7, $c0
 	sta $55                                                  ; $9e8b : $85, $55
 	lsr                                                  ; $9e8d : $4a
 	lsr                                                  ; $9e8e : $4a
@@ -5070,9 +5094,9 @@ br_00_9e54:
 	ora #$8000.w                                                  ; $9eb1 : $09, $00, $80
 	tay                                                  ; $9eb4 : $a8
 	sep #ACCU_8                                                  ; $9eb5 : $e2, $20
-	lda $09b9.w                                                  ; $9eb7 : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $9eb7 : $ad, $b9, $09
 	dea                                                  ; $9eba : $3a
-	sta $09b9.w                                                  ; $9ebb : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $9ebb : $8d, $b9, $09
 	pha                                                  ; $9ebe : $48
 	plb                                                  ; $9ebf : $ab
 
@@ -5088,13 +5112,13 @@ br_00_9ec0:
 	brl br_00_bce4                                                  ; $9ed3 : $82, $0e, $1e
 
 	sty $1252.w                                                  ; $9ed6 : $8c, $52, $12
-	lda $09b9.w                                                  ; $9ed9 : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $9ed9 : $ad, $b9, $09
 	sta $1254.w                                                  ; $9edc : $8d, $54, $12
 	lda #$10.b                                                  ; $9edf : $a9, $10
 	tsb $099b.w                                                  ; $9ee1 : $0c, $9b, $09
 	ldy #$0bad.w                                                  ; $9ee4 : $a0, $ad, $0b
 	sty $09b7.w                                                  ; $9ee7 : $8c, $b7, $09
-	stz $09b9.w                                                  ; $9eea : $9c, $b9, $09
+	stz wCurrScriptBank.w                                                  ; $9eea : $9c, $b9, $09
 	brl br_00_9cd9                                                  ; $9eed : $82, $e9, $fd
 
 	lda #$3f.b                                                  ; $9ef0 : $a9, $3f
@@ -5116,12 +5140,12 @@ br_00_9efe:
 	jsr Call_00_9ddb.w                                                  ; $9f0a : $20, $db, $9d
 	brl br_00_9db0                                                  ; $9f0d : $82, $a0, $fe
 
-	jsr Call_00_c0b7.w                                                  ; $9f10 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $9f10 : $20, $b7, $c0
 	sta $126e.w                                                  ; $9f13 : $8d, $6e, $12
 	asl                                                  ; $9f16 : $0a
 	sta $54                                                  ; $9f17 : $85, $54
 	stz $55                                                  ; $9f19 : $64, $55
-	lda $09b9.w                                                  ; $9f1b : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $9f1b : $ad, $b9, $09
 	sta $126d.w                                                  ; $9f1e : $8d, $6d, $12
 	sty $126b.w                                                  ; $9f21 : $8c, $6b, $12
 	rep #ACCU_8                                                  ; $9f24 : $c2, $20
@@ -5186,7 +5210,7 @@ br_00_9f83:
 	beq br_00_9fcc                                                  ; $9f88 : $f0, $42
 
 	lda $126d.w                                                  ; $9f8a : $ad, $6d, $12
-	sta $09b9.w                                                  ; $9f8d : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $9f8d : $8d, $b9, $09
 	pha                                                  ; $9f90 : $48
 	plb                                                  ; $9f91 : $ab
 	tdc                                                  ; $9f92 : $7b
@@ -5197,14 +5221,14 @@ br_00_9f83:
 	adc $126b.w                                                  ; $9f9a : $6d, $6b, $12
 	jsr Call_00_c102.w                                                  ; $9f9d : $20, $02, $c1
 	sep #ACCU_8                                                  ; $9fa0 : $e2, $20
-	jsr Call_00_c0d0.w                                                  ; $9fa2 : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $9fa2 : $20, $d0, $c0
 	rep #ACCU_8                                                  ; $9fa5 : $c2, $20
 	clc                                                  ; $9fa7 : $18
 	adc $099e.w                                                  ; $9fa8 : $6d, $9e, $09
 	pha                                                  ; $9fab : $48
 	sep #ACCU_8                                                  ; $9fac : $e2, $20
 	lda $09a0.w                                                  ; $9fae : $ad, $a0, $09
-	sta $09b9.w                                                  ; $9fb1 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $9fb1 : $8d, $b9, $09
 	rep #ACCU_8                                                  ; $9fb4 : $c2, $20
 	pla                                                  ; $9fb6 : $68
 	jsr Call_00_c102.w                                                  ; $9fb7 : $20, $02, $c1
@@ -5273,10 +5297,10 @@ Call_00_a019:
 	rts                                                  ; $a040 : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $a041 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a041 : $20, $b7, $c0
 	sta $56                                                  ; $a044 : $85, $56
 	stz $57                                                  ; $a046 : $64, $57
-	jsr Call_00_c0b7.w                                                  ; $a048 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a048 : $20, $b7, $c0
 	sta $54                                                  ; $a04b : $85, $54
 	ldx $56                                                  ; $a04d : $a6, $56
 	lda $079e.w, X                                                  ; $a04f : $bd, $9e, $07
@@ -5300,13 +5324,13 @@ br_00_a062:
 	jsr Call_00_c102.w                                                  ; $a068 : $20, $02, $c1
 	brl br_00_a3c6                                                  ; $a06b : $82, $58, $03
 
-	jsr Call_00_c0b7.w                                                  ; $a06e : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a06e : $20, $b7, $c0
 	brl br_00_bc33                                                  ; $a071 : $82, $bf, $1b
 
 	stz $1267.w                                                  ; $a074 : $9c, $67, $12
 
 br_00_a077:
-	jsr Call_00_c0b7.w                                                  ; $a077 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a077 : $20, $b7, $c0
 	sta $22                                                  ; $a07a : $85, $22
 	lda $22                                                  ; $a07c : $a5, $22
 	cmp #$d0ff.w                                                  ; $a07e : $c9, $ff, $d0
@@ -5333,7 +5357,7 @@ br_00_a077:
 	bit #$d001.w                                                  ; $a0a6 : $89, $01, $d0
 	ora ($a9)                                                  ; $a0a9 : $12, $a9
 	sbc $12688d.l, X                                                  ; $a0ab : $ff, $8d, $68, $12
-	jsr Call_00_c0b7.w                                                  ; $a0af : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a0af : $20, $b7, $c0
 	jsr Call_00_be1e.w                                                  ; $a0b2 : $20, $1e, $be
 	bne br_00_a0ce                                                  ; $a0b5 : $d0, $17
 
@@ -5398,9 +5422,9 @@ br_00_a117:
 	brl br_00_a1c2                                                  ; $a129 : $82, $96, $00
 
 br_00_a12c:
-	jsr Call_00_c0b7.w                                                  ; $a12c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a12c : $20, $b7, $c0
 	jsr Call_00_bf92.l                                                  ; $a12f : $22, $92, $bf, $80
-	jsr Call_00_c0b7.w                                                  ; $a133 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a133 : $20, $b7, $c0
 	phy                                                  ; $a136 : $5a
 	ldx $a7                                                  ; $a137 : $a6, $a7
 	lda $0736.w, X                                                  ; $a139 : $bd, $36, $07
@@ -5410,7 +5434,7 @@ br_00_a12c:
 	.db $00                                                  ; $a142 : $00
 	brl br_00_a1a6                                                  ; $a143 : $82, $60, $00
 
-	jsr Call_00_c0b7.w                                                  ; $a146 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a146 : $20, $b7, $c0
 	lda $0005ae.l                                                  ; $a149 : $af, $ae, $05, $00
 	cmp #$9002.w                                                  ; $a14d : $c9, $02, $90
 	tsb $a9                                                  ; $a150 : $04, $a9
@@ -5440,7 +5464,7 @@ br_00_a171:
 	sep #ACCU_8                                                  ; $a17b : $e2, $20
 	bra br_00_a1c2                                                  ; $a17d : $80, $43
 
-	jsr Call_00_c0b7.w                                                  ; $a17f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a17f : $20, $b7, $c0
 	lda #$ff.b                                                  ; $a182 : $a9, $ff
 	sta $54                                                  ; $a184 : $85, $54
 	sta $57                                                  ; $a186 : $85, $57
@@ -5449,7 +5473,7 @@ br_00_a171:
 br_00_a18a:
 	stz $1267.w                                                  ; $a18a : $9c, $67, $12
 	jsr Call_00_a1cc.w                                                  ; $a18d : $20, $cc, $a1
-	jsr Call_00_c0b7.w                                                  ; $a190 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a190 : $20, $b7, $c0
 	sta $54                                                  ; $a193 : $85, $54
 	phy                                                  ; $a195 : $5a
 	ldy #$0023.w                                                  ; $a196 : $a0, $23, $00
@@ -5479,20 +5503,20 @@ br_00_a1ab:
 	stz $55                                                  ; $a1b7 : $64, $55
 
 br_00_a1b9:
-	jsr Call_00_c0b7.w                                                  ; $a1b9 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a1b9 : $20, $b7, $c0
 	sta $56                                                  ; $a1bc : $85, $56
 	stz $57                                                  ; $a1be : $64, $57
 	bra br_00_a20c                                                  ; $a1c0 : $80, $4a
 
 br_00_a1c2:
-	jsr Call_00_c0d0.w                                                  ; $a1c2 : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $a1c2 : $20, $d0, $c0
 	sta $56                                                  ; $a1c5 : $85, $56
 	xba                                                  ; $a1c7 : $eb
 	sta $57                                                  ; $a1c8 : $85, $57
 	bra br_00_a20c                                                  ; $a1ca : $80, $40
 
 Call_00_a1cc:
-	jsr Call_00_c0b7.w                                                  ; $a1cc : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a1cc : $20, $b7, $c0
 	sta WRMPYA.w                                                  ; $a1cf : $8d, $02, $42
 	lda #$be.b                                                  ; $a1d2 : $a9, $be
 	sta WRMPYB.w                                                  ; $a1d4 : $8d, $03, $42
@@ -5506,7 +5530,7 @@ Call_00_a1cc:
 
 
 Call_00_a1e4:
-	jsr Call_00_c0d0.w                                                  ; $a1e4 : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $a1e4 : $20, $d0, $c0
 	rep #ACCU_8                                                  ; $a1e7 : $c2, $20
 	phy                                                  ; $a1e9 : $5a
 	jsr $82fb1f.l                                                  ; $a1ea : $22, $1f, $fb, $82
@@ -5517,7 +5541,7 @@ Call_00_a1e4:
 	rts                                                  ; $a1f5 : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $a1f6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a1f6 : $20, $b7, $c0
 	xba                                                  ; $a1f9 : $eb
 	lda #$00.b                                                  ; $a1fa : $a9, $00
 	xba                                                  ; $a1fc : $eb
@@ -5525,7 +5549,7 @@ Call_00_a1e4:
 	lda $079e.w, X                                                  ; $a1fe : $bd, $9e, $07
 	sta $54                                                  ; $a201 : $85, $54
 	stz $55                                                  ; $a203 : $64, $55
-	jsr Call_00_c0b7.w                                                  ; $a205 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a205 : $20, $b7, $c0
 	sta $56                                                  ; $a208 : $85, $56
 	stz $57                                                  ; $a20a : $64, $57
 
@@ -5603,52 +5627,52 @@ br_00_a269:
 	lda $1267.w                                                  ; $a269 : $ad, $67, $12
 	bne br_00_a285                                                  ; $a26c : $d0, $17
 
-	jsr Call_00_c0b7.w                                                  ; $a26e : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $a271 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a26e : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a271 : $20, $b7, $c0
 	brl br_00_a077                                                  ; $a274 : $82, $00, $fe
 
 	lda $1267.w                                                  ; $a277 : $ad, $67, $12
 	beq br_00_a285                                                  ; $a27a : $f0, $09
 
-	jsr Call_00_c0b7.w                                                  ; $a27c : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $a27f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a27c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a27f : $20, $b7, $c0
 	brl br_00_a077                                                  ; $a282 : $82, $f2, $fd
 
 br_00_a285:
 	brl br_00_a3c6                                                  ; $a285 : $82, $3e, $01
 
-	jsr Call_00_c0b7.w                                                  ; $a288 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a288 : $20, $b7, $c0
 	jsr Call_00_be1e.w                                                  ; $a28b : $20, $1e, $be
 	beq br_00_a293                                                  ; $a28e : $f0, $03
 
 	brl br_00_a3c6                                                  ; $a290 : $82, $33, $01
 
 br_00_a293:
-	jsr Call_00_c0b7.w                                                  ; $a293 : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $a296 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a293 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a296 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a299 : $82, $64, $fa
 
-	jsr Call_00_c0b7.w                                                  ; $a29c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a29c : $20, $b7, $c0
 	jsr Call_00_be1e.w                                                  ; $a29f : $20, $1e, $be
 	bne br_00_a2a7                                                  ; $a2a2 : $d0, $03
 
 	brl br_00_a3c6                                                  ; $a2a4 : $82, $1f, $01
 
 br_00_a2a7:
-	jsr Call_00_c0b7.w                                                  ; $a2a7 : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $a2aa : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a2a7 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a2aa : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a2ad : $82, $50, $fa
 
 	lda $05aa.w                                                  ; $a2b0 : $ad, $aa, $05
 	jsr Call_00_ed9c.l                                                  ; $a2b3 : $22, $9c, $ed, $80
 	brl br_00_9d00                                                  ; $a2b7 : $82, $46, $fa
 
-	jsr Call_00_c0b7.w                                                  ; $a2ba : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a2ba : $20, $b7, $c0
 	sta $05ae.w                                                  ; $a2bd : $8d, $ae, $05
 	stz $05b2.w                                                  ; $a2c0 : $9c, $b2, $05
-	jsr Call_00_c0b7.w                                                  ; $a2c3 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a2c3 : $20, $b7, $c0
 	sta $05b8.w                                                  ; $a2c6 : $8d, $b8, $05
-	jsr Call_00_c0b7.w                                                  ; $a2c9 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a2c9 : $20, $b7, $c0
 	sta $05b0.w                                                  ; $a2cc : $8d, $b0, $05
 	lda #$01.b                                                  ; $a2cf : $a9, $01
 	sta $05b3.w                                                  ; $a2d1 : $8d, $b3, $05
@@ -5690,14 +5714,16 @@ br_00_a30a:
 	ply                                                  ; $a316 : $7a
 	jsr $848311.l                                                  ; $a317 : $22, $11, $83, $84
 	jsr Call_00_bf0b.w                                                  ; $a31b : $20, $0b, $bf
-	jsr Call_00_c0b7.w                                                  ; $a31e : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a31e : $20, $b7, $c0
 	xba                                                  ; $a321 : $eb
 	lda #$00.b                                                  ; $a322 : $a9, $00
 	xba                                                  ; $a324 : $eb
 	jsr Call_00_bf43.w                                                  ; $a325 : $20, $43, $bf
 	brl br_00_9d00                                                  ; $a328 : $82, $d5, $f9
 
-	jsr Call_00_c0b7.w                                                  ; $a32b : $20, $b7, $c0
+
+Func_0_a32b:
+	jsr AequNextScriptByte.w                                                  ; $a32b : $20, $b7, $c0
 	sty $09b7.w                                                  ; $a32e : $8c, $b7, $09
 	sta $30                                                  ; $a331 : $85, $30
 	stz $099b.w                                                  ; $a333 : $9c, $9b, $09
@@ -5753,7 +5779,7 @@ Call_00_a368:
 	sta $077e.w, X                                                  ; $a3a0 : $9d, $7e, $07
 	rep #IDX_8                                                  ; $a3a3 : $c2, $10
 	ply                                                  ; $a3a5 : $7a
-	jsr Call_00_c0b7.w                                                  ; $a3a6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a3a6 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a3a9 : $82, $54, $f9
 
 	lda $0000.w, Y                                                  ; $a3ac : $b9, $00, $00
@@ -5765,15 +5791,15 @@ Call_00_a368:
 	sta $077e.w, X                                                  ; $a3ba : $9d, $7e, $07
 	rep #IDX_8                                                  ; $a3bd : $c2, $10
 	ply                                                  ; $a3bf : $7a
-	jsr Call_00_c0b7.w                                                  ; $a3c0 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a3c0 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a3c3 : $82, $3a, $f9
 
 br_00_a3c6:
-	jsr Call_00_c0d0.w                                                  ; $a3c6 : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $a3c6 : $20, $d0, $c0
 	rep #ACCU_8                                                  ; $a3c9 : $c2, $20
 	pha                                                  ; $a3cb : $48
 	lda $09a0.w                                                  ; $a3cc : $ad, $a0, $09
-	sta $09b9.w                                                  ; $a3cf : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $a3cf : $8d, $b9, $09
 	pla                                                  ; $a3d2 : $68
 	clc                                                  ; $a3d3 : $18
 	adc $099e.w                                                  ; $a3d4 : $6d, $9e, $09
@@ -5782,25 +5808,25 @@ br_00_a3c6:
 	brl br_00_9d00                                                  ; $a3dc : $82, $21, $f9
 
 	tdc                                                  ; $a3df : $7b
-	jsr Call_00_c0b7.w                                                  ; $a3e0 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a3e0 : $20, $b7, $c0
 	tax                                                  ; $a3e3 : $aa
-	jsr Call_00_c0b7.w                                                  ; $a3e4 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a3e4 : $20, $b7, $c0
 	sta $079e.w, X                                                  ; $a3e7 : $9d, $9e, $07
 	brl br_00_9d00                                                  ; $a3ea : $82, $13, $f9
 
 	tdc                                                  ; $a3ed : $7b
-	jsr Call_00_c0b7.w                                                  ; $a3ee : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a3ee : $20, $b7, $c0
 	tax                                                  ; $a3f1 : $aa
-	jsr Call_00_c0b7.w                                                  ; $a3f2 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a3f2 : $20, $b7, $c0
 	clc                                                  ; $a3f5 : $18
 	adc $079e.w, X                                                  ; $a3f6 : $7d, $9e, $07
 	sta $079e.w, X                                                  ; $a3f9 : $9d, $9e, $07
 	brl br_00_9d00                                                  ; $a3fc : $82, $01, $f9
 
 	tdc                                                  ; $a3ff : $7b
-	jsr Call_00_c0b7.w                                                  ; $a400 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a400 : $20, $b7, $c0
 	tax                                                  ; $a403 : $aa
-	jsr Call_00_c0b7.w                                                  ; $a404 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a404 : $20, $b7, $c0
 	sec                                                  ; $a407 : $38
 	sbc $079e.w, X                                                  ; $a408 : $fd, $9e, $07
 	eor #$ff.b                                                  ; $a40b : $49, $ff
@@ -5819,9 +5845,9 @@ br_00_a3c6:
 	brl br_00_9d00                                                  ; $a428 : $82, $d5, $f8
 
 Call_00_a42b:
-	jsr Call_00_c0b7.w                                                  ; $a42b : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a42b : $20, $b7, $c0
 	sta $7fd4ef.l                                                  ; $a42e : $8f, $ef, $d4, $7f
-	jsr Call_00_c0b7.w                                                  ; $a432 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a432 : $20, $b7, $c0
 	sta $7fd4f1.l                                                  ; $a435 : $8f, $f1, $d4, $7f
 	phy                                                  ; $a439 : $5a
 
@@ -5861,13 +5887,13 @@ br_00_a46e:
 	rts                                                  ; $a47f : $60
 
 
-	jsr Call_00_c0d0.w                                                  ; $a480 : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $a480 : $20, $d0, $c0
 	jsr Call_00_bf12.w                                                  ; $a483 : $20, $12, $bf
 	brl br_00_9d00                                                  ; $a486 : $82, $77, $f8
 
-	jsr Call_00_c0b7.w                                                  ; $a489 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a489 : $20, $b7, $c0
 	pha                                                  ; $a48c : $48
-	jsr Call_00_c0b7.w                                                  ; $a48d : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a48d : $20, $b7, $c0
 	sta $0a0b.w                                                  ; $a490 : $8d, $0b, $0a
 	pla                                                  ; $a493 : $68
 	phy                                                  ; $a494 : $5a
@@ -5885,9 +5911,9 @@ br_00_a46e:
 	brl br_00_9d00                                                  ; $a4ae : $82, $4f, $f8
 
 Call_00_a4b1:
-	jsr Call_00_c0b7.w                                                  ; $a4b1 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a4b1 : $20, $b7, $c0
 	sta $09cf.w                                                  ; $a4b4 : $8d, $cf, $09
-	jsr Call_00_c0b7.w                                                  ; $a4b7 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a4b7 : $20, $b7, $c0
 	sta $09cd.w                                                  ; $a4ba : $8d, $cd, $09
 	stz $09ce.w                                                  ; $a4bd : $9c, $ce, $09
 	phy                                                  ; $a4c0 : $5a
@@ -5898,12 +5924,12 @@ Call_00_a4b1:
 	rts                                                  ; $a4ca : $60
 
 
-	jsr Call_00_c0d0.w                                                  ; $a4cb : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $a4cb : $20, $d0, $c0
 	jsr Call_00_bf43.w                                                  ; $a4ce : $20, $43, $bf
 	brl br_00_9d00                                                  ; $a4d1 : $82, $2c, $f8
 
-	jsr Call_00_c0b7.w                                                  ; $a4d4 : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $a4d7 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a4d4 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a4d7 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a4da : $82, $23, $f8
 
 	phb                                                  ; $a4dd : $8b
@@ -5930,7 +5956,7 @@ Call_00_a4b1:
 br_00_a508:
 	brl br_00_9d00                                                  ; $a508 : $82, $f5, $f7
 
-	jsr Call_00_c0b7.w                                                  ; $a50b : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a50b : $20, $b7, $c0
 	phb                                                  ; $a50e : $8b
 	phy                                                  ; $a50f : $5a
 	rep #ACCU_8|IDX_8                                                  ; $a510 : $c2, $30
@@ -5981,7 +6007,7 @@ br_00_a508:
 	lda ($5d)                                                  ; $a573 : $b2, $5d
 	sta $4e                                                  ; $a575 : $85, $4e
 	sep #ACCU_8                                                  ; $a577 : $e2, $20
-	jsr Call_00_c0b7.w                                                  ; $a579 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a579 : $20, $b7, $c0
 	sta $50                                                  ; $a57c : $85, $50
 	jsr Call_00_834c.l                                                  ; $a57e : $22, $4c, $83, $80
 	rep #ACCU_8                                                  ; $a582 : $c2, $20
@@ -6016,7 +6042,7 @@ br_00_a5ae:
 	sty $00                                                  ; $a5b0 : $84, $00
 
 Call_00_a5b2:
-	jsr Call_00_c0b7.w                                                  ; $a5b2 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a5b2 : $20, $b7, $c0
 	xba                                                  ; $a5b5 : $eb
 	lda #$00.b                                                  ; $a5b6 : $a9, $00
 	xba                                                  ; $a5b8 : $eb
@@ -6025,12 +6051,12 @@ Call_00_a5b2:
 	rts                                                  ; $a5bb : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $a5bc : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $a5bf : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $a5c2 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a5bc : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a5bf : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a5c2 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a5c5 : $82, $38, $f7
 
-	jsr Call_00_c0b7.w                                                  ; $a5c8 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a5c8 : $20, $b7, $c0
 	phy                                                  ; $a5cb : $5a
 	pha                                                  ; $a5cc : $48
 	jsr $81f723.l                                                  ; $a5cd : $22, $23, $f7, $81
@@ -6067,7 +6093,7 @@ br_00_a5fb:
 	ply                                                  ; $a5fb : $7a
 	brl br_00_9d00                                                  ; $a5fc : $82, $01, $f7
 
-	jsr Call_00_c0b7.w                                                  ; $a5ff : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a5ff : $20, $b7, $c0
 	phy                                                  ; $a602 : $5a
 	pha                                                  ; $a603 : $48
 	jsr $81f74f.l                                                  ; $a604 : $22, $4f, $f7, $81
@@ -6108,7 +6134,7 @@ br_00_a636:
 	ply                                                  ; $a636 : $7a
 	brl br_00_9d00                                                  ; $a637 : $82, $c6, $f6
 
-	jsr Call_00_c0b7.w                                                  ; $a63a : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a63a : $20, $b7, $c0
 	sta $54                                                  ; $a63d : $85, $54
 	jsr Call_00_bf92.l                                                  ; $a63f : $22, $92, $bf, $80
 	bcs br_00_a676                                                  ; $a643 : $b0, $31
@@ -6140,7 +6166,7 @@ br_00_a636:
 br_00_a676:
 	brl br_00_9d00                                                  ; $a676 : $82, $87, $f6
 
-	jsr Call_00_c0b7.w                                                  ; $a679 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a679 : $20, $b7, $c0
 	sta $54                                                  ; $a67c : $85, $54
 	jsr Call_00_bf92.l                                                  ; $a67e : $22, $92, $bf, $80
 	bcs br_00_a6ab                                                  ; $a682 : $b0, $27
@@ -6169,7 +6195,7 @@ br_00_a676:
 br_00_a6ab:
 	brl br_00_9d00                                                  ; $a6ab : $82, $52, $f6
 
-	jsr Call_00_c0b7.w                                                  ; $a6ae : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a6ae : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a6b1 : $22, $6f, $bf, $80
 	ldx $a7                                                  ; $a6b5 : $a6, $a7
 	lda $0622.w, X                                                  ; $a6b7 : $bd, $22, $06
@@ -6222,24 +6248,24 @@ br_00_a6f7:
 br_00_a706:
 	brl br_00_9d00                                                  ; $a706 : $82, $f7, $f5
 
-	jsr Call_00_c0b7.w                                                  ; $a709 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a709 : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a70c : $22, $6f, $bf, $80
-	jsr Call_00_c0b7.w                                                  ; $a710 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a710 : $20, $b7, $c0
 	ldx $a7                                                  ; $a713 : $a6, $a7
 	sta $066a.w, X                                                  ; $a715 : $9d, $6a, $06
 	brl br_00_9d00                                                  ; $a718 : $82, $e5, $f5
 
-	jsr Call_00_c0b7.w                                                  ; $a71b : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a71b : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a71e : $22, $6f, $bf, $80
-	jsr Call_00_c0b7.w                                                  ; $a722 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a722 : $20, $b7, $c0
 	sta $54                                                  ; $a725 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $a727 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a727 : $20, $b7, $c0
 	sta $56                                                  ; $a72a : $85, $56
 	bra br_00_a746                                                  ; $a72c : $80, $18
 
-	jsr Call_00_c0b7.w                                                  ; $a72e : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a72e : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a731 : $22, $6f, $bf, $80
-	jsr Call_00_c0b7.w                                                  ; $a735 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a735 : $20, $b7, $c0
 	jsr Call_00_c05c.l                                                  ; $a738 : $22, $5c, $c0, $80
 	lda $120a.w                                                  ; $a73c : $ad, $0a, $12
 	sta $54                                                  ; $a73f : $85, $54
@@ -6290,7 +6316,7 @@ br_00_a78e:
 	rtl                                                  ; $a793 : $6b
 
 
-	jsr Call_00_c0b7.w                                                  ; $a794 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a794 : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a797 : $22, $6f, $bf, $80
 	tdc                                                  ; $a79b : $7b
 	lda $0000.w, Y                                                  ; $a79c : $b9, $00, $00
@@ -6304,12 +6330,12 @@ br_00_a78e:
 	sta $066a.w, X                                                  ; $a7ae : $9d, $6a, $06
 
 br_00_a7b1:
-	jsr Call_00_c0b7.w                                                  ; $a7b1 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a7b1 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a7b4 : $82, $49, $f5
 
 	tsb $00                                                  ; $a7b7 : $04, $00
 	cop $06.b                                                  ; $a7b9 : $02, $06
-	jsr Call_00_c0b7.w                                                  ; $a7bb : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a7bb : $20, $b7, $c0
 	cmp #$ff.b                                                  ; $a7be : $c9, $ff
 	bne br_00_a7e6                                                  ; $a7c0 : $d0, $24
 
@@ -6332,14 +6358,14 @@ br_00_a7dd:
 	dex                                                  ; $a7dd : $ca
 	bpl br_00_a7c5                                                  ; $a7de : $10, $e5
 
-	jsr Call_00_c0b7.w                                                  ; $a7e0 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a7e0 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a7e3 : $82, $1a, $f5
 
 br_00_a7e6:
 	jsr Call_00_bf6f.l                                                  ; $a7e6 : $22, $6f, $bf, $80
 	bcc br_00_a7f2                                                  ; $a7ea : $90, $06
 
-	jsr Call_00_c0b7.w                                                  ; $a7ec : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a7ec : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a7ef : $82, $0e, $f5
 
 br_00_a7f2:
@@ -6347,7 +6373,7 @@ br_00_a7f2:
 	lda $0622.w, X                                                  ; $a7f4 : $bd, $22, $06
 	and #$fe.b                                                  ; $a7f7 : $29, $fe
 	sta $0622.w, X                                                  ; $a7f9 : $9d, $22, $06
-	jsr Call_00_c0b7.w                                                  ; $a7fc : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a7fc : $20, $b7, $c0
 	sta $070a.w, X                                                  ; $a7ff : $9d, $0a, $07
 	lda #$00.b                                                  ; $a802 : $a9, $00
 	sta $7fe3c6.l, X                                                  ; $a804 : $9f, $c6, $e3, $7f
@@ -6370,15 +6396,15 @@ br_00_a7f2:
 br_00_a826:
 	lda #$ff.b                                                  ; $a826 : $a9, $ff
 	sta $1269.w                                                  ; $a828 : $8d, $69, $12
-	jsr Call_00_c0b7.w                                                  ; $a82b : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $a82e : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a82b : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a82e : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $a831 : $82, $cc, $f4
 
 br_00_a834:
 	jsr Call_00_c195.l                                                  ; $a834 : $22, $95, $c1, $80
-	jsr Call_00_c0b7.w                                                  ; $a838 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a838 : $20, $b7, $c0
 	sta $00                                                  ; $a83b : $85, $00
-	jsr Call_00_c0b7.w                                                  ; $a83d : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a83d : $20, $b7, $c0
 	sta $01                                                  ; $a840 : $85, $01
 	jsr Call_00_bf6f.l                                                  ; $a842 : $22, $6f, $bf, $80
 	bcc br_00_a84b                                                  ; $a846 : $90, $03
@@ -6481,9 +6507,9 @@ br_00_a8e1:
 br_00_a8f5:
 	brl br_00_9d00                                                  ; $a8f5 : $82, $08, $f4
 
-	jsr Call_00_c0b7.w                                                  ; $a8f8 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a8f8 : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a8fb : $22, $6f, $bf, $80
-	jsr Call_00_c0b7.w                                                  ; $a8ff : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a8ff : $20, $b7, $c0
 	phy                                                  ; $a902 : $5a
 	pha                                                  ; $a903 : $48
 	jsr $83aaaf.l                                                  ; $a904 : $22, $af, $aa, $83
@@ -6528,13 +6554,13 @@ br_00_a91f:
 	ply                                                  ; $a958 : $7a
 	brl br_00_9d00                                                  ; $a959 : $82, $a4, $f3
 
-	jsr Call_00_c0b7.w                                                  ; $a95c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a95c : $20, $b7, $c0
 	sta $58                                                  ; $a95f : $85, $58
-	jsr Call_00_c0b7.w                                                  ; $a961 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a961 : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a964 : $22, $6f, $bf, $80
 	lda $a7                                                  ; $a968 : $a5, $a7
 	sta $59                                                  ; $a96a : $85, $59
-	jsr Call_00_c0b7.w                                                  ; $a96c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a96c : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a96f : $22, $6f, $bf, $80
 	ldx $a7                                                  ; $a973 : $a6, $a7
 	lda $59                                                  ; $a975 : $a5, $59
@@ -6546,9 +6572,9 @@ br_00_a91f:
 	brl br_00_9d00                                                  ; $a983 : $82, $7a, $f3
 
 Call_00_a986:
-	jsr Call_00_c0b7.w                                                  ; $a986 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a986 : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a989 : $22, $6f, $bf, $80
-	jsr Call_00_c0b7.w                                                  ; $a98d : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a98d : $20, $b7, $c0
 	sta $54                                                  ; $a990 : $85, $54
 	ldx $a7                                                  ; $a992 : $a6, $a7
 	lda $0622.w, X                                                  ; $a994 : $bd, $22, $06
@@ -6557,12 +6583,12 @@ Call_00_a986:
 	rts                                                  ; $a99c : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $a99d : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a99d : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a9a0 : $22, $6f, $bf, $80
 	ldx $a7                                                  ; $a9a4 : $a6, $a7
-	jsr Call_00_c0b7.w                                                  ; $a9a6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a9a6 : $20, $b7, $c0
 	sta $7fe5ce.l, X                                                  ; $a9a9 : $9f, $ce, $e5, $7f
-	jsr Call_00_c0b7.w                                                  ; $a9ad : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a9ad : $20, $b7, $c0
 	sta $7fe5a6.l, X                                                  ; $a9b0 : $9f, $a6, $e5, $7f
 	brl br_00_9d00                                                  ; $a9b4 : $82, $49, $f3
 
@@ -6583,17 +6609,17 @@ Call_00_a986:
 	bra br_00_aa20                                                  ; $a9d1 : $80, $4d
 
 	jsr Call_00_aa02.w                                                  ; $a9d3 : $20, $02, $aa
-	jsr Call_00_c0b7.w                                                  ; $a9d6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a9d6 : $20, $b7, $c0
 	bra br_00_aa20                                                  ; $a9d9 : $80, $45
 
 	jsr Call_00_a9e3.w                                                  ; $a9db : $20, $e3, $a9
-	jsr Call_00_c0b7.w                                                  ; $a9de : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a9de : $20, $b7, $c0
 	bra br_00_aa20                                                  ; $a9e1 : $80, $3d
 
 Call_00_a9e3:
-	jsr Call_00_c0b7.w                                                  ; $a9e3 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a9e3 : $20, $b7, $c0
 	sta $01                                                  ; $a9e6 : $85, $01
-	jsr Call_00_c0b7.w                                                  ; $a9e8 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $a9e8 : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $a9eb : $22, $6f, $bf, $80
 	ldx $a9                                                  ; $a9ef : $a6, $a9
 	rep #ACCU_8                                                  ; $a9f1 : $c2, $20
@@ -6606,9 +6632,9 @@ Call_00_a9e3:
 
 
 Call_00_aa02:
-	jsr Call_00_c0b7.w                                                  ; $aa02 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa02 : $20, $b7, $c0
 	sta $01                                                  ; $aa05 : $85, $01
-	jsr Call_00_c0b7.w                                                  ; $aa07 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa07 : $20, $b7, $c0
 	jsr Call_00_c05c.l                                                  ; $aa0a : $22, $5c, $c0, $80
 	jsr Call_00_bffa.w                                                  ; $aa0e : $20, $fa, $bf
 	rep #ACCU_8                                                  ; $aa11 : $c2, $20
@@ -6624,13 +6650,13 @@ br_00_aa20:
 	sep #ACCU_8                                                  ; $aa20 : $e2, $20
 	sta $0a                                                  ; $aa22 : $85, $0a
 	ldx $a9                                                  ; $aa24 : $a6, $a9
-	jsr Call_00_c0b7.w                                                  ; $aa26 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa26 : $20, $b7, $c0
 	sta $00                                                  ; $aa29 : $85, $00
-	jsr Call_00_c0b7.w                                                  ; $aa2b : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa2b : $20, $b7, $c0
 	sta $06                                                  ; $aa2e : $85, $06
-	jsr Call_00_c0b7.w                                                  ; $aa30 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa30 : $20, $b7, $c0
 	sta $08                                                  ; $aa33 : $85, $08
-	jsr Call_00_c0b7.w                                                  ; $aa35 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa35 : $20, $b7, $c0
 	sta $09                                                  ; $aa38 : $85, $09
 	phy                                                  ; $aa3a : $5a
 	jsr $83c729.l                                                  ; $aa3b : $22, $29, $c7, $83
@@ -6660,11 +6686,11 @@ br_00_aa5e:
 	brl br_00_9d00                                                  ; $aa64 : $82, $99, $f2
 
 Call_00_aa67:
-	jsr Call_00_c0b7.w                                                  ; $aa67 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa67 : $20, $b7, $c0
 	sta $54                                                  ; $aa6a : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $aa6c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa6c : $20, $b7, $c0
 	sta $66                                                  ; $aa6f : $85, $66
-	jsr Call_00_c0b7.w                                                  ; $aa71 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa71 : $20, $b7, $c0
 	sta $65                                                  ; $aa74 : $85, $65
 	stz $58                                                  ; $aa76 : $64, $58
 	lda #$06.b                                                  ; $aa78 : $a9, $06
@@ -6675,11 +6701,11 @@ Call_00_aa67:
 	rts                                                  ; $aa82 : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $aa83 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa83 : $20, $b7, $c0
 	sta $54                                                  ; $aa86 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $aa88 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa88 : $20, $b7, $c0
 	sta $63                                                  ; $aa8b : $85, $63
-	jsr Call_00_c0b7.w                                                  ; $aa8d : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aa8d : $20, $b7, $c0
 	sta $5a                                                  ; $aa90 : $85, $5a
 	lda #$06.b                                                  ; $aa92 : $a9, $06
 	sta $58                                                  ; $aa94 : $85, $58
@@ -6689,11 +6715,11 @@ Call_00_aa67:
 	ply                                                  ; $aa9d : $7a
 	brl br_00_9d00                                                  ; $aa9e : $82, $5f, $f2
 
-	jsr Call_00_c0b7.w                                                  ; $aaa1 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aaa1 : $20, $b7, $c0
 	sta $54                                                  ; $aaa4 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $aaa6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aaa6 : $20, $b7, $c0
 	sta $64                                                  ; $aaa9 : $85, $64
-	jsr Call_00_c0b7.w                                                  ; $aaab : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aaab : $20, $b7, $c0
 	sta $5b                                                  ; $aaae : $85, $5b
 	lda #$30.b                                                  ; $aab0 : $a9, $30
 	sta $58                                                  ; $aab2 : $85, $58
@@ -6703,7 +6729,7 @@ Call_00_aa67:
 	ply                                                  ; $aabb : $7a
 	brl br_00_9d00                                                  ; $aabc : $82, $41, $f2
 
-	jsr Call_00_c0b7.w                                                  ; $aabf : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aabf : $20, $b7, $c0
 	sta $54                                                  ; $aac2 : $85, $54
 	ldx #$0000.w                                                  ; $aac4 : $a2, $00, $00
 
@@ -6726,9 +6752,9 @@ br_00_aadd:
 
 	brl br_00_9d00                                                  ; $aae3 : $82, $1a, $f2
 
-	jsr Call_00_c0b7.w                                                  ; $aae6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aae6 : $20, $b7, $c0
 	sta $54                                                  ; $aae9 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $aaeb : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aaeb : $20, $b7, $c0
 	sta $55                                                  ; $aaee : $85, $55
 	jsr Call_00_ab33.w                                                  ; $aaf0 : $20, $33, $ab
 	bcc br_00_ab1a                                                  ; $aaf3 : $90, $25
@@ -6761,7 +6787,7 @@ br_00_ab0c:
 br_00_ab1a:
 	brl br_00_9d00                                                  ; $ab1a : $82, $e3, $f1
 
-	jsr Call_00_c0b7.w                                                  ; $ab1d : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ab1d : $20, $b7, $c0
 	sta $54                                                  ; $ab20 : $85, $54
 	jsr Call_00_ab33.w                                                  ; $ab22 : $20, $33, $ab
 	bcs br_00_ab2a                                                  ; $ab25 : $b0, $03
@@ -6890,18 +6916,18 @@ br_00_abf4:
 	plb                                                  ; $abf5 : $ab
 	brl br_00_9d00                                                  ; $abf6 : $82, $07, $f1
 
-	jsr Call_00_c0b7.w                                                  ; $abf9 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $abf9 : $20, $b7, $c0
 	cmp #$02.b                                                  ; $abfc : $c9, $02
 	bcs br_00_ac0c                                                  ; $abfe : $b0, $0c
 
 	stz $09e7.w                                                  ; $ac00 : $9c, $e7, $09
-	jsr Call_00_c0b7.w                                                  ; $ac03 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ac03 : $20, $b7, $c0
 	sta $09e6.w                                                  ; $ac06 : $8d, $e6, $09
 	brl br_00_9d00                                                  ; $ac09 : $82, $f4, $f0
 
 br_00_ac0c:
 	sta $05c0.w                                                  ; $ac0c : $8d, $c0, $05
-	jsr Call_00_c0b7.w                                                  ; $ac0f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ac0f : $20, $b7, $c0
 	sta $05c1.w                                                  ; $ac12 : $8d, $c1, $05
 	brl br_00_9d00                                                  ; $ac15 : $82, $e8, $f0
 
@@ -6920,7 +6946,7 @@ br_00_ac0c:
 	ply                                                  ; $ac35 : $7a
 	sep #ACCU_8                                                  ; $ac36 : $e2, $20
 	sta $54                                                  ; $ac38 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $ac3a : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ac3a : $20, $b7, $c0
 	dea                                                  ; $ac3d : $3a
 	cmp $54                                                  ; $ac3e : $c5, $54
 	bcs br_00_ac45                                                  ; $ac40 : $b0, $03
@@ -6930,13 +6956,13 @@ br_00_ac0c:
 br_00_ac45:
 	brl br_00_9d00                                                  ; $ac45 : $82, $b8, $f0
 
-	jsr Call_00_c0b7.w                                                  ; $ac48 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ac48 : $20, $b7, $c0
 	jsr Call_00_c05c.l                                                  ; $ac4b : $22, $5c, $c0, $80
 	lda $120a.w                                                  ; $ac4f : $ad, $0a, $12
 	sta $05bd.w                                                  ; $ac52 : $8d, $bd, $05
 	lda $120b.w                                                  ; $ac55 : $ad, $0b, $12
 	sta $05be.w                                                  ; $ac58 : $8d, $be, $05
-	jsr Call_00_c0b7.w                                                  ; $ac5b : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ac5b : $20, $b7, $c0
 	sta $05bf.w                                                  ; $ac5e : $8d, $bf, $05
 	lda #$ff.b                                                  ; $ac61 : $a9, $ff
 	sta $7fd0bf.l                                                  ; $ac63 : $8f, $bf, $d0, $7f
@@ -6947,7 +6973,7 @@ br_00_ac45:
 	ply                                                  ; $ac6f : $7a
 	brl br_00_9d00                                                  ; $ac70 : $82, $8d, $f0
 
-	jsr Call_00_c0b7.w                                                  ; $ac73 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ac73 : $20, $b7, $c0
 	sec                                                  ; $ac76 : $38
 	sbc #$ff.b                                                  ; $ac77 : $e9, $ff
 	lda $05b6.w                                                  ; $ac79 : $ad, $b6, $05
@@ -6963,9 +6989,9 @@ br_00_ac84:
 	sta $05b6.w                                                  ; $ac84 : $8d, $b6, $05
 	brl br_00_9d00                                                  ; $ac87 : $82, $76, $f0
 
-	jsr Call_00_c0b7.w                                                  ; $ac8a : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ac8a : $20, $b7, $c0
 	sta $56                                                  ; $ac8d : $85, $56
-	jsr Call_00_c0b7.w                                                  ; $ac8f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ac8f : $20, $b7, $c0
 	sta $57                                                  ; $ac92 : $85, $57
 	lda $56                                                  ; $ac94 : $a5, $56
 	jsr Call_00_bf92.l                                                  ; $ac96 : $22, $92, $bf, $80
@@ -6978,7 +7004,7 @@ br_00_ac84:
 br_00_aca4:
 	brl br_00_9d00                                                  ; $aca4 : $82, $59, $f0
 
-	jsr Call_00_c0b7.w                                                  ; $aca7 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aca7 : $20, $b7, $c0
 	jsr Call_00_bf92.l                                                  ; $acaa : $22, $92, $bf, $80
 	bcs br_00_acba                                                  ; $acae : $b0, $0a
 
@@ -6989,12 +7015,12 @@ br_00_aca4:
 br_00_acba:
 	brl br_00_9d00                                                  ; $acba : $82, $43, $f0
 
-	jsr Call_00_c0b7.w                                                  ; $acbd : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $acbd : $20, $b7, $c0
 	jsr Call_00_bf92.l                                                  ; $acc0 : $22, $92, $bf, $80
 	bcs br_00_acdc                                                  ; $acc4 : $b0, $16
 
 	ldx $a7                                                  ; $acc6 : $a6, $a7
-	jsr Call_00_c0b7.w                                                  ; $acc8 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $acc8 : $20, $b7, $c0
 	sta $7fe35e.l, X                                                  ; $accb : $9f, $5e, $e3, $7f
 	lda $000736.l, X                                                  ; $accf : $bf, $36, $07, $00
 	ora #$80.b                                                  ; $acd3 : $09, $80
@@ -7002,10 +7028,10 @@ br_00_acba:
 	brl br_00_9d00                                                  ; $acd9 : $82, $24, $f0
 
 br_00_acdc:
-	jsr Call_00_c0b7.w                                                  ; $acdc : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $acdc : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $acdf : $82, $1e, $f0
 
-	jsr Call_00_c0b7.w                                                  ; $ace2 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ace2 : $20, $b7, $c0
 	jsr Call_00_bf92.l                                                  ; $ace5 : $22, $92, $bf, $80
 	bcs br_00_acff                                                  ; $ace9 : $b0, $14
 
@@ -7019,16 +7045,16 @@ br_00_acdc:
 br_00_acff:
 	brl br_00_9d00                                                  ; $acff : $82, $fe, $ef
 
-	jsr Call_00_c0b7.w                                                  ; $ad02 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ad02 : $20, $b7, $c0
 	sta $56                                                  ; $ad05 : $85, $56
-	jsr Call_00_c0b7.w                                                  ; $ad07 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ad07 : $20, $b7, $c0
 	sta $57                                                  ; $ad0a : $85, $57
 	jsr Call_00_ad57.w                                                  ; $ad0c : $20, $57, $ad
 	brl br_00_9d00                                                  ; $ad0f : $82, $ee, $ef
 
-	jsr Call_00_c0b7.w                                                  ; $ad12 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ad12 : $20, $b7, $c0
 	sta $56                                                  ; $ad15 : $85, $56
-	jsr Call_00_c0b7.w                                                  ; $ad17 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ad17 : $20, $b7, $c0
 	sta $57                                                  ; $ad1a : $85, $57
 	jsr Call_00_ad57.w                                                  ; $ad1c : $20, $57, $ad
 	lda $56                                                  ; $ad1f : $a5, $56
@@ -7040,7 +7066,7 @@ br_00_acff:
 	jsr Call_00_ad57.w                                                  ; $ad29 : $20, $57, $ad
 	brl br_00_9d00                                                  ; $ad2c : $82, $d1, $ef
 
-	jsr Call_00_c0b7.w                                                  ; $ad2f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ad2f : $20, $b7, $c0
 	jsr Call_00_ad39.l                                                  ; $ad32 : $22, $39, $ad, $80
 	brl br_00_9d00                                                  ; $ad36 : $82, $c7, $ef
 
@@ -7171,7 +7197,7 @@ br_00_ade6:
 	stz $099c.w                                                  ; $ade6 : $9c, $9c, $09
 	brl br_00_9da6                                                  ; $ade9 : $82, $ba, $ef
 
-	jsr Call_00_c0b7.w                                                  ; $adec : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $adec : $20, $b7, $c0
 	ora #$00.b                                                  ; $adef : $09, $00
 	bne br_00_adfb                                                  ; $adf1 : $d0, $08
 
@@ -7185,7 +7211,7 @@ br_00_adfb:
 	brl br_00_9d00                                                  ; $ae00 : $82, $fd, $ee
 
 	jsr Call_00_ae3c.w                                                  ; $ae03 : $20, $3c, $ae
-	jsr Call_00_c0d0.w                                                  ; $ae06 : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $ae06 : $20, $d0, $c0
 	sta $54                                                  ; $ae09 : $85, $54
 	xba                                                  ; $ae0b : $eb
 	sta $55                                                  ; $ae0c : $85, $55
@@ -7205,7 +7231,7 @@ br_00_ae21:
 	brl br_00_9d00                                                  ; $ae21 : $82, $dc, $ee
 
 	jsr Call_00_ae3c.w                                                  ; $ae24 : $20, $3c, $ae
-	jsr Call_00_c0b7.w                                                  ; $ae27 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ae27 : $20, $b7, $c0
 	jsr $838ac9.l                                                  ; $ae2a : $22, $c9, $8a, $83
 	beq br_00_ae33                                                  ; $ae2e : $f0, $03
 
@@ -7228,9 +7254,9 @@ Call_00_ae3c:
 
 	lda #$20.b                                                  ; $ae42 : $a9, $20
 	sta $1282.w                                                  ; $ae44 : $8d, $82, $12
-	jsr Call_00_c0b7.w                                                  ; $ae47 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ae47 : $20, $b7, $c0
 	sta $54                                                  ; $ae4a : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $ae4c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ae4c : $20, $b7, $c0
 	sta $55                                                  ; $ae4f : $85, $55
 	ora #$00.b                                                  ; $ae51 : $09, $00
 	bpl br_00_ae8b                                                  ; $ae53 : $10, $36
@@ -7275,7 +7301,7 @@ br_00_ae8b:
 
 br_00_aeab:
 	sep #ACCU_8                                                  ; $aeab : $e2, $20
-	jsr Call_00_c0b7.w                                                  ; $aead : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $aead : $20, $b7, $c0
 	sta $1281.w                                                  ; $aeb0 : $8d, $81, $12
 	sta $1280.w                                                  ; $aeb3 : $8d, $80, $12
 	lda $0009a9.l                                                  ; $aeb6 : $af, $a9, $09, $00
@@ -7338,7 +7364,7 @@ br_00_aef1:
 	lda $58                                                  ; $af0f : $a5, $58
 	sta $127c.w                                                  ; $af11 : $8d, $7c, $12
 	sep #ACCU_8                                                  ; $af14 : $e2, $20
-	jsr Call_00_c0b7.w                                                  ; $af16 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $af16 : $20, $b7, $c0
 	lda #$01.b                                                  ; $af19 : $a9, $01
 	sta $1281.w                                                  ; $af1b : $8d, $81, $12
 	sta $1280.w                                                  ; $af1e : $8d, $80, $12
@@ -7350,9 +7376,9 @@ br_00_aef1:
 	brl br_00_9d00                                                  ; $af30 : $82, $cd, $ed
 
 Call_00_af33:
-	jsr Call_00_c0b7.w                                                  ; $af33 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $af33 : $20, $b7, $c0
 	sta $54                                                  ; $af36 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $af38 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $af38 : $20, $b7, $c0
 	sta $55                                                  ; $af3b : $85, $55
 	rep #ACCU_8                                                  ; $af3d : $c2, $20
 	lda $54                                                  ; $af3f : $a5, $54
@@ -7386,10 +7412,10 @@ Call_00_af33:
 	sta $2131.w                                                  ; $af77 : $8d, $31, $21
 	lda #$8de0.w                                                  ; $af7a : $a9, $e0, $8d
 	and ($21)                                                  ; $af7d : $32, $21
-	jsr Call_00_c0b7.w                                                  ; $af7f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $af7f : $20, $b7, $c0
 	sta $1286.w                                                  ; $af82 : $8d, $86, $12
 	sta $2132.w                                                  ; $af85 : $8d, $32, $21
-	jsr Call_00_c0b7.w                                                  ; $af88 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $af88 : $20, $b7, $c0
 	sta $1287.w                                                  ; $af8b : $8d, $87, $12
 	lda $1286.w                                                  ; $af8e : $ad, $86, $12
 	and #$cd1f.w                                                  ; $af91 : $29, $1f, $cd
@@ -7402,7 +7428,7 @@ Call_00_af33:
 	asl                                                  ; $af9f : $0a
 	stz $4204.w                                                  ; $afa0 : $9c, $04, $42
 	sta $4205.w                                                  ; $afa3 : $8d, $05, $42
-	jsr Call_00_c0b7.w                                                  ; $afa6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $afa6 : $20, $b7, $c0
 	sta $4206.w                                                  ; $afa9 : $8d, $06, $42
 	lda #$8d00.w                                                  ; $afac : $a9, $00, $8d
 	bmi br_00_afd2                                                  ; $afaf : $30, $21
@@ -7415,7 +7441,7 @@ Call_00_af33:
 	rts                                                  ; $afbf : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $afc0 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $afc0 : $20, $b7, $c0
 	jsr Call_00_c093.w                                                  ; $afc3 : $20, $93, $c0
 	rep #ACCU_8                                                  ; $afc6 : $c2, $20
 	lda $120a.w                                                  ; $afc8 : $ad, $0a, $12
@@ -7425,16 +7451,16 @@ Call_00_af33:
 
 br_00_afd2:
 	sep #ACCU_8                                                  ; $afd2 : $e2, $20
-	jsr Call_00_c0b7.w                                                  ; $afd4 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $afd4 : $20, $b7, $c0
 	sta $00                                                  ; $afd7 : $85, $00
-	jsr Call_00_c0b7.w                                                  ; $afd9 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $afd9 : $20, $b7, $c0
 	sta $01                                                  ; $afdc : $85, $01
 	phy                                                  ; $afde : $5a
 	jsr Call_00_d533.l                                                  ; $afdf : $22, $33, $d5, $80
 	ply                                                  ; $afe3 : $7a
 	brl br_00_9d00                                                  ; $afe4 : $82, $19, $ed
 
-	jsr Call_00_c0b7.w                                                  ; $afe7 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $afe7 : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $afea : $22, $6f, $bf, $80
 	ldx $a7                                                  ; $afee : $a6, $a7
 	lda $0622.w, X                                                  ; $aff0 : $bd, $22, $06
@@ -7456,16 +7482,16 @@ br_00_afff:
 	and #$08.b                                                  ; $b011 : $29, $08
 	bne br_00_b01b                                                  ; $b013 : $d0, $06
 
-	jsr Call_00_c0b7.w                                                  ; $b015 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b015 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $b018 : $82, $e5, $ec
 
 br_00_b01b:
 	jsr Call_00_c0ec.w                                                  ; $b01b : $20, $ec, $c0
 	brl br_00_9db0                                                  ; $b01e : $82, $8f, $ed
 
-	jsr Call_00_c0b7.w                                                  ; $b021 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b021 : $20, $b7, $c0
 	jsr Call_00_bf92.l                                                  ; $b024 : $22, $92, $bf, $80
-	jsr Call_00_c0b7.w                                                  ; $b028 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b028 : $20, $b7, $c0
 	jsr Call_00_c05c.l                                                  ; $b02b : $22, $5c, $c0, $80
 	ldx $a7                                                  ; $b02f : $a6, $a7
 	lda $0622.w, X                                                  ; $b031 : $bd, $22, $06
@@ -7482,7 +7508,7 @@ br_00_b01b:
 	ply                                                  ; $b050 : $7a
 	brl br_00_9d00                                                  ; $b051 : $82, $ac, $ec
 
-	jsr Call_00_c0b7.w                                                  ; $b054 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b054 : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $b057 : $22, $6f, $bf, $80
 	phy                                                  ; $b05b : $5a
 	lda #$61.b                                                  ; $b05c : $a9, $61
@@ -7490,7 +7516,7 @@ br_00_b01b:
 	ply                                                  ; $b062 : $7a
 	brl br_00_9d00                                                  ; $b063 : $82, $9a, $ec
 
-	jsr Call_00_c0b7.w                                                  ; $b066 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b066 : $20, $b7, $c0
 	jsr Call_00_bf6f.l                                                  ; $b069 : $22, $6f, $bf, $80
 	phy                                                  ; $b06d : $5a
 	lda #$63.b                                                  ; $b06e : $a9, $63
@@ -7498,14 +7524,14 @@ br_00_b01b:
 	ply                                                  ; $b074 : $7a
 	brl br_00_9d00                                                  ; $b075 : $82, $88, $ec
 
-	jsr Call_00_c0b7.w                                                  ; $b078 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b078 : $20, $b7, $c0
 	jsr Call_00_bf92.l                                                  ; $b07b : $22, $92, $bf, $80
 	ldx $a9                                                  ; $b07f : $a6, $a9
-	jsr Call_00_c0b7.w                                                  ; $b081 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b081 : $20, $b7, $c0
 	jsr Call_00_c0da.w                                                  ; $b084 : $20, $da, $c0
 	sta $7fdc8c.l, X                                                  ; $b087 : $9f, $8c, $dc, $7f
 	sep #ACCU_8                                                  ; $b08b : $e2, $20
-	jsr Call_00_c0b7.w                                                  ; $b08d : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b08d : $20, $b7, $c0
 	jsr Call_00_c0da.w                                                  ; $b090 : $20, $da, $c0
 	sec                                                  ; $b093 : $38
 	sbc #$10.b                                                  ; $b094 : $e9, $10
@@ -7554,16 +7580,16 @@ br_00_b0ba:
 	brl br_00_9d00                                                  ; $b0e8 : $82, $15, $ec
 
 Call_00_b0eb:
-	jsr Call_00_c0b7.w                                                  ; $b0eb : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b0eb : $20, $b7, $c0
 	jsr Call_00_bf92.l                                                  ; $b0ee : $22, $92, $bf, $80
 	ldx $a9                                                  ; $b0f2 : $a6, $a9
-	jsr Call_00_c0b7.w                                                  ; $b0f4 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b0f4 : $20, $b7, $c0
 	jsr Call_00_c0da.w                                                  ; $b0f7 : $20, $da, $c0
 	clc                                                  ; $b0fa : $18
 	adc wEntityXs.l, X                                                  ; $b0fb : $7f, $ae, $dd, $7f
 	sta wEntityXs.l, X                                                  ; $b0ff : $9f, $ae, $dd, $7f
 	sep #ACCU_8                                                  ; $b103 : $e2, $20
-	jsr Call_00_c0b7.w                                                  ; $b105 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b105 : $20, $b7, $c0
 	jsr Call_00_c0da.w                                                  ; $b108 : $20, $da, $c0
 	clc                                                  ; $b10b : $18
 	adc wEntityYs.l, X                                                  ; $b10c : $7f, $3e, $de, $7f
@@ -7572,9 +7598,9 @@ Call_00_b0eb:
 	rts                                                  ; $b116 : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $b117 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b117 : $20, $b7, $c0
 	sta $7fd4f3.l                                                  ; $b11a : $8f, $f3, $d4, $7f
-	jsr Call_00_c0b7.w                                                  ; $b11e : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b11e : $20, $b7, $c0
 	sta $7fd4f4.l                                                  ; $b121 : $8f, $f4, $d4, $7f
 	brl br_00_9d00                                                  ; $b125 : $82, $d8, $eb
 
@@ -7583,11 +7609,11 @@ Call_00_b0eb:
 	ldy #$0800.w                                                  ; $b12c : $a0, $00, $08
 	jsr Call_00_c61d.w                                                  ; $b12f : $20, $1d, $c6
 	ply                                                  ; $b132 : $7a
-	jsr Call_00_c0d0.w                                                  ; $b133 : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $b133 : $20, $d0, $c0
 	tax                                                  ; $b136 : $aa
 
 br_00_b137:
-	jsr Call_00_c0b7.w                                                  ; $b137 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b137 : $20, $b7, $c0
 	ora #$00.b                                                  ; $b13a : $09, $00
 	beq br_00_b157                                                  ; $b13c : $f0, $19
 
@@ -7670,11 +7696,11 @@ br_00_b157:
 	.db $00                                                  ; $b1bb : $00
 	.db $00                                                  ; $b1bc : $00
 	.db $00                                                  ; $b1bd : $00
-	jsr Call_00_c0d0.w                                                  ; $b1be : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $b1be : $20, $d0, $c0
 	tax                                                  ; $b1c1 : $aa
 
 br_00_b1c2:
-	jsr Call_00_c0b7.w                                                  ; $b1c2 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b1c2 : $20, $b7, $c0
 	ora #$00.b                                                  ; $b1c5 : $09, $00
 	beq br_00_b1ed                                                  ; $b1c7 : $f0, $24
 
@@ -7768,21 +7794,21 @@ br_00_b1ed:
 	.db $00                                                  ; $b254 : $00
 	.db $00                                                  ; $b255 : $00
 	.db $00                                                  ; $b256 : $00
-	jsr Call_00_c0b7.w                                                  ; $b257 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b257 : $20, $b7, $c0
 	phy                                                  ; $b25a : $5a
 	jsr $83df87.l                                                  ; $b25b : $22, $87, $df, $83
 	ply                                                  ; $b25f : $7a
-	jsr Call_00_c0b7.w                                                  ; $b260 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b260 : $20, $b7, $c0
 	jsr Call_00_c05c.l                                                  ; $b263 : $22, $5c, $c0, $80
 	bra br_00_b28d                                                  ; $b267 : $80, $24
 
-	jsr Call_00_c0b7.w                                                  ; $b269 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b269 : $20, $b7, $c0
 	phy                                                  ; $b26c : $5a
 	jsr $83df87.l                                                  ; $b26d : $22, $87, $df, $83
 	ply                                                  ; $b271 : $7a
 	ldx $a9                                                  ; $b272 : $a6, $a9
 	stx $58                                                  ; $b274 : $86, $58
-	jsr Call_00_c0b7.w                                                  ; $b276 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b276 : $20, $b7, $c0
 	jsr Call_00_bf92.l                                                  ; $b279 : $22, $92, $bf, $80
 	lda $06ba.w, X                                                  ; $b27d : $bd, $ba, $06
 	sta $120a.w                                                  ; $b280 : $8d, $0a, $12
@@ -7802,11 +7828,11 @@ br_00_b28d:
 	sep #ACCU_8                                                  ; $b2a2 : $e2, $20
 	brl br_00_9d00                                                  ; $b2a4 : $82, $59, $ea
 
-	jsr Call_00_c0b7.w                                                  ; $b2a7 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b2a7 : $20, $b7, $c0
 	sta $7ff8a0.l                                                  ; $b2aa : $8f, $a0, $f8, $7f
 	brl br_00_9d00                                                  ; $b2ae : $82, $4f, $ea
 
-	jsr Call_00_c0b7.w                                                  ; $b2b1 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b2b1 : $20, $b7, $c0
 	xba                                                  ; $b2b4 : $eb
 	lda #$00.b                                                  ; $b2b5 : $a9, $00
 	xba                                                  ; $b2b7 : $eb
@@ -7830,9 +7856,9 @@ br_00_b28d:
 	plx                                                  ; $b2db : $fa
 
 br_00_b2dc:
-	jsr Call_00_c0b7.w                                                  ; $b2dc : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b2dc : $20, $b7, $c0
 	sta $085e.w, X                                                  ; $b2df : $9d, $5e, $08
-	jsr Call_00_c0b7.w                                                  ; $b2e2 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b2e2 : $20, $b7, $c0
 	sta $089e.w, X                                                  ; $b2e5 : $9d, $9e, $08
 	brl br_00_9d00                                                  ; $b2e8 : $82, $15, $ea
 
@@ -7851,7 +7877,7 @@ br_00_b2f4:
 	brl br_00_9db0                                                  ; $b2fe : $82, $af, $ea
 
 br_00_b301:
-	jsr Call_00_c0b7.w                                                  ; $b301 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b301 : $20, $b7, $c0
 	lda #$20.b                                                  ; $b304 : $a9, $20
 	trb $099b.w                                                  ; $b306 : $1c, $9b, $09
 	brl br_00_9d00                                                  ; $b309 : $82, $f4, $e9
@@ -7881,20 +7907,20 @@ br_00_b32c:
 	bra br_00_b318                                                  ; $b331 : $80, $e5
 
 br_00_b333:
-	jsr Call_00_c0b7.w                                                  ; $b333 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b333 : $20, $b7, $c0
 	lda #$20.b                                                  ; $b336 : $a9, $20
 	trb $099b.w                                                  ; $b338 : $1c, $9b, $09
 	brl br_00_9d00                                                  ; $b33b : $82, $c2, $e9
 
 	brl br_00_9d00                                                  ; $b33e : $82, $bf, $e9
 
-	jsr Call_00_c0b7.w                                                  ; $b341 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b341 : $20, $b7, $c0
 	sta $120a.w                                                  ; $b344 : $8d, $0a, $12
-	jsr Call_00_c0b7.w                                                  ; $b347 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b347 : $20, $b7, $c0
 	sta $120b.w                                                  ; $b34a : $8d, $0b, $12
 	bra br_00_b356                                                  ; $b34d : $80, $07
 
-	jsr Call_00_c0b7.w                                                  ; $b34f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b34f : $20, $b7, $c0
 	jsr Call_00_c05c.l                                                  ; $b352 : $22, $5c, $c0, $80
 
 br_00_b356:
@@ -8047,7 +8073,7 @@ br_00_b464:
 	rtl                                                  ; $b46a : $6b
 
 
-	jsr Call_00_c0b7.w                                                  ; $b46b : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b46b : $20, $b7, $c0
 	lda $09a7.w                                                  ; $b46e : $ad, $a7, $09
 	pha                                                  ; $b471 : $48
 	and #$fe.b                                                  ; $b472 : $29, $fe
@@ -8077,18 +8103,18 @@ br_00_b464:
 	jsr Call_00_b374.w                                                  ; $b4a7 : $20, $74, $b3
 	brl br_00_9d00                                                  ; $b4aa : $82, $53, $e8
 
-	jsr Call_00_c0b7.w                                                  ; $b4ad : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b4ad : $20, $b7, $c0
 	sta $120a.w                                                  ; $b4b0 : $8d, $0a, $12
-	jsr Call_00_c0b7.w                                                  ; $b4b3 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b4b3 : $20, $b7, $c0
 	sta $120b.w                                                  ; $b4b6 : $8d, $0b, $12
 	jsr Call_00_b374.w                                                  ; $b4b9 : $20, $74, $b3
 	lda #$02.b                                                  ; $b4bc : $a9, $02
 	sta $05a8.w                                                  ; $b4be : $8d, $a8, $05
 	brl br_00_9d00                                                  ; $b4c1 : $82, $3c, $e8
 
-	jsr Call_00_c0b7.w                                                  ; $b4c4 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b4c4 : $20, $b7, $c0
 	sta $54                                                  ; $b4c7 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $b4c9 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b4c9 : $20, $b7, $c0
 	sta $55                                                  ; $b4cc : $85, $55
 	lda $55                                                  ; $b4ce : $a5, $55
 	cmp #$ff.b                                                  ; $b4d0 : $c9, $ff
@@ -8122,7 +8148,7 @@ br_00_b4fe:
 
 	lda $55                                                  ; $b506 : $a5, $55
 	sta $56                                                  ; $b508 : $85, $56
-	jsr Call_00_c0b7.w                                                  ; $b50a : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b50a : $20, $b7, $c0
 	sta $57                                                  ; $b50d : $85, $57
 	jsr Call_00_b592.w                                                  ; $b50f : $20, $92, $b5
 	brl br_00_9d00                                                  ; $b512 : $82, $eb, $e7
@@ -8337,18 +8363,18 @@ br_00_b641:
 	jsr Call_00_bf0b.w                                                  ; $b677 : $20, $0b, $bf
 	brl br_00_9d00                                                  ; $b67a : $82, $83, $e6
 
-	jsr Call_00_c0b7.w                                                  ; $b67d : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b67d : $20, $b7, $c0
 	xba                                                  ; $b680 : $eb
 	lda #$00.b                                                  ; $b681 : $a9, $00
 	xba                                                  ; $b683 : $eb
 	tax                                                  ; $b684 : $aa
-	jsr Call_00_c0b7.w                                                  ; $b685 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b685 : $20, $b7, $c0
 	sta $7fd020.l, X                                                  ; $b688 : $9f, $20, $d0, $7f
-	jsr Call_00_c0b7.w                                                  ; $b68c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b68c : $20, $b7, $c0
 	sta $7fd021.l, X                                                  ; $b68f : $9f, $21, $d0, $7f
 	brl br_00_9d00                                                  ; $b693 : $82, $6a, $e6
 
-	jsr Call_00_c0b7.w                                                  ; $b696 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b696 : $20, $b7, $c0
 	sta $0b52.w                                                  ; $b699 : $8d, $52, $0b
 	brl br_00_9d00                                                  ; $b69c : $82, $61, $e6
 
@@ -8364,7 +8390,7 @@ br_00_b641:
 br_00_b6b0:
 	brl br_00_9d00                                                  ; $b6b0 : $82, $4d, $e6
 
-	jsr Call_00_c0b7.w                                                  ; $b6b3 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b6b3 : $20, $b7, $c0
 	sec                                                  ; $b6b6 : $38
 	sbc #$48.b                                                  ; $b6b7 : $e9, $48
 	xba                                                  ; $b6b9 : $eb
@@ -8374,7 +8400,7 @@ br_00_b6b0:
 	jsr $83c110.l                                                  ; $b6be : $22, $10, $c1, $83
 	tdc                                                  ; $b6c2 : $7b
 	sta $7fd0a2.l                                                  ; $b6c3 : $8f, $a2, $d0, $7f
-	jsr Call_00_c0b7.w                                                  ; $b6c7 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b6c7 : $20, $b7, $c0
 	phb                                                  ; $b6ca : $8b
 	phy                                                  ; $b6cb : $5a
 	ldx $a7                                                  ; $b6cc : $a6, $a7
@@ -8396,7 +8422,7 @@ br_00_b6b0:
 	brl br_00_9d00                                                  ; $b6f1 : $82, $0c, $e6
 
 	jsr Call_00_b76a.w                                                  ; $b6f4 : $20, $6a, $b7
-	jsr Call_00_c0b7.w                                                  ; $b6f7 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b6f7 : $20, $b7, $c0
 	sta $7fd05f.l                                                  ; $b6fa : $8f, $5f, $d0, $7f
 	sta $1273.w                                                  ; $b6fe : $8d, $73, $12
 	phy                                                  ; $b701 : $5a
@@ -8457,13 +8483,13 @@ br_00_b765:
 	brl br_00_9d00                                                  ; $b767 : $82, $96, $e5
 
 Call_00_b76a:
-	jsr Call_00_c0b7.w                                                  ; $b76a : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b76a : $20, $b7, $c0
 	jsr Call_00_c093.w                                                  ; $b76d : $20, $93, $c0
 	lda $00120a.l                                                  ; $b770 : $af, $0a, $12, $00
 	sta $7fd046.l                                                  ; $b774 : $8f, $46, $d0, $7f
 	lda $00120b.l                                                  ; $b778 : $af, $0b, $12, $00
 	sta $7fd047.l                                                  ; $b77c : $8f, $47, $d0, $7f
-	jsr Call_00_c0b7.w                                                  ; $b780 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b780 : $20, $b7, $c0
 	jsr Call_00_c093.w                                                  ; $b783 : $20, $93, $c0
 	rep #ACCU_8                                                  ; $b786 : $c2, $20
 	lda $00120a.l                                                  ; $b788 : $af, $0a, $12, $00
@@ -8505,28 +8531,28 @@ br_00_b7c9:
 
 Call_00_b7d5:
 	tdc                                                  ; $b7d5 : $7b
-	jsr Call_00_c0b7.w                                                  ; $b7d6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b7d6 : $20, $b7, $c0
 	asl                                                  ; $b7d9 : $0a
 	tax                                                  ; $b7da : $aa
-	jsr Call_00_c0b7.w                                                  ; $b7db : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b7db : $20, $b7, $c0
 	sta $54                                                  ; $b7de : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $b7e0 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b7e0 : $20, $b7, $c0
 	sta $55                                                  ; $b7e3 : $85, $55
 	rts                                                  ; $b7e5 : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $b7e6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b7e6 : $20, $b7, $c0
 	sta $1255.w                                                  ; $b7e9 : $8d, $55, $12
 	brl br_00_9d00                                                  ; $b7ec : $82, $11, $e5
 
-	jsr Call_00_c0b7.w                                                  ; $b7ef : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b7ef : $20, $b7, $c0
 	asl                                                  ; $b7f2 : $0a
 	sta $54                                                  ; $b7f3 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $b7f5 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b7f5 : $20, $b7, $c0
 	jsr Call_00_b819.w                                                  ; $b7f8 : $20, $19, $b8
 	brl br_00_9d00                                                  ; $b7fb : $82, $02, $e5
 
-	jsr Call_00_c0b7.w                                                  ; $b7fe : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b7fe : $20, $b7, $c0
 	pha                                                  ; $b801 : $48
 	jsr Call_00_c652.w                                                  ; $b802 : $20, $52, $c6
 	lda $125b.w                                                  ; $b805 : $ad, $5b, $12
@@ -8556,15 +8582,15 @@ Call_00_b819:
 	rts                                                  ; $b836 : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $b837 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b837 : $20, $b7, $c0
 	sta $1265.w                                                  ; $b83a : $8d, $65, $12
 	brl br_00_9d00                                                  ; $b83d : $82, $c0, $e4
 
-	jsr Call_00_c0b7.w                                                  ; $b840 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b840 : $20, $b7, $c0
 	sta $09ad.w                                                  ; $b843 : $8d, $ad, $09
 	brl br_00_9d00                                                  ; $b846 : $82, $b7, $e4
 
-	jsr Call_00_c0b7.w                                                  ; $b849 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b849 : $20, $b7, $c0
 	cmp $099d.w                                                  ; $b84c : $cd, $9d, $09
 	beq br_00_b86e                                                  ; $b84f : $f0, $1d
 
@@ -8590,7 +8616,7 @@ br_00_b86e:
 	sta $099d.w                                                  ; $b881 : $8d, $9d, $09
 	brl br_00_9d00                                                  ; $b884 : $82, $79, $e4
 
-	jsr Call_00_c0b7.w                                                  ; $b887 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b887 : $20, $b7, $c0
 	cmp $099d.w                                                  ; $b88a : $cd, $9d, $09
 	beq br_00_b89a                                                  ; $b88d : $f0, $0b
 
@@ -8617,7 +8643,7 @@ br_00_b8ab:
 	sta $099d.w                                                  ; $b8b7 : $8d, $9d, $09
 	brl br_00_9d00                                                  ; $b8ba : $82, $43, $e4
 
-	jsr Call_00_c0b7.w                                                  ; $b8bd : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b8bd : $20, $b7, $c0
 	jsr $848775.l                                                  ; $b8c0 : $22, $75, $87, $84
 	brl br_00_9d00                                                  ; $b8c4 : $82, $39, $e4
 
@@ -8629,7 +8655,7 @@ br_00_b8ab:
 	brl br_00_9db0                                                  ; $b8d3 : $82, $da, $e4
 
 br_00_b8d6:
-	jsr Call_00_c0b7.w                                                  ; $b8d6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b8d6 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $b8d9 : $82, $24, $e4
 
 	jsr Call_00_95f0.l                                                  ; $b8dc : $22, $f0, $95, $80
@@ -8642,7 +8668,7 @@ br_00_b8e7:
 	jsr Call_00_c0ec.w                                                  ; $b8e7 : $20, $ec, $c0
 	brl br_00_9db0                                                  ; $b8ea : $82, $c3, $e4
 
-	jsr Call_00_c0b7.w                                                  ; $b8ed : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b8ed : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $b8f0 : $82, $0d, $e4
 
 	stz $1260.w                                                  ; $b8f3 : $9c, $60, $12
@@ -8651,7 +8677,7 @@ br_00_b8e7:
 	jsr Call_00_c1df.l                                                  ; $b8f9 : $22, $df, $c1, $80
 	brl br_00_9d00                                                  ; $b8fd : $82, $00, $e4
 
-	jsr Call_00_c0b7.w                                                  ; $b900 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b900 : $20, $b7, $c0
 	sta $1260.w                                                  ; $b903 : $8d, $60, $12
 	brl br_00_9d00                                                  ; $b906 : $82, $f7, $e3
 
@@ -8659,7 +8685,7 @@ br_00_b8e7:
 	sta $7fd4f7.l                                                  ; $b90c : $8f, $f7, $d4, $7f
 	lda #$ff.b                                                  ; $b910 : $a9, $ff
 	sta $7ff8a3.l                                                  ; $b912 : $8f, $a3, $f8, $7f
-	jsr Call_00_c0b7.w                                                  ; $b916 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b916 : $20, $b7, $c0
 	sta $7ff8a4.l                                                  ; $b919 : $8f, $a4, $f8, $7f
 	jsr $83845b.l                                                  ; $b91d : $22, $5b, $84, $83
 	jsr Call_00_a368.w                                                  ; $b921 : $20, $68, $a3
@@ -8667,7 +8693,7 @@ br_00_b8e7:
 	sta $099b.w                                                  ; $b926 : $8d, $9b, $09
 	brl br_00_9d00                                                  ; $b929 : $82, $d4, $e3
 
-	jsr Call_00_c0b7.w                                                  ; $b92c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b92c : $20, $b7, $c0
 	phb                                                  ; $b92f : $8b
 	phy                                                  ; $b930 : $5a
 	xba                                                  ; $b931 : $eb
@@ -8677,7 +8703,7 @@ br_00_b8e7:
 	plb                                                  ; $b939 : $ab
 	brl br_00_9d00                                                  ; $b93a : $82, $c3, $e3
 
-	jsr Call_00_c0b7.w                                                  ; $b93d : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b93d : $20, $b7, $c0
 	phb                                                  ; $b940 : $8b
 	phy                                                  ; $b941 : $5a
 	xba                                                  ; $b942 : $eb
@@ -8741,7 +8767,7 @@ br_00_b9ac:
 	lda $0000.w, Y                                                  ; $b9b2 : $b9, $00, $00
 	and #$0f.b                                                  ; $b9b5 : $29, $0f
 	sta $7fd08f.l                                                  ; $b9b7 : $8f, $8f, $d0, $7f
-	jsr Call_00_c0b7.w                                                  ; $b9bb : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b9bb : $20, $b7, $c0
 	lsr                                                  ; $b9be : $4a
 	lsr                                                  ; $b9bf : $4a
 	lsr                                                  ; $b9c0 : $4a
@@ -8758,7 +8784,7 @@ br_00_b9ac:
 	lda $0000.w, Y                                                  ; $b9da : $b9, $00, $00
 	and #$0f.b                                                  ; $b9dd : $29, $0f
 	sta $7fd08f.l                                                  ; $b9df : $8f, $8f, $d0, $7f
-	jsr Call_00_c0b7.w                                                  ; $b9e3 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $b9e3 : $20, $b7, $c0
 	lsr                                                  ; $b9e6 : $4a
 	lsr                                                  ; $b9e7 : $4a
 	lsr                                                  ; $b9e8 : $4a
@@ -8784,15 +8810,15 @@ br_00_b9ac:
 
 	lda #$04.b                                                  ; $ba1c : $a9, $04
 	tsb $1261.w                                                  ; $ba1e : $0c, $61, $12
-	jsr Call_00_c0b7.w                                                  ; $ba21 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ba21 : $20, $b7, $c0
 	sta $7fd07e.l                                                  ; $ba24 : $8f, $7e, $d0, $7f
-	jsr Call_00_c0b7.w                                                  ; $ba28 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ba28 : $20, $b7, $c0
 	sta $7fd07f.l                                                  ; $ba2b : $8f, $7f, $d0, $7f
-	jsr Call_00_c0b7.w                                                  ; $ba2f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ba2f : $20, $b7, $c0
 	sta $7fd080.l                                                  ; $ba32 : $8f, $80, $d0, $7f
 	brl br_00_9d00                                                  ; $ba36 : $82, $c7, $e2
 
-	jsr Call_00_c0b7.w                                                  ; $ba39 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ba39 : $20, $b7, $c0
 	xba                                                  ; $ba3c : $eb
 	lda #$00.b                                                  ; $ba3d : $a9, $00
 	xba                                                  ; $ba3f : $eb
@@ -8839,13 +8865,13 @@ br_00_ba4f:
 	rts                                                  ; $ba96 : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $ba97 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $ba97 : $20, $b7, $c0
 	jsr $8482e7.l                                                  ; $ba9a : $22, $e7, $82, $84
 	jsr Call_00_bf0b.w                                                  ; $ba9e : $20, $0b, $bf
 	rts                                                  ; $baa1 : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $baa2 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $baa2 : $20, $b7, $c0
 	lda #$80.b                                                  ; $baa5 : $a9, $80
 	sta $0583.w                                                  ; $baa7 : $8d, $83, $05
 	jsr Call_00_bf0b.w                                                  ; $baaa : $20, $0b, $bf
@@ -8861,7 +8887,7 @@ br_00_ba4f:
 	rts                                                  ; $bac8 : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $bac9 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bac9 : $20, $b7, $c0
 	phy                                                  ; $bacc : $5a
 	phb                                                  ; $bacd : $8b
 	jsr $8eb2ee.l                                                  ; $bace : $22, $ee, $b2, $8e
@@ -8881,7 +8907,7 @@ br_00_ba4f:
 	jmp ResetVector.l                                                  ; $baed : $5c, $00, $80, $80
 
 
-	jsr Call_00_c0b7.w                                                  ; $baf1 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $baf1 : $20, $b7, $c0
 	ora #$00.b                                                  ; $baf4 : $09, $00
 	beq br_00_bb4c                                                  ; $baf6 : $f0, $54
 
@@ -8943,7 +8969,7 @@ br_00_bb4c:
 	lda #$06.b                                                  ; $bb70 : $a9, $06
 	sta $7fd094.l                                                  ; $bb72 : $8f, $94, $d0, $7f
 	stz $1271.w                                                  ; $bb76 : $9c, $71, $12
-	jsr Call_00_c0b7.w                                                  ; $bb79 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bb79 : $20, $b7, $c0
 	ora #$00.b                                                  ; $bb7c : $09, $00
 	beq br_00_bb89                                                  ; $bb7e : $f0, $09
 
@@ -8967,7 +8993,7 @@ br_00_bb90:
 	jsr $83afea.l                                                  ; $bb96 : $22, $ea, $af, $83
 	plb                                                  ; $bb9a : $ab
 	ply                                                  ; $bb9b : $7a
-	jsr Call_00_c0b7.w                                                  ; $bb9c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bb9c : $20, $b7, $c0
 	sta $30                                                  ; $bb9f : $85, $30
 	stz $09a9.w                                                  ; $bba1 : $9c, $a9, $09
 	stz $81                                                  ; $bba4 : $64, $81
@@ -9014,7 +9040,7 @@ br_00_bbc0:
 	rts                                                  ; $bbea : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $bbeb : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bbeb : $20, $b7, $c0
 	xba                                                  ; $bbee : $eb
 	lda #$09.b                                                  ; $bbef : $a9, $09
 	xba                                                  ; $bbf1 : $eb
@@ -9025,13 +9051,13 @@ br_00_bbc0:
 	tsb $05b5.w                                                  ; $bbff : $0c, $b5, $05
 	brl br_00_9db0                                                  ; $bc02 : $82, $ab, $e1
 
-	jsr Call_00_c0b7.w                                                  ; $bc05 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bc05 : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $bc08 : $82, $f5, $e0
 
 	tdc                                                  ; $bc0b : $7b
-	jsr Call_00_c0b7.w                                                  ; $bc0c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bc0c : $20, $b7, $c0
 	tax                                                  ; $bc0f : $aa
-	jsr Call_00_c0b7.w                                                  ; $bc10 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bc10 : $20, $b7, $c0
 	sta $2100.w, X                                                  ; $bc13 : $9d, $00, $21
 	brl br_00_9d00                                                  ; $bc16 : $82, $e7, $e0
 
@@ -9069,8 +9095,8 @@ br_00_bc33:
 	brl br_00_9d00                                                  ; $bc49 : $82, $b4, $e0
 
 br_00_bc4c:
-	jsr Call_00_c0b7.w                                                  ; $bc4c : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $bc4f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bc4c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bc4f : $20, $b7, $c0
 	brl br_00_9d00                                                  ; $bc52 : $82, $ab, $e0
 
 	lda $05b3.w                                                  ; $bc55 : $ad, $b3, $05
@@ -9080,9 +9106,9 @@ br_00_bc4c:
 	bit #$08.b                                                  ; $bc5c : $89, $08
 	bne br_00_bc72                                                  ; $bc5e : $d0, $12
 
-	jsr Call_00_c0b7.w                                                  ; $bc60 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bc60 : $20, $b7, $c0
 	sta $54                                                  ; $bc63 : $85, $54
-	jsr Call_00_c0b7.w                                                  ; $bc65 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bc65 : $20, $b7, $c0
 	lda $54                                                  ; $bc68 : $a5, $54
 	jsr Call_00_bf92.l                                                  ; $bc6a : $22, $92, $bf, $80
 	bcs br_00_bc95                                                  ; $bc6e : $b0, $25
@@ -9090,7 +9116,7 @@ br_00_bc4c:
 	bra br_00_bc83                                                  ; $bc70 : $80, $11
 
 br_00_bc72:
-	jsr Call_00_c0b7.w                                                  ; $bc72 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bc72 : $20, $b7, $c0
 	sta $54                                                  ; $bc75 : $85, $54
 	jsr Call_00_c0ec.w                                                  ; $bc77 : $20, $ec, $c0
 	lda $54                                                  ; $bc7a : $a5, $54
@@ -9117,9 +9143,9 @@ br_00_bc95:
 Call_00_bc98:
 	jsr $8482d5.l                                                  ; $bc98 : $22, $d5, $82, $84
 	ldx $a7                                                  ; $bc9c : $a6, $a7
-	jsr Call_00_c0b7.w                                                  ; $bc9e : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bc9e : $20, $b7, $c0
 	sta $0005fa.l, X                                                  ; $bca1 : $9f, $fa, $05, $00
-	jsr Call_00_c0b7.w                                                  ; $bca5 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bca5 : $20, $b7, $c0
 	sta $0005d2.l, X                                                  ; $bca8 : $9f, $d2, $05, $00
 	lda $0005fa.l, X                                                  ; $bcac : $bf, $fa, $05, $00
 	sec                                                  ; $bcb0 : $38
@@ -9129,7 +9155,7 @@ Call_00_bc98:
 	rts                                                  ; $bcbb : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $bcbc : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bcbc : $20, $b7, $c0
 	sta $09a7.w                                                  ; $bcbf : $8d, $a7, $09
 	bit #$02.b                                                  ; $bcc2 : $89, $02
 	beq br_00_bce1                                                  ; $bcc4 : $f0, $1b
@@ -9171,7 +9197,7 @@ br_00_bcf5:
 	bra br_00_bd02                                                  ; $bcfd : $80, $03
 
 br_00_bcff:
-	jsr Call_00_c0b7.w                                                  ; $bcff : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bcff : $20, $b7, $c0
 
 br_00_bd02:
 	sty $09b7.w                                                  ; $bd02 : $8c, $b7, $09
@@ -9225,27 +9251,27 @@ Call_00_bd38:
 	rts                                                  ; $bd6b : $60
 
 
-	jsr Call_00_c0b7.w                                                  ; $bd6c : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bd6c : $20, $b7, $c0
 	sta $09df.w                                                  ; $bd6f : $8d, $df, $09
 	brl br_00_9d00                                                  ; $bd72 : $82, $8b, $df
 
-	jsr Call_00_c0b7.w                                                  ; $bd75 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bd75 : $20, $b7, $c0
 	sta $09ee.w                                                  ; $bd78 : $8d, $ee, $09
 	brl br_00_9d00                                                  ; $bd7b : $82, $82, $df
 
-	jsr Call_00_c0b7.w                                                  ; $bd7e : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bd7e : $20, $b7, $c0
 	sta $09e0.w                                                  ; $bd81 : $8d, $e0, $09
 	brl br_00_9d00                                                  ; $bd84 : $82, $79, $df
 
-	jsr Call_00_c0b7.w                                                  ; $bd87 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bd87 : $20, $b7, $c0
 	sta $09e1.w                                                  ; $bd8a : $8d, $e1, $09
 	brl br_00_9d00                                                  ; $bd8d : $82, $70, $df
 
-	jsr Call_00_c0b7.w                                                  ; $bd90 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bd90 : $20, $b7, $c0
 	sta $09e2.w                                                  ; $bd93 : $8d, $e2, $09
 	brl br_00_9d00                                                  ; $bd96 : $82, $67, $df
 
-	jsr Call_00_c0b7.w                                                  ; $bd99 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bd99 : $20, $b7, $c0
 	sta $31                                                  ; $bd9c : $85, $31
 	phb                                                  ; $bd9e : $8b
 	phy                                                  ; $bd9f : $5a
@@ -9269,7 +9295,7 @@ Call_00_bd38:
 	plb                                                  ; $bdc6 : $ab
 	brl br_00_9d00                                                  ; $bdc7 : $82, $36, $df
 
-	jsr Call_00_c0b7.w                                                  ; $bdca : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bdca : $20, $b7, $c0
 	xba                                                  ; $bdcd : $eb
 	lda #$09.b                                                  ; $bdce : $a9, $09
 	xba                                                  ; $bdd0 : $eb
@@ -9283,13 +9309,13 @@ Call_00_bd38:
 	sta $0005b3.l                                                  ; $bdea : $8f, $b3, $05, $00
 	brl br_00_9db0                                                  ; $bdee : $82, $bf, $df
 
-	jsr Call_00_c0b7.w                                                  ; $bdf1 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $bdf1 : $20, $b7, $c0
 	jsr Call_00_c05c.l                                                  ; $bdf4 : $22, $5c, $c0, $80
 	lda $120a.w                                                  ; $bdf8 : $ad, $0a, $12
 	sta $05b0.w                                                  ; $bdfb : $8d, $b0, $05
 	lda $120b.w                                                  ; $bdfe : $ad, $0b, $12
 	sta $05b1.w                                                  ; $be01 : $8d, $b1, $05
-	jsr Call_00_c0b7.w                                                  ; $be04 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $be04 : $20, $b7, $c0
 	asl                                                  ; $be07 : $0a
 	asl                                                  ; $be08 : $0a
 	asl                                                  ; $be09 : $0a
@@ -9428,7 +9454,7 @@ br_00_beae:
 	lda $878015.l, X                                                  ; $bec6 : $bf, $15, $80, $87
 	clc                                                  ; $beca : $18
 	adc #$87.b                                                  ; $becb : $69, $87
-	sta $09b9.w                                                  ; $becd : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $becd : $8d, $b9, $09
 	rep #ACCU_8                                                  ; $bed0 : $c2, $20
 	lda $09b7.w                                                  ; $bed2 : $ad, $b7, $09
 	jsr Call_00_c102.w                                                  ; $bed5 : $20, $02, $c1
@@ -9762,32 +9788,35 @@ br_00_c0b6:
 	rts                                                  ; $c0b6 : $60
 
 
-Call_00_c0b7:
-br_00_c0b7:
+AequNextScriptByte:
 	lda $0000.w, Y                                                  ; $c0b7 : $b9, $00, $00
 	iny                                                  ; $c0ba : $c8
-	bmi br_00_c0cf                                                  ; $c0bb : $30, $12
+	bmi @done                                                  ; $c0bb : $30, $12
 
 	pha                                                  ; $c0bd : $48
 	php                                                  ; $c0be : $08
 	sep #ACCU_8                                                  ; $c0bf : $e2, $20
-	lda $09b9.w                                                  ; $c0c1 : $ad, $b9, $09
+
+;
+	lda wCurrScriptBank.w                                                  ; $c0c1 : $ad, $b9, $09
 	ina                                                  ; $c0c4 : $1a
-	sta $09b9.w                                                  ; $c0c5 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $c0c5 : $8d, $b9, $09
 	pha                                                  ; $c0c8 : $48
 	plb                                                  ; $c0c9 : $ab
+
+;
 	plp                                                  ; $c0ca : $28
 	pla                                                  ; $c0cb : $68
 	ldy #$8000.w                                                  ; $c0cc : $a0, $00, $80
 
-br_00_c0cf:
+@done:
 	rts                                                  ; $c0cf : $60
 
 
-Call_00_c0d0:
-	jsr Call_00_c0b7.w                                                  ; $c0d0 : $20, $b7, $c0
+AequNextScriptWord:
+	jsr AequNextScriptByte.w                                                  ; $c0d0 : $20, $b7, $c0
 	pha                                                  ; $c0d3 : $48
-	jsr Call_00_c0b7.w                                                  ; $c0d4 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c0d4 : $20, $b7, $c0
 	xba                                                  ; $c0d7 : $eb
 	pla                                                  ; $c0d8 : $68
 	rts                                                  ; $c0d9 : $60
@@ -9818,9 +9847,9 @@ Call_00_c0ec:
 	pha                                                  ; $c0ef : $48
 	php                                                  ; $c0f0 : $08
 	sep #ACCU_8                                                  ; $c0f1 : $e2, $20
-	lda $09b9.w                                                  ; $c0f3 : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $c0f3 : $ad, $b9, $09
 	dea                                                  ; $c0f6 : $3a
-	sta $09b9.w                                                  ; $c0f7 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $c0f7 : $8d, $b9, $09
 	pha                                                  ; $c0fa : $48
 	plb                                                  ; $c0fb : $ab
 	plp                                                  ; $c0fc : $28
@@ -9844,12 +9873,12 @@ br_00_c109:
 	php                                                  ; $c109 : $08
 	clc                                                  ; $c10a : $18
 	adc #$00.b                                                  ; $c10b : $69, $00
-	bra br_00_c0b7                                                  ; $c10d : $80, $a8
+	bra AequNextScriptByte                                                  ; $c10d : $80, $a8
 
 	sep #ACCU_8                                                  ; $c10f : $e2, $20
-	lda $09b9.w                                                  ; $c111 : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $c111 : $ad, $b9, $09
 	ina                                                  ; $c114 : $1a
-	sta $09b9.w                                                  ; $c115 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $c115 : $8d, $b9, $09
 	pha                                                  ; $c118 : $48
 	plb                                                  ; $c119 : $ab
 	plp                                                  ; $c11a : $28
@@ -9876,7 +9905,7 @@ Call_00_c12e:
 	sta $54                                                  ; $c12e : $85, $54
 	phb                                                  ; $c130 : $8b
 	lda $09a0.w                                                  ; $c131 : $ad, $a0, $09
-	sta $09b9.w                                                  ; $c134 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $c134 : $8d, $b9, $09
 	pha                                                  ; $c137 : $48
 	plb                                                  ; $c138 : $ab
 	rep #ACCU_8                                                  ; $c139 : $c2, $20
@@ -9887,7 +9916,7 @@ Call_00_c12e:
 	lda $0009b8.l                                                  ; $c143 : $af, $b8, $09, $00
 	pha                                                  ; $c147 : $48
 	sep #ACCU_8                                                  ; $c148 : $e2, $20
-	jsr Call_00_c0d0.w                                                  ; $c14a : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $c14a : $20, $d0, $c0
 	rep #ACCU_8                                                  ; $c14d : $c2, $20
 	clc                                                  ; $c14f : $18
 	adc $099e.w                                                  ; $c150 : $6d, $9e, $09
@@ -9899,19 +9928,19 @@ Call_00_c12e:
 	sep #ACCU_8                                                  ; $c15d : $e2, $20
 
 br_00_c15f:
-	jsr Call_00_c0b7.w                                                  ; $c15f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c15f : $20, $b7, $c0
 	cmp #$ff.b                                                  ; $c162 : $c9, $ff
 	beq br_00_c18f                                                  ; $c164 : $f0, $29
 
 	cmp $54                                                  ; $c166 : $c5, $54
 	bne br_00_c18a                                                  ; $c168 : $d0, $20
 
-	jsr Call_00_c0d0.w                                                  ; $c16a : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $c16a : $20, $d0, $c0
 	sta $56                                                  ; $c16d : $85, $56
 	xba                                                  ; $c16f : $eb
 	sta $57                                                  ; $c170 : $85, $57
 	lda $09a0.w                                                  ; $c172 : $ad, $a0, $09
-	sta $09b9.w                                                  ; $c175 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $c175 : $8d, $b9, $09
 	pha                                                  ; $c178 : $48
 	plb                                                  ; $c179 : $ab
 	rep #ACCU_8                                                  ; $c17a : $c2, $20
@@ -9924,7 +9953,7 @@ br_00_c15f:
 	.db $80, $09                                                  ; $c188 : $80, $09
 
 br_00_c18a:
-	jsr Call_00_c0d0.w                                                  ; $c18a : $20, $d0, $c0
+	jsr AequNextScriptWord.w                                                  ; $c18a : $20, $d0, $c0
 	bra br_00_c15f                                                  ; $c18d : $80, $d0
 
 br_00_c18f:
@@ -10674,14 +10703,14 @@ br_00_c62b:
 
 Call_00_c652:
 	sty $09b7.w                                                  ; $c652 : $8c, $b7, $09
-	lda $09b9.w                                                  ; $c655 : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $c655 : $ad, $b9, $09
 	sta $57                                                  ; $c658 : $85, $57
 	stz $54                                                  ; $c65a : $64, $54
 	stz $55                                                  ; $c65c : $64, $55
 	stz $56                                                  ; $c65e : $64, $56
 
 br_00_c660:
-	jsr Call_00_c0b7.w                                                  ; $c660 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c660 : $20, $b7, $c0
 	cmp #$80.b                                                  ; $c663 : $c9, $80
 	bcc br_00_c66a                                                  ; $c665 : $90, $03
 
@@ -10751,8 +10780,8 @@ br_00_c683:
 	bra br_00_c660                                                  ; $c6c4 : $80, $9a
 
 br_00_c6c6:
-	jsr Call_00_c0b7.w                                                  ; $c6c6 : $20, $b7, $c0
-	jsr Call_00_c0b7.w                                                  ; $c6c9 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c6c6 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c6c9 : $20, $b7, $c0
 	lsr                                                  ; $c6cc : $4a
 	lsr                                                  ; $c6cd : $4a
 	lsr                                                  ; $c6ce : $4a
@@ -10788,13 +10817,13 @@ br_00_c6eb:
 	bra br_00_c701                                                  ; $c6f1 : $80, $0e
 
 br_00_c6f3:
-	jsr Call_00_c0b7.w                                                  ; $c6f3 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c6f3 : $20, $b7, $c0
 	xba                                                  ; $c6f6 : $eb
 	lda #$00.b                                                  ; $c6f7 : $a9, $00
 	bra br_00_c701                                                  ; $c6f9 : $80, $06
 
 br_00_c6fb:
-	jsr Call_00_c0b7.w                                                  ; $c6fb : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c6fb : $20, $b7, $c0
 	xba                                                  ; $c6fe : $eb
 	lda #$01.b                                                  ; $c6ff : $a9, $01
 
@@ -10836,7 +10865,7 @@ br_00_c72e:
 	ina                                                  ; $c735 : $1a
 	sta $125c.w                                                  ; $c736 : $8d, $5c, $12
 	lda $57                                                  ; $c739 : $a5, $57
-	sta $09b9.w                                                  ; $c73b : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $c73b : $8d, $b9, $09
 	pha                                                  ; $c73e : $48
 	plb                                                  ; $c73f : $ab
 	ldy $09b7.w                                                  ; $c740 : $ac, $b7, $09
@@ -11049,7 +11078,7 @@ br_00_c86d:
 	ldx #$ff00.w                                                  ; $c86d : $a2, $00, $ff
 	stx $09b7.w                                                  ; $c870 : $8e, $b7, $09
 	lda #$7e.b                                                  ; $c873 : $a9, $7e
-	sta $09b9.w                                                  ; $c875 : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $c875 : $8d, $b9, $09
 	bra br_00_c8c9                                                  ; $c878 : $80, $4f
 
 br_00_c87a:
@@ -11080,7 +11109,7 @@ br_00_c88d:
 	jsr Call_00_c9c0.l                                                  ; $c8a7 : $22, $c0, $c9, $80
 	sep #ACCU_8                                                  ; $c8ab : $e2, $20
 	lda #$87.b                                                  ; $c8ad : $a9, $87
-	sta $09b9.w                                                  ; $c8af : $8d, $b9, $09
+	sta wCurrScriptBank.w                                                  ; $c8af : $8d, $b9, $09
 	tdc                                                  ; $c8b2 : $7b
 	sta $7fd0c1.l                                                  ; $c8b3 : $8f, $c1, $d0, $7f
 	ldx #$0000.w                                                  ; $c8b7 : $a2, $00, $00
@@ -11108,7 +11137,7 @@ br_00_c8d3:
 Call_00_c8d5:
 	jsr $848328.l                                                  ; $c8d5 : $22, $28, $83, $84
 	ldy $09b7.w                                                  ; $c8d9 : $ac, $b7, $09
-	lda $09b9.w                                                  ; $c8dc : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $c8dc : $ad, $b9, $09
 	pha                                                  ; $c8df : $48
 	plb                                                  ; $c8e0 : $ab
 	jsr Call_00_c652.w                                                  ; $c8e1 : $20, $52, $c6
@@ -11138,21 +11167,21 @@ br_00_c8ed:
 	jsr Call_00_c5dd.w                                                  ; $c910 : $20, $dd, $c5
 	jsr Call_00_c784.l                                                  ; $c913 : $22, $84, $c7, $80
 	ldy $09b7.w                                                  ; $c917 : $ac, $b7, $09
-	lda $09b9.w                                                  ; $c91a : $ad, $b9, $09
+	lda wCurrScriptBank.w                                                  ; $c91a : $ad, $b9, $09
 	pha                                                  ; $c91d : $48
 	plb                                                  ; $c91e : $ab
 
 br_00_c91f:
-	jsr Call_00_c0b7.w                                                  ; $c91f : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c91f : $20, $b7, $c0
 	ora #$00.b                                                  ; $c922 : $09, $00
 	beq br_00_c981                                                  ; $c924 : $f0, $5b
 
 	cmp #$0a.b                                                  ; $c926 : $c9, $0a
 	bne br_00_c970                                                  ; $c928 : $d0, $46
 
-	jsr Call_00_c0b7.w                                                  ; $c92a : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c92a : $20, $b7, $c0
 	sta $0009af.l                                                  ; $c92d : $8f, $af, $09, $00
-	jsr Call_00_c0b7.w                                                  ; $c931 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c931 : $20, $b7, $c0
 	sta $0009b0.l                                                  ; $c934 : $8f, $b0, $09, $00
 	phy                                                  ; $c938 : $5a
 	lda $0009b0.l                                                  ; $c939 : $af, $b0, $09, $00
@@ -11172,7 +11201,7 @@ br_00_c91f:
 	sep #ACCU_8                                                  ; $c954 : $e2, $20
 
 br_00_c956:
-	jsr Call_00_c0b7.w                                                  ; $c956 : $20, $b7, $c0
+	jsr AequNextScriptByte.w                                                  ; $c956 : $20, $b7, $c0
 	sta $0009af.l                                                  ; $c959 : $8f, $af, $09, $00
 	tdc                                                  ; $c95d : $7b
 	sta $0009b0.l                                                  ; $c95e : $8f, $b0, $09, $00
@@ -11286,59 +11315,59 @@ br_00_ca0d:
 	rtl                                                  ; $ca13 : $6b
 
 
-	jmp $b39d.w                                                  ; $ca14 : $4c, $9d, $b3
-
-
-	sta $9dd4.w, X                                                  ; $ca17 : $9d, $d4, $9d
-	cmp $9d, X                                                  ; $ca1a : $d5, $9d
-	plx                                                  ; $ca1c : $fa
-	sta $9e45.w, X                                                  ; $ca1d : $9d, $45, $9e
-	lsr $c89e.w                                                  ; $ca20 : $4e, $9e, $c8
-	stz $9d3e.w, X                                                  ; $ca23 : $9e, $3e, $9d
-	dec $9e, X                                                  ; $ca26 : $d6, $9e
-	sta $9e, S                                                  ; $ca28 : $83, $9e
-	and [$9f], Y                                                  ; $ca2a : $37, $9f
-	.db $f0, $9e                                                  ; $ca2c : $f0, $9e
-
-	pea $f89e.w                                                  ; $ca2e : $f4, $9e, $f8
-	stz $9efc.w, X                                                  ; $ca31 : $9e, $fc, $9e
-	bpl br_00_c9d5                                                  ; $ca34 : $10, $9f
-
-	asl                                                  ; $ca36 : $0a
-	lda $6ea041.l, X                                                  ; $ca37 : $bf, $41, $a0, $6e
-	ldy #$a074.w                                                  ; $ca3b : $a0, $74, $a0
-	dey                                                  ; $ca3e : $88
-	ldx #$a2ba.w                                                  ; $ca3f : $a2, $ba, $a2
-	sbc ($a2, X)                                                  ; $ca42 : $e1, $a2
-	pld                                                  ; $ca44 : $2b
-	lda $72, S                                                  ; $ca45 : $a3, $72
-	lda $92, S                                                  ; $ca47 : $a3, $92
-	lda $ac, S                                                  ; $ca49 : $a3, $ac
-	lda $c6, S                                                  ; $ca4b : $a3, $c6
-	lda $df, S                                                  ; $ca4d : $a3, $df
-	lda $ed, S                                                  ; $ca4f : $a3, $ed
-	lda $ff, S                                                  ; $ca51 : $a3, $ff
-	lda $14, S                                                  ; $ca53 : $a3, $14
-	ldy $1f                                                  ; $ca55 : $a4, $1f
-	ldy $80                                                  ; $ca57 : $a4, $80
-	ldy $89                                                  ; $ca59 : $a4, $89
-	ldy $9d                                                  ; $ca5b : $a4, $9d
-	ldy $a6                                                  ; $ca5d : $a4, $a6
-	ldy $cb                                                  ; $ca5f : $a4, $cb
-	ldy $d4                                                  ; $ca61 : $a4, $d4
-	ldy $dd                                                  ; $ca63 : $a4, $dd
-	ldy $4a                                                  ; $ca65 : $a4, $4a
-	lda $bc                                                  ; $ca67 : $a5, $bc
-	lda $c8                                                  ; $ca69 : $a5, $c8
-	lda $ff                                                  ; $ca6b : $a5, $ff
-	lda $3a                                                  ; $ca6d : $a5, $3a
-	ldx $79                                                  ; $ca6f : $a6, $79
-	ldx $1b                                                  ; $ca71 : $a6, $1b
-	lda [$2e]                                                  ; $ca73 : $a7, $2e
-	lda [$94]                                                  ; $ca75 : $a7, $94
-	lda [$bb]                                                  ; $ca77 : $a7, $bb
-	lda [$0f]                                                  ; $ca79 : $a7, $0f
-	tay                                                  ; $ca7b : $a8
+ScriptCommands:
+	.dw $9d4c
+	.dw $9db3
+	.dw $9dd4
+	.dw $9dd5
+	.dw $9dfa
+	.dw $9e45
+	.dw $9e4e
+	.dw $9ec8
+	.dw $9d3e
+	.dw $9ed6
+	.dw $9e83
+	.dw $9f37
+	.dw $9ef0
+	.dw $9ef4
+	.dw $9ef8
+	.dw $9efc
+	.dw $9f10
+	.dw $bf0a
+	.dw $a041
+	.dw $a06e
+	.dw $a074
+	.dw $a288
+	.dw $a2ba
+	.dw $a2e1
+	.dw Func_0_a32b
+	.dw $a372
+	.dw $a392
+	.dw $a3ac
+	.dw $a3c6
+	.dw $a3df
+	.dw $a3ed
+	.dw $a3ff
+	.dw $a414
+	.dw $a41f
+	.dw $a480
+	.dw $a489
+	.dw $a49d
+	.dw $a4a6
+	.dw $a4cb
+	.dw $a4d4
+	.dw $a4dd
+	.dw $a54a
+	.dw $a5bc
+	.dw $a5c8
+	.dw $a5ff
+	.dw $a63a
+	.dw $a679
+	.dw $a71b
+	.dw $a72e
+	.dw $a794
+	.dw $a7bb
+	.dw $a80f
 	sed                                                  ; $ca7c : $f8
 	tay                                                  ; $ca7d : $a8
 	lda ($b2), Y                                                  ; $ca7e : $b1, $b2
@@ -11481,7 +11510,7 @@ br_00_cb4f:
 
 	ldy $0b                                                  ; $cb87 : $a4, $0b
 	lda $1d                                                  ; $cb89 : $a5, $1d
-	lda $46                                                  ; $cb8b : $a5, $46
+	lda wJoy1CurrHeld                                                  ; $cb8b : $a5, $46
 	ldx $b3, Y                                                  ; $cb8d : $b6, $b3
 	ldx $ae, Y                                                  ; $cb8f : $b6, $ae
 	ldx $5c                                                  ; $cb91 : $a6, $5c

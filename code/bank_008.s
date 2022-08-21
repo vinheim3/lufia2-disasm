@@ -8345,7 +8345,7 @@ br_08_c358:
 	asl $e9                                                  ; $c376 : $06, $e9
 	jsr $a5db.w                                                  ; $c378 : $20, $db, $a5
 	sta $03b8.w, X                                                  ; $c37b : $9d, $b8, $03
-	ora $46                                                  ; $c37e : $05, $46
+	ora wJoy1CurrHeld                                                  ; $c37e : $05, $46
 	sta [$49]                                                  ; $c380 : $87, $49
 	jsr $8005.w                                                  ; $c382 : $20, $05, $80
 	jsr $0e06.w                                                  ; $c385 : $20, $06, $0e
@@ -8680,7 +8680,7 @@ Call_08_c605:
 	jsr $190a.w                                                  ; $c618 : $20, $0a, $19
 	and $65                                                  ; $c61b : $25, $65
 	stz $208d.w, X                                                  ; $c61d : $9e, $8d, $20
-	ora $46                                                  ; $c620 : $05, $46
+	ora wJoy1CurrHeld                                                  ; $c620 : $05, $46
 	ora $20bf06.l                                                  ; $c622 : $0f, $06, $bf, $20
 	phx                                                  ; $c626 : $da
 	adc $66                                                  ; $c627 : $65, $66
@@ -12235,7 +12235,7 @@ Call_08_e305:
 	tay                                                  ; $e39e : $a8
 	and ($20, X)                                                  ; $e39f : $21, $20
 	asl $f9                                                  ; $e3a1 : $06, $f9
-	jsr $0a06.w                                                  ; $e3a3 : $20, $06, $0a
+	jsr wCurrItemIdx.w                                                  ; $e3a3 : $20, $06, $0a
 	ora $05, S                                                  ; $e3a6 : $03, $05
 	iny                                                  ; $e3a8 : $c8
 	jsr $0d05.w                                                  ; $e3a9 : $20, $05, $0d
@@ -13910,7 +13910,7 @@ Call_08_f105:
 	ror $06                                                  ; $f187 : $66, $06
 	wai                                                  ; $f189 : $cb
 	jsr $3606.w                                                  ; $f18a : $20, $06, $36
-	jsr $0a06.w                                                  ; $f18d : $20, $06, $0a
+	jsr wCurrItemIdx.w                                                  ; $f18d : $20, $06, $0a
 	jsr $0361.w                                                  ; $f190 : $20, $61, $03
 	adc ($75)                                                  ; $f193 : $72, $75
 	.db $62                                                  ; $f195 : $62
@@ -15658,7 +15658,7 @@ br_08_ff57:
 	eor ($13), Y                                                  ; $ffa8 : $51, $13
 	eor ($4f), Y                                                  ; $ffaa : $51, $4f
 	xba                                                  ; $ffac : $eb
-	lda $2121.w, Y                                                  ; $ffad : $b9, $21, $21
+	lda CGADD.w, Y                                                  ; $ffad : $b9, $21, $21
 	jsr $3b06.w                                                  ; $ffb0 : $20, $06, $3b
 	jsr Call_08_c405.w                                                  ; $ffb3 : $20, $05, $c4
 	and ($01, X)                                                  ; $ffb6 : $21, $01

@@ -5318,7 +5318,7 @@ Call_10_a82f:
 	sbc $ffffff.l, X                                                  ; $a834 : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $a838 : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $a83c : $ff, $ff, $ff, $ff
-	tsb $4212.w                                                  ; $a840 : $0c, $12, $42
+	tsb HVBJOY.w                                                  ; $a840 : $0c, $12, $42
 	.db $00                                                  ; $a843 : $00
 	ply                                                  ; $a844 : $7a
 	bit $3d                                                  ; $a845 : $24, $3d
@@ -5691,7 +5691,7 @@ br_10_aad3:
 
 	sbc $ffffff.l, X                                                  ; $aaf7 : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $aafb : $ff, $ff, $ff, $ff
-	tsb $4218.w                                                  ; $aaff : $0c, $18, $42
+	tsb JOY1L.w                                                  ; $aaff : $0c, $18, $42
 	.db $00                                                  ; $ab02 : $00
 	cop $c0.b                                                  ; $ab03 : $02, $c0
 	.db $00                                                  ; $ab05 : $00
@@ -8425,6 +8425,9 @@ br_10_bed7:
 	ror                                                  ; $bfff : $6a
 
 br_10_c000:
+
+
+Data_10_c000:
 	ora $03, S                                                  ; $c000 : $03, $03
 	.db $00                                                  ; $c002 : $00
 
@@ -9264,7 +9267,7 @@ br_10_c5dc:
 	and [$3c], Y                                                  ; $c632 : $37, $3c
 	asl $05                                                  ; $c634 : $06, $05
 	bit $063c.w, X                                                  ; $c636 : $3c, $3c, $06
-	ora $46                                                  ; $c639 : $05, $46
+	ora wJoy1CurrHeld                                                  ; $c639 : $05, $46
 	bit $0506.w, X                                                  ; $c63b : $3c, $06, $05
 	phk                                                  ; $c63e : $4b
 	bit $0506.w, X                                                  ; $c63f : $3c, $06, $05
@@ -9310,7 +9313,7 @@ br_10_c5dc:
 	and [$3c], Y                                                  ; $c692 : $37, $3c
 	asl $05                                                  ; $c694 : $06, $05
 	bit $063c.w, X                                                  ; $c696 : $3c, $3c, $06
-	ora $46                                                  ; $c699 : $05, $46
+	ora wJoy1CurrHeld                                                  ; $c699 : $05, $46
 	bit $0506.w, X                                                  ; $c69b : $3c, $06, $05
 	phk                                                  ; $c69e : $4b
 	bit $0506.w, X                                                  ; $c69f : $3c, $06, $05
@@ -9356,7 +9359,7 @@ br_10_c5dc:
 	and [$3c], Y                                                  ; $c6f2 : $37, $3c
 	asl $05                                                  ; $c6f4 : $06, $05
 	bit $063c.w, X                                                  ; $c6f6 : $3c, $3c, $06
-	ora $46                                                  ; $c6f9 : $05, $46
+	ora wJoy1CurrHeld                                                  ; $c6f9 : $05, $46
 	bit $0506.w, X                                                  ; $c6fb : $3c, $06, $05
 	phk                                                  ; $c6fe : $4b
 	bit $0506.w, X                                                  ; $c6ff : $3c, $06, $05

@@ -11478,7 +11478,7 @@ br_1d_ba28:
 	xba                                                  ; $ba48 : $eb
 	mvp $03, $57                                                  ; $ba49 : $44, $57, $03
 	and [$0c], Y                                                  ; $ba4c : $37, $0c
-	and $4212.w                                                  ; $ba4e : $2d, $12, $42
+	and HVBJOY.w                                                  ; $ba4e : $2d, $12, $42
 	rti                                                  ; $ba51 : $40
 
 

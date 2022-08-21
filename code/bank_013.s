@@ -5854,7 +5854,7 @@ br_13_ae02:
 	and [$04]                                                  ; $ae4e : $27, $04
 	tsb $2d                                                  ; $ae50 : $04, $2d
 	ora $07                                                  ; $ae52 : $05, $07
-	and $0a06.w                                                  ; $ae54 : $2d, $06, $0a
+	and wCurrItemIdx.w                                                  ; $ae54 : $2d, $06, $0a
 	and $0d07.w                                                  ; $ae57 : $2d, $07, $0d
 	and $00ff.w                                                  ; $ae5a : $2d, $ff, $00
 	cop $01.b                                                  ; $ae5d : $02, $01
@@ -7452,7 +7452,7 @@ br_13_b9d0:
 	ora [$04], Y                                                  ; $bb98 : $17, $04
 	ora $17, X                                                  ; $bb9a : $15, $17
 	ora $0c                                                  ; $bb9c : $05, $0c
-	trb $0a06.w                                                  ; $bb9e : $1c, $06, $0a
+	trb wCurrItemIdx.w                                                  ; $bb9e : $1c, $06, $0a
 	ora ($ff)                                                  ; $bba1 : $12, $ff
 	ora $2d02.w                                                  ; $bba3 : $0d, $02, $2d
 	.db $00                                                  ; $bba6 : $00
@@ -14585,7 +14585,7 @@ br_13_f41d:
 	phd                                                  ; $f5e6 : $0b
 
 br_13_f5e7:
-	tsb $0a06.w                                                  ; $f5e7 : $0c, $06, $0a
+	tsb wCurrItemIdx.w                                                  ; $f5e7 : $0c, $06, $0a
 	ora $0907.w                                                  ; $f5ea : $0d, $07, $09
 	asl $0f08.w                                                  ; $f5ed : $0e, $08, $0f
 	tsb $1009.w                                                  ; $f5f0 : $0c, $09, $10

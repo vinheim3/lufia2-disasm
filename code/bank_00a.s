@@ -3559,7 +3559,7 @@ br_0a_9cd1:
 	ora $06, S                                                  ; $9cf0 : $03, $06
 	bit $86, X                                                  ; $9cf2 : $34, $86
 	asl $36                                                  ; $9cf4 : $06, $36
-	jsr $0a06.w                                                  ; $9cf6 : $20, $06, $0a
+	jsr wCurrItemIdx.w                                                  ; $9cf6 : $20, $06, $0a
 	jsr $0361.w                                                  ; $9cf9 : $20, $61, $03
 	cmp $9291.w, X                                                  ; $9cfc : $dd, $91, $92
 	stx $06                                                  ; $9cff : $86, $06
@@ -5307,7 +5307,7 @@ br_0a_ab3c:
 	asl                                                  ; $ab4c : $0a
 	asl                                                  ; $ab4d : $0a
 	rol $4c                                                  ; $ab4e : $26, $4c
-	ora $055a.w                                                  ; $ab50 : $0d, $5a, $05
+	ora wJoy1StickyCounter.w                                                  ; $ab50 : $0d, $5a, $05
 	asl                                                  ; $ab53 : $0a
 	adc $9c0138.l, X                                                  ; $ab54 : $7f, $38, $01, $9c
 	asl                                                  ; $ab58 : $0a
@@ -5333,7 +5333,7 @@ br_0a_ab3c:
 	asl                                                  ; $ab70 : $0a
 	asl                                                  ; $ab71 : $0a
 	rol $4c                                                  ; $ab72 : $26, $4c
-	ora $055a.w                                                  ; $ab74 : $0d, $5a, $05
+	ora wJoy1StickyCounter.w                                                  ; $ab74 : $0d, $5a, $05
 	asl                                                  ; $ab77 : $0a
 	adc $9c0138.l, X                                                  ; $ab78 : $7f, $38, $01, $9c
 	asl                                                  ; $ab7c : $0a
@@ -6929,7 +6929,7 @@ Call_0a_b806:
 	ora ($4b, X)                                                  ; $b80d : $01, $4b
 	ina                                                  ; $b80f : $1a
 	adc ($05, X)                                                  ; $b810 : $61, $05
-	cmp $2121.w                                                  ; $b812 : $cd, $21, $21
+	cmp CGADD.w                                                  ; $b812 : $cd, $21, $21
 	ora ($13, X)                                                  ; $b815 : $01, $13
 	ina                                                  ; $b817 : $1a
 	asl $bf                                                  ; $b818 : $06, $bf
@@ -7353,7 +7353,7 @@ br_0a_bb1c:
 	bit $9020.w, X                                                  ; $bb73 : $3c, $20, $90
 	txa                                                  ; $bb76 : $8a
 	rol $4c01.w                                                  ; $bb77 : $2e, $01, $4c
-	ora $055a.w                                                  ; $bb7a : $0d, $5a, $05
+	ora wJoy1StickyCounter.w                                                  ; $bb7a : $0d, $5a, $05
 	asl                                                  ; $bb7d : $0a
 	adc $5a0438.l, X                                                  ; $bb7e : $7f, $38, $04, $5a
 	ora $03                                                  ; $bb82 : $05, $03
@@ -10377,7 +10377,7 @@ Call_0a_d406:
 	jsr $2049.w                                                  ; $d419 : $20, $49, $20
 	asl $c2                                                  ; $d41c : $06, $c2
 	jsr $869a.w                                                  ; $d41e : $20, $9a, $86
-	ora $46                                                  ; $d421 : $05, $46
+	ora wJoy1CurrHeld                                                  ; $d421 : $05, $46
 	and $033301.l, X                                                  ; $d423 : $3f, $01, $33, $03
 	ora $31                                                  ; $d427 : $05, $31
 	cop $02.b                                                  ; $d429 : $02, $02

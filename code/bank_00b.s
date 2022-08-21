@@ -3060,7 +3060,7 @@ br_0b_978b:
 	sei                                                  ; $98f9 : $78
 	rol $3301.w                                                  ; $98fa : $2e, $01, $33
 	ora #$4c02.w                                                  ; $98fd : $09, $02, $4c
-	ora $055a.w                                                  ; $9900 : $0d, $5a, $05
+	ora wJoy1StickyCounter.w                                                  ; $9900 : $0d, $5a, $05
 	asl                                                  ; $9903 : $0a
 	adc $5a0238.l, X                                                  ; $9904 : $7f, $38, $02, $5a
 	ora $03                                                  ; $9908 : $05, $03
@@ -7436,7 +7436,7 @@ br_0b_bb6a:
 	dea                                                  ; $bba0 : $3a
 	jsr $a399.w                                                  ; $bba1 : $20, $99, $a3
 	rol $4c01.w                                                  ; $bba4 : $2e, $01, $4c
-	ora $055a.w, Y                                                  ; $bba7 : $19, $5a, $05
+	ora wJoy1StickyCounter.w, Y                                                  ; $bba7 : $19, $5a, $05
 	tsb $7f                                                  ; $bbaa : $04, $7f
 	and [$1e], Y                                                  ; $bbac : $37, $1e
 	jmp $a37c.w                                                  ; $bbae : $4c, $7c, $a3

@@ -808,7 +808,7 @@ Call_0d_868f:
 	cmp ($b2, X)                                                  ; $86b2 : $c1, $b2
 	jsr $0389.w                                                  ; $86b4 : $20, $89, $03
 	ora $1d                                                  ; $86b7 : $05, $1d
-	jsr $0a06.w                                                  ; $86b9 : $20, $06, $0a
+	jsr wCurrItemIdx.w                                                  ; $86b9 : $20, $06, $0a
 	jsr $7564.w                                                  ; $86bc : $20, $64, $75
 	adc $8970.w                                                  ; $86bf : $6d, $70, $89
 	adc [$03]                                                  ; $86c2 : $67, $03
@@ -8588,7 +8588,7 @@ br_0d_c728:
 	sta $20, S                                                  ; $c759 : $83, $20
 	dec $8a, X                                                  ; $c75b : $d6, $8a
 	rol $4c01.w                                                  ; $c75d : $2e, $01, $4c
-	ora $055a.w                                                  ; $c760 : $0d, $5a, $05
+	ora wJoy1StickyCounter.w                                                  ; $c760 : $0d, $5a, $05
 	ora $7f                                                  ; $c763 : $05, $7f
 	sec                                                  ; $c765 : $38
 	ora ($63, X)                                                  ; $c766 : $01, $63
@@ -9069,7 +9069,7 @@ Call_0d_ca05:
 	.db $70, $13                                                  ; $cb27 : $70, $13
 
 	rol $eb4f.w                                                  ; $cb29 : $2e, $4f, $eb
-	lda $2121.w, Y                                                  ; $cb2c : $b9, $21, $21
+	lda CGADD.w, Y                                                  ; $cb2c : $b9, $21, $21
 	ora ($4b, X)                                                  ; $cb2f : $01, $4b
 	dea                                                  ; $cb31 : $3a
 	stz $0404.w, X                                                  ; $cb32 : $9e, $04, $04
@@ -9324,7 +9324,7 @@ br_0d_cccc:
 	ora $05, S                                                  ; $cd29 : $03, $05
 	tsb $3f                                                  ; $cd2b : $04, $3f
 	jsr $cb06.w                                                  ; $cd2d : $20, $06, $cb
-	jsr $0a06.w                                                  ; $cd30 : $20, $06, $0a
+	jsr wCurrItemIdx.w                                                  ; $cd30 : $20, $06, $0a
 	jsr $3506.w                                                  ; $cd33 : $20, $06, $35
 	ora $05, S                                                  ; $cd36 : $03, $05
 	cmp ($20)                                                  ; $cd38 : $d2, $20
@@ -10801,7 +10801,7 @@ Call_0d_d905:
 	wai                                                  ; $d905 : $cb
 
 Call_0d_d906:
-	jsr $0a06.w                                                  ; $d906 : $20, $06, $0a
+	jsr wCurrItemIdx.w                                                  ; $d906 : $20, $06, $0a
 	ora $8d, S                                                  ; $d909 : $03, $8d
 	jsr $06c4.w                                                  ; $d90b : $20, $c4, $06
 	lda $06cf.w, X                                                  ; $d90e : $bd, $cf, $06
@@ -15472,7 +15472,7 @@ Call_0d_fe05:
 	stz $21                                                  ; $fe17 : $64, $21
 	ora ($63, X)                                                  ; $fe19 : $01, $63
 	asl $42                                                  ; $fe1b : $06, $42
-	jsr $0a06.w                                                  ; $fe1d : $20, $06, $0a
+	jsr wCurrItemIdx.w                                                  ; $fe1d : $20, $06, $0a
 	jsr $4e06.w                                                  ; $fe20 : $20, $06, $4e
 	and ($20, X)                                                  ; $fe23 : $21, $20
 	pha                                                  ; $fe25 : $48
@@ -15558,7 +15558,7 @@ br_0d_fed9:
 	jsr $3f06.w                                                  ; $fee0 : $20, $06, $3f
 	jsr Call_0d_be06.w                                                  ; $fee3 : $20, $06, $be
 	jsr $208f.w                                                  ; $fee6 : $20, $8f, $20
-	ora $46                                                  ; $fee9 : $05, $46
+	ora wJoy1CurrHeld                                                  ; $fee9 : $05, $46
 	ora $ad, S                                                  ; $feeb : $03, $ad
 	cmp ($af, X)                                                  ; $feed : $c1, $af
 	lda ($89, S), Y                                                  ; $feef : $b3, $89
