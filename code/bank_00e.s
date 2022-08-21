@@ -7877,12 +7877,12 @@ br_0e_b810:
 	txa                                                  ; $b814 : $8a
 	asl                                                  ; $b815 : $0a
 	tax                                                  ; $b816 : $aa
-	lda $91b8b5.l, X                                                  ; $b817 : $bf, $b5, $b8, $91
+	lda Data_11_b8b7.l-2, X                                                  ; $b817 : $bf, $b5, $b8, $91
 	tax                                                  ; $b81b : $aa
 	sep #ACCU_8                                                  ; $b81c : $e2, $20
 
 br_0e_b81e:
-	lda $91b8b5.l, X                                                  ; $b81e : $bf, $b5, $b8, $91
+	lda Data_11_b8b7.l-2, X                                                  ; $b81e : $bf, $b5, $b8, $91
 	cmp #$ff.b                                                  ; $b822 : $c9, $ff
 	beq br_0e_b83c                                                  ; $b824 : $f0, $16
 
@@ -8484,7 +8484,7 @@ br_0e_bca6:
 
 br_0e_bcb3:
 	rep #ACCU_8                                                  ; $bcb3 : $c2, $20
-	lda $91b8b5.l, X                                                  ; $bcb5 : $bf, $b5, $b8, $91
+	lda Data_11_b8b7.l-2, X                                                  ; $bcb5 : $bf, $b5, $b8, $91
 	cmp #$ffff.w                                                  ; $bcb9 : $c9, $ff, $ff
 	sep #ACCU_8                                                  ; $bcbc : $e2, $20
 	beq br_0e_bd07                                                  ; $bcbe : $f0, $47
@@ -8493,7 +8493,7 @@ br_0e_bcb3:
 	tax                                                  ; $bcc1 : $aa
 
 br_0e_bcc2:
-	lda $91b8b5.l, X                                                  ; $bcc2 : $bf, $b5, $b8, $91
+	lda Data_11_b8b7.l-2, X                                                  ; $bcc2 : $bf, $b5, $b8, $91
 	cmp #$ff.b                                                  ; $bcc6 : $c9, $ff
 	beq br_0e_bcff                                                  ; $bcc8 : $f0, $35
 
@@ -9100,12 +9100,12 @@ br_0e_c04c:
 	sbc $fcff.w, X                                                  ; $c05b : $fd, $ff, $fc
 	sbc $17aaad.l, X                                                  ; $c05e : $ff, $ad, $aa, $17
 	clc                                                  ; $c062 : $18
-	bne br_0e_c0ac                                                  ; $c063 : $d0, $47
+	bne Done_e_c0ac                                                  ; $c063 : $d0, $47
 
 	ldx #$0026.w                                                  ; $c065 : $a2, $26, $00
 	ldy #$0004.w                                                  ; $c068 : $a0, $04, $00
 	jsr $83b851.l                                                  ; $c06b : $22, $51, $b8, $83
-	bcc br_0e_c0ac                                                  ; $c06f : $90, $3b
+	bcc Done_e_c0ac                                                  ; $c06f : $90, $3b
 
 	lda $05b6.w                                                  ; $c071 : $ad, $b6, $05
 	bit #$01.b                                                  ; $c074 : $89, $01
@@ -9125,27 +9125,27 @@ Call_0e_c08f:
 	lda $7fd1a0.l                                                  ; $c090 : $af, $a0, $d1, $7f
 	tax                                                  ; $c094 : $aa
 
-br_0e_c095:
-	lda $91b8b5.l, X                                                  ; $c095 : $bf, $b5, $b8, $91
+@nextChestEntry:
+	lda Data_11_b8b7.l-2, X                                                  ; $c095 : $bf, $b5, $b8, $91
 	cmp #$ff.b                                                  ; $c099 : $c9, $ff
-	beq br_0e_c0ab                                                  ; $c09b : $f0, $0e
+	beq @retWithCarry                                                  ; $c09b : $f0, $0e
 
 	and #$1f.b                                                  ; $c09d : $29, $1f
 	cmp $58                                                  ; $c09f : $c5, $58
-	bne br_0e_c0a6                                                  ; $c0a1 : $d0, $03
+	bne @toNextChestEntry                                                  ; $c0a1 : $d0, $03
 
-	brl br_0e_c153                                                  ; $c0a3 : $82, $ad, $00
+	brl ProcessFoundChest                                                  ; $c0a3 : $82, $ad, $00
 
-br_0e_c0a6:
+@toNextChestEntry:
 	inx                                                  ; $c0a6 : $e8
 	inx                                                  ; $c0a7 : $e8
 	inx                                                  ; $c0a8 : $e8
-	bra br_0e_c095                                                  ; $c0a9 : $80, $ea
+	bra @nextChestEntry                                                  ; $c0a9 : $80, $ea
 
-br_0e_c0ab:
+@retWithCarry:
 	sec                                                  ; $c0ab : $38
 
-br_0e_c0ac:
+Done_e_c0ac:
 	rtl                                                  ; $c0ac : $6b
 
 
@@ -9244,7 +9244,8 @@ br_0e_c152:
 	rtl                                                  ; $c152 : $6b
 
 
-br_0e_c153:
+; X - index from chest pointers table to 1st of 3 chest bytes
+ProcessFoundChest:
 	stx $8b                                                  ; $c153 : $86, $8b
 	jsr Call_0e_c338.l                                                  ; $c155 : $22, $38, $c3, $8e
 	jsr $8ec34f.l                                                  ; $c159 : $22, $4f, $c3, $8e
@@ -9273,7 +9274,7 @@ br_0e_c181:
 
 	sep #ACCU_8                                                  ; $c185 : $e2, $20
 	ldx $8b                                                  ; $c187 : $a6, $8b
-	jsr Call_0e_c36d.w                                                  ; $c189 : $20, $6d, $c3
+	jsr todo_GetChestItemContent.w                                                  ; $c189 : $20, $6d, $c3
 	sta $7fd4ef.l                                                  ; $c18c : $8f, $ef, $d4, $7f
 	xba                                                  ; $c190 : $eb
 	sta $7fd4f0.l                                                  ; $c191 : $8f, $f0, $d4, $7f
@@ -9489,21 +9490,25 @@ br_0e_c331:
 
 
 Call_0e_c338:
-	lda $91b8b5.l, X                                                  ; $c338 : $bf, $b5, $b8, $91
-	and #$f080.w                                                  ; $c33c : $29, $80, $f0
-	cop $a9.b                                                  ; $c33f : $02, $a9
-	ora ($8f, X)                                                  ; $c341 : $01, $8f
-	sbc ($d4)                                                  ; $c343 : $f2, $d4
-	adc $b8b6bf.l, X                                                  ; $c345 : $7f, $bf, $b6, $b8
-	sta ($8f), Y                                                  ; $c349 : $91, $8f
-	sbc ($d4), Y                                                  ; $c34b : $f1, $d4
-	adc $af7b6b.l, X                                                  ; $c34d : $7f, $6b, $7b, $af
-	sbc ($d4), Y                                                  ; $c351 : $f1, $d4
-	adc $e89822.l, X                                                  ; $c353 : $7f, $22, $98, $e8
-	.db $80, $85                                                  ; $c357 : $80, $85
+	lda Data_11_b8b7.l-2, X                                                  ; $c338 : $bf, $b5, $b8, $91
+	and #$80.b                                                  ; $c33c : $29, $80
+	beq br_0e_c342                                                  ; $c33e : $f0, $02
 
-	mvn $f2, $af                                                  ; $c359 : $54, $af, $f2
-	pei ($7f)                                                  ; $c35c : $d4, $7f
+	lda #$01.b                                                  ; $c340 : $a9, $01
+
+br_0e_c342:
+	sta $7fd4f2.l                                                  ; $c342 : $8f, $f2, $d4, $7f
+	lda Data_11_b8b7.l-1, X                                                  ; $c346 : $bf, $b6, $b8, $91
+	sta $7fd4f1.l                                                  ; $c34a : $8f, $f1, $d4, $7f
+	rtl                                                  ; $c34e : $6b
+
+
+;
+	tdc                                                  ; $c34f : $7b
+	lda $7fd4f1.l                                                  ; $c350 : $af, $f1, $d4, $7f
+	jsr $80e898.l                                                  ; $c354 : $22, $98, $e8, $80
+	sta $54                                                  ; $c358 : $85, $54
+	lda $7fd4f2.l                                                  ; $c35a : $af, $f2, $d4, $7f
 	beq br_0e_c36a                                                  ; $c35e : $f0, $0a
 
 	rep #ACCU_8                                                  ; $c360 : $c2, $20
@@ -9518,17 +9523,18 @@ br_0e_c36a:
 	rtl                                                  ; $c36c : $6b
 
 
-Call_0e_c36d:
-	lda $91b8b5.l, X                                                  ; $c36d : $bf, $b5, $b8, $91
+todo_GetChestItemContent:
+	lda Data_11_b8b7.l-2, X                                                  ; $c36d : $bf, $b5, $b8, $91
 	and #$40.b                                                  ; $c371 : $29, $40
 	asl                                                  ; $c373 : $0a
 	asl                                                  ; $c374 : $0a
 	adc #$00.b                                                  ; $c375 : $69, $00
 	xba                                                  ; $c377 : $eb
-	lda $91b8b7.l, X                                                  ; $c378 : $bf, $b7, $b8, $91
+	lda Data_11_b8b7.l, X                                                  ; $c378 : $bf, $b7, $b8, $91
 	rts                                                  ; $c37c : $60
 
 
+;
 	phd                                                  ; $c37d : $0b
 	sep #ACCU_8|IDX_8                                                  ; $c37e : $e2, $30
 	tsb $0e07.w                                                  ; $c380 : $0c, $07, $0e
@@ -14805,7 +14811,7 @@ Call_0e_e642:
 	and ($10, X)                                                  ; $e661 : $21, $10
 	stx $15                                                  ; $e663 : $86, $15
 	rep #ACCU_8                                                  ; $e665 : $c2, $20
-	lda $91b8b5.l                                                  ; $e667 : $af, $b5, $b8, $91
+	lda Data_11_b8b7.l-2                                                  ; $e667 : $af, $b5, $b8, $91
 	sta $e1                                                  ; $e66b : $85, $e1
 	sep #ACCU_8                                                  ; $e66d : $e2, $20
 	lda #$20.b                                                  ; $e66f : $a9, $20

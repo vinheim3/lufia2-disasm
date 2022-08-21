@@ -8627,248 +8627,254 @@ br_11_b803:
 	eor $010392.l                                                  ; $b8ad : $4f, $92, $03, $01
 	ora $08, S                                                  ; $b8b1 : $03, $08
 	.db $00                                                  ; $b8b3 : $00
-	ora $0100a4.l                                                  ; $b8b4 : $0f, $a4, $00, $01
-	cop $02.b                                                  ; $b8b8 : $02, $02
-	cop $03.b                                                  ; $b8ba : $02, $03
-	cop $04.b                                                  ; $b8bc : $02, $04
-	cop $05.b                                                  ; $b8be : $02, $05
-	cop $06.b                                                  ; $b8c0 : $02, $06
-	cop $10.b                                                  ; $b8c2 : $02, $10
-	cop $1d.b                                                  ; $b8c4 : $02, $1d
-	cop $1e.b                                                  ; $b8c6 : $02, $1e
-	cop $1f.b                                                  ; $b8c8 : $02, $1f
-	cop $20.b                                                  ; $b8ca : $02, $20
-	cop $2d.b                                                  ; $b8cc : $02, $2d
-	cop $31.b                                                  ; $b8ce : $02, $31
-	cop $32.b                                                  ; $b8d0 : $02, $32
-	cop $33.b                                                  ; $b8d2 : $02, $33
-	cop $34.b                                                  ; $b8d4 : $02, $34
-	cop $35.b                                                  ; $b8d6 : $02, $35
-	cop $3f.b                                                  ; $b8d8 : $02, $3f
-	cop $46.b                                                  ; $b8da : $02, $46
-	cop $53.b                                                  ; $b8dc : $02, $53
-	cop $54.b                                                  ; $b8de : $02, $54
-	cop $55.b                                                  ; $b8e0 : $02, $55
-	cop $56.b                                                  ; $b8e2 : $02, $56
-	cop $57.b                                                  ; $b8e4 : $02, $57
-	cop $61.b                                                  ; $b8e6 : $02, $61
-	cop $6b.b                                                  ; $b8e8 : $02, $6b
-	cop $7e.b                                                  ; $b8ea : $02, $7e
-	cop $85.b                                                  ; $b8ec : $02, $85
-	cop $86.b                                                  ; $b8ee : $02, $86
-	cop $87.b                                                  ; $b8f0 : $02, $87
-	cop $88.b                                                  ; $b8f2 : $02, $88
-	cop $89.b                                                  ; $b8f4 : $02, $89
-	cop $8a.b                                                  ; $b8f6 : $02, $8a
-	cop $8e.b                                                  ; $b8f8 : $02, $8e
-	cop $8f.b                                                  ; $b8fa : $02, $8f
-	cop $93.b                                                  ; $b8fc : $02, $93
-	cop $9d.b                                                  ; $b8fe : $02, $9d
-	cop $9e.b                                                  ; $b900 : $02, $9e
-	cop $9f.b                                                  ; $b902 : $02, $9f
-	cop $a0.b                                                  ; $b904 : $02, $a0
-	cop $a1.b                                                  ; $b906 : $02, $a1
-	cop $ab.b                                                  ; $b908 : $02, $ab
-	cop $af.b                                                  ; $b90a : $02, $af
-	cop $b0.b                                                  ; $b90c : $02, $b0
-	cop $b1.b                                                  ; $b90e : $02, $b1
-	cop $b2.b                                                  ; $b910 : $02, $b2
-	cop $b3.b                                                  ; $b912 : $02, $b3
-	cop $b7.b                                                  ; $b914 : $02, $b7
-	cop $b8.b                                                  ; $b916 : $02, $b8
-	cop $bf.b                                                  ; $b918 : $02, $bf
-	cop $c0.b                                                  ; $b91a : $02, $c0
-	cop $c4.b                                                  ; $b91c : $02, $c4
-	cop $d4.b                                                  ; $b91e : $02, $d4
-	cop $d5.b                                                  ; $b920 : $02, $d5
-	cop $d6.b                                                  ; $b922 : $02, $d6
-	cop $d7.b                                                  ; $b924 : $02, $d7
-	cop $db.b                                                  ; $b926 : $02, $db
-	cop $e2.b                                                  ; $b928 : $02, $e2
-	cop $e3.b                                                  ; $b92a : $02, $e3
-	cop $ed.b                                                  ; $b92c : $02, $ed
-	cop $ee.b                                                  ; $b92e : $02, $ee
-	cop $f5.b                                                  ; $b930 : $02, $f5
-	cop $f6.b                                                  ; $b932 : $02, $f6
-	cop $f7.b                                                  ; $b934 : $02, $f7
-	cop $f8.b                                                  ; $b936 : $02, $f8
-	cop $fc.b                                                  ; $b938 : $02, $fc
-	cop $00.b                                                  ; $b93a : $02, $00
-	ora $01, S                                                  ; $b93c : $03, $01
-	ora $02, S                                                  ; $b93e : $03, $02
-	ora $03, S                                                  ; $b940 : $03, $03
-	ora $04, S                                                  ; $b942 : $03, $04
-	ora $08, S                                                  ; $b944 : $03, $08
-	ora $0f, S                                                  ; $b946 : $03, $0f
-	ora $16, S                                                  ; $b948 : $03, $16
-	ora $17, S                                                  ; $b94a : $03, $17
-	ora $18, S                                                  ; $b94c : $03, $18
-	ora $19, S                                                  ; $b94e : $03, $19
-	ora $1a, S                                                  ; $b950 : $03, $1a
-	ora $24, S                                                  ; $b952 : $03, $24
-	ora $2e, S                                                  ; $b954 : $03, $2e
-	ora $2f, S                                                  ; $b956 : $03, $2f
-	ora $30, S                                                  ; $b958 : $03, $30
-	ora $31, S                                                  ; $b95a : $03, $31
-	ora $32, S                                                  ; $b95c : $03, $32
-	ora $36, S                                                  ; $b95e : $03, $36
-	ora $37, S                                                  ; $b960 : $03, $37
-	ora $38, S                                                  ; $b962 : $03, $38
-	ora $39, S                                                  ; $b964 : $03, $39
-	ora $43, S                                                  ; $b966 : $03, $43
-	ora $44, S                                                  ; $b968 : $03, $44
-	ora $48, S                                                  ; $b96a : $03, $48
-	ora $52, S                                                  ; $b96c : $03, $52
-	ora $53, S                                                  ; $b96e : $03, $53
-	ora $54, S                                                  ; $b970 : $03, $54
-	ora $55, S                                                  ; $b972 : $03, $55
-	ora $56, S                                                  ; $b974 : $03, $56
-	ora $5a, S                                                  ; $b976 : $03, $5a
-	ora $5b, S                                                  ; $b978 : $03, $5b
-	ora $5f, S                                                  ; $b97a : $03, $5f
-	ora $60, S                                                  ; $b97c : $03, $60
-	ora $64, S                                                  ; $b97e : $03, $64
-	ora $65, S                                                  ; $b980 : $03, $65
-	ora $66, S                                                  ; $b982 : $03, $66
-	ora $67, S                                                  ; $b984 : $03, $67
-	ora $68, S                                                  ; $b986 : $03, $68
-	ora $69, S                                                  ; $b988 : $03, $69
-	ora $6a, S                                                  ; $b98a : $03, $6a
-	ora $6b, S                                                  ; $b98c : $03, $6b
-	ora $6c, S                                                  ; $b98e : $03, $6c
-	ora $70, S                                                  ; $b990 : $03, $70
-	ora $71, S                                                  ; $b992 : $03, $71
-	ora $75, S                                                  ; $b994 : $03, $75
-	ora $76, S                                                  ; $b996 : $03, $76
-	ora $77, S                                                  ; $b998 : $03, $77
-	ora $78, S                                                  ; $b99a : $03, $78
-	ora $79, S                                                  ; $b99c : $03, $79
-	ora $7a, S                                                  ; $b99e : $03, $7a
-	ora $7b, S                                                  ; $b9a0 : $03, $7b
-	ora $7f, S                                                  ; $b9a2 : $03, $7f
-	ora $83, S                                                  ; $b9a4 : $03, $83
-	ora $87, S                                                  ; $b9a6 : $03, $87
-	ora $88, S                                                  ; $b9a8 : $03, $88
-	ora $89, S                                                  ; $b9aa : $03, $89
-	ora $8a, S                                                  ; $b9ac : $03, $8a
-	ora $8b, S                                                  ; $b9ae : $03, $8b
-	ora $8c, S                                                  ; $b9b0 : $03, $8c
-	ora $90, S                                                  ; $b9b2 : $03, $90
-	ora $94, S                                                  ; $b9b4 : $03, $94
-	ora $95, S                                                  ; $b9b6 : $03, $95
-	ora $9f, S                                                  ; $b9b8 : $03, $9f
-	ora $a6, S                                                  ; $b9ba : $03, $a6
-	ora $aa, S                                                  ; $b9bc : $03, $aa
-	ora $ab, S                                                  ; $b9be : $03, $ab
-	ora $ac, S                                                  ; $b9c0 : $03, $ac
-	ora $ad, S                                                  ; $b9c2 : $03, $ad
-	ora $ae, S                                                  ; $b9c4 : $03, $ae
-	ora $af, S                                                  ; $b9c6 : $03, $af
-	ora $b0, S                                                  ; $b9c8 : $03, $b0
-	ora $b1, S                                                  ; $b9ca : $03, $b1
-	ora $b2, S                                                  ; $b9cc : $03, $b2
-	ora $b3, S                                                  ; $b9ce : $03, $b3
-	ora $ba, S                                                  ; $b9d0 : $03, $ba
-	ora $c7, S                                                  ; $b9d2 : $03, $c7
-	ora $cb, S                                                  ; $b9d4 : $03, $cb
-	ora $cc, S                                                  ; $b9d6 : $03, $cc
-	ora $cd, S                                                  ; $b9d8 : $03, $cd
-	ora $ce, S                                                  ; $b9da : $03, $ce
-	ora $cf, S                                                  ; $b9dc : $03, $cf
-	ora $d3, S                                                  ; $b9de : $03, $d3
-	ora $d4, S                                                  ; $b9e0 : $03, $d4
-	ora $d8, S                                                  ; $b9e2 : $03, $d8
-	ora $df, S                                                  ; $b9e4 : $03, $df
-	ora $e0, S                                                  ; $b9e6 : $03, $e0
-	ora $e1, S                                                  ; $b9e8 : $03, $e1
-	ora $e2, S                                                  ; $b9ea : $03, $e2
-	ora $e3, S                                                  ; $b9ec : $03, $e3
-	ora $e4, S                                                  ; $b9ee : $03, $e4
-	ora $e5, S                                                  ; $b9f0 : $03, $e5
-	ora $e6, S                                                  ; $b9f2 : $03, $e6
-	ora $e7, S                                                  ; $b9f4 : $03, $e7
-	ora $e8, S                                                  ; $b9f6 : $03, $e8
-	ora $e9, S                                                  ; $b9f8 : $03, $e9
-	ora $ea, S                                                  ; $b9fa : $03, $ea
-	ora $eb, S                                                  ; $b9fc : $03, $eb
-	ora $ec, S                                                  ; $b9fe : $03, $ec
-	ora $f0, S                                                  ; $ba00 : $03, $f0
-	ora $f1, S                                                  ; $ba02 : $03, $f1
-	ora $f2, S                                                  ; $ba04 : $03, $f2
-	ora $f6, S                                                  ; $ba06 : $03, $f6
-	ora $fa, S                                                  ; $ba08 : $03, $fa
-	ora $01, S                                                  ; $ba0a : $03, $01
-	tsb $05                                                  ; $ba0c : $04, $05
-	tsb $06                                                  ; $ba0e : $04, $06
-	tsb $07                                                  ; $ba10 : $04, $07
-	tsb $08                                                  ; $ba12 : $04, $08
-	tsb $09                                                  ; $ba14 : $04, $09
-	tsb $0d                                                  ; $ba16 : $04, $0d
-	tsb $14                                                  ; $ba18 : $04, $14
-	tsb $18                                                  ; $ba1a : $04, $18
-	tsb $1c                                                  ; $ba1c : $04, $1c
-	tsb $26                                                  ; $ba1e : $04, $26
-	tsb $27                                                  ; $ba20 : $04, $27
-	tsb $28                                                  ; $ba22 : $04, $28
-	tsb $29                                                  ; $ba24 : $04, $29
-	tsb $2a                                                  ; $ba26 : $04, $2a
-	tsb $2e                                                  ; $ba28 : $04, $2e
-	tsb $2f                                                  ; $ba2a : $04, $2f
-	tsb $39                                                  ; $ba2c : $04, $39
-	tsb $3d                                                  ; $ba2e : $04, $3d
-	tsb $3e                                                  ; $ba30 : $04, $3e
-	tsb $3f                                                  ; $ba32 : $04, $3f
-	tsb $40                                                  ; $ba34 : $04, $40
-	tsb $44                                                  ; $ba36 : $04, $44
-	tsb $5a                                                  ; $ba38 : $04, $5a
-	tsb $6a                                                  ; $ba3a : $04, $6a
-	tsb $7d                                                  ; $ba3c : $04, $7d
-	tsb $7e                                                  ; $ba3e : $04, $7e
-	tsb $7f                                                  ; $ba40 : $04, $7f
-	tsb $80                                                  ; $ba42 : $04, $80
-	tsb $84                                                  ; $ba44 : $04, $84
-	tsb $85                                                  ; $ba46 : $04, $85
-	tsb $86                                                  ; $ba48 : $04, $86
-	tsb $87                                                  ; $ba4a : $04, $87
-	tsb $88                                                  ; $ba4c : $04, $88
-	tsb $89                                                  ; $ba4e : $04, $89
-	tsb $8a                                                  ; $ba50 : $04, $8a
-	tsb $8b                                                  ; $ba52 : $04, $8b
-	tsb $8c                                                  ; $ba54 : $04, $8c
-	tsb $8d                                                  ; $ba56 : $04, $8d
-	tsb $8e                                                  ; $ba58 : $04, $8e
-	tsb $8f                                                  ; $ba5a : $04, $8f
-	tsb $93                                                  ; $ba5c : $04, $93
-	tsb $97                                                  ; $ba5e : $04, $97
-	tsb $98                                                  ; $ba60 : $04, $98
-	tsb $99                                                  ; $ba62 : $04, $99
-	tsb $9a                                                  ; $ba64 : $04, $9a
-	tsb $9b                                                  ; $ba66 : $04, $9b
-	tsb $9c                                                  ; $ba68 : $04, $9c
-	tsb $9d                                                  ; $ba6a : $04, $9d
-	tsb $9e                                                  ; $ba6c : $04, $9e
-	tsb $9f                                                  ; $ba6e : $04, $9f
-	tsb $a9                                                  ; $ba70 : $04, $a9
-	tsb $aa                                                  ; $ba72 : $04, $aa
-	tsb $ab                                                  ; $ba74 : $04, $ab
-	tsb $ac                                                  ; $ba76 : $04, $ac
-	tsb $ad                                                  ; $ba78 : $04, $ad
-	tsb $ae                                                  ; $ba7a : $04, $ae
-	tsb $af                                                  ; $ba7c : $04, $af
-	tsb $b0                                                  ; $ba7e : $04, $b0
-	tsb $b4                                                  ; $ba80 : $04, $b4
-	tsb $b5                                                  ; $ba82 : $04, $b5
-	tsb $c5                                                  ; $ba84 : $04, $c5
-	tsb $cc                                                  ; $ba86 : $04, $cc
-	tsb $d3                                                  ; $ba88 : $04, $d3
-	tsb $dd                                                  ; $ba8a : $04, $dd
-	tsb $de                                                  ; $ba8c : $04, $de
-	tsb $df                                                  ; $ba8e : $04, $df
-	tsb $e0                                                  ; $ba90 : $04, $e0
-	tsb $e1                                                  ; $ba92 : $04, $e1
-	tsb $e8                                                  ; $ba94 : $04, $e8
-	tsb $f2                                                  ; $ba96 : $04, $f2
-	tsb $ff                                                  ; $ba98 : $04, $ff
+	.db $0f, $a4, $00
+	
+
+Data_11_b8b7:
+	.dw $0201
+	.dw $0202
+	.dw $0203
+	.dw $0204
+	.dw $0205
+	.dw $0206
+	.dw $0210
+	.dw $021d
+	.dw $021e
+	.dw $021f
+	.dw $0220
+	.dw $022d
+	.dw $0231
+	.dw $0232
+	.dw $0233
+	.dw $0234
+	.dw $0235
+	.dw $023f
+	.dw $0246
+	.dw $0253
+	.dw $0254
+	.dw $0255
+	.dw $0256
+	.dw $0257
+	.dw $0261
+	.dw $026b
+	.dw $027e
+	.dw $0285
+	.dw $0286
+	.dw $0287
+	.dw $0288
+	.dw $0289
+	.dw $028a
+	.dw $028e
+	.dw $028f
+	.dw $0293
+	.dw $029d
+	.dw $029e
+	.dw $029f
+	.dw $02a0
+	.dw $02a1
+	.dw $02ab
+	.dw $02af
+	.dw $02b0
+	.dw $02b1
+	.dw $02b2
+	.dw $02b3
+	.dw $02b7
+	.dw $02b8
+	.dw $02bf
+	.dw $02c0
+	.dw $02c4
+	.dw $02d4
+	.dw $02d5
+	.dw $02d6
+	.dw $02d7
+	.dw $02db
+	.dw $02e2
+	.dw $02e3
+	.dw $02ed
+	.dw $02ee
+	.dw $02f5
+	.dw $02f6
+	.dw $02f7
+	.dw $02f8
+	.dw $02fc
+	.dw $0300
+	.dw $0301
+	.dw $0302
+	.dw $0303
+	.dw $0304
+	.dw $0308
+	.dw $030f
+	.dw $0316
+	.dw $0317
+	.dw $0318
+	.dw $0319
+	.dw $031a
+	.dw $0324
+	.dw $032e
+	.dw $032f
+	.dw $0330
+	.dw $0331
+	.dw $0332
+	.dw $0336
+	.dw $0337
+	.dw $0338
+	.dw $0339
+	.dw $0343
+	.dw $0344
+	.dw $0348
+	.dw $0352
+	.dw $0353
+	.dw $0354
+	.dw $0355
+	.dw $0356
+	.dw $035a
+	.dw $035b
+	.dw $035f
+	.dw $0360
+	.dw $0364
+	.dw $0365
+	.dw $0366
+	.dw $0367
+	.dw $0368
+	.dw $0369
+	.dw $036a
+	.dw $036b
+	.dw $036c
+	.dw $0370
+	.dw $0371
+	.dw $0375
+	.dw $0376
+	.dw $0377
+	.dw $0378
+	.dw $0379
+	.dw $037a
+	.dw $037b
+	.dw $037f
+	.dw $0383
+	.dw $0387
+	.dw $0388
+	.dw $0389
+	.dw $038a
+	.dw $038b
+	.dw $038c
+	.dw $0390
+	.dw $0394
+	.dw $0395
+	.dw $039f
+	.dw $03a6
+	.dw $03aa
+	.dw $03ab
+	.dw $03ac
+	.dw $03ad
+	.dw $03ae
+	.dw $03af
+	.dw $03b0
+	.dw $03b1
+	.dw $03b2
+	.dw $03b3
+	.dw $03ba
+	.dw $03c7
+	.dw $03cb
+	.dw $03cc
+	.dw $03cd
+	.dw $03ce
+	.dw $03cf
+	.dw $03d3
+	.dw $03d4
+	.dw $03d8
+	.dw $03df
+	.dw $03e0
+	.dw $03e1
+	.dw $03e2
+	.dw $03e3
+	.dw $03e4
+	.dw $03e5
+	.dw $03e6
+	.dw $03e7
+	.dw $03e8
+	.dw $03e9
+	.dw $03ea
+	.dw $03eb
+	.dw $03ec
+	.dw $03f0
+	.dw $03f1
+	.dw $03f2
+	.dw $03f6
+	.dw $03fa
+	.dw $0401
+	.dw $0405
+	.dw $0406
+	.dw $0407
+	.dw $0408
+	.dw $0409
+	.dw $040d
+	.dw $0414
+	.dw $0418
+	.dw $041c
+	.dw $0426
+	.dw $0427
+	.dw $0428
+	.dw $0429
+	.dw $042a
+	.dw $042e
+	.dw $042f
+	.dw $0439
+	.dw $043d
+	.dw $043e
+	.dw $043f
+	.dw $0440
+	.dw $0444
+	.dw $045a
+	.dw $046a
+	.dw $047d
+	.dw $047e
+	.dw $047f
+	.dw $0480
+	.dw $0484
+	.dw $0485
+	.dw $0486
+	.dw $0487
+	.dw $0488
+	.dw $0489
+	.dw $048a
+	.dw $048b
+	.dw $048c
+	.dw $048d
+	.dw $048e
+	.dw $048f
+	.dw $0493
+	.dw $0497
+	.dw $0498
+	.dw $0499
+	.dw $049a
+	.dw $049b
+	.dw $049c
+	.dw $049d
+	.dw $049e
+	.dw $049f
+	.dw $04a9
+	.dw $04aa
+	.dw $04ab
+	.dw $04ac
+	.dw $04ad
+	.dw $04ae
+	.dw $04af
+	.dw $04b0
+	.dw $04b4
+	.dw $04b5
+	.dw $04c5
+	.dw $04cc
+	.dw $04d3
+	.dw $04dd
+	.dw $04de
+	.dw $04df
+	.dw $04e0
+	.dw $04e1
+	.dw $04e8
+	.dw $04f2
+
+
+	.db $ff                                                  ; $ba99 : $ff
 	sbc $ffffff.l, X                                                  ; $ba9a : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $ba9e : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $baa2 : $ff, $ff, $ff, $ff
@@ -8876,12 +8882,15 @@ br_11_b803:
 	sbc $ffffff.l, X                                                  ; $baaa : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $baae : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $bab2 : $ff, $ff, $ff, $ff
+
+; 1st table entry
 	sbc $ffffff.l, X                                                  ; $bab6 : $ff, $ff, $ff, $ff
-	sbc $290000.l, X                                                  ; $baba : $ff, $00, $00, $29
-	ora ($01, X)                                                  ; $babe : $01, $01
-	asl                                                  ; $bac0 : $0a
-	cop $02.b                                                  ; $bac1 : $02, $02
-	ora ($ff), Y                                                  ; $bac3 : $11, $ff
+	.db $ff
+
+
+; Data_11_babb: offset 206 from above table
+; 3 chests for 'area'? 3 bytes each, 3rd is contennt
+	.db $00, $00, $29, $01, $01, $0a, $02, $02, $11, $ff
 	.db $00                                                  ; $bac5 : $00
 	ora $13, S                                                  ; $bac6 : $03, $13
 	cop $04.b                                                  ; $bac8 : $02, $04

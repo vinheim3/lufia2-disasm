@@ -15378,7 +15378,7 @@ br_00_e84a:
 	lda wCurrRoomIdx.w                                                  ; $e858 : $ad, $ac, $05
 	asl                                                  ; $e85b : $0a
 	tax                                                  ; $e85c : $aa
-	lda $91b8b5.l, X                                                  ; $e85d : $bf, $b5, $b8, $91
+	lda Data_11_b8b7.l-2, X                                                  ; $e85d : $bf, $b5, $b8, $91
 	sta $7fd1a0.l                                                  ; $e861 : $8f, $a0, $d1, $7f
 	lda wCurrRoomIdx.w                                                  ; $e865 : $ad, $ac, $05
 	asl                                                  ; $e868 : $0a

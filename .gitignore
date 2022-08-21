@@ -3,6 +3,7 @@ build/
 *.sfc
 __pycache__/
 *.bst
+*.cht
 *.srm
 *.sym
 temp.s
