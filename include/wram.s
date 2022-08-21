@@ -148,6 +148,13 @@ w09ba:
 wCurrItemIdx: ; $0a06
     dw
 
+w0a08:
+    ds $8d-8
+
+; todo: unknown size, word-sized
+wInventoryItemsAndCounts: ; $0a8d
+    db
+
 .ends
 
 .ramsection "Ram 7eh" bank $7e slot 1

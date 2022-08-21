@@ -8574,7 +8574,7 @@ br_0e_bd21:
 	sep #ACCU_8                                                  ; $bd50 : $e2, $20
 	jsr $81f057.l                                                  ; $bd52 : $22, $57, $f0, $81
 	tdc                                                  ; $bd56 : $7b
-	sta $0a8d.w, X                                                  ; $bd57 : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $bd57 : $9d, $8d, $0a
 	sta $0a8e.w, X                                                  ; $bd5a : $9d, $8e, $0a
 	rtl                                                  ; $bd5d : $6b
 

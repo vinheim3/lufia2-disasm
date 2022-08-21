@@ -4053,7 +4053,7 @@ br_17_a0da:
 	asl                                                  ; $a179 : $0a
 	ldx $2c, Y                                                  ; $a17a : $b6, $2c
 	jsr $3711.w                                                  ; $a17c : $20, $11, $37
-	jsr $0a8d.w                                                  ; $a17f : $20, $8d, $0a
+	jsr wInventoryItemsAndCounts.w                                                  ; $a17f : $20, $8d, $0a
 	ldy #$1120.w                                                  ; $a182 : $a0, $20, $11
 	and $1120.w, X                                                  ; $a185 : $3d, $20, $11
 	cmp $1120.w                                                  ; $a188 : $cd, $20, $11

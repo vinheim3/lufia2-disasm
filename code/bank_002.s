@@ -822,7 +822,7 @@ Call_02_84d5:
 
 br_02_84df:
 	lda $11                                                  ; $84df : $a5, $11
-	jsr Call_02_84f7.w                                                  ; $84e1 : $20, $f7, $84
+	jsr LoadInventoryItem.w                                                  ; $84e1 : $20, $f7, $84
 	lda $11                                                  ; $84e4 : $a5, $11
 	clc                                                  ; $84e6 : $18
 	adc #$0080.w                                                  ; $84e7 : $69, $80, $00
@@ -836,16 +836,15 @@ br_02_84df:
 	rts                                                  ; $84f6 : $60
 
 
-Call_02_84f7:
+LoadInventoryItem:
 	sta $17                                                  ; $84f7 : $85, $17
 	phx                                                  ; $84f9 : $da
-	lda $0a8d.w, X                                                  ; $84fa : $bd, $8d, $0a
-	beq br_02_8522                                                  ; $84fd : $f0, $23
+	lda wInventoryItemsAndCounts.w, X                                                  ; $84fa : $bd, $8d, $0a
+	beq @done                                                  ; $84fd : $f0, $23
 
 	sta $00                                                  ; $84ff : $85, $00
-	and #$ff.b                                                  ; $8501 : $29, $ff
-	ora ($8d, X)                                                  ; $8503 : $01, $8d
-	asl $0a                                                  ; $8505 : $06, $0a
+	and #$01ff.w                                                  ; $8501 : $29, $ff, $01
+	sta wCurrItemIdx.w                                                  ; $8504 : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $8507 : $e2, $20
 	jsr Call_02_841e.w                                                  ; $8509 : $20, $1e, $84
 	rep #ACCU_8                                                  ; $850c : $c2, $20
@@ -857,7 +856,7 @@ Call_02_84f7:
 	ldx $17                                                  ; $851c : $a6, $17
 	jsr $808878.l                                                  ; $851e : $22, $78, $88, $80
 
-br_02_8522:
+@done:
 	plx                                                  ; $8522 : $fa
 	inx                                                  ; $8523 : $e8
 	inx                                                  ; $8524 : $e8
@@ -952,7 +951,7 @@ Call_02_859b:
 br_02_85b3:
 	phx                                                  ; $85b3 : $da
 	tax                                                  ; $85b4 : $aa
-	lda $0a8d.w, X                                                  ; $85b5 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $85b5 : $bd, $8d, $0a
 	sta $00                                                  ; $85b8 : $85, $00
 	ldy #$c9b1.w                                                  ; $85ba : $a0, $b1, $c9
 	ldx $17                                                  ; $85bd : $a6, $17
@@ -6016,7 +6015,7 @@ Jump_02_a836:
 
 	jsr Call_02_fbe5.w                                                  ; $a843 : $20, $e5, $fb
 	tax                                                  ; $a846 : $aa
-	lda $0a8d.w, X                                                  ; $a847 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $a847 : $bd, $8d, $0a
 	and #$01ff.w                                                  ; $a84a : $29, $ff, $01
 	beq br_02_a889                                                  ; $a84d : $f0, $3a
 
@@ -6281,12 +6280,12 @@ Call_02_a9b5:
 
 br_02_a9f8:
 	phy                                                  ; $a9f8 : $5a
-	lda $0a8d.w, Y                                                  ; $a9f9 : $b9, $8d, $0a
+	lda wInventoryItemsAndCounts.w, Y                                                  ; $a9f9 : $b9, $8d, $0a
 	beq br_02_aa48                                                  ; $a9fc : $f0, $4a
 
 	sta wCurrItemIdx.w                                                  ; $a9fe : $8d, $06, $0a
 	lda #$0000.w                                                  ; $aa01 : $a9, $00, $00
-	sta $0a8d.w, Y                                                  ; $aa04 : $99, $8d, $0a
+	sta wInventoryItemsAndCounts.w, Y                                                  ; $aa04 : $99, $8d, $0a
 	jsr $81f194.l                                                  ; $aa07 : $22, $94, $f1, $81
 	and #$00ff.w                                                  ; $aa0b : $29, $ff, $00
 	sta $00                                                  ; $aa0e : $85, $00
@@ -6408,7 +6407,7 @@ br_02_aaba:
 br_02_aad1:
 	ldx $00                                                  ; $aad1 : $a6, $00
 	lda [$08], Y                                                  ; $aad3 : $b7, $08
-	sta $0a8d.w, X                                                  ; $aad5 : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $aad5 : $9d, $8d, $0a
 	inc $00                                                  ; $aad8 : $e6, $00
 	inc $00                                                  ; $aada : $e6, $00
 	iny                                                  ; $aadc : $c8
@@ -8651,7 +8650,7 @@ br_02_b950:
 	bcs br_02_b985                                                  ; $b959 : $b0, $2a
 
 	txy                                                  ; $b95b : $9b
-	ldx $0a8d.w, Y                                                  ; $b95c : $be, $8d, $0a
+	ldx wInventoryItemsAndCounts.w, Y                                                  ; $b95c : $be, $8d, $0a
 	stx wCurrItemIdx.w                                                  ; $b95f : $8e, $06, $0a
 	lda $14ee.w                                                  ; $b962 : $ad, $ee, $14
 	jsr Call_02_f864.w                                                  ; $b965 : $20, $64, $f8
@@ -8772,7 +8771,7 @@ Jump_02_ba2c:
 	beq br_02_ba49                                                  ; $ba31 : $f0, $16
 
 	rep #ACCU_8                                                  ; $ba33 : $c2, $20
-	lda $0a8d.w, X                                                  ; $ba35 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $ba35 : $bd, $8d, $0a
 	and #$01ff.w                                                  ; $ba38 : $29, $ff, $01
 	sta $1513.w                                                  ; $ba3b : $8d, $13, $15
 	sep #ACCU_8                                                  ; $ba3e : $e2, $20
@@ -8845,7 +8844,7 @@ br_02_bab2:
 	cmp #$0020.w                                                  ; $bac2 : $c9, $20, $00
 	bne br_02_bae1                                                  ; $bac5 : $d0, $1a
 
-	lda $0a8d.w, Y                                                  ; $bac7 : $b9, $8d, $0a
+	lda wInventoryItemsAndCounts.w, Y                                                  ; $bac7 : $b9, $8d, $0a
 	sta wCurrItemIdx.w                                                  ; $baca : $8d, $06, $0a
 	jsr $81f1c5.l                                                  ; $bacd : $22, $c5, $f1, $81
 	jsr Call_02_bb6e.w                                                  ; $bad1 : $20, $6e, $bb
@@ -9203,7 +9202,7 @@ Call_02_bd48:
 br_02_bd70:
 	phx                                                  ; $bd70 : $da
 	stx $08                                                  ; $bd71 : $86, $08
-	lda $0a8d.w, X                                                  ; $bd73 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $bd73 : $bd, $8d, $0a
 	beq br_02_bd8e                                                  ; $bd76 : $f0, $16
 
 	inc $09cd.w                                                  ; $bd78 : $ee, $cd, $09
@@ -9320,7 +9319,7 @@ br_02_be25:
 	beq br_02_be54                                                  ; $be2c : $f0, $26
 
 	tax                                                  ; $be2e : $aa
-	lda $0a8d.w, X                                                  ; $be2f : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $be2f : $bd, $8d, $0a
 	sta wCurrItemIdx.w                                                  ; $be32 : $8d, $06, $0a
 	jsr $81f1ab.l                                                  ; $be35 : $22, $ab, $f1, $81
 	lda $0b8c.w                                                  ; $be39 : $ad, $8c, $0b
@@ -13198,10 +13197,10 @@ Call_02_d970:
 	lda $14af.w                                                  ; $d972 : $ad, $af, $14
 	asl                                                  ; $d975 : $0a
 	tax                                                  ; $d976 : $aa
-	lda $0a8d.w, X                                                  ; $d977 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $d977 : $bd, $8d, $0a
 	and #$01ff.w                                                  ; $d97a : $29, $ff, $01
 	sta $09cf.w                                                  ; $d97d : $8d, $cf, $09
-	lda $0a8d.w, X                                                  ; $d980 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $d980 : $bd, $8d, $0a
 	and #$fe00.w                                                  ; $d983 : $29, $00, $fe
 	xba                                                  ; $d986 : $eb
 	lsr                                                  ; $d987 : $4a
@@ -13938,7 +13937,7 @@ br_02_de89:
 	lda $14af.w                                                  ; $dea6 : $ad, $af, $14
 	asl                                                  ; $dea9 : $0a
 	tax                                                  ; $deaa : $aa
-	lda $0a8d.w, X                                                  ; $deab : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $deab : $bd, $8d, $0a
 	sta wCurrItemIdx.w                                                  ; $deae : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $deb1 : $e2, $20
 	beq br_02_debf                                                  ; $deb3 : $f0, $0a
@@ -13994,7 +13993,7 @@ br_02_deef:
 	lda $14af.w                                                  ; $def7 : $ad, $af, $14
 	asl                                                  ; $defa : $0a
 	tay                                                  ; $defb : $a8
-	ldx $0a8d.w, Y                                                  ; $defc : $be, $8d, $0a
+	ldx wInventoryItemsAndCounts.w, Y                                                  ; $defc : $be, $8d, $0a
 	lda $1547.w                                                  ; $deff : $ad, $47, $15
 	jsr Call_02_fc97.w                                                  ; $df02 : $20, $97, $fc
 	lda $14af.w                                                  ; $df05 : $ad, $af, $14
@@ -15284,7 +15283,7 @@ Call_02_e718:
 	lda $14af.w                                                  ; $e718 : $ad, $af, $14
 	asl                                                  ; $e71b : $0a
 	tay                                                  ; $e71c : $a8
-	lda $0a8d.w, Y                                                  ; $e71d : $b9, $8d, $0a
+	lda wInventoryItemsAndCounts.w, Y                                                  ; $e71d : $b9, $8d, $0a
 	and #$ff.b                                                  ; $e720 : $29, $ff
 	ora ($f0, X)                                                  ; $e722 : $01, $f0
 	cop $18.b                                                  ; $e724 : $02, $18
@@ -17831,11 +17830,11 @@ br_02_f903:
 	bcs br_02_f923                                                  ; $f90e : $b0, $13
 
 br_02_f910:
-	lda $0a8d.w, X                                                  ; $f910 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $f910 : $bd, $8d, $0a
 	clc                                                  ; $f913 : $18
 	adc #$0200.w                                                  ; $f914 : $69, $00, $02
 	ora $11                                                  ; $f917 : $05, $11
-	sta $0a8d.w, X                                                  ; $f919 : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $f919 : $9d, $8d, $0a
 	lda #$0000.w                                                  ; $f91c : $a9, $00, $00
 	sta ($2a), Y                                                  ; $f91f : $91, $2a
 	clc                                                  ; $f921 : $18
@@ -17849,7 +17848,7 @@ br_02_f923:
 
 Call_02_f925:
 	stx $13                                                  ; $f925 : $86, $13
-	lda $0a8d.w, X                                                  ; $f927 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $f927 : $bd, $8d, $0a
 	and #$01ff.w                                                  ; $f92a : $29, $ff, $01
 	sta $11                                                  ; $f92d : $85, $11
 	lda ($2a), Y                                                  ; $f92f : $b1, $2a
@@ -17882,7 +17881,7 @@ br_02_f957:
 
 	lda ($2a), Y                                                  ; $f95c : $b1, $2a
 	ora #$0200.w                                                  ; $f95e : $09, $00, $02
-	sta $0a8d.w, X                                                  ; $f961 : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $f961 : $9d, $8d, $0a
 	jmp Jump_02_f96d.w                                                  ; $f964 : $4c, $6d, $f9
 
 
@@ -17931,7 +17930,7 @@ br_02_f98f:
 
 	lda ($2a), Y                                                  ; $f99c : $b1, $2a
 	ora #$0200.w                                                  ; $f99e : $09, $00, $02
-	sta $0a8d.w, X                                                  ; $f9a1 : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $f9a1 : $9d, $8d, $0a
 	jmp Jump_02_f9ad.w                                                  ; $f9a4 : $4c, $ad, $f9
 
 
@@ -17953,12 +17952,12 @@ br_02_f9b4:
 
 
 Call_02_f9b6:
-	lda $0a8d.w, X                                                  ; $f9b6 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $f9b6 : $bd, $8d, $0a
 	and #$01ff.w                                                  ; $f9b9 : $29, $ff, $01
 	pha                                                  ; $f9bc : $48
 	lda ($2a), Y                                                  ; $f9bd : $b1, $2a
 	ora #$0200.w                                                  ; $f9bf : $09, $00, $02
-	sta $0a8d.w, X                                                  ; $f9c2 : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $f9c2 : $9d, $8d, $0a
 	pla                                                  ; $f9c5 : $68
 	sta ($2a), Y                                                  ; $f9c6 : $91, $2a
 	rts                                                  ; $f9c8 : $60
@@ -17996,7 +17995,7 @@ Call_02_f9e8:
 	xba                                                  ; $f9ea : $eb
 	asl                                                  ; $f9eb : $0a
 	ora $54                                                  ; $f9ec : $05, $54
-	sta $0a8d.w, X                                                  ; $f9ee : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $f9ee : $9d, $8d, $0a
 	rts                                                  ; $f9f1 : $60
 
 
@@ -18136,7 +18135,7 @@ Call_02_faa0:
 	asl                                                  ; $faa1 : $0a
 	and #$00.b                                                  ; $faa2 : $29, $00
 	inc $5485.w, X                                                  ; $faa4 : $fe, $85, $54
-	lda $0a8d.w, X                                                  ; $faa7 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $faa7 : $bd, $8d, $0a
 	and #$ff.b                                                  ; $faaa : $29, $ff
 	ora ($85, X)                                                  ; $faac : $01, $85
 	lsr $bd, X                                                  ; $faae : $56, $bd
@@ -18159,7 +18158,7 @@ Call_02_faa0:
 br_02_fac8:
 	lda $56                                                  ; $fac8 : $a5, $56
 	ora $54                                                  ; $faca : $05, $54
-	sta $0a8d.w, X                                                  ; $facc : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $facc : $9d, $8d, $0a
 	rts                                                  ; $facf : $60
 
 
@@ -18168,7 +18167,7 @@ Call_02_fad0:
 	asl                                                  ; $fad1 : $0a
 	and #$00.b                                                  ; $fad2 : $29, $00
 	inc $5485.w, X                                                  ; $fad4 : $fe, $85, $54
-	lda $0a8d.w, X                                                  ; $fad7 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $fad7 : $bd, $8d, $0a
 	and #$ff.b                                                  ; $fada : $29, $ff
 	ora ($85, X)                                                  ; $fadc : $01, $85
 	lsr $bd, X                                                  ; $fade : $56, $bd
@@ -18179,7 +18178,7 @@ Call_02_fad0:
 	sta $54                                                  ; $faea : $85, $54
 	lda $56                                                  ; $faec : $a5, $56
 	ora $54                                                  ; $faee : $05, $54
-	sta $0a8d.w, X                                                  ; $faf0 : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $faf0 : $9d, $8d, $0a
 	rts                                                  ; $faf3 : $60
 
 
@@ -18206,7 +18205,7 @@ Call_02_fb04:
 	txy                                                  ; $fb07 : $9b
 
 br_02_fb08:
-	lda $0a8d.w, X                                                  ; $fb08 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $fb08 : $bd, $8d, $0a
 	beq br_02_fb0e                                                  ; $fb0b : $f0, $01
 
 	iny                                                  ; $fb0d : $c8
@@ -18248,7 +18247,7 @@ br_02_fb2f:
 	ldx #$0000.w                                                  ; $fb2f : $a2, $00, $00
 
 br_02_fb32:
-	lda $0a8d.w, X                                                  ; $fb32 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $fb32 : $bd, $8d, $0a
 	and #$ff.b                                                  ; $fb35 : $29, $ff
 	ora ($c5, X)                                                  ; $fb37 : $01, $c5
 	mvn $0c, $f0                                                  ; $fb39 : $54, $f0, $0c
@@ -18329,7 +18328,7 @@ Call_02_fb94:
 	ldx #$0000.w                                                  ; $fb94 : $a2, $00, $00
 
 br_02_fb97:
-	lda $0a8d.w, X                                                  ; $fb97 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $fb97 : $bd, $8d, $0a
 	beq br_02_fba5                                                  ; $fb9a : $f0, $09
 
 	inx                                                  ; $fb9c : $e8
@@ -18358,7 +18357,7 @@ Call_02_fba7:
 	ldx #$0000.w                                                  ; $fbb3 : $a2, $00, $00
 
 br_02_fbb6:
-	lda $0a8d.w, X                                                  ; $fbb6 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $fbb6 : $bd, $8d, $0a
 	sta $8000.w, X                                                  ; $fbb9 : $9d, $00, $80
 	inx                                                  ; $fbbc : $e8
 	inx                                                  ; $fbbd : $e8
@@ -18382,7 +18381,7 @@ br_02_fbb6:
 
 br_02_fbd5:
 	lda $8000.w, X                                                  ; $fbd5 : $bd, $00, $80
-	sta $0a8d.w, X                                                  ; $fbd8 : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $fbd8 : $9d, $8d, $0a
 	inx                                                  ; $fbdb : $e8
 	inx                                                  ; $fbdc : $e8
 	cpx #$00c0.w                                                  ; $fbdd : $e0, $c0, $00
@@ -18403,7 +18402,7 @@ Call_02_fbe5:
 
 Call_02_fbee:
 	ldx $14af.w                                                  ; $fbee : $ae, $af, $14
-	lda $0a8d.w, X                                                  ; $fbf1 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $fbf1 : $bd, $8d, $0a
 	beq br_02_fc06                                                  ; $fbf4 : $f0, $10
 
 	and #$01ff.w                                                  ; $fbf6 : $29, $ff, $01
@@ -18425,12 +18424,12 @@ br_02_fc06:
 Call_02_fc08:
 	ldx $14af.w                                                  ; $fc08 : $ae, $af, $14
 	ldy $14b1.w                                                  ; $fc0b : $ac, $b1, $14
-	lda $0a8d.w, X                                                  ; $fc0e : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $fc0e : $bd, $8d, $0a
 	sta $54                                                  ; $fc11 : $85, $54
-	lda $0a8d.w, Y                                                  ; $fc13 : $b9, $8d, $0a
-	sta $0a8d.w, X                                                  ; $fc16 : $9d, $8d, $0a
+	lda wInventoryItemsAndCounts.w, Y                                                  ; $fc13 : $b9, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $fc16 : $9d, $8d, $0a
 	lda $54                                                  ; $fc19 : $a5, $54
-	sta $0a8d.w, Y                                                  ; $fc1b : $99, $8d, $0a
+	sta wInventoryItemsAndCounts.w, Y                                                  ; $fc1b : $99, $8d, $0a
 	rts                                                  ; $fc1e : $60
 
 
@@ -18446,7 +18445,7 @@ Call_02_fc1f:
 	ldx wCurrItemIdx.w                                                  ; $fc2f : $ae, $06, $0a
 	jsr Call_02_fc97.w                                                  ; $fc32 : $20, $97, $fc
 	ldx $14af.w                                                  ; $fc35 : $ae, $af, $14
-	stz $0a8d.w, X                                                  ; $fc38 : $9e, $8d, $0a
+	stz wInventoryItemsAndCounts.w, X                                                  ; $fc38 : $9e, $8d, $0a
 	clc                                                  ; $fc3b : $18
 	rts                                                  ; $fc3c : $60
 

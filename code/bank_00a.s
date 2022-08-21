@@ -61,7 +61,7 @@ Call_0a_8005:
 	inc $20                                                  ; $8087 : $e6, $20
 	asl $05                                                  ; $8089 : $06, $05
 	asl $c906.w                                                  ; $808b : $0e, $06, $c9
-	jsr $0a8d.w                                                  ; $808e : $20, $8d, $0a
+	jsr wInventoryItemsAndCounts.w                                                  ; $808e : $20, $8d, $0a
 	ror                                                  ; $8091 : $6a
 	jsr Call_0a_cf05.w                                                  ; $8092 : $20, $05, $cf
 	ora $05, S                                                  ; $8095 : $03, $05

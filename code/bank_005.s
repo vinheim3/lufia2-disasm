@@ -3532,7 +3532,7 @@ br_05_9694:
 	ldx #$00bf.w                                                  ; $96a2 : $a2, $bf, $00
 
 br_05_96a5:
-	lda $0a8d.w, X                                                  ; $96a5 : $bd, $8d, $0a
+	lda wInventoryItemsAndCounts.w, X                                                  ; $96a5 : $bd, $8d, $0a
 	sta $7ff8a6.l, X                                                  ; $96a8 : $9f, $a6, $f8, $7f
 	dex                                                  ; $96ac : $ca
 	bpl br_05_96a5                                                  ; $96ad : $10, $f6
@@ -3545,7 +3545,7 @@ Call_05_96b0:
 
 br_05_96b3:
 	lda $7ff8a6.l, X                                                  ; $96b3 : $bf, $a6, $f8, $7f
-	sta $0a8d.w, X                                                  ; $96b7 : $9d, $8d, $0a
+	sta wInventoryItemsAndCounts.w, X                                                  ; $96b7 : $9d, $8d, $0a
 	dex                                                  ; $96ba : $ca
 	bpl br_05_96b3                                                  ; $96bb : $10, $f6
 

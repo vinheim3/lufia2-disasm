@@ -1139,14 +1139,14 @@ br_04_87a6:
 	rep #ACCU_8                                                  ; $87c7 : $c2, $20
 
 br_04_87c9:
-	lda $0a8d.w, Y                                                  ; $87c9 : $b9, $8d, $0a
+	lda wInventoryItemsAndCounts.w, Y                                                  ; $87c9 : $b9, $8d, $0a
 	jsr Call_04_886d.w                                                  ; $87cc : $20, $6d, $88
 	bcc br_04_87db                                                  ; $87cf : $90, $0a
 
-	lda $0a8d.w, Y                                                  ; $87d1 : $b9, $8d, $0a
+	lda wInventoryItemsAndCounts.w, Y                                                  ; $87d1 : $b9, $8d, $0a
 	jsr Call_04_8862.w                                                  ; $87d4 : $20, $62, $88
 	tdc                                                  ; $87d7 : $7b
-	sta $0a8d.w, Y                                                  ; $87d8 : $99, $8d, $0a
+	sta wInventoryItemsAndCounts.w, Y                                                  ; $87d8 : $99, $8d, $0a
 
 br_04_87db:
 	iny                                                  ; $87db : $c8
@@ -1308,7 +1308,7 @@ br_04_88ac:
 
 br_04_88bb:
 	ldx #$1402.w                                                  ; $88bb : $a2, $02, $14
-	stx $0a8d.w                                                  ; $88be : $8e, $8d, $0a
+	stx wInventoryItemsAndCounts.w                                                  ; $88be : $8e, $8d, $0a
 	sep #ACCU_8                                                  ; $88c1 : $e2, $20
 	lda $7fe759.l                                                  ; $88c3 : $af, $59, $e7, $7f
 	bne br_04_88ff                                                  ; $88c7 : $d0, $36
@@ -1402,7 +1402,7 @@ br_04_8959:
 	sty $58                                                  ; $8969 : $84, $58
 
 br_04_896b:
-	lda $0a8d.w, Y                                                  ; $896b : $b9, $8d, $0a
+	lda wInventoryItemsAndCounts.w, Y                                                  ; $896b : $b9, $8d, $0a
 	and #$01ff.w                                                  ; $896e : $29, $ff, $01
 	ldx #$0000.w                                                  ; $8971 : $a2, $00, $00
 
@@ -1443,7 +1443,7 @@ br_04_899e:
 
 br_04_89af:
 	rep #ACCU_8                                                  ; $89af : $c2, $20
-	lda $0a8d.w, Y                                                  ; $89b1 : $b9, $8d, $0a
+	lda wInventoryItemsAndCounts.w, Y                                                  ; $89b1 : $b9, $8d, $0a
 	jsr Call_04_8af4.w                                                  ; $89b4 : $20, $f4, $8a
 	sep #ACCU_8                                                  ; $89b7 : $e2, $20
 	iny                                                  ; $89b9 : $c8
