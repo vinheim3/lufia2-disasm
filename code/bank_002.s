@@ -10,22 +10,24 @@ Call_02_8000:
 	rep #ACCU_8|IDX_8                                                  ; $8002 : $c2, $30
 	stz $1574.w                                                  ; $8004 : $9c, $74, $15
 	stz $1576.w                                                  ; $8007 : $9c, $76, $15
+
+;
 	ldx #$0010.w                                                  ; $800a : $a2, $10, $00
 
-br_02_800d:
+@loop_800d:
 	ror $1572.w                                                  ; $800d : $6e, $72, $15
-	bcc br_02_801c                                                  ; $8010 : $90, $0a
+	bcc @cont_801c                                                  ; $8010 : $90, $0a
 
 	lda $1576.w                                                  ; $8012 : $ad, $76, $15
 	clc                                                  ; $8015 : $18
 	adc $1570.w                                                  ; $8016 : $6d, $70, $15
 	sta $1576.w                                                  ; $8019 : $8d, $76, $15
 
-br_02_801c:
+@cont_801c:
 	ror $1576.w                                                  ; $801c : $6e, $76, $15
 	ror $1574.w                                                  ; $801f : $6e, $74, $15
 	dex                                                  ; $8022 : $ca
-	bne br_02_800d                                                  ; $8023 : $d0, $e8
+	bne @loop_800d                                                  ; $8023 : $d0, $e8
 
 	plp                                                  ; $8025 : $28
 	plx                                                  ; $8026 : $fa
@@ -1163,25 +1165,27 @@ Call_02_8704:
 
 
 Call_02_8720:
-	lda $14ac.w                                                  ; $8720 : $ad, $ac, $14
-	bit #$f008.w                                                  ; $8723 : $89, $08, $f0
-	rti                                                  ; $8726 : $40
+	lda wJoy1StickyPressed.w+1                                                  ; $8720 : $ad, $ac, $14
+	bit #$08.b                                                  ; $8723 : $89, $08
+	beq br_02_8767                                                  ; $8725 : $f0, $40
 
-
+; up
 	dec $14eb.w, X                                                  ; $8727 : $de, $eb, $14
 	lda $14eb.w, X                                                  ; $872a : $bd, $eb, $14
-	cmp #$1000.w                                                  ; $872d : $c9, $00, $10
-	and $c1bd.w                                                  ; $8730 : $2d, $bd, $c1
-	trb $f0                                                  ; $8733 : $14, $f0
-	asl $c1bd.w                                                  ; $8735 : $0e, $bd, $c1
-	trb $09                                                  ; $8738 : $14, $09
-	.db $80, $9d                                                  ; $873a : $80, $9d
+	cmp #$00.b                                                  ; $872d : $c9, $00
+	bpl br_02_875e                                                  ; $872f : $10, $2d
 
-	cmp ($14, X)                                                  ; $873c : $c1, $14
+	lda $14c1.w, X                                                  ; $8731 : $bd, $c1, $14
+	beq br_02_8744                                                  ; $8734 : $f0, $0e
+
+	lda $14c1.w, X                                                  ; $8736 : $bd, $c1, $14
+	ora #$80.b                                                  ; $8739 : $09, $80
+	sta $14c1.w, X                                                  ; $873b : $9d, $c1, $14
 	stz $14eb.w, X                                                  ; $873e : $9e, $eb, $14
-	jmp $8892.w                                                  ; $8741 : $4c, $92, $88
+	jmp br_02_8892.w                                                  ; $8741 : $4c, $92, $88
 
 
+br_02_8744:
 	lda $14f7.w, X                                                  ; $8744 : $bd, $f7, $14
 	dea                                                  ; $8747 : $3a
 	sta $14eb.w, X                                                  ; $8748 : $9d, $eb, $14
@@ -1196,16 +1200,18 @@ Call_02_8720:
 	stz $14eb.w, X                                                  ; $875b : $9e, $eb, $14
 
 br_02_875e:
-	lda #$2200.w                                                  ; $875e : $a9, $00, $22
-	tsc                                                  ; $8761 : $3b
-	sta $80, X                                                  ; $8762 : $95, $80
-	jmp $8892.w                                                  ; $8764 : $4c, $92, $88
+	lda #$00.b                                                  ; $875e : $a9, $00
+	jsr todo_SoundRelated_953b.l                                                  ; $8760 : $22, $3b, $95, $80
+	jmp br_02_8892.w                                                  ; $8764 : $4c, $92, $88
 
 
-	bit #$f004.w                                                  ; $8767 : $89, $04, $f0
-	mvp $eb, $fe                                                  ; $876a : $44, $fe, $eb
-	trb $bd                                                  ; $876d : $14, $bd
-	cmp ($14, X)                                                  ; $876f : $c1, $14
+br_02_8767:
+	bit #$04.b                                                  ; $8767 : $89, $04
+	beq br_02_87af                                                  ; $8769 : $f0, $44
+
+; down
+	inc $14eb.w, X                                                  ; $876b : $fe, $eb, $14
+	lda $14c1.w, X                                                  ; $876e : $bd, $c1, $14
 	beq br_02_8789                                                  ; $8771 : $f0, $16
 
 	lda $14eb.w, X                                                  ; $8773 : $bd, $eb, $14
@@ -1213,10 +1219,10 @@ br_02_875e:
 	bmi br_02_87a6                                                  ; $8779 : $30, $2b
 
 	lda $14c1.w, X                                                  ; $877b : $bd, $c1, $14
-	ora #$9d40.w                                                  ; $877e : $09, $40, $9d
-	cmp ($14, X)                                                  ; $8781 : $c1, $14
+	ora #$40.b                                                  ; $877e : $09, $40
+	sta $14c1.w, X                                                  ; $8780 : $9d, $c1, $14
 	dec $14eb.w, X                                                  ; $8783 : $de, $eb, $14
-	jmp $8892.w                                                  ; $8786 : $4c, $92, $88
+	jmp br_02_8892.w                                                  ; $8786 : $4c, $92, $88
 
 
 br_02_8789:
@@ -1239,19 +1245,23 @@ br_02_87a3:
 	stz $14eb.w, X                                                  ; $87a3 : $9e, $eb, $14
 
 br_02_87a6:
-	lda #$2200.w                                                  ; $87a6 : $a9, $00, $22
-	tsc                                                  ; $87a9 : $3b
-	sta $80, X                                                  ; $87aa : $95, $80
-	jmp $8892.w                                                  ; $87ac : $4c, $92, $88
+	lda #$00.b                                                  ; $87a6 : $a9, $00
+	jsr todo_SoundRelated_953b.l                                                  ; $87a8 : $22, $3b, $95, $80
+	jmp br_02_8892.w                                                  ; $87ac : $4c, $92, $88
 
 
-	bit #$f002.w                                                  ; $87af : $89, $02, $f0
-	and $00a9.w                                                  ; $87b2 : $2d, $a9, $00
-	jsr $80953b.l                                                  ; $87b5 : $22, $3b, $95, $80
+br_02_87af:
+	bit #$02.b                                                  ; $87af : $89, $02
+	beq br_02_87e0                                                  ; $87b1 : $f0, $2d
+
+; left
+	lda #$00.b                                                  ; $87b3 : $a9, $00
+	jsr todo_SoundRelated_953b.l                                                  ; $87b5 : $22, $3b, $95, $80
 	dec $14d9.w, X                                                  ; $87b9 : $de, $d9, $14
 	lda $14d9.w, X                                                  ; $87bc : $bd, $d9, $14
-	cmp #$1000.w                                                  ; $87bf : $c9, $00, $10
-	ina                                                  ; $87c2 : $1a
+	cmp #$00.b                                                  ; $87bf : $c9, $00
+	bpl br_02_87dd                                                  ; $87c1 : $10, $1a
+
 	lda $14f1.w, X                                                  ; $87c3 : $bd, $f1, $14
 	dea                                                  ; $87c6 : $3a
 	sta $14d9.w, X                                                  ; $87c7 : $9d, $d9, $14
@@ -1263,16 +1273,20 @@ br_02_87a6:
 	cmp $14c7.w, X                                                  ; $87d5 : $dd, $c7, $14
 	bmi br_02_87dd                                                  ; $87d8 : $30, $03
 
+; cleared if left invalid
 	stz $14d9.w, X                                                  ; $87da : $9e, $d9, $14
 
 br_02_87dd:
-	jmp $8892.w                                                  ; $87dd : $4c, $92, $88
+	jmp br_02_8892.w                                                  ; $87dd : $4c, $92, $88
 
 
-	bit #$f001.w                                                  ; $87e0 : $89, $01, $f0
-	and [$a9]                                                  ; $87e3 : $27, $a9
-	.db $00                                                  ; $87e5 : $00
-	jsr $80953b.l                                                  ; $87e6 : $22, $3b, $95, $80
+br_02_87e0:
+	bit #$01.b                                                  ; $87e0 : $89, $01
+	beq br_02_880b                                                  ; $87e2 : $f0, $27
+
+; right
+	lda #$00.b                                                  ; $87e4 : $a9, $00
+	jsr todo_SoundRelated_953b.l                                                  ; $87e6 : $22, $3b, $95, $80
 	inc $14d9.w, X                                                  ; $87ea : $fe, $d9, $14
 	lda $14c7.w, X                                                  ; $87ed : $bd, $c7, $14
 	beq br_02_87fd                                                  ; $87f0 : $f0, $0b
@@ -1291,79 +1305,109 @@ br_02_8805:
 	stz $14d9.w, X                                                  ; $8805 : $9e, $d9, $14
 
 br_02_8808:
-	jmp $8892.w                                                  ; $8808 : $4c, $92, $88
+	jmp br_02_8892.w                                                  ; $8808 : $4c, $92, $88
 
 
-	lda $14ab.w                                                  ; $880b : $ad, $ab, $14
-	bit #$f080.w                                                  ; $880e : $89, $80, $f0
-	php                                                  ; $8811 : $08
+br_02_880b:
+	lda wJoy1StickyPressed.w                                                  ; $880b : $ad, $ab, $14
+	bit #$80.b                                                  ; $880e : $89, $80
+	beq br_02_881a                                                  ; $8810 : $f0, $08
+
 	jsr Call_02_88a0.w                                                  ; $8812 : $20, $a0, $88
-	lda #$4c02.w                                                  ; $8815 : $a9, $02, $4c
-	stz $ad88.w                                                  ; $8818 : $9c, $88, $ad
-	ldy $8914.w                                                  ; $881b : $ac, $14, $89
-	.db $80, $f0                                                  ; $881e : $80, $f0
+	lda #$02.b                                                  ; $8815 : $a9, $02
+	jmp Jump_02_889c.w                                                  ; $8817 : $4c, $9c, $88
 
-	asl $01a9.w                                                  ; $8820 : $0e, $a9, $01
-	jsr $80953b.l                                                  ; $8823 : $22, $3b, $95, $80
+
+br_02_881a:
+	lda wJoy1StickyPressed.w+1                                                  ; $881a : $ad, $ac, $14
+	bit #$80.b                                                  ; $881d : $89, $80
+	beq br_02_882f                                                  ; $881f : $f0, $0e
+
+	lda #$01.b                                                  ; $8821 : $a9, $01
+	jsr todo_SoundRelated_953b.l                                                  ; $8823 : $22, $3b, $95, $80
 	jsr Call_02_88a0.w                                                  ; $8827 : $20, $a0, $88
-	lda #$4c03.w                                                  ; $882a : $a9, $03, $4c
-	stz $ad88.w                                                  ; $882d : $9c, $88, $ad
-	plb                                                  ; $8830 : $ab
-	trb $89                                                  ; $8831 : $14, $89
-	rti                                                  ; $8833 : $40
+	lda #$03.b                                                  ; $882a : $a9, $03
+	jmp Jump_02_889c.w                                                  ; $882c : $4c, $9c, $88
 
 
-	.db $f0, $08                                                  ; $8834 : $f0, $08
+br_02_882f:
+	lda wJoy1StickyPressed.w                                                  ; $882f : $ad, $ab, $14
+	bit #$40.b                                                  ; $8832 : $89, $40
+	beq br_02_883e                                                  ; $8834 : $f0, $08
 
 	jsr Call_02_88a0.w                                                  ; $8836 : $20, $a0, $88
-	lda #$4c04.w                                                  ; $8839 : $a9, $04, $4c
-	stz $ad88.w                                                  ; $883c : $9c, $88, $ad
-	ldy $8914.w                                                  ; $883f : $ac, $14, $89
-	rti                                                  ; $8842 : $40
+	lda #$04.b                                                  ; $8839 : $a9, $04
+	jmp Jump_02_889c.w                                                  ; $883b : $4c, $9c, $88
 
 
-	.db $f0, $08                                                  ; $8843 : $f0, $08
+br_02_883e:
+	lda wJoy1StickyPressed.w+1                                                  ; $883e : $ad, $ac, $14
+	bit #$40.b                                                  ; $8841 : $89, $40
+	beq br_02_884d                                                  ; $8843 : $f0, $08
 
 	jsr Call_02_88a0.w                                                  ; $8845 : $20, $a0, $88
-	lda #$4c05.w                                                  ; $8848 : $a9, $05, $4c
-	stz $ad88.w                                                  ; $884b : $9c, $88, $ad
-	plb                                                  ; $884e : $ab
-	trb $89                                                  ; $884f : $14, $89
-	jsr $0ef0.w                                                  ; $8851 : $20, $f0, $0e
-	lda #$2200.w                                                  ; $8854 : $a9, $00, $22
-	tsc                                                  ; $8857 : $3b
-	sta $80, X                                                  ; $8858 : $95, $80
+	lda #$05.b                                                  ; $8848 : $a9, $05
+	jmp Jump_02_889c.w                                                  ; $884a : $4c, $9c, $88
+
+
+br_02_884d:
+	lda wJoy1StickyPressed.w                                                  ; $884d : $ad, $ab, $14
+	bit #$20.b                                                  ; $8850 : $89, $20
+	beq br_02_8862                                                  ; $8852 : $f0, $0e
+
+	lda #$00.b                                                  ; $8854 : $a9, $00
+	jsr todo_SoundRelated_953b.l                                                  ; $8856 : $22, $3b, $95, $80
 	jsr Call_02_88a0.w                                                  ; $885a : $20, $a0, $88
-	lda #$4c06.w                                                  ; $885d : $a9, $06, $4c
-	stz $8988.w                                                  ; $8860 : $9c, $88, $89
-	.db $10, $f0                                                  ; $8863 : $10, $f0
+	lda #$06.b                                                  ; $885d : $a9, $06
+	jmp Jump_02_889c.w                                                  ; $885f : $4c, $9c, $88
 
-	asl $00a9.w                                                  ; $8865 : $0e, $a9, $00
-	jsr $80953b.l                                                  ; $8868 : $22, $3b, $95, $80
+
+br_02_8862:
+	bit #$10.b                                                  ; $8862 : $89, $10
+	beq br_02_8874                                                  ; $8864 : $f0, $0e
+
+	lda #$00.b                                                  ; $8866 : $a9, $00
+	jsr todo_SoundRelated_953b.l                                                  ; $8868 : $22, $3b, $95, $80
 	jsr Call_02_88a0.w                                                  ; $886c : $20, $a0, $88
-	lda #$4c07.w                                                  ; $886f : $a9, $07, $4c
-	stz $ad88.w                                                  ; $8872 : $9c, $88, $ad
-	ldy $8914.w                                                  ; $8875 : $ac, $14, $89
-	.db $10, $f0                                                  ; $8878 : $10, $f0
+	lda #$07.b                                                  ; $886f : $a9, $07
+	jmp Jump_02_889c.w                                                  ; $8871 : $4c, $9c, $88
 
-	php                                                  ; $887a : $08
+
+br_02_8874:
+	lda wJoy1StickyPressed.w+1                                                  ; $8874 : $ad, $ac, $14
+	bit #$10.b                                                  ; $8877 : $89, $10
+	beq br_02_8883                                                  ; $8879 : $f0, $08
+
 	jsr Call_02_88a0.w                                                  ; $887b : $20, $a0, $88
-	lda #$4c08.w                                                  ; $887e : $a9, $08, $4c
-	stz $ad88.w                                                  ; $8881 : $9c, $88, $ad
-	ldy $8914.w                                                  ; $8884 : $ac, $14, $89
-	jsr $14f0.w                                                  ; $8887 : $20, $f0, $14
+	lda #$08.b                                                  ; $887e : $a9, $08
+	jmp Jump_02_889c.w                                                  ; $8880 : $4c, $9c, $88
+
+
+br_02_8883:
+	lda wJoy1StickyPressed.w+1                                                  ; $8883 : $ad, $ac, $14
+	bit #$20.b                                                  ; $8886 : $89, $20
+	beq br_02_889e                                                  ; $8888 : $f0, $14
+
 	jsr Call_02_88a0.w                                                  ; $888a : $20, $a0, $88
-	lda #$4c09.w                                                  ; $888d : $a9, $09, $4c
-	stz $e288.w                                                  ; $8890 : $9c, $88, $e2
-	jsr $a020.w                                                  ; $8893 : $20, $20, $a0
-	dey                                                  ; $8896 : $88
+	lda #$09.b                                                  ; $888d : $a9, $09
+	jmp Jump_02_889c.w                                                  ; $888f : $4c, $9c, $88
+
+br_02_8892:
+	sep #$20.b                                                  ; $8892 : $e2, $20
+	jsr Call_02_88a0.w                                                  ; $8894 : $20, $a0, $88
 	jsr Call_02_88cb.w                                                  ; $8897 : $20, $cb, $88
-	lda #$1801.w                                                  ; $889a : $a9, $01, $18
+	lda #$01.b                                                  ; $889a : $a9, $01
+
+Jump_02_889c:
+	clc                                                  ; $889c : $18
 	rts                                                  ; $889d : $60
 
 
+br_02_889e:
 	sec                                                  ; $889e : $38
 	rts                                                  ; $889f : $60
+
+
 
 
 Call_02_88a0:
@@ -1479,7 +1523,7 @@ Call_02_898d:
 	asl                                                  ; $8990 : $0a
 	clc                                                  ; $8991 : $18
 	adc $14d9.w, X                                                  ; $8992 : $7d, $d9, $14
-	cmp $0a7a.w                                                  ; $8995 : $cd, $7a, $0a
+	cmp wNumPartyChars.w                                                  ; $8995 : $cd, $7a, $0a
 	bcc br_02_89a3                                                  ; $8998 : $90, $09
 
 	stz $14d9.w, X                                                  ; $899a : $9e, $d9, $14
@@ -1748,7 +1792,7 @@ br_02_8b0c:
 	lda $14c1.w, X                                                  ; $8b14 : $bd, $c1, $14
 	and #$01.b                                                  ; $8b17 : $29, $01
 	sta $14c1.w, X                                                  ; $8b19 : $9d, $c1, $14
-	jsr Call_02_8b4b.l                                                  ; $8b1c : $22, $4b, $8b, $82
+	jsr SetJoy1StickyPressed.l                                                  ; $8b1c : $22, $4b, $8b, $82
 	bcs br_02_8b36                                                  ; $8b20 : $b0, $14
 
 	jsr Call_02_8720.w                                                  ; $8b22 : $20, $20, $87
@@ -1789,176 +1833,178 @@ br_02_8b4a:
 	rts                                                  ; $8b4a : $60
 
 
-Call_02_8b4b:
-	stz $14ab.w                                                  ; $8b4b : $9c, $ab, $14
-	stz $14ac.w                                                  ; $8b4e : $9c, $ac, $14
+; Returns with carry clear if any btns sticky pressed
+SetJoy1StickyPressed:
+	stz wJoy1StickyPressed.w                                                  ; $8b4b : $9c, $ab, $14
+	stz wJoy1StickyPressed.w+1                                                  ; $8b4e : $9c, $ac, $14
+
+;
 	lda #$80.b                                                  ; $8b51 : $a9, $80
-	and $4a                                                  ; $8b53 : $25, $4a
+	and wJoy1InvertedStickyHeld                                                  ; $8b53 : $25, $4a
 	beq br_02_8b64                                                  ; $8b55 : $f0, $0d
 
 	lda #$80.b                                                  ; $8b57 : $a9, $80
-	and $46                                                  ; $8b59 : $25, $46
+	and wJoy1CurrHeld                                                  ; $8b59 : $25, $46
 	beq br_02_8b64                                                  ; $8b5b : $f0, $07
 
-	trb $4a                                                  ; $8b5d : $14, $4a
+	trb wJoy1InvertedStickyHeld                                                  ; $8b5d : $14, $4a
 	lda #$80.b                                                  ; $8b5f : $a9, $80
-	tsb $14ab.w                                                  ; $8b61 : $0c, $ab, $14
+	tsb wJoy1StickyPressed.w                                                  ; $8b61 : $0c, $ab, $14
 
 br_02_8b64:
 	lda #$40.b                                                  ; $8b64 : $a9, $40
-	and $4a                                                  ; $8b66 : $25, $4a
+	and wJoy1InvertedStickyHeld                                                  ; $8b66 : $25, $4a
 	beq br_02_8b77                                                  ; $8b68 : $f0, $0d
 
 	lda #$40.b                                                  ; $8b6a : $a9, $40
-	and $46                                                  ; $8b6c : $25, $46
+	and wJoy1CurrHeld                                                  ; $8b6c : $25, $46
 	beq br_02_8b77                                                  ; $8b6e : $f0, $07
 
-	trb $4a                                                  ; $8b70 : $14, $4a
+	trb wJoy1InvertedStickyHeld                                                  ; $8b70 : $14, $4a
 	lda #$40.b                                                  ; $8b72 : $a9, $40
-	tsb $14ab.w                                                  ; $8b74 : $0c, $ab, $14
+	tsb wJoy1StickyPressed.w                                                  ; $8b74 : $0c, $ab, $14
 
 br_02_8b77:
 	lda #$20.b                                                  ; $8b77 : $a9, $20
-	and $4a                                                  ; $8b79 : $25, $4a
+	and wJoy1InvertedStickyHeld                                                  ; $8b79 : $25, $4a
 	beq br_02_8b8a                                                  ; $8b7b : $f0, $0d
 
 	lda #$20.b                                                  ; $8b7d : $a9, $20
-	and $46                                                  ; $8b7f : $25, $46
+	and wJoy1CurrHeld                                                  ; $8b7f : $25, $46
 	beq br_02_8b8a                                                  ; $8b81 : $f0, $07
 
-	trb $4a                                                  ; $8b83 : $14, $4a
+	trb wJoy1InvertedStickyHeld                                                  ; $8b83 : $14, $4a
 	lda #$20.b                                                  ; $8b85 : $a9, $20
-	tsb $14ab.w                                                  ; $8b87 : $0c, $ab, $14
+	tsb wJoy1StickyPressed.w                                                  ; $8b87 : $0c, $ab, $14
 
 br_02_8b8a:
 	lda #$10.b                                                  ; $8b8a : $a9, $10
-	and $4a                                                  ; $8b8c : $25, $4a
+	and wJoy1InvertedStickyHeld                                                  ; $8b8c : $25, $4a
 	beq br_02_8b9d                                                  ; $8b8e : $f0, $0d
 
 	lda #$10.b                                                  ; $8b90 : $a9, $10
-	and $46                                                  ; $8b92 : $25, $46
+	and wJoy1CurrHeld                                                  ; $8b92 : $25, $46
 	beq br_02_8b9d                                                  ; $8b94 : $f0, $07
 
-	trb $4a                                                  ; $8b96 : $14, $4a
+	trb wJoy1InvertedStickyHeld                                                  ; $8b96 : $14, $4a
 	lda #$10.b                                                  ; $8b98 : $a9, $10
-	tsb $14ab.w                                                  ; $8b9a : $0c, $ab, $14
+	tsb wJoy1StickyPressed.w                                                  ; $8b9a : $0c, $ab, $14
 
 br_02_8b9d:
 	lda #$80.b                                                  ; $8b9d : $a9, $80
-	and $4b                                                  ; $8b9f : $25, $4b
+	and wJoy1InvertedStickyHeld+1                                                  ; $8b9f : $25, $4b
 	beq br_02_8bb0                                                  ; $8ba1 : $f0, $0d
 
 	lda #$80.b                                                  ; $8ba3 : $a9, $80
-	and $47                                                  ; $8ba5 : $25, $47
+	and wJoy1CurrHeld+1                                                 ; $8ba5 : $25, $47
 	beq br_02_8bb0                                                  ; $8ba7 : $f0, $07
 
-	trb $4b                                                  ; $8ba9 : $14, $4b
+	trb wJoy1InvertedStickyHeld+1                                                  ; $8ba9 : $14, $4b
 	lda #$80.b                                                  ; $8bab : $a9, $80
-	tsb $14ac.w                                                  ; $8bad : $0c, $ac, $14
+	tsb wJoy1StickyPressed.w+1                                                  ; $8bad : $0c, $ac, $14
 
 br_02_8bb0:
 	lda #$40.b                                                  ; $8bb0 : $a9, $40
-	and $4b                                                  ; $8bb2 : $25, $4b
+	and wJoy1InvertedStickyHeld+1                                                  ; $8bb2 : $25, $4b
 	beq br_02_8bc3                                                  ; $8bb4 : $f0, $0d
 
 	lda #$40.b                                                  ; $8bb6 : $a9, $40
-	and $47                                                  ; $8bb8 : $25, $47
+	and wJoy1CurrHeld+1                                                 ; $8bb8 : $25, $47
 	beq br_02_8bc3                                                  ; $8bba : $f0, $07
 
-	trb $4b                                                  ; $8bbc : $14, $4b
+	trb wJoy1InvertedStickyHeld+1                                                  ; $8bbc : $14, $4b
 	lda #$40.b                                                  ; $8bbe : $a9, $40
-	tsb $14ac.w                                                  ; $8bc0 : $0c, $ac, $14
+	tsb wJoy1StickyPressed.w+1                                                  ; $8bc0 : $0c, $ac, $14
 
 br_02_8bc3:
 	lda #$20.b                                                  ; $8bc3 : $a9, $20
-	and $4b                                                  ; $8bc5 : $25, $4b
+	and wJoy1InvertedStickyHeld+1                                                  ; $8bc5 : $25, $4b
 	beq br_02_8bd6                                                  ; $8bc7 : $f0, $0d
 
 	lda #$20.b                                                  ; $8bc9 : $a9, $20
-	and $47                                                  ; $8bcb : $25, $47
+	and wJoy1CurrHeld+1                                                 ; $8bcb : $25, $47
 	beq br_02_8bd6                                                  ; $8bcd : $f0, $07
 
-	trb $4b                                                  ; $8bcf : $14, $4b
+	trb wJoy1InvertedStickyHeld+1                                                  ; $8bcf : $14, $4b
 	lda #$20.b                                                  ; $8bd1 : $a9, $20
-	tsb $14ac.w                                                  ; $8bd3 : $0c, $ac, $14
+	tsb wJoy1StickyPressed.w+1                                                  ; $8bd3 : $0c, $ac, $14
 
 br_02_8bd6:
 	lda #$10.b                                                  ; $8bd6 : $a9, $10
-	and $4b                                                  ; $8bd8 : $25, $4b
+	and wJoy1InvertedStickyHeld+1                                                  ; $8bd8 : $25, $4b
 	beq br_02_8be9                                                  ; $8bda : $f0, $0d
 
 	lda #$10.b                                                  ; $8bdc : $a9, $10
-	and $47                                                  ; $8bde : $25, $47
+	and wJoy1CurrHeld+1                                                 ; $8bde : $25, $47
 	beq br_02_8be9                                                  ; $8be0 : $f0, $07
 
-	trb $4b                                                  ; $8be2 : $14, $4b
+	trb wJoy1InvertedStickyHeld+1                                                  ; $8be2 : $14, $4b
 	lda #$10.b                                                  ; $8be4 : $a9, $10
-	tsb $14ac.w                                                  ; $8be6 : $0c, $ac, $14
+	tsb wJoy1StickyPressed.w+1                                                  ; $8be6 : $0c, $ac, $14
 
 br_02_8be9:
 	lda #$08.b                                                  ; $8be9 : $a9, $08
-	and $4b                                                  ; $8beb : $25, $4b
+	and wJoy1InvertedStickyHeld+1                                                  ; $8beb : $25, $4b
 	beq br_02_8bfc                                                  ; $8bed : $f0, $0d
 
 	lda #$08.b                                                  ; $8bef : $a9, $08
-	and $47                                                  ; $8bf1 : $25, $47
+	and wJoy1CurrHeld+1                                                 ; $8bf1 : $25, $47
 	beq br_02_8bfc                                                  ; $8bf3 : $f0, $07
 
-	trb $4b                                                  ; $8bf5 : $14, $4b
+	trb wJoy1InvertedStickyHeld+1                                                  ; $8bf5 : $14, $4b
 	lda #$08.b                                                  ; $8bf7 : $a9, $08
-	tsb $14ac.w                                                  ; $8bf9 : $0c, $ac, $14
+	tsb wJoy1StickyPressed.w+1                                                  ; $8bf9 : $0c, $ac, $14
 
 br_02_8bfc:
 	lda #$04.b                                                  ; $8bfc : $a9, $04
-	and $4b                                                  ; $8bfe : $25, $4b
+	and wJoy1InvertedStickyHeld+1                                                  ; $8bfe : $25, $4b
 	beq br_02_8c0f                                                  ; $8c00 : $f0, $0d
 
 	lda #$04.b                                                  ; $8c02 : $a9, $04
-	and $47                                                  ; $8c04 : $25, $47
+	and wJoy1CurrHeld+1                                                 ; $8c04 : $25, $47
 	beq br_02_8c0f                                                  ; $8c06 : $f0, $07
 
-	trb $4b                                                  ; $8c08 : $14, $4b
+	trb wJoy1InvertedStickyHeld+1                                                  ; $8c08 : $14, $4b
 	lda #$04.b                                                  ; $8c0a : $a9, $04
-	tsb $14ac.w                                                  ; $8c0c : $0c, $ac, $14
+	tsb wJoy1StickyPressed.w+1                                                  ; $8c0c : $0c, $ac, $14
 
 br_02_8c0f:
 	lda #$02.b                                                  ; $8c0f : $a9, $02
-	and $4b                                                  ; $8c11 : $25, $4b
+	and wJoy1InvertedStickyHeld+1                                                  ; $8c11 : $25, $4b
 	beq br_02_8c22                                                  ; $8c13 : $f0, $0d
 
 	lda #$02.b                                                  ; $8c15 : $a9, $02
-	and $47                                                  ; $8c17 : $25, $47
+	and wJoy1CurrHeld+1                                                 ; $8c17 : $25, $47
 	beq br_02_8c22                                                  ; $8c19 : $f0, $07
 
-	trb $4b                                                  ; $8c1b : $14, $4b
+	trb wJoy1InvertedStickyHeld+1                                                  ; $8c1b : $14, $4b
 	lda #$02.b                                                  ; $8c1d : $a9, $02
-	tsb $14ac.w                                                  ; $8c1f : $0c, $ac, $14
+	tsb wJoy1StickyPressed.w+1                                                  ; $8c1f : $0c, $ac, $14
 
 br_02_8c22:
 	lda #$01.b                                                  ; $8c22 : $a9, $01
-	and $4b                                                  ; $8c24 : $25, $4b
+	and wJoy1InvertedStickyHeld+1                                                  ; $8c24 : $25, $4b
 	beq br_02_8c35                                                  ; $8c26 : $f0, $0d
 
 	lda #$01.b                                                  ; $8c28 : $a9, $01
-	and $47                                                  ; $8c2a : $25, $47
+	and wJoy1CurrHeld+1                                                 ; $8c2a : $25, $47
 	beq br_02_8c35                                                  ; $8c2c : $f0, $07
 
-	trb $4b                                                  ; $8c2e : $14, $4b
+	trb wJoy1InvertedStickyHeld+1                                                  ; $8c2e : $14, $4b
 	lda #$01.b                                                  ; $8c30 : $a9, $01
-	tsb $14ac.w                                                  ; $8c32 : $0c, $ac, $14
+	tsb wJoy1StickyPressed.w+1                                                  ; $8c32 : $0c, $ac, $14
 
 br_02_8c35:
-	lda $14ab.w                                                  ; $8c35 : $ad, $ab, $14
-	bne br_02_8c41                                                  ; $8c38 : $d0, $07
+	lda wJoy1StickyPressed.w                                                  ; $8c35 : $ad, $ab, $14
+	bne @clc                                                  ; $8c38 : $d0, $07
 
-	lda $14ac.w                                                  ; $8c3a : $ad, $ac, $14
-	bne br_02_8c41                                                  ; $8c3d : $d0, $02
+	lda wJoy1StickyPressed.w+1                                                  ; $8c3a : $ad, $ac, $14
+	bne @clc                                                  ; $8c3d : $d0, $02
 
 	sec                                                  ; $8c3f : $38
 	rtl                                                  ; $8c40 : $6b
 
-
-br_02_8c41:
+@clc:
 	clc                                                  ; $8c41 : $18
 	rtl                                                  ; $8c42 : $6b
 
@@ -2990,11 +3036,11 @@ Call_02_9246:
 	lda $14bf.w                                                  ; $924e : $ad, $bf, $14
 	bit #$d004.w                                                  ; $9251 : $89, $04, $d0
 	php                                                  ; $9254 : $08
-	lda $0a7a.w                                                  ; $9255 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $9255 : $ad, $7a, $0a
 	sta $14c7.w, X                                                  ; $9258 : $9d, $c7, $14
 	bra br_02_9280                                                  ; $925b : $80, $23
 
-	lda $0a7a.w                                                  ; $925d : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $925d : $ad, $7a, $0a
 	sta $14f1.w, X                                                  ; $9260 : $9d, $f1, $14
 	bra br_02_9280                                                  ; $9263 : $80, $1b
 
@@ -3022,7 +3068,7 @@ br_02_9280:
 	lda $208914.l, X                                                  ; $928c : $bf, $14, $89, $20
 	.db $f0, $f2                                                  ; $9290 : $f0, $f2
 
-	lda $47                                                  ; $9292 : $a5, $47
+	lda wJoy1CurrHeld+1                                                 ; $9292 : $a5, $47
 	bit #$f004.w                                                  ; $9294 : $89, $04, $f0
 	cpx $bfad.w                                                  ; $9297 : $ec, $ad, $bf
 	trb $89                                                  ; $929a : $14, $89
@@ -3121,8 +3167,8 @@ Call_02_9330:
 
 br_02_9335:
 	pha                                                  ; $9335 : $48
-	jsr Call_02_8b4b.l                                                  ; $9336 : $22, $4b, $8b, $82
-	lda $14ab.w                                                  ; $933a : $ad, $ab, $14
+	jsr SetJoy1StickyPressed.l                                                  ; $9336 : $22, $4b, $8b, $82
+	lda wJoy1StickyPressed.w                                                  ; $933a : $ad, $ab, $14
 	bit #$d080.w                                                  ; $933d : $89, $80, $d0
 	.db $10, $ad                                                  ; $9340 : $10, $ad
 
@@ -3155,9 +3201,9 @@ br_02_9353:
 
 Call_02_935d:
 br_02_935d:
-	jsr Call_02_8b4b.l                                                  ; $935d : $22, $4b, $8b, $82
+	jsr SetJoy1StickyPressed.l                                                  ; $935d : $22, $4b, $8b, $82
 	rep #ACCU_8                                                  ; $9361 : $c2, $20
-	lda $14ab.w                                                  ; $9363 : $ad, $ab, $14
+	lda wJoy1StickyPressed.w                                                  ; $9363 : $ad, $ab, $14
 	bit $156c.w                                                  ; $9366 : $2c, $6c, $15
 	bne br_02_9378                                                  ; $9369 : $d0, $0d
 
@@ -3182,12 +3228,12 @@ br_02_937c:
 
 Call_02_9380:
 br_02_9380:
-	jsr Call_02_8b4b.l                                                  ; $9380 : $22, $4b, $8b, $82
-	lda $14ab.w                                                  ; $9384 : $ad, $ab, $14
+	jsr SetJoy1StickyPressed.l                                                  ; $9380 : $22, $4b, $8b, $82
+	lda wJoy1StickyPressed.w                                                  ; $9384 : $ad, $ab, $14
 	bit #$80.b                                                  ; $9387 : $89, $80
 	bne br_02_939b                                                  ; $9389 : $d0, $10
 
-	lda $14ac.w                                                  ; $938b : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $938b : $ad, $ac, $14
 	bit #$80.b                                                  ; $938e : $89, $80
 	bne br_02_939b                                                  ; $9390 : $d0, $09
 
@@ -3263,7 +3309,7 @@ br_02_93d3:
 	stz $1418.w, X                                                  ; $93e7 : $9e, $18, $14
 	stz $13b8.w, X                                                  ; $93ea : $9e, $b8, $13
 	inx                                                  ; $93ed : $e8
-	cpx $0a7a.w                                                  ; $93ee : $ec, $7a, $0a
+	cpx wNumPartyChars.w                                                  ; $93ee : $ec, $7a, $0a
 	bne br_02_93d3                                                  ; $93f1 : $d0, $e0
 
 	rep #IDX_8                                                  ; $93f3 : $c2, $10
@@ -3878,7 +3924,7 @@ br_02_97df:
 
 Call_02_97e3:
 	lda #$03.b                                                  ; $97e3 : $a9, $03
-	jsr $80953b.l                                                  ; $97e5 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $97e5 : $22, $3b, $95, $80
 	ldx #$0000.w                                                  ; $97e9 : $a2, $00, $00
 
 br_02_97ec:
@@ -4056,13 +4102,13 @@ Call_02_9918:
 	ldy #$0000.w                                                  ; $9923 : $a0, $00, $00
 
 br_02_9926:
-	lda $0a7b.w, Y                                                  ; $9926 : $b9, $7b, $0a
+	lda wPartCharTypeIdxes.w, Y                                                  ; $9926 : $b9, $7b, $0a
 	cmp #$01.b                                                  ; $9929 : $c9, $01
 	beq br_02_9936                                                  ; $992b : $f0, $09
 
 	iny                                                  ; $992d : $c8
 	tya                                                  ; $992e : $98
-	cmp $0a7a.w                                                  ; $992f : $cd, $7a, $0a
+	cmp wNumPartyChars.w                                                  ; $992f : $cd, $7a, $0a
 	bne br_02_9926                                                  ; $9932 : $d0, $f2
 
 	bra br_02_994b                                                  ; $9934 : $80, $15
@@ -4154,7 +4200,7 @@ br_02_99a5:
 	jsr Call_02_99be.w                                                  ; $99b0 : $20, $be, $99
 	sep #IDX_8                                                  ; $99b3 : $e2, $10
 	inx                                                  ; $99b5 : $e8
-	cpx $0a7a.w                                                  ; $99b6 : $ec, $7a, $0a
+	cpx wNumPartyChars.w                                                  ; $99b6 : $ec, $7a, $0a
 	rep #IDX_8                                                  ; $99b9 : $c2, $10
 	bne br_02_99a5                                                  ; $99bb : $d0, $e8
 
@@ -4215,7 +4261,7 @@ br_02_99f6:
 	pla                                                  ; $9a08 : $68
 	sep #IDX_8                                                  ; $9a09 : $e2, $10
 	inx                                                  ; $9a0b : $e8
-	cpx $0a7a.w                                                  ; $9a0c : $ec, $7a, $0a
+	cpx wNumPartyChars.w                                                  ; $9a0c : $ec, $7a, $0a
 	rep #IDX_8                                                  ; $9a0f : $c2, $10
 	bne br_02_99f6                                                  ; $9a11 : $d0, $e3
 
@@ -4228,7 +4274,7 @@ Call_02_9a14:
 	dec $22                                                  ; $9a16 : $c6, $22
 	bpl br_02_9a2d                                                  ; $9a18 : $10, $13
 
-	lda $0a7a.w                                                  ; $9a1a : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $9a1a : $ad, $7a, $0a
 	dea                                                  ; $9a1d : $3a
 	sta $22                                                  ; $9a1e : $85, $22
 	bra br_02_9a2d                                                  ; $9a20 : $80, $0b
@@ -4236,7 +4282,7 @@ Call_02_9a14:
 br_02_9a22:
 	inc $22                                                  ; $9a22 : $e6, $22
 	lda $22                                                  ; $9a24 : $a5, $22
-	cmp $0a7a.w                                                  ; $9a26 : $cd, $7a, $0a
+	cmp wNumPartyChars.w                                                  ; $9a26 : $cd, $7a, $0a
 	bmi br_02_9a2d                                                  ; $9a29 : $30, $02
 
 	stz $22                                                  ; $9a2b : $64, $22
@@ -5260,7 +5306,7 @@ br_02_a34a:
 	jsr Call_02_94c0.w                                                  ; $a35c : $20, $c0, $94
 	inc $22                                                  ; $a35f : $e6, $22
 	lda $22                                                  ; $a361 : $a5, $22
-	cmp $0a7a.w                                                  ; $a363 : $cd, $7a, $0a
+	cmp wNumPartyChars.w                                                  ; $a363 : $cd, $7a, $0a
 	bne br_02_a34a                                                  ; $a366 : $d0, $e2
 
 	jmp $a42d.w                                                  ; $a368 : $4c, $2d, $a4
@@ -5344,7 +5390,7 @@ br_02_a405:
 	jsr Call_02_950e.w                                                  ; $a419 : $20, $0e, $95
 	pla                                                  ; $a41c : $68
 	ina                                                  ; $a41d : $1a
-	cmp $0a7a.w                                                  ; $a41e : $cd, $7a, $0a
+	cmp wNumPartyChars.w                                                  ; $a41e : $cd, $7a, $0a
 	bne br_02_a405                                                  ; $a421 : $d0, $e2
 
 	.db $80, $08                                                  ; $a423 : $80, $08
@@ -5414,7 +5460,7 @@ br_02_a46d:
 
 br_02_a480:
 	lda #$02.b                                                  ; $a480 : $a9, $02
-	jsr $80953b.l                                                  ; $a482 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $a482 : $22, $3b, $95, $80
 	ldx $14b3.w                                                  ; $a486 : $ae, $b3, $14
 	stx $09d1.w                                                  ; $a489 : $8e, $d1, $09
 	stx $09d3.w                                                  ; $a48c : $8e, $d3, $09
@@ -5428,7 +5474,7 @@ br_02_a480:
 	bit #$20.b                                                  ; $a49f : $89, $20
 	beq br_02_a4ae                                                  ; $a4a1 : $f0, $0b
 
-	lda $47                                                  ; $a4a3 : $a5, $47
+	lda wJoy1CurrHeld+1                                                 ; $a4a3 : $a5, $47
 	bit #$20.b                                                  ; $a4a5 : $89, $20
 	beq br_02_a4ae                                                  ; $a4a7 : $f0, $05
 
@@ -5462,7 +5508,7 @@ Jump_02_a4d1:
 	bne br_02_a4ed                                                  ; $a4d6 : $d0, $15
 
 	lda #$02.b                                                  ; $a4d8 : $a9, $02
-	jsr $80953b.l                                                  ; $a4da : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $a4da : $22, $3b, $95, $80
 	lda $09c8.w                                                  ; $a4de : $ad, $c8, $09
 	eor #$01.b                                                  ; $a4e1 : $49, $01
 	sta $09c8.w                                                  ; $a4e3 : $8d, $c8, $09
@@ -5524,7 +5570,7 @@ br_02_a521:
 
 Jump_02_a524:
 	lda #$02.b                                                  ; $a524 : $a9, $02
-	jsr $80953b.l                                                  ; $a526 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $a526 : $22, $3b, $95, $80
 	ldx #$0001.w                                                  ; $a52a : $a2, $01, $00
 	stx $09cd.w                                                  ; $a52d : $8e, $cd, $09
 	ldx #$0000.w                                                  ; $a530 : $a2, $00, $00
@@ -5594,9 +5640,9 @@ br_02_a59b:
 
 Jump_02_a59c:
 	lda #$02.b                                                  ; $a59c : $a9, $02
-	jsr $80953b.l                                                  ; $a59e : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $a59e : $22, $3b, $95, $80
 	jsr $868b32.l                                                  ; $a5a2 : $22, $32, $8b, $86
-	lda $47                                                  ; $a5a6 : $a5, $47
+	lda wJoy1CurrHeld+1                                                 ; $a5a6 : $a5, $47
 	bit #$20.b                                                  ; $a5a8 : $89, $20
 	bne br_02_a5c4                                                  ; $a5aa : $d0, $18
 
@@ -5634,7 +5680,7 @@ br_02_a5ca:
 
 Jump_02_a5d7:
 	lda #$02.b                                                  ; $a5d7 : $a9, $02
-	jsr $80953b.l                                                  ; $a5d9 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $a5d9 : $22, $3b, $95, $80
 	ldx #$0000.w                                                  ; $a5dd : $a2, $00, $00
 
 br_02_a5e0:
@@ -5649,7 +5695,7 @@ br_02_a5e0:
 
 Jump_02_a5ef:
 	lda #$02.b                                                  ; $a5ef : $a9, $02
-	jsr $80953b.l                                                  ; $a5f1 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $a5f1 : $22, $3b, $95, $80
 	ldx #$2710.w                                                  ; $a5f5 : $a2, $10, $27
 	stx $09ba.w                                                  ; $a5f8 : $8e, $ba, $09
 	stz $09bc.w                                                  ; $a5fb : $9c, $bc, $09
@@ -5765,7 +5811,7 @@ br_02_a69d:
 	bra br_02_a683                                                  ; $a6b0 : $80, $d1
 
 br_02_a6b2:
-	lda $47                                                  ; $a6b2 : $a5, $47
+	lda wJoy1CurrHeld+1                                                 ; $a6b2 : $a5, $47
 	bit #$04.b                                                  ; $a6b4 : $89, $04
 	beq br_02_a683                                                  ; $a6b6 : $f0, $cb
 
@@ -5780,7 +5826,7 @@ br_02_a6b2:
 
 br_02_a6ca:
 	lda #$02.b                                                  ; $a6ca : $a9, $02
-	jsr $80953b.l                                                  ; $a6cc : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $a6cc : $22, $3b, $95, $80
 
 br_02_a6d0:
 	lda $14b3.w                                                  ; $a6d0 : $ad, $b3, $14
@@ -5902,7 +5948,7 @@ br_02_a75f:
 
 br_02_a775:
 	lda #$02.b                                                  ; $a775 : $a9, $02
-	jsr $80953b.l                                                  ; $a777 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $a777 : $22, $3b, $95, $80
 	lda $1391.w                                                  ; $a77b : $ad, $91, $13
 	sta $1390.w                                                  ; $a77e : $8d, $90, $13
 	lda $13f1.w                                                  ; $a781 : $ad, $f1, $13
@@ -6534,7 +6580,7 @@ br_02_ab81:
 
 Call_02_ab89:
 	lda #$02.b                                                  ; $ab89 : $a9, $02
-	jsr $80953b.l                                                  ; $ab8b : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ab8b : $22, $3b, $95, $80
 	rep #ACCU_8                                                  ; $ab8f : $c2, $20
 	jsr Call_02_fc08.w                                                  ; $ab91 : $20, $08, $fc
 	sep #ACCU_8                                                  ; $ab94 : $e2, $20
@@ -6549,7 +6595,7 @@ Call_02_ab9a:
 	bcs br_02_abb0                                                  ; $aba1 : $b0, $0d
 
 	lda #$02.b                                                  ; $aba3 : $a9, $02
-	jsr $80953b.l                                                  ; $aba5 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $aba5 : $22, $3b, $95, $80
 	jsr Call_02_9e2f.w                                                  ; $aba9 : $20, $2f, $9e
 	jsr Call_02_ac84.w                                                  ; $abac : $20, $84, $ac
 	clc                                                  ; $abaf : $18
@@ -6588,7 +6634,7 @@ br_02_abd3:
 
 br_02_abd5:
 	lda #$02.b                                                  ; $abd5 : $a9, $02
-	jsr $80953b.l                                                  ; $abd7 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $abd7 : $22, $3b, $95, $80
 	lda $0b86.w                                                  ; $abdb : $ad, $86, $0b
 	cmp #$00.b                                                  ; $abde : $c9, $00
 	bne br_02_abea                                                  ; $abe0 : $d0, $08
@@ -6642,7 +6688,7 @@ br_02_ac13:
 
 br_02_ac31:
 	lda #$76.b                                                  ; $ac31 : $a9, $76
-	jsr $80953b.l                                                  ; $ac33 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ac33 : $22, $3b, $95, $80
 	stz $0a04.w                                                  ; $ac37 : $9c, $04, $0a
 	ldx $14b3.w                                                  ; $ac3a : $ae, $b3, $14
 	jsr Call_02_ae64.w                                                  ; $ac3d : $20, $64, $ae
@@ -7006,7 +7052,7 @@ br_02_ae85:
 	bne br_02_aefe                                                  ; $ae8a : $d0, $72
 
 	lda #$02.b                                                  ; $ae8c : $a9, $02
-	jsr $80953b.l                                                  ; $ae8e : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ae8e : $22, $3b, $95, $80
 	jsr Call_02_af8e.w                                                  ; $ae92 : $20, $8e, $af
 	bcc br_02_aed8                                                  ; $ae95 : $90, $41
 
@@ -7029,7 +7075,7 @@ br_02_ae99:
 
 br_02_aeb2:
 	lda #$89.b                                                  ; $aeb2 : $a9, $89
-	jsr $80953b.l                                                  ; $aeb4 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $aeb4 : $22, $3b, $95, $80
 	jsr $8eb7e2.l                                                  ; $aeb8 : $22, $e2, $b7, $8e
 	cmp #$00.b                                                  ; $aebc : $c9, $00
 	beq br_02_aed6                                                  ; $aebe : $f0, $16
@@ -7040,7 +7086,7 @@ br_02_aeb2:
 
 br_02_aec7:
 	lda #$8a.b                                                  ; $aec7 : $a9, $8a
-	jsr $80953b.l                                                  ; $aec9 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $aec9 : $22, $3b, $95, $80
 	lda #$10.b                                                  ; $aecd : $a9, $10
 	jsr Call_02_9353.w                                                  ; $aecf : $20, $53, $93
 	dec $04                                                  ; $aed2 : $c6, $04
@@ -7068,7 +7114,7 @@ br_02_aed8:
 
 Call_02_aef3:
 	lda #$02.b                                                  ; $aef3 : $a9, $02
-	jsr $80953b.l                                                  ; $aef5 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $aef5 : $22, $3b, $95, $80
 	jsr $81f034.l                                                  ; $aef9 : $22, $34, $f0, $81
 	rts                                                  ; $aefd : $60
 
@@ -7100,7 +7146,7 @@ br_02_af16:
 	bne br_02_af8c                                                  ; $af1b : $d0, $6f
 
 	lda #$02.b                                                  ; $af1d : $a9, $02
-	jsr $80953b.l                                                  ; $af1f : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $af1f : $22, $3b, $95, $80
 	jsr Call_02_af8e.w                                                  ; $af23 : $20, $8e, $af
 	bcc br_02_af5c                                                  ; $af26 : $90, $34
 
@@ -7152,7 +7198,7 @@ br_02_af5c:
 
 Call_02_af78:
 	lda #$02.b                                                  ; $af78 : $a9, $02
-	jsr $80953b.l                                                  ; $af7a : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $af7a : $22, $3b, $95, $80
 	lda $0b84.w                                                  ; $af7e : $ad, $84, $0b
 	sta $0a0f.w                                                  ; $af81 : $8d, $0f, $0a
 	stz $0a10.w                                                  ; $af84 : $9c, $10, $0a
@@ -7422,7 +7468,7 @@ br_02_b12a:
 	beq br_02_b143                                                  ; $b12d : $f0, $14
 
 	lda #$02.b                                                  ; $b12f : $a9, $02
-	jsr $80953b.l                                                  ; $b131 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b131 : $22, $3b, $95, $80
 	lda $14b3.w                                                  ; $b135 : $ad, $b3, $14
 	cmp #$01.b                                                  ; $b138 : $c9, $01
 	beq br_02_b143                                                  ; $b13a : $f0, $07
@@ -7529,7 +7575,7 @@ br_02_b1bb:
 
 br_02_b1e2:
 	lda #$02.b                                                  ; $b1e2 : $a9, $02
-	jsr $80953b.l                                                  ; $b1e4 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b1e4 : $22, $3b, $95, $80
 	lda #$05.b                                                  ; $b1e8 : $a9, $05
 	ldx #$0007.w                                                  ; $b1ea : $a2, $07, $00
 	jsr Call_02_895b.w                                                  ; $b1ed : $20, $5b, $89
@@ -7578,7 +7624,7 @@ br_02_b229:
 	beq br_02_b223                                                  ; $b22e : $f0, $f3
 
 	lda #$02.b                                                  ; $b230 : $a9, $02
-	jsr $80953b.l                                                  ; $b232 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b232 : $22, $3b, $95, $80
 	jsr Call_02_9e07.w                                                  ; $b236 : $20, $07, $9e
 
 br_02_b239:
@@ -7601,7 +7647,7 @@ br_02_b239:
 
 br_02_b25c:
 	lda #$02.b                                                  ; $b25c : $a9, $02
-	jsr $80953b.l                                                  ; $b25e : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b25e : $22, $3b, $95, $80
 	stz $0a04.w                                                  ; $b262 : $9c, $04, $0a
 	ldx $14b3.w                                                  ; $b265 : $ae, $b3, $14
 	jsr Call_02_ae64.w                                                  ; $b268 : $20, $64, $ae
@@ -7720,7 +7766,7 @@ br_02_b33c:
 
 br_02_b33d:
 	lda #$02.b                                                  ; $b33d : $a9, $02
-	jsr $80953b.l                                                  ; $b33f : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b33f : $22, $3b, $95, $80
 	lda #$05.b                                                  ; $b343 : $a9, $05
 	ldx #$0007.w                                                  ; $b345 : $a2, $07, $00
 	jsr Call_02_895b.w                                                  ; $b348 : $20, $5b, $89
@@ -7858,7 +7904,7 @@ br_02_b41e:
 
 Call_02_b42d:
 	lda #$02.b                                                  ; $b42d : $a9, $02
-	jsr $80953b.l                                                  ; $b42f : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b42f : $22, $3b, $95, $80
 	rep #ACCU_8                                                  ; $b433 : $c2, $20
 	lda $14af.w                                                  ; $b435 : $ad, $af, $14
 	lsr                                                  ; $b438 : $4a
@@ -7911,7 +7957,7 @@ br_02_b47f:
 
 br_02_b481:
 	lda #$02.b                                                  ; $b481 : $a9, $02
-	jsr $80953b.l                                                  ; $b483 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b483 : $22, $3b, $95, $80
 	lda $0b83.w                                                  ; $b487 : $ad, $83, $0b
 	cmp #$00.b                                                  ; $b48a : $c9, $00
 	bne br_02_b496                                                  ; $b48c : $d0, $08
@@ -7982,7 +8028,7 @@ br_02_b4dc:
 
 br_02_b4ef:
 	lda #$76.b                                                  ; $b4ef : $a9, $76
-	jsr $80953b.l                                                  ; $b4f1 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b4f1 : $22, $3b, $95, $80
 	jsr Call_02_b564.w                                                  ; $b4f5 : $20, $64, $b5
 	jsr $81f3bc.l                                                  ; $b4f8 : $22, $bc, $f3, $81
 	jsr $81f2e7.l                                                  ; $b4fc : $22, $e7, $f2, $81
@@ -7990,7 +8036,7 @@ br_02_b4ef:
 	cmp #$01.b                                                  ; $b503 : $c9, $01
 	beq br_02_b50c                                                  ; $b505 : $f0, $05
 
-	cmp $0a7a.w                                                  ; $b507 : $cd, $7a, $0a
+	cmp wNumPartyChars.w                                                  ; $b507 : $cd, $7a, $0a
 	beq br_02_b511                                                  ; $b50a : $f0, $05
 
 br_02_b50c:
@@ -8059,7 +8105,7 @@ br_02_b57d:
 	clc                                                  ; $b57d : $18
 	adc $11e4.w, X                                                  ; $b57e : $7d, $e4, $11
 	inx                                                  ; $b581 : $e8
-	cpx $0a7a.w                                                  ; $b582 : $ec, $7a, $0a
+	cpx wNumPartyChars.w                                                  ; $b582 : $ec, $7a, $0a
 	bne br_02_b57d                                                  ; $b585 : $d0, $f6
 
 	rep #IDX_8                                                  ; $b587 : $c2, $10
@@ -8073,7 +8119,7 @@ Call_02_b58a:
 br_02_b58e:
 	sta $11e4.w, X                                                  ; $b58e : $9d, $e4, $11
 	inx                                                  ; $b591 : $e8
-	cpx $0a7a.w                                                  ; $b592 : $ec, $7a, $0a
+	cpx wNumPartyChars.w                                                  ; $b592 : $ec, $7a, $0a
 	bne br_02_b58e                                                  ; $b595 : $d0, $f7
 
 	rep #IDX_8                                                  ; $b597 : $c2, $10
@@ -8154,7 +8200,7 @@ Call_02_b60a:
 	cmp #$02.b                                                  ; $b60f : $c9, $02
 	bne br_02_b67b                                                  ; $b611 : $d0, $68
 
-	lda $0a7a.w                                                  ; $b613 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $b613 : $ad, $7a, $0a
 	cmp #$01.b                                                  ; $b616 : $c9, $01
 	beq br_02_b67b                                                  ; $b618 : $f0, $61
 
@@ -8168,14 +8214,14 @@ br_02_b61a:
 	cmp #$ff.b                                                  ; $b624 : $c9, $ff
 	bne br_02_b639                                                  ; $b626 : $d0, $11
 
-	lda $0a7a.w                                                  ; $b628 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $b628 : $ad, $7a, $0a
 	dea                                                  ; $b62b : $3a
 	bra br_02_b639                                                  ; $b62c : $80, $0b
 
 br_02_b62e:
 	lda $151b.w                                                  ; $b62e : $ad, $1b, $15
 	ina                                                  ; $b631 : $1a
-	cmp $0a7a.w                                                  ; $b632 : $cd, $7a, $0a
+	cmp wNumPartyChars.w                                                  ; $b632 : $cd, $7a, $0a
 	bne br_02_b639                                                  ; $b635 : $d0, $02
 
 	lda #$00.b                                                  ; $b637 : $a9, $00
@@ -8194,7 +8240,7 @@ br_02_b639:
 	bne br_02_b61a                                                  ; $b650 : $d0, $c8
 
 	lda #$00.b                                                  ; $b652 : $a9, $00
-	jsr $80953b.l                                                  ; $b654 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b654 : $22, $3b, $95, $80
 	rep #ACCU_8                                                  ; $b658 : $c2, $20
 	lda #$0082.w                                                  ; $b65a : $a9, $82, $00
 	ldx #$1e0a.w                                                  ; $b65d : $a2, $0a, $1e
@@ -8294,12 +8340,12 @@ Call_02_b6ef:
 	sep #ACCU_8                                                  ; $b70d : $e2, $20
 	ldx $14af.w                                                  ; $b70f : $ae, $af, $14
 	ldy $14b0.w                                                  ; $b712 : $ac, $b0, $14
-	lda $0a7b.w, X                                                  ; $b715 : $bd, $7b, $0a
+	lda wPartCharTypeIdxes.w, X                                                  ; $b715 : $bd, $7b, $0a
 	xba                                                  ; $b718 : $eb
-	lda $0a7b.w, Y                                                  ; $b719 : $b9, $7b, $0a
-	sta $0a7b.w, X                                                  ; $b71c : $9d, $7b, $0a
+	lda wPartCharTypeIdxes.w, Y                                                  ; $b719 : $b9, $7b, $0a
+	sta wPartCharTypeIdxes.w, X                                                  ; $b71c : $9d, $7b, $0a
 	xba                                                  ; $b71f : $eb
-	sta $0a7b.w, Y                                                  ; $b720 : $99, $7b, $0a
+	sta wPartCharTypeIdxes.w, Y                                                  ; $b720 : $99, $7b, $0a
 	lda $1268.w, X                                                  ; $b723 : $bd, $68, $12
 	xba                                                  ; $b726 : $eb
 	lda $1268.w, Y                                                  ; $b727 : $b9, $68, $12
@@ -8414,7 +8460,7 @@ Jump_02_b7fe:
 
 br_02_b802:
 	lda #$02.b                                                  ; $b802 : $a9, $02
-	jsr $80953b.l                                                  ; $b804 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b804 : $22, $3b, $95, $80
 	lda $14b3.w                                                  ; $b808 : $ad, $b3, $14
 	jsr JumpTable.w                                                  ; $b80b : $20, $28, $80
 	clc                                                  ; $b80e : $18
@@ -8500,7 +8546,7 @@ br_02_b884:
 	bra br_02_b865                                                  ; $b886 : $80, $dd
 
 br_02_b888:
-	lda $14ac.w                                                  ; $b888 : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $b888 : $ad, $ac, $14
 	and #$0c.b                                                  ; $b88b : $29, $0c
 	beq br_02_b884                                                  ; $b88d : $f0, $f5
 
@@ -8582,7 +8628,7 @@ br_02_b904:
 
 Call_02_b907:
 	lda #$02.b                                                  ; $b907 : $a9, $02
-	jsr $80953b.l                                                  ; $b909 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b909 : $22, $3b, $95, $80
 	jsr Call_02_9ffb.w                                                  ; $b90d : $20, $fb, $9f
 	jsr Call_02_f846.w                                                  ; $b910 : $20, $46, $f8
 	jmp Jump_02_b950.w                                                  ; $b913 : $4c, $50, $b9
@@ -8711,7 +8757,7 @@ br_02_b9be:
 
 br_02_b9cb:
 	lda #$02.b                                                  ; $b9cb : $a9, $02
-	jsr $80953b.l                                                  ; $b9cd : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b9cd : $22, $3b, $95, $80
 	jsr Call_02_f846.w                                                  ; $b9d1 : $20, $46, $f8
 	ldx $2a                                                  ; $b9d4 : $a6, $2a
 	jsr $81f4d5.l                                                  ; $b9d6 : $22, $d5, $f4, $81
@@ -8972,7 +9018,7 @@ Call_02_bb91:
 	bcs br_02_bbe6                                                  ; $bb9c : $b0, $48
 
 	lda #$02.b                                                  ; $bb9e : $a9, $02
-	jsr $80953b.l                                                  ; $bba0 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $bba0 : $22, $3b, $95, $80
 	lda #$05.b                                                  ; $bba4 : $a9, $05
 	ldx #$0008.w                                                  ; $bba6 : $a2, $08, $00
 	jsr Call_02_895b.w                                                  ; $bba9 : $20, $5b, $89
@@ -9052,7 +9098,7 @@ Call_02_bc46:
 	bne br_02_bc94                                                  ; $bc4c : $d0, $46
 
 	lda #$02.b                                                  ; $bc4e : $a9, $02
-	jsr $80953b.l                                                  ; $bc50 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $bc50 : $22, $3b, $95, $80
 	lda #$05.b                                                  ; $bc54 : $a9, $05
 	ldx #$0008.w                                                  ; $bc56 : $a2, $08, $00
 	jsr Call_02_895b.w                                                  ; $bc59 : $20, $5b, $89
@@ -9478,7 +9524,7 @@ br_02_bf3b:
 	bra br_02_bf28                                                  ; $bf3d : $80, $e9
 
 br_02_bf3f:
-	lda $14ac.w                                                  ; $bf3f : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $bf3f : $ad, $ac, $14
 	bit #$02.b                                                  ; $bf42 : $89, $02
 	bne br_02_bf4c                                                  ; $bf44 : $d0, $06
 
@@ -9622,7 +9668,7 @@ br_02_c011:
 
 br_02_c029:
 	lda #$02.b                                                  ; $c029 : $a9, $02
-	jsr $80953b.l                                                  ; $c02b : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $c02b : $22, $3b, $95, $80
 	lda #$05.b                                                  ; $c02f : $a9, $05
 	ldx #$0006.w                                                  ; $c031 : $a2, $06, $00
 	jsr Call_02_895b.w                                                  ; $c034 : $20, $5b, $89
@@ -9732,7 +9778,7 @@ br_02_c0dd:
 	bra br_02_c0be                                                  ; $c0df : $80, $dd
 
 br_02_c0e1:
-	lda $47                                                  ; $c0e1 : $a5, $47
+	lda wJoy1CurrHeld+1                                                 ; $c0e1 : $a5, $47
 	bit #$04.b                                                  ; $c0e3 : $89, $04
 	beq br_02_c0dd                                                  ; $c0e5 : $f0, $f6
 
@@ -9749,7 +9795,7 @@ br_02_c0e1:
 
 br_02_c0fb:
 	lda #$02.b                                                  ; $c0fb : $a9, $02
-	jsr $80953b.l                                                  ; $c0fd : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $c0fd : $22, $3b, $95, $80
 
 br_02_c101:
 	lda $14b3.w                                                  ; $c101 : $ad, $b3, $14
@@ -9798,7 +9844,7 @@ br_02_c145:
 	bcs br_02_c16d                                                  ; $c14d : $b0, $1e
 
 	lda #$02.b                                                  ; $c14f : $a9, $02
-	jsr $80953b.l                                                  ; $c151 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $c151 : $22, $3b, $95, $80
 	jsr Call_02_c504.w                                                  ; $c155 : $20, $04, $c5
 	rep #ACCU_8                                                  ; $c158 : $c2, $20
 	lda $0000.w, X                                                  ; $c15a : $bd, $00, $00
@@ -9838,7 +9884,7 @@ Jump_02_c188:
 
 br_02_c18c:
 	lda #$02.b                                                  ; $c18c : $a9, $02
-	jsr $80953b.l                                                  ; $c18e : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $c18e : $22, $3b, $95, $80
 
 br_02_c192:
 	rep #ACCU_8                                                  ; $c192 : $c2, $20
@@ -9858,7 +9904,7 @@ br_02_c192:
 
 
 br_02_c1b5:
-	lda $14ac.w                                                  ; $c1b5 : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $c1b5 : $ad, $ac, $14
 	bit #$03.b                                                  ; $c1b8 : $89, $03
 	beq br_02_c1fa                                                  ; $c1ba : $f0, $3e
 
@@ -9866,7 +9912,7 @@ br_02_c1b5:
 	bra br_02_c1e0                                                  ; $c1bf : $80, $1f
 
 br_02_c1c1:
-	lda $14ac.w                                                  ; $c1c1 : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $c1c1 : $ad, $ac, $14
 	bit #$02.b                                                  ; $c1c4 : $89, $02
 	beq br_02_c1d4                                                  ; $c1c6 : $f0, $0c
 
@@ -9925,7 +9971,7 @@ br_02_c21c:
 	bcs br_02_c243                                                  ; $c223 : $b0, $1e
 
 	sta $11a4.w                                                  ; $c225 : $8d, $a4, $11
-	lda $14ac.w                                                  ; $c228 : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $c228 : $ad, $ac, $14
 	bit #$08.b                                                  ; $c22b : $89, $08
 	beq br_02_c234                                                  ; $c22d : $f0, $05
 
@@ -10596,7 +10642,7 @@ br_02_c6a0:
 
 br_02_c6a2:
 	lda #$02.b                                                  ; $c6a2 : $a9, $02
-	jsr $80953b.l                                                  ; $c6a4 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $c6a4 : $22, $3b, $95, $80
 	rep #ACCU_8                                                  ; $c6a8 : $c2, $20
 	lda #$0001.w                                                  ; $c6aa : $a9, $01, $00
 	ldx $14af.w                                                  ; $c6ad : $ae, $af, $14
@@ -11257,7 +11303,7 @@ br_02_cb23:
 	pla                                                  ; $cb2c : $68
 	sta $04                                                  ; $cb2d : $85, $04
 	lda #$73.b                                                  ; $cb2f : $a9, $73
-	jsr $80953b.l                                                  ; $cb31 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $cb31 : $22, $3b, $95, $80
 	ldx #$0010.w                                                  ; $cb35 : $a2, $10, $00
 
 br_02_cb38:
@@ -11496,7 +11542,7 @@ br_02_ccc5:
 	jsr Call_02_fad0.w                                                  ; $cccd : $20, $d0, $fa
 	sep #ACCU_8                                                  ; $ccd0 : $e2, $20
 	lda #$02.b                                                  ; $ccd2 : $a9, $02
-	jsr $80953b.l                                                  ; $ccd4 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ccd4 : $22, $3b, $95, $80
 	lda #$3c.b                                                  ; $ccd8 : $a9, $3c
 	jsr Call_02_9353.w                                                  ; $ccda : $20, $53, $93
 	lda #$3e.b                                                  ; $ccdd : $a9, $3e
@@ -13125,7 +13171,7 @@ Call_02_d8a5:
 	ldx #$0007.w                                                  ; $d8c4 : $a2, $07, $00
 	ldy #$0008.w                                                  ; $d8c7 : $a0, $08, $00
 	jsr Call_02_89ec.w                                                  ; $d8ca : $20, $ec, $89
-	lda $0a7a.w                                                  ; $d8cd : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $d8cd : $ad, $7a, $0a
 	sta $14f4.w                                                  ; $d8d0 : $8d, $f4, $14
 	rts                                                  ; $d8d3 : $60
 
@@ -13183,7 +13229,7 @@ Call_02_d905:
 	ldy #$0085.w                                                  ; $d957 : $a0, $85, $00
 	ldx #$0003.w                                                  ; $d95a : $a2, $03, $00
 	jsr Call_02_891e.w                                                  ; $d95d : $20, $1e, $89
-	lda $0a7a.w                                                  ; $d960 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $d960 : $ad, $7a, $0a
 	sta $14f4.w                                                  ; $d963 : $8d, $f4, $14
 	lda #$0b.b                                                  ; $d966 : $a9, $0b
 	jsr Call_02_93f6.w                                                  ; $d968 : $20, $f6, $93
@@ -13284,7 +13330,7 @@ br_02_da38:
 	cmp $02d009.l                                                  ; $da44 : $cf, $09, $d0, $02
 	inc $04                                                  ; $da48 : $e6, $04
 	inc $22                                                  ; $da4a : $e6, $22
-	lda $0a7a.w                                                  ; $da4c : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $da4c : $ad, $7a, $0a
 	and #$ff.b                                                  ; $da4f : $29, $ff
 	.db $00                                                  ; $da51 : $00
 	cmp $22                                                  ; $da52 : $c5, $22
@@ -13367,7 +13413,7 @@ br_02_dac2:
 	bra br_02_daaf                                                  ; $dac4 : $80, $e9
 
 br_02_dac6:
-	lda $47                                                  ; $dac6 : $a5, $47
+	lda wJoy1CurrHeld+1                                                 ; $dac6 : $a5, $47
 	and #$0c.b                                                  ; $dac8 : $29, $0c
 	beq br_02_dac2                                                  ; $daca : $f0, $f6
 
@@ -13394,7 +13440,7 @@ Call_02_dad8:
 
 br_02_daf5:
 	lda #$02.b                                                  ; $daf5 : $a9, $02
-	jsr $80953b.l                                                  ; $daf7 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $daf7 : $22, $3b, $95, $80
 	lda $14b9.w                                                  ; $dafb : $ad, $b9, $14
 	beq br_02_dabe                                                  ; $dafe : $f0, $be
 
@@ -13922,9 +13968,9 @@ Call_02_de75:
 
 br_02_de89:
 	lda #$08.b                                                  ; $de89 : $a9, $08
-	jsr $80953b.l                                                  ; $de8b : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $de8b : $22, $3b, $95, $80
 	lda #$7b.b                                                  ; $de8f : $a9, $7b
-	jsr $80953b.l                                                  ; $de91 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $de91 : $22, $3b, $95, $80
 	lda #$05.b                                                  ; $de95 : $a9, $05
 	ldx #$0007.w                                                  ; $de97 : $a2, $07, $00
 	jsr Call_02_895b.w                                                  ; $de9a : $20, $5b, $89
@@ -13956,7 +14002,7 @@ br_02_debf:
 
 br_02_dec4:
 	lda #$02.b                                                  ; $dec4 : $a9, $02
-	jsr $80953b.l                                                  ; $dec6 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $dec6 : $22, $3b, $95, $80
 	jsr Call_02_d970.w                                                  ; $deca : $20, $70, $d9
 	bra br_02_dee2                                                  ; $decd : $80, $13
 
@@ -13988,7 +14034,7 @@ br_02_deea:
 
 br_02_deef:
 	lda #$02.b                                                  ; $deef : $a9, $02
-	jsr $80953b.l                                                  ; $def1 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $def1 : $22, $3b, $95, $80
 	rep #ACCU_8                                                  ; $def5 : $c2, $20
 	lda $14af.w                                                  ; $def7 : $ad, $af, $14
 	asl                                                  ; $defa : $0a
@@ -14031,7 +14077,7 @@ br_02_df33:
 
 
 	lda #$02.b                                                  ; $df45 : $a9, $02
-	jsr $80953b.l                                                  ; $df47 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $df47 : $22, $3b, $95, $80
 	jsr Call_02_d7bc.w                                                  ; $df4b : $20, $bc, $d7
 	bra br_02_df63                                                  ; $df4e : $80, $13
 
@@ -14212,7 +14258,7 @@ br_02_e03f:
 	bne br_02_e077                                                  ; $e050 : $d0, $25
 
 	lda #$02.b                                                  ; $e052 : $a9, $02
-	jsr $80953b.l                                                  ; $e054 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $e054 : $22, $3b, $95, $80
 	jsr Call_02_dfc4.w                                                  ; $e058 : $20, $c4, $df
 	php                                                  ; $e05b : $08
 	lda $1540.w                                                  ; $e05c : $ad, $40, $15
@@ -14375,7 +14421,7 @@ br_02_e164:
 
 
 	lda #$02.b                                                  ; $e167 : $a9, $02
-	jsr $80953b.l                                                  ; $e169 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $e169 : $22, $3b, $95, $80
 	jsr Call_02_d8d4.w                                                  ; $e16d : $20, $d4, $d8
 
 br_02_e170:
@@ -14486,7 +14532,7 @@ Call_02_e20c:
 
 
 Call_02_e22c:
-	lda $47                                                  ; $e22c : $a5, $47
+	lda wJoy1CurrHeld+1                                                 ; $e22c : $a5, $47
 	bit #$08.b                                                  ; $e22e : $89, $08
 	bne br_02_e23f                                                  ; $e230 : $d0, $0d
 
@@ -14915,7 +14961,7 @@ Call_02_e49e:
 
 Call_02_e4d5:
 	rep #ACCU_8                                                  ; $e4d5 : $c2, $20
-	lda $0a7a.w                                                  ; $e4d7 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $e4d7 : $ad, $7a, $0a
 	and #$00ff.w                                                  ; $e4da : $29, $ff, $00
 	sta $26                                                  ; $e4dd : $85, $26
 	lda #$3d00.w                                                  ; $e4df : $a9, $00, $3d
@@ -15027,7 +15073,7 @@ Call_02_e569:
 
 Call_02_e586:
 	rep #ACCU_8                                                  ; $e586 : $c2, $20
-	lda $0a7a.w                                                  ; $e588 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $e588 : $ad, $7a, $0a
 	and #$00ff.w                                                  ; $e58b : $29, $ff, $00
 	sta $26                                                  ; $e58e : $85, $26
 	ldx #$0000.w                                                  ; $e590 : $a2, $00, $00
@@ -15081,7 +15127,7 @@ br_02_e5dd:
 
 Call_02_e5e1:
 	rep #ACCU_8                                                  ; $e5e1 : $c2, $20
-	lda $0a7a.w                                                  ; $e5e3 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $e5e3 : $ad, $7a, $0a
 	and #$00ff.w                                                  ; $e5e6 : $29, $ff, $00
 	sta $26                                                  ; $e5e9 : $85, $26
 	ldx #$0000.w                                                  ; $e5eb : $a2, $00, $00
@@ -15213,7 +15259,7 @@ br_02_e6a9:
 	jsr Call_02_e6be.w                                                  ; $e6af : $20, $be, $e6
 	inc $22                                                  ; $e6b2 : $e6, $22
 	lda $22                                                  ; $e6b4 : $a5, $22
-	cmp $0a7a.w                                                  ; $e6b6 : $cd, $7a, $0a
+	cmp wNumPartyChars.w                                                  ; $e6b6 : $cd, $7a, $0a
 	bne br_02_e6a9                                                  ; $e6b9 : $d0, $ee
 
 	rep #ACCU_8                                                  ; $e6bb : $c2, $20
@@ -15481,7 +15527,7 @@ br_02_e897:
 	ldx $2a                                                  ; $e89d : $a6, $2a
 	jsr $81f4d5.l                                                  ; $e89f : $22, $d5, $f4, $81
 	inc $22                                                  ; $e8a3 : $e6, $22
-	lda $0a7a.w                                                  ; $e8a5 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $e8a5 : $ad, $7a, $0a
 	and #$00ff.w                                                  ; $e8a8 : $29, $ff, $00
 	cmp $22                                                  ; $e8ab : $c5, $22
 	bne br_02_e897                                                  ; $e8ad : $d0, $e8
@@ -15660,7 +15706,7 @@ br_02_e9ee:
 
 br_02_e9f6:
 	lda #$02.b                                                  ; $e9f6 : $a9, $02
-	jsr $80953b.l                                                  ; $e9f8 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $e9f8 : $22, $3b, $95, $80
 	lda #$05.b                                                  ; $e9fc : $a9, $05
 	ldx #$0006.w                                                  ; $e9fe : $a2, $06, $00
 	jsr Call_02_895b.w                                                  ; $ea01 : $20, $5b, $89
@@ -15679,7 +15725,7 @@ br_02_e9f6:
 
 
 br_02_ea22:
-	lda $14ac.w                                                  ; $ea22 : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $ea22 : $ad, $ac, $14
 	bit #$04.b                                                  ; $ea25 : $89, $04
 	beq br_02_e9ee                                                  ; $ea27 : $f0, $c5
 
@@ -15719,7 +15765,7 @@ br_02_ea4c:
 
 br_02_ea54:
 	jsr Call_02_f3dd.w                                                  ; $ea54 : $20, $dd, $f3
-	lda $14ac.w                                                  ; $ea57 : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $ea57 : $ad, $ac, $14
 	bit #$08.b                                                  ; $ea5a : $89, $08
 	beq br_02_ea7e                                                  ; $ea5c : $f0, $20
 
@@ -15756,7 +15802,7 @@ br_02_ea84:
 
 br_02_ea97:
 	lda #$02.b                                                  ; $ea97 : $a9, $02
-	jsr $80953b.l                                                  ; $ea99 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ea99 : $22, $3b, $95, $80
 	lda $14b3.w                                                  ; $ea9d : $ad, $b3, $14
 	jsr $80905f.l                                                  ; $eaa0 : $22, $5f, $90, $80
 	bcs br_02_ea84                                                  ; $eaa4 : $b0, $de
@@ -15840,7 +15886,7 @@ br_02_eb25:
 	bcs br_02_eb55                                                  ; $eb38 : $b0, $1b
 
 	lda #$02.b                                                  ; $eb3a : $a9, $02
-	jsr $80953b.l                                                  ; $eb3c : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $eb3c : $22, $3b, $95, $80
 	jsr Call_02_eff6.w                                                  ; $eb40 : $20, $f6, $ef
 	jsr Call_02_eb9a.w                                                  ; $eb43 : $20, $9a, $eb
 	bcc br_02_eb55                                                  ; $eb46 : $90, $0d
@@ -15862,7 +15908,7 @@ br_02_eb55:
 	ora $14b3.w                                                  ; $eb6b : $0d, $b3, $14
 	sta $700000.l                                                  ; $eb6e : $8f, $00, $00, $70
 	lda #$7a.b                                                  ; $eb72 : $a9, $7a
-	jsr $80953b.l                                                  ; $eb74 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $eb74 : $22, $3b, $95, $80
 	lda #$88.b                                                  ; $eb78 : $a9, $88
 	tsb $74                                                  ; $eb7a : $04, $74
 	lda #$40.b                                                  ; $eb7c : $a9, $40
@@ -15919,7 +15965,7 @@ br_02_ebb3:
 	bne br_02_ebcf                                                  ; $ebc7 : $d0, $06
 
 	lda #$02.b                                                  ; $ebc9 : $a9, $02
-	jsr $80953b.l                                                  ; $ebcb : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ebcb : $22, $3b, $95, $80
 
 br_02_ebcf:
 	clc                                                  ; $ebcf : $18
@@ -15928,7 +15974,7 @@ br_02_ebcf:
 
 br_02_ebd1:
 	lda #$02.b                                                  ; $ebd1 : $a9, $02
-	jsr $80953b.l                                                  ; $ebd3 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ebd3 : $22, $3b, $95, $80
 	bra br_02_ebe6                                                  ; $ebd7 : $80, $0d
 
 br_02_ebd9:
@@ -15936,7 +15982,7 @@ br_02_ebd9:
 	bne br_02_ebaf                                                  ; $ebdc : $d0, $d1
 
 	lda #$02.b                                                  ; $ebde : $a9, $02
-	jsr $80953b.l                                                  ; $ebe0 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ebe0 : $22, $3b, $95, $80
 	clc                                                  ; $ebe4 : $18
 	rts                                                  ; $ebe5 : $60
 
@@ -15988,7 +16034,7 @@ br_02_ec25:
 
 br_02_ec29:
 	lda #$02.b                                                  ; $ec29 : $a9, $02
-	jsr $80953b.l                                                  ; $ec2b : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ec2b : $22, $3b, $95, $80
 	lda $155b.w                                                  ; $ec2f : $ad, $5b, $15
 	beq br_02_ec3a                                                  ; $ec32 : $f0, $06
 
@@ -16008,7 +16054,7 @@ br_02_ec3f:
 
 br_02_ec49:
 	lda #$02.b                                                  ; $ec49 : $a9, $02
-	jsr $80953b.l                                                  ; $ec4b : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ec4b : $22, $3b, $95, $80
 	jsr $868b32.l                                                  ; $ec4f : $22, $32, $8b, $86
 	rts                                                  ; $ec53 : $60
 
@@ -16022,7 +16068,7 @@ br_02_ec54:
 
 br_02_ec60:
 	ldx #$0005.w                                                  ; $ec60 : $a2, $05, $00
-	lda $14ac.w                                                  ; $ec63 : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $ec63 : $ad, $ac, $14
 	bit #$08.b                                                  ; $ec66 : $89, $08
 	beq br_02_ec73                                                  ; $ec68 : $f0, $09
 
@@ -16122,7 +16168,7 @@ br_02_ecd4:
 
 br_02_ecdc:
 	lda #$02.b                                                  ; $ecdc : $a9, $02
-	jsr $80953b.l                                                  ; $ecde : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ecde : $22, $3b, $95, $80
 	lda $14b3.w                                                  ; $ece2 : $ad, $b3, $14
 	dea                                                  ; $ece5 : $3a
 	sta $31                                                  ; $ece6 : $85, $31
@@ -16176,7 +16222,7 @@ br_02_ed20:
 
 br_02_ed25:
 	lda #$02.b                                                  ; $ed25 : $a9, $02
-	jsr $80953b.l                                                  ; $ed27 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ed27 : $22, $3b, $95, $80
 	jsr Call_02_9984.w                                                  ; $ed2b : $20, $84, $99
 	stz $14db.w                                                  ; $ed2e : $9c, $db, $14
 	stz $14ed.w                                                  ; $ed31 : $9c, $ed, $14
@@ -16223,7 +16269,7 @@ br_02_ed67:
 	jsr Call_02_983d.w                                                  ; $ed7d : $20, $3d, $98
 	jsr Call_02_eddf.w                                                  ; $ed80 : $20, $df, $ed
 	lda #$7b.b                                                  ; $ed83 : $a9, $7b
-	jsr $80953b.l                                                  ; $ed85 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ed85 : $22, $3b, $95, $80
 	ldy #$1802.w                                                  ; $ed89 : $a0, $02, $18
 	jsr Call_02_f637.w                                                  ; $ed8c : $20, $37, $f6
 	bra br_02_edaa                                                  ; $ed8f : $80, $19
@@ -16239,7 +16285,7 @@ br_02_ed91:
 
 br_02_eda4:
 	lda #$02.b                                                  ; $eda4 : $a9, $02
-	jsr $80953b.l                                                  ; $eda6 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $eda6 : $22, $3b, $95, $80
 
 br_02_edaa:
 	rep #ACCU_8                                                  ; $edaa : $c2, $20
@@ -16337,7 +16383,7 @@ br_02_ee68:
 
 br_02_ee6c:
 	lda #$02.b                                                  ; $ee6c : $a9, $02
-	jsr $80953b.l                                                  ; $ee6e : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ee6e : $22, $3b, $95, $80
 	lda #$05.b                                                  ; $ee72 : $a9, $05
 	ldx #$0006.w                                                  ; $ee74 : $a2, $06, $00
 	jsr Call_02_895b.w                                                  ; $ee77 : $20, $5b, $89
@@ -18696,7 +18742,7 @@ Call_02_fd81:
 	ldx #$8040.w                                                  ; $fd8d : $a2, $40, $80
 	stx $156e.w                                                  ; $fd90 : $8e, $6e, $15
 	lda #$02.b                                                  ; $fd93 : $a9, $02
-	jsr $80953b.l                                                  ; $fd95 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $fd95 : $22, $3b, $95, $80
 	jsr Call_02_8345.w                                                  ; $fd99 : $20, $45, $83
 
 br_02_fd9c:
@@ -18714,18 +18760,18 @@ br_02_fdac:
 	bcs br_02_fdac                                                  ; $fdb5 : $b0, $f5
 
 	lda #$02.b                                                  ; $fdb7 : $a9, $02
-	jsr $80953b.l                                                  ; $fdb9 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $fdb9 : $22, $3b, $95, $80
 	jsr Call_02_fdec.w                                                  ; $fdbd : $20, $ec, $fd
 	jsr Call_02_935d.l                                                  ; $fdc0 : $22, $5d, $93, $82
 	bcs br_02_fdce                                                  ; $fdc4 : $b0, $08
 
 	lda #$02.b                                                  ; $fdc6 : $a9, $02
-	jsr $80953b.l                                                  ; $fdc8 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $fdc8 : $22, $3b, $95, $80
 	bra br_02_fd9c                                                  ; $fdcc : $80, $ce
 
 br_02_fdce:
 	lda #$01.b                                                  ; $fdce : $a9, $01
-	jsr $80953b.l                                                  ; $fdd0 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $fdd0 : $22, $3b, $95, $80
 	jsr Call_02_836a.w                                                  ; $fdd4 : $20, $6a, $83
 	jsr Call_02_fec0.w                                                  ; $fdd7 : $20, $c0, $fe
 	lda $1516.w                                                  ; $fdda : $ad, $16, $15

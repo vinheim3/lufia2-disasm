@@ -10269,7 +10269,7 @@ br_17_cebb:
 	pla                                                  ; $d02a : $68
 	php                                                  ; $d02b : $08
 	txa                                                  ; $d02c : $8a
-	tsb $14ac.w                                                  ; $d02d : $0c, $ac, $14
+	tsb wJoy1StickyPressed.w+1                                                  ; $d02d : $0c, $ac, $14
 
 br_17_d030:
 	dec $2614.w                                                  ; $d030 : $ce, $14, $26

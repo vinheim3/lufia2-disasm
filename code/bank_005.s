@@ -8779,7 +8779,7 @@ br_05_bb8a:
 	bra br_05_bb97                                                  ; $bb92 : $80, $03
 
 br_05_bb94:
-	lda $0a7a.w                                                  ; $bb94 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $bb94 : $ad, $7a, $0a
 
 br_05_bb97:
 	tax                                                  ; $bb97 : $aa
@@ -10495,7 +10495,7 @@ br_05_c650:
 
 br_05_c65c:
 	lda $0000.w, X                                                  ; $c65c : $bd, $00, $00
-	sta $0a7b.w, Y                                                  ; $c65f : $99, $7b, $0a
+	sta wPartCharTypeIdxes.w, Y                                                  ; $c65f : $99, $7b, $0a
 	inx                                                  ; $c662 : $e8
 	dey                                                  ; $c663 : $88
 	bpl br_05_c65c                                                  ; $c664 : $10, $f6
@@ -10573,7 +10573,7 @@ br_05_c6d9:
 	ldy #$0000.w                                                  ; $c6ef : $a0, $00, $00
 
 br_05_c6f2:
-	lda $0a7b.w, X                                                  ; $c6f2 : $bd, $7b, $0a
+	lda wPartCharTypeIdxes.w, X                                                  ; $c6f2 : $bd, $7b, $0a
 	bmi br_05_c6f8                                                  ; $c6f5 : $30, $01
 
 	iny                                                  ; $c6f7 : $c8
@@ -10583,7 +10583,7 @@ br_05_c6f8:
 	bpl br_05_c6f2                                                  ; $c6f9 : $10, $f7
 
 	tya                                                  ; $c6fb : $98
-	sta $0a7a.w                                                  ; $c6fc : $8d, $7a, $0a
+	sta wNumPartyChars.w                                                  ; $c6fc : $8d, $7a, $0a
 	jsr $82994e.l                                                  ; $c6ff : $22, $4e, $99, $82
 	jsr $82c515.l                                                  ; $c703 : $22, $15, $c5, $82
 	jsr $82c261.l                                                  ; $c707 : $22, $61, $c2, $82
@@ -10982,7 +10982,7 @@ br_05_c96d:
 	ldy #$0004.w                                                  ; $c976 : $a0, $04, $00
 
 br_05_c979:
-	lda $0a7b.w, Y                                                  ; $c979 : $b9, $7b, $0a
+	lda wPartCharTypeIdxes.w, Y                                                  ; $c979 : $b9, $7b, $0a
 	sta $0000.w, X                                                  ; $c97c : $9d, $00, $00
 	inx                                                  ; $c97f : $e8
 	dey                                                  ; $c980 : $88
@@ -15968,7 +15968,7 @@ br_05_e95d:
 	.db $d0, $8d                                                  ; $e9a6 : $d0, $8d
 
 	lda #$6b.b                                                  ; $e9a8 : $a9, $6b
-	jsr $80953b.l                                                  ; $e9aa : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $e9aa : $22, $3b, $95, $80
 	lda #$0c.b                                                  ; $e9ae : $a9, $0c
 
 br_05_e9b0:

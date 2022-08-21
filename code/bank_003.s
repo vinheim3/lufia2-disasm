@@ -83,7 +83,7 @@ br_03_8070:
 	cmp #$ff.b                                                  ; $8095 : $c9, $ff
 	beq br_03_809d                                                  ; $8097 : $f0, $04
 
-	jsr $80953b.l                                                  ; $8099 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $8099 : $22, $3b, $95, $80
 
 br_03_809d:
 	lda $099b.w                                                  ; $809d : $ad, $9b, $09
@@ -267,7 +267,7 @@ Call_03_8192:
 	cmp #$ff.b                                                  ; $81bc : $c9, $ff
 	beq br_03_81c4                                                  ; $81be : $f0, $04
 
-	jsr $80953b.l                                                  ; $81c0 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $81c0 : $22, $3b, $95, $80
 
 br_03_81c4:
 	plp                                                  ; $81c4 : $28
@@ -762,7 +762,7 @@ br_03_850f:
 	tdc                                                  ; $8518 : $7b
 	sta $7fd0a1.l                                                  ; $8519 : $8f, $a1, $d0, $7f
 	lda #$08.b                                                  ; $851d : $a9, $08
-	jsr $80953b.l                                                  ; $851f : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $851f : $22, $3b, $95, $80
 	jsr Call_03_c0ef.w                                                  ; $8523 : $20, $ef, $c0
 	ldx #$0000.w                                                  ; $8526 : $a2, $00, $00
 	ldy #$0020.w                                                  ; $8529 : $a0, $20, $00
@@ -10653,7 +10653,7 @@ Call_03_c652:
 br_03_c65c:
 	phy                                                  ; $c65c : $5a
 	tdc                                                  ; $c65d : $7b
-	lda $0a7b.w, Y                                                  ; $c65e : $b9, $7b, $0a
+	lda wPartCharTypeIdxes.w, Y                                                  ; $c65e : $b9, $7b, $0a
 	cmp #$ff.b                                                  ; $c661 : $c9, $ff
 	beq br_03_c684                                                  ; $c663 : $f0, $1f
 

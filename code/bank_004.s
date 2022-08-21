@@ -1101,7 +1101,7 @@ br_04_8774:
 	bne br_04_8789                                                  ; $877c : $d0, $0b
 
 	xba                                                  ; $877e : $eb
-	jsr $80953b.l                                                  ; $877f : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $877f : $22, $3b, $95, $80
 	lda #$ff.b                                                  ; $8783 : $a9, $ff
 	sta $0017ac.l                                                  ; $8785 : $8f, $ac, $17, $00
 
@@ -1159,7 +1159,7 @@ br_04_87db:
 
 br_04_87e7:
 	tdc                                                  ; $87e7 : $7b
-	lda $0a7b.w, X                                                  ; $87e8 : $bd, $7b, $0a
+	lda wPartCharTypeIdxes.w, X                                                  ; $87e8 : $bd, $7b, $0a
 	and #$00ff.w                                                  ; $87eb : $29, $ff, $00
 	cmp #$00ff.w                                                  ; $87ee : $c9, $ff, $00
 	beq br_04_8820                                                  ; $87f1 : $f0, $2d
@@ -5650,7 +5650,7 @@ br_04_a5fb:
 
 
 Call_04_a607:
-	jsr $80953b.l                                                  ; $a607 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $a607 : $22, $3b, $95, $80
 	rts                                                  ; $a60b : $60
 
 

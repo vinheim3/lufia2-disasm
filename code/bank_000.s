@@ -1272,8 +1272,8 @@ Call_00_8703:
 ;
 	lda wJoy1PrevHeld.w, X                                                  ; $877f : $bd, $5e, $05
 	and $0562.w                                                  ; $8782 : $2d, $62, $05
-	ora $4a, X                                                  ; $8785 : $15, $4a
-	sta $4a, X                                                  ; $8787 : $95, $4a
+	ora wJoy1InvertedStickyHeld, X                                                  ; $8785 : $15, $4a
+	sta wJoy1InvertedStickyHeld, X                                                  ; $8787 : $95, $4a
 
 ; Set a shorter sticky counter from here
 	lda #$0004.w                                                  ; $8789 : $a9, $04, $00
@@ -1284,8 +1284,8 @@ Call_00_8703:
 ;
 	sta wJoy1PrevHeld.w, X                                                  ; $8791 : $9d, $5e, $05
 	eor #$ffff.w                                                  ; $8794 : $49, $ff, $ff
-	ora $4a, X                                                  ; $8797 : $15, $4a
-	sta $4a, X                                                  ; $8799 : $95, $4a
+	ora wJoy1InvertedStickyHeld, X                                                  ; $8797 : $15, $4a
+	sta wJoy1InvertedStickyHeld, X                                                  ; $8799 : $95, $4a
 
 ; Set a longer sticky counter for the 1st repeat btns held
 	lda #$0010.w                                                              ; $879b : $a9, $10, $00
@@ -3621,6 +3621,7 @@ Call_00_9528:
 	rtl                                                  ; $953a : $6b
 
 
+todo_SoundRelated_953b:
 	pha                                                  ; $953b : $48
 	php                                                  ; $953c : $08
 	sep #ACCU_8                                                  ; $953d : $e2, $20
@@ -6082,10 +6083,12 @@ Call_00_a5b2:
 	jsr AequNextScriptByte.w                                                  ; $a5c2 : $20, $b7, $c0
 	brl Func_0_9d00                                                  ; $a5c5 : $82, $38, $f7
 
+
+;
 	jsr AequNextScriptByte.w                                                  ; $a5c8 : $20, $b7, $c0
 	phy                                                  ; $a5cb : $5a
 	pha                                                  ; $a5cc : $48
-	jsr $81f723.l                                                  ; $a5cd : $22, $23, $f7, $81
+	jsr AddANewPartyCharA.l                                                  ; $a5cd : $22, $23, $f7, $81
 	pla                                                  ; $a5d1 : $68
 	sta $54                                                  ; $a5d2 : $85, $54
 	ldx #$0004.w                                                  ; $a5d4 : $a2, $04, $00

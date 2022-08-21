@@ -14763,7 +14763,7 @@ br_0e_e602:
 	bcs br_0e_e637                                                  ; $e617 : $b0, $1e
 
 	lda #$02.b                                                  ; $e619 : $a9, $02
-	jsr $80953b.l                                                  ; $e61b : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $e61b : $22, $3b, $95, $80
 	jsr $868b32.l                                                  ; $e61f : $22, $32, $8b, $86
 	jsr Call_0e_e688.w                                                  ; $e623 : $20, $88, $e6
 	ldx #$ff.b                                                  ; $e626 : $a2, $ff
@@ -14778,7 +14778,7 @@ br_0e_e602:
 
 br_0e_e637:
 	lda #$01.b                                                  ; $e637 : $a9, $01
-	jsr $80953b.l                                                  ; $e639 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $e639 : $22, $3b, $95, $80
 	jsr $868b32.l                                                  ; $e63d : $22, $32, $8b, $86
 	rtl                                                  ; $e641 : $6b
 

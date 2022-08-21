@@ -52,11 +52,11 @@ Call_01_8000:
 	sbc [$11]                                                  ; $806f : $e7, $11
 
 @cont_8071:
-	lda $0a7a.w                                                  ; $8071 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $8071 : $ad, $7a, $0a
 	sta $153c.w                                                  ; $8074 : $8d, $3c, $15
 	ldx #$0003.w                                                  ; $8077 : $a2, $03, $00
 
--	lda $0a7b.w, X                                                  ; $807a : $bd, $7b, $0a
+-	lda wPartCharTypeIdxes.w, X                                                  ; $807a : $bd, $7b, $0a
 	sta $153d.w, X                                                  ; $807d : $9d, $3d, $15
 	dex                                                  ; $8080 : $ca
 	bpl -                                                  ; $8081 : $10, $f7
@@ -597,7 +597,7 @@ AddAnEnemySetup:
 	ldx #$00.b                                                  ; $842f : $a2, $00
 
 @loop_8431:
-	lda $0a7b.w, Y                                                  ; $8431 : $b9, $7b, $0a
+	lda wPartCharTypeIdxes.w, Y                                                  ; $8431 : $b9, $7b, $0a
 	bmi +                                                  ; $8434 : $30, $01
 	inx                                                  ; $8436 : $e8
 +	dey                                                  ; $8437 : $88
@@ -4237,7 +4237,7 @@ br_01_9df5:
 
 	lda [$c3]                                                  ; $9e13 : $a7, $c3
 	phy                                                  ; $9e15 : $5a
-	jsr $80953b.l                                                  ; $9e16 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $9e16 : $22, $3b, $95, $80
 	ply                                                  ; $9e1a : $7a
 	rep #ACCU_8                                                  ; $9e1b : $c2, $20
 	inc $c3                                                  ; $9e1d : $e6, $c3
@@ -4483,7 +4483,7 @@ Call_01_9f39:
 
 	lda [$c3]                                                  ; $9f9c : $a7, $c3
 	phy                                                  ; $9f9e : $5a
-	jsr $80953b.l                                                  ; $9f9f : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $9f9f : $22, $3b, $95, $80
 	ply                                                  ; $9fa3 : $7a
 
 br_01_9fa4:
@@ -6144,7 +6144,7 @@ br_01_ab9e:
 	jsr $85ec81.l                                                  ; $abc3 : $22, $81, $ec, $85
 	jsr Call_01_afc4.w                                                  ; $abc7 : $20, $c4, $af
 	lda #$31.b                                                  ; $abca : $a9, $31
-	jsr $80953b.l                                                  ; $abcc : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $abcc : $22, $3b, $95, $80
 	lda #$0f.b                                                  ; $abd0 : $a9, $0f
 
 br_01_abd2:
@@ -6216,7 +6216,7 @@ br_01_ac31:
 br_01_ac52:
 	sep #ACCU_8                                                  ; $ac52 : $e2, $20
 	lda #$31.b                                                  ; $ac54 : $a9, $31
-	jsr $80953b.l                                                  ; $ac56 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $ac56 : $22, $3b, $95, $80
 	lda #$3c.b                                                  ; $ac5a : $a9, $3c
 
 br_01_ac5c:
@@ -6870,7 +6870,7 @@ br_01_b0f8:
 br_01_b119:
 	sep #ACCU_8                                                  ; $b119 : $e2, $20
 	lda #$31.b                                                  ; $b11b : $a9, $31
-	jsr $80953b.l                                                  ; $b11d : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $b11d : $22, $3b, $95, $80
 	lda #$3c.b                                                  ; $b121 : $a9, $3c
 
 br_01_b123:
@@ -11085,7 +11085,7 @@ br_01_cb99:
 	beq br_01_cc07                                                  ; $cbfb : $f0, $0a
 
 	lda #$1b.b                                                  ; $cbfd : $a9, $1b
-	jsr $80953b.l                                                  ; $cbff : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $cbff : $22, $3b, $95, $80
 	jsr $849b3e.l                                                  ; $cc03 : $22, $3e, $9b, $84
 
 br_01_cc07:
@@ -11101,7 +11101,7 @@ br_01_cc07:
 
 br_01_cc14:
 	lda #$02.b                                                  ; $cc14 : $a9, $02
-	jsr $80953b.l                                                  ; $cc16 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $cc16 : $22, $3b, $95, $80
 	lda $26                                                  ; $cc1a : $a5, $26
 	dea                                                  ; $cc1c : $3a
 	and #$03.b                                                  ; $cc1d : $29, $03
@@ -11110,7 +11110,7 @@ br_01_cc14:
 
 br_01_cc20:
 	lda #$02.b                                                  ; $cc20 : $a9, $02
-	jsr $80953b.l                                                  ; $cc22 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $cc22 : $22, $3b, $95, $80
 	lda $26                                                  ; $cc26 : $a5, $26
 	dea                                                  ; $cc28 : $3a
 	and #$03.b                                                  ; $cc29 : $29, $03
@@ -11239,14 +11239,14 @@ br_01_cc96:
 	lda #$21.b                                                  ; $cd2b : $a9, $21
 	sta $09f6.w                                                  ; $cd2d : $8d, $f6, $09
 	lda #$01.b                                                  ; $cd30 : $a9, $01
-	jsr $80953b.l                                                  ; $cd32 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $cd32 : $22, $3b, $95, $80
 	lda #$ff.b                                                  ; $cd36 : $a9, $ff
 	rts                                                  ; $cd38 : $60
 
 
 br_01_cd39:
 	lda #$02.b                                                  ; $cd39 : $a9, $02
-	jsr $80953b.l                                                  ; $cd3b : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $cd3b : $22, $3b, $95, $80
 	lda $26                                                  ; $cd3f : $a5, $26
 	cmp #$03.b                                                  ; $cd41 : $c9, $03
 	beq br_01_cd48                                                  ; $cd43 : $f0, $03
@@ -12374,7 +12374,7 @@ br_01_d4a5:
 	bne br_01_d472                                                  ; $d4ab : $d0, $c5
 
 	lda #$02.b                                                  ; $d4ad : $a9, $02
-	jsr $80953b.l                                                  ; $d4af : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $d4af : $22, $3b, $95, $80
 	tdc                                                  ; $d4b3 : $7b
 	lda $001be8.l                                                  ; $d4b4 : $af, $e8, $1b, $00
 	tax                                                  ; $d4b8 : $aa
@@ -12397,7 +12397,7 @@ br_01_d4a5:
 
 Jump_01_d4d7:
 	lda #$01.b                                                  ; $d4d7 : $a9, $01
-	jsr $80953b.l                                                  ; $d4d9 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $d4d9 : $22, $3b, $95, $80
 	lda #$01.b                                                  ; $d4dd : $a9, $01
 	rts                                                  ; $d4df : $60
 
@@ -12887,7 +12887,7 @@ br_01_d79d:
 
 Jump_01_d7bb:
 	lda #$02.b                                                  ; $d7bb : $a9, $02
-	jsr $80953b.l                                                  ; $d7bd : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $d7bd : $22, $3b, $95, $80
 	ldy #$007f.w                                                  ; $d7c1 : $a0, $7f, $00
 	tdc                                                  ; $d7c4 : $7b
 
@@ -13071,7 +13071,7 @@ br_01_d8a6:
 
 Jump_01_d8c2:
 	lda #$01.b                                                  ; $d8c2 : $a9, $01
-	jsr $80953b.l                                                  ; $d8c4 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $d8c4 : $22, $3b, $95, $80
 	ldy #$007f.w                                                  ; $d8c8 : $a0, $7f, $00
 	tdc                                                  ; $d8cb : $7b
 
@@ -13364,7 +13364,7 @@ Jump_01_dac6:
 	ldx #$0000.w                                                  ; $dacd : $a2, $00, $00
 
 br_01_dad0:
-	cmp $0a7b.w, X                                                  ; $dad0 : $dd, $7b, $0a
+	cmp wPartCharTypeIdxes.w, X                                                  ; $dad0 : $dd, $7b, $0a
 	beq br_01_dad8                                                  ; $dad3 : $f0, $03
 
 	inx                                                  ; $dad5 : $e8
@@ -13444,7 +13444,7 @@ br_01_db45:
 	phx                                                  ; $db45 : $da
 	phy                                                  ; $db46 : $5a
 	lda #$44.b                                                  ; $db47 : $a9, $44
-	jsr $80953b.l                                                  ; $db49 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $db49 : $22, $3b, $95, $80
 	ldy #$f103.w                                                  ; $db4d : $a0, $03, $f1
 	jsr Call_01_dde7.w                                                  ; $db50 : $20, $e7, $dd
 	jsr Call_01_de9e.w                                                  ; $db53 : $20, $9e, $de
@@ -13599,7 +13599,7 @@ br_01_dc4f:
 	bcs br_01_dcbe                                                  ; $dc53 : $b0, $69
 
 	lda #$44.b                                                  ; $dc55 : $a9, $44
-	jsr $80953b.l                                                  ; $dc57 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $dc57 : $22, $3b, $95, $80
 	lda #$04.b                                                  ; $dc5b : $a9, $04
 	sta $00                                                  ; $dc5d : $85, $00
 	ldy #$f103.w                                                  ; $dc5f : $a0, $03, $f1
@@ -16114,7 +16114,7 @@ br_01_ec90:
 	rep #ACCU_8                                                  ; $eca2 : $c2, $20
 
 br_01_eca4:
-	lda $0a7b.w, Y                                                  ; $eca4 : $b9, $7b, $0a
+	lda wPartCharTypeIdxes.w, Y                                                  ; $eca4 : $b9, $7b, $0a
 	and #$00ff.w                                                  ; $eca7 : $29, $ff, $00
 	cmp #$00ff.w                                                  ; $ecaa : $c9, $ff, $00
 	beq br_01_ecb9                                                  ; $ecad : $f0, $0a
@@ -17714,14 +17714,15 @@ br_01_f71a:
 	rtl                                                  ; $f722 : $6b
 
 
+AddANewPartyCharA:
 	sep #IDX_8                                                  ; $f723 : $e2, $10
 	ldx #$00.b                                                  ; $f725 : $a2, $00
 
 br_01_f727:
-	ldy $0a7b.w, X                                                  ; $f727 : $bc, $7b, $0a
+	ldy wPartCharTypeIdxes.w, X                                                  ; $f727 : $bc, $7b, $0a
 	bmi br_01_f742                                                  ; $f72a : $30, $16
 
-	cmp $0a7b.w, X                                                  ; $f72c : $dd, $7b, $0a
+	cmp wPartCharTypeIdxes.w, X                                                  ; $f72c : $dd, $7b, $0a
 	beq br_01_f73c                                                  ; $f72f : $f0, $0b
 
 	inx                                                  ; $f731 : $e8
@@ -17742,8 +17743,8 @@ br_01_f73c:
 
 
 br_01_f742:
-	sta $0a7b.w, X                                                  ; $f742 : $9d, $7b, $0a
-	inc $0a7a.w                                                  ; $f745 : $ee, $7a, $0a
+	sta wPartCharTypeIdxes.w, X                                                  ; $f742 : $9d, $7b, $0a
+	inc wNumPartyChars.w                                                  ; $f745 : $ee, $7a, $0a
 	rep #IDX_8                                                  ; $f748 : $c2, $10
 	jsr Call_01_f78d.w                                                  ; $f74a : $20, $8d, $f7
 	clc                                                  ; $f74d : $18
@@ -17754,7 +17755,7 @@ br_01_f742:
 	ldx #$00.b                                                  ; $f751 : $a2, $00
 
 br_01_f753:
-	cmp $0a7b.w, X                                                  ; $f753 : $dd, $7b, $0a
+	cmp wPartCharTypeIdxes.w, X                                                  ; $f753 : $dd, $7b, $0a
 	beq br_01_f763                                                  ; $f756 : $f0, $0b
 
 	inx                                                  ; $f758 : $e8
@@ -17768,7 +17769,7 @@ br_01_f753:
 
 
 br_01_f763:
-	ldy $0a7a.w                                                  ; $f763 : $ac, $7a, $0a
+	ldy wNumPartyChars.w                                                  ; $f763 : $ac, $7a, $0a
 	dey                                                  ; $f766 : $88
 	bne br_01_f775                                                  ; $f767 : $d0, $0c
 
@@ -17778,11 +17779,11 @@ br_01_f763:
 	rtl                                                  ; $f76e : $6b
 
 
-	lda $0a7b.w, X                                                  ; $f76f : $bd, $7b, $0a
-	sta $0a7a.w, X                                                  ; $f772 : $9d, $7a, $0a
+	lda wPartCharTypeIdxes.w, X                                                  ; $f76f : $bd, $7b, $0a
+	sta wNumPartyChars.w, X                                                  ; $f772 : $9d, $7a, $0a
 
 br_01_f775:
-	sty $0a7a.w                                                  ; $f775 : $8c, $7a, $0a
+	sty wNumPartyChars.w                                                  ; $f775 : $8c, $7a, $0a
 	inx                                                  ; $f778 : $e8
 	cpx #$d004.w                                                  ; $f779 : $e0, $04, $d0
 	sbc ($a9)                                                  ; $f77c : $f2, $a9
@@ -17802,7 +17803,7 @@ Call_01_f78d:
 	ldy #$0000.w                                                  ; $f78f : $a0, $00, $00
 
 br_01_f792:
-	lda $0a7b.w, Y                                                  ; $f792 : $b9, $7b, $0a
+	lda wPartCharTypeIdxes.w, Y                                                  ; $f792 : $b9, $7b, $0a
 	bit #$0080.w                                                  ; $f795 : $89, $80, $00
 	bne br_01_f7a8                                                  ; $f798 : $d0, $0e
 

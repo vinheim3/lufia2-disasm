@@ -19,8 +19,11 @@ wJoy1CurrHeld: ; $46
 wJoy2CurrHeld: ; $48
     dw
 
-w04a:
-    ds $e-$a
+wJoy1InvertedStickyHeld: ; $4a
+    dw
+
+wJoy2InvertedStickyHeld: ; $4c
+    dw
 
 wWordInMultWordByByte: ; $4e
     dw
@@ -214,7 +217,17 @@ wCurrSpellIdx: ; $0a0b
     db
 
 w0a0c:
-    ds $8d-$c
+    ds $7a-$c
+
+wNumPartyChars: ; $0a7a
+    db
+
+; todo: unknown size
+wPartCharTypeIdxes: ; $0a7b
+    db
+
+w0a7c:
+    ds $8d-$7c
 
 ; todo: unknown size, word-sized
 ; low 9 bits is inventory item, upper 7 bits>>1 = count
@@ -257,7 +270,13 @@ wInBattleEnemyIdxes: ; $1345
     ds NUM_ENEMIES_IN_BATTLE
 
 w134b:
-    ds $605-$34b
+    ds $4ab-$34b
+
+wJoy1StickyPressed: ; $14ab
+    dw
+
+w14ad:
+    ds $605-$4ad
 
 wAccumulatedBattleExp: ; $1605
     dl

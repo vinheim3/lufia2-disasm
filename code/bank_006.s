@@ -375,15 +375,15 @@ br_06_82b8:
 
 Call_06_82c8:
 	lda #$26.b                                                  ; $82c8 : $a9, $26
-	jsr $80953b.l                                                  ; $82ca : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $82ca : $22, $3b, $95, $80
 
 br_06_82ce:
 	jsr $828b4b.l                                                  ; $82ce : $22, $4b, $8b, $82
-	lda $14ab.w                                                  ; $82d2 : $ad, $ab, $14
+	lda wJoy1StickyPressed.w                                                  ; $82d2 : $ad, $ab, $14
 	bit #$80.b                                                  ; $82d5 : $89, $80
 	bne br_06_8303                                                  ; $82d7 : $d0, $2a
 
-	lda $14ac.w                                                  ; $82d9 : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $82d9 : $ad, $ac, $14
 	bit #$90.b                                                  ; $82dc : $89, $90
 	bne br_06_8303                                                  ; $82de : $d0, $23
 
@@ -446,11 +446,11 @@ Call_06_8339:
 br_06_8339:
 	phx                                                  ; $8339 : $da
 	jsr $828b4b.l                                                  ; $833a : $22, $4b, $8b, $82
-	lda $14ab.w                                                  ; $833e : $ad, $ab, $14
+	lda wJoy1StickyPressed.w                                                  ; $833e : $ad, $ab, $14
 	bit #$80.b                                                  ; $8341 : $89, $80
 	bne br_06_8358                                                  ; $8343 : $d0, $13
 
-	lda $14ac.w                                                  ; $8345 : $ad, $ac, $14
+	lda wJoy1StickyPressed.w+1                                                  ; $8345 : $ad, $ac, $14
 	bit #$90.b                                                  ; $8348 : $89, $90
 	bne br_06_8358                                                  ; $834a : $d0, $0c
 
@@ -2270,10 +2270,10 @@ br_06_8f78:
 	lda #$00.b                                                  ; $8f7a : $a9, $00
 	xba                                                  ; $8f7c : $eb
 	ldx $04                                                  ; $8f7d : $a6, $04
-	lda $0a7b.w, X                                                  ; $8f7f : $bd, $7b, $0a
+	lda wPartCharTypeIdxes.w, X                                                  ; $8f7f : $bd, $7b, $0a
 	asl                                                  ; $8f82 : $0a
 	clc                                                  ; $8f83 : $18
-	adc $0a7b.w, X                                                  ; $8f84 : $7d, $7b, $0a
+	adc wPartCharTypeIdxes.w, X                                                  ; $8f84 : $7d, $7b, $0a
 	tax                                                  ; $8f87 : $aa
 	lda $8ee5c4.l, X                                                  ; $8f88 : $bf, $c4, $e5, $8e
 	sta $1b                                                  ; $8f8c : $85, $1b
@@ -2312,7 +2312,7 @@ br_06_8f78:
 	sep #ACCU_8                                                  ; $8fd3 : $e2, $20
 	inc $04                                                  ; $8fd5 : $e6, $04
 	lda $04                                                  ; $8fd7 : $a5, $04
-	cmp $0a7a.w                                                  ; $8fd9 : $cd, $7a, $0a
+	cmp wNumPartyChars.w                                                  ; $8fd9 : $cd, $7a, $0a
 	bne br_06_8f78                                                  ; $8fdc : $d0, $9a
 
 	ldx #$6000.w                                                  ; $8fde : $a2, $00, $60
@@ -2498,14 +2498,14 @@ Call_06_9093:
 	rep #ACCU_8                                                  ; $911f : $c2, $20
 	ldx #$04a0.w                                                  ; $9121 : $a2, $a0, $04
 	stx $02                                                  ; $9124 : $86, $02
-	lda $0a7a.w                                                  ; $9126 : $ad, $7a, $0a
+	lda wNumPartyChars.w                                                  ; $9126 : $ad, $7a, $0a
 	and #$00ff.w                                                  ; $9129 : $29, $ff, $00
 	sta $15                                                  ; $912c : $85, $15
 	stz $04                                                  ; $912e : $64, $04
 
 br_06_9130:
 	ldx $04                                                  ; $9130 : $a6, $04
-	lda $0a7b.w, X                                                  ; $9132 : $bd, $7b, $0a
+	lda wPartCharTypeIdxes.w, X                                                  ; $9132 : $bd, $7b, $0a
 	and #$00ff.w                                                  ; $9135 : $29, $ff, $00
 	tax                                                  ; $9138 : $aa
 	phb                                                  ; $9139 : $8b
@@ -4340,7 +4340,7 @@ Call_06_9c71:
 	adc $00                                                  ; $9d06 : $65, $00
 	tax                                                  ; $9d08 : $aa
 
-; get relevant byte for world map data, * 10
+; get relevant byte for world map data, * 10 (5 entries)
 	sep #ACCU_8                                                  ; $9d09 : $e2, $20
 	lda $7fe000.l, X                                                  ; $9d0b : $bf, $00, $e0, $7f
 	sta WRMPYA.w                                                  ; $9d0f : $8d, $02, $42
@@ -12626,7 +12626,7 @@ br_06_d370:
 
 
 Call_06_d378:
-	jsr $80953b.l                                                  ; $d378 : $22, $3b, $95, $80
+	jsr todo_SoundRelated_953b.l                                                  ; $d378 : $22, $3b, $95, $80
 	rts                                                  ; $d37c : $60
 
 
