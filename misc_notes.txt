@@ -45,3 +45,9 @@ Entity size types
 1 - 2 squares (vert)
 2 - 2 squares (horiz)
 3 - 4 squares (square)
+
+
+InBattleEnemyData:
+* first d bytes is name
+* +$1d.w = exp given
+* +$1f.w = gold given

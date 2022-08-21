@@ -137,7 +137,19 @@ wJoy2PrevHeld: ; $0560
     dw
 
 w0562:
-    ds $ac-$62
+    ds 7-2
+
+wBCDversionOfANum: ; $0567
+    ds 8
+
+w056f:
+    ds $70-$6f
+
+wNumToConvertToBCD: ; $0570
+    dl
+
+w0573:
+    ds $ac-$73
 
 wCurrRoomIdx: ; $05ac
     db
@@ -164,7 +176,23 @@ wCurrInBattleEnemyIdx: ; $09f2
     db
 
 w09f3:
-    ds $a06-$9f3
+    ds $a-3
+
+; ie a4 for red slime
+wHitEnemyIdx: ; $09fa
+    db
+
+w09fb:
+    ds $c-$b
+
+wCurrEnemyExpGiven: ; $09fc
+    dw
+
+wCurrEnemyGoldGiven: ; $09fe
+    dw
+
+w0a00:
+    ds 6-0
 
 wCurrItemIdx: ; $0a06
     dw
@@ -173,6 +201,8 @@ w0a08:
     ds $8d-8
 
 ; todo: unknown size, word-sized
+; low 9 bits is inventory item, upper 7 bits>>1 = count
+; since count is bcd, max is 127, though display will render as 27
 wInventoryItemsAndCounts: ; $0a8d
     db
 
@@ -187,6 +217,15 @@ w0bbf:
 
 wInBattleEnemyIdxes: ; $1345
     ds NUM_ENEMIES_IN_BATTLE
+
+w134b:
+    ds $605-$34b
+
+wAccumulatedBattleExp: ; $1605
+    dl
+
+wAccumulatedBattleGold: ; $1608
+    dl
 
 .ends
 

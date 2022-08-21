@@ -13730,7 +13730,7 @@ br_26_c5a6:
 br_26_c5b8:
 	ora ($02, X)                                                  ; $c5b8 : $01, $02
 	lsr                                                  ; $c5ba : $4a
-	eor $1608.w                                                  ; $c5bb : $4d, $08, $16
+	eor wAccumulatedBattleGold.w                                                  ; $c5bb : $4d, $08, $16
 	asl $23, X                                                  ; $c5be : $16, $23
 	.db $00                                                  ; $c5c0 : $00
 	.db $00                                                  ; $c5c1 : $00

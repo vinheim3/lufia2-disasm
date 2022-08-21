@@ -86,11 +86,11 @@ Call_01_8000:
 +	rep #ACCU_8                                                  ; $80ac : $c2, $20
 	lda $1104.w                                                  ; $80ae : $ad, $04, $11
 	sta $10f0.w                                                  ; $80b1 : $8d, $f0, $10
-	stz $160a.w                                                  ; $80b4 : $9c, $0a, $16
-	stz $1607.w                                                  ; $80b7 : $9c, $07, $16
+	stz wAccumulatedBattleGold.w+2                                                  ; $80b4 : $9c, $0a, $16
+	stz wAccumulatedBattleExp.w+2                                                  ; $80b7 : $9c, $07, $16
 	rep #ACCU_8                                                  ; $80ba : $c2, $20
-	stz $1608.w                                                  ; $80bc : $9c, $08, $16
-	stz $1605.w                                                  ; $80bf : $9c, $05, $16
+	stz wAccumulatedBattleGold.w                                                  ; $80bc : $9c, $08, $16
+	stz wAccumulatedBattleExp.w                                                  ; $80bf : $9c, $05, $16
 	stz $160b.w                                                  ; $80c2 : $9c, $0b, $16
 	ldx #$0000.w                                                  ; $80c5 : $a2, $00, $00
 
@@ -410,11 +410,11 @@ Call_01_81e6:
 	inx                                                  ; $831c : $e8
 	rep #ACCU_8                                                  ; $831d : $c2, $20
 	lda $97c53d.l, X                                                  ; $831f : $bf, $3d, $c5, $97
-	sta $1605.w                                                  ; $8323 : $8d, $05, $16
+	sta wAccumulatedBattleExp.w                                                  ; $8323 : $8d, $05, $16
 	inx                                                  ; $8326 : $e8
 	inx                                                  ; $8327 : $e8
 	lda $97c53d.l, X                                                  ; $8328 : $bf, $3d, $c5, $97
-	sta $1608.w                                                  ; $832c : $8d, $08, $16
+	sta wAccumulatedBattleGold.w                                                  ; $832c : $8d, $08, $16
 	inx                                                  ; $832f : $e8
 	inx                                                  ; $8330 : $e8
 	sep #ACCU_8                                                  ; $8331 : $e2, $20
@@ -1119,9 +1119,16 @@ br_01_8796:
 	stz $a1                                                  ; $8803 : $64, $a1
 	adc $a1                                                  ; $8805 : $65, $a1
 	stz $e1                                                  ; $8807 : $64, $e1
-	cop $2c.b                                                  ; $8809 : $02, $2c
-	jsr $822c.w                                                  ; $880b : $20, $2c, $82
-	and $2da0.w                                                  ; $880e : $2d, $a0, $2d
+
+
+Data_1_8809:
+	.db $02, $2c
+	.db $20, $2c
+	.db $82, $2d
+	.db $a0, $2d
+
+
+;
 	mvp $6a, $2c                                                  ; $8811 : $44, $2c, $6a
 	bit $2dc4.w                                                  ; $8814 : $2c, $c4, $2d
 	nop                                                  ; $8817 : $ea
@@ -6128,7 +6135,7 @@ br_01_ab9e:
 	ora #$04.b                                                  ; $aba5 : $09, $04
 	sta $000f.w, X                                                  ; $aba7 : $9d, $0f, $00
 	lda $7ff44e.l                                                  ; $abaa : $af, $4e, $f4, $7f
-	sta $09fa.w                                                  ; $abae : $8d, $fa, $09
+	sta wHitEnemyIdx.w                                                  ; $abae : $8d, $fa, $09
 	jsr $85d9f0.l                                                  ; $abb1 : $22, $f0, $d9, $85
 	jsr $859150.l                                                  ; $abb5 : $22, $50, $91, $85
 	lda #$02.b                                                  ; $abb9 : $a9, $02
@@ -10393,25 +10400,25 @@ br_01_c6df:
 	bpl br_01_c713                                                  ; $c6e3 : $10, $2e
 
 	lda $0050.w, X                                                  ; $c6e5 : $bd, $50, $00
-	sta $09fa.w                                                  ; $c6e8 : $8d, $fa, $09
+	sta wHitEnemyIdx.w                                                  ; $c6e8 : $8d, $fa, $09
 	jsr Call_01_fbdb.l                                                  ; $c6eb : $22, $db, $fb, $81
 	rep #ACCU_8                                                  ; $c6ef : $c2, $20
-	lda $09fc.w                                                  ; $c6f1 : $ad, $fc, $09
+	lda wCurrEnemyExpGiven.w                                                  ; $c6f1 : $ad, $fc, $09
 	clc                                                  ; $c6f4 : $18
-	adc $1605.w                                                  ; $c6f5 : $6d, $05, $16
-	sta $1605.w                                                  ; $c6f8 : $8d, $05, $16
+	adc wAccumulatedBattleExp.w                                                  ; $c6f5 : $6d, $05, $16
+	sta wAccumulatedBattleExp.w                                                  ; $c6f8 : $8d, $05, $16
 	bcc br_01_c700                                                  ; $c6fb : $90, $03
 
-	inc $1607.w                                                  ; $c6fd : $ee, $07, $16
+	inc wAccumulatedBattleExp.w+2                                                  ; $c6fd : $ee, $07, $16
 
 br_01_c700:
-	lda $09fe.w                                                  ; $c700 : $ad, $fe, $09
+	lda wCurrEnemyGoldGiven.w                                                  ; $c700 : $ad, $fe, $09
 	clc                                                  ; $c703 : $18
-	adc $1608.w                                                  ; $c704 : $6d, $08, $16
-	sta $1608.w                                                  ; $c707 : $8d, $08, $16
+	adc wAccumulatedBattleGold.w                                                  ; $c704 : $6d, $08, $16
+	sta wAccumulatedBattleGold.w                                                  ; $c707 : $8d, $08, $16
 	bcc br_01_c70f                                                  ; $c70a : $90, $03
 
-	inc $160a.w                                                  ; $c70c : $ee, $0a, $16
+	inc wAccumulatedBattleGold.w+2                                                  ; $c70c : $ee, $0a, $16
 
 br_01_c70f:
 	sep #ACCU_8                                                  ; $c70f : $e2, $20
@@ -11124,7 +11131,7 @@ Call_01_cc2e:
 	sep #ACCU_8                                                  ; $cc44 : $e2, $20
 	jsr Call_01_e1b5.w                                                  ; $cc46 : $20, $b5, $e1
 	rep #ACCU_8                                                  ; $cc49 : $c2, $20
-	lda $818809.l, X                                                  ; $cc4b : $bf, $09, $88, $81
+	lda Data_1_8809.l, X                                                  ; $cc4b : $bf, $09, $88, $81
 	tax                                                  ; $cc4f : $aa
 	sep #ACCU_8                                                  ; $cc50 : $e2, $20
 	phx                                                  ; $cc52 : $da
@@ -11213,7 +11220,7 @@ br_01_cc96:
 	sep #ACCU_8                                                  ; $ccfe : $e2, $20
 	jsr Call_01_e1b5.w                                                  ; $cd00 : $20, $b5, $e1
 	rep #ACCU_8                                                  ; $cd03 : $c2, $20
-	lda $818809.l, X                                                  ; $cd05 : $bf, $09, $88, $81
+	lda Data_1_8809.l, X                                                  ; $cd05 : $bf, $09, $88, $81
 	tax                                                  ; $cd09 : $aa
 	sep #ACCU_8                                                  ; $cd0a : $e2, $20
 	phx                                                  ; $cd0c : $da
@@ -11334,7 +11341,7 @@ br_01_cdae:
 	sep #ACCU_8                                                  ; $cdd9 : $e2, $20
 	jsr Call_01_e1b5.w                                                  ; $cddb : $20, $b5, $e1
 	rep #ACCU_8                                                  ; $cdde : $c2, $20
-	lda $818809.l, X                                                  ; $cde0 : $bf, $09, $88, $81
+	lda Data_1_8809.l, X                                                  ; $cde0 : $bf, $09, $88, $81
 	tax                                                  ; $cde4 : $aa
 	sep #ACCU_8                                                  ; $cde5 : $e2, $20
 	phx                                                  ; $cde7 : $da
@@ -11460,7 +11467,7 @@ br_01_ce68:
 	sep #ACCU_8                                                  ; $ceb3 : $e2, $20
 	jsr Call_01_e1b5.w                                                  ; $ceb5 : $20, $b5, $e1
 	rep #ACCU_8                                                  ; $ceb8 : $c2, $20
-	lda $818809.l, X                                                  ; $ceba : $bf, $09, $88, $81
+	lda Data_1_8809.l, X                                                  ; $ceba : $bf, $09, $88, $81
 	tax                                                  ; $cebe : $aa
 	sep #ACCU_8                                                  ; $cebf : $e2, $20
 	phx                                                  ; $cec1 : $da
@@ -11582,7 +11589,7 @@ br_01_cf79:
 	sep #ACCU_8                                                  ; $cf89 : $e2, $20
 	jsr Call_01_e1b5.w                                                  ; $cf8b : $20, $b5, $e1
 	rep #ACCU_8                                                  ; $cf8e : $c2, $20
-	lda $818809.l, X                                                  ; $cf90 : $bf, $09, $88, $81
+	lda Data_1_8809.l, X                                                  ; $cf90 : $bf, $09, $88, $81
 	tax                                                  ; $cf94 : $aa
 	sep #ACCU_8                                                  ; $cf95 : $e2, $20
 	phx                                                  ; $cf97 : $da
@@ -11693,7 +11700,7 @@ br_01_d008:
 	sep #ACCU_8                                                  ; $d04c : $e2, $20
 	jsr Call_01_e1b5.w                                                  ; $d04e : $20, $b5, $e1
 	rep #ACCU_8                                                  ; $d051 : $c2, $20
-	lda $818809.l, X                                                  ; $d053 : $bf, $09, $88, $81
+	lda Data_1_8809.l, X                                                  ; $d053 : $bf, $09, $88, $81
 	tax                                                  ; $d057 : $aa
 	sep #ACCU_8                                                  ; $d058 : $e2, $20
 	phx                                                  ; $d05a : $da
@@ -11739,7 +11746,7 @@ br_01_d09b:
 	sep #ACCU_8                                                  ; $d0a3 : $e2, $20
 	jsr Call_01_e1b5.w                                                  ; $d0a5 : $20, $b5, $e1
 	rep #ACCU_8                                                  ; $d0a8 : $c2, $20
-	lda $818809.l, X                                                  ; $d0aa : $bf, $09, $88, $81
+	lda Data_1_8809.l, X                                                  ; $d0aa : $bf, $09, $88, $81
 	tax                                                  ; $d0ae : $aa
 	sep #ACCU_8                                                  ; $d0af : $e2, $20
 	lda #$0d.b                                                  ; $d0b1 : $a9, $0d
@@ -11780,7 +11787,7 @@ br_01_d0cf:
 	sep #ACCU_8                                                  ; $d0f5 : $e2, $20
 	jsr Call_01_e1b5.w                                                  ; $d0f7 : $20, $b5, $e1
 	rep #ACCU_8                                                  ; $d0fa : $c2, $20
-	lda $818809.l, X                                                  ; $d0fc : $bf, $09, $88, $81
+	lda Data_1_8809.l, X                                                  ; $d0fc : $bf, $09, $88, $81
 	tax                                                  ; $d100 : $aa
 	sep #ACCU_8                                                  ; $d101 : $e2, $20
 	phx                                                  ; $d103 : $da
@@ -13250,14 +13257,14 @@ Call_01_d9e1:
 	beq br_01_da11                                                  ; $da0f : $f0, $00
 
 br_01_da11:
-	asl $1605.w                                                  ; $da11 : $0e, $05, $16
+	asl wAccumulatedBattleExp.w                                                  ; $da11 : $0e, $05, $16
 	rol $1606.w                                                  ; $da14 : $2e, $06, $16
-	rol $1607.w                                                  ; $da17 : $2e, $07, $16
+	rol wAccumulatedBattleExp.w+2                                                  ; $da17 : $2e, $07, $16
 	bcs br_01_da3d                                                  ; $da1a : $b0, $21
 
-	asl $1605.w                                                  ; $da1c : $0e, $05, $16
+	asl wAccumulatedBattleExp.w                                                  ; $da1c : $0e, $05, $16
 	rol $1606.w                                                  ; $da1f : $2e, $06, $16
-	rol $1607.w                                                  ; $da22 : $2e, $07, $16
+	rol wAccumulatedBattleExp.w+2                                                  ; $da22 : $2e, $07, $16
 	bcs br_01_da3d                                                  ; $da25 : $b0, $16
 
 	cmp #$98.b                                                  ; $da27 : $c9, $98
@@ -13271,27 +13278,27 @@ br_01_da11:
 
 	bne br_01_da4c                                                  ; $da34 : $d0, $16
 
-	lda $1605.w                                                  ; $da36 : $ad, $05, $16
+	lda wAccumulatedBattleExp.w                                                  ; $da36 : $ad, $05, $16
 	cmp #$7f.b                                                  ; $da39 : $c9, $7f
 	bcc br_01_da4c                                                  ; $da3b : $90, $0f
 
 br_01_da3d:
 	lda #$98.b                                                  ; $da3d : $a9, $98
-	sta $1607.w                                                  ; $da3f : $8d, $07, $16
+	sta wAccumulatedBattleExp.w+2                                                  ; $da3f : $8d, $07, $16
 	lda #$96.b                                                  ; $da42 : $a9, $96
 	sta $1606.w                                                  ; $da44 : $8d, $06, $16
 	lda #$7f.b                                                  ; $da47 : $a9, $7f
-	sta $1605.w                                                  ; $da49 : $8d, $05, $16
+	sta wAccumulatedBattleExp.w                                                  ; $da49 : $8d, $05, $16
 
 br_01_da4c:
-	asl $1608.w                                                  ; $da4c : $0e, $08, $16
+	asl wAccumulatedBattleGold.w                                                  ; $da4c : $0e, $08, $16
 	rol $1609.w                                                  ; $da4f : $2e, $09, $16
-	rol $160a.w                                                  ; $da52 : $2e, $0a, $16
+	rol wAccumulatedBattleGold.w+2                                                  ; $da52 : $2e, $0a, $16
 	bcs br_01_da78                                                  ; $da55 : $b0, $21
 
-	asl $1608.w                                                  ; $da57 : $0e, $08, $16
+	asl wAccumulatedBattleGold.w                                                  ; $da57 : $0e, $08, $16
 	rol $1609.w                                                  ; $da5a : $2e, $09, $16
-	rol $160a.w                                                  ; $da5d : $2e, $0a, $16
+	rol wAccumulatedBattleGold.w+2                                                  ; $da5d : $2e, $0a, $16
 	bcs br_01_da78                                                  ; $da60 : $b0, $16
 
 	cmp #$98.b                                                  ; $da62 : $c9, $98
@@ -13305,17 +13312,17 @@ br_01_da4c:
 
 	bne br_01_da87                                                  ; $da6f : $d0, $16
 
-	lda $1608.w                                                  ; $da71 : $ad, $08, $16
+	lda wAccumulatedBattleGold.w                                                  ; $da71 : $ad, $08, $16
 	cmp #$7f.b                                                  ; $da74 : $c9, $7f
 	bcc br_01_da87                                                  ; $da76 : $90, $0f
 
 br_01_da78:
 	lda #$98.b                                                  ; $da78 : $a9, $98
-	sta $160a.w                                                  ; $da7a : $8d, $0a, $16
+	sta wAccumulatedBattleGold.w+2                                                  ; $da7a : $8d, $0a, $16
 	lda #$96.b                                                  ; $da7d : $a9, $96
 	sta $1609.w                                                  ; $da7f : $8d, $09, $16
 	lda #$7f.b                                                  ; $da82 : $a9, $7f
-	sta $1608.w                                                  ; $da84 : $8d, $08, $16
+	sta wAccumulatedBattleGold.w                                                  ; $da84 : $8d, $08, $16
 
 br_01_da87:
 	jsr Call_01_dd7f.w                                                  ; $da87 : $20, $7f, $dd
@@ -13382,13 +13389,13 @@ br_01_dae2:
 br_01_daec:
 	lda $005f.w, X                                                  ; $daec : $bd, $5f, $00
 	clc                                                  ; $daef : $18
-	adc $1605.w                                                  ; $daf0 : $6d, $05, $16
+	adc wAccumulatedBattleExp.w                                                  ; $daf0 : $6d, $05, $16
 	sta $005f.w, X                                                  ; $daf3 : $9d, $5f, $00
 	lda $0060.w, X                                                  ; $daf6 : $bd, $60, $00
 	adc $1606.w                                                  ; $daf9 : $6d, $06, $16
 	sta $0060.w, X                                                  ; $dafc : $9d, $60, $00
 	lda $0061.w, X                                                  ; $daff : $bd, $61, $00
-	adc $1607.w                                                  ; $db02 : $6d, $07, $16
+	adc wAccumulatedBattleExp.w+2                                                  ; $db02 : $6d, $07, $16
 	sta $0061.w, X                                                  ; $db05 : $9d, $61, $00
 	bcs br_01_db20                                                  ; $db08 : $b0, $16
 
@@ -13554,13 +13561,13 @@ br_01_dbff:
 br_01_dc0c:
 	lda $005f.w, X                                                  ; $dc0c : $bd, $5f, $00
 	clc                                                  ; $dc0f : $18
-	adc $1605.w                                                  ; $dc10 : $6d, $05, $16
+	adc wAccumulatedBattleExp.w                                                  ; $dc10 : $6d, $05, $16
 	sta $005f.w, X                                                  ; $dc13 : $9d, $5f, $00
 	lda $0060.w, X                                                  ; $dc16 : $bd, $60, $00
 	adc $1606.w                                                  ; $dc19 : $6d, $06, $16
 	sta $0060.w, X                                                  ; $dc1c : $9d, $60, $00
 	lda $0061.w, X                                                  ; $dc1f : $bd, $61, $00
-	adc $1607.w                                                  ; $dc22 : $6d, $07, $16
+	adc wAccumulatedBattleExp.w+2                                                  ; $dc22 : $6d, $07, $16
 	sta $0061.w, X                                                  ; $dc25 : $9d, $61, $00
 	bcs br_01_dc40                                                  ; $dc28 : $b0, $16
 
@@ -13690,13 +13697,13 @@ br_01_dcd5:
 Jump_01_dd11:
 	lda $0a8a.w                                                  ; $dd11 : $ad, $8a, $0a
 	clc                                                  ; $dd14 : $18
-	adc $1608.w                                                  ; $dd15 : $6d, $08, $16
+	adc wAccumulatedBattleGold.w                                                  ; $dd15 : $6d, $08, $16
 	sta $0a8a.w                                                  ; $dd18 : $8d, $8a, $0a
 	lda $0a8b.w                                                  ; $dd1b : $ad, $8b, $0a
 	adc $1609.w                                                  ; $dd1e : $6d, $09, $16
 	sta $0a8b.w                                                  ; $dd21 : $8d, $8b, $0a
 	lda $0a8c.w                                                  ; $dd24 : $ad, $8c, $0a
-	adc $160a.w                                                  ; $dd27 : $6d, $0a, $16
+	adc wAccumulatedBattleGold.w+2                                                  ; $dd27 : $6d, $0a, $16
 	sta $0a8c.w                                                  ; $dd2a : $8d, $8c, $0a
 	bcs br_01_dd45                                                  ; $dd2d : $b0, $16
 
@@ -13904,7 +13911,7 @@ Call_01_dea9:
 	ldx #$0000.w                                                  ; $deac : $a2, $00, $00
 
 br_01_deaf:
-	ldy $8809.w, X                                                  ; $deaf : $bc, $09, $88
+	ldy Data_1_8809.w, X                                                  ; $deaf : $bc, $09, $88
 	sty $11                                                  ; $deb2 : $84, $11
 	phx                                                  ; $deb4 : $da
 	ldy $0a64.w, X                                                  ; $deb5 : $bc, $64, $0a
@@ -13992,18 +13999,22 @@ Call_01_df0a:
 	sep #ACCU_8                                                  ; $df62 : $e2, $20
 	ldx #$0000.w                                                  ; $df64 : $a2, $00, $00
 
-br_01_df67:
-	ldy $8809.w, X                                                  ; $df67 : $bc, $09, $88
+@loop_df67:
+	ldy Data_1_8809.w, X                                                  ; $df67 : $bc, $09, $88
 	sty $11                                                  ; $df6a : $84, $11
 	phx                                                  ; $df6c : $da
 	ldy $0a64.w, X                                                  ; $df6d : $bc, $64, $0a
-	beq br_01_df98                                                  ; $df70 : $f0, $26
+	beq @toLoop_df67                                                  ; $df70 : $f0, $26
 
 	phy                                                  ; $df72 : $5a
 	lda #$0d.b                                                  ; $df73 : $a9, $0d
 	sta wCurrInBattleEnemyIdx.w                                                  ; $df75 : $8d, $f2, $09
+
+; this gets manipped into enemy gold given
 	lda #$04.b                                                  ; $df78 : $a9, $04
 	sta $09f3.w                                                  ; $df7a : $8d, $f3, $09
+
+;
 	ldx $11                                                  ; $df7d : $a6, $11
 	ldy #$87b7.w                                                  ; $df7f : $a0, $b7, $87
 	sty $09f4.w                                                  ; $df82 : $8c, $f4, $09
@@ -14018,12 +14029,12 @@ br_01_df67:
 	lda #$7e.b                                                  ; $df94 : $a9, $7e
 	sta $1b                                                  ; $df96 : $85, $1b
 
-br_01_df98:
+@toLoop_df67:
 	plx                                                  ; $df98 : $fa
 	inx                                                  ; $df99 : $e8
 	inx                                                  ; $df9a : $e8
 	cpx #$0008.w                                                  ; $df9b : $e0, $08, $00
-	bne br_01_df67                                                  ; $df9e : $d0, $c7
+	bne @loop_df67                                                  ; $df9e : $d0, $c7
 
 	plb                                                  ; $dfa0 : $ab
 	rts                                                  ; $dfa1 : $60
@@ -14776,14 +14787,14 @@ br_01_e40d:
 	sty $09f4.w                                                  ; $e422 : $8c, $f4, $09
 	lda wCurrInBattleEnemyIdx.w                                                  ; $e425 : $ad, $f2, $09
 	dea                                                  ; $e428 : $3a
-	sta $09fa.w                                                  ; $e429 : $8d, $fa, $09
+	sta wHitEnemyIdx.w                                                  ; $e429 : $8d, $fa, $09
 	stz $09fb.w                                                  ; $e42c : $9c, $fb, $09
 	lda $09f3.w                                                  ; $e42f : $ad, $f3, $09
 	dea                                                  ; $e432 : $3a
 	dea                                                  ; $e433 : $3a
-	sta $09fe.w                                                  ; $e434 : $8d, $fe, $09
-	stz $09ff.w                                                  ; $e437 : $9c, $ff, $09
-	stx $09fc.w                                                  ; $e43a : $8e, $fc, $09
+	sta wCurrEnemyGoldGiven.w                                                  ; $e434 : $8d, $fe, $09
+	stz wCurrEnemyGoldGiven.w+1                                                  ; $e437 : $9c, $ff, $09
+	stx wCurrEnemyExpGiven.w                                                  ; $e43a : $8e, $fc, $09
 	txy                                                  ; $e43d : $9b
 	rep #ACCU_8                                                  ; $e43e : $c2, $20
 	jsr Call_01_e479.w                                                  ; $e440 : $20, $79, $e4
@@ -14798,7 +14809,7 @@ br_01_e454:
 	jsr Call_01_e4ad.w                                                  ; $e454 : $20, $ad, $e4
 
 br_01_e457:
-	dec $09fe.w                                                  ; $e457 : $ce, $fe, $09
+	dec wCurrEnemyGoldGiven.w                                                  ; $e457 : $ce, $fe, $09
 	bpl br_01_e454                                                  ; $e45a : $10, $f8
 
 	lda $09f4.w                                                  ; $e45c : $ad, $f4, $09
@@ -14816,7 +14827,7 @@ br_01_e457:
 
 
 Call_01_e479:
-	lda $09fa.w                                                  ; $e479 : $ad, $fa, $09
+	lda wHitEnemyIdx.w                                                  ; $e479 : $ad, $fa, $09
 	dea                                                  ; $e47c : $3a
 	dea                                                  ; $e47d : $3a
 	sta $0a3c.w                                                  ; $e47e : $8d, $3c, $0a
@@ -14841,12 +14852,12 @@ br_01_e48c:
 	sta $0004.w, Y                                                  ; $e49a : $99, $04, $00
 	dea                                                  ; $e49d : $3a
 	sta $0006.w, Y                                                  ; $e49e : $99, $06, $00
-	lda $09fc.w                                                  ; $e4a1 : $ad, $fc, $09
+	lda wCurrEnemyExpGiven.w                                                  ; $e4a1 : $ad, $fc, $09
 	clc                                                  ; $e4a4 : $18
 	adc #$40.b                                                  ; $e4a5 : $69, $40
 	.db $00                                                  ; $e4a7 : $00
 	tay                                                  ; $e4a8 : $a8
-	sta $09fc.w                                                  ; $e4a9 : $8d, $fc, $09
+	sta wCurrEnemyExpGiven.w                                                  ; $e4a9 : $8d, $fc, $09
 	rts                                                  ; $e4ac : $60
 
 
@@ -14855,8 +14866,8 @@ Call_01_e4ad:
 	sta $0000.w, Y                                                  ; $e4b0 : $99, $00, $00
 	tya                                                  ; $e4b3 : $98
 	clc                                                  ; $e4b4 : $18
-	adc $09fa.w                                                  ; $e4b5 : $6d, $fa, $09
-	adc $09fa.w                                                  ; $e4b8 : $6d, $fa, $09
+	adc wHitEnemyIdx.w                                                  ; $e4b5 : $6d, $fa, $09
+	adc wHitEnemyIdx.w                                                  ; $e4b8 : $6d, $fa, $09
 	tay                                                  ; $e4bb : $a8
 	lda $09f4.w                                                  ; $e4bc : $ad, $f4, $09
 	ora #$00.b                                                  ; $e4bf : $09, $00
@@ -14864,12 +14875,12 @@ Call_01_e4ad:
 
 
 	sta $0004.w, Y                                                  ; $e4c2 : $99, $04, $00
-	lda $09fc.w                                                  ; $e4c5 : $ad, $fc, $09
+	lda wCurrEnemyExpGiven.w                                                  ; $e4c5 : $ad, $fc, $09
 	clc                                                  ; $e4c8 : $18
 	adc #$40.b                                                  ; $e4c9 : $69, $40
 	.db $00                                                  ; $e4cb : $00
 	tay                                                  ; $e4cc : $a8
-	sta $09fc.w                                                  ; $e4cd : $8d, $fc, $09
+	sta wCurrEnemyExpGiven.w                                                  ; $e4cd : $8d, $fc, $09
 	rts                                                  ; $e4d0 : $60
 
 
@@ -14909,19 +14920,23 @@ br_01_e4fa:
 	rts                                                  ; $e502 : $60
 
 
+; X - curr enemy exp given
 Call_01_e503:
+; data bank is 7e
 	phb                                                  ; $e503 : $8b
 	lda #$7e.b                                                  ; $e504 : $a9, $7e
 	pha                                                  ; $e506 : $48
 	plb                                                  ; $e507 : $ab
+
+;
 	lda wCurrInBattleEnemyIdx.w                                                  ; $e508 : $ad, $f2, $09
 	dea                                                  ; $e50b : $3a
-	sta $09fa.w                                                  ; $e50c : $8d, $fa, $09
+	sta wHitEnemyIdx.w                                                  ; $e50c : $8d, $fa, $09
 	stz $09fb.w                                                  ; $e50f : $9c, $fb, $09
 	lda $09f3.w                                                  ; $e512 : $ad, $f3, $09
-	sta $09fe.w                                                  ; $e515 : $8d, $fe, $09
-	stz $09ff.w                                                  ; $e518 : $9c, $ff, $09
-	stx $09fc.w                                                  ; $e51b : $8e, $fc, $09
+	sta wCurrEnemyGoldGiven.w                                                  ; $e515 : $8d, $fe, $09
+	stz wCurrEnemyGoldGiven.w+1                                                  ; $e518 : $9c, $ff, $09
+	stx wCurrEnemyExpGiven.w                                                  ; $e51b : $8e, $fc, $09
 	txy                                                  ; $e51e : $9b
 	ldx $09f4.w                                                  ; $e51f : $ae, $f4, $09
 	rep #ACCU_8                                                  ; $e522 : $c2, $20
@@ -14933,14 +14948,14 @@ Call_01_e503:
 	inx                                                  ; $e52b : $e8
 	inx                                                  ; $e52c : $e8
 
-br_01_e52d:
-	dec $09fe.w                                                  ; $e52d : $ce, $fe, $09
-	bmi br_01_e537                                                  ; $e530 : $30, $05
+@loop_e52d:
+	dec wCurrEnemyGoldGiven.w                                                  ; $e52d : $ce, $fe, $09
+	bmi @cont_e537                                                  ; $e530 : $30, $05
 
 	jsr Call_01_e570.w                                                  ; $e532 : $20, $70, $e5
-	bra br_01_e52d                                                  ; $e535 : $80, $f6
+	bra @loop_e52d                                                  ; $e535 : $80, $f6
 
-br_01_e537:
+@cont_e537:
 	inx                                                  ; $e537 : $e8
 	inx                                                  ; $e538 : $e8
 	inx                                                  ; $e539 : $e8
@@ -14952,7 +14967,7 @@ br_01_e537:
 
 
 Call_01_e542:
-	lda $09fa.w                                                  ; $e542 : $ad, $fa, $09
+	lda wHitEnemyIdx.w                                                  ; $e542 : $ad, $fa, $09
 	sta $0a3c.w                                                  ; $e545 : $8d, $3c, $0a
 	lda $010000.l, X                                                  ; $e548 : $bf, $00, $00, $01
 	sta $0000.w, Y                                                  ; $e54c : $99, $00, $00
@@ -14967,12 +14982,12 @@ br_01_e553:
 
 	lda $010004.l, X                                                  ; $e55d : $bf, $04, $00, $01
 	sta $0002.w, Y                                                  ; $e561 : $99, $02, $00
-	lda $09fc.w                                                  ; $e564 : $ad, $fc, $09
+	lda wCurrEnemyExpGiven.w                                                  ; $e564 : $ad, $fc, $09
 	clc                                                  ; $e567 : $18
 	adc #$40.b                                                  ; $e568 : $69, $40
 	.db $00                                                  ; $e56a : $00
 	tay                                                  ; $e56b : $a8
-	sta $09fc.w                                                  ; $e56c : $8d, $fc, $09
+	sta wCurrEnemyExpGiven.w                                                  ; $e56c : $8d, $fc, $09
 	rts                                                  ; $e56f : $60
 
 
@@ -14981,17 +14996,17 @@ Call_01_e570:
 	sta $0000.w, Y                                                  ; $e574 : $99, $00, $00
 	tya                                                  ; $e577 : $98
 	clc                                                  ; $e578 : $18
-	adc $09fa.w                                                  ; $e579 : $6d, $fa, $09
-	adc $09fa.w                                                  ; $e57c : $6d, $fa, $09
+	adc wHitEnemyIdx.w                                                  ; $e579 : $6d, $fa, $09
+	adc wHitEnemyIdx.w                                                  ; $e57c : $6d, $fa, $09
 	tay                                                  ; $e57f : $a8
 	lda $010002.l, X                                                  ; $e580 : $bf, $02, $00, $01
 	sta $0004.w, Y                                                  ; $e584 : $99, $04, $00
-	lda $09fc.w                                                  ; $e587 : $ad, $fc, $09
+	lda wCurrEnemyExpGiven.w                                                  ; $e587 : $ad, $fc, $09
 	clc                                                  ; $e58a : $18
 	adc #$40.b                                                  ; $e58b : $69, $40
 	.db $00                                                  ; $e58d : $00
 	tay                                                  ; $e58e : $a8
-	sta $09fc.w                                                  ; $e58f : $8d, $fc, $09
+	sta wCurrEnemyExpGiven.w                                                  ; $e58f : $8d, $fc, $09
 	rts                                                  ; $e592 : $60
 
 
@@ -16146,7 +16161,7 @@ br_01_ecb9:
 
 	inx                                                  ; $eceb : $e8
 	inx                                                  ; $ecec : $e8
-	stz $09fa.w                                                  ; $eced : $9c, $fa, $09
+	stz wHitEnemyIdx.w                                                  ; $eced : $9c, $fa, $09
 	ldy #$0bad.w                                                  ; $ecf0 : $a0, $ad, $0b
 	jsr Call_01_ed8e.w                                                  ; $ecf3 : $20, $8e, $ed
 	ldy #$0c6b.w                                                  ; $ecf6 : $a0, $6b, $0c
@@ -16186,7 +16201,7 @@ br_01_ecb9:
 	lda #$7f.b                                                  ; $ed48 : $a9, $7f
 	sta $b7                                                  ; $ed4a : $85, $b7
 	ldx #$b395.w                                                  ; $ed4c : $a2, $95, $b3
-	stz $09fa.w                                                  ; $ed4f : $9c, $fa, $09
+	stz wHitEnemyIdx.w                                                  ; $ed4f : $9c, $fa, $09
 	ldy #$0bad.w                                                  ; $ed52 : $a0, $ad, $0b
 	jsr Call_01_ee94.w                                                  ; $ed55 : $20, $94, $ee
 	ldy #$0c6b.w                                                  ; $ed58 : $a0, $6b, $0c
@@ -16302,7 +16317,7 @@ br_01_ee05:
 	ldy $b2                                                  ; $ee1d : $a4, $b2
 	lda $000e.w, Y                                                  ; $ee1f : $b9, $0e, $00
 	and #$00ff.w                                                  ; $ee22 : $29, $ff, $00
-	sta $09fe.w                                                  ; $ee25 : $8d, $fe, $09
+	sta wCurrEnemyGoldGiven.w                                                  ; $ee25 : $8d, $fe, $09
 	sep #ACCU_8                                                  ; $ee28 : $e2, $20
 	phb                                                  ; $ee2a : $8b
 	lda #$97.b                                                  ; $ee2b : $a9, $97
@@ -16333,7 +16348,7 @@ br_01_ee05:
 	sta $005b.w, Y                                                  ; $ee6c : $99, $5b, $00
 	lda $0a28.w                                                  ; $ee6f : $ad, $28, $0a
 	sta $005d.w, Y                                                  ; $ee72 : $99, $5d, $00
-	inc $09fa.w                                                  ; $ee75 : $ee, $fa, $09
+	inc wHitEnemyIdx.w                                                  ; $ee75 : $ee, $fa, $09
 	ldx $b2                                                  ; $ee78 : $a6, $b2
 	jsr Call_01_f4d5.l                                                  ; $ee7a : $22, $d5, $f4, $81
 	plx                                                  ; $ee7e : $fa
@@ -16437,7 +16452,7 @@ br_01_ef00:
 	ldy $b2                                                  ; $ef1c : $a4, $b2
 	lda $000e.w, Y                                                  ; $ef1e : $b9, $0e, $00
 	and #$00ff.w                                                  ; $ef21 : $29, $ff, $00
-	sta $09fe.w                                                  ; $ef24 : $8d, $fe, $09
+	sta wCurrEnemyGoldGiven.w                                                  ; $ef24 : $8d, $fe, $09
 	sep #ACCU_8                                                  ; $ef27 : $e2, $20
 	phb                                                  ; $ef29 : $8b
 	lda #$97.b                                                  ; $ef2a : $a9, $97
@@ -16468,7 +16483,7 @@ br_01_ef00:
 	sta $005b.w, Y                                                  ; $ef6b : $99, $5b, $00
 	lda $0a28.w                                                  ; $ef6e : $ad, $28, $0a
 	sta $005d.w, Y                                                  ; $ef71 : $99, $5d, $00
-	inc $09fa.w                                                  ; $ef74 : $ee, $fa, $09
+	inc wHitEnemyIdx.w                                                  ; $ef74 : $ee, $fa, $09
 	ldx $b2                                                  ; $ef77 : $a6, $b2
 	jsr Call_01_f4d5.l                                                  ; $ef79 : $22, $d5, $f4, $81
 	plx                                                  ; $ef7d : $fa
@@ -16856,13 +16871,13 @@ br_01_f1e9:
 	bne br_01_f1e9                                                  ; $f1f4 : $d0, $f3
 
 	lda $0000.w, Y                                                  ; $f1f6 : $b9, $00, $00
-	sta $09fc.w                                                  ; $f1f9 : $8d, $fc, $09
+	sta wCurrEnemyExpGiven.w                                                  ; $f1f9 : $8d, $fc, $09
 	lda $0001.w, Y                                                  ; $f1fc : $b9, $01, $00
-	sta $09fd.w                                                  ; $f1ff : $8d, $fd, $09
+	sta wCurrEnemyExpGiven.w+1                                                  ; $f1ff : $8d, $fd, $09
 	lda $0002.w, Y                                                  ; $f202 : $b9, $02, $00
-	sta $09fe.w                                                  ; $f205 : $8d, $fe, $09
+	sta wCurrEnemyGoldGiven.w                                                  ; $f205 : $8d, $fe, $09
 	lda $0003.w, Y                                                  ; $f208 : $b9, $03, $00
-	sta $09ff.w                                                  ; $f20b : $8d, $ff, $09
+	sta wCurrEnemyGoldGiven.w+1                                                  ; $f20b : $8d, $ff, $09
 	iny                                                  ; $f20e : $c8
 	iny                                                  ; $f20f : $c8
 	iny                                                  ; $f210 : $c8
@@ -16871,7 +16886,7 @@ br_01_f1e9:
 	sta $0a00.w                                                  ; $f214 : $8d, $00, $0a
 
 br_01_f217:
-	lsr $09fc.w                                                  ; $f217 : $4e, $fc, $09
+	lsr wCurrEnemyExpGiven.w                                                  ; $f217 : $4e, $fc, $09
 	bcc br_01_f22a                                                  ; $f21a : $90, $0e
 
 	lda $0000.w, Y                                                  ; $f21c : $b9, $00, $00
@@ -16891,7 +16906,7 @@ br_01_f22a:
 	sta $0a00.w                                                  ; $f233 : $8d, $00, $0a
 
 br_01_f236:
-	lsr $09fd.w                                                  ; $f236 : $4e, $fd, $09
+	lsr wCurrEnemyExpGiven.w+1                                                  ; $f236 : $4e, $fd, $09
 	bcc br_01_f249                                                  ; $f239 : $90, $0e
 
 	lda $0000.w, Y                                                  ; $f23b : $b9, $00, $00
@@ -16911,7 +16926,7 @@ br_01_f249:
 	sta $0a00.w                                                  ; $f252 : $8d, $00, $0a
 
 br_01_f255:
-	lsr $09fe.w                                                  ; $f255 : $4e, $fe, $09
+	lsr wCurrEnemyGoldGiven.w                                                  ; $f255 : $4e, $fe, $09
 	bcc br_01_f268                                                  ; $f258 : $90, $0e
 
 	lda $0000.w, Y                                                  ; $f25a : $b9, $00, $00
@@ -16931,7 +16946,7 @@ br_01_f268:
 	sta $0a00.w                                                  ; $f271 : $8d, $00, $0a
 
 br_01_f274:
-	lsr $09ff.w                                                  ; $f274 : $4e, $ff, $09
+	lsr wCurrEnemyGoldGiven.w+1                                                  ; $f274 : $4e, $ff, $09
 	bcc br_01_f287                                                  ; $f277 : $90, $0e
 
 	lda $0000.w, Y                                                  ; $f279 : $b9, $00, $00
@@ -17625,7 +17640,7 @@ br_01_f6a2:
 	sbc $0011.w, X                                                  ; $f6b4 : $fd, $11, $00
 	bcs br_01_f6c7                                                  ; $f6b7 : $b0, $0e
 
-	sty $09fa.w                                                  ; $f6b9 : $8c, $fa, $09
+	sty wHitEnemyIdx.w                                                  ; $f6b9 : $8c, $fa, $09
 	sec                                                  ; $f6bc : $38
 	sbc $0011.w, X                                                  ; $f6bd : $fd, $11, $00
 	sta $0011.w, X                                                  ; $f6c0 : $9d, $11, $00
@@ -17678,7 +17693,7 @@ br_01_f6f6:
 	sbc $0013.w, X                                                  ; $f708 : $fd, $13, $00
 	bcs br_01_f71a                                                  ; $f70b : $b0, $0d
 
-	sty $09fa.w                                                  ; $f70d : $8c, $fa, $09
+	sty wHitEnemyIdx.w                                                  ; $f70d : $8c, $fa, $09
 	sec                                                  ; $f710 : $38
 	sbc $0013.w, X                                                  ; $f711 : $fd, $13, $00
 	sta $0013.w, X                                                  ; $f714 : $9d, $13, $00
@@ -17824,13 +17839,13 @@ Call_01_f7bd:
 Call_01_f7ca:
 	rep #ACCU_8                                                  ; $f7ca : $c2, $20
 	and #$00ff.w                                                  ; $f7cc : $29, $ff, $00
-	sta $09fa.w                                                  ; $f7cf : $8d, $fa, $09
+	sta wHitEnemyIdx.w                                                  ; $f7cf : $8d, $fa, $09
 	sep #ACCU_8                                                  ; $f7d2 : $e2, $20
 	jsr Call_01_f979.w                                                  ; $f7d4 : $20, $79, $f9
 	cmp #$01.b                                                  ; $f7d7 : $c9, $01
 	bne br_01_f7eb                                                  ; $f7d9 : $d0, $10
 
-	ldx $09fa.w                                                  ; $f7db : $ae, $fa, $09
+	ldx wHitEnemyIdx.w                                                  ; $f7db : $ae, $fa, $09
 	jsr Call_01_f7bd.w                                                  ; $f7de : $20, $bd, $f7
 	stx $c1                                                  ; $f7e1 : $86, $c1
 	jsr Call_01_f7ed.w                                                  ; $f7e3 : $20, $ed, $f7
@@ -17853,7 +17868,7 @@ Call_01_f7ed:
 	rep #ACCU_8                                                  ; $f7f3 : $c2, $20
 	lda $000e.w, X                                                  ; $f7f5 : $bd, $0e, $00
 	and #$00ff.w                                                  ; $f7f8 : $29, $ff, $00
-	sta $09fe.w                                                  ; $f7fb : $8d, $fe, $09
+	sta wCurrEnemyGoldGiven.w                                                  ; $f7fb : $8d, $fe, $09
 	sep #ACCU_8                                                  ; $f7fe : $e2, $20
 	jsr Call_01_f87f.l                                                  ; $f800 : $22, $7f, $f8, $81
 	ldy #$0006.w                                                  ; $f804 : $a0, $06, $00
@@ -17939,7 +17954,7 @@ br_01_f87e:
 	.db $00                                                  ; $f87e : $00
 
 Call_01_f87f:
-	lda $09fa.w                                                  ; $f87f : $ad, $fa, $09
+	lda wHitEnemyIdx.w                                                  ; $f87f : $ad, $fa, $09
 	sta WRMPYA.w                                                  ; $f882 : $8d, $02, $42
 	lda #$0e.b                                                  ; $f885 : $a9, $0e
 	sta WRMPYB.w                                                  ; $f887 : $8d, $03, $42
@@ -17966,7 +17981,7 @@ Call_01_f87f:
 	sep #ACCU_8                                                  ; $f8bb : $e2, $20
 
 Jump_01_f8bd:
-	cpx $09fe.w                                                  ; $f8bd : $ec, $fe, $09
+	cpx wCurrEnemyGoldGiven.w                                                  ; $f8bd : $ec, $fe, $09
 	bne br_01_f8c5                                                  ; $f8c0 : $d0, $03
 
 	jmp Jump_01_f945.w                                                  ; $f8c2 : $4c, $45, $f9
@@ -18101,11 +18116,11 @@ br_01_f96d:
 
 
 Call_01_f979:
-	ldx $09fa.w                                                  ; $f979 : $ae, $fa, $09
+	ldx wHitEnemyIdx.w                                                  ; $f979 : $ae, $fa, $09
 	jsr Call_01_f7bd.w                                                  ; $f97c : $20, $bd, $f7
 	lda $000e.w, X                                                  ; $f97f : $bd, $0e, $00
-	sta $09fe.w                                                  ; $f982 : $8d, $fe, $09
-	stz $09ff.w                                                  ; $f985 : $9c, $ff, $09
+	sta wCurrEnemyGoldGiven.w                                                  ; $f982 : $8d, $fe, $09
+	stz wCurrEnemyGoldGiven.w+1                                                  ; $f985 : $9c, $ff, $09
 	jsr Call_01_f9e9.l                                                  ; $f988 : $22, $e9, $f9, $81
 	lda $0062.w, X                                                  ; $f98c : $bd, $62, $00
 	cmp $0a2a.w                                                  ; $f98f : $cd, $2a, $0a
@@ -18139,7 +18154,7 @@ br_01_f9ba:
 
 	ina                                                  ; $f9c3 : $1a
 	sta $000e.w, X                                                  ; $f9c4 : $9d, $0e, $00
-	sta $09fe.w                                                  ; $f9c7 : $8d, $fe, $09
+	sta wCurrEnemyGoldGiven.w                                                  ; $f9c7 : $8d, $fe, $09
 	jsr Call_01_f9e9.l                                                  ; $f9ca : $22, $e9, $f9, $81
 	lda $0a2a.w                                                  ; $f9ce : $ad, $2a, $0a
 	sta $0062.w, X                                                  ; $f9d1 : $9d, $62, $00
@@ -18170,7 +18185,7 @@ Call_01_f9e9:
 	lda #$70.b                                                  ; $f9ef : $a9, $70
 	sta WRMPYA.w                                                  ; $f9f1 : $8d, $02, $42
 	tdc                                                  ; $f9f4 : $7b
-	lda $09fa.w                                                  ; $f9f5 : $ad, $fa, $09
+	lda wHitEnemyIdx.w                                                  ; $f9f5 : $ad, $fa, $09
 	sta WRMPYB.w                                                  ; $f9f8 : $8d, $03, $42
 	asl                                                  ; $f9fb : $0a
 	tax                                                  ; $f9fc : $aa
@@ -18186,7 +18201,7 @@ Call_01_f9e9:
 	stz $63                                                  ; $fa0f : $64, $63
 	stz $65                                                  ; $fa11 : $64, $65
 	sep #ACCU_8                                                  ; $fa13 : $e2, $20
-	lda $09fe.w                                                  ; $fa15 : $ad, $fe, $09
+	lda wCurrEnemyGoldGiven.w                                                  ; $fa15 : $ad, $fe, $09
 	cmp #$62.b                                                  ; $fa18 : $c9, $62
 	bcc br_01_fa1f                                                  ; $fa1a : $90, $03
 
@@ -18270,7 +18285,7 @@ br_01_fa8f:
 	adc $65                                                  ; $fa9a : $65, $65
 	sta $65                                                  ; $fa9c : $85, $65
 	sep #ACCU_8                                                  ; $fa9e : $e2, $20
-	cpx $09fe.w                                                  ; $faa0 : $ec, $fe, $09
+	cpx wCurrEnemyGoldGiven.w                                                  ; $faa0 : $ec, $fe, $09
 	bne br_01_fa2b                                                  ; $faa3 : $d0, $86
 
 	rep #ACCU_8                                                  ; $faa5 : $c2, $20
@@ -18330,7 +18345,7 @@ br_01_faed:
 
 
 Call_01_faf5:
-	sta $09fa.w                                                  ; $faf5 : $8d, $fa, $09
+	sta wHitEnemyIdx.w                                                  ; $faf5 : $8d, $fa, $09
 	ldy #$0000.w                                                  ; $faf8 : $a0, $00, $00
 
 br_01_fafb:
@@ -18342,7 +18357,7 @@ br_01_fafb:
 	bra br_01_fafb                                                  ; $fb00 : $80, $f9
 
 br_01_fb02:
-	lda $09fa.w                                                  ; $fb02 : $ad, $fa, $09
+	lda wHitEnemyIdx.w                                                  ; $fb02 : $ad, $fa, $09
 	bpl br_01_fb0c                                                  ; $fb05 : $10, $05
 
 	ldx $0a6e.w, Y                                                  ; $fb07 : $be, $6e, $0a
@@ -18363,8 +18378,8 @@ br_01_fb19:
 
 
 	rep #ACCU_8                                                  ; $fb1a : $c2, $20
-	stz $09fe.w                                                  ; $fb1c : $9c, $fe, $09
-	lda $09fa.w                                                  ; $fb1f : $ad, $fa, $09
+	stz wCurrEnemyGoldGiven.w                                                  ; $fb1c : $9c, $fe, $09
+	lda wHitEnemyIdx.w                                                  ; $fb1f : $ad, $fa, $09
 	and #$00ff.w                                                  ; $fb22 : $29, $ff, $00
 	asl                                                  ; $fb25 : $0a
 	tax                                                  ; $fb26 : $aa
@@ -18386,7 +18401,7 @@ br_01_fb32:
 	lda InBattleEnemyData.l, X                                                  ; $fb3f : $bf, $c0, $85, $96
 	beq br_01_fb72                                                  ; $fb43 : $f0, $2d
 
-	sta $09fc.w                                                  ; $fb45 : $8d, $fc, $09
+	sta wCurrEnemyExpGiven.w                                                  ; $fb45 : $8d, $fc, $09
 	sep #ACCU_8                                                  ; $fb48 : $e2, $20
 	xba                                                  ; $fb4a : $eb
 	lsr                                                  ; $fb4b : $4a
@@ -18402,10 +18417,10 @@ br_01_fb32:
 	bne br_01_fb74                                                  ; $fb62 : $d0, $10
 
 	rep #ACCU_8                                                  ; $fb64 : $c2, $20
-	lda $09fc.w                                                  ; $fb66 : $ad, $fc, $09
+	lda wCurrEnemyExpGiven.w                                                  ; $fb66 : $ad, $fc, $09
 	and #$01ff.w                                                  ; $fb69 : $29, $ff, $01
 	ora #$0200.w                                                  ; $fb6c : $09, $00, $02
-	sta $09fe.w                                                  ; $fb6f : $8d, $fe, $09
+	sta wCurrEnemyGoldGiven.w                                                  ; $fb6f : $8d, $fe, $09
 
 br_01_fb72:
 	sep #ACCU_8                                                  ; $fb72 : $e2, $20
@@ -18490,7 +18505,7 @@ Call_01_fbc6:
 
 Call_01_fbdb:
 	phx                                                  ; $fbdb : $da
-	lda $09fa.w                                                  ; $fbdc : $ad, $fa, $09
+	lda wHitEnemyIdx.w                                                  ; $fbdc : $ad, $fa, $09
 	rep #ACCU_8                                                  ; $fbdf : $c2, $20
 	and #$00ff.w                                                  ; $fbe1 : $29, $ff, $00
 	asl                                                  ; $fbe4 : $0a
@@ -18498,14 +18513,14 @@ Call_01_fbdb:
 	lda InBattleEnemyData.l, X                                                  ; $fbe6 : $bf, $c0, $85, $96
 	tax                                                  ; $fbea : $aa
 	sep #ACCU_8                                                  ; $fbeb : $e2, $20
-	lda $9685dd.l, X                                                  ; $fbed : $bf, $dd, $85, $96
-	sta $09fc.w                                                  ; $fbf1 : $8d, $fc, $09
-	lda $9685de.l, X                                                  ; $fbf4 : $bf, $de, $85, $96
-	sta $09fd.w                                                  ; $fbf8 : $8d, $fd, $09
-	lda $9685df.l, X                                                  ; $fbfb : $bf, $df, $85, $96
-	sta $09fe.w                                                  ; $fbff : $8d, $fe, $09
-	lda $9685e0.l, X                                                  ; $fc02 : $bf, $e0, $85, $96
-	sta $09ff.w                                                  ; $fc06 : $8d, $ff, $09
+	lda InBattleEnemyData.l+$1d, X                                                  ; $fbed : $bf, $dd, $85, $96
+	sta wCurrEnemyExpGiven.w                                                  ; $fbf1 : $8d, $fc, $09
+	lda InBattleEnemyData.l+$1e, X                                                  ; $fbf4 : $bf, $de, $85, $96
+	sta wCurrEnemyExpGiven.w+1                                                  ; $fbf8 : $8d, $fd, $09
+	lda InBattleEnemyData.l+$1f, X                                                  ; $fbfb : $bf, $df, $85, $96
+	sta wCurrEnemyGoldGiven.w                                                  ; $fbff : $8d, $fe, $09
+	lda InBattleEnemyData.l+$20, X                                                  ; $fc02 : $bf, $e0, $85, $96
+	sta wCurrEnemyGoldGiven.w+1                                                  ; $fc06 : $8d, $ff, $09
 	plx                                                  ; $fc09 : $fa
 	rtl                                                  ; $fc0a : $6b
 

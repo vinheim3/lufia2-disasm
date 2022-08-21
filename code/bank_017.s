@@ -2173,7 +2173,7 @@ Call_17_9105:
 
 	jsr $4805.w                                                  ; $91b9 : $20, $05, $48
 	rol $4100.w                                                  ; $91bc : $2e, $00, $41
-	jsr $1605.w                                                  ; $91bf : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $91bf : $20, $05, $16
 	jsr $3d11.w                                                  ; $91c2 : $20, $11, $3d
 	jsr $2612.w                                                  ; $91c5 : $20, $12, $26
 	jsr $0ac1.w                                                  ; $91c8 : $20, $c1, $0a
@@ -2234,7 +2234,7 @@ Call_17_9105:
 	.db $00                                                  ; $9254 : $00
 	eor ($20, X)                                                  ; $9255 : $41, $20
 	asl $ed                                                  ; $9257 : $06, $ed
-	jsr $1605.w                                                  ; $9259 : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $9259 : $20, $05, $16
 	asl                                                  ; $925c : $0a
 	ora ($c1), Y                                                  ; $925d : $11, $c1
 	jsr $8e10.w                                                  ; $925f : $20, $10, $8e
@@ -7087,7 +7087,7 @@ br_17_b76d:
 	rti                                                  ; $b7b5 : $40
 
 
-	jsr $1608.w                                                  ; $b7b6 : $20, $08, $16
+	jsr wAccumulatedBattleGold.w                                                  ; $b7b6 : $20, $08, $16
 	.db $00                                                  ; $b7b9 : $00
 	pha                                                  ; $b7ba : $48
 	cop $50.b                                                  ; $b7bb : $02, $50

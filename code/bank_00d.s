@@ -13441,7 +13441,7 @@ Call_0d_ee06:
 	asl $bd                                                  ; $ee7c : $06, $bd
 	jsr $eb05.w                                                  ; $ee7e : $20, $05, $eb
 	ora $93, S                                                  ; $ee81 : $03, $93
-	jsr $160a.w                                                  ; $ee83 : $20, $0a, $16
+	jsr wAccumulatedBattleGold.w+2                                                  ; $ee83 : $20, $0a, $16
 	bit $b9, X                                                  ; $ee86 : $34, $b9
 	jsr Call_0d_9005.w                                                  ; $ee88 : $20, $05, $90
 	and $066101.l, X                                                  ; $ee8b : $3f, $01, $61, $06

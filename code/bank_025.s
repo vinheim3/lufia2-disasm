@@ -4848,7 +4848,7 @@ br_25_997d:
 
 
 	jsr $002c.w                                                  ; $998b : $20, $2c, $00
-	asl $1608.w, X                                                  ; $998e : $1e, $08, $16
+	asl wAccumulatedBattleGold.w, X                                                  ; $998e : $1e, $08, $16
 	ora $233d.w, Y                                                  ; $9991 : $19, $3d, $23
 	dea                                                  ; $9994 : $3a
 	ora $101f.w                                                  ; $9995 : $0d, $1f, $10

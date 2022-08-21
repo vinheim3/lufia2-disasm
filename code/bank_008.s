@@ -8414,7 +8414,7 @@ br_08_c39a:
 
 Call_08_c405:
 	and $17, X                                                  ; $c405 : $35, $17
-	ora $160a.w, X                                                  ; $c407 : $1d, $0a, $16
+	ora wAccumulatedBattleGold.w+2, X                                                  ; $c407 : $1d, $0a, $16
 	ora $0101.w, X                                                  ; $c40a : $1d, $01, $01
 	.db $00                                                  ; $c40d : $00
 	.db $00                                                  ; $c40e : $00

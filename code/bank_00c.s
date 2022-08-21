@@ -683,7 +683,7 @@ Call_0c_8567:
 	adc $00, S                                                  ; $857a : $63, $00
 	php                                                  ; $857c : $08
 	asl $c1                                                  ; $857d : $06, $c1
-	jsr $1605.w                                                  ; $857f : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $857f : $20, $05, $16
 	jsr $f105.w                                                  ; $8582 : $20, $05, $f1
 	jsr Call_0c_d806.w                                                  ; $8585 : $20, $06, $d8
 	ora $06, S                                                  ; $8588 : $03, $06
@@ -982,7 +982,7 @@ br_0c_87e7:
 	jsr $1f05.w                                                  ; $87f9 : $20, $05, $1f
 	ora $89, S                                                  ; $87fc : $03, $89
 	jsr $bd06.w                                                  ; $87fe : $20, $06, $bd
-	jsr $1605.w                                                  ; $8801 : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $8801 : $20, $05, $16
 	jsr $f105.w                                                  ; $8804 : $20, $05, $f1
 	asl $c606.w                                                  ; $8807 : $0e, $06, $c6
 	jsr Call_0c_c805.w                                                  ; $880a : $20, $05, $c8
@@ -1135,7 +1135,7 @@ br_0c_8905:
 
 	cop $08.b                                                  ; $894c : $02, $08
 	asl $c1                                                  ; $894e : $06, $c1
-	jsr $1605.w                                                  ; $8950 : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $8950 : $20, $05, $16
 
 Call_0c_8953:
 	jsr $f105.w                                                  ; $8953 : $20, $05, $f1
@@ -1443,7 +1443,7 @@ Call_0c_8b6d:
 	jsr Call_0c_ec05.w                                                  ; $8bdd : $20, $05, $ec
 	ora $81, S                                                  ; $8be0 : $03, $81
 	asl $bd                                                  ; $8be2 : $06, $bd
-	jsr $1605.w                                                  ; $8be4 : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $8be4 : $20, $05, $16
 	jsr $f105.w                                                  ; $8be7 : $20, $05, $f1
 	rol $0801.w                                                  ; $8bea : $2e, $01, $08
 	asl $cb                                                  ; $8bed : $06, $cb
@@ -1792,7 +1792,7 @@ Call_0c_8e05:
 	ldx $03                                                  ; $8ec6 : $a6, $03
 	dey                                                  ; $8ec8 : $88
 	jsr $bd06.w                                                  ; $8ec9 : $20, $06, $bd
-	jsr $1605.w                                                  ; $8ecc : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $8ecc : $20, $05, $16
 	jsr $f105.w                                                  ; $8ecf : $20, $05, $f1
 	rol $1a01.w                                                  ; $8ed2 : $2e, $01, $1a
 	plx                                                  ; $8ed5 : $fa
@@ -2013,7 +2013,7 @@ br_0c_907e:
 	ldx $20                                                  ; $90a2 : $a6, $20
 	sta ($03, S), Y                                                  ; $90a4 : $93, $03
 	asl $bd                                                  ; $90a6 : $06, $bd
-	jsr $1605.w                                                  ; $90a8 : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $90a8 : $20, $05, $16
 	jsr $f105.w                                                  ; $90ab : $20, $05, $f1
 	and $536101.l, X                                                  ; $90ae : $3f, $01, $61, $53
 	adc $d00690.l                                                  ; $90b2 : $6f, $90, $06, $d0
@@ -2022,7 +2022,7 @@ br_0c_907e:
 	ldx $03                                                  ; $90bc : $a6, $03
 	sta ($20, S), Y                                                  ; $90be : $93, $20
 	asl $bd                                                  ; $90c0 : $06, $bd
-	jsr $1605.w                                                  ; $90c2 : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $90c2 : $20, $05, $16
 	jsr $f105.w                                                  ; $90c5 : $20, $05, $f1
 	and $060801.l, X                                                  ; $90c8 : $3f, $01, $08, $06
 	lsr $86, X                                                  ; $90cc : $56, $86
@@ -2134,7 +2134,7 @@ Call_0c_9154:
 	cmp $06, X                                                  ; $91b7 : $d5, $06
 	pei ($03)                                                  ; $91b9 : $d4, $03
 	asl $bd                                                  ; $91bb : $06, $bd
-	jsr $1605.w                                                  ; $91bd : $20, $05, $16
+	jsr wAccumulatedBattleExp.w                                                  ; $91bd : $20, $05, $16
 	jsr $f105.w                                                  ; $91c0 : $20, $05, $f1
 	jsr $1906.w                                                  ; $91c3 : $20, $06, $19
 	rol $6101.w                                                  ; $91c6 : $2e, $01, $61

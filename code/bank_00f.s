@@ -2615,7 +2615,7 @@ br_0f_93de:
 	ora ($08), Y                                                  ; $94be : $11, $08
 	ora #$10.b                                                  ; $94c0 : $09, $10
 	.db $00                                                  ; $94c2 : $00
-	tsb $09fc.w                                                  ; $94c3 : $0c, $fc, $09
+	tsb wCurrEnemyExpGiven.w                                                  ; $94c3 : $0c, $fc, $09
 	ora ($06, X)                                                  ; $94c6 : $01, $06
 	jsr ($091a.w, X)                                                  ; $94c8 : $fc, $1a, $09
 	jsr ($0600.w, X)                                                  ; $94cb : $fc, $00, $06

@@ -16839,7 +16839,7 @@ br_06_ed3f:
 	sbc ($00), Y                                                  ; $ed7d : $f1, $00
 	ora $1c08.w                                                  ; $ed7f : $0d, $08, $1c
 	sbc ($00), Y                                                  ; $ed82 : $f1, $00
-	ora $1608.w                                                  ; $ed84 : $0d, $08, $16
+	ora wAccumulatedBattleGold.w                                                  ; $ed84 : $0d, $08, $16
 	sbc ($00), Y                                                  ; $ed87 : $f1, $00
 	ora $0408.w                                                  ; $ed89 : $0d, $08, $04
 	.db $00                                                  ; $ed8c : $00

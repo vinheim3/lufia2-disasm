@@ -21164,7 +21164,7 @@ br_23_f3ac:
 
 	.db $00                                                  ; $f47a : $00
 	jsr Call_23_f800.w                                                  ; $f47b : $20, $00, $f8
-	jsr $09fc.w                                                  ; $f47e : $20, $fc, $09
+	jsr wCurrEnemyExpGiven.w                                                  ; $f47e : $20, $fc, $09
 	tsb $13                                                  ; $f481 : $04, $13
 	ora #$0317.w                                                  ; $f483 : $09, $17, $03
 	ora [$02], Y                                                  ; $f486 : $17, $02

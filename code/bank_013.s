@@ -5794,7 +5794,7 @@ br_13_ad26:
 	php                                                  ; $add6 : $08
 	sbc $ffffff.l, X                                                  ; $add7 : $ff, $ff, $ff, $ff
 	sbc [$1e], Y                                                  ; $addb : $f7, $1e
-	ora $09ff.w, Y                                                  ; $addd : $19, $ff, $09
+	ora wCurrEnemyGoldGiven.w+1, Y                                                  ; $addd : $19, $ff, $09
 	sbc $ffffff.l, X                                                  ; $ade0 : $ff, $ff, $ff, $ff
 	sbc [$19], Y                                                  ; $ade4 : $f7, $19
 	ora $ff, X                                                  ; $ade6 : $15, $ff
@@ -7262,7 +7262,7 @@ br_13_b9d0:
 	ora $ff0010.l                                                  ; $b9dc : $0f, $10, $00, $ff
 	cop $05.b                                                  ; $b9e0 : $02, $05
 	asl $06, X                                                  ; $b9e2 : $16, $06
-	ora $1605.w, Y                                                  ; $b9e4 : $19, $05, $16
+	ora wAccumulatedBattleExp.w, Y                                                  ; $b9e4 : $19, $05, $16
 	asl $17                                                  ; $b9e7 : $06, $17
 	asl $16                                                  ; $b9e9 : $06, $16
 	ora [$17]                                                  ; $b9eb : $07, $17

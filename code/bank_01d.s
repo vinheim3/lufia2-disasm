@@ -872,7 +872,7 @@ br_1d_8441:
 
 	ora $02                                                  ; $8492 : $05, $02
 	lsr                                                  ; $8494 : $4a
-	eor $1608.w                                                  ; $8495 : $4d, $08, $16
+	eor wAccumulatedBattleGold.w                                                  ; $8495 : $4d, $08, $16
 	asl $23, X                                                  ; $8498 : $16, $23
 	tdc                                                  ; $849a : $7b
 	tsb $4a                                                  ; $849b : $04, $4a
@@ -1063,7 +1063,7 @@ br_1d_84ff:
 
 	ora $02                                                  ; $8594 : $05, $02
 	lsr                                                  ; $8596 : $4a
-	eor $1608.w                                                  ; $8597 : $4d, $08, $16
+	eor wAccumulatedBattleGold.w                                                  ; $8597 : $4d, $08, $16
 	asl $23, X                                                  ; $859a : $16, $23
 	tdc                                                  ; $859c : $7b
 	tsb $4a                                                  ; $859d : $04, $4a
@@ -1986,7 +1986,7 @@ br_1d_8a5d:
 
 	ora $02                                                  ; $8a92 : $05, $02
 	lsr                                                  ; $8a94 : $4a
-	eor $1608.w                                                  ; $8a95 : $4d, $08, $16
+	eor wAccumulatedBattleGold.w                                                  ; $8a95 : $4d, $08, $16
 	asl $23, X                                                  ; $8a98 : $16, $23
 	tdc                                                  ; $8a9a : $7b
 	tsb $4a                                                  ; $8a9b : $04, $4a
@@ -2170,7 +2170,7 @@ br_1d_8b5f:
 
 	ora $02                                                  ; $8b94 : $05, $02
 	lsr                                                  ; $8b96 : $4a
-	eor $1608.w                                                  ; $8b97 : $4d, $08, $16
+	eor wAccumulatedBattleGold.w                                                  ; $8b97 : $4d, $08, $16
 	asl $23, X                                                  ; $8b9a : $16, $23
 	tdc                                                  ; $8b9c : $7b
 	tsb $4a                                                  ; $8b9d : $04, $4a
@@ -3150,7 +3150,7 @@ br_1d_905f:
 
 	ora $02                                                  ; $9094 : $05, $02
 	lsr                                                  ; $9096 : $4a
-	eor $1608.w                                                  ; $9097 : $4d, $08, $16
+	eor wAccumulatedBattleGold.w                                                  ; $9097 : $4d, $08, $16
 	asl $23, X                                                  ; $909a : $16, $23
 	tdc                                                  ; $909c : $7b
 	tsb $4a                                                  ; $909d : $04, $4a
@@ -3347,7 +3347,7 @@ br_1d_9184:
 
 	ora $02                                                  ; $9196 : $05, $02
 	lsr                                                  ; $9198 : $4a
-	eor $1608.w                                                  ; $9199 : $4d, $08, $16
+	eor wAccumulatedBattleGold.w                                                  ; $9199 : $4d, $08, $16
 	asl $23, X                                                  ; $919c : $16, $23
 	tdc                                                  ; $919e : $7b
 	tsb $00                                                  ; $919f : $04, $00
@@ -4487,7 +4487,7 @@ br_1d_975f:
 
 	ora $02                                                  ; $9794 : $05, $02
 	lsr                                                  ; $9796 : $4a
-	eor $1608.w                                                  ; $9797 : $4d, $08, $16
+	eor wAccumulatedBattleGold.w                                                  ; $9797 : $4d, $08, $16
 	asl $23, X                                                  ; $979a : $16, $23
 	tdc                                                  ; $979c : $7b
 	tsb $4a                                                  ; $979d : $04, $4a
@@ -8962,7 +8962,7 @@ br_1d_ad39:
 	and [$10]                                                  ; $ad40 : $27, $10
 	tcs                                                  ; $ad42 : $1b
 	.db $00                                                  ; $ad43 : $00
-	rol $1608.w                                                  ; $ad44 : $2e, $08, $16
+	rol wAccumulatedBattleGold.w                                                  ; $ad44 : $2e, $08, $16
 	.db $00                                                  ; $ad47 : $00
 	asl $1700.w, X                                                  ; $ad48 : $1e, $00, $17
 	php                                                  ; $ad4b : $08
@@ -12163,7 +12163,7 @@ br_1d_bdcd:
 
 br_1d_bdd1:
 	tsb $0308.w                                                  ; $bdd1 : $0c, $08, $03
-	tsb $1605.w                                                  ; $bdd4 : $0c, $05, $16
+	tsb wAccumulatedBattleExp.w                                                  ; $bdd4 : $0c, $05, $16
 	ina                                                  ; $bdd7 : $1a
 	ora $18, S                                                  ; $bdd8 : $03, $18
 	.db $00                                                  ; $bdda : $00
@@ -14750,7 +14750,7 @@ br_1d_ca76:
 
 
 	jsr $002c.w                                                  ; $ca8b : $20, $2c, $00
-	asl $1608.w, X                                                  ; $ca8e : $1e, $08, $16
+	asl wAccumulatedBattleGold.w, X                                                  ; $ca8e : $1e, $08, $16
 	ora $233d.w, Y                                                  ; $ca91 : $19, $3d, $23
 	dea                                                  ; $ca94 : $3a
 	ora $101f.w                                                  ; $ca95 : $0d, $1f, $10

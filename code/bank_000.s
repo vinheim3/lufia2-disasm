@@ -1571,22 +1571,22 @@ br_00_8922:
 	stz $55                                                  ; $8926 : $64, $55
 	lda $057b.w                                                  ; $8928 : $ad, $7b, $05
 	and #$04.b                                                  ; $892b : $29, $04
-	beq br_00_8949                                                  ; $892d : $f0, $1a
+	beq @convertNumToBCD                                                  ; $892d : $f0, $1a
 
-	lda $0572.w                                                  ; $892f : $ad, $72, $05
-	bpl br_00_8949                                                  ; $8932 : $10, $15
+	lda wNumToConvertToBCD.w+2                                                  ; $892f : $ad, $72, $05
+	bpl @convertNumToBCD                                                  ; $8932 : $10, $15
 
-	stz $0572.w                                                  ; $8934 : $9c, $72, $05
+	stz wNumToConvertToBCD.w+2                                                  ; $8934 : $9c, $72, $05
 	rep #ACCU_8                                                  ; $8937 : $c2, $20
-	lda $0570.w                                                  ; $8939 : $ad, $70, $05
+	lda wNumToConvertToBCD.w                                                  ; $8939 : $ad, $70, $05
 	eor #$ffff.w                                                  ; $893c : $49, $ff, $ff
 	ina                                                  ; $893f : $1a
-	sta $0570.w                                                  ; $8940 : $8d, $70, $05
+	sta wNumToConvertToBCD.w                                                  ; $8940 : $8d, $70, $05
 	sep #ACCU_8                                                  ; $8943 : $e2, $20
 	lda #$ff.b                                                  ; $8945 : $a9, $ff
 	sta $55                                                  ; $8947 : $85, $55
 
-br_00_8949:
+@convertNumToBCD:
 	jsr Call_00_89aa.w                                                  ; $8949 : $20, $aa, $89
 	lda $057b.w                                                  ; $894c : $ad, $7b, $05
 	bit #$02.b                                                  ; $894f : $89, $02
@@ -1595,12 +1595,12 @@ br_00_8949:
 	ldy #$0000.w                                                  ; $8953 : $a0, $00, $00
 
 br_00_8956:
-	lda $0567.w, Y                                                  ; $8956 : $b9, $67, $05
+	lda wBCDversionOfANum.w, Y                                                  ; $8956 : $b9, $67, $05
 	cmp #$30.b                                                  ; $8959 : $c9, $30
 	bne br_00_8968                                                  ; $895b : $d0, $0b
 
 	lda #$20.b                                                  ; $895d : $a9, $20
-	sta $0567.w, Y                                                  ; $895f : $99, $67, $05
+	sta wBCDversionOfANum.w, Y                                                  ; $895f : $99, $67, $05
 	iny                                                  ; $8962 : $c8
 	cpy #$0007.w                                                  ; $8963 : $c0, $07, $00
 	bne br_00_8956                                                  ; $8966 : $d0, $ee
@@ -1612,7 +1612,7 @@ br_00_8968:
 	ldy #$0007.w                                                  ; $896c : $a0, $07, $00
 
 br_00_896f:
-	lda $0567.w, Y                                                  ; $896f : $b9, $67, $05
+	lda wBCDversionOfANum.w, Y                                                  ; $896f : $b9, $67, $05
 	cmp #$20.b                                                  ; $8972 : $c9, $20
 	beq br_00_8979                                                  ; $8974 : $f0, $03
 
@@ -1621,7 +1621,7 @@ br_00_896f:
 
 br_00_8979:
 	lda #$2d.b                                                  ; $8979 : $a9, $2d
-	sta $0567.w, Y                                                  ; $897b : $99, $67, $05
+	sta wBCDversionOfANum.w, Y                                                  ; $897b : $99, $67, $05
 
 br_00_897e:
 	lda $057b.w                                                  ; $897e : $ad, $7b, $05
@@ -1655,134 +1655,130 @@ br_00_899f:
 	ply                                                  ; $89a6 : $7a
 	brl Func_0_88ad                                                  ; $89a7 : $82, $03, $ff
 
+
 Call_00_89aa:
 	phy                                                  ; $89aa : $5a
 	lda $057b.w                                                  ; $89ab : $ad, $7b, $05
 	and #$08.b                                                  ; $89ae : $29, $08
-	beq br_00_89d8                                                  ; $89b0 : $f0, $26
+	beq SaveBCDofANumber                                                  ; $89b0 : $f0, $26
 
 	ldx #$0002.w                                                  ; $89b2 : $a2, $02, $00
 	ldy #$0002.w                                                  ; $89b5 : $a0, $02, $00
 
 br_00_89b8:
-	lda $0570.w, Y                                                  ; $89b8 : $b9, $70, $05
+	lda wNumToConvertToBCD.w, Y                                                  ; $89b8 : $b9, $70, $05
 	lsr                                                  ; $89bb : $4a
 	lsr                                                  ; $89bc : $4a
 	lsr                                                  ; $89bd : $4a
 	lsr                                                  ; $89be : $4a
 	jsr Call_00_89d0.w                                                  ; $89bf : $20, $d0, $89
-	lda $0570.w, Y                                                  ; $89c2 : $b9, $70, $05
+	lda wNumToConvertToBCD.w, Y                                                  ; $89c2 : $b9, $70, $05
 	and #$0f.b                                                  ; $89c5 : $29, $0f
 	jsr Call_00_89d0.w                                                  ; $89c7 : $20, $d0, $89
 	dey                                                  ; $89ca : $88
 	bpl br_00_89b8                                                  ; $89cb : $10, $eb
 
-	brl br_00_8a55                                                  ; $89cd : $82, $85, $00
+	brl Done_0_8a55                                                  ; $89cd : $82, $85, $00
+
 
 Call_00_89d0:
 	clc                                                  ; $89d0 : $18
 	adc #$30.b                                                  ; $89d1 : $69, $30
-	sta $0567.w, X                                                  ; $89d3 : $9d, $67, $05
+	sta wBCDversionOfANum.w, X                                                  ; $89d3 : $9d, $67, $05
 	inx                                                  ; $89d6 : $e8
 	rts                                                  ; $89d7 : $60
 
 
-br_00_89d8:
+SaveBCDofANumber:
+; points to 10,000,000
 	ldy #$0000.w                                                  ; $89d8 : $a0, $00, $00
 	ldx #$0000.w                                                  ; $89db : $a2, $00, $00
-	lda $0572.w                                                  ; $89de : $ad, $72, $05
-	bne br_00_89f4                                                  ; $89e1 : $d0, $11
+	lda wNumToConvertToBCD.w+2                                                  ; $89de : $ad, $72, $05
+	bne @cont_89f4                                                  ; $89e1 : $d0, $11
 
+; points to 10,000
 	ldy #$0003.w                                                  ; $89e3 : $a0, $03, $00
 	ldx #$0009.w                                                  ; $89e6 : $a2, $09, $00
-	lda $0571.w                                                  ; $89e9 : $ad, $71, $05
-	bne br_00_89f4                                                  ; $89ec : $d0, $06
+	lda wNumToConvertToBCD.w+1                                                  ; $89e9 : $ad, $71, $05
+	bne @cont_89f4                                                  ; $89ec : $d0, $06
 
+; for 1st slime (points to 100)
 	ldy #$0005.w                                                  ; $89ee : $a0, $05, $00
 	ldx #$000f.w                                                  ; $89f1 : $a2, $0f, $00
 
-br_00_89f4:
+@cont_89f4:
 	phy                                                  ; $89f4 : $5a
 	ldy #$0007.w                                                  ; $89f5 : $a0, $07, $00
 	lda #$30.b                                                  ; $89f8 : $a9, $30
 
-br_00_89fa:
-	sta $0567.w, Y                                                  ; $89fa : $99, $67, $05
+-	sta wBCDversionOfANum.w, Y                                                  ; $89fa : $99, $67, $05
 	dey                                                  ; $89fd : $88
-	bpl br_00_89fa                                                  ; $89fe : $10, $fa
+	bpl -                                                  ; $89fe : $10, $fa
 
 	ply                                                  ; $8a00 : $7a
 
-br_00_8a01:
-	lda $808a57.l, X                                                  ; $8a01 : $bf, $57, $8a, $80
+@loop_8a01:
+	lda PowersOf10.l, X                                                  ; $8a01 : $bf, $57, $8a, $80
 	sta $60                                                  ; $8a05 : $85, $60
-	lda $808a58.l, X                                                  ; $8a07 : $bf, $58, $8a, $80
+	lda PowersOf10.l+1, X                                                  ; $8a07 : $bf, $58, $8a, $80
 	sta $61                                                  ; $8a0b : $85, $61
-	lda $808a59.l, X                                                  ; $8a0d : $bf, $59, $8a, $80
+	lda PowersOf10.l+2, X                                                  ; $8a0d : $bf, $59, $8a, $80
 	sta $62                                                  ; $8a11 : $85, $62
+
+;
 	phy                                                  ; $8a13 : $5a
 	ldy #$0030.w                                                  ; $8a14 : $a0, $30, $00
 
-br_00_8a17:
+@loop_8a17:
 	rep #ACCU_8                                                  ; $8a17 : $c2, $20
-	lda $0570.w                                                  ; $8a19 : $ad, $70, $05
+	lda wNumToConvertToBCD.w                                                  ; $8a19 : $ad, $70, $05
 	sec                                                  ; $8a1c : $38
 	sbc $60                                                  ; $8a1d : $e5, $60
-	sta $0570.w                                                  ; $8a1f : $8d, $70, $05
+	sta wNumToConvertToBCD.w                                                  ; $8a1f : $8d, $70, $05
 	sep #ACCU_8                                                  ; $8a22 : $e2, $20
-	lda $0572.w                                                  ; $8a24 : $ad, $72, $05
+	lda wNumToConvertToBCD.w+2                                                  ; $8a24 : $ad, $72, $05
 	sbc $62                                                  ; $8a27 : $e5, $62
-	bcc br_00_8a31                                                  ; $8a29 : $90, $06
+	bcc @cont_8a31                                                  ; $8a29 : $90, $06
 
-	sta $0572.w                                                  ; $8a2b : $8d, $72, $05
+	sta wNumToConvertToBCD.w+2                                                  ; $8a2b : $8d, $72, $05
 	iny                                                  ; $8a2e : $c8
-	bra br_00_8a17                                                  ; $8a2f : $80, $e6
+	bra @loop_8a17                                                  ; $8a2f : $80, $e6
 
-br_00_8a31:
+@cont_8a31:
 	rep #ACCU_8                                                  ; $8a31 : $c2, $20
-	lda $0570.w                                                  ; $8a33 : $ad, $70, $05
+	lda wNumToConvertToBCD.w                                                  ; $8a33 : $ad, $70, $05
 	clc                                                  ; $8a36 : $18
 	adc $60                                                  ; $8a37 : $65, $60
-	sta $0570.w                                                  ; $8a39 : $8d, $70, $05
+	sta wNumToConvertToBCD.w                                                  ; $8a39 : $8d, $70, $05
 	sep #ACCU_8                                                  ; $8a3c : $e2, $20
 	tya                                                  ; $8a3e : $98
 	ply                                                  ; $8a3f : $7a
-	sta $0567.w, Y                                                  ; $8a40 : $99, $67, $05
+	sta wBCDversionOfANum.w, Y                                                  ; $8a40 : $99, $67, $05
 	inx                                                  ; $8a43 : $e8
 	inx                                                  ; $8a44 : $e8
 	inx                                                  ; $8a45 : $e8
 	iny                                                  ; $8a46 : $c8
 	cpy #$0007.w                                                  ; $8a47 : $c0, $07, $00
-	bne br_00_8a01                                                  ; $8a4a : $d0, $b5
+	bne @loop_8a01                                                  ; $8a4a : $d0, $b5
 
-	lda $0570.w                                                  ; $8a4c : $ad, $70, $05
+	lda wNumToConvertToBCD.w                                                  ; $8a4c : $ad, $70, $05
 	clc                                                  ; $8a4f : $18
 	adc #$30.b                                                  ; $8a50 : $69, $30
-	sta $056e.w                                                  ; $8a52 : $8d, $6e, $05
+	sta wBCDversionOfANum.w+7                                                  ; $8a52 : $8d, $6e, $05
 
-br_00_8a55:
+Done_0_8a55:
 	ply                                                  ; $8a55 : $7a
 	rts                                                  ; $8a56 : $60
 
 
-	.db $80, $96                                                  ; $8a57 : $80, $96
-
-	tya                                                  ; $8a59 : $98
-	rti                                                  ; $8a5a : $40
-
-
-	wdm                                                  ; $8a5b : $42
-	ora $0186a0.l                                                  ; $8a5c : $0f, $a0, $86, $01
-	.db $10, $27
-
-	.db $00                                                  ; $8a62 : $00
-	inx                                                  ; $8a63 : $e8
-	ora $00, S                                                  ; $8a64 : $03, $00
-	stz $00                                                  ; $8a66 : $64, $00
-	.db $00                                                  ; $8a68 : $00
-	asl                                                  ; $8a69 : $0a
-	.db $00                                                  ; $8a6a : $00
-	.db $00                                                  ; $8a6b : $00
+PowersOf10:
+	.dl 10000000
+	.dl 1000000
+	.dl 100000
+	.dl 10000
+	.dl 1000
+	.dl 100
+	.dl 10
 
 
 Func_0_8a6c:
@@ -2090,39 +2086,46 @@ br_00_8c5e:
 	ldy #$0000.w                                                  ; $8c66 : $a0, $00, $00
 	brl Func_0_88aa                                                  ; $8c69 : $82, $3e, $fc
 
+
+; $56.w - points to value to convert
+; $057b -
 Call_00_8c6c:
-	stz $0570.w                                                  ; $8c6c : $9c, $70, $05
-	stz $0571.w                                                  ; $8c6f : $9c, $71, $05
-	stz $0572.w                                                  ; $8c72 : $9c, $72, $05
+; Clear num to convert
+	stz wNumToConvertToBCD.w                                                  ; $8c6c : $9c, $70, $05
+	stz wNumToConvertToBCD.w+1                                                  ; $8c6f : $9c, $71, $05
+	stz wNumToConvertToBCD.w+2                                                  ; $8c72 : $9c, $72, $05
+
+;
 	lda $057b.w                                                  ; $8c75 : $ad, $7b, $05
 	ldy #$0000.w                                                  ; $8c78 : $a0, $00, $00
 
-br_00_8c7b:
+@loop_8c7b:
+; eg points to 1605
 	xba                                                  ; $8c7b : $eb
 	lda ($56), Y                                                  ; $8c7c : $b1, $56
-	sta $0570.w, Y                                                  ; $8c7e : $99, $70, $05
+	sta wNumToConvertToBCD.w, Y                                                  ; $8c7e : $99, $70, $05
 	iny                                                  ; $8c81 : $c8
 	xba                                                  ; $8c82 : $eb
 	asl                                                  ; $8c83 : $0a
-	bcc br_00_8c7b                                                  ; $8c84 : $90, $f5
+	bcc @loop_8c7b                                                  ; $8c84 : $90, $f5
 
 	lda $057b.w                                                  ; $8c86 : $ad, $7b, $05
 	and #$04.b                                                  ; $8c89 : $29, $04
-	beq br_00_8c9d                                                  ; $8c8b : $f0, $10
+	beq @done                                                  ; $8c8b : $f0, $10
 
 	xba                                                  ; $8c8d : $eb
-	bpl br_00_8c9d                                                  ; $8c8e : $10, $0d
+	bpl @done                                                  ; $8c8e : $10, $0d
 
-br_00_8c90:
+@loop_8c90:
 	cpy #$0003.w                                                  ; $8c90 : $c0, $03, $00
-	beq br_00_8c9d                                                  ; $8c93 : $f0, $08
+	beq @done                                                  ; $8c93 : $f0, $08
 
 	lda #$ff.b                                                  ; $8c95 : $a9, $ff
-	sta $0570.w, Y                                                  ; $8c97 : $99, $70, $05
+	sta wNumToConvertToBCD.w, Y                                                  ; $8c97 : $99, $70, $05
 	iny                                                  ; $8c9a : $c8
-	bra br_00_8c90                                                  ; $8c9b : $80, $f3
+	bra @loop_8c90                                                  ; $8c9b : $80, $f3
 
-br_00_8c9d:
+@done:
 	rts                                                  ; $8c9d : $60
 
 
@@ -11073,18 +11076,18 @@ br_00_c835:
 	bra br_00_c835                                                  ; $c840 : $80, $f3
 
 br_00_c842:
-	stz $0572.w                                                  ; $c842 : $9c, $72, $05
-	stz $0571.w                                                  ; $c845 : $9c, $71, $05
+	stz wNumToConvertToBCD.w+2                                                  ; $c842 : $9c, $72, $05
+	stz wNumToConvertToBCD.w+1                                                  ; $c845 : $9c, $71, $05
 	lda $7fe696.l                                                  ; $c848 : $af, $96, $e6, $7f
 	dea                                                  ; $c84c : $3a
-	sta $0570.w                                                  ; $c84d : $8d, $70, $05
+	sta wNumToConvertToBCD.w                                                  ; $c84d : $8d, $70, $05
 	phx                                                  ; $c850 : $da
 	jsr Call_00_89aa.w                                                  ; $c851 : $20, $aa, $89
 	plx                                                  ; $c854 : $fa
 	ldy #$0000.w                                                  ; $c855 : $a0, $00, $00
 
 br_00_c858:
-	lda $0567.w, Y                                                  ; $c858 : $b9, $67, $05
+	lda wBCDversionOfANum.w, Y                                                  ; $c858 : $b9, $67, $05
 	iny                                                  ; $c85b : $c8
 	cmp #$30.b                                                  ; $c85c : $c9, $30
 	beq br_00_c858                                                  ; $c85e : $f0, $f8

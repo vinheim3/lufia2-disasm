@@ -2962,7 +2962,7 @@ br_21_8c32:
 	eor $6505.w, X                                                  ; $8ca2 : $5d, $05, $65
 	eor ($00), Y                                                  ; $8ca5 : $51, $00
 	stz $05, X                                                  ; $8ca7 : $74, $05
-	adc $0572.w                                                  ; $8ca9 : $6d, $72, $05
+	adc wNumToConvertToBCD.w+2                                                  ; $8ca9 : $6d, $72, $05
 	iny                                                  ; $8cac : $c8
 	eor $6505.w, X                                                  ; $8cad : $5d, $05, $65
 	eor ($05), Y                                                  ; $8cb0 : $51, $05
