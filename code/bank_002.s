@@ -5258,7 +5258,7 @@ Call_02_a2e3:
 	sbc $11a4.w                                                  ; $a2f3 : $ed, $a4, $11
 	sta $14f0.w                                                  ; $a2f6 : $8d, $f0, $14
 	lda $11a3.w                                                  ; $a2f9 : $ad, $a3, $11
-	sta $14de.w                                                  ; $a2fc : $8d, $de, $14
+	sta wSelectedCapsuleMonsterType.w                                                  ; $a2fc : $8d, $de, $14
 	lda #$08.b                                                  ; $a2ff : $a9, $08
 	ldx #$000a.w                                                  ; $a301 : $a2, $0a, $00
 	jsr Call_02_895b.w                                                  ; $a304 : $20, $5b, $89
@@ -9861,32 +9861,32 @@ br_02_c16d:
 
 Call_02_c170:
 	jsr Call_02_a2e3.w                                                  ; $c170 : $20, $e3, $a2
-	bra br_02_c184                                                  ; $c173 : $80, $0f
+	bra @cont_c184                                                  ; $c173 : $80, $0f
 
-br_02_c175:
+@loop_c175:
 	jsr Call_02_8b08.w                                                  ; $c175 : $20, $08, $8b
 	cmp #$01.b                                                  ; $c178 : $c9, $01
-	beq br_02_c1b5                                                  ; $c17a : $f0, $39
+	beq @br_c1b5                                                  ; $c17a : $f0, $39
 
 	cmp #$02.b                                                  ; $c17c : $c9, $02
-	beq br_02_c18c                                                  ; $c17e : $f0, $0c
+	beq @br_c18c                                                  ; $c17e : $f0, $0c
 
 	cmp #$03.b                                                  ; $c180 : $c9, $03
-	beq br_02_c192                                                  ; $c182 : $f0, $0e
+	beq @cont_c192                                                  ; $c182 : $f0, $0e
 
-br_02_c184:
+@cont_c184:
 	lda #$00.b                                                  ; $c184 : $a9, $00
-	bra br_02_c175                                                  ; $c186 : $80, $ed
+	bra @loop_c175                                                  ; $c186 : $80, $ed
 
-Jump_02_c188:
+@bigLoop_c188:
 	lda #$01.b                                                  ; $c188 : $a9, $01
-	bra br_02_c175                                                  ; $c18a : $80, $e9
+	bra @loop_c175                                                  ; $c18a : $80, $e9
 
-br_02_c18c:
+@br_c18c:
 	lda #$02.b                                                  ; $c18c : $a9, $02
 	jsr todo_SoundRelated_953b.l                                                  ; $c18e : $22, $3b, $95, $80
 
-br_02_c192:
+@cont_c192:
 	rep #ACCU_8                                                  ; $c192 : $c2, $20
 	lda #$0358.w                                                  ; $c194 : $a9, $58, $03
 	ldx #$120b.w                                                  ; $c197 : $a2, $0b, $12
@@ -9902,39 +9902,38 @@ br_02_c192:
 	jsr Call_02_89bc.w                                                  ; $c1b1 : $20, $bc, $89
 	rts                                                  ; $c1b4 : $60
 
-
-br_02_c1b5:
+@br_c1b5:
 	lda wJoy1StickyPressed.w+1                                                  ; $c1b5 : $ad, $ac, $14
 	bit #$03.b                                                  ; $c1b8 : $89, $03
-	beq br_02_c1fa                                                  ; $c1ba : $f0, $3e
+	beq @notLeftRight                                                  ; $c1ba : $f0, $3e
 
-	lda $14de.w                                                  ; $c1bc : $ad, $de, $14
-	bra br_02_c1e0                                                  ; $c1bf : $80, $1f
+	lda wSelectedCapsuleMonsterType.w                                                  ; $c1bc : $ad, $de, $14
+	bra @checkLeftRight                                                  ; $c1bf : $80, $1f
 
-br_02_c1c1:
+@loop_c1c1:
 	lda wJoy1StickyPressed.w+1                                                  ; $c1c1 : $ad, $ac, $14
 	bit #$02.b                                                  ; $c1c4 : $89, $02
-	beq br_02_c1d4                                                  ; $c1c6 : $f0, $0c
+	beq @br_c1d4                                                  ; $c1c6 : $f0, $0c
 
-	lda $14de.w                                                  ; $c1c8 : $ad, $de, $14
+	lda wSelectedCapsuleMonsterType.w                                                  ; $c1c8 : $ad, $de, $14
 	sec                                                  ; $c1cb : $38
 	sbc #$01.b                                                  ; $c1cc : $e9, $01
-	bcs br_02_c1e0                                                  ; $c1ce : $b0, $10
+	bcs @checkLeftRight                                                  ; $c1ce : $b0, $10
 
 	lda #$06.b                                                  ; $c1d0 : $a9, $06
-	bra br_02_c1e0                                                  ; $c1d2 : $80, $0c
+	bra @checkLeftRight                                                  ; $c1d2 : $80, $0c
 
-br_02_c1d4:
-	lda $14de.w                                                  ; $c1d4 : $ad, $de, $14
+@br_c1d4:
+	lda wSelectedCapsuleMonsterType.w                                                  ; $c1d4 : $ad, $de, $14
 	clc                                                  ; $c1d7 : $18
 	adc #$01.b                                                  ; $c1d8 : $69, $01
 	cmp #$07.b                                                  ; $c1da : $c9, $07
-	bne br_02_c1e0                                                  ; $c1dc : $d0, $02
+	bne @checkLeftRight                                                  ; $c1dc : $d0, $02
 
 	lda #$00.b                                                  ; $c1de : $a9, $00
 
-br_02_c1e0:
-	sta $14de.w                                                  ; $c1e0 : $8d, $de, $14
+@checkLeftRight:
+	sta wSelectedCapsuleMonsterType.w                                                  ; $c1e0 : $8d, $de, $14
 	rep #ACCU_8                                                  ; $c1e3 : $c2, $20
 	and #$00ff.w                                                  ; $c1e5 : $29, $ff, $00
 	clc                                                  ; $c1e8 : $18
@@ -9942,43 +9941,43 @@ br_02_c1e0:
 	tax                                                  ; $c1ec : $aa
 	sep #ACCU_8                                                  ; $c1ed : $e2, $20
 	lda $0000.w, X                                                  ; $c1ef : $bd, $00, $00
-	beq br_02_c1c1                                                  ; $c1f2 : $f0, $cd
+	beq @loop_c1c1                                                  ; $c1f2 : $f0, $cd
 
 	ldx #$0005.w                                                  ; $c1f4 : $a2, $05, $00
 	jsr Call_02_88cb.w                                                  ; $c1f7 : $20, $cb, $88
 
-br_02_c1fa:
+@notLeftRight:
 	lda #$05.b                                                  ; $c1fa : $a9, $05
 	sec                                                  ; $c1fc : $38
 	sbc $14f0.w                                                  ; $c1fd : $ed, $f0, $14
 	sta $11a4.w                                                  ; $c200 : $8d, $a4, $11
 	sta $00                                                  ; $c203 : $85, $00
-	lda $14de.w                                                  ; $c205 : $ad, $de, $14
+	lda wSelectedCapsuleMonsterType.w                                                  ; $c205 : $ad, $de, $14
 	sta $11a3.w                                                  ; $c208 : $8d, $a3, $11
 	jsr Call_02_c482.w                                                  ; $c20b : $20, $82, $c4
 	lda $0000.w, X                                                  ; $c20e : $bd, $00, $00
 	and #$08.b                                                  ; $c211 : $29, $08
-	beq br_02_c21c                                                  ; $c213 : $f0, $07
+	beq @br_c21c                                                  ; $c213 : $f0, $07
 
 	lda #$05.b                                                  ; $c215 : $a9, $05
 	sta $11a4.w                                                  ; $c217 : $8d, $a4, $11
-	bra br_02_c234                                                  ; $c21a : $80, $18
+	bra @cont_c234                                                  ; $c21a : $80, $18
 
-br_02_c21c:
+@br_c21c:
 	lda $0000.w, X                                                  ; $c21c : $bd, $00, $00
 	and #$07.b                                                  ; $c21f : $29, $07
 	cmp $00                                                  ; $c221 : $c5, $00
-	bcs br_02_c243                                                  ; $c223 : $b0, $1e
+	bcs @cont_c243                                                  ; $c223 : $b0, $1e
 
 	sta $11a4.w                                                  ; $c225 : $8d, $a4, $11
 	lda wJoy1StickyPressed.w+1                                                  ; $c228 : $ad, $ac, $14
 	bit #$08.b                                                  ; $c22b : $89, $08
-	beq br_02_c234                                                  ; $c22d : $f0, $05
+	beq @cont_c234                                                  ; $c22d : $f0, $05
 
 	lda #$01.b                                                  ; $c22f : $a9, $01
 	sta $11a4.w                                                  ; $c231 : $8d, $a4, $11
 
-br_02_c234:
+@cont_c234:
 	lda #$05.b                                                  ; $c234 : $a9, $05
 	sec                                                  ; $c236 : $38
 	sbc $11a4.w                                                  ; $c237 : $ed, $a4, $11
@@ -9986,7 +9985,7 @@ br_02_c234:
 	ldx #$0005.w                                                  ; $c23d : $a2, $05, $00
 	jsr Call_02_88cb.w                                                  ; $c240 : $20, $cb, $88
 
-br_02_c243:
+@cont_c243:
 	jsr $d248.w                                                  ; $c243 : $20, $48, $d2
 	lda #$04.b                                                  ; $c246 : $a9, $04
 	jsr Call_02_cf9d.w                                                  ; $c248 : $20, $9d, $cf
@@ -9997,7 +9996,7 @@ br_02_c243:
 	jsr Call_02_d07b.w                                                  ; $c257 : $20, $7b, $d0
 	lda #$08.b                                                  ; $c25a : $a9, $08
 	tsb $74                                                  ; $c25c : $04, $74
-	jmp Jump_02_c188.w                                                  ; $c25e : $4c, $88, $c1
+	jmp @bigLoop_c188.w                                                  ; $c25e : $4c, $88, $c1
 
 
 Call_02_c261:
@@ -10025,7 +10024,7 @@ br_02_c26b:
 	lda #$97.b                                                  ; $c285 : $a9, $97
 	sta $1126.w                                                  ; $c287 : $8d, $26, $11
 	rep #ACCU_8                                                  ; $c28a : $c2, $20
-	ldy $09c4.w                                                  ; $c28c : $ac, $c4, $09
+	ldy wCapsuleMonsterDataOffs.w                                                  ; $c28c : $ac, $c4, $09
 	sty $1124.w                                                  ; $c28f : $8c, $24, $11
 	lda $0023.w, Y                                                  ; $c292 : $b9, $23, $00
 	sta $1127.w                                                  ; $c295 : $8d, $27, $11
@@ -10118,12 +10117,12 @@ br_02_c318:
 	ldx #$0000.w                                                  ; $c325 : $a2, $00, $00
 
 br_02_c328:
-	lda $11bb.w, X                                                  ; $c328 : $bd, $bb, $11
+	lda wCapsuleMonstersAndLevel.w, X                                                  ; $c328 : $bd, $bb, $11
 	clc                                                  ; $c32b : $18
 	adc #$ff.b                                                  ; $c32c : $69, $ff
 	lda #$00.b                                                  ; $c32e : $a9, $00
 	adc #$00.b                                                  ; $c330 : $69, $00
-	sta $11bb.w, X                                                  ; $c332 : $9d, $bb, $11
+	sta wCapsuleMonstersAndLevel.w, X                                                  ; $c332 : $9d, $bb, $11
 	inx                                                  ; $c335 : $e8
 	cpx #$0007.w                                                  ; $c336 : $e0, $07, $00
 	bne br_02_c328                                                  ; $c339 : $d0, $ed
@@ -10141,7 +10140,7 @@ br_02_c351:
 
 
 Call_02_c352:
-	sta $11bb.w                                                  ; $c352 : $8d, $bb, $11
+	sta wCapsuleMonstersAndLevel.w                                                  ; $c352 : $8d, $bb, $11
 	sta $11bc.w                                                  ; $c355 : $8d, $bc, $11
 	sta $11bd.w                                                  ; $c358 : $8d, $bd, $11
 	sta $11be.w                                                  ; $c35b : $8d, $be, $11
@@ -10171,6 +10170,8 @@ br_02_c381:
 
 
 Call_02_c38b:
+; eg 0, and 1 in 11a4
+; do 11a3 * 5 (type?)
 	lda $11a3.w                                                  ; $c38b : $ad, $a3, $11
 	and #$07.b                                                  ; $c38e : $29, $07
 	asl                                                  ; $c390 : $0a
@@ -10178,17 +10179,21 @@ Call_02_c38b:
 	clc                                                  ; $c392 : $18
 	adc $11a3.w                                                  ; $c393 : $6d, $a3, $11
 	clc                                                  ; $c396 : $18
+
+; (level, 1-idxed?)
 	adc $11a4.w                                                  ; $c397 : $6d, $a4, $11
 	dea                                                  ; $c39a : $3a
+
+;
 	rep #ACCU_8                                                  ; $c39b : $c2, $20
 	and #$00ff.w                                                  ; $c39d : $29, $ff, $00
 	asl                                                  ; $c3a0 : $0a
 	tax                                                  ; $c3a1 : $aa
-	lda $97dcb8.l, X                                                  ; $c3a2 : $bf, $b8, $dc, $97
+	lda CapsuleMonstersData.l, X                                                  ; $c3a2 : $bf, $b8, $dc, $97
 	clc                                                  ; $c3a6 : $18
-	adc #$dcb8.w                                                  ; $c3a7 : $69, $b8, $dc
+	adc #CapsuleMonstersData.w                                                  ; $c3a7 : $69, $b8, $dc
 	tax                                                  ; $c3aa : $aa
-	stx $09c4.w                                                  ; $c3ab : $8e, $c4, $09
+	stx wCapsuleMonsterDataOffs.w                                                  ; $c3ab : $8e, $c4, $09
 	sep #ACCU_8                                                  ; $c3ae : $e2, $20
 	rts                                                  ; $c3b0 : $60
 
@@ -10338,7 +10343,7 @@ Call_02_c4b3:
 	lda #$97.b                                                  ; $c4c2 : $a9, $97
 	sta $1b                                                  ; $c4c4 : $85, $1b
 	rep #ACCU_8                                                  ; $c4c6 : $c2, $20
-	lda $09c4.w                                                  ; $c4c8 : $ad, $c4, $09
+	lda wCapsuleMonsterDataOffs.w                                                  ; $c4c8 : $ad, $c4, $09
 	clc                                                  ; $c4cb : $18
 	adc $19                                                  ; $c4cc : $65, $19
 	sta $19                                                  ; $c4ce : $85, $19
@@ -10401,7 +10406,7 @@ Call_02_c515:
 
 br_02_c51f:
 	rep #ACCU_8                                                  ; $c51f : $c2, $20
-	lda $11bb.w, Y                                                  ; $c521 : $b9, $bb, $11
+	lda wCapsuleMonstersAndLevel.w, Y                                                  ; $c521 : $b9, $bb, $11
 	and #$00ff.w                                                  ; $c524 : $29, $ff, $00
 	tax                                                  ; $c527 : $aa
 	sep #ACCU_8                                                  ; $c528 : $e2, $20
@@ -10423,7 +10428,7 @@ Call_02_c53a:
 	lda $11a3.w                                                  ; $c53c : $ad, $a3, $11
 	and #$00ff.w                                                  ; $c53f : $29, $ff, $00
 	tay                                                  ; $c542 : $a8
-	lda $11bb.w, Y                                                  ; $c543 : $b9, $bb, $11
+	lda wCapsuleMonstersAndLevel.w, Y                                                  ; $c543 : $b9, $bb, $11
 	and #$00ff.w                                                  ; $c546 : $29, $ff, $00
 	tax                                                  ; $c549 : $aa
 	sep #ACCU_8                                                  ; $c54a : $e2, $20
@@ -12076,7 +12081,7 @@ Call_02_d07b:
 	ldy #$c8db.w                                                  ; $d0a8 : $a0, $db, $c8
 	ldx #$3064.w                                                  ; $d0ab : $a2, $64, $30
 	jsr $808878.l                                                  ; $d0ae : $22, $78, $88, $80
-	ldx $09c4.w                                                  ; $d0b2 : $ae, $c4, $09
+	ldx wCapsuleMonsterDataOffs.w                                                  ; $d0b2 : $ae, $c4, $09
 	lda #$97.b                                                  ; $d0b5 : $a9, $97
 	sta $0a                                                  ; $d0b7 : $85, $0a
 	stx $08                                                  ; $d0b9 : $86, $08
@@ -12318,11 +12323,15 @@ Call_02_d270:
 
 Call_02_d283:
 	jsr Call_02_c38b.w                                                  ; $d283 : $20, $8b, $c3
-	ldy $09c4.w                                                  ; $d286 : $ac, $c4, $09
+	ldy wCapsuleMonsterDataOffs.w                                                  ; $d286 : $ac, $c4, $09
+
+; data bank is 7e
 	phb                                                  ; $d289 : $8b
 	lda #$97.b                                                  ; $d28a : $a9, $97
 	pha                                                  ; $d28c : $48
 	plb                                                  ; $d28d : $ab
+
+;
 	rep #ACCU_8                                                  ; $d28e : $c2, $20
 	lda $0016.w, Y                                                  ; $d290 : $b9, $16, $00
 	and #$00ff.w                                                  ; $d293 : $29, $ff, $00
@@ -12380,71 +12389,82 @@ Call_02_d283:
 	rts                                                  ; $d31b : $60
 
 
+; A - eg 2
 Call_02_d31c:
-	and #$ff.b                                                  ; $d31c : $29, $ff
-	.db $00                                                  ; $d31e : $00
+; eg store $10
+	and #$00ff.w                                                  ; $d31c : $29, $ff, $00
 	asl                                                  ; $d31f : $0a
 	asl                                                  ; $d320 : $0a
 	asl                                                  ; $d321 : $0a
 	sta $17                                                  ; $d322 : $85, $17
 	stz $11                                                  ; $d324 : $64, $11
-	lda $10ed.w                                                  ; $d326 : $ad, $ed, $10
-	and #$ff.b                                                  ; $d329 : $29, $ff
-	.db $00                                                  ; $d32b : $00
-	cmp #$01.b                                                  ; $d32c : $c9, $01
-	.db $00                                                  ; $d32e : $00
-	beq br_02_d36f                                                  ; $d32f : $f0, $3e
 
+; eg 8
+	lda $10ed.w                                                  ; $d326 : $ad, $ed, $10
+	and #$00ff.w                                                  ; $d329 : $29, $ff, $00
+	cmp #$0001.w                                                  ; $d32c : $c9, $01, $00
+	beq @end_d36f                                                  ; $d32f : $f0, $3e
+
+; eg 1
 	lda $11a4.w                                                  ; $d331 : $ad, $a4, $11
 	sta $13                                                  ; $d334 : $85, $13
 	stz $14                                                  ; $d336 : $64, $14
-	lda #$01.b                                                  ; $d338 : $a9, $01
-	.db $00                                                  ; $d33a : $00
+
+; loop from 1 to 8 in 10ed
+	lda #$0001.w                                                  ; $d338 : $a9, $01, $00
 	sta $15                                                  ; $d33b : $85, $15
 
-br_02_d33d:
+@loop_d33d:
+; every 16 loops, is a +1 here
 	lda $15                                                  ; $d33d : $a5, $15
 	lsr                                                  ; $d33f : $4a
 	lsr                                                  ; $d340 : $4a
 	lsr                                                  ; $d341 : $4a
 	lsr                                                  ; $d342 : $4a
 	pha                                                  ; $d343 : $48
+
+; eg +10
 	clc                                                  ; $d344 : $18
 	adc $17                                                  ; $d345 : $65, $17
 	tax                                                  ; $d347 : $aa
+
+; eg put 68 in 1c
 	lda $a6f420.l, X                                                  ; $d348 : $bf, $20, $f4, $a6
-	and #$ff.b                                                  ; $d34c : $29, $ff
-	.db $00                                                  ; $d34e : $00
+	and #$00ff.w                                                  ; $d34c : $29, $ff, $00
 	sta $1c                                                  ; $d34f : $85, $1c
+
+; this is 0 for 1st foomy, so we skip 2 shifts
 	pla                                                  ; $d351 : $68
 	cmp $13                                                  ; $d352 : $c5, $13
-	bcc br_02_d35c                                                  ; $d354 : $90, $06
+	bcc @connt_d35c                                                  ; $d354 : $90, $06
 
-	beq br_02_d35a                                                  ; $d356 : $f0, $02
-
+	beq +                                                  ; $d356 : $f0, $02
 	lsr $1c                                                  ; $d358 : $46, $1c
++	lsr $1c                                                  ; $d35a : $46, $1c
 
-br_02_d35a:
-	lsr $1c                                                  ; $d35a : $46, $1c
-
-br_02_d35c:
+@connt_d35c:
+; (11) += 68, 7*68 = 02d8
 	lda $1c                                                  ; $d35c : $a5, $1c
 	clc                                                  ; $d35e : $18
 	adc $11                                                  ; $d35f : $65, $11
 	sta $11                                                  ; $d361 : $85, $11
+
+;
 	lda $10ed.w                                                  ; $d363 : $ad, $ed, $10
-	and #$ff.b                                                  ; $d366 : $29, $ff
-	.db $00                                                  ; $d368 : $00
+	and #$00ff.w                                                  ; $d366 : $29, $ff, $00
 	inc $15                                                  ; $d369 : $e6, $15
 	cmp $15                                                  ; $d36b : $c5, $15
-	bne br_02_d33d                                                  ; $d36d : $d0, $ce
+	bne @loop_d33d                                                  ; $d36d : $d0, $ce
 
-br_02_d36f:
+@end_d36f:
+; eg 2d
 	lsr $11                                                  ; $d36f : $46, $11
 	lsr $11                                                  ; $d371 : $46, $11
 	lsr $11                                                  ; $d373 : $46, $11
 	lsr $11                                                  ; $d375 : $46, $11
 	rts                                                  ; $d377 : $60
+
+
 
 
 Call_02_d378:
@@ -15365,7 +15385,7 @@ Call_02_e746:
 	.dw $e75d
 	.dw $e77c
 	.dw $e78d
-	.dw $e7aa
+	.dw Func_2_e7aa
 	.dw Func_2_e80c
 	.dw $e861
 	.dw $e87b
@@ -15409,6 +15429,7 @@ Call_02_e746:
 	rtl                                                  ; $e7a9 : $6b
 
 
+Func_2_e7aa:
 	jsr Call_02_e8de.w                                                  ; $e7aa : $20, $de, $e8
 	ldx #$0010.w                                                  ; $e7ad : $a2, $10, $00
 	stx $155e.w                                                  ; $e7b0 : $8e, $5e, $15
@@ -15421,7 +15442,7 @@ Call_02_e746:
 	tax                                                  ; $e7bf : $aa
 	sta $11a3.w                                                  ; $e7c0 : $8d, $a3, $11
 	lda #$01.b                                                  ; $e7c3 : $a9, $01
-	sta $11bb.w, X                                                  ; $e7c5 : $9d, $bb, $11
+	sta wCapsuleMonstersAndLevel.w, X                                                  ; $e7c5 : $9d, $bb, $11
 	lda $8ee4c4.l, X                                                  ; $e7c8 : $bf, $c4, $e4, $8e
 	sta $7ff1a3.l, X                                                  ; $e7cc : $9f, $a3, $f1, $7f
 	jsr Call_02_c3f8.w                                                  ; $e7d0 : $20, $f8, $c3
@@ -16657,7 +16678,7 @@ Call_02_f0a2:
 	ldx #$1811.w                                                  ; $f0c7 : $a2, $11, $18
 	jsr Call_02_810e.w                                                  ; $f0ca : $20, $0e, $81
 	sep #ACCU_8                                                  ; $f0cd : $e2, $20
-	stz $14de.w                                                  ; $f0cf : $9c, $de, $14
+	stz wSelectedCapsuleMonsterType.w                                                  ; $f0cf : $9c, $de, $14
 	stz $14f0.w                                                  ; $f0d2 : $9c, $f0, $14
 	lda #$07.b                                                  ; $f0d5 : $a9, $07
 	ldx #$000a.w                                                  ; $f0d7 : $a2, $0a, $00

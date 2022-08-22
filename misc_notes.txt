@@ -51,3 +51,6 @@ InBattleEnemyData:
 * first d bytes is name
 * +$1d.w = exp given
 * +$1f.w = gold given
+
+
+joypad is udlr (r = 1)

@@ -183,7 +183,13 @@ wCurrScriptBank: ; $09b9
     db
 
 w09ba:
-    ds $f2-$ba
+    ds $c4-$ba
+
+wCapsuleMonsterDataOffs: ; $09c4
+    dw
+
+w09c6:
+    ds $f2-$c6
 
 wCurrInBattleEnemyIdx: ; $09f2
     db
@@ -249,7 +255,13 @@ wNotInCode_PlayerHealth: ; $0bbe
     db
 
 w0bbf:
-    ds $11f2-$bbf
+    ds $11bb-$bbf
+
+wCapsuleMonstersAndLevel: ; $11bb
+    ds 7
+
+w11c2:
+    ds $f2-$c2
 
 wCurrOverworldPlayerX: ; $11f2
     dw
@@ -276,7 +288,13 @@ wJoy1StickyPressed: ; $14ab
     dw
 
 w14ad:
-    ds $605-$4ad
+    ds $de-$ad
+
+wSelectedCapsuleMonsterType: ; $14de
+    db
+
+w14df:
+    ds $605-$4df
 
 wAccumulatedBattleExp: ; $1605
     dl

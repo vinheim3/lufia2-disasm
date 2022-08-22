@@ -10485,7 +10485,7 @@ br_18_d22d:
 	nop                                                  ; $d275 : $ea
 	ora $53, S                                                  ; $d276 : $03, $53
 	tax                                                  ; $d278 : $aa
-	tsb $14de.w                                                  ; $d279 : $0c, $de, $14
+	tsb wSelectedCapsuleMonsterType.w                                                  ; $d279 : $0c, $de, $14
 	rol $02ee.w, X                                                  ; $d27c : $3e, $ee, $02
 	and ($ef), Y                                                  ; $d27f : $31, $ef
 	tax                                                  ; $d281 : $aa
