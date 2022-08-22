@@ -4538,13 +4538,15 @@ Call_06_9e4f:
 	beq @done_1                                                  ; $9e59 : $f0, $15
 
 @br_9e5b:
+; save overworld location and call routine (called with data bank 6)
 	ldy wCurrOverworldPlayerX.w                                                  ; $9e5b : $ac, $f2, $11
 	sty $58                                                  ; $9e5e : $84, $58
 	ldy wCurrOverworldPlayerY.w                                                  ; $9e60 : $ac, $f4, $11
 	sty $5a                                                  ; $9e63 : $84, $5a
 	jsr Call_06_9edd.w                                                  ; $9e65 : $20, $dd, $9e
-	bcc @br_9e7a                                                  ; $9e68 : $90, $10
+	bcc @steppedOnLocation                                                  ; $9e68 : $90, $10
 
+; not on an overworld area
 	lda #$00.b                                                  ; $9e6a : $a9, $00
 	sta $0009ed.l                                                  ; $9e6c : $8f, $ed, $09, $00
 
@@ -4559,7 +4561,7 @@ Call_06_9e4f:
 	plb                                                  ; $9e78 : $ab
 	rts                                                  ; $9e79 : $60
 
-@br_9e7a:
+@steppedOnLocation:
 	stz $11e3.w                                                  ; $9e7a : $9c, $e3, $11
 	phx                                                  ; $9e7d : $da
 	lda $11e7.w                                                  ; $9e7e : $ad, $e7, $11
@@ -4568,7 +4570,7 @@ Call_06_9e4f:
 	xba                                                  ; $9e86 : $eb
 	lda $0f, X                                                  ; $9e87 : $b5, $0f
 	tax                                                  ; $9e89 : $aa
-	lda $869ed9.l, X                                                  ; $9e8a : $bf, $d9, $9e, $86
+	lda Data_6_9ed9.l, X                                                  ; $9e8a : $bf, $d9, $9e, $86
 	sta $00                                                  ; $9e8e : $85, $00
 	plx                                                  ; $9e90 : $fa
 	phb                                                  ; $9e91 : $8b
@@ -4582,7 +4584,7 @@ Call_06_9e4f:
 	beq @done_2                                                  ; $9e9f : $f0, $d7
 
 	lda $0008.w, X                                                  ; $9ea1 : $bd, $08, $00
-	sta $0005ac.l                                                  ; $9ea4 : $8f, $ac, $05, $00
+	sta wCurrRoomIdx.l                                                  ; $9ea4 : $8f, $ac, $05, $00
 	lda $0005.w, X                                                  ; $9ea8 : $bd, $05, $00
 	cmp #$f0.b                                                  ; $9eab : $c9, $f0
 	bcc +                                                  ; $9ead : $90, $04
@@ -4608,50 +4610,51 @@ Call_06_9e4f:
 	rtl                                                  ; $9ed8 : $6b
 
 
-;
-	rti                                                  ; $9ed9 : $40
+Data_6_9ed9:
+	.db $40, $20, $00, $60
 
 
-	jsr $6000.w                                                  ; $9eda : $20, $00, $60
-
+; Returns if carry set if not on a location
 Call_06_9edd:
+; called with data bank 6
 	phb                                                  ; $9edd : $8b
 	jsr Call_06_9f35.w                                                  ; $9ede : $20, $35, $9f
 	adc $0006.w, X                                                  ; $9ee1 : $7d, $06, $00
 	tax                                                  ; $9ee4 : $aa
 	sep #ACCU_8                                                  ; $9ee5 : $e2, $20
 
-br_06_9ee7:
+@loop_9ee7:
 	lda $0000.w, X                                                  ; $9ee7 : $bd, $00, $00
-	bmi br_06_9f10                                                  ; $9eea : $30, $24
+	bmi @sec                                                  ; $9eea : $30, $24
 
+; player X
 	lda $58                                                  ; $9eec : $a5, $58
 	cmp $0001.w, X                                                  ; $9eee : $dd, $01, $00
-	bcc br_06_9f04                                                  ; $9ef1 : $90, $11
+	bcc @br_9f04                                                  ; $9ef1 : $90, $11
 
 	cmp $0003.w, X                                                  ; $9ef3 : $dd, $03, $00
-	bcs br_06_9f04                                                  ; $9ef6 : $b0, $0c
+	bcs @br_9f04                                                  ; $9ef6 : $b0, $0c
 
 	lda $5a                                                  ; $9ef8 : $a5, $5a
 	cmp $0002.w, X                                                  ; $9efa : $dd, $02, $00
-	bcc br_06_9f04                                                  ; $9efd : $90, $05
+	bcc @br_9f04                                                  ; $9efd : $90, $05
 
 	cmp $0004.w, X                                                  ; $9eff : $dd, $04, $00
-	bcc br_06_9f11                                                  ; $9f02 : $90, $0d
+	bcc @done                                                  ; $9f02 : $90, $0d
 
-br_06_9f04:
+@br_9f04:
 	rep #ACCU_8                                                  ; $9f04 : $c2, $20
 	txa                                                  ; $9f06 : $8a
 	clc                                                  ; $9f07 : $18
 	adc #$0009.w                                                  ; $9f08 : $69, $09, $00
 	tax                                                  ; $9f0b : $aa
 	sep #ACCU_8                                                  ; $9f0c : $e2, $20
-	bra br_06_9ee7                                                  ; $9f0e : $80, $d7
+	bra @loop_9ee7                                                  ; $9f0e : $80, $d7
 
-br_06_9f10:
+@sec:
 	sec                                                  ; $9f10 : $38
 
-br_06_9f11:
+@done:
 	plb                                                  ; $9f11 : $ab
 	rts                                                  ; $9f12 : $60
 
@@ -4683,19 +4686,25 @@ br_06_9f2e:
 
 
 Call_06_9f35:
+; called with data bank 6
+; get a value in the table and triple it
 	rep #ACCU_8                                                  ; $9f35 : $c2, $20
 	ldy $09eb.w                                                  ; $9f37 : $ac, $eb, $09
-	lda $ce36.w, Y                                                  ; $9f3a : $b9, $36, $ce
+	lda Data_6_ce36.w, Y                                                  ; $9f3a : $b9, $36, $ce
 	asl                                                  ; $9f3d : $0a
-	adc $ce36.w, Y                                                  ; $9f3e : $79, $36, $ce
+	adc Data_6_ce36.w, Y                                                  ; $9f3e : $79, $36, $ce
 	tax                                                  ; $9f41 : $aa
+
+; get data bank and store in 10
 	sep #ACCU_8                                                  ; $9f42 : $e2, $20
-	lda $cffcbe.l, X                                                  ; $9f44 : $bf, $be, $fc, $cf
+	lda Data_4f_fcbc.l+2, X                                                  ; $9f44 : $bf, $be, $fc, $cf
 	pha                                                  ; $9f48 : $48
 	plb                                                  ; $9f49 : $ab
 	sta $10                                                  ; $9f4a : $85, $10
+
+; get addr in X
 	rep #ACCU_8                                                  ; $9f4c : $c2, $20
-	lda $cffcbc.l, X                                                  ; $9f4e : $bf, $bc, $fc, $cf
+	lda Data_4f_fcbc.l, X                                                  ; $9f4e : $bf, $bc, $fc, $cf
 	tax                                                  ; $9f52 : $aa
 	clc                                                  ; $9f53 : $18
 	rts                                                  ; $9f54 : $60
@@ -11928,7 +11937,11 @@ br_06_ce03:
 
 	phb                                                  ; $ce32 : $8b
 	cop $8c.b                                                  ; $ce33 : $02, $8c
-	cop $00.b                                                  ; $ce35 : $02, $00
+	.db $02
+
+
+Data_6_ce36:
+	.db $00
 	.db $00                                                  ; $ce37 : $00
 	.db $00                                                  ; $ce38 : $00
 	lda ($a6)                                                  ; $ce39 : $b2, $a6
@@ -15869,6 +15882,7 @@ br_06_e6cd:
 
 
 Call_06_e709:
+; return A * 1d + 1469
 	sta WRMPYA.w                                                  ; $e709 : $8d, $02, $42
 	lda #$1d.b                                                  ; $e70c : $a9, $1d
 	sta WRMPYB.w                                                  ; $e70e : $8d, $03, $42

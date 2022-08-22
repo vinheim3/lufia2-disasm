@@ -7502,390 +7502,255 @@ br_4f_fc8b:
 	sta ($da)                                                  ; $fcb5 : $92, $da
 	sta ($fd)                                                  ; $fcb7 : $92, $fd
 	sta ($2c, S), Y                                                  ; $fcb9 : $93, $2c
-	sta $00, X                                                  ; $fcbb : $95, $00
-	.db $80, $92                                                  ; $fcbd : $80, $92
-
-	sbc ($ed), Y                                                  ; $fcbf : $f1, $ed
-	sty $ec, X                                                  ; $fcc1 : $94, $ec
-	lda ($94), Y                                                  ; $fcc3 : $b1, $94
-	lda $93bf.w, X                                                  ; $fcc5 : $bd, $bf, $93
-	sed                                                  ; $fcc8 : $f8
-	stp                                                  ; $fcc9 : $db
-	sta ($a8)                                                  ; $fcca : $92, $a8
-	lda $ae91.w, X                                                  ; $fccc : $bd, $91, $ae
-	ldx $92, Y                                                  ; $fccf : $b6, $92
-	tya                                                  ; $fcd1 : $98
-	stx $94                                                  ; $fcd2 : $86, $94
-	ply                                                  ; $fcd4 : $7a
-	tax                                                  ; $fcd5 : $aa
-	sty $9a, X                                                  ; $fcd6 : $94, $9a
-	cmp ($94, S), Y                                                  ; $fcd8 : $d3, $94
-	phd                                                  ; $fcda : $0b
-	cld                                                  ; $fcdb : $d8
-	sta ($00), Y                                                  ; $fcdc : $91, $00
-	.db $80, $93                                                  ; $fcde : $80, $93
-
-	ror $90                                                  ; $fce0 : $66, $90
-	sta ($09, S), Y                                                  ; $fce2 : $93, $09
-	xba                                                  ; $fce4 : $eb
-	sty $aa, X                                                  ; $fce5 : $94, $aa
-	sbc $94, S                                                  ; $fce7 : $e3, $94
-	cpy #$94d7.w                                                  ; $fce9 : $c0, $d7, $94
-	adc ($b3)                                                  ; $fcec : $72, $b3
-	sta ($24), Y                                                  ; $fcee : $91, $24
-	sta [$93]                                                  ; $fcf0 : $87, $93
-	sei                                                  ; $fcf2 : $78
-	ldy $93                                                  ; $fcf3 : $a4, $93
-	adc $d9, S                                                  ; $fcf5 : $63, $d9
-	sta ($47)                                                  ; $fcf7 : $92, $47
-	plb                                                  ; $fcf9 : $ab
-	sta ($7c)                                                  ; $fcfa : $92, $7c
-
-br_4f_fcfc:
-	wai                                                  ; $fcfc : $cb
-	sty $35, X                                                  ; $fcfd : $94, $35
-	cmp $9794.w, X                                                  ; $fcff : $dd, $94, $97
-	cpy #$e094.w                                                  ; $fd02 : $c0, $94, $e0
-	lda ($92, S), Y                                                  ; $fd05 : $b3, $92
-	dea                                                  ; $fd07 : $3a
-	lda $cc5493.l                                                  ; $fd08 : $af, $93, $54, $cc
-	sta ($af)                                                  ; $fd0c : $92, $af
-	sta $ae92.w, Y                                                  ; $fd0e : $99, $92, $ae
-	nop                                                  ; $fd11 : $ea
-	sta ($b9), Y                                                  ; $fd12 : $91, $b9
-	.db $b0, $94                                                  ; $fd14 : $b0, $94
-
-br_4f_fd16:
-	cli                                                  ; $fd16 : $58
-	cmp $d494.w                                                  ; $fd17 : $cd, $94, $d4
-	lda [$94]                                                  ; $fd1a : $a7, $94
-	rep #$a3.b                                                  ; $fd1c : $c2, $a3
-	sty $00, X                                                  ; $fd1e : $94, $00
-	.db $80, $94                                                  ; $fd20 : $80, $94
-
-	lda $bb, S                                                  ; $fd22 : $a3, $bb
-	sta ($05, S), Y                                                  ; $fd24 : $93, $05
-	sta $94, X                                                  ; $fd26 : $95, $94
-	adc ($be, S), Y                                                  ; $fd28 : $73, $be
-	sty $17, X                                                  ; $fd2a : $94, $17
-	stz $7c94.w, X                                                  ; $fd2c : $9e, $94, $7c
-	bit #$5593.w                                                  ; $fd2f : $89, $93, $55
-	stp                                                  ; $fd32 : $db
-	sta ($d7, S), Y                                                  ; $fd33 : $93, $d7
-	cmp $93                                                  ; $fd35 : $c5, $93
-	sta [$d7]                                                  ; $fd37 : $87, $d7
-	sta ($8b, S), Y                                                  ; $fd39 : $93, $8b
-	sbc [$92], Y                                                  ; $fd3b : $f7, $92
-
-br_4f_fd3d:
-	.db $00                                                  ; $fd3d : $00
-	sbc $94, S                                                  ; $fd3e : $e3, $94
-	ora [$a8]                                                  ; $fd40 : $07, $a8
-	sta ($7b), Y                                                  ; $fd42 : $91, $7b
-	sta ($94, S), Y                                                  ; $fd44 : $93, $94
-	adc $92b9.w, Y                                                  ; $fd46 : $79, $b9, $92
-	and $91d4.w                                                  ; $fd49 : $2d, $d4, $91
-	plb                                                  ; $fd4c : $ab
-	sbc ($92)                                                  ; $fd4d : $f2, $92
-	ror $fc                                                  ; $fd4f : $66, $fc
-	sta ($39), Y                                                  ; $fd51 : $91, $39
-	xba                                                  ; $fd53 : $eb
-	sta ($98)                                                  ; $fd54 : $92, $98
-	ldx #$8092.w                                                  ; $fd56 : $a2, $92, $80
-	lda $92                                                  ; $fd59 : $a5, $92
-	sta $4d94ea.l                                                  ; $fd5b : $8f, $ea, $94, $4d
-	cpx $94                                                  ; $fd5f : $e4, $94
-	cmp ($fe)                                                  ; $fd61 : $d2, $fe
-	sta ($3d)                                                  ; $fd63 : $92, $3d
-	nop                                                  ; $fd65 : $ea
-	sta ($37, S), Y                                                  ; $fd66 : $93, $37
-	beq br_4f_fcfc                                                  ; $fd68 : $f0, $92
-
-	bcc br_4f_fd3d                                                  ; $fd6a : $90, $d1
-
-	sta ($a2)                                                  ; $fd6c : $92, $a2
-	ldx $93                                                  ; $fd6e : $a6, $93
-	and $93dd.w, Y                                                  ; $fd70 : $39, $dd, $93
-	adc ($f1), Y                                                  ; $fd73 : $71, $f1
-	sta ($87, S), Y                                                  ; $fd75 : $93, $87
-	lda $d47494.l, X                                                  ; $fd77 : $bf, $94, $74, $d4
-	sty $dc, X                                                  ; $fd7b : $94, $dc
-	bit #$5294.w                                                  ; $fd7d : $89, $94, $52
-	bcc br_4f_fd16                                                  ; $fd80 : $90, $94
-
-	ora $93df.w, X                                                  ; $fd82 : $1d, $df, $93
-	tsb $93fa.w                                                  ; $fd85 : $0c, $fa, $93
-
-br_4f_fd88:
-	cmp ($cf), Y                                                  ; $fd88 : $d1, $cf
-	sta ($f2, S), Y                                                  ; $fd8a : $93, $f2
-	lda $6291.w                                                  ; $fd8c : $ad, $91, $62
-	sta $92, S                                                  ; $fd8f : $83, $92
-	cpx #$93c9.w                                                  ; $fd91 : $e0, $c9, $93
-	lda $929c.w                                                  ; $fd94 : $ad, $9c, $92
-	jmp $91ee.w                                                  ; $fd97 : $4c, $ee, $91
+	.db $95
 
 
-	ror                                                  ; $fd9a : $6a
-	sta $b693.w, Y                                                  ; $fd9b : $99, $93, $b6
-	dec $c894.w, X                                                  ; $fd9e : $de, $94, $c8
-	dec $92, X                                                  ; $fda1 : $d6, $92
-	lda $92e8.w, Y                                                  ; $fda3 : $b9, $e8, $92
-	asl $93ad.w, X                                                  ; $fda6 : $1e, $ad, $93
-	adc $a8                                                  ; $fda9 : $65, $a8
-	sta ($e6)                                                  ; $fdab : $92, $e6
-	clv                                                  ; $fdad : $b8
-	sty $52, X                                                  ; $fdae : $94, $52
-	lda ($93), Y                                                  ; $fdb0 : $b1, $93
-	plx                                                  ; $fdb2 : $fa
-	sbc $3a92.w, Y                                                  ; $fdb3 : $f9, $92, $3a
-	dey                                                  ; $fdb6 : $88
-	sty $bc, X                                                  ; $fdb7 : $94, $bc
-	cmp $94                                                  ; $fdb9 : $c5, $94
-	rtl                                                  ; $fdbb : $6b
+Data_4f_fcbc:
+	.dl Data_12_8000
+	.db $f1, $ed, $94
+	.db $ec, $b1, $94
+	.db $bd, $bf, $93
+	.db $f8, $db, $92
+	.db $a8, $bd, $91
+	.db $ae, $b6, $92
+	.db $98, $86, $94
+	.db $7a, $aa, $94
+	.db $9a, $d3, $94
+	.db $0b, $d8, $91
+	.db $00, $80, $93
+	.db $66, $90, $93
+	.db $09, $eb, $94
+	.db $aa, $e3, $94
+	.db $c0, $d7, $94
+	.db $72, $b3, $91
+	.db $24, $87, $93
+	.db $78, $a4, $93
+	.db $63, $d9, $92
+	.db $47, $ab, $92
+	.db $7c, $cb, $94
+	.db $35, $dd, $94
+	.db $97, $c0, $94
+	.db $e0, $b3, $92
+	.db $3a, $af, $93
+	.db $54, $cc, $92
+	.db $af, $99, $92
+	.db $ae, $ea, $91
+	.db $b9, $b0, $94
+	.db $58, $cd, $94
+	.db $d4, $a7, $94
+	.db $c2, $a3, $94
+	.db $00, $80, $94
+	.db $a3, $bb, $93
+	.db $05, $95, $94
+	.db $73, $be, $94
+	.db $17, $9e, $94
+	.db $7c, $89, $93
+	.db $55, $db, $93
+	.db $d7, $c5, $93
+	.db $87, $d7, $93
+	.db $8b, $f7, $92
+	.db $00, $e3, $94
+	.db $07, $a8, $91
+	.db $7b, $93, $94
+	.db $79, $b9, $92
+	.db $2d, $d4, $91
+	.db $ab, $f2, $92
+	.db $66, $fc, $91
+	.db $39, $eb, $92
+	.db $98, $a2, $92
+	.db $80, $a5, $92
+	.db $8f, $ea, $94
+	.db $4d, $e4, $94
+	.db $d2, $fe, $92
+	.db $3d, $ea, $93
+	.db $37, $f0, $92
+	.db $90, $d1, $92
+	.db $a2, $a6, $93
+	.db $39, $dd, $93
+	.db $71, $f1, $93
+	.db $87, $bf, $94
+	.db $74, $d4, $94
+	.db $dc, $89, $94
+	.db $52, $90, $94
+	.db $1d, $df, $93
+	.db $0c, $fa, $93
+	.db $d1, $cf, $93
+	.db $f2, $ad, $91
+	.db $62, $83, $92
+	.db $e0, $c9, $93
+	.db $ad, $9c, $92
+	.db $4c, $ee, $91
+	.db $6a, $99, $93
+	.db $b6, $de, $94
+	.db $c8, $d6, $92
+	.db $b9, $e8, $92
+	.db $1e, $ad, $93
+	.db $65, $a8, $92
+	.db $e6, $b8, $94
+	.db $52, $b1, $93
+	.db $fa, $f9, $92
+	.db $3a, $88, $94
+	.db $bc, $c5, $94
+	.db $6b, $cc, $94
+	.db $5d, $bd, $94
+	.db $59, $e7, $94
+	.db $09, $b1, $92
+	.db $ee, $94, $93
+	.db $bf, $d1, $93
+	.db $02, $c7, $92
+	.db $11, $a0, $93
+	.db $af, $c2, $94
+	.db $8c, $de, $92
+	.db $10, $ad, $94
+	.db $2a, $a9, $94
+	.db $f6, $aa, $93
+	.db $f3, $ce, $92
+	.db $28, $ae, $92
+	.db $c7, $e6, $94
+	.db $75, $b5, $93
+	.db $7b, $8b, $94
+	.db $75, $df, $94
+	.db $18, $8d, $94
+	.db $69, $82, $93
+	.db $1d, $e1, $92
+	.db $f0, $e4, $94
+	.db $30, $e0, $94
+	.db $64, $fd, $93
+	.db $df, $cd, $93
+	.db $6f, $d9, $93
+	.db $dc, $c7, $93
+	.db $af, $c7, $94
+	.db $36, $bc, $92
+	.db $23, $a5, $94
+	.db $0b, $ea, $94
+	.db $0c, $ec, $93
+	.db $46, $a2, $93
+	.db $ed, $f8, $91
+	.db $6f, $f5, $91
+	.db $8e, $e5, $94
+	.db $eb, $cb, $91
+	.db $a9, $81, $94
+	.db $2c, $97, $93
+	.db $a2, $9b, $93
+	.db $4d, $ae, $94
+	.db $16, $d0, $94
+	.db $95, $b9, $93
+	.db $ab, $c9, $92
+	.db $08, $ba, $94
+	.db $8e, $96, $94
+	.db $df, $d1, $94
+	.db $8a, $ca, $94
+	.db $28, $bb, $94
+	.db $f9, $a0, $94
+	.db $8c, $9f, $94
+	.db $78, $93, $92
+	.db $9a, $b6, $94
+	.db $f0, $d6, $94
+	.db $38, $e6, $92
+	.db $8a, $df, $91
+	.db $e6, $f1, $91
+	.db $cd, $db, $91
+	.db $8c, $c2, $91
+	.db $b7, $c3, $94
+	.db $fd, $e6, $91
+	.db $7d, $eb, $94
+	.db $43, $ce, $94
+	.db $b0, $f6, $93
+	.db $15, $98, $94
+	.db $ee, $91, $94
+	.db $cb, $84, $93
+	.db $fd, $e8, $94
+	.db $c1, $b7, $94
+	.db $1e, $b3, $94
+	.db $2e, $cf, $94
+	.db $e8, $e0, $94
+	.db $57, $ec, $94
+	.db $35, $f0, $94
+	.db $48, $c7, $91
+	.db $1e, $8e, $93
+	.db $25, $d0, $91
+	.db $2c, $d4, $92
+	.db $fd, $f4, $93
+	.db $84, $af, $94
+	.db $cd, $8b, $93
+	.db $e7, $e7, $94
+	.db $3b, $f3, $93
+	.db $b0, $bd, $93
+	.db $b8, $ed, $92
+	.db $9f, $9c, $94
+	.db $5e, $f8, $93
+	.db $52, $e2, $94
+	.db $79, $f0, $94
+	.db $fd, $89, $92
+	.db $da, $9d, $93
+	.db $bb, $86, $92
+	.db $ec, $da, $94
+	.db $00, $e1, $93
+	.db $f1, $be, $92
+	.db $4a, $b4, $94
+	.db $26, $da, $94
+	.db $8d, $ed, $94
+	.db $e0, $cb, $93
+	.db $c8, $c1, $93
+	.db $ad, $d3, $93
+	.db $64, $b3, $93
+	.db $85, $b7, $93
+	.db $a6, $c1, $92
+	.db $7c, $a6, $94
+	.db $a4, $c8, $94
+	.db $73, $dc, $94
+	.db $55, $c4, $92
+	.db $52, $90, $92
+	.db $d1, $c3, $93
+	.db $ad, $e3, $92
+	.db $73, $e8, $94
+	.db $b0, $db, $94
+	.db $b8, $fb, $93
+	.db $c1, $ec, $94
+	.db $86, $e9, $94
+	.db $45, $bc, $94
+	.db $ea, $eb, $94
+	.db $a7, $9f, $92
+	.db $9b, $99, $94
+	.db $f2, $ee, $94
+	.db $fd, $d0, $94
+	.db $a0, $e1, $94
+	.db $bd, $f0, $94
+	.db $dd, $e2, $93
+	.db $9b, $96, $92
+	.db $46, $e3, $91
+	.db $cc, $a8, $93
+	.db $2a, $8d, $92
+	.db $44, $ef, $94
+	.db $a6, $c1, $94
+	.db $d9, $ed, $93
+	.db $69, $e8, $93
+	.db $5e, $a2, $94
+	.db $b9, $c6, $94
+	.db $b5, $8e, $94
+	.db $4f, $83, $94
+	.db $a5, $ef, $93
+	.db $be, $c4, $94
+	.db $ba, $e4, $93
+	.db $f4, $84, $94
+	.db $67, $fc, $92
+	.db $92, $e6, $93
+	.db $ac, $92, $93
+	.db $4c, $ee, $94
+	.db $1e, $9b, $94
+	.db $2c, $e6, $94
+	.db $8e, $d8, $94
+	.db $0f, $ff, $93
+	.db $1b, $f5, $92
+	.db $72, $b5, $94
+	.db $fd, $f0, $94
+	.db $96, $ef, $94
+	.db $27, $ed, $94
+	.db $c7, $ab, $94
+	.db $e8, $ef, $94
 
 
-	cpy $5d94.w                                                  ; $fdbc : $cc, $94, $5d
-	lda $5994.w, X                                                  ; $fdbf : $bd, $94, $59
-	sbc [$94]                                                  ; $fdc2 : $e7, $94
-	ora #$92b1.w                                                  ; $fdc4 : $09, $b1, $92
-	inc $9394.w                                                  ; $fdc7 : $ee, $94, $93
-	lda $0293d1.l, X                                                  ; $fdca : $bf, $d1, $93, $02
-	cmp [$92]                                                  ; $fdce : $c7, $92
-	ora ($a0), Y                                                  ; $fdd0 : $11, $a0
-	sta ($af, S), Y                                                  ; $fdd2 : $93, $af
-	rep #$94.b                                                  ; $fdd4 : $c2, $94
-	sty $92de.w                                                  ; $fdd6 : $8c, $de, $92
-	bpl br_4f_fd88                                                  ; $fdd9 : $10, $ad
-
-	sty $2a, X                                                  ; $fddb : $94, $2a
-	lda #$f694.w                                                  ; $fddd : $a9, $94, $f6
-	tax                                                  ; $fde0 : $aa
-	sta ($f3, S), Y                                                  ; $fde1 : $93, $f3
-
-br_4f_fde3:
-	dec $2892.w                                                  ; $fde3 : $ce, $92, $28
-	ldx $c792.w                                                  ; $fde6 : $ae, $92, $c7
-	inc $94                                                  ; $fde9 : $e6, $94
-	adc $b5, X                                                  ; $fdeb : $75, $b5
-	sta ($7b, S), Y                                                  ; $fded : $93, $7b
-	phb                                                  ; $fdef : $8b
-	sty $75, X                                                  ; $fdf0 : $94, $75
-	cmp $8d1894.l, X                                                  ; $fdf2 : $df, $94, $18, $8d
-	sty $69, X                                                  ; $fdf6 : $94, $69
-	.db $82                                                  ; $fdf8 : $82
-
-	sta ($1d, S), Y                                                  ; $fdf9 : $93, $1d
-	sbc ($92, X)                                                  ; $fdfb : $e1, $92
-	beq br_4f_fde3                                                  ; $fdfd : $f0, $e4
-
-	sty $30, X                                                  ; $fdff : $94, $30
-	cpx #$6494.w                                                  ; $fe01 : $e0, $94, $64
-	sbc $df93.w, X                                                  ; $fe04 : $fd, $93, $df
-	cmp $6f93.w                                                  ; $fe07 : $cd, $93, $6f
-	cmp $dc93.w, Y                                                  ; $fe0a : $d9, $93, $dc
-	cmp [$93]                                                  ; $fe0d : $c7, $93
-	lda $3694c7.l                                                  ; $fe0f : $af, $c7, $94, $36
-	ldy $2392.w, X                                                  ; $fe13 : $bc, $92, $23
-	lda $94                                                  ; $fe16 : $a5, $94
-	phd                                                  ; $fe18 : $0b
-	nop                                                  ; $fe19 : $ea
-	sty $0c, X                                                  ; $fe1a : $94, $0c
-	cpx $4693.w                                                  ; $fe1c : $ec, $93, $46
-	ldx #$ed93.w                                                  ; $fe1f : $a2, $93, $ed
-	sed                                                  ; $fe22 : $f8
-	sta ($6f), Y                                                  ; $fe23 : $91, $6f
-	sbc $91, X                                                  ; $fe25 : $f5, $91
-	stx $94e5.w                                                  ; $fe27 : $8e, $e5, $94
-	xba                                                  ; $fe2a : $eb
-	wai                                                  ; $fe2b : $cb
-	sta ($a9), Y                                                  ; $fe2c : $91, $a9
-	sta ($94, X)                                                  ; $fe2e : $81, $94
-
-br_4f_fe30:
-	bit $9397.w                                                  ; $fe30 : $2c, $97, $93
-	ldx #$939b.w                                                  ; $fe33 : $a2, $9b, $93
-	eor $94ae.w                                                  ; $fe36 : $4d, $ae, $94
-	asl $d0, X                                                  ; $fe39 : $16, $d0
-	sty $95, X                                                  ; $fe3b : $94, $95
-	lda $ab93.w, Y                                                  ; $fe3d : $b9, $93, $ab
-	cmp #$0892.w                                                  ; $fe40 : $c9, $92, $08
-	tsx                                                  ; $fe43 : $ba
-	sty $8e, X                                                  ; $fe44 : $94, $8e
-	stx $94, Y                                                  ; $fe46 : $96, $94
-	cmp $8a94d1.l, X                                                  ; $fe48 : $df, $d1, $94, $8a
-	dex                                                  ; $fe4c : $ca
-	sty $28, X                                                  ; $fe4d : $94, $28
-	tyx                                                  ; $fe4f : $bb
-	sty $f9, X                                                  ; $fe50 : $94, $f9
-	ldy #$8c94.w                                                  ; $fe52 : $a0, $94, $8c
-	sta $937894.l, X                                                  ; $fe55 : $9f, $94, $78, $93
-	sta ($9a)                                                  ; $fe59 : $92, $9a
-	ldx $94, Y                                                  ; $fe5b : $b6, $94
-	.db $f0, $d6                                                  ; $fe5d : $f0, $d6
-
-	sty $38, X                                                  ; $fe5f : $94, $38
-	inc $92                                                  ; $fe61 : $e6, $92
-	txa                                                  ; $fe63 : $8a
-	cmp $f1e691.l, X                                                  ; $fe64 : $df, $91, $e6, $f1
-	sta ($cd), Y                                                  ; $fe68 : $91, $cd
-	stp                                                  ; $fe6a : $db
-	sta ($8c), Y                                                  ; $fe6b : $91, $8c
-	rep #$91.b                                                  ; $fe6d : $c2, $91
-	lda [$c3], Y                                                  ; $fe6f : $b7, $c3
-	sty $fd, X                                                  ; $fe71 : $94, $fd
-	inc $91                                                  ; $fe73 : $e6, $91
-	adc $94eb.w, X                                                  ; $fe75 : $7d, $eb, $94
-	eor $ce, S                                                  ; $fe78 : $43, $ce
-	sty $b0, X                                                  ; $fe7a : $94, $b0
-	inc $93, X                                                  ; $fe7c : $f6, $93
-	ora $98, X                                                  ; $fe7e : $15, $98
-	sty $ee, X                                                  ; $fe80 : $94, $ee
-	sta ($94), Y                                                  ; $fe82 : $91, $94
-	wai                                                  ; $fe84 : $cb
-	sty $93                                                  ; $fe85 : $84, $93
-	sbc $94e8.w, X                                                  ; $fe87 : $fd, $e8, $94
-	cmp ($b7, X)                                                  ; $fe8a : $c1, $b7
-	sty $1e, X                                                  ; $fe8c : $94, $1e
-	lda ($94, S), Y                                                  ; $fe8e : $b3, $94
-	rol $94cf.w                                                  ; $fe90 : $2e, $cf, $94
-	inx                                                  ; $fe93 : $e8
-	cpx #$5794.w                                                  ; $fe94 : $e0, $94, $57
-	cpx $3594.w                                                  ; $fe97 : $ec, $94, $35
-	beq br_4f_fe30                                                  ; $fe9a : $f0, $94
-
-	pha                                                  ; $fe9c : $48
-	cmp [$91]                                                  ; $fe9d : $c7, $91
-	asl $938e.w, X                                                  ; $fe9f : $1e, $8e, $93
-	and $d0                                                  ; $fea2 : $25, $d0
-	sta ($2c), Y                                                  ; $fea4 : $91, $2c
-	pei ($92)                                                  ; $fea6 : $d4, $92
-	sbc $93f4.w, X                                                  ; $fea8 : $fd, $f4, $93
-	sty $af                                                  ; $feab : $84, $af
-	sty $cd, X                                                  ; $fead : $94, $cd
-	phb                                                  ; $feaf : $8b
-	sta ($e7, S), Y                                                  ; $feb0 : $93, $e7
-	sbc [$94]                                                  ; $feb2 : $e7, $94
-	tsc                                                  ; $feb4 : $3b
-	sbc ($93, S), Y                                                  ; $feb5 : $f3, $93
-	.db $b0, $bd                                                  ; $feb7 : $b0, $bd
-
-	sta ($b8, S), Y                                                  ; $feb9 : $93, $b8
-	sbc $9f92.w                                                  ; $febb : $ed, $92, $9f
-	stz $5e94.w                                                  ; $febe : $9c, $94, $5e
-	sed                                                  ; $fec1 : $f8
-	sta ($52, S), Y                                                  ; $fec2 : $93, $52
-	sep #$94.b                                                  ; $fec4 : $e2, $94
-
-br_4f_fec6:
-	adc $94f0.w, Y                                                  ; $fec6 : $79, $f0, $94
-	sbc $9289.w, X                                                  ; $fec9 : $fd, $89, $92
-	phx                                                  ; $fecc : $da
-	sta $bb93.w, X                                                  ; $fecd : $9d, $93, $bb
-	stx $92                                                  ; $fed0 : $86, $92
-	cpx $94da.w                                                  ; $fed2 : $ec, $da, $94
-	.db $00                                                  ; $fed5 : $00
-	sbc ($93, X)                                                  ; $fed6 : $e1, $93
-	sbc ($be), Y                                                  ; $fed8 : $f1, $be
-	sta ($4a)                                                  ; $feda : $92, $4a
-	ldy $94, X                                                  ; $fedc : $b4, $94
-	rol $da                                                  ; $fede : $26, $da
-	sty $8d, X                                                  ; $fee0 : $94, $8d
-	sbc $e094.w                                                  ; $fee2 : $ed, $94, $e0
-	wai                                                  ; $fee5 : $cb
-	sta ($c8, S), Y                                                  ; $fee6 : $93, $c8
-	cmp ($93, X)                                                  ; $fee8 : $c1, $93
-	lda $93d3.w                                                  ; $feea : $ad, $d3, $93
-	stz $b3                                                  ; $feed : $64, $b3
-	sta ($85, S), Y                                                  ; $feef : $93, $85
-	lda [$93], Y                                                  ; $fef1 : $b7, $93
-	ldx $c1                                                  ; $fef3 : $a6, $c1
-	sta ($7c)                                                  ; $fef5 : $92, $7c
-	ldx $94                                                  ; $fef7 : $a6, $94
-	ldy $c8                                                  ; $fef9 : $a4, $c8
-	sty $73, X                                                  ; $fefb : $94, $73
-	jml [$5594.w]                                                  ; $fefd : $dc, $94, $55
-
-
-	cpy $92                                                  ; $ff00 : $c4, $92
-	eor ($90)                                                  ; $ff02 : $52, $90
-
-Call_4f_ff04:
-	sta ($d1)                                                  ; $ff04 : $92, $d1
-	cmp $93, S                                                  ; $ff06 : $c3, $93
-	lda $92e3.w                                                  ; $ff08 : $ad, $e3, $92
-	adc ($e8, S), Y                                                  ; $ff0b : $73, $e8
-	sty $b0, X                                                  ; $ff0d : $94, $b0
-	stp                                                  ; $ff0f : $db
-
-Call_4f_ff10:
-	sty $b8, X                                                  ; $ff10 : $94, $b8
-	xce                                                  ; $ff12 : $fb
-	sta ($c1, S), Y                                                  ; $ff13 : $93, $c1
-	cpx $8694.w                                                  ; $ff15 : $ec, $94, $86
-	sbc #$4594.w                                                  ; $ff18 : $e9, $94, $45
-	ldy $ea94.w, X                                                  ; $ff1b : $bc, $94, $ea
-	xba                                                  ; $ff1e : $eb
-	sty $a7, X                                                  ; $ff1f : $94, $a7
-	sta $999b92.l, X                                                  ; $ff21 : $9f, $92, $9b, $99
-	sty $f2, X                                                  ; $ff25 : $94, $f2
-	inc $fd94.w                                                  ; $ff27 : $ee, $94, $fd
-	.db $d0, $94                                                  ; $ff2a : $d0, $94
-
-	ldy #$e1.b                                                  ; $ff2c : $a0, $e1
-	sty $bd, X                                                  ; $ff2e : $94, $bd
-
-Call_4f_ff30:
-	beq br_4f_fec6                                                  ; $ff30 : $f0, $94
-
-	cmp $93e2.w, X                                                  ; $ff32 : $dd, $e2, $93
-	txy                                                  ; $ff35 : $9b
-	stx $92, Y                                                  ; $ff36 : $96, $92
-	lsr $e3                                                  ; $ff38 : $46, $e3
-	sta ($cc), Y                                                  ; $ff3a : $91, $cc
-	tay                                                  ; $ff3c : $a8
-	sta ($2a, S), Y                                                  ; $ff3d : $93, $2a
-	sta $4492.w                                                  ; $ff3f : $8d, $92, $44
-	sbc $c1a694.l                                                  ; $ff42 : $ef, $94, $a6, $c1
-
-Call_4f_ff46:
-	sty $d9, X                                                  ; $ff46 : $94, $d9
-	sbc $6993.w                                                  ; $ff48 : $ed, $93, $69
-	inx                                                  ; $ff4b : $e8
-	sta ($5e, S), Y                                                  ; $ff4c : $93, $5e
-	ldx #$94.b                                                  ; $ff4e : $a2, $94
-	lda $94c6.w, Y                                                  ; $ff50 : $b9, $c6, $94
-	lda $8e, X                                                  ; $ff53 : $b5, $8e
-	sty $4f, X                                                  ; $ff55 : $94, $4f
-	sta $94, S                                                  ; $ff57 : $83, $94
-	lda $ef                                                  ; $ff59 : $a5, $ef
-	sta ($be, S), Y                                                  ; $ff5b : $93, $be
-	cpy $94                                                  ; $ff5d : $c4, $94
-	tsx                                                  ; $ff5f : $ba
-	cpx $93                                                  ; $ff60 : $e4, $93
-	pea $9484.w                                                  ; $ff62 : $f4, $84, $94
-	adc [$fc]                                                  ; $ff65 : $67, $fc
-	sta ($92)                                                  ; $ff67 : $92, $92
-	inc $93                                                  ; $ff69 : $e6, $93
-	ldy $9392.w                                                  ; $ff6b : $ac, $92, $93
-	jmp $94ee.w                                                  ; $ff6e : $4c, $ee, $94
-
-
-	asl $949b.w, X                                                  ; $ff71 : $1e, $9b, $94
-	bit $94e6.w                                                  ; $ff74 : $2c, $e6, $94
-	stx $94d8.w                                                  ; $ff77 : $8e, $d8, $94
-	ora $1b93ff.l                                                  ; $ff7a : $0f, $ff, $93, $1b
-	sbc $92, X                                                  ; $ff7e : $f5, $92
-	adc ($b5)                                                  ; $ff80 : $72, $b5
-	sty $fd, X                                                  ; $ff82 : $94, $fd
-	.db $f0, $94                                                  ; $ff84 : $f0, $94
-
-	stx $ef, Y                                                  ; $ff86 : $96, $ef
-	sty $27, X                                                  ; $ff88 : $94, $27
-	sbc $c794.w                                                  ; $ff8a : $ed, $94, $c7
-	plb                                                  ; $ff8d : $ab
-	sty $e8, X                                                  ; $ff8e : $94, $e8
-	sbc $061d94.l                                                  ; $ff90 : $ef, $94, $1d, $06
+	.db $1d, $06                                                 ; $ff92 : $1d, $06
 	tsc                                                  ; $ff94 : $3b
 	.db $00                                                  ; $ff95 : $00
 	asl $d1                                                  ; $ff96 : $06, $d1

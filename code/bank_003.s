@@ -9,40 +9,41 @@ Jump_03_8000:
 	phk                                                  ; $8002 : $4b
 	plb                                                  ; $8003 : $ab
 
-br_03_8004:
+@loop_8004:
+; waits a frame?
 	jsr Call_03_900c.w                                                  ; $8004 : $20, $0c, $90
 	lda #$ff.b                                                  ; $8007 : $a9, $ff
 	sta $17ac.w                                                  ; $8009 : $8d, $ac, $17
 	lda $057c.w                                                  ; $800c : $ad, $7c, $05
-	beq br_03_8017                                                  ; $800f : $f0, $06
+	beq @cont_8017                                                  ; $800f : $f0, $06
 
 	lda #$10.b                                                  ; $8011 : $a9, $10
 	bit $49                                                  ; $8013 : $24, $49
-	bne br_03_8004                                                  ; $8015 : $d0, $ed
+	bne @loop_8004                                                  ; $8015 : $d0, $ed
 
-br_03_8017:
+@cont_8017:
 	lda $0622.w                                                  ; $8017 : $ad, $22, $06
 	bit #$80.b                                                  ; $801a : $89, $80
-	bne br_03_8062                                                  ; $801c : $d0, $44
+	bne @br_8062                                                  ; $801c : $d0, $44
 
 	lda $05b7.w                                                  ; $801e : $ad, $b7, $05
-	bne br_03_8062                                                  ; $8021 : $d0, $3f
+	bne @br_8062                                                  ; $8021 : $d0, $3f
 
 	lda #$80.b                                                  ; $8023 : $a9, $80
 	trb $05b5.w                                                  ; $8025 : $1c, $b5, $05
-	beq br_03_8062                                                  ; $8028 : $f0, $38
+	beq @br_8062                                                  ; $8028 : $f0, $38
 
 	lda $05b3.w                                                  ; $802a : $ad, $b3, $05
 	bit #$08.b                                                  ; $802d : $89, $08
-	beq br_03_8036                                                  ; $802f : $f0, $05
+	beq @br_8036                                                  ; $802f : $f0, $05
 
 	jsr Call_03_84e1.w                                                  ; $8031 : $20, $e1, $84
-	bra br_03_8004                                                  ; $8034 : $80, $ce
+	bra @loop_8004                                                  ; $8034 : $80, $ce
 
-br_03_8036:
+@br_8036:
 	lda #$08.b                                                  ; $8036 : $a9, $08
 	trb $05b5.w                                                  ; $8038 : $1c, $b5, $05
-	beq br_03_8062                                                  ; $803b : $f0, $25
+	beq @br_8062                                                  ; $803b : $f0, $25
 
 	rep #ACCU_8                                                  ; $803d : $c2, $20
 	lda wCurrRoomIdx.w                                                  ; $803f : $ad, $ac, $05
@@ -59,16 +60,15 @@ br_03_8036:
 	stz $1262.w                                                  ; $805c : $9c, $62, $12
 	jmp $b18e.w                                                  ; $805f : $4c, $8e, $b1
 
-
-br_03_8062:
+@br_8062:
 	lda #$20.b                                                  ; $8062 : $a9, $20
 	trb $05b5.w                                                  ; $8064 : $1c, $b5, $05
-	beq br_03_8070                                                  ; $8067 : $f0, $07
+	beq @br_8070                                                  ; $8067 : $f0, $07
 
 	jsr $8eb28f.l                                                  ; $8069 : $22, $8f, $b2, $8e
-	brl br_03_8004                                                  ; $806d : $82, $94, $ff
+	brl @loop_8004                                                  ; $806d : $82, $94, $ff
 
-br_03_8070:
+@br_8070:
 	jsr Call_03_aeb5.w                                                  ; $8070 : $20, $b5, $ae
 	jsr $809c72.l                                                  ; $8073 : $22, $72, $9c, $80
 	jsr Call_03_83a0.w                                                  ; $8077 : $20, $a0, $83
@@ -81,40 +81,35 @@ br_03_8070:
 	jsr Call_03_8103.w                                                  ; $808f : $20, $03, $81
 	lda $17ac.w                                                  ; $8092 : $ad, $ac, $17
 	cmp #$ff.b                                                  ; $8095 : $c9, $ff
-	beq br_03_809d                                                  ; $8097 : $f0, $04
-
+	beq +                                                  ; $8097 : $f0, $04
 	jsr todo_SoundRelated_953b.l                                                  ; $8099 : $22, $3b, $95, $80
++	lda $099b.w                                                  ; $809d : $ad, $9b, $09
+	bpl @br_80a5                                                  ; $80a0 : $10, $03
 
-br_03_809d:
-	lda $099b.w                                                  ; $809d : $ad, $9b, $09
-	bpl br_03_80a5                                                  ; $80a0 : $10, $03
+	brl @loop_8004                                                  ; $80a2 : $82, $5f, $ff
 
-	brl br_03_8004                                                  ; $80a2 : $82, $5f, $ff
-
-br_03_80a5:
+@br_80a5:
 	lda $057c.w                                                  ; $80a5 : $ad, $7c, $05
-	beq br_03_80ae                                                  ; $80a8 : $f0, $04
-
+	beq +                                                  ; $80a8 : $f0, $04
 	jsr $8ebb2e.l                                                  ; $80aa : $22, $2e, $bb, $8e
-
-br_03_80ae:
-	lda #$40.b                                                  ; $80ae : $a9, $40
++	lda #$40.b                                                  ; $80ae : $a9, $40
 	jsr Call_03_867b.w                                                  ; $80b0 : $20, $7b, $86
-	beq br_03_80ca                                                  ; $80b3 : $f0, $15
+	beq @connt_80ca                                                  ; $80b3 : $f0, $15
 
 	lda $7fd0a1.l                                                  ; $80b5 : $af, $a1, $d0, $7f
-	bne br_03_80ca                                                  ; $80b9 : $d0, $0f
+	bne @connt_80ca                                                  ; $80b9 : $d0, $0f
 
 	jsr Call_03_80cd.w                                                  ; $80bb : $20, $cd, $80
-	bne br_03_80ca                                                  ; $80be : $d0, $0a
+	bne @connt_80ca                                                  ; $80be : $d0, $0a
 
 	lda $7fd0fe.l                                                  ; $80c0 : $af, $fe, $d0, $7f
-	bne br_03_80ca                                                  ; $80c4 : $d0, $04
+	bne @connt_80ca                                                  ; $80c4 : $d0, $04
 
 	jsr $8eb000.l                                                  ; $80c6 : $22, $00, $b0, $8e
 
-br_03_80ca:
-	brl br_03_8004                                                  ; $80ca : $82, $37, $ff
+@connt_80ca:
+	brl @loop_8004                                                  ; $80ca : $82, $37, $ff
+
 
 Call_03_80cd:
 	lda $09a8.w                                                  ; $80cd : $ad, $a8, $09
@@ -8237,11 +8232,11 @@ br_03_b5f7:
 	adc wCurrRoomIdx.w                                                  ; $b5fb : $6d, $ac, $05
 	tax                                                  ; $b5fe : $aa
 	sep #ACCU_8                                                  ; $b5ff : $e2, $20
-	lda $cffcbe.l, X                                                  ; $b601 : $bf, $be, $fc, $cf
+	lda Data_4f_fcbc.l+2, X                                                  ; $b601 : $bf, $be, $fc, $cf
 	sta $057f.w                                                  ; $b605 : $8d, $7f, $05
 	sta $5f                                                  ; $b608 : $85, $5f
 	rep #ACCU_8                                                  ; $b60a : $c2, $20
-	lda $cffcbc.l, X                                                  ; $b60c : $bf, $bc, $fc, $cf
+	lda Data_4f_fcbc.l, X                                                  ; $b60c : $bf, $bc, $fc, $cf
 
 br_03_b610:
 	sta $5d                                                  ; $b610 : $85, $5d
@@ -8477,7 +8472,7 @@ br_03_b7a9:
 	lda $0005b5.l                                                  ; $b7a9 : $af, $b5, $05, $00
 	ora #$80.b                                                  ; $b7ad : $09, $80
 	sta $0005b5.l                                                  ; $b7af : $8f, $b5, $05, $00
-	lda $0005ac.l                                                  ; $b7b3 : $af, $ac, $05, $00
+	lda wCurrRoomIdx.l                                                  ; $b7b3 : $af, $ac, $05, $00
 	sta $0005ae.l                                                  ; $b7b7 : $8f, $ae, $05, $00
 	lda #$06.b                                                  ; $b7bb : $a9, $06
 	sta $0005b3.l                                                  ; $b7bd : $8f, $b3, $05, $00

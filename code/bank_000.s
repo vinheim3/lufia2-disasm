@@ -9337,7 +9337,7 @@ Call_00_bd38:
 	jsr Call_00_bfaa.l                                                  ; $bdd4 : $22, $aa, $bf, $80
 	jsr $83b76e.l                                                  ; $bdd8 : $22, $6e, $b7, $83
 	lda $0005ae.l                                                  ; $bddc : $af, $ae, $05, $00
-	sta $0005ac.l                                                  ; $bde0 : $8f, $ac, $05, $00
+	sta wCurrRoomIdx.l                                                  ; $bde0 : $8f, $ac, $05, $00
 	lda $0005b3.l                                                  ; $bde4 : $af, $b3, $05, $00
 	ora #$20.b                                                  ; $bde8 : $09, $20
 	sta $0005b3.l                                                  ; $bdea : $8f, $b3, $05, $00

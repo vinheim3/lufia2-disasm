@@ -155,7 +155,18 @@ wNumToConvertToBCD: ; $0570
     dl
 
 w0573:
-    ds $ac-$73
+    ds $a4-$73
+
+; Every tile is -/+ $10
+wInAreaPlayerX: ; $05a4
+    dw
+
+; Every tile is -/+ $10
+wInAreaPlayerY: ; $05a6
+    dw
+
+w05a8:
+    ds $c-8
 
 wCurrRoomIdx: ; $05ac
     db
