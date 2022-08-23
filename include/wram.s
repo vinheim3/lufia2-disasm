@@ -186,7 +186,15 @@ wScenarioItemsBitsSet: ; $091e
     db
 
 w091f:
-    ds $b7-$1f
+    ds $9e-$1f
+
+wRoomScriptAddr: ; $099e
+    dw
+wRoomScriptBank: ; $09a0:
+    db
+
+w09a1:
+    ds $b7-$a1
 
 wCurrScriptAddr: ; $09b7
     dw

@@ -54,3 +54,4 @@ InBattleEnemyData:
 
 
 joypad is udlr (r = 1)
+seems to be $100 rooms

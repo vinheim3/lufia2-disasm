@@ -12939,6 +12939,9 @@ Call_02_d68c:
 	eor #$ff.b                                                  ; $d694 : $49, $ff
 	sbc $758d1a.l, X                                                  ; $d696 : $ff, $1a, $8d, $75
 	ora $60, X                                                  ; $d69a : $15, $60
+
+
+Func_2_d69c:
 	sep #ACCU_8                                                  ; $d69c : $e2, $20
 	rep #IDX_8                                                  ; $d69e : $c2, $10
 	jsr $868dbb.l                                                  ; $d6a0 : $22, $bb, $8d, $86

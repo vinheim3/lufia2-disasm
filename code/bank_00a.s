@@ -9502,29 +9502,41 @@ Call_0a_cb06:
 	.db $00                                                  ; $cca2 : $00
 	lda $00                                                  ; $cca3 : $a5, $00
 	.db $00                                                  ; $cca5 : $00
-	bvc br_0a_ccf0                                                  ; $cca6 : $50, $48
 
-	asl $1200.w                                                  ; $cca8 : $0e, $00, $12
-	.db $00                                                  ; $ccab : $00
-	ora $3800.w, Y                                                  ; $ccac : $19, $00, $38
-	.db $00                                                  ; $ccaf : $00
-	wdm                                                  ; $ccb0 : $42
-	.db $00                                                  ; $ccb1 : $00
-	eor $00, S                                                  ; $ccb2 : $43, $00
-	.db $00                                                  ; $ccb4 : $00
-	mvp $ff, $00                                                  ; $ccb5 : $44, $00, $ff
+
+; Aleyn
+RoomScripts5eh:
+	.db $50, $48
+	.dw @ccb4-RoomScripts5eh
+	.dw @ccb8-RoomScripts5eh
+	.dw @ccbf-RoomScripts5eh
+	.dw @ccde-RoomScripts5eh
+	.dw @cce8-RoomScripts5eh
+	.dw @cce9-RoomScripts5eh
+
+@ccb4:
+	.db $00
+	.dw @ccea-RoomScripts5eh
+	.db $ff
+
+@ccb8:
 	ora ($23, X)                                                  ; $ccb8 : $01, $23
 	tsb $02                                                  ; $ccba : $04, $02
 	eor $00                                                  ; $ccbc : $45, $00
-	sbc $081c22.l, X                                                  ; $ccbe : $ff, $22, $1c, $08
-	and $83, S                                                  ; $ccc2 : $23, $83
-	.db $00                                                  ; $ccc4 : $00
-	.db $50, $84                                                  ; $ccc5 : $50, $84
+	.db $ff
 
-	.db $00                                                  ; $ccc7 : $00
-	eor ($59), Y                                                  ; $ccc8 : $51, $59
-	ora ($52, X)                                                  ; $ccca : $01, $52
-	lda [$01], Y                                                  ; $cccc : $b7, $01
+@ccbf:
+; npcs
+	.db $22
+	.dw $081c
+	.db $23
+	.dw $0083
+	.db $50
+	.dw $0084
+	.db $51
+	.dw $0159
+	.db $52
+	.dw $01b7
 	eor ($1c, S), Y                                                  ; $ccce : $53, $1c
 	cop $54.b                                                  ; $ccd0 : $02, $54
 	lda $255502.l, X                                                  ; $ccd2 : $bf, $02, $55, $25
@@ -9532,11 +9544,23 @@ Call_0a_cb06:
 	stz $03, X                                                  ; $ccd8 : $74, $03
 	eor [$c3], Y                                                  ; $ccda : $57, $c3
 	ora $ff, S                                                  ; $ccdc : $03, $ff
+
+@ccde:
 	ora ($56, X)                                                  ; $ccde : $01, $56
 	ora $9202.w                                                  ; $cce0 : $0d, $02, $92
 	ora $cd03.w                                                  ; $cce3 : $0d, $03, $cd
-	ora $ffff.w                                                  ; $cce6 : $0d, $ff, $ff
-	sbc $002e00.l, X                                                  ; $cce9 : $ff, $00, $2e, $00
+	.db $0d, $ff
+
+@cce8:
+	.db $ff
+
+@cce9:
+	.db $ff
+
+; room load
+@ccea:
+	.db $00
+	.dw $002e
 	rol $2e01.w                                                  ; $cced : $2e, $01, $2e
 
 br_0a_ccf0:
@@ -15605,29 +15629,54 @@ br_0a_ff96:
 	adc ($09)                                                  ; $ff9b : $72, $09
 	.db $00                                                  ; $ff9d : $00
 	.db $00                                                  ; $ff9e : $00
-	bvc br_0a_ffe9                                                  ; $ff9f : $50, $48
 
-	asl $1200.w                                                  ; $ffa1 : $0e, $00, $12
-	.db $00                                                  ; $ffa4 : $00
-	ora ($00, S), Y                                                  ; $ffa5 : $13, $00
-	rol $00                                                  ; $ffa7 : $26, $00
-	and [$00]                                                  ; $ffa9 : $27, $00
-	plp                                                  ; $ffab : $28
-	.db $00                                                  ; $ffac : $00
-	.db $00                                                  ; $ffad : $00
-	and #$00.b                                                  ; $ffae : $29, $00
-	sbc $2a50ff.l, X                                                  ; $ffb0 : $ff, $ff, $50, $2a
-	.db $00                                                  ; $ffb4 : $00
-	eor ($b4), Y                                                  ; $ffb5 : $51, $b4
-	.db $00                                                  ; $ffb7 : $00
-	eor ($d9)                                                  ; $ffb8 : $52, $d9
-	.db $00                                                  ; $ffba : $00
-	eor ($f0, S), Y                                                  ; $ffbb : $53, $f0
-	.db $00                                                  ; $ffbd : $00
-	mvn $01, $07                                                  ; $ffbe : $54, $07, $01
-	eor $87, X                                                  ; $ffc1 : $55, $87
-	ora ($ff, X)                                                  ; $ffc3 : $01, $ff
-	sbc $00ffff.l, X                                                  ; $ffc5 : $ff, $ff, $ff, $00
+
+; Narcysus
+RoomScripts6bh:
+	.db $50, $48
+	.dw @ffad-RoomScripts6bh ; on room load, is an offset
+	.dw @ffb1-RoomScripts6bh
+	.dw @ffb2-RoomScripts6bh ; when talking to shopkeeper
+	.dw @ffc5-RoomScripts6bh
+	.dw @ffc6-RoomScripts6bh
+	.dw @ffc7-RoomScripts6bh
+
+@ffad:
+	.db $00
+	.dw @ffc8-RoomScripts6bh
+	.db $ff
+
+@ffb1:
+	.db $ff
+
+@ffb2:
+	.db $50
+	.dw @ffc9-RoomScripts6bh
+	.db $51 ; shopkeeper
+	.dw $00b4 ; Data_b_8053
+	.db $52
+	.dw $00d9
+	.db $53
+	.dw $00f0
+	.db $54
+	.dw $0107
+	.db $55
+	.dw $0187
+	.db $ff
+
+@ffc5:
+	.db $ff
+
+@ffc6:
+	.db $ff
+
+@ffc7:
+	.db $ff
+
+@ffc8:
+	.db $00
+	
+@ffc9:
 	ora $40, X                                                  ; $ffc9 : $15, $40
 	adc [$00]                                                  ; $ffcb : $67, $00
 	php                                                  ; $ffcd : $08

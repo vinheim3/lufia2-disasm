@@ -10317,7 +10317,7 @@ br_05_c51f:
 	asl                                                  ; $c546 : $0a
 	phx                                                  ; $c547 : $da
 	tax                                                  ; $c548 : $aa
-	lda $8eea00.l, X                                                  ; $c549 : $bf, $00, $ea, $8e
+	lda TextDictionary.l, X                                                  ; $c549 : $bf, $00, $ea, $8e
 	tax                                                  ; $c54d : $aa
 	sep #ACCU_8                                                  ; $c54e : $e2, $20
 	bra br_05_c557                                                  ; $c550 : $80, $05
@@ -10328,7 +10328,7 @@ br_05_c552:
 	iny                                                  ; $c556 : $c8
 
 br_05_c557:
-	lda $8eea00.l, X                                                  ; $c557 : $bf, $00, $ea, $8e
+	lda TextDictionary.l, X                                                  ; $c557 : $bf, $00, $ea, $8e
 	bne br_05_c552                                                  ; $c55b : $d0, $f5
 
 	plx                                                  ; $c55d : $fa

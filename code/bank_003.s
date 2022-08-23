@@ -273,7 +273,7 @@ Call_03_81c6:
 	php                                                  ; $81c6 : $08
 	sep #ACCU_8                                                  ; $81c7 : $e2, $20
 	rep #IDX_8                                                  ; $81c9 : $c2, $10
-	jsr $80cbae.l                                                  ; $81cb : $22, $ae, $cb, $80
+	jsr Func_0_cbae.l                                                  ; $81cb : $22, $ae, $cb, $80
 	lda $09a7.w                                                  ; $81cf : $ad, $a7, $09
 	bit #$01.b                                                  ; $81d2 : $89, $01
 	beq br_03_81fa                                                  ; $81d4 : $f0, $24
@@ -331,7 +331,7 @@ br_03_8218:
 	ldx #$0000.w                                                  ; $822d : $a2, $00, $00
 	ldy #$0000.w                                                  ; $8230 : $a0, $00, $00
 	jsr $80e722.l                                                  ; $8233 : $22, $22, $e7, $80
-	jsr $80cbae.l                                                  ; $8237 : $22, $ae, $cb, $80
+	jsr Func_0_cbae.l                                                  ; $8237 : $22, $ae, $cb, $80
 
 br_03_823b:
 	lda $05b5.w                                                  ; $823b : $ad, $b5, $05
@@ -761,7 +761,7 @@ br_03_850f:
 	ldx #$0000.w                                                  ; $8526 : $a2, $00, $00
 	ldy #$0020.w                                                  ; $8529 : $a0, $20, $00
 	jsr $80e722.l                                                  ; $852c : $22, $22, $e7, $80
-	jsr $80cbae.l                                                  ; $8530 : $22, $ae, $cb, $80
+	jsr Func_0_cbae.l                                                  ; $8530 : $22, $ae, $cb, $80
 	lda #$14.b                                                  ; $8534 : $a9, $14
 	tsb $05b3.w                                                  ; $8536 : $0c, $b3, $05
 	lda #$ff.b                                                  ; $8539 : $a9, $ff
@@ -803,7 +803,7 @@ br_03_8587:
 	ldx #$0000.w                                                  ; $859f : $a2, $00, $00
 	ldy #$0000.w                                                  ; $85a2 : $a0, $00, $00
 	jsr $80e722.l                                                  ; $85a5 : $22, $22, $e7, $80
-	jsr $80cbae.l                                                  ; $85a9 : $22, $ae, $cb, $80
+	jsr Func_0_cbae.l                                                  ; $85a9 : $22, $ae, $cb, $80
 	sep #IDX_8                                                  ; $85ad : $e2, $10
 
 br_03_85af:
@@ -5980,7 +5980,7 @@ Call_03_a686:
 	sep #ACCU_8|IDX_8                                                  ; $a688 : $e2, $30
 	ldx #$27.b                                                  ; $a68a : $a2, $27
 
-br_03_a68c:
+@nextEntity:
 	stx $a7                                                  ; $a68c : $86, $a7
 	jsr Call_03_ab4f.l                                                  ; $a68e : $22, $4f, $ab, $83
 	lda #$ff.b                                                  ; $a692 : $a9, $ff
@@ -6001,7 +6001,7 @@ br_03_a68c:
 	sta $0622.w, X                                                  ; $a6be : $9d, $22, $06
 	jsr Call_03_a6df.w                                                  ; $a6c1 : $20, $df, $a6
 	dex                                                  ; $a6c4 : $ca
-	bpl br_03_a68c                                                  ; $a6c5 : $10, $c5
+	bpl @nextEntity                                                  ; $a6c5 : $10, $c5
 
 	lda #$ff.b                                                  ; $a6c7 : $a9, $ff
 	sta $7fd0a2.l                                                  ; $a6c9 : $8f, $a2, $d0, $7f
@@ -6228,11 +6228,11 @@ br_03_a83b:
 
 br_03_a845:
 	cmp #$ff.b                                                  ; $a845 : $c9, $ff
-	bne br_03_a84c                                                  ; $a847 : $d0, $03
+	bne @br_a84c                                                  ; $a847 : $d0, $03
 
 	brl br_03_a973                                                  ; $a849 : $82, $27, $01
 
-br_03_a84c:
+@br_a84c:
 	stx $a7                                                  ; $a84c : $86, $a7
 	jsr Call_03_ab4f.l                                                  ; $a84e : $22, $4f, $ab, $83
 	ldx wCurrEntity                                                  ; $a852 : $a6, $a7
@@ -6337,7 +6337,7 @@ br_03_a901:
 
 br_03_a904:
 	rep #IDX_8                                                  ; $a904 : $c2, $10
-	jsr $80c01d.l                                                  ; $a906 : $22, $1d, $c0, $80
+	jsr Call_00_c01d.l                                                  ; $a906 : $22, $1d, $c0, $80
 	ldx wCurrEntity                                                  ; $a90a : $a6, $a7
 	lda $00120e.l                                                  ; $a90c : $af, $0e, $12, $00
 	sta $7fe5f6.l, X                                                  ; $a910 : $9f, $f6, $e5, $7f
@@ -7048,7 +7048,7 @@ br_03_acef:
 	sta $7fd0fe.l                                                  ; $ad32 : $8f, $fe, $d0, $7f
 	sta $7fe75a.l                                                  ; $ad36 : $8f, $5a, $e7, $7f
 	jsr $80e844.l                                                  ; $ad3a : $22, $44, $e8, $80
-	jsr Call_03_b5ad.w                                                  ; $ad3e : $20, $ad, $b5
+	jsr SetRoomScriptSrc.w                                                  ; $ad3e : $20, $ad, $b5
 	jsr Call_03_b5d3.l                                                  ; $ad41 : $22, $d3, $b5, $83
 	jsr Call_03_ab61.w                                                  ; $ad45 : $20, $61, $ab
 	jsr Call_03_a82e.l                                                  ; $ad48 : $22, $2e, $a8, $83
@@ -7695,7 +7695,7 @@ br_03_b1f6:
 	cmp #$02.b                                                  ; $b1f9 : $c9, $02
 	bcs br_03_b254                                                  ; $b1fb : $b0, $57
 
-	jsr Call_03_b5ad.w                                                  ; $b1fd : $20, $ad, $b5
+	jsr SetRoomScriptSrc.w                                                  ; $b1fd : $20, $ad, $b5
 	jsr $80be4d.l                                                  ; $b200 : $22, $4d, $be, $80
 	lda #$80.b                                                  ; $b204 : $a9, $80
 	trb $05b3.w                                                  ; $b206 : $1c, $b3, $05
@@ -7759,7 +7759,7 @@ br_03_b271:
 	jsr $83ac7a.l                                                  ; $b271 : $22, $7a, $ac, $83
 	jsr Call_03_ab61.w                                                  ; $b275 : $20, $61, $ab
 	jsr $80e844.l                                                  ; $b278 : $22, $44, $e8, $80
-	jsr Call_03_b5ad.w                                                  ; $b27c : $20, $ad, $b5
+	jsr SetRoomScriptSrc.w                                                  ; $b27c : $20, $ad, $b5
 	jsr Call_03_b5d3.l                                                  ; $b27f : $22, $d3, $b5, $83
 	lda $0005b3.l                                                  ; $b283 : $af, $b3, $05, $00
 	and #$df.b                                                  ; $b287 : $29, $df
@@ -7863,7 +7863,7 @@ br_03_b343:
 	sta $7fd0fe.l                                                  ; $b343 : $8f, $fe, $d0, $7f
 
 br_03_b347:
-	jsr Call_03_b5ad.w                                                  ; $b347 : $20, $ad, $b5
+	jsr SetRoomScriptSrc.w                                                  ; $b347 : $20, $ad, $b5
 	rep #IDX_8                                                  ; $b34a : $c2, $10
 	ldx #$003e.w                                                  ; $b34c : $a2, $3e, $00
 
@@ -7899,10 +7899,10 @@ br_03_b34f:
 	bra br_03_b398                                                  ; $b392 : $80, $04
 
 br_03_b394:
-	jsr $80c01d.l                                                  ; $b394 : $22, $1d, $c0, $80
+	jsr Call_00_c01d.l                                                  ; $b394 : $22, $1d, $c0, $80
 
 br_03_b398:
-	jsr $80c1a7.l                                                  ; $b398 : $22, $a7, $c1, $80
+	jsr Call_00_c1a7.l                                                  ; $b398 : $22, $a7, $c1, $80
 	plx                                                  ; $b39c : $fa
 	inc $a7                                                  ; $b39d : $e6, $a7
 
@@ -8067,7 +8067,7 @@ br_03_b4e7:
 	ldx #$0000.w                                                  ; $b4ec : $a2, $00, $00
 	ldy #$0000.w                                                  ; $b4ef : $a0, $00, $00
 	jsr $80e722.l                                                  ; $b4f2 : $22, $22, $e7, $80
-	jsr $80cbae.l                                                  ; $b4f6 : $22, $ae, $cb, $80
+	jsr Func_0_cbae.l                                                  ; $b4f6 : $22, $ae, $cb, $80
 	sep #ACCU_8|IDX_8                                                  ; $b4fa : $e2, $30
 	jsr Call_03_afcd.l                                                  ; $b4fc : $22, $cd, $af, $83
 
@@ -8184,25 +8184,29 @@ br_03_b5a5:
 	rts                                                  ; $b5ac : $60
 
 
-Call_03_b5ad:
+SetRoomScriptSrc:
 	php                                                  ; $b5ad : $08
 	sep #ACCU_8                                                  ; $b5ae : $e2, $20
 	tdc                                                  ; $b5b0 : $7b
+
+; X = room idx * 8
 	lda wCurrRoomIdx.w                                                  ; $b5b1 : $ad, $ac, $05
 	rep #ACCU_8|IDX_8                                                  ; $b5b4 : $c2, $30
 	asl                                                  ; $b5b6 : $0a
 	asl                                                  ; $b5b7 : $0a
 	asl                                                  ; $b5b8 : $0a
 	tax                                                  ; $b5b9 : $aa
-	lda $878010.l, X                                                  ; $b5ba : $bf, $10, $80, $87
+
+; word at location is addr
+	lda Data_7_8010.l, X                                                  ; $b5ba : $bf, $10, $80, $87
 	clc                                                  ; $b5be : $18
 	adc #$8000.w                                                  ; $b5bf : $69, $00, $80
-	sta $099e.w                                                  ; $b5c2 : $8d, $9e, $09
+	sta wRoomScriptAddr.w                                                  ; $b5c2 : $8d, $9e, $09
 	sep #ACCU_8                                                  ; $b5c5 : $e2, $20
-	lda $878012.l, X                                                  ; $b5c7 : $bf, $12, $80, $87
+	lda Data_7_8010.l+2, X                                                  ; $b5c7 : $bf, $12, $80, $87
 	clc                                                  ; $b5cb : $18
 	adc #$87.b                                                  ; $b5cc : $69, $87
-	sta $09a0.w                                                  ; $b5ce : $8d, $a0, $09
+	sta wRoomScriptBank.w                                                  ; $b5ce : $8d, $a0, $09
 	plp                                                  ; $b5d1 : $28
 	rts                                                  ; $b5d2 : $60
 
@@ -8284,7 +8288,7 @@ br_03_b659:
 	ldx #$0000.w                                                  ; $b65d : $a2, $00, $00
 	ldy #$001e.w                                                  ; $b660 : $a0, $1e, $00
 	jsr $80e722.l                                                  ; $b663 : $22, $22, $e7, $80
-	jsr $80cbae.l                                                  ; $b667 : $22, $ae, $cb, $80
+	jsr Func_0_cbae.l                                                  ; $b667 : $22, $ae, $cb, $80
 	plb                                                  ; $b66b : $ab
 	plp                                                  ; $b66c : $28
 	rtl                                                  ; $b66d : $6b
@@ -8761,7 +8765,7 @@ Call_03_b8bf:
 
 	lda $05fa.w, X                                                  ; $b976 : $bd, $fa, $05
 	sta $54                                                  ; $b979 : $85, $54
-	jsr Func_0_bfe7.l                                                  ; $b97b : $22, $e7, $bf, $80
+	jsr GetScriptForSpokenNPC.l                                                  ; $b97b : $22, $e7, $bf, $80
 	ldx $09b7.w                                                  ; $b97f : $ae, $b7, $09
 	cpx #$ffff.w                                                  ; $b982 : $e0, $ff, $ff
 	beq @beginBattle                                                  ; $b985 : $f0, $02
@@ -9004,7 +9008,7 @@ Call_03_bb08:
 	sta $54                                                  ; $bb17 : $85, $54
 	sta $09ab.w                                                  ; $bb19 : $8d, $ab, $09
 	sta $09ac.w                                                  ; $bb1c : $8d, $ac, $09
-	jsr Func_0_bfe7.l                                                  ; $bb1f : $22, $e7, $bf, $80
+	jsr GetScriptForSpokenNPC.l                                                  ; $bb1f : $22, $e7, $bf, $80
 	ldx $09b7.w                                                  ; $bb23 : $ae, $b7, $09
 	cpx #$ffff.w                                                  ; $bb26 : $e0, $ff, $ff
 	beq br_03_bb73                                                  ; $bb29 : $f0, $48
@@ -17167,7 +17171,7 @@ br_03_f238:
 	sta $54                                                  ; $f29a : $85, $54
 	phy                                                  ; $f29c : $5a
 	phx                                                  ; $f29d : $da
-	jsr Func_0_bfe7.l                                                  ; $f29e : $22, $e7, $bf, $80
+	jsr GetScriptForSpokenNPC.l                                                  ; $f29e : $22, $e7, $bf, $80
 	plx                                                  ; $f2a2 : $fa
 	ply                                                  ; $f2a3 : $7a
 	rep #ACCU_8                                                  ; $f2a4 : $c2, $20

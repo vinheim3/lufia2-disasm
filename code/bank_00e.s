@@ -826,7 +826,7 @@ br_0e_85e4:
 	jsr $2905.w                                                  ; $8634 : $20, $05, $29
 	ora $f906.w                                                  ; $8637 : $0d, $06, $f9
 	jsr Call_0e_be06.w                                                  ; $863a : $20, $06, $be
-	jsr Call_0e_ea05.w                                                  ; $863d : $20, $05, $ea
+	jsr $ea05.w                                                  ; $863d : $20, $05, $ea
 	jsr Call_0e_c506.w                                                  ; $8640 : $20, $06, $c5
 	jsr $03f4.w                                                  ; $8643 : $20, $f4, $03
 	asl $bb                                                  ; $8646 : $06, $bb
@@ -6600,7 +6600,7 @@ Call_0e_af63:
 	tax                                                  ; $affd : $aa
 	tay                                                  ; $affe : $a8
 	tax                                                  ; $afff : $aa
-	jsr $83afea.l                                                  ; $b000 : $22, $ea, $af, $83
+	jsr Call_03_afea.l                                                  ; $b000 : $22, $ea, $af, $83
 	stz $6a                                                  ; $b004 : $64, $6a
 
 Call_0e_b006:
@@ -6618,7 +6618,7 @@ Call_0e_b006:
 	ldx #$0000.w                                                  ; $b020 : $a2, $00, $00
 	ldy #$0022.w                                                  ; $b023 : $a0, $22, $00
 	jsr $80e722.l                                                  ; $b026 : $22, $22, $e7, $80
-	jsr $80cbae.l                                                  ; $b02a : $22, $ae, $cb, $80
+	jsr Func_0_cbae.l                                                  ; $b02a : $22, $ae, $cb, $80
 	plp                                                  ; $b02e : $28
 	jsr $83afcd.l                                                  ; $b02f : $22, $cd, $af, $83
 	lda $09c9.w                                                  ; $b033 : $ad, $c9, $09
@@ -6995,7 +6995,7 @@ br_0e_b28a:
 	ldx #$0000.w                                                  ; $b2a1 : $a2, $00, $00
 	ldy #$0014.w                                                  ; $b2a4 : $a0, $14, $00
 	jsr $80e722.l                                                  ; $b2a7 : $22, $22, $e7, $80
-	jsr $80cbae.l                                                  ; $b2ab : $22, $ae, $cb, $80
+	jsr Func_0_cbae.l                                                  ; $b2ab : $22, $ae, $cb, $80
 	ldx #$0000.w                                                  ; $b2af : $a2, $00, $00
 	jsr $80f47a.l                                                  ; $b2b2 : $22, $7a, $f4, $80
 	ldx #$0002.w                                                  ; $b2b6 : $a2, $02, $00
@@ -15437,710 +15437,653 @@ Call_0e_e892:
 	sep #$aa.b                                                  ; $e9fa : $e2, $aa
 	tax                                                  ; $e9fc : $aa
 	tax                                                  ; $e9fd : $aa
-	ldx #$00a2.w                                                  ; $e9fe : $a2, $a2, $00
-	ora $10                                                  ; $ea01 : $05, $10
-	ora $1e                                                  ; $ea03 : $05, $1e
-
-Call_0e_ea05:
-	ora $2a                                                  ; $ea05 : $05, $2a
-	ora $36                                                  ; $ea07 : $05, $36
-	ora $41                                                  ; $ea09 : $05, $41
-	ora $4c                                                  ; $ea0b : $05, $4c
-	ora $57                                                  ; $ea0d : $05, $57
-	ora $62                                                  ; $ea0f : $05, $62
-	ora $6d                                                  ; $ea11 : $05, $6d
-	ora $78                                                  ; $ea13 : $05, $78
-	ora $83                                                  ; $ea15 : $05, $83
-	ora $8e                                                  ; $ea17 : $05, $8e
-	ora $99                                                  ; $ea19 : $05, $99
-	ora $a3                                                  ; $ea1b : $05, $a3
-	ora $ad                                                  ; $ea1d : $05, $ad
-	ora $b7                                                  ; $ea1f : $05, $b7
-	ora $c1                                                  ; $ea21 : $05, $c1
-	ora $cb                                                  ; $ea23 : $05, $cb
-	ora $d5                                                  ; $ea25 : $05, $d5
-	ora $df                                                  ; $ea27 : $05, $df
-	ora $e9                                                  ; $ea29 : $05, $e9
-	ora $f3                                                  ; $ea2b : $05, $f3
-	ora $fd                                                  ; $ea2d : $05, $fd
-	ora $07                                                  ; $ea2f : $05, $07
-	asl $11                                                  ; $ea31 : $06, $11
-	asl $1b                                                  ; $ea33 : $06, $1b
-	asl $25                                                  ; $ea35 : $06, $25
-	asl $2f                                                  ; $ea37 : $06, $2f
-	asl $39                                                  ; $ea39 : $06, $39
-	asl $43                                                  ; $ea3b : $06, $43
-	asl $4d                                                  ; $ea3d : $06, $4d
-	asl $56                                                  ; $ea3f : $06, $56
-	asl $5f                                                  ; $ea41 : $06, $5f
-	asl $68                                                  ; $ea43 : $06, $68
-	asl $71                                                  ; $ea45 : $06, $71
-	asl $7a                                                  ; $ea47 : $06, $7a
-	asl $83                                                  ; $ea49 : $06, $83
-	asl $8c                                                  ; $ea4b : $06, $8c
-	asl $95                                                  ; $ea4d : $06, $95
-	asl $9e                                                  ; $ea4f : $06, $9e
-	asl $a7                                                  ; $ea51 : $06, $a7
-	asl $b0                                                  ; $ea53 : $06, $b0
-	asl $b9                                                  ; $ea55 : $06, $b9
-	asl $c2                                                  ; $ea57 : $06, $c2
-	asl $cb                                                  ; $ea59 : $06, $cb
-	asl $d4                                                  ; $ea5b : $06, $d4
-	asl $dd                                                  ; $ea5d : $06, $dd
-	asl $e6                                                  ; $ea5f : $06, $e6
-	asl $ef                                                  ; $ea61 : $06, $ef
-	asl $f8                                                  ; $ea63 : $06, $f8
-	asl $01                                                  ; $ea65 : $06, $01
-	ora [$0a]                                                  ; $ea67 : $07, $0a
-	ora [$13]                                                  ; $ea69 : $07, $13
-	ora [$1c]                                                  ; $ea6b : $07, $1c
-	ora [$25]                                                  ; $ea6d : $07, $25
-	ora [$2e]                                                  ; $ea6f : $07, $2e
-	ora [$37]                                                  ; $ea71 : $07, $37
-	ora [$40]                                                  ; $ea73 : $07, $40
-	ora [$49]                                                  ; $ea75 : $07, $49
-	ora [$52]                                                  ; $ea77 : $07, $52
-	ora [$5b]                                                  ; $ea79 : $07, $5b
-	ora [$64]                                                  ; $ea7b : $07, $64
-	ora [$6d]                                                  ; $ea7d : $07, $6d
-	ora [$76]                                                  ; $ea7f : $07, $76
-	ora [$7f]                                                  ; $ea81 : $07, $7f
-	ora [$88]                                                  ; $ea83 : $07, $88
-	ora [$91]                                                  ; $ea85 : $07, $91
-	ora [$9a]                                                  ; $ea87 : $07, $9a
-	ora [$a2]                                                  ; $ea89 : $07, $a2
-	ora [$aa]                                                  ; $ea8b : $07, $aa
-	ora [$b2]                                                  ; $ea8d : $07, $b2
-	ora [$ba]                                                  ; $ea8f : $07, $ba
-	ora [$c2]                                                  ; $ea91 : $07, $c2
-	ora [$ca]                                                  ; $ea93 : $07, $ca
-	ora [$d2]                                                  ; $ea95 : $07, $d2
-	ora [$da]                                                  ; $ea97 : $07, $da
-	ora [$e2]                                                  ; $ea99 : $07, $e2
-	ora [$ea]                                                  ; $ea9b : $07, $ea
-	ora [$f2]                                                  ; $ea9d : $07, $f2
-	ora [$fa]                                                  ; $ea9f : $07, $fa
-	ora [$02]                                                  ; $eaa1 : $07, $02
-	php                                                  ; $eaa3 : $08
-	asl                                                  ; $eaa4 : $0a
-	php                                                  ; $eaa5 : $08
-	ora ($08)                                                  ; $eaa6 : $12, $08
-	ina                                                  ; $eaa8 : $1a
-	php                                                  ; $eaa9 : $08
-	jsr $082a08.l                                                  ; $eaaa : $22, $08, $2a, $08
-	and ($08)                                                  ; $eaae : $32, $08
-	dea                                                  ; $eab0 : $3a
-	php                                                  ; $eab1 : $08
-	wdm                                                  ; $eab2 : $42
-	php                                                  ; $eab3 : $08
-	lsr                                                  ; $eab4 : $4a
-	php                                                  ; $eab5 : $08
-	eor ($08)                                                  ; $eab6 : $52, $08
-	phy                                                  ; $eab8 : $5a
-	php                                                  ; $eab9 : $08
-	.db $62                                                  ; $eaba : $62
-
-	php                                                  ; $eabb : $08
-	ror                                                  ; $eabc : $6a
-	php                                                  ; $eabd : $08
-	adc ($08)                                                  ; $eabe : $72, $08
-	ply                                                  ; $eac0 : $7a
-	php                                                  ; $eac1 : $08
-	.db $82                                                  ; $eac2 : $82
-
-	php                                                  ; $eac3 : $08
-	txa                                                  ; $eac4 : $8a
-	php                                                  ; $eac5 : $08
-	sta ($08)                                                  ; $eac6 : $92, $08
-	txs                                                  ; $eac8 : $9a
-	php                                                  ; $eac9 : $08
-	ldx #$aa08.w                                                  ; $eaca : $a2, $08, $aa
-	php                                                  ; $eacd : $08
-	lda ($08)                                                  ; $eace : $b2, $08
-	tsx                                                  ; $ead0 : $ba
-	php                                                  ; $ead1 : $08
-	rep #$08.b                                                  ; $ead2 : $c2, $08
-	dex                                                  ; $ead4 : $ca
-	php                                                  ; $ead5 : $08
-	cmp ($08)                                                  ; $ead6 : $d2, $08
-	phx                                                  ; $ead8 : $da
-	php                                                  ; $ead9 : $08
-	sep #$08.b                                                  ; $eada : $e2, $08
-	nop                                                  ; $eadc : $ea
-	php                                                  ; $eadd : $08
-	sbc ($08)                                                  ; $eade : $f2, $08
-	plx                                                  ; $eae0 : $fa
-	php                                                  ; $eae1 : $08
-	cop $09.b                                                  ; $eae2 : $02, $09
-	asl                                                  ; $eae4 : $0a
-	ora #$12.b                                                  ; $eae5 : $09, $12
-	ora #$1a.b                                                  ; $eae7 : $09, $1a
-	ora #$22.b                                                  ; $eae9 : $09, $22
-	ora #$2a.b                                                  ; $eaeb : $09, $2a
-	ora #$32.b                                                  ; $eaed : $09, $32
-	ora #$3a.b                                                  ; $eaef : $09, $3a
-	ora #$42.b                                                  ; $eaf1 : $09, $42
-	ora #$49.b                                                  ; $eaf3 : $09, $49
-	ora #$50.b                                                  ; $eaf5 : $09, $50
-	ora #$57.b                                                  ; $eaf7 : $09, $57
-	ora #$5e.b                                                  ; $eaf9 : $09, $5e
-	ora #$65.b                                                  ; $eafb : $09, $65
-	ora #$6c.b                                                  ; $eafd : $09, $6c
-	ora #$73.b                                                  ; $eaff : $09, $73
-	ora #$7a.b                                                  ; $eb01 : $09, $7a
-	ora #$81.b                                                  ; $eb03 : $09, $81
-	ora #$88.b                                                  ; $eb05 : $09, $88
-	ora #$8f.b                                                  ; $eb07 : $09, $8f
-	ora #$96.b                                                  ; $eb09 : $09, $96
-	ora #$9d.b                                                  ; $eb0b : $09, $9d
-	ora #$a4.b                                                  ; $eb0d : $09, $a4
-	ora #$ab.b                                                  ; $eb0f : $09, $ab
-	ora #$b2.b                                                  ; $eb11 : $09, $b2
-	ora #$b9.b                                                  ; $eb13 : $09, $b9
-	ora #$c0.b                                                  ; $eb15 : $09, $c0
-	ora #$c7.b                                                  ; $eb17 : $09, $c7
-	ora #$ce.b                                                  ; $eb19 : $09, $ce
-	ora #$d5.b                                                  ; $eb1b : $09, $d5
-	ora #$dc.b                                                  ; $eb1d : $09, $dc
-	ora #$e3.b                                                  ; $eb1f : $09, $e3
-	ora #$ea.b                                                  ; $eb21 : $09, $ea
-	ora #$f1.b                                                  ; $eb23 : $09, $f1
-	ora #$f8.b                                                  ; $eb25 : $09, $f8
-	ora #$ff.b                                                  ; $eb27 : $09, $ff
-	ora #$06.b                                                  ; $eb29 : $09, $06
-	asl                                                  ; $eb2b : $0a
-	ora $140a.w                                                  ; $eb2c : $0d, $0a, $14
-	asl                                                  ; $eb2f : $0a
-	tcs                                                  ; $eb30 : $1b
-	asl                                                  ; $eb31 : $0a
-	jsr $0a290a.l                                                  ; $eb32 : $22, $0a, $29, $0a
-	bmi br_0e_eb42                                                  ; $eb36 : $30, $0a
-
-	and [$0a], Y                                                  ; $eb38 : $37, $0a
-	rol $450a.w, X                                                  ; $eb3a : $3e, $0a, $45
-	asl                                                  ; $eb3d : $0a
-	jmp $530a.w                                                  ; $eb3e : $4c, $0a, $53
-
-
-	asl                                                  ; $eb41 : $0a
-
-br_0e_eb42:
-	phy                                                  ; $eb42 : $5a
-	asl                                                  ; $eb43 : $0a
-	adc ($0a, X)                                                  ; $eb44 : $61, $0a
-	pla                                                  ; $eb46 : $68
-	asl                                                  ; $eb47 : $0a
-	adc $0a760a.l                                                  ; $eb48 : $6f, $0a, $76, $0a
-	adc $840a.w, X                                                  ; $eb4c : $7d, $0a, $84
-	asl                                                  ; $eb4f : $0a
-	phb                                                  ; $eb50 : $8b
-	asl                                                  ; $eb51 : $0a
-	sta ($0a)                                                  ; $eb52 : $92, $0a
-	sta $a00a.w, Y                                                  ; $eb54 : $99, $0a, $a0
-	asl                                                  ; $eb57 : $0a
-	lda [$0a]                                                  ; $eb58 : $a7, $0a
-	ldx $b50a.w                                                  ; $eb5a : $ae, $0a, $b5
-	asl                                                  ; $eb5d : $0a
-	ldy $c30a.w, X                                                  ; $eb5e : $bc, $0a, $c3
-	asl                                                  ; $eb61 : $0a
-	dex                                                  ; $eb62 : $ca
-	asl                                                  ; $eb63 : $0a
-	cmp ($0a), Y                                                  ; $eb64 : $d1, $0a
-	cld                                                  ; $eb66 : $d8
-	asl                                                  ; $eb67 : $0a
-	cmp $0ae60a.l, X                                                  ; $eb68 : $df, $0a, $e6, $0a
-	sbc $f40a.w                                                  ; $eb6c : $ed, $0a, $f4
-	asl                                                  ; $eb6f : $0a
-	xce                                                  ; $eb70 : $fb
-	asl                                                  ; $eb71 : $0a
-	cop $0b.b                                                  ; $eb72 : $02, $0b
-	ora #$0b.b                                                  ; $eb74 : $09, $0b
-	bpl br_0e_eb83                                                  ; $eb76 : $10, $0b
-
-	ora [$0b], Y                                                  ; $eb78 : $17, $0b
-	asl $250b.w, X                                                  ; $eb7a : $1e, $0b, $25
-	phd                                                  ; $eb7d : $0b
-	bit $330b.w                                                  ; $eb7e : $2c, $0b, $33
-	phd                                                  ; $eb81 : $0b
-	dea                                                  ; $eb82 : $3a
-
-br_0e_eb83:
-	phd                                                  ; $eb83 : $0b
-	eor ($0b, X)                                                  ; $eb84 : $41, $0b
-	eor [$0b]                                                  ; $eb86 : $47, $0b
-	eor $530b.w                                                  ; $eb88 : $4d, $0b, $53
-	phd                                                  ; $eb8b : $0b
-	eor $5f0b.w, Y                                                  ; $eb8c : $59, $0b, $5f
-	phd                                                  ; $eb8f : $0b
-	adc $0b                                                  ; $eb90 : $65, $0b
-	rtl                                                  ; $eb92 : $6b
-
-
-	phd                                                  ; $eb93 : $0b
-	adc ($0b), Y                                                  ; $eb94 : $71, $0b
-	adc [$0b], Y                                                  ; $eb96 : $77, $0b
-	adc $830b.w, X                                                  ; $eb98 : $7d, $0b, $83
-	phd                                                  ; $eb9b : $0b
-	bit #$0b.b                                                  ; $eb9c : $89, $0b
-	sta $0b950b.l                                                  ; $eb9e : $8f, $0b, $95, $0b
-	txy                                                  ; $eba2 : $9b
-	phd                                                  ; $eba3 : $0b
-	lda ($0b, X)                                                  ; $eba4 : $a1, $0b
-	lda [$0b]                                                  ; $eba6 : $a7, $0b
-	lda $b30b.w                                                  ; $eba8 : $ad, $0b, $b3
-	phd                                                  ; $ebab : $0b
-	lda $bf0b.w, Y                                                  ; $ebac : $b9, $0b, $bf
-	phd                                                  ; $ebaf : $0b
-	cmp $0b                                                  ; $ebb0 : $c5, $0b
-	wai                                                  ; $ebb2 : $cb
-	phd                                                  ; $ebb3 : $0b
-	cmp ($0b), Y                                                  ; $ebb4 : $d1, $0b
-	cmp [$0b], Y                                                  ; $ebb6 : $d7, $0b
-	cmp $e30b.w, X                                                  ; $ebb8 : $dd, $0b, $e3
-	phd                                                  ; $ebbb : $0b
-	sbc #$0b.b                                                  ; $ebbc : $e9, $0b
-	sbc $0bf50b.l                                                  ; $ebbe : $ef, $0b, $f5, $0b
-	xce                                                  ; $ebc2 : $fb
-	phd                                                  ; $ebc3 : $0b
-	ora ($0c, X)                                                  ; $ebc4 : $01, $0c
-	ora [$0c]                                                  ; $ebc6 : $07, $0c
-	ora $130c.w                                                  ; $ebc8 : $0d, $0c, $13
-	tsb $0c19.w                                                  ; $ebcb : $0c, $19, $0c
-	ora $0c250c.l, X                                                  ; $ebce : $1f, $0c, $25, $0c
-	pld                                                  ; $ebd2 : $2b
-	tsb $0c31.w                                                  ; $ebd3 : $0c, $31, $0c
-	and [$0c], Y                                                  ; $ebd6 : $37, $0c
-	and $430c.w, X                                                  ; $ebd8 : $3d, $0c, $43
-	tsb $0c49.w                                                  ; $ebdb : $0c, $49, $0c
-	eor $0c550c.l                                                  ; $ebde : $4f, $0c, $55, $0c
-	tcd                                                  ; $ebe2 : $5b
-	tsb $0c61.w                                                  ; $ebe3 : $0c, $61, $0c
-	adc [$0c]                                                  ; $ebe6 : $67, $0c
-	adc $730c.w                                                  ; $ebe8 : $6d, $0c, $73
-	tsb $0c79.w                                                  ; $ebeb : $0c, $79, $0c
-	adc $0c850c.l, X                                                  ; $ebee : $7f, $0c, $85, $0c
-	phb                                                  ; $ebf2 : $8b
-	tsb $0c91.w                                                  ; $ebf3 : $0c, $91, $0c
-	sta [$0c], Y                                                  ; $ebf6 : $97, $0c
-	sta $a30c.w, X                                                  ; $ebf8 : $9d, $0c, $a3
-	tsb $0ca9.w                                                  ; $ebfb : $0c, $a9, $0c
-	lda $0cb50c.l                                                  ; $ebfe : $af, $0c, $b5, $0c
-	tyx                                                  ; $ec02 : $bb
-	tsb $0cc1.w                                                  ; $ec03 : $0c, $c1, $0c
-	cmp [$0c]                                                  ; $ec06 : $c7, $0c
-	cmp $d30c.w                                                  ; $ec08 : $cd, $0c, $d3
-	tsb $0cd9.w                                                  ; $ec0b : $0c, $d9, $0c
-	cmp $0ce50c.l, X                                                  ; $ec0e : $df, $0c, $e5, $0c
-	xba                                                  ; $ec12 : $eb
-	tsb $0cf1.w                                                  ; $ec13 : $0c, $f1, $0c
-	sbc [$0c], Y                                                  ; $ec16 : $f7, $0c
-	sbc $030c.w, X                                                  ; $ec18 : $fd, $0c, $03
-	ora $0d09.w                                                  ; $ec1b : $0d, $09, $0d
-	ora $0d150d.l                                                  ; $ec1e : $0f, $0d, $15, $0d
-	tcs                                                  ; $ec22 : $1b
-	ora $0d21.w                                                  ; $ec23 : $0d, $21, $0d
-	and [$0d]                                                  ; $ec26 : $27, $0d
-	and $330d.w                                                  ; $ec28 : $2d, $0d, $33
-	ora $0d39.w                                                  ; $ec2b : $0d, $39, $0d
-	and $0d450d.l, X                                                  ; $ec2e : $3f, $0d, $45, $0d
-	phk                                                  ; $ec32 : $4b
-	ora $0d51.w                                                  ; $ec33 : $0d, $51, $0d
-	eor [$0d], Y                                                  ; $ec36 : $57, $0d
-	eor $630d.w, X                                                  ; $ec38 : $5d, $0d, $63
-	ora $0d69.w                                                  ; $ec3b : $0d, $69, $0d
-	adc $0d750d.l                                                  ; $ec3e : $6f, $0d, $75, $0d
-	tdc                                                  ; $ec42 : $7b
-	ora $0d81.w                                                  ; $ec43 : $0d, $81, $0d
-	sta [$0d]                                                  ; $ec46 : $87, $0d
-	sta $930d.w                                                  ; $ec48 : $8d, $0d, $93
-	ora $0d99.w                                                  ; $ec4b : $0d, $99, $0d
-	sta $0da50d.l, X                                                  ; $ec4e : $9f, $0d, $a5, $0d
-	plb                                                  ; $ec52 : $ab
-	ora $0db1.w                                                  ; $ec53 : $0d, $b1, $0d
-	lda [$0d], Y                                                  ; $ec56 : $b7, $0d
-	lda $c30d.w, X                                                  ; $ec58 : $bd, $0d, $c3
-	ora $0dc9.w                                                  ; $ec5b : $0d, $c9, $0d
-	cmp $0dd50d.l                                                  ; $ec5e : $cf, $0d, $d5, $0d
-	stp                                                  ; $ec62 : $db
-	ora $0de1.w                                                  ; $ec63 : $0d, $e1, $0d
-	sbc [$0d]                                                  ; $ec66 : $e7, $0d
-	sbc $f30d.w                                                  ; $ec68 : $ed, $0d, $f3
-	ora $0df8.w                                                  ; $ec6b : $0d, $f8, $0d
-	sbc $020d.w, X                                                  ; $ec6e : $fd, $0d, $02
-	asl $0e07.w                                                  ; $ec71 : $0e, $07, $0e
-	tsb $110e.w                                                  ; $ec74 : $0c, $0e, $11
-	asl $0e16.w                                                  ; $ec77 : $0e, $16, $0e
-	tcs                                                  ; $ec7a : $1b
-	asl $0e20.w                                                  ; $ec7b : $0e, $20, $0e
-	and $0e                                                  ; $ec7e : $25, $0e
-	rol                                                  ; $ec80 : $2a
-	asl $0e2f.w                                                  ; $ec81 : $0e, $2f, $0e
-	bit $0e, X                                                  ; $ec84 : $34, $0e
-	and $3e0e.w, Y                                                  ; $ec86 : $39, $0e, $3e
-	asl $0e43.w                                                  ; $ec89 : $0e, $43, $0e
-	pha                                                  ; $ec8c : $48
-	asl $0e4d.w                                                  ; $ec8d : $0e, $4d, $0e
-	eor ($0e)                                                  ; $ec90 : $52, $0e
-	eor [$0e], Y                                                  ; $ec92 : $57, $0e
-	jmp $0e610e.l                                                  ; $ec94 : $5c, $0e, $61, $0e
-
-
-	ror $0e                                                  ; $ec98 : $66, $0e
-	rtl                                                  ; $ec9a : $6b
-
-
-	asl $0e70.w                                                  ; $ec9b : $0e, $70, $0e
-	adc $0e, X                                                  ; $ec9e : $75, $0e
-	ply                                                  ; $eca0 : $7a
-	asl $0e7f.w                                                  ; $eca1 : $0e, $7f, $0e
-	sty $0e                                                  ; $eca4 : $84, $0e
-	bit #$0e.b                                                  ; $eca6 : $89, $0e
-	stx $930e.w                                                  ; $eca8 : $8e, $0e, $93
-	asl $0e98.w                                                  ; $ecab : $0e, $98, $0e
-	sta $a20e.w, X                                                  ; $ecae : $9d, $0e, $a2
-	asl $0ea7.w                                                  ; $ecb1 : $0e, $a7, $0e
-	ldy $b10e.w                                                  ; $ecb4 : $ac, $0e, $b1
-	asl $0eb6.w                                                  ; $ecb7 : $0e, $b6, $0e
-	tyx                                                  ; $ecba : $bb
-	asl $0ec0.w                                                  ; $ecbb : $0e, $c0, $0e
-	cmp $0e                                                  ; $ecbe : $c5, $0e
-	dex                                                  ; $ecc0 : $ca
-	asl $0ecf.w                                                  ; $ecc1 : $0e, $cf, $0e
-	pei ($0e)                                                  ; $ecc4 : $d4, $0e
-	cmp $de0e.w, Y                                                  ; $ecc6 : $d9, $0e, $de
-	asl $0ee3.w                                                  ; $ecc9 : $0e, $e3, $0e
-	inx                                                  ; $eccc : $e8
-	asl $0eed.w                                                  ; $eccd : $0e, $ed, $0e
-	sbc ($0e)                                                  ; $ecd0 : $f2, $0e
-	sbc [$0e], Y                                                  ; $ecd2 : $f7, $0e
-	jsr ($010e.w, X)                                                  ; $ecd4 : $fc, $0e, $01
-	ora $0b0f06.l                                                  ; $ecd7 : $0f, $06, $0f, $0b
-	ora $150f10.l                                                  ; $ecdb : $0f, $10, $0f, $15
-	ora $1f0f1a.l                                                  ; $ecdf : $0f, $1a, $0f, $1f
-	ora $290f24.l                                                  ; $ece3 : $0f, $24, $0f, $29
-	ora $330f2e.l                                                  ; $ece7 : $0f, $2e, $0f, $33
-	ora $3d0f38.l                                                  ; $eceb : $0f, $38, $0f, $3d
-	ora $470f42.l                                                  ; $ecef : $0f, $42, $0f, $47
-
-br_0e_ecf3:
-	ora $510f4c.l                                                  ; $ecf3 : $0f, $4c, $0f, $51
-	ora $5b0f56.l                                                  ; $ecf7 : $0f, $56, $0f, $5b
-	ora $650f60.l                                                  ; $ecfb : $0f, $60, $0f, $65
-	ora $6f0f6a.l                                                  ; $ecff : $0f, $6a, $0f, $6f
-	ora $790f74.l                                                  ; $ed03 : $0f, $74, $0f, $79
-	ora $830f7e.l                                                  ; $ed07 : $0f, $7e, $0f, $83
-	ora $8d0f88.l                                                  ; $ed0b : $0f, $88, $0f, $8d
-
-br_0e_ed0f:
-	ora $970f92.l                                                  ; $ed0f : $0f, $92, $0f, $97
-	ora $a10f9c.l                                                  ; $ed13 : $0f, $9c, $0f, $a1
-	ora $ab0fa6.l                                                  ; $ed17 : $0f, $a6, $0f, $ab
-	ora $b50fb0.l                                                  ; $ed1b : $0f, $b0, $0f, $b5
-	ora $bf0fba.l                                                  ; $ed1f : $0f, $ba, $0f, $bf
-	ora $c90fc4.l                                                  ; $ed23 : $0f, $c4, $0f, $c9
-	ora $d30fce.l                                                  ; $ed27 : $0f, $ce, $0f, $d3
-	ora $dd0fd8.l                                                  ; $ed2b : $0f, $d8, $0f, $dd
-	ora $e70fe2.l                                                  ; $ed2f : $0f, $e2, $0f, $e7
-	ora $f10fec.l                                                  ; $ed33 : $0f, $ec, $0f, $f1
-	ora $fb0ff6.l                                                  ; $ed37 : $0f, $f6, $0f, $fb
-	ora $051000.l                                                  ; $ed3b : $0f, $00, $10, $05
-	bpl br_0e_ed4b                                                  ; $ed3f : $10, $0a
-
-	.db $10, $0f                                                  ; $ed41 : $10, $0f
-
-	bpl br_0e_ed59                                                  ; $ed43 : $10, $14
-
-	.db $10, $19                                                  ; $ed45 : $10, $19
-
-	bpl br_0e_ed67                                                  ; $ed47 : $10, $1e
-
-	.db $10, $23                                                  ; $ed49 : $10, $23
-
-br_0e_ed4b:
-	bpl br_0e_ed75                                                  ; $ed4b : $10, $28
-
-	.db $10, $2d                                                  ; $ed4d : $10, $2d
-
-	bpl br_0e_ed83                                                  ; $ed4f : $10, $32
-
-	.db $10, $37                                                  ; $ed51 : $10, $37
-
-	bpl br_0e_ed91                                                  ; $ed53 : $10, $3c
-
-	.db $10, $41                                                  ; $ed55 : $10, $41
-
-	bpl br_0e_ed9f                                                  ; $ed57 : $10, $46
-
-br_0e_ed59:
-	.db $10, $4b                                                  ; $ed59 : $10, $4b
-
-	bpl br_0e_edad                                                  ; $ed5b : $10, $50
-
-	.db $10, $55                                                  ; $ed5d : $10, $55
-
-	bpl br_0e_edbb                                                  ; $ed5f : $10, $5a
-
-	.db $10, $5f                                                  ; $ed61 : $10, $5f
-
-	bpl br_0e_edc9                                                  ; $ed63 : $10, $64
-
-	.db $10, $69                                                  ; $ed65 : $10, $69
-
-br_0e_ed67:
-	bpl br_0e_edd7                                                  ; $ed67 : $10, $6e
-
-	.db $10, $73                                                  ; $ed69 : $10, $73
-
-	bpl br_0e_ede5                                                  ; $ed6b : $10, $78
-
-	.db $10, $7d                                                  ; $ed6d : $10, $7d
-
-	bpl br_0e_ecf3                                                  ; $ed6f : $10, $82
-
-	.db $10, $87                                                  ; $ed71 : $10, $87
-
-	.db $10, $8c                                                  ; $ed73 : $10, $8c
-
-br_0e_ed75:
-	.db $10, $91                                                  ; $ed75 : $10, $91
-
-	bpl br_0e_ed0f                                                  ; $ed77 : $10, $96
-
-	.db $10, $9b                                                  ; $ed79 : $10, $9b
-
-	.db $10, $9f                                                  ; $ed7b : $10, $9f
-
-	.db $10, $a3                                                  ; $ed7d : $10, $a3
-
-	.db $10, $a7                                                  ; $ed7f : $10, $a7
-
-	.db $10, $ab                                                  ; $ed81 : $10, $ab
-
-br_0e_ed83:
-	.db $10, $af                                                  ; $ed83 : $10, $af
-
-	.db $10, $b3                                                  ; $ed85 : $10, $b3
-
-	.db $10, $b7                                                  ; $ed87 : $10, $b7
-
-	.db $10, $bb                                                  ; $ed89 : $10, $bb
-
-	.db $10, $bf                                                  ; $ed8b : $10, $bf
-
-	.db $10, $c3                                                  ; $ed8d : $10, $c3
-
-	.db $10, $c7                                                  ; $ed8f : $10, $c7
-
-br_0e_ed91:
-	.db $10, $cb                                                  ; $ed91 : $10, $cb
-
-	.db $10, $cf                                                  ; $ed93 : $10, $cf
-
-	.db $10, $d3                                                  ; $ed95 : $10, $d3
-
-	.db $10, $d7                                                  ; $ed97 : $10, $d7
-
-	.db $10, $db                                                  ; $ed99 : $10, $db
-
-	.db $10, $df                                                  ; $ed9b : $10, $df
-
-	.db $10, $e3                                                  ; $ed9d : $10, $e3
-
-br_0e_ed9f:
-	.db $10, $e7                                                  ; $ed9f : $10, $e7
-
-	.db $10, $eb                                                  ; $eda1 : $10, $eb
-
-	.db $10, $ef                                                  ; $eda3 : $10, $ef
-
-	.db $10, $f3                                                  ; $eda5 : $10, $f3
-
-	.db $10, $f7                                                  ; $eda7 : $10, $f7
-
-	.db $10, $fb                                                  ; $eda9 : $10, $fb
-
-	.db $10, $ff                                                  ; $edab : $10, $ff
-
-br_0e_edad:
-	.db $10, $03                                                  ; $edad : $10, $03
-
-	ora ($07), Y                                                  ; $edaf : $11, $07
-	ora ($0b), Y                                                  ; $edb1 : $11, $0b
-	ora ($0f), Y                                                  ; $edb3 : $11, $0f
-	ora ($13), Y                                                  ; $edb5 : $11, $13
-	ora ($17), Y                                                  ; $edb7 : $11, $17
-	ora ($1b), Y                                                  ; $edb9 : $11, $1b
-
-br_0e_edbb:
-	ora ($1f), Y                                                  ; $edbb : $11, $1f
-	ora ($23), Y                                                  ; $edbd : $11, $23
-	ora ($27), Y                                                  ; $edbf : $11, $27
-	ora ($2b), Y                                                  ; $edc1 : $11, $2b
-	ora ($2f), Y                                                  ; $edc3 : $11, $2f
-	ora ($33), Y                                                  ; $edc5 : $11, $33
-	ora ($37), Y                                                  ; $edc7 : $11, $37
-
-br_0e_edc9:
-	ora ($3b), Y                                                  ; $edc9 : $11, $3b
-	ora ($3f), Y                                                  ; $edcb : $11, $3f
-	ora ($43), Y                                                  ; $edcd : $11, $43
-	ora ($47), Y                                                  ; $edcf : $11, $47
-	ora ($4b), Y                                                  ; $edd1 : $11, $4b
-	ora ($4f), Y                                                  ; $edd3 : $11, $4f
-	ora ($53), Y                                                  ; $edd5 : $11, $53
-
-br_0e_edd7:
-	ora ($57), Y                                                  ; $edd7 : $11, $57
-	ora ($5b), Y                                                  ; $edd9 : $11, $5b
-	ora ($5f), Y                                                  ; $eddb : $11, $5f
-	ora ($63), Y                                                  ; $eddd : $11, $63
-	ora ($67), Y                                                  ; $eddf : $11, $67
-	ora ($6b), Y                                                  ; $ede1 : $11, $6b
-	ora ($6f), Y                                                  ; $ede3 : $11, $6f
-
-br_0e_ede5:
-	ora ($73), Y                                                  ; $ede5 : $11, $73
-	ora ($77), Y                                                  ; $ede7 : $11, $77
-	ora ($7b), Y                                                  ; $ede9 : $11, $7b
-	ora ($7f), Y                                                  ; $edeb : $11, $7f
-	ora ($83), Y                                                  ; $eded : $11, $83
-	ora ($87), Y                                                  ; $edef : $11, $87
-	ora ($8b), Y                                                  ; $edf1 : $11, $8b
-	ora ($8f), Y                                                  ; $edf3 : $11, $8f
-	ora ($93), Y                                                  ; $edf5 : $11, $93
-	ora ($97), Y                                                  ; $edf7 : $11, $97
-	ora ($9b), Y                                                  ; $edf9 : $11, $9b
-	ora ($9f), Y                                                  ; $edfb : $11, $9f
-	ora ($a3), Y                                                  ; $edfd : $11, $a3
-	ora ($a7), Y                                                  ; $edff : $11, $a7
-	ora ($ac), Y                                                  ; $ee01 : $11, $ac
-	ora ($b0), Y                                                  ; $ee03 : $11, $b0
-	ora ($b4), Y                                                  ; $ee05 : $11, $b4
-	ora ($b8), Y                                                  ; $ee07 : $11, $b8
-	ora ($bc), Y                                                  ; $ee09 : $11, $bc
-	ora ($c0), Y                                                  ; $ee0b : $11, $c0
-	ora ($c3), Y                                                  ; $ee0d : $11, $c3
-	ora ($c6), Y                                                  ; $ee0f : $11, $c6
-	ora ($c9), Y                                                  ; $ee11 : $11, $c9
-	ora ($cc), Y                                                  ; $ee13 : $11, $cc
-	ora ($cf), Y                                                  ; $ee15 : $11, $cf
-	ora ($d2), Y                                                  ; $ee17 : $11, $d2
-	ora ($d5), Y                                                  ; $ee19 : $11, $d5
-	ora ($d8), Y                                                  ; $ee1b : $11, $d8
-	ora ($db), Y                                                  ; $ee1d : $11, $db
-	ora ($de), Y                                                  ; $ee1f : $11, $de
-	ora ($e1), Y                                                  ; $ee21 : $11, $e1
-	ora ($e4), Y                                                  ; $ee23 : $11, $e4
-	ora ($e7), Y                                                  ; $ee25 : $11, $e7
-	ora ($ea), Y                                                  ; $ee27 : $11, $ea
-	ora ($ed), Y                                                  ; $ee29 : $11, $ed
-	ora ($f0), Y                                                  ; $ee2b : $11, $f0
-	ora ($f3), Y                                                  ; $ee2d : $11, $f3
-	ora ($f6), Y                                                  ; $ee2f : $11, $f6
-	ora ($f9), Y                                                  ; $ee31 : $11, $f9
-	ora ($fc), Y                                                  ; $ee33 : $11, $fc
-	ora ($ff), Y                                                  ; $ee35 : $11, $ff
-	ora ($02), Y                                                  ; $ee37 : $11, $02
-	ora ($05)                                                  ; $ee39 : $12, $05
-	ora ($08)                                                  ; $ee3b : $12, $08
-	ora ($0b)                                                  ; $ee3d : $12, $0b
-	ora ($0e)                                                  ; $ee3f : $12, $0e
-	ora ($11)                                                  ; $ee41 : $12, $11
-	ora ($14)                                                  ; $ee43 : $12, $14
-	ora ($17)                                                  ; $ee45 : $12, $17
-	ora ($1a)                                                  ; $ee47 : $12, $1a
-	ora ($1d)                                                  ; $ee49 : $12, $1d
-	ora ($20)                                                  ; $ee4b : $12, $20
-	ora ($23)                                                  ; $ee4d : $12, $23
-	ora ($26)                                                  ; $ee4f : $12, $26
-	ora ($29)                                                  ; $ee51 : $12, $29
-	ora ($2c)                                                  ; $ee53 : $12, $2c
-	ora ($2f)                                                  ; $ee55 : $12, $2f
-	ora ($32)                                                  ; $ee57 : $12, $32
-	ora ($35)                                                  ; $ee59 : $12, $35
-	ora ($38)                                                  ; $ee5b : $12, $38
-	ora ($3b)                                                  ; $ee5d : $12, $3b
-	ora ($3e)                                                  ; $ee5f : $12, $3e
-	ora ($41)                                                  ; $ee61 : $12, $41
-	ora ($44)                                                  ; $ee63 : $12, $44
-	ora ($47)                                                  ; $ee65 : $12, $47
-	ora ($4a)                                                  ; $ee67 : $12, $4a
-	ora ($4d)                                                  ; $ee69 : $12, $4d
-	ora ($50)                                                  ; $ee6b : $12, $50
-	ora ($53)                                                  ; $ee6d : $12, $53
-	ora ($56)                                                  ; $ee6f : $12, $56
-	ora ($59)                                                  ; $ee71 : $12, $59
-	ora ($5c)                                                  ; $ee73 : $12, $5c
-	ora ($5f)                                                  ; $ee75 : $12, $5f
-	ora ($62)                                                  ; $ee77 : $12, $62
-	ora ($65)                                                  ; $ee79 : $12, $65
-	ora ($68)                                                  ; $ee7b : $12, $68
-	ora ($6b)                                                  ; $ee7d : $12, $6b
-	ora ($6e)                                                  ; $ee7f : $12, $6e
-	ora ($71)                                                  ; $ee81 : $12, $71
-	ora ($74)                                                  ; $ee83 : $12, $74
-	ora ($77)                                                  ; $ee85 : $12, $77
-	ora ($7a)                                                  ; $ee87 : $12, $7a
-	ora ($7d)                                                  ; $ee89 : $12, $7d
-	ora ($80)                                                  ; $ee8b : $12, $80
-	ora ($83)                                                  ; $ee8d : $12, $83
-	ora ($86)                                                  ; $ee8f : $12, $86
-	ora ($89)                                                  ; $ee91 : $12, $89
-	ora ($8c)                                                  ; $ee93 : $12, $8c
-	ora ($8f)                                                  ; $ee95 : $12, $8f
-	ora ($92)                                                  ; $ee97 : $12, $92
-	ora ($95)                                                  ; $ee99 : $12, $95
-	ora ($98)                                                  ; $ee9b : $12, $98
-	ora ($9b)                                                  ; $ee9d : $12, $9b
-	ora ($9e)                                                  ; $ee9f : $12, $9e
-	ora ($a1)                                                  ; $eea1 : $12, $a1
-	ora ($a4)                                                  ; $eea3 : $12, $a4
-	ora ($a7)                                                  ; $eea5 : $12, $a7
-	ora ($aa)                                                  ; $eea7 : $12, $aa
-	ora ($ad)                                                  ; $eea9 : $12, $ad
-	ora ($b0)                                                  ; $eeab : $12, $b0
-	ora ($b3)                                                  ; $eead : $12, $b3
-	ora ($b6)                                                  ; $eeaf : $12, $b6
-	ora ($b9)                                                  ; $eeb1 : $12, $b9
-	ora ($bc)                                                  ; $eeb3 : $12, $bc
-	ora ($bf)                                                  ; $eeb5 : $12, $bf
-	ora ($c2)                                                  ; $eeb7 : $12, $c2
-	ora ($c5)                                                  ; $eeb9 : $12, $c5
-	ora ($c8)                                                  ; $eebb : $12, $c8
-	ora ($cb)                                                  ; $eebd : $12, $cb
-	ora ($ce)                                                  ; $eebf : $12, $ce
-	ora ($d1)                                                  ; $eec1 : $12, $d1
-	ora ($d4)                                                  ; $eec3 : $12, $d4
-	ora ($d7)                                                  ; $eec5 : $12, $d7
-	ora ($da)                                                  ; $eec7 : $12, $da
-	ora ($dd)                                                  ; $eec9 : $12, $dd
-	ora ($e0)                                                  ; $eecb : $12, $e0
-	ora ($e3)                                                  ; $eecd : $12, $e3
-	ora ($e6)                                                  ; $eecf : $12, $e6
-	ora ($e9)                                                  ; $eed1 : $12, $e9
-	ora ($ec)                                                  ; $eed3 : $12, $ec
-	ora ($ef)                                                  ; $eed5 : $12, $ef
-	ora ($f2)                                                  ; $eed7 : $12, $f2
-	ora ($f5)                                                  ; $eed9 : $12, $f5
-	ora ($f8)                                                  ; $eedb : $12, $f8
-	ora ($fb)                                                  ; $eedd : $12, $fb
-	ora ($fe)                                                  ; $eedf : $12, $fe
-	ora ($01)                                                  ; $eee1 : $12, $01
-	ora ($04, S), Y                                                  ; $eee3 : $13, $04
-	ora ($07, S), Y                                                  ; $eee5 : $13, $07
-	ora ($0a, S), Y                                                  ; $eee7 : $13, $0a
-	ora ($0d, S), Y                                                  ; $eee9 : $13, $0d
-	ora ($10, S), Y                                                  ; $eeeb : $13, $10
-	ora ($13, S), Y                                                  ; $eeed : $13, $13
-	ora ($16, S), Y                                                  ; $eeef : $13, $16
-	ora ($19, S), Y                                                  ; $eef1 : $13, $19
-	ora ($1c, S), Y                                                  ; $eef3 : $13, $1c
-	ora ($1f, S), Y                                                  ; $eef5 : $13, $1f
-	ora ($22, S), Y                                                  ; $eef7 : $13, $22
-	ora ($25, S), Y                                                  ; $eef9 : $13, $25
-	ora ($28, S), Y                                                  ; $eefb : $13, $28
-	ora ($2b, S), Y                                                  ; $eefd : $13, $2b
-	ora ($43, S), Y                                                  ; $eeff : $13, $43
+	.db $a2, $a2
+
+
+TextDictionary:
+	.dw $0500
+	.dw $0510
+	.dw $051e
+	.dw $052a
+	.dw $0536
+	.dw $0541
+	.dw $054c
+	.dw $0557
+	.dw $0562
+	.dw $056d
+	.dw $0578
+	.dw $0583
+	.dw $058e
+	.dw $0599
+	.dw $05a3
+	.dw $05ad
+	.dw $05b7
+	.dw $05c1
+	.dw $05cb
+	.dw $05d5
+	.dw $05df
+	.dw $05e9
+	.dw $05f3
+	.dw $05fd
+	.dw $0607
+	.dw $0611
+	.dw $061b
+	.dw $0625
+	.dw $062f
+	.dw $0639
+	.dw $0643
+	.dw $064d
+	.dw $0656
+	.dw $065f
+	.dw $0668
+	.dw $0671
+	.dw $067a
+	.dw $0683
+	.dw $068c
+	.dw $0695
+	.dw $069e
+	.dw $06a7
+	.dw $06b0
+	.dw $06b9
+	.dw $06c2
+	.dw $06cb
+	.dw $06d4
+	.dw $06dd
+	.dw $06e6
+	.dw $06ef
+	.dw $06f8
+	.dw $0701
+	.dw $070a
+	.dw $0713
+	.dw $071c
+	.dw $0725
+	.dw $072e
+	.dw $0737
+	.dw $0740
+	.dw $0749
+	.dw $0752
+	.dw $075b
+	.dw $0764
+	.dw $076d
+	.dw $0776
+	.dw $077f
+	.dw $0788
+	.dw $0791
+	.dw $079a
+	.dw $07a2
+	.dw $07aa
+	.dw $07b2
+	.dw $07ba
+	.dw $07c2
+	.dw $07ca
+	.dw $07d2
+	.dw $07da
+	.dw $07e2
+	.dw $07ea
+	.dw $07f2
+	.dw $07fa
+	.dw $0802
+	.dw $080a
+	.dw $0812
+	.dw $081a
+	.dw $0822
+	.dw $082a
+	.dw $0832
+	.dw $083a
+	.dw $0842
+	.dw $084a
+	.dw $0852
+	.dw $085a
+	.dw $0862
+	.dw $086a
+	.dw $0872
+	.dw $087a
+	.dw $0882
+	.dw $088a
+	.dw $0892
+	.dw $089a
+	.dw $08a2
+	.dw $08aa
+	.dw $08b2
+	.dw $08ba
+	.dw $08c2
+	.dw $08ca
+	.dw $08d2
+	.dw $08da
+	.dw $08e2
+	.dw $08ea
+	.dw $08f2
+	.dw $08fa
+	.dw $0902
+	.dw $090a
+	.dw $0912
+	.dw $091a
+	.dw $0922
+	.dw $092a
+	.dw $0932
+	.dw $093a
+	.dw $0942
+	.dw $0949
+	.dw $0950
+	.dw $0957
+	.dw $095e
+	.dw $0965
+	.dw $096c
+	.dw $0973
+	.dw $097a
+	.dw $0981
+	.dw $0988
+	.dw $098f
+	.dw $0996
+	.dw $099d
+	.dw $09a4
+	.dw $09ab
+	.dw $09b2
+	.dw $09b9
+	.dw $09c0
+	.dw $09c7
+	.dw $09ce
+	.dw $09d5
+	.dw $09dc
+	.dw $09e3
+	.dw $09ea
+	.dw $09f1
+	.dw $09f8
+	.dw $09ff
+	.dw $0a06
+	.dw $0a0d
+	.dw $0a14
+	.dw $0a1b
+	.dw $0a22
+	.dw $0a29
+	.dw $0a30
+	.dw $0a37
+	.dw $0a3e
+	.dw $0a45
+	.dw $0a4c
+	.dw $0a53
+	.dw $0a5a
+	.dw $0a61
+	.dw $0a68
+	.dw $0a6f
+	.dw $0a76
+	.dw $0a7d
+	.dw $0a84
+	.dw $0a8b
+	.dw $0a92
+	.dw $0a99
+	.dw $0aa0
+	.dw $0aa7
+	.dw $0aae
+	.dw $0ab5
+	.dw $0abc
+	.dw $0ac3
+	.dw $0aca
+	.dw $0ad1
+	.dw $0ad8
+	.dw $0adf
+	.dw $0ae6
+	.dw $0aed
+	.dw $0af4
+	.dw $0afb
+	.dw $0b02
+	.dw $0b09
+	.dw $0b10
+	.dw $0b17
+	.dw $0b1e
+	.dw $0b25
+	.dw $0b2c
+	.dw $0b33
+	.dw $0b3a
+	.dw $0b41
+	.dw $0b47
+	.dw $0b4d
+	.dw $0b53
+	.dw $0b59
+	.dw $0b5f
+	.dw $0b65
+	.dw $0b6b
+	.dw $0b71
+	.dw $0b77
+	.dw $0b7d
+	.dw $0b83
+	.dw $0b89
+	.dw $0b8f
+	.dw $0b95
+	.dw $0b9b
+	.dw $0ba1
+	.dw $0ba7
+	.dw $0bad
+	.dw $0bb3
+	.dw $0bb9
+	.dw $0bbf
+	.dw $0bc5
+	.dw $0bcb
+	.dw $0bd1
+	.dw $0bd7
+	.dw $0bdd
+	.dw $0be3
+	.dw $0be9
+	.dw $0bef
+	.dw $0bf5
+	.dw $0bfb
+	.dw $0c01
+	.dw $0c07
+	.dw $0c0d
+	.dw $0c13
+	.dw $0c19
+	.dw $0c1f
+	.dw $0c25
+	.dw $0c2b
+	.dw $0c31
+	.dw $0c37
+	.dw $0c3d
+	.dw $0c43
+	.dw $0c49
+	.dw $0c4f
+	.dw $0c55
+	.dw $0c5b
+	.dw $0c61
+	.dw $0c67
+	.dw $0c6d
+	.dw $0c73
+	.dw $0c79
+	.dw $0c7f
+	.dw $0c85
+	.dw $0c8b
+	.dw $0c91
+	.dw $0c97
+	.dw $0c9d
+	.dw $0ca3
+	.dw $0ca9
+	.dw $0caf
+	.dw $0cb5
+	.dw $0cbb
+	.dw $0cc1
+	.dw $0cc7
+	.dw $0ccd
+	.dw $0cd3
+	.dw $0cd9
+	.dw $0cdf
+	.dw $0ce5
+	.dw $0ceb
+	.dw $0cf1
+	.dw $0cf7
+	.dw $0cfd
+	.dw $0d03
+	.dw $0d09
+	.dw $0d0f
+	.dw $0d15
+	.dw $0d1b
+	.dw $0d21
+	.dw $0d27
+	.dw $0d2d
+	.dw $0d33
+	.dw $0d39
+	.dw $0d3f
+	.dw $0d45
+	.dw $0d4b
+	.dw $0d51
+	.dw $0d57
+	.dw $0d5d
+	.dw $0d63
+	.dw $0d69
+	.dw $0d6f
+	.dw $0d75
+	.dw $0d7b
+	.dw $0d81
+	.dw $0d87
+	.dw $0d8d
+	.dw $0d93
+	.dw $0d99
+	.dw $0d9f
+	.dw $0da5
+	.dw $0dab
+	.dw $0db1
+	.dw $0db7
+	.dw $0dbd
+	.dw $0dc3
+	.dw $0dc9
+	.dw $0dcf
+	.dw $0dd5
+	.dw $0ddb
+	.dw $0de1
+	.dw $0de7
+	.dw $0ded
+	.dw $0df3
+	.dw $0df8
+	.dw $0dfd
+	.dw $0e02
+	.dw $0e07
+	.dw $0e0c
+	.dw $0e11
+	.dw $0e16
+	.dw $0e1b
+	.dw $0e20
+	.dw $0e25
+	.dw $0e2a
+	.dw $0e2f
+	.dw $0e34
+	.dw $0e39
+	.dw $0e3e
+	.dw $0e43
+	.dw $0e48
+	.dw $0e4d
+	.dw $0e52
+	.dw $0e57
+	.dw $0e5c
+	.dw $0e61
+	.dw $0e66
+	.dw $0e6b
+	.dw $0e70
+	.dw $0e75
+	.dw $0e7a
+	.dw $0e7f
+	.dw $0e84
+	.dw $0e89
+	.dw $0e8e
+	.dw $0e93
+	.dw $0e98
+	.dw $0e9d
+	.dw $0ea2
+	.dw $0ea7
+	.dw $0eac
+	.dw $0eb1
+	.dw $0eb6
+	.dw $0ebb
+	.dw $0ec0
+	.dw $0ec5
+	.dw $0eca
+	.dw $0ecf
+	.dw $0ed4
+	.dw $0ed9
+	.dw $0ede
+	.dw $0ee3
+	.dw $0ee8
+	.dw $0eed
+	.dw $0ef2
+	.dw $0ef7
+	.dw $0efc
+	.dw $0f01
+	.dw $0f06
+	.dw $0f0b
+	.dw $0f10
+	.dw $0f15
+	.dw $0f1a
+	.dw $0f1f
+	.dw $0f24
+	.dw $0f29
+	.dw $0f2e
+	.dw $0f33
+	.dw $0f38
+	.dw $0f3d
+	.dw $0f42
+	.dw $0f47
+	.dw $0f4c
+	.dw $0f51
+	.dw $0f56
+	.dw $0f5b
+	.dw $0f60
+	.dw $0f65
+	.dw $0f6a
+	.dw $0f6f
+	.dw $0f74
+	.dw $0f79
+	.dw $0f7e
+	.dw $0f83
+	.dw $0f88
+	.dw $0f8d
+	.dw $0f92
+	.dw $0f97
+	.dw $0f9c
+	.dw $0fa1
+	.dw $0fa6
+	.dw $0fab
+	.dw $0fb0
+	.dw $0fb5
+	.dw $0fba
+	.dw $0fbf
+	.dw $0fc4
+	.dw $0fc9
+	.dw $0fce
+	.dw $0fd3
+	.dw $0fd8
+	.dw $0fdd
+	.dw $0fe2
+	.dw $0fe7
+	.dw $0fec
+	.dw $0ff1
+	.dw $0ff6
+	.dw $0ffb
+	.dw $1000
+	.dw $1005
+	.dw $100a
+	.dw $100f
+	.dw $1014
+	.dw $1019
+	.dw $101e
+	.dw $1023
+	.dw $1028
+	.dw $102d
+	.dw $1032
+	.dw $1037
+	.dw $103c
+	.dw $1041
+	.dw $1046
+	.dw $104b
+	.dw $1050
+	.dw $1055
+	.dw $105a
+	.dw $105f
+	.dw $1064
+	.dw $1069
+	.dw $106e
+	.dw $1073
+	.dw $1078
+	.dw $107d
+	.dw $1082
+	.dw $1087
+	.dw $108c
+	.dw $1091
+	.dw $1096
+	.dw $109b
+	.dw $109f
+	.dw $10a3
+	.dw $10a7
+	.dw $10ab
+	.dw $10af
+	.dw $10b3
+	.dw $10b7
+	.dw $10bb
+	.dw $10bf
+	.dw $10c3
+	.dw $10c7
+	.dw $10cb
+	.dw $10cf
+	.dw $10d3
+	.dw $10d7
+	.dw $10db
+	.dw $10df
+	.dw $10e3
+	.dw $10e7
+	.dw $10eb
+	.dw $10ef
+	.dw $10f3
+	.dw $10f7
+	.dw $10fb
+	.dw $10ff
+	.dw $1103
+	.dw $1107
+	.dw $110b
+	.dw $110f
+	.dw $1113
+	.dw $1117
+	.dw $111b
+	.dw $111f
+	.dw $1123
+	.dw $1127
+	.dw $112b
+	.dw $112f
+	.dw $1133
+	.dw $1137
+	.dw $113b
+	.dw $113f
+	.dw $1143
+	.dw $1147
+	.dw $114b
+	.dw $114f
+	.dw $1153
+	.dw $1157
+	.dw $115b
+	.dw $115f
+	.dw $1163
+	.dw $1167
+	.dw $116b
+	.dw $116f
+	.dw $1173
+	.dw $1177
+	.dw $117b
+	.dw $117f
+	.dw $1183
+	.dw $1187
+	.dw $118b
+	.dw $118f
+	.dw $1193
+	.dw $1197
+	.dw $119b
+	.dw $119f
+	.dw $11a3
+	.dw $11a7
+	.dw $11ac
+	.dw $11b0
+	.dw $11b4
+	.dw $11b8
+	.dw $11bc
+	.dw $11c0
+	.dw $11c3
+	.dw $11c6
+	.dw $11c9
+	.dw $11cc
+	.dw $11cf
+	.dw $11d2
+	.dw $11d5
+	.dw $11d8
+	.dw $11db
+	.dw $11de
+	.dw $11e1
+	.dw $11e4
+	.dw $11e7
+	.dw $11ea
+	.dw $11ed
+	.dw $11f0
+	.dw $11f3
+	.dw $11f6
+	.dw $11f9
+	.dw $11fc
+	.dw $11ff
+	.dw $1202
+	.dw $1205
+	.dw $1208
+	.dw $120b
+	.dw $120e
+	.dw $1211
+	.dw $1214
+	.dw $1217
+	.dw $121a
+	.dw $121d
+	.dw $1220
+	.dw $1223
+	.dw $1226
+	.dw $1229
+	.dw $122c
+	.dw $122f
+	.dw $1232
+	.dw $1235
+	.dw $1238
+	.dw $123b
+	.dw $123e
+	.dw $1241
+	.dw $1244
+	.dw $1247
+	.dw $124a
+	.dw $124d
+	.dw $1250
+	.dw $1253
+	.dw $1256
+	.dw $1259
+	.dw $125c
+	.dw $125f
+	.dw $1262
+	.dw $1265
+	.dw $1268
+	.dw $126b
+	.dw $126e
+	.dw $1271
+	.dw $1274
+	.dw $1277
+	.dw $127a
+	.dw $127d
+	.dw $1280
+	.dw $1283
+	.dw $1286
+	.dw $1289
+	.dw $128c
+	.dw $128f
+	.dw $1292
+	.dw $1295
+	.dw $1298
+	.dw $129b
+	.dw $129e
+	.dw $12a1
+	.dw $12a4
+	.dw $12a7
+	.dw $12aa
+	.dw $12ad
+	.dw $12b0
+	.dw $12b3
+	.dw $12b6
+	.dw $12b9
+	.dw $12bc
+	.dw $12bf
+	.dw $12c2
+	.dw $12c5
+	.dw $12c8
+	.dw $12cb
+	.dw $12ce
+	.dw $12d1
+	.dw $12d4
+	.dw $12d7
+	.dw $12da
+	.dw $12dd
+	.dw $12e0
+	.dw $12e3
+	.dw $12e6
+	.dw $12e9
+	.dw $12ec
+	.dw $12ef
+	.dw $12f2
+	.dw $12f5
+	.dw $12f8
+	.dw $12fb
+	.dw $12fe
+	.dw $1301
+	.dw $1304
+	.dw $1307
+	.dw $130a
+	.dw $130d
+	.dw $1310
+	.dw $1313
+	.dw $1316
+	.dw $1319
+	.dw $131c
+	.dw $131f
+	.dw $1322
+	.dw $1325
+	.dw $1328
+	.dw $132b
+
+
+	.db $43                                                  ; $ef00 : $43
 	adc $72676e.l                                                  ; $ef01 : $6f, $6e, $67, $72
 	adc ($74, X)                                                  ; $ef05 : $61, $74
 	adc $6c, X                                                  ; $ef07 : $75, $6c

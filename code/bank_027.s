@@ -6478,7 +6478,7 @@ br_4f_f593:
 	cmp ($a5, S), Y                                                  ; $f613 : $d3, $a5
 	ora ($00, S), Y                                                  ; $f615 : $13, $00
 	.db $00                                                  ; $f617 : $00
-	ldy $09a0.w, X                                                  ; $f618 : $bc, $a0, $09
+	ldy wRoomScriptBank.w, X                                                  ; $f618 : $bc, $a0, $09
 	ora $00                                                  ; $f61b : $05, $00
 	inc $13a4.w, X                                                  ; $f61d : $fe, $a4, $13
 	tsb $00                                                  ; $f620 : $04, $00
