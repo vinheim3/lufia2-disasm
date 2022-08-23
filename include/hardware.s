@@ -1,5 +1,9 @@
 OAMADDL = $2102 ; OAM Address Registers (Low)
 OAMDATA = $2104 ; OAM Data Write Register
+BGMODE = $2105 ; BG Mode and Character Size Register
+MOSAIC = $2106 ; Mosaic Register
+BG3HOFS = $2111 ; BG Scroll Registers (BG3)
+BG3VOFS = $2112 ; BG Scroll Registers (BG3)
 VMAIN = $2115 ; Video Port Control Register
 VMADDL = $2116 ; VRAM Address Registers (Low)
 VMDATAL = $2118 ; VRAM Data Write Registers (Low)

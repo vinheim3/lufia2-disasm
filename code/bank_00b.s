@@ -7786,7 +7786,7 @@ br_0b_be91:
 	lda #$03a3.w                                                  ; $bea9 : $a9, $a3, $03
 	ora $f6                                                  ; $beac : $05, $f6
 	jsr Call_0b_8705.w                                                  ; $beae : $20, $05, $87
-	jsr $2106.w                                                  ; $beb1 : $20, $06, $21
+	jsr MOSAIC.w                                                  ; $beb1 : $20, $06, $21
 	sta [$49]                                                  ; $beb4 : $87, $49
 	stz $03, X                                                  ; $beb6 : $74, $03
 	stz $f5, X                                                  ; $beb8 : $74, $f5
@@ -7804,7 +7804,7 @@ br_0b_be91:
 	ora ($61, X)                                                  ; $bed1 : $01, $61
 	asl $e6                                                  ; $bed3 : $06, $e6
 	jsr $f605.w                                                  ; $bed5 : $20, $05, $f6
-	jsr $2106.w                                                  ; $bed8 : $20, $06, $21
+	jsr MOSAIC.w                                                  ; $bed8 : $20, $06, $21
 	jsr $6306.w                                                  ; $bedb : $20, $06, $63
 	ora $91, S                                                  ; $bede : $03, $91
 	lda $a6ee.w                                                  ; $bee0 : $ad, $ee, $a6

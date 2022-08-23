@@ -339,7 +339,14 @@ wEntitiesReservingSpriteSlots: ; $e100
 .ramsection "Ram 7fh" bank $7f slot 1
 
 w7f2000:
-    ds $ddae-$2000
+    ds $d0f2-$2000
+
+; ie uppper nybble of MOSAIC
+wMosaicPixelSize: ; $d0f2
+    db
+
+w7fd0f3:
+    ds $dae-$f3
 
 ; todo: unknown size
 wEntityXs: ; $ddae

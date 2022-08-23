@@ -8827,7 +8827,7 @@ br_00_b9ac:
 	brl Func_0_9d00                                                  ; $b9fd : $82, $00, $e3
 
 	lda #$f8.b                                                  ; $ba00 : $a9, $f8
-	sta $7fd0f2.l                                                  ; $ba02 : $8f, $f2, $d0, $7f
+	sta wMosaicPixelSize.l                                                  ; $ba02 : $8f, $f2, $d0, $7f
 	lda #$00.b                                                  ; $ba06 : $a9, $00
 	sta $7fd0f3.l                                                  ; $ba08 : $8f, $f3, $d0, $7f
 	lda #$01.b                                                  ; $ba0c : $a9, $01
@@ -9693,6 +9693,7 @@ br_00_bfe6:
 	rts                                                  ; $bfe6 : $60
 
 
+Func_0_bfe7:
 	php                                                  ; $bfe7 : $08
 	sep #ACCU_8                                                  ; $bfe8 : $e2, $20
 	rep #IDX_8                                                  ; $bfea : $c2, $10
@@ -16928,7 +16929,7 @@ Call_00_f2f3:
 	sta $2132.w                                                  ; $f313 : $8d, $32, $21
 	lda $7f0005.l                                                  ; $f316 : $af, $05, $00, $7f
 	sta $2132.w                                                  ; $f31a : $8d, $32, $21
-	stz $2106.w                                                  ; $f31d : $9c, $06, $21
+	stz MOSAIC.w                                                  ; $f31d : $9c, $06, $21
 	rtl                                                  ; $f320 : $6b
 
 
@@ -16938,7 +16939,7 @@ br_00_f321:
 	stz $212d.w                                                  ; $f326 : $9c, $2d, $21
 	stz $2131.w                                                  ; $f329 : $9c, $31, $21
 	stz $2130.w                                                  ; $f32c : $9c, $30, $21
-	stz $2106.w                                                  ; $f32f : $9c, $06, $21
+	stz MOSAIC.w                                                  ; $f32f : $9c, $06, $21
 	lda #$e0.b                                                  ; $f332 : $a9, $e0
 	sta $2132.w                                                  ; $f334 : $8d, $32, $21
 	rtl                                                  ; $f337 : $6b

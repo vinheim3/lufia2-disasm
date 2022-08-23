@@ -15523,13 +15523,12 @@ br_01_e86f:
 
 Call_01_e872:
 	ldx #$018d.w                                                  ; $e872 : $a2, $8d, $01
-	bra br_01_e87a                                                  ; $e875 : $80, $03
+	bra +                                                  ; $e875 : $80, $03
 
 Call_01_e877:
 	ldx #$018e.w                                                  ; $e877 : $a2, $8e, $01
 
-br_01_e87a:
-	stx $54                                                  ; $e87a : $86, $54
++	stx $54                                                  ; $e87a : $86, $54
 	ldx #$a000.w                                                  ; $e87c : $a2, $00, $a0
 	stx $60                                                  ; $e87f : $86, $60
 	lda #$7e.b                                                  ; $e881 : $a9, $7e
@@ -15556,7 +15555,7 @@ br_01_e87a:
 	jsr Call_01_e8ee.w                                                  ; $e8b4 : $20, $ee, $e8
 	ldx #$0006.w                                                  ; $e8b7 : $a2, $06, $00
 
-br_01_e8ba:
+@loop_e8ba:
 	ldy $0a64.w, X                                                  ; $e8ba : $bc, $64, $0a
 	lda $0000.w, Y                                                  ; $e8bd : $b9, $00, $00
 	jsr Call_01_e8e1.w                                                  ; $e8c0 : $20, $e1, $e8
@@ -15570,7 +15569,7 @@ br_01_e8ba:
 	jsr Call_01_e8e1.w                                                  ; $e8d8 : $20, $e1, $e8
 	dex                                                  ; $e8db : $ca
 	dex                                                  ; $e8dc : $ca
-	bpl br_01_e8ba                                                  ; $e8dd : $10, $db
+	bpl @loop_e8ba                                                  ; $e8dd : $10, $db
 
 	plb                                                  ; $e8df : $ab
 	rts                                                  ; $e8e0 : $60

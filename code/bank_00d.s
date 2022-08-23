@@ -13084,7 +13084,7 @@ br_0d_eb11:
 	ora $aa, S                                                  ; $eb96 : $03, $aa
 	jsr ($b1e3.w, X)                                                  ; $eb98 : $fc, $e3, $b1
 	ora $87                                                  ; $eb9b : $05, $87
-	jsr $2106.w                                                  ; $eb9d : $20, $06, $21
+	jsr MOSAIC.w                                                  ; $eb9d : $20, $06, $21
 	rol $6101.w                                                  ; $eba0 : $2e, $01, $61
 	asl $bf                                                  ; $eba3 : $06, $bf
 	jsr $7506.w                                                  ; $eba5 : $20, $06, $75
