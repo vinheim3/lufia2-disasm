@@ -1125,7 +1125,7 @@ br_04_8789:
 br_04_87a6:
 	stx $0b6a.w                                                  ; $87a6 : $8e, $6a, $0b
 	tdc                                                  ; $87a9 : $7b
-	sta $7fe696.l                                                  ; $87aa : $8f, $96, $e6, $7f
+	sta wAncientCaveFloorPlus1.l                                                  ; $87aa : $8f, $96, $e6, $7f
 	sta $7fe759.l                                                  ; $87ae : $8f, $59, $e7, $7f
 	sta $7fe75b.l                                                  ; $87b2 : $8f, $5b, $e7, $7f
 	sta $7fe75d.l                                                  ; $87b6 : $8f, $5d, $e7, $7f

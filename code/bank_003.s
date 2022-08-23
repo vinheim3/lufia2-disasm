@@ -2433,7 +2433,7 @@ br_03_9021:
 	stx $5d                                                  ; $9041 : $86, $5d
 	ldx #$1000.w                                                  ; $9043 : $a2, $00, $10
 	stx $60                                                  ; $9046 : $86, $60
-	lda $7fe696.l                                                  ; $9048 : $af, $96, $e6, $7f
+	lda wAncientCaveFloorPlus1.l                                                  ; $9048 : $af, $96, $e6, $7f
 	cmp #$3c.b                                                  ; $904c : $c9, $3c
 	bcc br_03_9058                                                  ; $904e : $90, $08
 
@@ -2447,7 +2447,7 @@ br_03_9058:
 	sta $211b.w                                                  ; $905a : $8d, $1b, $21
 	lda #$03.b                                                  ; $905d : $a9, $03
 	sta $211b.w                                                  ; $905f : $8d, $1b, $21
-	lda $7fe696.l                                                  ; $9062 : $af, $96, $e6, $7f
+	lda wAncientCaveFloorPlus1.l                                                  ; $9062 : $af, $96, $e6, $7f
 	ina                                                  ; $9066 : $1a
 	sta $211c.w                                                  ; $9067 : $8d, $1c, $21
 	lda $2134.w                                                  ; $906a : $ad, $34, $21
@@ -2553,13 +2553,13 @@ br_03_9116:
 
 	tdc                                                  ; $911c : $7b
 	sta $7fe75b.l                                                  ; $911d : $8f, $5b, $e7, $7f
-	lda $7fe696.l                                                  ; $9121 : $af, $96, $e6, $7f
+	lda wAncientCaveFloorPlus1.l                                                  ; $9121 : $af, $96, $e6, $7f
 	cmp #$15.b                                                  ; $9125 : $c9, $15
 	bcc br_03_9142                                                  ; $9127 : $90, $19
 
 	lda #$3c.b                                                  ; $9129 : $a9, $3c
 	jsr Call_03_9e1b.w                                                  ; $912b : $20, $1b, $9e
-	cmp $7fe696.l                                                  ; $912e : $cf, $96, $e6, $7f
+	cmp wAncientCaveFloorPlus1.l                                                  ; $912e : $cf, $96, $e6, $7f
 	bcs br_03_9142                                                  ; $9132 : $b0, $0e
 
 	ldx #$022d.w                                                  ; $9134 : $a2, $2d, $02
@@ -4732,14 +4732,14 @@ Call_03_9e1b:
 
 
 Call_03_9e31:
-	lda $7fe696.l                                                  ; $9e31 : $af, $96, $e6, $7f
+	lda wAncientCaveFloorPlus1.l                                                  ; $9e31 : $af, $96, $e6, $7f
 	cmp $000b75.l                                                  ; $9e35 : $cf, $75, $0b, $00
 	bcc br_03_9e3f                                                  ; $9e39 : $90, $04
 
 	sta $000b75.l                                                  ; $9e3b : $8f, $75, $0b, $00
 
 br_03_9e3f:
-	lda $7fe696.l                                                  ; $9e3f : $af, $96, $e6, $7f
+	lda wAncientCaveFloorPlus1.l                                                  ; $9e3f : $af, $96, $e6, $7f
 	dea                                                  ; $9e43 : $3a
 	sta $004204.l                                                  ; $9e44 : $8f, $04, $42, $00
 	tdc                                                  ; $9e48 : $7b
@@ -4764,7 +4764,7 @@ br_03_9e75:
 	dec $54                                                  ; $9e79 : $c6, $54
 	bne br_03_9e75                                                  ; $9e7b : $d0, $f8
 
-	lda $7fe696.l                                                  ; $9e7d : $af, $96, $e6, $7f
+	lda wAncientCaveFloorPlus1.l                                                  ; $9e7d : $af, $96, $e6, $7f
 	cmp #$63.b                                                  ; $9e81 : $c9, $63
 	bne br_03_9ea2                                                  ; $9e83 : $d0, $1d
 
@@ -4804,7 +4804,7 @@ br_03_9ea2:
 	sta $7fe6a2.l                                                  ; $9edb : $8f, $a2, $e6, $7f
 	lda $839f7f.l, X                                                  ; $9edf : $bf, $7f, $9f, $83
 	sta $54                                                  ; $9ee3 : $85, $54
-	lda $7fe696.l                                                  ; $9ee5 : $af, $96, $e6, $7f
+	lda wAncientCaveFloorPlus1.l                                                  ; $9ee5 : $af, $96, $e6, $7f
 	and #$0006.w                                                  ; $9ee9 : $29, $06, $00
 	sta $58                                                  ; $9eec : $85, $58
 	lsr                                                  ; $9eee : $4a
@@ -4834,9 +4834,9 @@ br_03_9ea2:
 br_03_9f2e:
 	jsr Call_03_b5d3.l                                                  ; $9f2e : $22, $d3, $b5, $83
 	jsr Call_03_9013.w                                                  ; $9f32 : $20, $13, $90
-	lda $7fe696.l                                                  ; $9f35 : $af, $96, $e6, $7f
+	lda wAncientCaveFloorPlus1.l                                                  ; $9f35 : $af, $96, $e6, $7f
 	ina                                                  ; $9f39 : $1a
-	sta $7fe696.l                                                  ; $9f3a : $8f, $96, $e6, $7f
+	sta wAncientCaveFloorPlus1.l                                                  ; $9f3a : $8f, $96, $e6, $7f
 	rtl                                                  ; $9f3e : $6b
 
 
@@ -7226,7 +7226,7 @@ br_03_ae69:
 	sta $7fd0c5.l                                                  ; $ae9c : $8f, $c5, $d0, $7f
 	sta $05b2.w                                                  ; $aea0 : $8d, $b2, $05
 	sta $7fd0a1.l                                                  ; $aea3 : $8f, $a1, $d0, $7f
-	sta $7fe696.l                                                  ; $aea7 : $8f, $96, $e6, $7f
+	sta wAncientCaveFloorPlus1.l                                                  ; $aea7 : $8f, $96, $e6, $7f
 	sta $7fe75a.l                                                  ; $aeab : $8f, $5a, $e7, $7f
 	tdc                                                  ; $aeaf : $7b
 	sta $7fe75a.l                                                  ; $aeb0 : $8f, $5a, $e7, $7f
@@ -7744,11 +7744,11 @@ br_03_b254:
 	lda $05b4.w                                                  ; $b258 : $ad, $b4, $05
 	beq br_03_b271                                                  ; $b25b : $f0, $14
 
-	lda $7fe696.l                                                  ; $b25d : $af, $96, $e6, $7f
+	lda wAncientCaveFloorPlus1.l                                                  ; $b25d : $af, $96, $e6, $7f
 	bne br_03_b268                                                  ; $b261 : $d0, $05
 
 	ina                                                  ; $b263 : $1a
-	sta $7fe696.l                                                  ; $b264 : $8f, $96, $e6, $7f
+	sta wAncientCaveFloorPlus1.l                                                  ; $b264 : $8f, $96, $e6, $7f
 
 br_03_b268:
 	lda #$01.b                                                  ; $b268 : $a9, $01

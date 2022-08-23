@@ -248,12 +248,11 @@ w0a0c:
 wNumPartyChars: ; $0a7a
     db
 
-; todo: unknown size
 wPartCharTypeIdxes: ; $0a7b
-    db
+    ds 4
 
-w0a7c:
-    ds $8d-$7c
+w0a7f:
+    ds $8d-$7f
 
 ; low 9 bits is inventory item, upper 7 bits>>1 = count
 ; since count is bcd, max is 127, though display will render as 27
@@ -377,7 +376,13 @@ wEntityMovePatternLongAddrs: ; $e3ee
     db
 
 w7fe3ef:
-    ds $f462-$e3ef
+    ds $696-$3ef
+
+wAncientCaveFloorPlus1: ; $e696
+    db
+
+w7fe697:
+    ds $f462-$e697
 
 wPlayerDamageTaken: ; $f462
     db
