@@ -11583,7 +11583,7 @@ br_14_da47:
 	.db $00                                                  ; $db17 : $00
 	sbc $0a0700.l, X                                                  ; $db18 : $ff, $00, $07, $0a
 	php                                                  ; $db1c : $08
-	asl $0a07.w                                                  ; $db1d : $0e, $07, $0a
+	asl wCurrItemIdx.w+1                                                  ; $db1d : $0e, $07, $0a
 	php                                                  ; $db20 : $08
 	phd                                                  ; $db21 : $0b
 	ora [$0d]                                                  ; $db22 : $07, $0d
@@ -13443,7 +13443,7 @@ br_14_e90f:
 	php                                                  ; $e92d : $08
 	ora $0d07.w                                                  ; $e92e : $0d, $07, $0d
 	php                                                  ; $e931 : $08
-	asl $0a07.w                                                  ; $e932 : $0e, $07, $0a
+	asl wCurrItemIdx.w+1                                                  ; $e932 : $0e, $07, $0a
 	php                                                  ; $e935 : $08
 	phd                                                  ; $e936 : $0b
 	.db $00                                                  ; $e937 : $00

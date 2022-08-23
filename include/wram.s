@@ -202,11 +202,20 @@ wCapsuleMonsterDataOffs: ; $09c4
 w09c6:
     ds $f2-$c6
 
-wCurrInBattleEnemyIdx: ; $09f2
-    db
+.union
 
-w09f3:
-    ds $a-3
+    wCurrInBattleEnemyIdx: ; $09f2
+        db
+
+.nextu
+
+    wCurrInvItemId: ; $09f2
+        dw
+
+.endu
+
+w09f4:
+    ds $a-4
 
 ; ie a4 for red slime
 wHitEnemyIdx: ; $09fa
@@ -246,14 +255,13 @@ wPartCharTypeIdxes: ; $0a7b
 w0a7c:
     ds $8d-$7c
 
-; todo: unknown size, word-sized
 ; low 9 bits is inventory item, upper 7 bits>>1 = count
 ; since count is bcd, max is 127, though display will render as 27
 wInventoryItemsAndCounts: ; $0a8d
-    db
+    ds $be
 
-w0a8e:
-    ds $b77-$a8e
+w0b4b:
+    ds $77-$4b
 
 ; todo: unknown size
 wBufferedTextToDisplay: ; $0b77

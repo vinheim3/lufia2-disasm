@@ -9220,7 +9220,7 @@ Jump_01_bf7b:
 
 
 br_01_bf85:
-	sta $0a07.w                                                  ; $bf85 : $8d, $07, $0a
+	sta wCurrItemIdx.w+1                                                  ; $bf85 : $8d, $07, $0a
 	lsr                                                  ; $bf88 : $4a
 	sta $4204.w                                                  ; $bf89 : $8d, $04, $42
 	stz $4205.w                                                  ; $bf8c : $9c, $05, $42
@@ -9230,7 +9230,7 @@ br_01_bf85:
 	sta wCurrItemIdx.w                                                  ; $bf97 : $8d, $06, $0a
 	lda $0a8e.w, X                                                  ; $bf9a : $bd, $8e, $0a
 	and #$01.b                                                  ; $bf9d : $29, $01
-	sta $0a07.w                                                  ; $bf9f : $8d, $07, $0a
+	sta wCurrItemIdx.w+1                                                  ; $bf9f : $8d, $07, $0a
 	phx                                                  ; $bfa2 : $da
 	jsr Call_01_f1c5.l                                                  ; $bfa3 : $22, $c5, $f1, $81
 	plx                                                  ; $bfa7 : $fa
@@ -16600,32 +16600,40 @@ br_01_f033:
 	rtl                                                  ; $f056 : $6b
 
 
+; wCurrItemIdx.w
+GetCurrItemCount:
+; Save ID part of item ID+count
 	rep #ACCU_8                                                  ; $f057 : $c2, $20
 	lda wCurrItemIdx.w                                                  ; $f059 : $ad, $06, $0a
 	and #$01ff.w                                                  ; $f05c : $29, $ff, $01
-	sta wCurrInBattleEnemyIdx.w                                                  ; $f05f : $8d, $f2, $09
-	ldx #$00be.w                                                  ; $f062 : $a2, $be, $00
+	sta wCurrInvItemId.w                                                  ; $f05f : $8d, $f2, $09
 
-br_01_f065:
+; Loop through inventory items
+	ldx #_sizeof_wInventoryItemsAndCounts.w                                                  ; $f062 : $a2, $be, $00
+
+@nextInvSlot:
+; If the item count is 0, check the next inv item
 	lda wInventoryItemsAndCounts.w, X                                                  ; $f065 : $bd, $8d, $0a
 	bit #$fe00.w                                                  ; $f068 : $89, $00, $fe
-	beq br_01_f075                                                  ; $f06b : $f0, $08
+	beq @toNextInvSlot                                                  ; $f06b : $f0, $08
 
+; Exit loop if we've found our item
 	and #$01ff.w                                                  ; $f06d : $29, $ff, $01
-	cmp wCurrInBattleEnemyIdx.w                                                  ; $f070 : $cd, $f2, $09
-	beq br_01_f07d                                                  ; $f073 : $f0, $08
+	cmp wCurrInvItemId.w                                                  ; $f070 : $cd, $f2, $09
+	beq @foundItem                                                  ; $f073 : $f0, $08
 
-br_01_f075:
+@toNextInvSlot:
 	dex                                                  ; $f075 : $ca
 	dex                                                  ; $f076 : $ca
-	bpl br_01_f065                                                  ; $f077 : $10, $ec
+	bpl @nextInvSlot                                                  ; $f077 : $10, $ec
 
+;
 	sep #ACCU_8                                                  ; $f079 : $e2, $20
 	tdc                                                  ; $f07b : $7b
 	rtl                                                  ; $f07c : $6b
 
-
-br_01_f07d:
+@foundItem:
+; Put item count in A
 	lda wInventoryItemsAndCounts.w, X                                                  ; $f07d : $bd, $8d, $0a
 	lsr                                                  ; $f080 : $4a
 	sep #ACCU_8                                                  ; $f081 : $e2, $20
@@ -16636,7 +16644,7 @@ br_01_f07d:
 Call_01_f085:
 	ldx wCurrItemIdx.w                                                  ; $f085 : $ae, $06, $0a
 	stx wCurrInBattleEnemyIdx.w                                                  ; $f088 : $8e, $f2, $09
-	lda $0a07.w                                                  ; $f08b : $ad, $07, $0a
+	lda wCurrItemIdx.w+1                                                  ; $f08b : $ad, $07, $0a
 	lsr                                                  ; $f08e : $4a
 	sta $09f4.w                                                  ; $f08f : $8d, $f4, $09
 	jsr Call_01_f1c5.l                                                  ; $f092 : $22, $c5, $f1, $81
@@ -16720,10 +16728,10 @@ br_01_f0f6:
 	ora $09f5.w                                                  ; $f0ff : $0d, $f5, $09
 	sta $0a8e.w, X                                                  ; $f102 : $9d, $8e, $0a
 	asl $09f4.w                                                  ; $f105 : $0e, $f4, $09
-	lda $0a07.w                                                  ; $f108 : $ad, $07, $0a
+	lda wCurrItemIdx.w+1                                                  ; $f108 : $ad, $07, $0a
 	and #$01.b                                                  ; $f10b : $29, $01
 	ora $09f4.w                                                  ; $f10d : $0d, $f4, $09
-	sta $0a07.w                                                  ; $f110 : $8d, $07, $0a
+	sta wCurrItemIdx.w+1                                                  ; $f110 : $8d, $07, $0a
 	rts                                                  ; $f113 : $60
 
 
@@ -16804,7 +16812,7 @@ br_01_f185:
 	sep #ACCU_8                                                  ; $f185 : $e2, $20
 	tya                                                  ; $f187 : $98
 	sta $0a08.w                                                  ; $f188 : $8d, $08, $0a
-	lda $0a07.w                                                  ; $f18b : $ad, $07, $0a
+	lda wCurrItemIdx.w+1                                                  ; $f18b : $ad, $07, $0a
 	lsr                                                  ; $f18e : $4a
 	jsr Call_01_f114.l                                                  ; $f18f : $22, $14, $f1, $81
 	rtl                                                  ; $f193 : $6b

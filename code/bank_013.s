@@ -3959,7 +3959,7 @@ br_13_9eba:
 	jsr $0704.w                                                  ; $9ee1 : $20, $04, $07
 	jsr $0805.w                                                  ; $9ee4 : $20, $05, $08
 	jsr $0906.w                                                  ; $9ee7 : $20, $06, $09
-	jsr $0a07.w                                                  ; $9eea : $20, $07, $0a
+	jsr wCurrItemIdx.w+1                                                  ; $9eea : $20, $07, $0a
 	jsr $0b08.w                                                  ; $9eed : $20, $08, $0b
 	jsr $0c09.w                                                  ; $9ef0 : $20, $09, $0c
 	jsr $0d0a.w                                                  ; $9ef3 : $20, $0a, $0d
@@ -4060,7 +4060,7 @@ br_13_9eba:
 	jsr $0704.w                                                  ; $9fd7 : $20, $04, $07
 	jsr $0805.w                                                  ; $9fda : $20, $05, $08
 	jsr $0906.w                                                  ; $9fdd : $20, $06, $09
-	jsr $0a07.w                                                  ; $9fe0 : $20, $07, $0a
+	jsr wCurrItemIdx.w+1                                                  ; $9fe0 : $20, $07, $0a
 	jsr $0b08.w                                                  ; $9fe3 : $20, $08, $0b
 	jsr $0c09.w                                                  ; $9fe6 : $20, $09, $0c
 	jsr $0d0a.w                                                  ; $9fe9 : $20, $0a, $0d
@@ -5240,7 +5240,7 @@ br_13_a8b4:
 	ora ($09)                                                  ; $a968 : $12, $09
 	clc                                                  ; $a96a : $18
 	tsb $0700.w                                                  ; $a96b : $0c, $00, $07
-	tsb $0a07.w                                                  ; $a96e : $0c, $07, $0a
+	tsb wCurrItemIdx.w+1                                                  ; $a96e : $0c, $07, $0a
 	asl $0f                                                  ; $a971 : $06, $0f
 	php                                                  ; $a973 : $08
 	.db $00                                                  ; $a974 : $00
@@ -15417,7 +15417,7 @@ br_13_fb0e:
 
 br_13_fca4:
 	rol $0906.w                                                  ; $fca4 : $2e, $06, $09
-	rol $0a07.w                                                  ; $fca7 : $2e, $07, $0a
+	rol wCurrItemIdx.w+1                                                  ; $fca7 : $2e, $07, $0a
 	rol $0908.w                                                  ; $fcaa : $2e, $08, $09
 	bit $0a09.w                                                  ; $fcad : $2c, $09, $0a
 	bit $0b0a.w                                                  ; $fcb0 : $2c, $0a, $0b

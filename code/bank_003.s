@@ -10047,7 +10047,7 @@ Call_03_c24f:
 	lda $0c1f.w                                                  ; $c264 : $ad, $1f, $0c
 	sta wCurrItemIdx.w                                                  ; $c267 : $8d, $06, $0a
 	lda $0c20.w                                                  ; $c26a : $ad, $20, $0c
-	sta $0a07.w                                                  ; $c26d : $8d, $07, $0a
+	sta wCurrItemIdx.w+1                                                  ; $c26d : $8d, $07, $0a
 	jsr Call_03_c692.w                                                  ; $c270 : $20, $92, $c6
 	and #$c90f.w                                                  ; $c273 : $29, $0f, $c9
 	ora ($f0, X)                                                  ; $c276 : $01, $f0
@@ -10336,52 +10336,48 @@ br_03_c440:
 
 
 Call_03_c460:
-	ldx #$00.b                                                  ; $c460 : $a2, $00
-	.db $00                                                  ; $c462 : $00
+	ldx #$0000.w                                                  ; $c460 : $a2, $00, $00
 
 br_03_c463:
 	lda $1559.w, X                                                  ; $c463 : $bd, $59, $15
 	beq br_03_c4ae                                                  ; $c466 : $f0, $46
 
 	inx                                                  ; $c468 : $e8
-	cpx #$20.b                                                  ; $c469 : $e0, $20
-	.db $00                                                  ; $c46b : $00
+	cpx #$0020.w                                                  ; $c469 : $e0, $20, $00
 	bne br_03_c463                                                  ; $c46c : $d0, $f5
 
 	stz $171b.w                                                  ; $c46e : $9c, $1b, $17
-	ldy #$00.b                                                  ; $c471 : $a0, $00
-	.db $00                                                  ; $c473 : $00
-	ldx #$00.b                                                  ; $c474 : $a2, $00
-	.db $00                                                  ; $c476 : $00
+	ldy #$0000.w                                                  ; $c471 : $a0, $00, $00
+	ldx #$0000.w                                                  ; $c474 : $a2, $00, $00
 
-br_03_c477:
-	lda $c633.w, X                                                  ; $c477 : $bd, $33, $c6
+@nextTool:
+	lda ToolItemIdxes.w, X                                                  ; $c477 : $bd, $33, $c6
 	sta wCurrItemIdx.w                                                  ; $c47a : $8d, $06, $0a
-	lda $c634.w, X                                                  ; $c47d : $bd, $34, $c6
-	sta $0a07.w                                                  ; $c480 : $8d, $07, $0a
+	lda ToolItemIdxes.w+1, X                                                  ; $c47d : $bd, $34, $c6
+	sta wCurrItemIdx.w+1                                                  ; $c480 : $8d, $07, $0a
 	ora wCurrItemIdx.w                                                  ; $c483 : $0d, $06, $0a
 	beq br_03_c4a9                                                  ; $c486 : $f0, $21
 
 	phx                                                  ; $c488 : $da
 	phy                                                  ; $c489 : $5a
-	jsr $81f057.l                                                  ; $c48a : $22, $57, $f0, $81
+	jsr GetCurrItemCount.l                                                  ; $c48a : $22, $57, $f0, $81
 	ply                                                  ; $c48e : $7a
 	plx                                                  ; $c48f : $fa
 	ora #$00.b                                                  ; $c490 : $09, $00
-	beq br_03_c4a5                                                  ; $c492 : $f0, $11
+	beq @toNextTool                                                  ; $c492 : $f0, $11
 
 	inc $171b.w                                                  ; $c494 : $ee, $1b, $17
 	lda wCurrItemIdx.w                                                  ; $c497 : $ad, $06, $0a
 	sta $1499.w, Y                                                  ; $c49a : $99, $99, $14
-	lda $0a07.w                                                  ; $c49d : $ad, $07, $0a
+	lda wCurrItemIdx.w+1                                                  ; $c49d : $ad, $07, $0a
 	sta $149a.w, Y                                                  ; $c4a0 : $99, $9a, $14
 	iny                                                  ; $c4a3 : $c8
 	iny                                                  ; $c4a4 : $c8
 
-br_03_c4a5:
+@toNextTool:
 	inx                                                  ; $c4a5 : $e8
 	inx                                                  ; $c4a6 : $e8
-	bra br_03_c477                                                  ; $c4a7 : $80, $ce
+	bra @nextTool                                                  ; $c4a7 : $80, $ce
 
 br_03_c4a9:
 	lda $171b.w                                                  ; $c4a9 : $ad, $1b, $17
@@ -10618,13 +10614,15 @@ br_03_c62f:
 	rts                                                  ; $c632 : $60
 
 
-	lda #$01.b                                                  ; $c633 : $a9, $01
-	tay                                                  ; $c635 : $a8
-	ora ($a7, X)                                                  ; $c636 : $01, $a7
-	ora ($aa, X)                                                  ; $c638 : $01, $aa
-	ora ($ab, X)                                                  ; $c63a : $01, $ab
-	ora ($00, X)                                                  ; $c63c : $01, $00
-	.db $00                                                  ; $c63e : $00
+ToolItemIdxes:
+	.dw $01a9
+	.dw $01a8
+	.dw $01a7
+	.dw $01aa
+	.dw $01ab
+	.dw $0000
+
+;
 	ora ($02, X)                                                  ; $c63f : $01, $02
 	ora $04, S                                                  ; $c641 : $03, $04
 	asl $07                                                  ; $c643 : $06, $07

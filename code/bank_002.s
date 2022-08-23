@@ -14433,7 +14433,7 @@ br_02_e153:
 	lda $1547.w                                                  ; $e158 : $ad, $47, $15
 	and #$00ff.w                                                  ; $e15b : $29, $ff, $00
 	ldy $09cf.w                                                  ; $e15e : $ac, $cf, $09
-	jsr Call_02_f9e8.w                                                  ; $e161 : $20, $e8, $f9
+	jsr SetItemIdxAndCountInInventory.w                                                  ; $e161 : $20, $e8, $f9
 
 br_02_e164:
 	sep #ACCU_8                                                  ; $e164 : $e2, $20
@@ -18058,7 +18058,12 @@ br_02_f9dd:
 	rts                                                  ; $f9e7 : $60
 
 
-Call_02_f9e8:
+; A - item count
+; X - idx in inventory struct
+; Y - item idx
+SetItemIdxAndCountInInventory:
+; Saving item idx, put the item count in the high byte,
+; shifted for the item idx'es highest bit
 	sty $54                                                  ; $f9e8 : $84, $54
 	xba                                                  ; $f9ea : $eb
 	asl                                                  ; $f9eb : $0a
@@ -18094,7 +18099,7 @@ br_02_fa19:
 
 	lda $09cd.w                                                  ; $fa1e : $ad, $cd, $09
 	ldy $09cf.w                                                  ; $fa21 : $ac, $cf, $09
-	jsr Call_02_f9e8.w                                                  ; $fa24 : $20, $e8, $f9
+	jsr SetItemIdxAndCountInInventory.w                                                  ; $fa24 : $20, $e8, $f9
 
 br_02_fa27:
 	stz $09cf.w                                                  ; $fa27 : $9c, $cf, $09

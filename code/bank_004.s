@@ -975,14 +975,14 @@ Call_04_869e:
 Call_04_86c0:
 	tdc                                                  ; $86c0 : $7b
 	lda $171a.w                                                  ; $86c1 : $ad, $1a, $17
-	beq br_04_86ce                                                  ; $86c4 : $f0, $08
+	beq @cont_86ce                                                  ; $86c4 : $f0, $08
 
 	lda $171b.w                                                  ; $86c6 : $ad, $1b, $17
 	sec                                                  ; $86c9 : $38
 	sbc $171a.w                                                  ; $86ca : $ed, $1a, $17
 	asl                                                  ; $86cd : $0a
 
-br_04_86ce:
+@cont_86ce:
 	tax                                                  ; $86ce : $aa
 	lda $14ba.w, X                                                  ; $86cf : $bd, $ba, $14
 	xba                                                  ; $86d2 : $eb
@@ -1015,7 +1015,7 @@ br_04_8703:
 	jsr Call_04_86c0.w                                                  ; $8703 : $20, $c0, $86
 	sta wCurrItemIdx.w                                                  ; $8706 : $8d, $06, $0a
 	xba                                                  ; $8709 : $eb
-	sta $0a07.w                                                  ; $870a : $8d, $07, $0a
+	sta wCurrItemIdx.w+1                                                  ; $870a : $8d, $07, $0a
 	jsr $81f1c5.l                                                  ; $870d : $22, $c5, $f1, $81
 	ldx #$0000.w                                                  ; $8711 : $a2, $00, $00
 
@@ -1073,13 +1073,10 @@ br_04_875e:
 
 
 Call_04_875f:
-	and $46                                                  ; $875f : $25, $46
-	beq br_04_8765                                                  ; $8761 : $f0, $02
-
-	trb $4a                                                  ; $8763 : $14, $4a
-
-br_04_8765:
-	rts                                                  ; $8765 : $60
+	and wJoy1CurrHeld                                                  ; $875f : $25, $46
+	beq +                                                  ; $8761 : $f0, $02
+	trb wJoy1InvertedStickyHeld                                                  ; $8763 : $14, $4a
++	rts                                                  ; $8765 : $60
 
 
 Call_04_8766:

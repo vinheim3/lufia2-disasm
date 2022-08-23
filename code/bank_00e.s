@@ -7721,7 +7721,7 @@ br_0e_b6ef:
 	sta wCurrItemIdx.w                                                  ; $b703 : $8d, $06, $0a
 	jsr Call_0e_b7cd.w                                                  ; $b706 : $20, $cd, $b7
 	sta $09d0.w                                                  ; $b709 : $8d, $d0, $09
-	sta $0a07.w                                                  ; $b70c : $8d, $07, $0a
+	sta wCurrItemIdx.w+1                                                  ; $b70c : $8d, $07, $0a
 	phy                                                  ; $b70f : $5a
 	rep #ACCU_8                                                  ; $b710 : $c2, $20
 	lda $09cf.w                                                  ; $b712 : $ad, $cf, $09
@@ -8572,7 +8572,7 @@ br_0e_bd21:
 	lda #$002b.w                                                  ; $bd4a : $a9, $2b, $00
 	sta wCurrItemIdx.w                                                  ; $bd4d : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $bd50 : $e2, $20
-	jsr $81f057.l                                                  ; $bd52 : $22, $57, $f0, $81
+	jsr GetCurrItemCount.l                                                  ; $bd52 : $22, $57, $f0, $81
 	tdc                                                  ; $bd56 : $7b
 	sta wInventoryItemsAndCounts.w, X                                                  ; $bd57 : $9d, $8d, $0a
 	sta $0a8e.w, X                                                  ; $bd5a : $9d, $8e, $0a
@@ -9543,7 +9543,7 @@ todo_GetChestItemContent:
 	rol                                                  ; $c387 : $2a
 	.db $00                                                  ; $c388 : $00
 	ror $00                                                  ; $c389 : $66, $00
-	tsb $0a07.w                                                  ; $c38b : $0c, $07, $0a
+	tsb wCurrItemIdx.w+1                                                  ; $c38b : $0c, $07, $0a
 	asl                                                  ; $c38e : $0a
 	asl $1526.w                                                  ; $c38f : $0e, $26, $15
 	cop $08.b                                                  ; $c392 : $02, $08
@@ -9551,7 +9551,7 @@ todo_GetChestItemContent:
 	.db $00                                                  ; $c395 : $00
 	pla                                                  ; $c396 : $68
 	.db $00                                                  ; $c397 : $00
-	tsb $0a07.w                                                  ; $c398 : $0c, $07, $0a
+	tsb wCurrItemIdx.w+1                                                  ; $c398 : $0c, $07, $0a
 	asl                                                  ; $c39b : $0a
 	asl $1527.w                                                  ; $c39c : $0e, $27, $15
 	cop $08.b                                                  ; $c39f : $02, $08
@@ -9559,7 +9559,7 @@ todo_GetChestItemContent:
 	.db $00                                                  ; $c3a2 : $00
 	ror                                                  ; $c3a3 : $6a
 	.db $00                                                  ; $c3a4 : $00
-	tsb $0a07.w                                                  ; $c3a5 : $0c, $07, $0a
+	tsb wCurrItemIdx.w+1                                                  ; $c3a5 : $0c, $07, $0a
 	asl                                                  ; $c3a8 : $0a
 	asl $1528.w                                                  ; $c3a9 : $0e, $28, $15
 	cop $08.b                                                  ; $c3ac : $02, $08
