@@ -7,7 +7,7 @@
 w00:
     ds $2a
 
-wCurrEntityMovePatternAddr: ; $2a
+wCurrCharMovePatternAddr: ; $2a
     dw
 
 w2c:
@@ -109,13 +109,19 @@ wCameraTopLeftY: ; $a1
 wa3:
     ds 7-3
 
-wCurrEntity: ; $a7
+wCurrChar: ; $a7
     db
 
 wa8:
-    ds $b-8
+    ds 9-8
 
-wCurrEntityMovePatternIdx: ; $ab
+wCurrEntity: ; $a9
+    db
+
+waa:
+    ds $b-$a
+
+wCurrCharMovePatternIdx: ; $ab
     db
 
 wac:
@@ -172,14 +178,38 @@ wCurrRoomIdx: ; $05ac
     db
 
 w05ad:
-    ds $692-$5ad
+    ds $d2-$ad
 
-; todo: unknown size
-wEntityMovementDirs: ; $0692
-    db
+; ie how they look
+wCharacterType: ; $05d2
+    ds NUM_CHARS
 
-w0693:
-    ds $91e-$693
+wCharacterIds: ; $05fa
+    ds NUM_CHARS
+
+w0622:
+    ds $92-$22
+
+wCharacterMovementDirs: ; $0692
+    ds NUM_CHARS
+
+; this is their X / 16 so it fits in a byte
+wCharacterXsDiv16s: ; 06ba
+    ds NUM_CHARS
+
+; this is their Y / 16 so it fits in a byte
+wCharacterYsDiv16s: ; 06e2
+    ds NUM_CHARS
+
+w070a:
+    ds $7e-$a
+
+; todo: unknown size, max $20
+wtodo_SomeFlagsBitfield: ; $077e
+    ds $20
+
+w079e:
+    ds $91e-$79e
 
 ; todo: unknown size
 wScenarioItemsBitsSet: ; $091e
@@ -302,7 +332,16 @@ wPrevOverworldPlayerYLo: ; $11f7
     db
 
 w11f8:
-    ds $345-$1f8
+    ds $267-$1f8
+
+wFinalScriptCondition: ; $1267
+    db
+
+wCurrScriptCondition: ; $1268
+    db
+
+w1269:
+    ds $345-$269
 
 wInBattleEnemyIdxes: ; $1345
     ds NUM_ENEMIES_IN_BATTLE
@@ -355,21 +394,20 @@ wMosaicPixelSize: ; $d0f2
 w7fd0f3:
     ds $dae-$f3
 
-; todo: unknown size
 wEntityXs: ; $ddae
-    ds $e3e-$dae
+    ds NUM_ENTITIES*2
 
-; todo: unkown size
 wEntityYs: ; $de3e
-    ds $e216-$de3e
+    ds NUM_ENTITIES*2
 
-; todo: unknown size
+w7fdece:
+    ds $e216-$dece
+
 wEntitySizeTypes: ; $e216
-    ds $5e-$16
+    ds NUM_ENTITIES
 
-; todo: unknown size
 wEntitySpriteTileIdxes: ; $e25e
-    ds $a6-$5e
+    ds NUM_ENTITIES
 
 ; todo: unknown size
 wEntityNonPriorityAttrBits: ; $e2a6

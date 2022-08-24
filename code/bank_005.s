@@ -358,9 +358,9 @@ br_05_8247:
 
 
 br_05_825d:
-	lda $077e.w, Y                                                  ; $825d : $b9, $7e, $07
+	lda wtodo_SomeFlagsBitfield.w, Y                                                  ; $825d : $b9, $7e, $07
 	eor $830a.w, X                                                  ; $8260 : $5d, $0a, $83
-	sta $077e.w, Y                                                  ; $8263 : $99, $7e, $07
+	sta wtodo_SomeFlagsBitfield.w, Y                                                  ; $8263 : $99, $7e, $07
 	rts                                                  ; $8266 : $60
 
 
@@ -426,7 +426,7 @@ br_05_82aa:
 	bra br_05_82bd                                                  ; $82b8 : $80, $03
 
 br_05_82ba:
-	lda $077e.w, Y                                                  ; $82ba : $b9, $7e, $07
+	lda wtodo_SomeFlagsBitfield.w, Y                                                  ; $82ba : $b9, $7e, $07
 
 br_05_82bd:
 	and $830a.w, X                                                  ; $82bd : $3d, $0a, $83
@@ -2203,7 +2203,7 @@ br_05_8e22:
 	stx $212f.w                                                  ; $8e4c : $8e, $2f, $21
 	ldx $124a.w                                                  ; $8e4f : $ae, $4a, $12
 	stx $2131.w                                                  ; $8e52 : $8e, $31, $21
-	lda $1268.w                                                  ; $8e55 : $ad, $68, $12
+	lda wCurrScriptCondition.w                                                  ; $8e55 : $ad, $68, $12
 	bne br_05_8e66                                                  ; $8e58 : $d0, $0c
 
 	ldx $1249.w                                                  ; $8e5a : $ae, $49, $12
@@ -2662,12 +2662,12 @@ br_05_9154:
 	bra br_05_9154                                                  ; $915e : $80, $f4
 
 br_05_9160:
-	lda $1268.w, Y                                                  ; $9160 : $b9, $68, $12
+	lda wCurrScriptCondition.w, Y                                                  ; $9160 : $b9, $68, $12
 	cmp #$10.b                                                  ; $9163 : $c9, $10
 	bne br_05_916e                                                  ; $9165 : $d0, $07
 
 	tdc                                                  ; $9167 : $7b
-	sta $1268.w, Y                                                  ; $9168 : $99, $68, $12
+	sta wCurrScriptCondition.w, Y                                                  ; $9168 : $99, $68, $12
 	dey                                                  ; $916b : $88
 	bne br_05_9160                                                  ; $916c : $d0, $f2
 
@@ -3459,7 +3459,7 @@ Call_05_95fe:
 	phk                                                  ; $9607 : $4b
 	plb                                                  ; $9608 : $ab
 	lda #$01.b                                                  ; $9609 : $a9, $01
-	sta $1268.w                                                  ; $960b : $8d, $68, $12
+	sta wCurrScriptCondition.w                                                  ; $960b : $8d, $68, $12
 	jsr $81e73b.l                                                  ; $960e : $22, $3b, $e7, $81
 	lda $22                                                  ; $9612 : $a5, $22
 	beq br_05_967a                                                  ; $9614 : $f0, $64
@@ -6388,7 +6388,7 @@ Call_05_aadc:
 	sep #ACCU_8                                                  ; $ab46 : $e2, $20
 	lda #$04.b                                                  ; $ab48 : $a9, $04
 	trb $db                                                  ; $ab4a : $14, $db
-	stz $1268.w                                                  ; $ab4c : $9c, $68, $12
+	stz wCurrScriptCondition.w                                                  ; $ab4c : $9c, $68, $12
 	stz $1b27.w                                                  ; $ab4f : $9c, $27, $1b
 	rts                                                  ; $ab52 : $60
 

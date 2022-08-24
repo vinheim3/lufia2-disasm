@@ -7596,9 +7596,9 @@ br_0e_b639:
 
 br_0e_b63b:
 	phb                                                  ; $b63b : $8b
-	lda $06ba.w                                                  ; $b63c : $ad, $ba, $06
+	lda wCharacterXsDiv16s.w                                                  ; $b63c : $ad, $ba, $06
 	sta $56                                                  ; $b63f : $85, $56
-	lda $06e2.w                                                  ; $b641 : $ad, $e2, $06
+	lda wCharacterYsDiv16s.w                                                  ; $b641 : $ad, $e2, $06
 	sta $57                                                  ; $b644 : $85, $57
 	lda #$7e.b                                                  ; $b646 : $a9, $7e
 	pha                                                  ; $b648 : $48
@@ -8256,7 +8256,7 @@ Call_0e_bb05:
 
 	and #$df.b                                                  ; $bb07 : $29, $df
 	sta $0736.w, X                                                  ; $bb09 : $9d, $36, $07
-	lda $05fa.w, X                                                  ; $bb0c : $bd, $fa, $05
+	lda wCharacterIds.w, X                                                  ; $bb0c : $bd, $fa, $05
 	sec                                                  ; $bb0f : $38
 	sbc #$50.b                                                  ; $bb10 : $e9, $50
 	jsr FillAnEnemySetupSlot.l                                                  ; $bb12 : $22, $51, $83, $81
@@ -8360,9 +8360,9 @@ br_0e_bbae:
 	rts                                                  ; $bbae : $60
 
 
-	lda $06ba.w                                                  ; $bbaf : $ad, $ba, $06
+	lda wCharacterXsDiv16s.w                                                  ; $bbaf : $ad, $ba, $06
 	sta $8f                                                  ; $bbb2 : $85, $8f
-	lda $06e2.w                                                  ; $bbb4 : $ad, $e2, $06
+	lda wCharacterYsDiv16s.w                                                  ; $bbb4 : $ad, $e2, $06
 	sta $91                                                  ; $bbb7 : $85, $91
 	jsr $83fb71.l                                                  ; $bbb9 : $22, $71, $fb, $83
 	cmp #$06.b                                                  ; $bbbd : $c9, $06
@@ -8407,16 +8407,16 @@ br_0e_bbfb:
 	sta $089d.w                                                  ; $bbfe : $8d, $9d, $08
 	lda $7fd0fe.l                                                  ; $bc01 : $af, $fe, $d0, $7f
 	sta $091d.w                                                  ; $bc05 : $8d, $1d, $09
-	lda $06ba.w                                                  ; $bc08 : $ad, $ba, $06
+	lda wCharacterXsDiv16s.w                                                  ; $bc08 : $ad, $ba, $06
 	sta $08dd.w                                                  ; $bc0b : $8d, $dd, $08
-	lda $06e2.w                                                  ; $bc0e : $ad, $e2, $06
+	lda wCharacterYsDiv16s.w                                                  ; $bc0e : $ad, $e2, $06
 	sta $085d.w                                                  ; $bc11 : $8d, $5d, $08
 	tdc                                                  ; $bc14 : $7b
 	sta $7fd0fe.l                                                  ; $bc15 : $8f, $fe, $d0, $7f
 	jsr $848204.l                                                  ; $bc19 : $22, $04, $82, $84
 	jsr Call_0e_bc99.l                                                  ; $bc1d : $22, $99, $bc, $8e
 	lda #$fd.b                                                  ; $bc21 : $a9, $fd
-	sta $05fa.w, X                                                  ; $bc23 : $9d, $fa, $05
+	sta wCharacterIds.w, X                                                  ; $bc23 : $9d, $fa, $05
 	lda $091d.w                                                  ; $bc26 : $ad, $1d, $09
 	jsr $83a9ba.l                                                  ; $bc29 : $22, $ba, $a9, $83
 	jsr $83d416.l                                                  ; $bc2d : $22, $16, $d4, $83
@@ -8427,10 +8427,10 @@ br_0e_bbfb:
 	stz $0736.w, X                                                  ; $bc3d : $9e, $36, $07
 	lda $066a.w                                                  ; $bc40 : $ad, $6a, $06
 	sta $066a.w, X                                                  ; $bc43 : $9d, $6a, $06
-	lda $06ba.w                                                  ; $bc46 : $ad, $ba, $06
-	sta $06ba.w, X                                                  ; $bc49 : $9d, $ba, $06
-	lda $06e2.w                                                  ; $bc4c : $ad, $e2, $06
-	sta $06e2.w, X                                                  ; $bc4f : $9d, $e2, $06
+	lda wCharacterXsDiv16s.w                                                  ; $bc46 : $ad, $ba, $06
+	sta wCharacterXsDiv16s.w, X                                                  ; $bc49 : $9d, $ba, $06
+	lda wCharacterYsDiv16s.w                                                  ; $bc4c : $ad, $e2, $06
+	sta wCharacterYsDiv16s.w, X                                                  ; $bc4f : $9d, $e2, $06
 	jsr $83a746.l                                                  ; $bc52 : $22, $46, $a7, $83
 	rep #IDX_8                                                  ; $bc56 : $c2, $10
 	ldx $a7                                                  ; $bc58 : $a6, $a7
@@ -8444,7 +8444,7 @@ br_0e_bbfb:
 	sta $7fdc8c.l, X                                                  ; $bc6d : $9f, $8c, $dc, $7f
 	lda #$ff.b                                                  ; $bc71 : $a9, $ff
 	sta $7fdc8d.l, X                                                  ; $bc73 : $9f, $8d, $dc, $7f
-	lda wEntityMovementDirs.w                                                  ; $bc77 : $ad, $92, $06
+	lda wCharacterMovementDirs.w                                                  ; $bc77 : $ad, $92, $06
 	sta $05bf.w                                                  ; $bc7a : $8d, $bf, $05
 	lda $8f                                                  ; $bc7d : $a5, $8f
 	sta $05bd.w                                                  ; $bc7f : $8d, $bd, $05
@@ -9398,7 +9398,7 @@ br_0e_c258:
 	inc $8093.w, X                                                  ; $c26f : $fe, $93, $80
 	jsr $838e66.l                                                  ; $c272 : $22, $66, $8e, $83
 	tdc                                                  ; $c276 : $7b
-	lda wEntityMovementDirs.w                                                  ; $c277 : $ad, $92, $06
+	lda wCharacterMovementDirs.w                                                  ; $c277 : $ad, $92, $06
 	tax                                                  ; $c27a : $aa
 	lda $83c1a5.l, X                                                  ; $c27b : $bf, $a5, $c1, $83
 	clc                                                  ; $c27f : $18

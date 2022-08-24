@@ -12869,29 +12869,38 @@ br_14_e4d1:
 	trb $1d                                                  ; $e4ea : $14, $1d
 	ora $1e, X                                                  ; $e4ec : $15, $1e
 	.db $00                                                  ; $e4ee : $00
-	sbc $2c009e.l, X                                                  ; $e4ef : $ff, $9e, $00, $2c
-	.db $00                                                  ; $e4f3 : $00
-	bit $2d00.w                                                  ; $e4f4 : $2c, $00, $2d
-	.db $00                                                  ; $e4f7 : $00
-	bit $2c00.w                                                  ; $e4f8 : $2c, $00, $2c
-	.db $00                                                  ; $e4fb : $00
-	bit $2c00.w                                                  ; $e4fc : $2c, $00, $2c
-	.db $00                                                  ; $e4ff : $00
-	adc $2c00.w                                                  ; $e500 : $6d, $00, $2c
-	.db $00                                                  ; $e503 : $00
-	bit $2c00.w                                                  ; $e504 : $2c, $00, $2c
-	.db $00                                                  ; $e507 : $00
-	bit $2c00.w                                                  ; $e508 : $2c, $00, $2c
-	.db $00                                                  ; $e50b : $00
-	bit $2c00.w                                                  ; $e50c : $2c, $00, $2c
-	.db $00                                                  ; $e50f : $00
-	bit $2c00.w                                                  ; $e510 : $2c, $00, $2c
-	.db $00                                                  ; $e513 : $00
-	bit $2c00.w                                                  ; $e514 : $2c, $00, $2c
-	.db $00                                                  ; $e517 : $00
-	bit $2c00.w                                                  ; $e518 : $2c, $00, $2c
-	.db $00                                                  ; $e51b : $00
-	sbc $1a1e00.l, X                                                  ; $e51c : $ff, $00, $1e, $1a
+	.db $ff
+
+
+Data_14_e4f0:
+	.dw @e58e-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @e51d-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @e55d-Data_14_e4f0 ; 0:c01d
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+	.dw @stub-Data_14_e4f0
+
+@stub:
+	.db $ff
+
+@e51d:
+	.db $00, $1e, $1a                                                  ; $e51d : $00, $1e, $1a
 	ora $24f31b.l, X                                                  ; $e520 : $1f, $1b, $f3, $24
 	ora $6a, X                                                  ; $e524 : $15, $6a
 	ora ($05, X)                                                  ; $e526 : $01, $05
@@ -12923,32 +12932,53 @@ br_14_e4d1:
 	.db $f0, $1c                                                  ; $e558 : $f0, $1c
 
 	php                                                  ; $e55a : $08
-	sbc $1e01ff.l, X                                                  ; $e55b : $ff, $ff, $01, $1e
-	trb $1e                                                  ; $e55f : $14, $1e
-	trb $1f                                                  ; $e561 : $14, $1f
-	ora $00, X                                                  ; $e563 : $15, $00
-	cop $11.b                                                  ; $e565 : $02, $11
-	ora ($11)                                                  ; $e567 : $12, $11
-	ora ($14)                                                  ; $e569 : $12, $14
-	ora ($00, S), Y                                                  ; $e56b : $13, $00
-	ora $05, S                                                  ; $e56d : $03, $05
-	ora ($05)                                                  ; $e56f : $12, $05
-	ora ($06)                                                  ; $e571 : $12, $06
-	ora ($00, S), Y                                                  ; $e573 : $13, $00
-	tsb $07                                                  ; $e575 : $04, $07
-	tsb $07                                                  ; $e577 : $04, $07
-	tsb $08                                                  ; $e579 : $04, $08
-	ora $00                                                  ; $e57b : $05, $00
-	ora $1f                                                  ; $e57d : $05, $1f
-	asl $1e                                                  ; $e57f : $06, $1e
-	tsb $22                                                  ; $e581 : $04, $22
-	php                                                  ; $e583 : $08
-	.db $00                                                  ; $e584 : $00
-	asl $14                                                  ; $e585 : $06, $14
-	ora $13                                                  ; $e587 : $05, $13
-	tsb $17                                                  ; $e589 : $04, $17
-	ora [$00]                                                  ; $e58b : $07, $00
-	sbc $2d009e.l, X                                                  ; $e58d : $ff, $9e, $00, $2d
+	.db $ff, $ff
+
+@e55d:
+; each block corresponds to an NPC
+; 1st row of 2 is x and y
+; 2nd row of 2 is top left of movable area
+; 3rd row of 2 is bottom right of movable area
+	.db $01
+	.db $1e, $14
+	.db $1e, $14
+	.db $1f, $15
+	.db $00
+
+	.db $02
+	.db $11, $12
+	.db $11, $12
+	.db $14, $13
+	.db $00
+
+	.db $03
+	.db $05, $12
+	.db $05, $12
+	.db $06, $13
+	.db $00
+
+	.db $04
+	.db $07, $04
+	.db $07, $04
+	.db $08, $05
+	.db $00
+
+	.db $05
+	.db $1f, $06
+	.db $1e, $04
+	.db $22, $08
+	.db $00
+
+	.db $06
+	.db $14, $05
+	.db $13, $04
+	.db $17, $07
+	.db $00
+
+	.db $ff
+
+@e58e:
+	.db $9e, $00, $2d
 	.db $00                                                  ; $e591 : $00
 	jmp $5700.w                                                  ; $e592 : $4c, $00, $57
 

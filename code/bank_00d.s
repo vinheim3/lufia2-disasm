@@ -13043,7 +13043,7 @@ br_0d_eb11:
 	and $490801.l, X                                                  ; $eb40 : $3f, $01, $08, $49
 	lda ($a7), Y                                                  ; $eb44 : $b1, $a7
 	ldx $88cf.w                                                  ; $eb46 : $ae, $cf, $88
-	jsr $06ba.w                                                  ; $eb49 : $20, $ba, $06
+	jsr wCharacterXsDiv16s.w                                                  ; $eb49 : $20, $ba, $06
 	cmp [$ed], Y                                                  ; $eb4c : $d7, $ed
 	asl $bd                                                  ; $eb4e : $06, $bd
 	ora $06, S                                                  ; $eb50 : $03, $06

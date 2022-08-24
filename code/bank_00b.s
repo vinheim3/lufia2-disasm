@@ -284,6 +284,9 @@ Call_0b_8204:
 	adc [$20]                                                  ; $822a : $67, $20
 	asl $6a                                                  ; $822c : $06, $6a
 	and ($00, X)                                                  ; $822e : $21, $00
+
+
+RoomScripts6ch:
 	bvc br_0b_827a                                                  ; $8230 : $50, $48
 
 	asl $1200.w                                                  ; $8232 : $0e, $00, $12
@@ -4000,34 +4003,48 @@ br_0b_9fa0:
 	phb                                                  ; $9fcc : $8b
 	jsr $4a05.w                                                  ; $9fcd : $20, $05, $4a
 	jsr $3a06.w                                                  ; $9fd0 : $20, $06, $3a
-	rol $5000.w                                                  ; $9fd3 : $2e, $00, $50
-	pha                                                  ; $9fd6 : $48
-	asl $1200.w                                                  ; $9fd7 : $0e, $00, $12
-	.db $00                                                  ; $9fda : $00
-	trb $5000.w                                                  ; $9fdb : $1c, $00, $50
-	.db $00                                                  ; $9fde : $00
-	eor ($00), Y                                                  ; $9fdf : $51, $00
-	eor ($00)                                                  ; $9fe1 : $52, $00
-	.db $00                                                  ; $9fe3 : $00
-	eor ($00, S), Y                                                  ; $9fe4 : $53, $00
-	sbc $0ba501.l, X                                                  ; $9fe6 : $ff, $01, $a5, $0b
-	cop $66.b                                                  ; $9fea : $02, $66
-	.db $00                                                  ; $9fec : $00
-	ora $69, S                                                  ; $9fed : $03, $69
-	.db $00                                                  ; $9fef : $00
-	sbc $064b24.l, X                                                  ; $9ff0 : $ff, $24, $4b, $06
-	bit $080c.w                                                  ; $9ff4 : $2c, $0c, $08
-	.db $50, $70                                                  ; $9ff7 : $50, $70
+	.db $2e, $00
 
-	.db $00                                                  ; $9ff9 : $00
-	eor ($e1), Y                                                  ; $9ffa : $51, $e1
-	ora $52, S                                                  ; $9ffc : $03, $52
-	tsc                                                  ; $9ffe : $3b
-	tsb $53                                                  ; $9fff : $04, $53
+
+; 9fd5
+RoomScripts7ah_Treadool:
+	.db $50, $48
+	.dw @_9fe3-RoomScripts7ah_Treadool
+	.dw @_9fe7-RoomScripts7ah_Treadool
+	.dw @_9ff1-RoomScripts7ah_Treadool
+	.dw @a025-RoomScripts7ah_Treadool
+	.dw @a026-RoomScripts7ah_Treadool
+	.dw @a027-RoomScripts7ah_Treadool
+
+@_9fe3:
+	.db $00
+	.dw @a028-RoomScripts7ah_Treadool
+	.db $ff
+
+@_9fe7:
+	.db $01
+	.dw $0ba5
+	.db $02
+	.dw $0066
+	.db $03
+	.dw $0069
+	.db $ff
+
+@_9ff1:
+	.db $24
+	.dw $064b
+	.db $2c
+	.dw $080c
+	.db $50
+	.dw $0070
+	.db $51
+	.dw $03e1
+	.db $52
+	.dw $043b
+	.db $53
+
 	ldy $5404.w                                                  ; $a001 : $ac, $04, $54
 	inc $04                                                  ; $a004 : $e6, $04
-
-Call_0b_a006:
 	eor $2c, X                                                  ; $a006 : $55, $2c
 	ora $56                                                  ; $a008 : $05, $56
 	sbc $5705.w                                                  ; $a00a : $ed, $05, $57
@@ -4045,15 +4062,42 @@ Call_0b_a006:
 
 	bit $610b.w, X                                                  ; $a01f : $3c, $0b, $61
 	adc ($0b, S), Y                                                  ; $a022 : $73, $0b
-	sbc $ffffff.l, X                                                  ; $a024 : $ff, $ff, $ff, $ff
-	trb $01                                                  ; $a028 : $14, $01
-	mvp $5c, $30                                                  ; $a02a : $44, $30, $5c
-	.db $00                                                  ; $a02d : $00
-	sbc $14242e.l, X                                                  ; $a02e : $ff, $2e, $24, $14
-	.db $00                                                  ; $a032 : $00
-	eor [$30]                                                  ; $a033 : $47, $30
-	adc $00                                                  ; $a035 : $65, $00
-	sbc $005e2e.l, X                                                  ; $a037 : $ff, $2e, $5e, $00
+	.db $ff
+
+@a025:
+	.db $ff
+	
+@a026:
+	.db $ff
+
+@a027:	
+	.db $ff
+
+@a028:
+	.db $14
+		.db $01 ; check if flag set
+			.db $44
+		.db $30 ; exec if cond 0 (above true)
+			.dw @a031-RoomScripts7ah_Treadool
+		.db $ff
+	.db $2e
+		.db $24
+	
+@a031:
+	.db $14
+		.db $00 ; check if flag clear
+			.db $47
+		.db $30
+			.dw @a03a-RoomScripts7ah_Treadool
+		.db $ff
+	.db $2e
+		.db $5e
+
+@a03a:
+	.db $00
+
+
+;
 	eor $0011.w, Y                                                  ; $a03b : $59, $11, $00
 	eor $3511.w, Y                                                  ; $a03e : $59, $11, $35
 	bit $7b                                                  ; $a041 : $24, $7b
@@ -5033,7 +5077,7 @@ br_0b_a7f2:
 	asl $49                                                  ; $a80e : $06, $49
 	jsr $c306.w                                                  ; $a810 : $20, $06, $c3
 	jsr $6005.w                                                  ; $a813 : $20, $05, $60
-	jsr Call_0b_a006.w                                                  ; $a816 : $20, $06, $a0
+	jsr $a006.w                                                  ; $a816 : $20, $06, $a0
 	and ($01, X)                                                  ; $a819 : $21, $01
 	adc ($41, X)                                                  ; $a81b : $61, $41
 	jmp ($ff05.w)                                                  ; $a81d : $6c, $05, $ff
@@ -11105,7 +11149,7 @@ br_0b_d9e4:
 	cpy $20                                                  ; $da30 : $c4, $20
 	asl $43                                                  ; $da32 : $06, $43
 	jsr $b105.w                                                  ; $da34 : $20, $05, $b1
-	jsr Call_0b_a006.w                                                  ; $da37 : $20, $06, $a0
+	jsr $a006.w                                                  ; $da37 : $20, $06, $a0
 	ora $4606.w                                                  ; $da3a : $0d, $06, $46
 	jsr $209a.w                                                  ; $da3d : $20, $9a, $20
 	asl $cc                                                  ; $da40 : $06, $cc
@@ -11209,7 +11253,7 @@ Call_0b_db06:
 	asl $3a                                                  ; $db13 : $06, $3a
 	jsr $c606.w                                                  ; $db15 : $20, $06, $c6
 	jsr $1e06.w                                                  ; $db18 : $20, $06, $1e
-	jsr $06ba.w                                                  ; $db1b : $20, $ba, $06
+	jsr wCharacterXsDiv16s.w                                                  ; $db1b : $20, $ba, $06
 	and $440f.w                                                  ; $db1e : $2d, $0f, $44
 	adc $276ea3.l                                                  ; $db21 : $6f, $a3, $6e, $27
 	stz $3506.w, X                                                  ; $db25 : $9e, $06, $35
@@ -12285,7 +12329,7 @@ br_0b_e388:
 
 	ora $5e                                                  ; $e3e1 : $05, $5e
 	rol $1500.w                                                  ; $e3e3 : $2e, $00, $15
-	jmp $05d2.w                                                  ; $e3e6 : $4c, $d2, $05
+	jmp wCharacterType.w                                                  ; $e3e6 : $4c, $d2, $05
 
 
 	ora $49, X                                                  ; $e3e9 : $15, $49

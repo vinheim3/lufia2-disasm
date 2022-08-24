@@ -310,7 +310,7 @@ Call_0a_8206:
 	trb $01                                                  ; $82cc : $14, $01
 	and ($40, S), Y                                                  ; $82ce : $33, $40
 	txy                                                  ; $82d0 : $9b
-	jsr $05d2.w                                                  ; $82d1 : $20, $d2, $05
+	jsr wCharacterType.w                                                  ; $82d1 : $20, $d2, $05
 	sbc $003f33.l, X                                                  ; $82d4 : $ff, $33, $3f, $00
 	and ($40, S), Y                                                  ; $82d8 : $33, $40
 	.db $50, $13                                                  ; $82da : $50, $13
@@ -15679,6 +15679,7 @@ RoomScripts6bh:
 @ffc9:
 	ora $40, X                                                  ; $ffc9 : $15, $40
 	adc [$00]                                                  ; $ffcb : $67, $00
+
 	php                                                  ; $ffcd : $08
 	ora $d7                                                  ; $ffce : $05, $d7
 	sta [$06]                                                  ; $ffd0 : $87, $06

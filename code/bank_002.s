@@ -4291,8 +4291,8 @@ br_02_9a2d:
 	stz $23                                                  ; $9a2d : $64, $23
 	ldy $22                                                  ; $9a2f : $a4, $22
 	ldx #$0004.w                                                  ; $9a31 : $a2, $04, $00
-	lda $1268.w, Y                                                  ; $9a34 : $b9, $68, $12
-	sta $1268.w, X                                                  ; $9a37 : $9d, $68, $12
+	lda wCurrScriptCondition.w, Y                                                  ; $9a34 : $b9, $68, $12
+	sta wCurrScriptCondition.w, X                                                  ; $9a37 : $9d, $68, $12
 	lda $1298.w, Y                                                  ; $9a3a : $b9, $98, $12
 	sta $1298.w, X                                                  ; $9a3d : $9d, $98, $12
 	stz $1448.w, X                                                  ; $9a40 : $9e, $48, $14
@@ -4795,8 +4795,8 @@ Call_02_9e67:
 	jsr Call_02_a318.w                                                  ; $9e94 : $20, $18, $a3
 	ldx #$0004.w                                                  ; $9e97 : $a2, $04, $00
 	ldy $14b3.w                                                  ; $9e9a : $ac, $b3, $14
-	lda $1268.w, Y                                                  ; $9e9d : $b9, $68, $12
-	sta $1268.w, X                                                  ; $9ea0 : $9d, $68, $12
+	lda wCurrScriptCondition.w, Y                                                  ; $9e9d : $b9, $68, $12
+	sta wCurrScriptCondition.w, X                                                  ; $9ea0 : $9d, $68, $12
 	lda $1298.w, Y                                                  ; $9ea3 : $b9, $98, $12
 	sta $1298.w, X                                                  ; $9ea6 : $9d, $98, $12
 	lda $1238.w, Y                                                  ; $9ea9 : $b9, $38, $12
@@ -4853,8 +4853,8 @@ Call_02_9f0c:
 	jsr Call_02_a318.w                                                  ; $9f27 : $20, $18, $a3
 	ldx #$0004.w                                                  ; $9f2a : $a2, $04, $00
 	ldy $14b3.w                                                  ; $9f2d : $ac, $b3, $14
-	lda $1268.w, Y                                                  ; $9f30 : $b9, $68, $12
-	sta $1268.w, X                                                  ; $9f33 : $9d, $68, $12
+	lda wCurrScriptCondition.w, Y                                                  ; $9f30 : $b9, $68, $12
+	sta wCurrScriptCondition.w, X                                                  ; $9f33 : $9d, $68, $12
 	lda $1298.w, Y                                                  ; $9f36 : $b9, $98, $12
 	sta $1298.w, X                                                  ; $9f39 : $9d, $98, $12
 	lda $1238.w, Y                                                  ; $9f3c : $b9, $38, $12
@@ -8346,12 +8346,12 @@ Call_02_b6ef:
 	sta wPartCharTypeIdxes.w, X                                                  ; $b71c : $9d, $7b, $0a
 	xba                                                  ; $b71f : $eb
 	sta wPartCharTypeIdxes.w, Y                                                  ; $b720 : $99, $7b, $0a
-	lda $1268.w, X                                                  ; $b723 : $bd, $68, $12
+	lda wCurrScriptCondition.w, X                                                  ; $b723 : $bd, $68, $12
 	xba                                                  ; $b726 : $eb
-	lda $1268.w, Y                                                  ; $b727 : $b9, $68, $12
-	sta $1268.w, X                                                  ; $b72a : $9d, $68, $12
+	lda wCurrScriptCondition.w, Y                                                  ; $b727 : $b9, $68, $12
+	sta wCurrScriptCondition.w, X                                                  ; $b72a : $9d, $68, $12
 	xba                                                  ; $b72d : $eb
-	sta $1268.w, Y                                                  ; $b72e : $99, $68, $12
+	sta wCurrScriptCondition.w, Y                                                  ; $b72e : $99, $68, $12
 	lda $1298.w, X                                                  ; $b731 : $bd, $98, $12
 	xba                                                  ; $b734 : $eb
 	lda $1298.w, Y                                                  ; $b735 : $b9, $98, $12

@@ -1968,7 +1968,7 @@ br_06_8cd9:
 	asl                                                  ; $8cfe : $0a
 	tay                                                  ; $8cff : $a8
 	sep #ACCU_8                                                  ; $8d00 : $e2, $20
-	lda $1268.w, X                                                  ; $8d02 : $bd, $68, $12
+	lda wCurrScriptCondition.w, X                                                  ; $8d02 : $bd, $68, $12
 	sta $5d                                                  ; $8d05 : $85, $5d
 	lda $1298.w, X                                                  ; $8d07 : $bd, $98, $12
 	sta $5e                                                  ; $8d0a : $85, $5e

@@ -272,7 +272,7 @@ br_04_81f6:
 	ldy #$0005.w                                                  ; $8204 : $a0, $05, $00
 
 br_04_8207:
-	lda $05d2.w, Y                                                  ; $8207 : $b9, $d2, $05
+	lda wCharacterType.w, Y                                                  ; $8207 : $b9, $d2, $05
 	cmp #$ff.b                                                  ; $820a : $c9, $ff
 	beq br_04_8216                                                  ; $820c : $f0, $08
 
@@ -296,7 +296,7 @@ br_04_821c:
 	brl br_04_82b9                                                  ; $8227 : $82, $8f, $00
 
 br_04_822a:
-	sta $05fa.w, Y                                                  ; $822a : $99, $fa, $05
+	sta wCharacterIds.w, Y                                                  ; $822a : $99, $fa, $05
 	sta $54                                                  ; $822d : $85, $54
 	sty $a7                                                  ; $822f : $84, $a7
 	jsr Call_04_82d5.l                                                  ; $8231 : $22, $d5, $82, $84
@@ -325,17 +325,17 @@ br_04_825c:
 	jsr $83d416.l                                                  ; $8260 : $22, $16, $d4, $83
 	jsr $83aa30.l                                                  ; $8264 : $22, $30, $aa, $83
 	ldx $a7                                                  ; $8268 : $a6, $a7
-	lda wEntityMovementDirs.w                                                  ; $826a : $ad, $92, $06
-	sta wEntityMovementDirs.w, X                                                  ; $826d : $9d, $92, $06
+	lda wCharacterMovementDirs.w                                                  ; $826a : $ad, $92, $06
+	sta wCharacterMovementDirs.w, X                                                  ; $826d : $9d, $92, $06
 	lda #$08.b                                                  ; $8270 : $a9, $08
 	sta $7fe4de.l, X                                                  ; $8272 : $9f, $de, $e4, $7f
 	stz $0736.w, X                                                  ; $8276 : $9e, $36, $07
 	lda $066a.w                                                  ; $8279 : $ad, $6a, $06
 	sta $066a.w, X                                                  ; $827c : $9d, $6a, $06
-	lda $06ba.w                                                  ; $827f : $ad, $ba, $06
-	sta $06ba.w, X                                                  ; $8282 : $9d, $ba, $06
-	lda $06e2.w                                                  ; $8285 : $ad, $e2, $06
-	sta $06e2.w, X                                                  ; $8288 : $9d, $e2, $06
+	lda wCharacterXsDiv16s.w                                                  ; $827f : $ad, $ba, $06
+	sta wCharacterXsDiv16s.w, X                                                  ; $8282 : $9d, $ba, $06
+	lda wCharacterYsDiv16s.w                                                  ; $8285 : $ad, $e2, $06
+	sta wCharacterYsDiv16s.w, X                                                  ; $8288 : $9d, $e2, $06
 	jsr $83a746.l                                                  ; $828b : $22, $46, $a7, $83
 	rep #IDX_8                                                  ; $828f : $c2, $10
 	lda #$20.b                                                  ; $8291 : $a9, $20
@@ -381,13 +381,14 @@ br_04_82cf:
 	asl                                                  ; $82d3 : $0a
 	asl                                                  ; $82d4 : $0a
 
+
 Call_04_82d5:
 	stz $a8                                                  ; $82d5 : $64, $a8
-	lda $a7                                                  ; $82d7 : $a5, $a7
+	lda wCurrChar                                                  ; $82d7 : $a5, $a7
 	asl                                                  ; $82d9 : $0a
 	sta $a9                                                  ; $82da : $85, $a9
 	stz $aa                                                  ; $82dc : $64, $aa
-	adc $a7                                                  ; $82de : $65, $a7
+	adc wCurrChar                                                  ; $82de : $65, $a7
 	sta $ab                                                  ; $82e0 : $85, $ab
 	stz $ac                                                  ; $82e2 : $64, $ac
 	stz $ad                                                  ; $82e4 : $64, $ad
@@ -1419,9 +1420,9 @@ br_04_8974:
 	clc                                                  ; $898a : $18
 	adc #$c8.b                                                  ; $898b : $69, $c8
 	jsr $80be1a.l                                                  ; $898d : $22, $1a, $be, $80
-	lda $00077e.l, X                                                  ; $8991 : $bf, $7e, $07, $00
+	lda wtodo_SomeFlagsBitfield.l, X                                                  ; $8991 : $bf, $7e, $07, $00
 	ora $57                                                  ; $8995 : $05, $57
-	sta $00077e.l, X                                                  ; $8997 : $9f, $7e, $07, $00
+	sta wtodo_SomeFlagsBitfield.l, X                                                  ; $8997 : $9f, $7e, $07, $00
 	plx                                                  ; $899b : $fa
 	rep #ACCU_8                                                  ; $899c : $c2, $20
 
