@@ -7214,9 +7214,9 @@ br_03_ae69:
 	stz $09e1.w                                                  ; $ae7f : $9c, $e1, $09
 	stz $09e2.w                                                  ; $ae82 : $9c, $e2, $09
 	lda #$20.b                                                  ; $ae85 : $a9, $20
-	sta $09e3.w                                                  ; $ae87 : $8d, $e3, $09
+	sta wShipXdiv16.w                                                  ; $ae87 : $8d, $e3, $09
 	lda #$cc.b                                                  ; $ae8a : $a9, $cc
-	sta $09e4.w                                                  ; $ae8c : $8d, $e4, $09
+	sta wShipYdiv16.w                                                  ; $ae8c : $8d, $e4, $09
 	stz $05b5.w                                                  ; $ae8f : $9c, $b5, $05
 	stz $05b6.w                                                  ; $ae92 : $9c, $b6, $05
 	lda #$ff.b                                                  ; $ae95 : $a9, $ff

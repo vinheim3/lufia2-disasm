@@ -2441,7 +2441,7 @@ Call_06_9093:
 	bcs br_06_905a                                                  ; $90bb : $b0, $9d
 
 	jsr $c2a1b6.l                                                  ; $90bd : $22, $b6, $a1, $c2
-	jsr $a28b.w                                                  ; $90c1 : $20, $8b, $a2
+	jsr SetShipFullCoords.w                                                  ; $90c1 : $20, $8b, $a2
 	.db $00                                                  ; $90c4 : $00
 	brl br_06_b168                                                  ; $90c5 : $82, $a0, $20
 
@@ -2666,9 +2666,9 @@ Call_06_91fe:
 	stz $09e0.w                                                  ; $923c : $9c, $e0, $09
 	stz $09e1.w                                                  ; $923f : $9c, $e1, $09
 	lda #$20.b                                                  ; $9242 : $a9, $20
-	sta $09e3.w                                                  ; $9244 : $8d, $e3, $09
+	sta wShipXdiv16.w                                                  ; $9244 : $8d, $e3, $09
 	lda #$cc.b                                                  ; $9247 : $a9, $cc
-	sta $09e4.w                                                  ; $9249 : $8d, $e4, $09
+	sta wShipYdiv16.w                                                  ; $9249 : $8d, $e4, $09
 
 br_06_924c:
 	tsx                                                  ; $924c : $ba
@@ -4002,11 +4002,11 @@ br_06_9abb:
 	bne br_06_9ad9                                                  ; $9ac0 : $d0, $17
 
 	lda $58                                                  ; $9ac2 : $a5, $58
-	cmp $09e3.w                                                  ; $9ac4 : $cd, $e3, $09
+	cmp wShipXdiv16.w                                                  ; $9ac4 : $cd, $e3, $09
 	bne br_06_9ad9                                                  ; $9ac7 : $d0, $10
 
 	lda $5a                                                  ; $9ac9 : $a5, $5a
-	cmp $09e4.w                                                  ; $9acb : $cd, $e4, $09
+	cmp wShipYdiv16.w                                                  ; $9acb : $cd, $e4, $09
 	bne br_06_9ad9                                                  ; $9ace : $d0, $09
 
 	lda #$ff.b                                                  ; $9ad0 : $a9, $ff
@@ -5132,17 +5132,20 @@ br_06_a244:
 	nop                                                  ; $a284 : $ea
 	ora #$7d20.w                                                  ; $a285 : $09, $20, $7d
 	cmp ($80, S), Y                                                  ; $a288 : $d3, $80
-	cmp [$c2], Y                                                  ; $a28a : $d7, $c2
-	jsr $e3ad.w                                                  ; $a28c : $20, $ad, $e3
-	ora #$ff29.w                                                  ; $a28f : $09, $29, $ff
-	.db $00                                                  ; $a292 : $00
+	.db $d7
+
+
+SetShipFullCoords:
+	rep #ACCU_8                                                  ; $a28b : $c2, $20
+	lda wShipXdiv16.w                                                  ; $a28d : $ad, $e3, $09
+	and #$00ff.w                                                  ; $a290 : $29, $ff, $00
 	asl                                                  ; $a293 : $0a
 	asl                                                  ; $a294 : $0a
 	asl                                                  ; $a295 : $0a
 	asl                                                  ; $a296 : $0a
 	adc #$0008.w                                                  ; $a297 : $69, $08, $00
 	sta $04                                                  ; $a29a : $85, $04
-	lda $09e4.w                                                  ; $a29c : $ad, $e4, $09
+	lda wShipYdiv16.w                                                  ; $a29c : $ad, $e4, $09
 	and #$00ff.w                                                  ; $a29f : $29, $ff, $00
 	asl                                                  ; $a2a2 : $0a
 	asl                                                  ; $a2a3 : $0a
@@ -5161,9 +5164,9 @@ Call_06_a2ae:
 	sta $00                                                  ; $a2b3 : $85, $00
 	jsr Call_06_9f13.w                                                  ; $a2b5 : $20, $13, $9f
 	lda $06                                                  ; $a2b8 : $a5, $06
-	sta $09e3.w                                                  ; $a2ba : $8d, $e3, $09
+	sta wShipXdiv16.w                                                  ; $a2ba : $8d, $e3, $09
 	lda $07                                                  ; $a2bd : $a5, $07
-	sta $09e4.w                                                  ; $a2bf : $8d, $e4, $09
+	sta wShipYdiv16.w                                                  ; $a2bf : $8d, $e4, $09
 	stz $09ee.w                                                  ; $a2c2 : $9c, $ee, $09
 
 br_06_a2c5:
@@ -5186,9 +5189,9 @@ Call_06_a2c6:
 	lsr                                                  ; $a2db : $4a
 	lsr                                                  ; $a2dc : $4a
 	sep #ACCU_8                                                  ; $a2dd : $e2, $20
-	sta $09e4.w                                                  ; $a2df : $8d, $e4, $09
+	sta wShipYdiv16.w                                                  ; $a2df : $8d, $e4, $09
 	tya                                                  ; $a2e2 : $98
-	sta $09e3.w                                                  ; $a2e3 : $8d, $e3, $09
+	sta wShipXdiv16.w                                                  ; $a2e3 : $8d, $e3, $09
 	rts                                                  ; $a2e6 : $60
 
 
@@ -11742,7 +11745,7 @@ br_06_cc73:
 	clc                                                  ; $cca9 : $18
 	adc #$01.b                                                  ; $ccaa : $69, $01
 	jsr Call_06_e0b9.w                                                  ; $ccac : $20, $b9, $e0
-	jsr $a28b.w                                                  ; $ccaf : $20, $8b, $a2
+	jsr SetShipFullCoords.w                                                  ; $ccaf : $20, $8b, $a2
 	ldy $04                                                  ; $ccb2 : $a4, $04
 	sty $02, X                                                  ; $ccb4 : $94, $02
 	ldy $06                                                  ; $ccb6 : $a4, $06

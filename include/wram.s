@@ -238,7 +238,20 @@ wCapsuleMonsterDataOffs: ; $09c4
     dw
 
 w09c6:
-    ds $f2-$c6
+    ds $e2-$c6
+
+; 0-3 = dlur
+wShipDir: ; $09e2
+    db
+
+wShipXdiv16: ; $09e3
+    db
+
+wShipYdiv16: ; $09e4
+    db
+
+w09e5:
+    ds $f2-$e5
 
 .union
 
