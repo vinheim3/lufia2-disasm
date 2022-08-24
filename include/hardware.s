@@ -8,6 +8,7 @@ VMAIN = $2115 ; Video Port Control Register
 VMADDL = $2116 ; VRAM Address Registers (Low)
 VMDATAL = $2118 ; VRAM Data Write Registers (Low)
 CGADD = $2121 ; CGRAM Address Register
+CGDATA = $2122 ; CGRAM Data Write Register
 APUIO0 = $2140 ; APU IO Registers
 APUIO1 = $2141 ; APU IO Registers
 APUIO2 = $2142 ; APU IO Registers

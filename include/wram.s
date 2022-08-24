@@ -131,7 +131,13 @@ wOam: ; $0100
     ds $100
 
 w0200:
-    ds $559-$200
+    ds $320-$200
+
+wShadowPalettes: ; $0320
+    ds $200
+
+w0520:
+    ds $59-$20
 
 wCounterTilSlowlyUpdatingRNG: ; $0559
     db

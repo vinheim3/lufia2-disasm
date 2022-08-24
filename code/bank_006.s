@@ -2439,15 +2439,17 @@ Call_06_9093:
 
 	.db $00                                                  ; $90ba : $00
 	bcs br_06_905a                                                  ; $90bb : $b0, $9d
+	.db $22, $b6, $a1
 
-	jsr $c2a1b6.l                                                  ; $90bd : $22, $b6, $a1, $c2
-	jsr SetShipFullCoords.w                                                  ; $90c1 : $20, $8b, $a2
-	.db $00                                                  ; $90c4 : $00
-	brl br_06_b168                                                  ; $90c5 : $82, $a0, $20
 
-	ora $a9, S                                                  ; $90c8 : $03, $a9
-	and $005400.l, X                                                  ; $90ca : $3f, $00, $54, $00
-	sta $20e2ab.l, X                                                  ; $90ce : $9f, $ab, $e2, $20
+	rep #ACCU_8                                                  ; $90c0 : $c2, $20
+	phb                                                  ; $90c2 : $8b
+	ldx #$8200.w                                                  ; $90c3 : $a2, $00, $82
+	ldy #wShadowPalettes.w                                                  ; $90c6 : $a0, $20, $03
+	lda #$003f.w                                                  ; $90c9 : $a9, $3f, $00
+	mvn $9f, $00                                                  ; $90cc : $54, $00, $9f
+	plb                                                  ; $90cf : $ab
+	sep #ACCU_8                                                  ; $90d0 : $e2, $20
 	rtl                                                  ; $90d2 : $6b
 
 

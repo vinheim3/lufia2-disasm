@@ -4994,7 +4994,7 @@ Call_03_a033:
 	beq br_03_a044                                                  ; $a037 : $f0, $0b
 
 	lda #$10.b                                                  ; $a039 : $a9, $10
-	ldx #$0340.w                                                  ; $a03b : $a2, $40, $03
+	ldx #wShadowPalettes.w+$20                                                  ; $a03b : $a2, $40, $03
 	ldy #$00e0.w                                                  ; $a03e : $a0, $e0, $00
 	jsr Call_03_a052.w                                                  ; $a041 : $20, $52, $a0
 
@@ -5004,18 +5004,24 @@ br_03_a044:
 	beq br_03_a06f                                                  ; $a048 : $f0, $25
 
 	lda #$f0.b                                                  ; $a04a : $a9, $f0
-	ldx #$0500.w                                                  ; $a04c : $a2, $00, $05
+	ldx #wShadowPalettes.w+$1e0                                                  ; $a04c : $a2, $00, $05
 	ldy #$0020.w                                                  ; $a04f : $a0, $20, $00
 
+; A - cgram address
+; X - src address
+; Y - num bytes
 Call_03_a052:
+;
 	sty DAS6L.w                                                  ; $a052 : $8c, $65, $43
 	sta CGADD.w                                                  ; $a055 : $8d, $21, $21
 	stx A1T6L.w                                                  ; $a058 : $8e, $62, $43
+
+;
 	lda #$00.b                                                  ; $a05b : $a9, $00
 	sta DMAP6.w                                                  ; $a05d : $8d, $60, $43
 	lda #$00.b                                                  ; $a060 : $a9, $00
 	sta A1B6.w                                                  ; $a062 : $8d, $64, $43
-	lda #$22.b                                                  ; $a065 : $a9, $22
+	lda #<CGDATA.b                                                  ; $a065 : $a9, $22
 	sta BBAD6.w                                                  ; $a067 : $8d, $61, $43
 	lda #$40.b                                                  ; $a06a : $a9, $40
 	sta MDMAEN.w                                                  ; $a06c : $8d, $0b, $42
@@ -7503,7 +7509,7 @@ Call_03_b062:
 	lda #$00ff.w                                                  ; $b074 : $a9, $ff, $00
 	mvn $a6, $00                                                  ; $b077 : $54, $00, $a6
 	ldx #$fb0d.w                                                  ; $b07a : $a2, $0d, $fb
-	ldy #$0320.w                                                  ; $b07d : $a0, $20, $03
+	ldy #wShadowPalettes.w                                                  ; $b07d : $a0, $20, $03
 	lda #$001f.w                                                  ; $b080 : $a9, $1f, $00
 	mvn $a6, $00                                                  ; $b083 : $54, $00, $a6
 	sep #ACCU_8                                                  ; $b086 : $e2, $20
