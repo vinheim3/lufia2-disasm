@@ -7212,7 +7212,7 @@ br_03_ae69:
 	bpl br_03_ae69                                                  ; $ae6d : $10, $fa
 
 	lda #$02.b                                                  ; $ae6f : $a9, $02
-	sta $09df.w                                                  ; $ae71 : $8d, $df, $09
+	sta wShipUpgradeLevel.w                                                  ; $ae71 : $8d, $df, $09
 	lda #$ff.b                                                  ; $ae74 : $a9, $ff
 	sta $09e0.w                                                  ; $ae76 : $8d, $e0, $09
 	stz $09ee.w                                                  ; $ae79 : $9c, $ee, $09

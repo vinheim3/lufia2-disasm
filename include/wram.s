@@ -244,7 +244,13 @@ wCapsuleMonsterDataOffs: ; $09c4
     dw
 
 w09c6:
-    ds $e2-$c6
+    ds $df-$c6
+
+wShipUpgradeLevel: ; $09df
+    db
+
+w09e0:
+    ds 2-0
 
 ; 0-3 = dlur
 wShipDir: ; $09e2

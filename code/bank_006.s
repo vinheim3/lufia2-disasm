@@ -2663,7 +2663,7 @@ Call_06_91fe:
 	lda #$01.b                                                  ; $922f : $a9, $01
 	sta $11de.w                                                  ; $9231 : $8d, $de, $11
 	lda #$02.b                                                  ; $9234 : $a9, $02
-	sta $09df.w                                                  ; $9236 : $8d, $df, $09
+	sta wShipUpgradeLevel.w                                                  ; $9236 : $8d, $df, $09
 	sta $09e2.w                                                  ; $9239 : $8d, $e2, $09
 	stz $09e0.w                                                  ; $923c : $9c, $e0, $09
 	stz $09e1.w                                                  ; $923f : $9c, $e1, $09
@@ -3310,7 +3310,7 @@ br_06_96cf:
 	bne br_06_96f1                                                  ; $96de : $d0, $11
 
 	lda #$02.b                                                  ; $96e0 : $a9, $02
-	sta $09df.w                                                  ; $96e2 : $8d, $df, $09
+	sta wShipUpgradeLevel.w                                                  ; $96e2 : $8d, $df, $09
 	sta $09e2.w                                                  ; $96e5 : $8d, $e2, $09
 	sta $09e0.w                                                  ; $96e8 : $8d, $e0, $09
 	jsr Call_06_a1c5.w                                                  ; $96eb : $20, $c5, $a1
@@ -3521,7 +3521,7 @@ br_06_97ef:
 	bit #$10.b                                                  ; $97f6 : $89, $10
 	beq br_06_9801                                                  ; $97f8 : $f0, $07
 
-	lda $09df.w                                                  ; $97fa : $ad, $df, $09
+	lda wShipUpgradeLevel.w                                                  ; $97fa : $ad, $df, $09
 	bne br_06_9829                                                  ; $97fd : $d0, $2a
 
 	lda wJoy1CurrHeld                                                  ; $97ff : $a5, $46
@@ -3530,7 +3530,7 @@ br_06_9801:
 	bit #$20.b                                                  ; $9801 : $89, $20
 	beq br_06_980e                                                  ; $9803 : $f0, $09
 
-	lda $09df.w                                                  ; $9805 : $ad, $df, $09
+	lda wShipUpgradeLevel.w                                                  ; $9805 : $ad, $df, $09
 	cmp #$02.b                                                  ; $9808 : $c9, $02
 	bcs br_06_982c                                                  ; $980a : $b0, $20
 
@@ -3544,7 +3544,7 @@ br_06_980e:
 	lda $09e1.w                                                  ; $9812 : $ad, $e1, $09
 	beq br_06_9835                                                  ; $9815 : $f0, $1e
 
-	lda $09df.w                                                  ; $9817 : $ad, $df, $09
+	lda wShipUpgradeLevel.w                                                  ; $9817 : $ad, $df, $09
 	beq br_06_9841                                                  ; $981a : $f0, $25
 
 	dea                                                  ; $981c : $3a
@@ -15133,15 +15133,18 @@ br_06_e280:
 
 	adc $e7e4.w, Y                                                  ; $e281 : $79, $e4, $e7
 	cpx $55                                                  ; $e284 : $e4, $55
-	sbc $20                                                  ; $e286 : $e5, $20
-	sta $e2, X                                                  ; $e288 : $95, $e2
+	.db $e5
+
+Func_6_e287:
+
+br_06_e287:
+	jsr Call_06_e295.w                                                  ; $e287 : $20, $95, $e2
 	txa                                                  ; $e28a : $8a
 	clc                                                  ; $e28b : $18
-	adc #$1d.b                                                  ; $e28c : $69, $1d
-	.db $00                                                  ; $e28e : $00
+	adc #$001d.w                                                  ; $e28c : $69, $1d, $00
 	tax                                                  ; $e28f : $aa
 	dec $22                                                  ; $e290 : $c6, $22
-	.db $d0, $f3                                                  ; $e292 : $d0, $f3
+	bne br_06_e287                                                  ; $e292 : $d0, $f3
 
 	rts                                                  ; $e294 : $60
 
@@ -15154,19 +15157,20 @@ Call_06_e295:
 	sbc $5a                                                  ; $e29a : $e5, $5a
 	clc                                                  ; $e29c : $18
 	adc $0d, X                                                  ; $e29d : $75, $0d
-	cmp #$00.b                                                  ; $e29f : $c9, $00
-	ora ($b0, X)                                                  ; $e2a1 : $01, $b0
-	and $02b5.w                                                  ; $e2a3 : $2d, $b5, $02
+	cmp #$0100.w                                                  ; $e29f : $c9, $00, $01
+	bcs br_06_e2d1                                                  ; $e2a2 : $b0, $2d
+
+	lda $02, X                                                  ; $e2a4 : $b5, $02
 	clc                                                  ; $e2a6 : $18
-	adc #$10.b                                                  ; $e2a7 : $69, $10
-	.db $00                                                  ; $e2a9 : $00
+	adc #$0010.w                                                  ; $e2a7 : $69, $10, $00
 	sec                                                  ; $e2aa : $38
 	sbc $58                                                  ; $e2ab : $e5, $58
 	clc                                                  ; $e2ad : $18
 	adc $0b, X                                                  ; $e2ae : $75, $0b
-	cmp #$20.b                                                  ; $e2b0 : $c9, $20
-	ora ($b0, X)                                                  ; $e2b2 : $01, $b0
-	trb $02b5.w                                                  ; $e2b4 : $1c, $b5, $02
+	cmp #$0120.w                                                  ; $e2b0 : $c9, $20, $01
+	bcs br_06_e2d1                                                  ; $e2b3 : $b0, $1c
+
+	lda $02, X                                                  ; $e2b5 : $b5, $02
 	sec                                                  ; $e2b7 : $38
 	sbc $58                                                  ; $e2b8 : $e5, $58
 	sta $07, X                                                  ; $e2ba : $95, $07
@@ -15188,11 +15192,9 @@ br_06_e2d1:
 
 Call_06_e2d2:
 	lda $11ff.w                                                  ; $e2d2 : $ad, $ff, $11
-	and #$ff.b                                                  ; $e2d5 : $29, $ff
-	.db $00                                                  ; $e2d7 : $00
-	cmp #$3e.b                                                  ; $e2d8 : $c9, $3e
-	.db $00                                                  ; $e2da : $00
-	.db $b0, $aa                                                  ; $e2db : $b0, $aa
+	and #$00ff.w                                                  ; $e2d5 : $29, $ff, $00
+	cmp #$003e.w                                                  ; $e2d8 : $c9, $3e, $00
+	bcs Func_6_e287                                                  ; $e2db : $b0, $aa
 
 	ina                                                  ; $e2dd : $1a
 	ina                                                  ; $e2de : $1a
@@ -15350,15 +15352,16 @@ Call_06_e3d2:
 	and #$00ff.w                                                  ; $e3d6 : $29, $ff, $00
 	asl                                                  ; $e3d9 : $0a
 	tax                                                  ; $e3da : $aa
-	jsr ($e3df.w, X)                                                  ; $e3db : $fc, $df, $e3
+	jsr (@funcs.w, X)                                                  ; $e3db : $fc, $df, $e3
 	rts                                                  ; $e3de : $60
 
+@funcs:
+	.dw $e3f6
+	.dw $e3e5
+	.dw $e40b
 
-	inc $e3, X                                                  ; $e3df : $f6, $e3
-	sbc $e3                                                  ; $e3e1 : $e5, $e3
-	phd                                                  ; $e3e3 : $0b
-	cpx $a2                                                  ; $e3e4 : $e4, $a2
-	lda $12, X                                                  ; $e3e6 : $b5, $12
+
+	ldx #$12b5.w                                                  ; $e3e5 : $a2, $b5, $12
 	stx $08                                                  ; $e3e8 : $86, $08
 	ldy #$0010.w                                                  ; $e3ea : $a0, $10, $00
 	jsr Call_06_e430.w                                                  ; $e3ed : $20, $30, $e4

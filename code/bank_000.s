@@ -9356,7 +9356,7 @@ Call_00_bd38:
 
 
 	jsr AequNextScriptByte.w                                                  ; $bd6c : $20, $b7, $c0
-	sta $09df.w                                                  ; $bd6f : $8d, $df, $09
+	sta wShipUpgradeLevel.w                                                  ; $bd6f : $8d, $df, $09
 	brl Func_0_9d00                                                  ; $bd72 : $82, $8b, $df
 
 	jsr AequNextScriptByte.w                                                  ; $bd75 : $20, $b7, $c0
