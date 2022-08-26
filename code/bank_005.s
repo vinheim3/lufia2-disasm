@@ -8512,7 +8512,7 @@ br_05_b8e2:
 	txa                                                  ; $b958 : $8a
 	eor #$ffff.w                                                  ; $b959 : $49, $ff, $ff
 	ina                                                  ; $b95c : $1a
-	sta wPlayerDamageTaken.l                                                  ; $b95d : $8f, $62, $f4, $7f
+	sta wPlayerHPAdjust.l                                                  ; $b95d : $8f, $62, $f4, $7f
 	lda #$0020.w                                                  ; $b961 : $a9, $20, $00
 	sta $7ff464.l                                                  ; $b964 : $8f, $64, $f4, $7f
 	jsr Call_05_bfbf.w                                                  ; $b968 : $20, $bf, $bf
@@ -8543,7 +8543,7 @@ br_05_b8e2:
 	sta $ca                                                  ; $b9a1 : $85, $ca
 	eor #$ffff.w                                                  ; $b9a3 : $49, $ff, $ff
 	ina                                                  ; $b9a6 : $1a
-	sta wPlayerDamageTaken.l                                                  ; $b9a7 : $8f, $62, $f4, $7f
+	sta wPlayerHPAdjust.l                                                  ; $b9a7 : $8f, $62, $f4, $7f
 	lda #$0020.w                                                  ; $b9ab : $a9, $20, $00
 	sta $7ff464.l                                                  ; $b9ae : $8f, $64, $f4, $7f
 	jsr Call_05_bfbf.w                                                  ; $b9b2 : $20, $bf, $bf
@@ -8555,7 +8555,7 @@ br_05_b8e2:
 	txa                                                  ; $b9bd : $8a
 	eor #$ffff.w                                                  ; $b9be : $49, $ff, $ff
 	ina                                                  ; $b9c1 : $1a
-	sta wPlayerDamageTaken.l                                                  ; $b9c2 : $8f, $62, $f4, $7f
+	sta wPlayerHPAdjust.l                                                  ; $b9c2 : $8f, $62, $f4, $7f
 	lda #$0020.w                                                  ; $b9c6 : $a9, $20, $00
 	sta $7ff464.l                                                  ; $b9c9 : $8f, $64, $f4, $7f
 	lda #$0020.w                                                  ; $b9cd : $a9, $20, $00
@@ -8956,7 +8956,7 @@ br_05_bcea:
 	sta $7ff454.l                                                  ; $bcf2 : $8f, $54, $f4, $7f
 	tdc                                                  ; $bcf6 : $7b
 	sta $7ff456.l                                                  ; $bcf7 : $8f, $56, $f4, $7f
-	lda wPlayerDamageTaken.l                                                  ; $bcfb : $af, $62, $f4, $7f
+	lda wPlayerHPAdjust.l                                                  ; $bcfb : $af, $62, $f4, $7f
 	bne br_05_bd21                                                  ; $bcff : $d0, $20
 
 	lda #$0004.w                                                  ; $bd01 : $a9, $04, $00
@@ -8972,7 +8972,7 @@ br_05_bcea:
 	adc $01, S                                                  ; $bd16 : $63, $01
 	eor #$ffff.w                                                  ; $bd18 : $49, $ff, $ff
 	ina                                                  ; $bd1b : $1a
-	sta wPlayerDamageTaken.l                                                  ; $bd1c : $8f, $62, $f4, $7f
+	sta wPlayerHPAdjust.l                                                  ; $bd1c : $8f, $62, $f4, $7f
 	pla                                                  ; $bd20 : $68
 
 br_05_bd21:
@@ -8985,7 +8985,7 @@ br_05_bd21:
 	lda #$2008.w                                                  ; $bd2c : $a9, $08, $20
 	eor $ca86c0.l, X                                                  ; $bd2f : $5f, $c0, $86, $ca
 	rep #ACCU_8                                                  ; $bd33 : $c2, $20
-	lda wPlayerDamageTaken.l                                                  ; $bd35 : $af, $62, $f4, $7f
+	lda wPlayerHPAdjust.l                                                  ; $bd35 : $af, $62, $f4, $7f
 	beq br_05_bd51                                                  ; $bd39 : $f0, $16
 
 	bpl br_05_bd4a                                                  ; $bd3b : $10, $0d
@@ -9003,7 +9003,7 @@ br_05_bd4a:
 	adc $ca                                                  ; $bd4b : $65, $ca
 
 br_05_bd4d:
-	sta wPlayerDamageTaken.l                                                  ; $bd4d : $8f, $62, $f4, $7f
+	sta wPlayerHPAdjust.l                                                  ; $bd4d : $8f, $62, $f4, $7f
 
 br_05_bd51:
 	jmp Jump_05_b45e.w                                                  ; $bd51 : $4c, $5e, $b4
@@ -9578,7 +9578,7 @@ br_05_c0d4:
 
 br_05_c0d9:
 	tax                                                  ; $c0d9 : $aa
-	lda $97fe26.l, X                                                  ; $c0da : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $c0da : $bf, $26, $fe, $97
 	sta WRMPYA.l                                                  ; $c0de : $8f, $02, $42, $00
 	lda #$06.b                                                  ; $c0e2 : $a9, $06
 	sta WRMPYB.l                                                  ; $c0e4 : $8f, $03, $42, $00
@@ -12026,7 +12026,7 @@ Call_05_d080:
 	rep #ACCU_8                                                  ; $d084 : $c2, $20
 	and #$00ff.w                                                  ; $d086 : $29, $ff, $00
 	tax                                                  ; $d089 : $aa
-	lda $97fe26.l, X                                                  ; $d08a : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $d08a : $bf, $26, $fe, $97
 	and #$00ff.w                                                  ; $d08e : $29, $ff, $00
 	sep #ACCU_8                                                  ; $d091 : $e2, $20
 	lsr                                                  ; $d093 : $4a
@@ -12067,7 +12067,7 @@ br_05_d0b6:
 	rep #ACCU_8                                                  ; $d0b7 : $c2, $20
 	and #$007f.w                                                  ; $d0b9 : $29, $7f, $00
 	tax                                                  ; $d0bc : $aa
-	lda $97fe26.l, X                                                  ; $d0bd : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $d0bd : $bf, $26, $fe, $97
 	and #$00ff.w                                                  ; $d0c1 : $29, $ff, $00
 	tax                                                  ; $d0c4 : $aa
 	sep #ACCU_8                                                  ; $d0c5 : $e2, $20
@@ -12238,7 +12238,7 @@ Call_05_d0cd:
 	sta $56                                                  ; $d210 : $85, $56
 
 ; eg -c, dont jump, put in 5a
-	lda wPlayerDamageTaken.l                                                  ; $d212 : $af, $62, $f4, $7f
+	lda wPlayerHPAdjust.l                                                  ; $d212 : $af, $62, $f4, $7f
 	sta $5a                                                  ; $d216 : $85, $5a
 	bpl @br_d286                                                  ; $d218 : $10, $6c
 
@@ -12349,7 +12349,7 @@ Call_05_d0cd:
 	sta $54                                                  ; $d2c3 : $85, $54
 
 @cont_d2c5:
-	sta wPlayerDamageTaken.l                                                  ; $d2c5 : $8f, $62, $f4, $7f
+	sta wPlayerHPAdjust.l                                                  ; $d2c5 : $8f, $62, $f4, $7f
 	rep #ACCU_8                                                  ; $d2c9 : $c2, $20
 	lda $7ff468.l                                                  ; $d2cb : $af, $68, $f4, $7f
 	sta $5a                                                  ; $d2cf : $85, $5a
@@ -12645,9 +12645,9 @@ Call_05_d0cd:
 
 @cont_d4a5:
 	rep #ACCU_8                                                  ; $d4a5 : $c2, $20
-	lda $0011.w, X                                                  ; $d4a7 : $bd, $11, $00
+	lda todo_BattlePlayer.hp.w, X                                                  ; $d4a7 : $bd, $11, $00
 	sta $58                                                  ; $d4aa : $85, $58
-	lda wPlayerDamageTaken.l                                                  ; $d4ac : $af, $62, $f4, $7f
+	lda wPlayerHPAdjust.l                                                  ; $d4ac : $af, $62, $f4, $7f
 	bne @br_d4b5                                                  ; $d4b0 : $d0, $03
 
 	jmp @bigBr_d5d2.w                                                  ; $d4b2 : $4c, $d2, $d5
@@ -12657,39 +12657,39 @@ Call_05_d0cd:
 	bmi @br_d4da                                                  ; $d4b8 : $30, $20
 
 	clc                                                  ; $d4ba : $18
-	adc $0011.w, X                                                  ; $d4bb : $7d, $11, $00
+	adc todo_BattlePlayer.hp.w, X                                                  ; $d4bb : $7d, $11, $00
 	cmp $0025.w, X                                                  ; $d4be : $dd, $25, $00
 	bcc @br_d4cc                                                  ; $d4c1 : $90, $09
 
 	lda $0025.w, X                                                  ; $d4c3 : $bd, $25, $00
 	sec                                                  ; $d4c6 : $38
-	sbc $0011.w, X                                                  ; $d4c7 : $fd, $11, $00
+	sbc todo_BattlePlayer.hp.w, X                                                  ; $d4c7 : $fd, $11, $00
 	bra +                                                  ; $d4ca : $80, $04
 
 @br_d4cc:
-	lda wPlayerDamageTaken.l                                                  ; $d4cc : $af, $62, $f4, $7f
+	lda wPlayerHPAdjust.l                                                  ; $d4cc : $af, $62, $f4, $7f
 
 +	clc                                                  ; $d4d0 : $18
-	adc $0011.w, X                                                  ; $d4d1 : $7d, $11, $00
-	sta $0011.w, X                                                  ; $d4d4 : $9d, $11, $00
+	adc todo_BattlePlayer.hp.w, X                                                  ; $d4d1 : $7d, $11, $00
+	sta todo_BattlePlayer.hp.w, X                                                  ; $d4d4 : $9d, $11, $00
 	jmp @bigBr_d5d2.w                                                  ; $d4d7 : $4c, $d2, $d5
 
 @br_d4da:
 	clc                                                  ; $d4da : $18
-	adc $0011.w, X                                                  ; $d4db : $7d, $11, $00
+	adc todo_BattlePlayer.hp.w, X                                                  ; $d4db : $7d, $11, $00
 	bcs @br_d4e9                                                  ; $d4de : $b0, $09
 
-	lda $0011.w, X                                                  ; $d4e0 : $bd, $11, $00
+	lda todo_BattlePlayer.hp.w, X                                                  ; $d4e0 : $bd, $11, $00
 	eor #$ffff.w                                                  ; $d4e3 : $49, $ff, $ff
 	ina                                                  ; $d4e6 : $1a
 	bra +                                                  ; $d4e7 : $80, $04
 
 @br_d4e9:
-	lda wPlayerDamageTaken.l                                                  ; $d4e9 : $af, $62, $f4, $7f
+	lda wPlayerHPAdjust.l                                                  ; $d4e9 : $af, $62, $f4, $7f
 
 +	clc                                                  ; $d4ed : $18
-	adc $0011.w, X                                                  ; $d4ee : $7d, $11, $00
-	sta $0011.w, X                                                  ; $d4f1 : $9d, $11, $00
+	adc todo_BattlePlayer.hp.w, X                                                  ; $d4ee : $7d, $11, $00
+	sta todo_BattlePlayer.hp.w, X                                                  ; $d4f1 : $9d, $11, $00
 	bne @br_d508                                                  ; $d4f4 : $d0, $12
 
 	sep #ACCU_8                                                  ; $d4f6 : $e2, $20
@@ -12715,51 +12715,72 @@ Call_05_d0cd:
 	jmp @bigBr_d5d2.w                                                  ; $d51d : $4c, $d2, $d5
 
 @br_d520:
-	lda wPlayerDamageTaken.l                                                  ; $d520 : $af, $62, $f4, $7f
+; jump if took damage
+	lda wPlayerHPAdjust.l                                                  ; $d520 : $af, $62, $f4, $7f
 	bmi @br_d529                                                  ; $d524 : $30, $03
 
 	jmp @bigBr_d5d2.w                                                  ; $d526 : $4c, $d2, $d5
 
 @br_d529:
+; store damage taken in 65
 	eor #$ffff.w                                                  ; $d529 : $49, $ff, $ff
 	ina                                                  ; $d52c : $1a
 	sta $65                                                  ; $d52d : $85, $65
 	clc                                                  ; $d52f : $18
-	adc $0011.w, X                                                  ; $d530 : $7d, $11, $00
+
+; get original hp in 58
+	adc todo_BattlePlayer.hp.w, X                                                  ; $d530 : $7d, $11, $00
 	phx                                                  ; $d533 : $da
 	sta $58                                                  ; $d534 : $85, $58
 	stz $63                                                  ; $d536 : $64, $63
+
+; this will get: dmg taken (2) * 0x100 // prev hp into 63
 	jsr Call_05_db6d.l                                                  ; $d538 : $22, $6d, $db, $85
+
+; eg 19*40 = 640
 	lda $63                                                  ; $d53c : $a5, $63
-	sta $4e                                                  ; $d53e : $85, $4e
+	sta wWordInMultWordByByte                                                  ; $d53e : $85, $4e
 	sep #ACCU_8                                                  ; $d540 : $e2, $20
 	lda #$40.b                                                  ; $d542 : $a9, $40
-	sta $50                                                  ; $d544 : $85, $50
+	sta wByteInMultWordByByte                                                  ; $d544 : $85, $50
 	jsr MultplyWordByByte.l                                                  ; $d546 : $22, $4c, $83, $80
-	lda $51                                                  ; $d54a : $a5, $51
+
+; eg >(640+80) in 54 eg 6
+	lda wResultOfMultWordByByte                                                  ; $d54a : $a5, $51
 	clc                                                  ; $d54c : $18
 	adc #$80.b                                                  ; $d54d : $69, $80
 	tdc                                                  ; $d54f : $7b
-	adc $52                                                  ; $d550 : $65, $52
+	adc wResultOfMultWordByByte+1                                                  ; $d550 : $65, $52
 	sta $54                                                  ; $d552 : $85, $54
-	jsr Call_05_de1e.l                                                  ; $d554 : $22, $1e, $de, $85
+
+; this will get cos in 63
+	jsr GetCosOfA.l                                                  ; $d554 : $22, $1e, $de, $85
+
+; word to mult is ($100-cos A)*2, (if was negative, it becomes 7fxx ie signed 15 bit)
 	rep #ACCU_8                                                  ; $d558 : $c2, $20
 	lda #$0100.w                                                  ; $d55a : $a9, $00, $01
 	sec                                                  ; $d55d : $38
 	sbc $63                                                  ; $d55e : $e5, $63
 	asl                                                  ; $d560 : $0a
-	sta $4e                                                  ; $d561 : $85, $4e
+	sta wWordInMultWordByByte                                                  ; $d561 : $85, $4e
+
+; eg 1 yields 0 in A, which is immediately trashed
 	sep #ACCU_8                                                  ; $d563 : $e2, $20
 	lda $7ff450.l                                                  ; $d565 : $af, $50, $f4, $7f
 	jsr Call_05_da5f.l                                                  ; $d569 : $22, $5f, $da, $85
+
+; get player struct+33 eg 64
 	rep #ACCU_8                                                  ; $d56d : $c2, $20
 	lda $01, S                                                  ; $d56f : $a3, $01
 	tax                                                  ; $d571 : $aa
 	lda $0033.w, X                                                  ; $d572 : $bd, $33, $00
 	sep #ACCU_8                                                  ; $d575 : $e2, $20
+
+; branched based off +34
 	xba                                                  ; $d577 : $eb
 	beq @br_d582                                                  ; $d578 : $f0, $08
 
+; max +34 value at c7, ie 199 and use that if >= 0xc8
 	cmp #$c8.b                                                  ; $d57a : $c9, $c8
 	bcc @br_d582                                                  ; $d57c : $90, $04
 
@@ -12769,14 +12790,19 @@ Call_05_d0cd:
 @br_d582:
 	xba                                                  ; $d582 : $eb
 
+; multiply above val with 80
 +	sta WRMPYA.w                                                  ; $d583 : $8d, $02, $42
 	lda #$80.b                                                  ; $d586 : $a9, $80
 	sta WRMPYB.w                                                  ; $d588 : $8d, $03, $42
 	nop                                                  ; $d58b : $ea
 	nop                                                  ; $d58c : $ea
 	nop                                                  ; $d58d : $ea
+
+; use as dividend eg 3200
 	ldx RDMPYL.w                                                  ; $d58e : $ae, $16, $42
 	stx WRDIVL.w                                                  ; $d591 : $8e, $04, $42
+
+; 3200 / 64
 	lda #$64.b                                                  ; $d594 : $a9, $64
 	sta WRDIVB.w                                                  ; $d596 : $8d, $06, $42
 	pha                                                  ; $d599 : $48
@@ -12784,27 +12810,35 @@ Call_05_d0cd:
 	phx                                                  ; $d59b : $da
 	plx                                                  ; $d59c : $fa
 	rep #ACCU_8                                                  ; $d59d : $c2, $20
+
+; max divisor at ff, 3200/64 = 80
 	lda RDDIVL.w                                                  ; $d59f : $ad, $14, $42
 	bit #$ff00.w                                                  ; $d5a2 : $89, $00, $ff
 	beq +                                                  ; $d5a5 : $f0, $03
 	lda #$00ff.w                                                  ; $d5a7 : $a9, $ff, $00
 +	sep #ACCU_8                                                  ; $d5aa : $e2, $20
-	sta $50                                                  ; $d5ac : $85, $50
+	sta wByteInMultWordByByte                                                  ; $d5ac : $85, $50
 	jsr MultplyWordByByte.l                                                  ; $d5ae : $22, $4c, $83, $80
+
+; eg 3 -> f
 	rep #ACCU_8                                                  ; $d5b2 : $c2, $20
-	lda $52                                                  ; $d5b4 : $a5, $52
+	lda wResultOfMultWordByByte+1                                                 ; $d5b4 : $a5, $52
 	clc                                                  ; $d5b6 : $18
 	adc #$000c.w                                                  ; $d5b7 : $69, $0c, $00
+
+; if +ip is >100, max addition at ff
 	cmp #$0100.w                                                  ; $d5ba : $c9, $00, $01
 	bcc +                                                  ; $d5bd : $90, $03
 	lda #$00ff.w                                                  ; $d5bf : $a9, $ff, $00
 +	sep #ACCU_8                                                  ; $d5c2 : $e2, $20
 	plx                                                  ; $d5c4 : $fa
 	clc                                                  ; $d5c5 : $18
-	adc $00bc.w, X                                                  ; $d5c6 : $7d, $bc, $00
+
+; add to ip, maxing at ff
+	adc todo_BattlePlayer.ip.w, X                                                  ; $d5c6 : $7d, $bc, $00
 	bcc +                                                  ; $d5c9 : $90, $02
 	lda #$ff.b                                                  ; $d5cb : $a9, $ff
-+	sta $00bc.w, X                                                  ; $d5cd : $9d, $bc, $00
++	sta todo_BattlePlayer.ip.w, X                                                  ; $d5cd : $9d, $bc, $00
 	rep #ACCU_8                                                  ; $d5d0 : $c2, $20
 
 @bigBr_d5d2:
@@ -12941,14 +12975,14 @@ Call_05_d0cd:
 @bigBr_d690:
 	rep #ACCU_8                                                  ; $d690 : $c2, $20
 	tdc                                                  ; $d692 : $7b
-	sta wPlayerDamageTaken.l                                                  ; $d693 : $8f, $62, $f4, $7f
+	sta wPlayerHPAdjust.l                                                  ; $d693 : $8f, $62, $f4, $7f
 	sep #ACCU_8                                                  ; $d697 : $e2, $20
 
 @bigBr_d699:
 	lda #$04.b                                                  ; $d699 : $a9, $04
 	sta $000f.w, X                                                  ; $d69b : $9d, $0f, $00
 	rep #ACCU_8                                                  ; $d69e : $c2, $20
-	stz $0011.w, X                                                  ; $d6a0 : $9e, $11, $00
+	stz todo_BattlePlayer.hp.w, X                                                  ; $d6a0 : $9e, $11, $00
 	sep #ACCU_8                                                  ; $d6a3 : $e2, $20
 	lda $7ff450.l                                                  ; $d6a5 : $af, $50, $f4, $7f
 	sta wHitEnemyIdx.w                                                  ; $d6a9 : $8d, $fa, $09
@@ -12996,7 +13030,7 @@ Call_05_d0cd:
 
 @br_d6fe:
 	rep #ACCU_8                                                  ; $d6fe : $c2, $20
-	stz $00bc.w, X                                                  ; $d700 : $9e, $bc, $00
+	stz todo_BattlePlayer.ip.w, X                                                  ; $d700 : $9e, $bc, $00
 	inc $00ba.w, X                                                  ; $d703 : $fe, $ba, $00
 	sep #ACCU_8                                                  ; $d706 : $e2, $20
 
@@ -13490,7 +13524,7 @@ Call_05_da5f:
 	phy                                                  ; $da60 : $5a
 	sep #IDX_8                                                  ; $da61 : $e2, $10
 	tax                                                  ; $da63 : $aa
-	lda $97fe26.l, X                                                  ; $da64 : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $da64 : $bf, $26, $fe, $97
 	tax                                                  ; $da68 : $aa
 	lda $153d.w, X                                                  ; $da69 : $bd, $3d, $15
 	rep #IDX_8                                                  ; $da6c : $c2, $10
@@ -13677,221 +13711,33 @@ br_05_db64:
 Call_05_db6d:
 	php                                                  ; $db6d : $08
 	rep #ACCU_8|IDX_8                                                  ; $db6e : $c2, $30
+; eg pop 0 from the right
 	lda $66                                                  ; $db70 : $a5, $66
 	and #$00ff.w                                                  ; $db72 : $29, $ff, $00
+
+; shift 63-65 up to 64-66
 	ldx $64                                                  ; $db75 : $a6, $64
 	stx $65                                                  ; $db77 : $86, $65
+
 	ldx $63                                                  ; $db79 : $a6, $63
 	stx $64                                                  ; $db7b : $86, $64
-	asl $63                                                  ; $db7d : $06, $63
+
+.rept 16
+; shift left the ram long, and A, ie dword
+++	asl $63                                                  ; $db7d : $06, $63
 	rol $65                                                  ; $db7f : $26, $65
 	rol                                                  ; $db81 : $2a
-	bcs br_05_db88                                                  ; $db82 : $b0, $04
+	bcs +                                                  ; $db82 : $b0, $04
 
 	cmp $58                                                  ; $db84 : $c5, $58
-	bcc br_05_db8c                                                  ; $db86 : $90, $04
+	bcc ++                                                  ; $db86 : $90, $04
 
-br_05_db88:
-	sbc $58                                                  ; $db88 : $e5, $58
++	sbc $58                                                  ; $db88 : $e5, $58
 	inc $63                                                  ; $db8a : $e6, $63
 
-br_05_db8c:
-	asl $63                                                  ; $db8c : $06, $63
-	rol $65                                                  ; $db8e : $26, $65
-	rol                                                  ; $db90 : $2a
-	bcs br_05_db97                                                  ; $db91 : $b0, $04
+.endr
 
-	cmp $58                                                  ; $db93 : $c5, $58
-	bcc br_05_db9b                                                  ; $db95 : $90, $04
-
-br_05_db97:
-	sbc $58                                                  ; $db97 : $e5, $58
-	inc $63                                                  ; $db99 : $e6, $63
-
-br_05_db9b:
-	asl $63                                                  ; $db9b : $06, $63
-	rol $65                                                  ; $db9d : $26, $65
-	rol                                                  ; $db9f : $2a
-	bcs br_05_dba6                                                  ; $dba0 : $b0, $04
-
-	cmp $58                                                  ; $dba2 : $c5, $58
-	bcc br_05_dbaa                                                  ; $dba4 : $90, $04
-
-br_05_dba6:
-	sbc $58                                                  ; $dba6 : $e5, $58
-	inc $63                                                  ; $dba8 : $e6, $63
-
-br_05_dbaa:
-	asl $63                                                  ; $dbaa : $06, $63
-	rol $65                                                  ; $dbac : $26, $65
-	rol                                                  ; $dbae : $2a
-	bcs br_05_dbb5                                                  ; $dbaf : $b0, $04
-
-	cmp $58                                                  ; $dbb1 : $c5, $58
-	bcc br_05_dbb9                                                  ; $dbb3 : $90, $04
-
-br_05_dbb5:
-	sbc $58                                                  ; $dbb5 : $e5, $58
-	inc $63                                                  ; $dbb7 : $e6, $63
-
-br_05_dbb9:
-	asl $63                                                  ; $dbb9 : $06, $63
-	rol $65                                                  ; $dbbb : $26, $65
-	rol                                                  ; $dbbd : $2a
-	bcs br_05_dbc4                                                  ; $dbbe : $b0, $04
-
-	cmp $58                                                  ; $dbc0 : $c5, $58
-	bcc br_05_dbc8                                                  ; $dbc2 : $90, $04
-
-br_05_dbc4:
-	sbc $58                                                  ; $dbc4 : $e5, $58
-	inc $63                                                  ; $dbc6 : $e6, $63
-
-br_05_dbc8:
-	asl $63                                                  ; $dbc8 : $06, $63
-	rol $65                                                  ; $dbca : $26, $65
-	rol                                                  ; $dbcc : $2a
-	bcs br_05_dbd3                                                  ; $dbcd : $b0, $04
-
-	cmp $58                                                  ; $dbcf : $c5, $58
-	bcc br_05_dbd7                                                  ; $dbd1 : $90, $04
-
-br_05_dbd3:
-	sbc $58                                                  ; $dbd3 : $e5, $58
-	inc $63                                                  ; $dbd5 : $e6, $63
-
-br_05_dbd7:
-	asl $63                                                  ; $dbd7 : $06, $63
-	rol $65                                                  ; $dbd9 : $26, $65
-	rol                                                  ; $dbdb : $2a
-	bcs br_05_dbe2                                                  ; $dbdc : $b0, $04
-
-	cmp $58                                                  ; $dbde : $c5, $58
-	bcc br_05_dbe6                                                  ; $dbe0 : $90, $04
-
-br_05_dbe2:
-	sbc $58                                                  ; $dbe2 : $e5, $58
-	inc $63                                                  ; $dbe4 : $e6, $63
-
-br_05_dbe6:
-	asl $63                                                  ; $dbe6 : $06, $63
-	rol $65                                                  ; $dbe8 : $26, $65
-	rol                                                  ; $dbea : $2a
-	bcs br_05_dbf1                                                  ; $dbeb : $b0, $04
-
-	cmp $58                                                  ; $dbed : $c5, $58
-	bcc br_05_dbf5                                                  ; $dbef : $90, $04
-
-br_05_dbf1:
-	sbc $58                                                  ; $dbf1 : $e5, $58
-	inc $63                                                  ; $dbf3 : $e6, $63
-
-br_05_dbf5:
-	asl $63                                                  ; $dbf5 : $06, $63
-	rol $65                                                  ; $dbf7 : $26, $65
-	rol                                                  ; $dbf9 : $2a
-	bcs br_05_dc00                                                  ; $dbfa : $b0, $04
-
-	cmp $58                                                  ; $dbfc : $c5, $58
-	bcc br_05_dc04                                                  ; $dbfe : $90, $04
-
-br_05_dc00:
-	sbc $58                                                  ; $dc00 : $e5, $58
-	inc $63                                                  ; $dc02 : $e6, $63
-
-br_05_dc04:
-	asl $63                                                  ; $dc04 : $06, $63
-	rol $65                                                  ; $dc06 : $26, $65
-	rol                                                  ; $dc08 : $2a
-	bcs br_05_dc0f                                                  ; $dc09 : $b0, $04
-
-	cmp $58                                                  ; $dc0b : $c5, $58
-	bcc br_05_dc13                                                  ; $dc0d : $90, $04
-
-br_05_dc0f:
-	sbc $58                                                  ; $dc0f : $e5, $58
-	inc $63                                                  ; $dc11 : $e6, $63
-
-br_05_dc13:
-	asl $63                                                  ; $dc13 : $06, $63
-	rol $65                                                  ; $dc15 : $26, $65
-	rol                                                  ; $dc17 : $2a
-	bcs br_05_dc1e                                                  ; $dc18 : $b0, $04
-
-	cmp $58                                                  ; $dc1a : $c5, $58
-	bcc br_05_dc22                                                  ; $dc1c : $90, $04
-
-br_05_dc1e:
-	sbc $58                                                  ; $dc1e : $e5, $58
-	inc $63                                                  ; $dc20 : $e6, $63
-
-br_05_dc22:
-	asl $63                                                  ; $dc22 : $06, $63
-	rol $65                                                  ; $dc24 : $26, $65
-	rol                                                  ; $dc26 : $2a
-	bcs br_05_dc2d                                                  ; $dc27 : $b0, $04
-
-	cmp $58                                                  ; $dc29 : $c5, $58
-	bcc br_05_dc31                                                  ; $dc2b : $90, $04
-
-br_05_dc2d:
-	sbc $58                                                  ; $dc2d : $e5, $58
-	inc $63                                                  ; $dc2f : $e6, $63
-
-br_05_dc31:
-	asl $63                                                  ; $dc31 : $06, $63
-	rol $65                                                  ; $dc33 : $26, $65
-	rol                                                  ; $dc35 : $2a
-	bcs br_05_dc3c                                                  ; $dc36 : $b0, $04
-
-	cmp $58                                                  ; $dc38 : $c5, $58
-	bcc br_05_dc40                                                  ; $dc3a : $90, $04
-
-br_05_dc3c:
-	sbc $58                                                  ; $dc3c : $e5, $58
-	inc $63                                                  ; $dc3e : $e6, $63
-
-br_05_dc40:
-	asl $63                                                  ; $dc40 : $06, $63
-	rol $65                                                  ; $dc42 : $26, $65
-	rol                                                  ; $dc44 : $2a
-	bcs br_05_dc4b                                                  ; $dc45 : $b0, $04
-
-	cmp $58                                                  ; $dc47 : $c5, $58
-	bcc br_05_dc4f                                                  ; $dc49 : $90, $04
-
-br_05_dc4b:
-	sbc $58                                                  ; $dc4b : $e5, $58
-	inc $63                                                  ; $dc4d : $e6, $63
-
-br_05_dc4f:
-	asl $63                                                  ; $dc4f : $06, $63
-	rol $65                                                  ; $dc51 : $26, $65
-	rol                                                  ; $dc53 : $2a
-	bcs br_05_dc5a                                                  ; $dc54 : $b0, $04
-
-	cmp $58                                                  ; $dc56 : $c5, $58
-	bcc br_05_dc5e                                                  ; $dc58 : $90, $04
-
-br_05_dc5a:
-	sbc $58                                                  ; $dc5a : $e5, $58
-	inc $63                                                  ; $dc5c : $e6, $63
-
-br_05_dc5e:
-	asl $63                                                  ; $dc5e : $06, $63
-	rol $65                                                  ; $dc60 : $26, $65
-	rol                                                  ; $dc62 : $2a
-	bcs br_05_dc69                                                  ; $dc63 : $b0, $04
-
-	cmp $58                                                  ; $dc65 : $c5, $58
-	bcc br_05_dc6d                                                  ; $dc67 : $90, $04
-
-br_05_dc69:
-	sbc $58                                                  ; $dc69 : $e5, $58
-	inc $63                                                  ; $dc6b : $e6, $63
-
-br_05_dc6d:
-	plp                                                  ; $dc6d : $28
+++	plp                                                  ; $dc6d : $28
 	rtl                                                  ; $dc6e : $6b
 
 
@@ -14103,7 +13949,7 @@ br_05_dda4:
 
 
 br_05_ddb0:
-	jsr Call_05_de2a.l                                                  ; $ddb0 : $22, $2a, $de, $85
+	jsr GetSinOfA.l                                                  ; $ddb0 : $22, $2a, $de, $85
 	lda #$01.b                                                  ; $ddb4 : $a9, $01
 	bit $64                                                  ; $ddb6 : $24, $64
 	beq br_05_ddc0                                                  ; $ddb8 : $f0, $06
@@ -14138,7 +13984,7 @@ br_05_dde2:
 	stx $56                                                  ; $dde4 : $86, $56
 
 br_05_dde6:
-	jsr Call_05_de1e.l                                                  ; $dde6 : $22, $1e, $de, $85
+	jsr GetCosOfA.l                                                  ; $dde6 : $22, $1e, $de, $85
 	lda #$01.b                                                  ; $ddea : $a9, $01
 	bit $64                                                  ; $ddec : $24, $64
 	beq br_05_ddf6                                                  ; $ddee : $f0, $06
@@ -14177,67 +14023,71 @@ br_05_de1c:
 	rtl                                                  ; $de1d : $6b
 
 
-Call_05_de1e:
+GetCosOfA:
+; eg 55 = 46
 	php                                                  ; $de1e : $08
 	sep #ACCU_8|IDX_8                                                  ; $de1f : $e2, $30
 	lda $54                                                  ; $de21 : $a5, $54
 	clc                                                  ; $de23 : $18
 	adc #$40.b                                                  ; $de24 : $69, $40
 	sta $55                                                  ; $de26 : $85, $55
-	bra br_05_de31                                                  ; $de28 : $80, $07
+	bra _GetSinOfA                                                  ; $de28 : $80, $07
 
-Call_05_de2a:
+
+GetSinOfA:
 	php                                                  ; $de2a : $08
 	sep #ACCU_8|IDX_8                                                  ; $de2b : $e2, $30
 	lda $54                                                  ; $de2d : $a5, $54
 	sta $55                                                  ; $de2f : $85, $55
 
-br_05_de31:
+; returns 0-ff, with bit 15 set if negative
+_GetSinOfA:
 	cmp #$40.b                                                  ; $de31 : $c9, $40
-	bcs br_05_de39                                                  ; $de33 : $b0, $04
+	bcs @br_de39                                                  ; $de33 : $b0, $04
 
 	asl                                                  ; $de35 : $0a
 	tax                                                  ; $de36 : $aa
-	bra br_05_de62                                                  ; $de37 : $80, $29
+	bra @positive                                                  ; $de37 : $80, $29
 
-br_05_de39:
+@br_de39:
 	cmp #$80.b                                                  ; $de39 : $c9, $80
-	bcs br_05_de46                                                  ; $de3b : $b0, $09
+	bcs @br_de46                                                  ; $de3b : $b0, $09
 
+; eg 80-46 = 3a, then double
 	lda #$80.b                                                  ; $de3d : $a9, $80
 	sec                                                  ; $de3f : $38
 	sbc $55                                                  ; $de40 : $e5, $55
 	asl                                                  ; $de42 : $0a
 	tax                                                  ; $de43 : $aa
-	bra br_05_de62                                                  ; $de44 : $80, $1c
+	bra @positive                                                  ; $de44 : $80, $1c
 
-br_05_de46:
+@br_de46:
 	cmp #$c0.b                                                  ; $de46 : $c9, $c0
-	bcs br_05_de50                                                  ; $de48 : $b0, $06
+	bcs @br_de50                                                  ; $de48 : $b0, $06
 
 	and #$3f.b                                                  ; $de4a : $29, $3f
 	asl                                                  ; $de4c : $0a
 	tax                                                  ; $de4d : $aa
-	bra br_05_de55                                                  ; $de4e : $80, $05
+	bra @negative                                                  ; $de4e : $80, $05
 
-br_05_de50:
+@br_de50:
 	eor #$ff.b                                                  ; $de50 : $49, $ff
 	ina                                                  ; $de52 : $1a
 	asl                                                  ; $de53 : $0a
 	tax                                                  ; $de54 : $aa
 
-br_05_de55:
+@negative:
 	rep #ACCU_8                                                  ; $de55 : $c2, $20
-	lda $97b226.l, X                                                  ; $de57 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $de57 : $bf, $26, $b2, $97
 	ora #$8000.w                                                  ; $de5b : $09, $00, $80
 	sta $63                                                  ; $de5e : $85, $63
 	plp                                                  ; $de60 : $28
 	rtl                                                  ; $de61 : $6b
 
-
-br_05_de62:
+@positive:
+; eg fd for 46 input
 	rep #ACCU_8                                                  ; $de62 : $c2, $20
-	lda $97b226.l, X                                                  ; $de64 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $de64 : $bf, $26, $b2, $97
 	sta $63                                                  ; $de68 : $85, $63
 	plp                                                  ; $de6a : $28
 	rtl                                                  ; $de6b : $6b
@@ -15376,7 +15226,7 @@ br_05_e5dc:
 	lda $22                                                  ; $e5dd : $a5, $22
 	and #$7f.b                                                  ; $e5df : $29, $7f
 	tax                                                  ; $e5e1 : $aa
-	lda $97fe26.l, X                                                  ; $e5e2 : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $e5e2 : $bf, $26, $fe, $97
 	sta WRMPYA.w                                                  ; $e5e6 : $8d, $02, $42
 	lda #$0f.b                                                  ; $e5e9 : $a9, $0f
 	sta WRMPYB.w                                                  ; $e5eb : $8d, $03, $42
@@ -15561,7 +15411,7 @@ Jump_05_e70e:
 
 	plb                                                  ; $e716 : $ab
 	tax                                                  ; $e717 : $aa
-	lda $97fe26.l, X                                                  ; $e718 : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $e718 : $bf, $26, $fe, $97
 	sta WRMPYA.w                                                  ; $e71c : $8d, $02, $42
 	lda #$8d0d.w                                                  ; $e71f : $a9, $0d, $8d
 	ora $42, S                                                  ; $e722 : $03, $42

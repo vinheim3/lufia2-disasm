@@ -517,7 +517,7 @@ wAncientCaveFloorPlus1: ; $e696
 w7fe697:
     ds $f462-$e697
 
-wPlayerDamageTaken: ; $f462
+wPlayerHPAdjust: ; $f462
     db
 
 w7ff463:

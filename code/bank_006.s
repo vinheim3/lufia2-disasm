@@ -5404,7 +5404,7 @@ br_06_a40c:
 	sta $05                                                  ; $a431 : $85, $05
 	asl                                                  ; $a433 : $0a
 	tax                                                  ; $a434 : $aa
-	lda $97b226.l, X                                                  ; $a435 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $a435 : $bf, $26, $b2, $97
 	sta $50                                                  ; $a439 : $85, $50
 	jsr Call_06_a583.w                                                  ; $a43b : $20, $83, $a5
 	ldx $52                                                  ; $a43e : $a6, $52
@@ -5416,7 +5416,7 @@ br_06_a40c:
 	sbc $05                                                  ; $a448 : $e5, $05
 	asl                                                  ; $a44a : $0a
 	tax                                                  ; $a44b : $aa
-	lda $97b226.l, X                                                  ; $a44c : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $a44c : $bf, $26, $b2, $97
 	sta $50                                                  ; $a450 : $85, $50
 	jsr Call_06_a583.w                                                  ; $a452 : $20, $83, $a5
 
@@ -5523,7 +5523,7 @@ br_06_a4e2:
 	and #$007f.w                                                  ; $a4e4 : $29, $7f, $00
 	asl                                                  ; $a4e7 : $0a
 	tax                                                  ; $a4e8 : $aa
-	lda $97b226.l, X                                                  ; $a4e9 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $a4e9 : $bf, $26, $b2, $97
 	sta $00                                                  ; $a4ed : $85, $00
 	eor #$ffff.w                                                  ; $a4ef : $49, $ff, $ff
 	ina                                                  ; $a4f2 : $1a
@@ -5554,7 +5554,7 @@ Call_06_a4fa:
 	adc #$0040.w                                                  ; $a511 : $69, $40, $00
 	asl                                                  ; $a514 : $0a
 	tax                                                  ; $a515 : $aa
-	lda $97b226.l, X                                                  ; $a516 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $a516 : $bf, $26, $b2, $97
 	sta $00                                                  ; $a51a : $85, $00
 	eor #$ffff.w                                                  ; $a51c : $49, $ff, $ff
 	ina                                                  ; $a51f : $1a
@@ -6168,14 +6168,14 @@ br_06_a80c:
 	ina                                                  ; $a80d : $1a
 	asl                                                  ; $a80e : $0a
 	tax                                                  ; $a80f : $aa
-	lda $97b226.l, X                                                  ; $a810 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $a810 : $bf, $26, $b2, $97
 	sta $11                                                  ; $a814 : $85, $11
 	lda #$3e.b                                                  ; $a816 : $a9, $3e
 	sec                                                  ; $a818 : $38
 	sbc $11ff.w                                                  ; $a819 : $ed, $ff, $11
 	asl                                                  ; $a81c : $0a
 	tax                                                  ; $a81d : $aa
-	lda $97b226.l, X                                                  ; $a81e : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $a81e : $bf, $26, $b2, $97
 	sta $12                                                  ; $a822 : $85, $12
 	rep #IDX_8                                                  ; $a824 : $c2, $10
 	ldy #$00e0.w                                                  ; $a826 : $a0, $e0, $00
@@ -6325,7 +6325,7 @@ Call_06_a913:
 
 	asl                                                  ; $a922 : $0a
 	tax                                                  ; $a923 : $aa
-	lda $97b226.l, X                                                  ; $a924 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $a924 : $bf, $26, $b2, $97
 	pha                                                  ; $a928 : $48
 	sta $04                                                  ; $a929 : $85, $04
 	lda $11fc.w                                                  ; $a92b : $ad, $fc, $11
@@ -6366,12 +6366,12 @@ Call_06_a956:
 	stx $02                                                  ; $a969 : $86, $02
 	asl                                                  ; $a96b : $0a
 	tax                                                  ; $a96c : $aa
-	lda $97b226.l, X                                                  ; $a96d : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $a96d : $bf, $26, $b2, $97
 	sta $06                                                  ; $a971 : $85, $06
 	lda $11ff.w                                                  ; $a973 : $ad, $ff, $11
 	asl                                                  ; $a976 : $0a
 	tax                                                  ; $a977 : $aa
-	lda $97b226.l, X                                                  ; $a978 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $a978 : $bf, $26, $b2, $97
 	sec                                                  ; $a97c : $38
 	sbc $06                                                  ; $a97d : $e5, $06
 	sta $04                                                  ; $a97f : $85, $04
@@ -15202,14 +15202,14 @@ Call_06_e2d2:
 	phx                                                  ; $e2e0 : $da
 	tax                                                  ; $e2e1 : $aa
 	sep #ACCU_8                                                  ; $e2e2 : $e2, $20
-	lda $97b226.l, X                                                  ; $e2e4 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $e2e4 : $bf, $26, $b2, $97
 	sta $11                                                  ; $e2e8 : $85, $11
 	lda #$3e.b                                                  ; $e2ea : $a9, $3e
 	sec                                                  ; $e2ec : $38
 	sbc $11ff.w                                                  ; $e2ed : $ed, $ff, $11
 	asl                                                  ; $e2f0 : $0a
 	tax                                                  ; $e2f1 : $aa
-	lda $97b226.l, X                                                  ; $e2f2 : $bf, $26, $b2, $97
+	lda SinTable.l, X                                                  ; $e2f2 : $bf, $26, $b2, $97
 	sta $12                                                  ; $e2f6 : $85, $12
 	rep #ACCU_8                                                  ; $e2f8 : $c2, $20
 	plx                                                  ; $e2fa : $fa

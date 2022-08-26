@@ -2583,7 +2583,7 @@ br_01_929b:
 	phx                                                  ; $930a : $da
 	tax                                                  ; $930b : $aa
 	sep #ACCU_8                                                  ; $930c : $e2, $20
-	lda $97fe26.l, X                                                  ; $930e : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $930e : $bf, $26, $fe, $97
 	plx                                                  ; $9312 : $fa
 	sta $0025.w, X                                                  ; $9313 : $9d, $25, $00
 	bra br_01_932b                                                  ; $9316 : $80, $13
@@ -2594,7 +2594,7 @@ br_01_9318:
 	phx                                                  ; $931d : $da
 	tax                                                  ; $931e : $aa
 	sep #ACCU_8                                                  ; $931f : $e2, $20
-	lda $97fe26.l, X                                                  ; $9321 : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $9321 : $bf, $26, $fe, $97
 	plx                                                  ; $9325 : $fa
 	ora #$80.b                                                  ; $9326 : $09, $80
 	sta $0025.w, X                                                  ; $9328 : $9d, $25, $00
@@ -6738,7 +6738,7 @@ br_01_b022:
 	lda $7ff44e.l                                                  ; $b026 : $af, $4e, $f4, $7f
 	sep #IDX_8                                                  ; $b02a : $e2, $10
 	tax                                                  ; $b02c : $aa
-	lda $97fe26.l, X                                                  ; $b02d : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $b02d : $bf, $26, $fe, $97
 	tax                                                  ; $b031 : $aa
 	lda $153d.w, X                                                  ; $b032 : $bd, $3d, $15
 	rep #IDX_8                                                  ; $b035 : $c2, $10
@@ -11727,7 +11727,7 @@ br_01_d008:
 	tdc                                                  ; $d083 : $7b
 	lda $1b7f.w                                                  ; $d084 : $ad, $7f, $1b
 	tax                                                  ; $d087 : $aa
-	lda $97fe26.l, X                                                  ; $d088 : $bf, $26, $fe, $97
+	lda Data_17_fe26.l, X                                                  ; $d088 : $bf, $26, $fe, $97
 	tax                                                  ; $d08c : $aa
 	lda $153d.w, X                                                  ; $d08d : $bd, $3d, $15
 	tax                                                  ; $d090 : $aa
