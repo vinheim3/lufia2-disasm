@@ -17,7 +17,7 @@ ResetVector:
 	sta $2100.w                                                  ; $800c : $8d, $00, $21
 	stz $6a                                                  ; $800f : $64, $6a
 	stz $6f                                                  ; $8011 : $64, $6f
-	stz $4200.w                                                  ; $8013 : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $8013 : $9c, $00, $42
 	stz MDMAEN.w                                                  ; $8016 : $9c, $0b, $42
 	stz $420c.w                                                  ; $8019 : $9c, $0c, $42
 	rep #ACCU_8                                                  ; $801c : $c2, $20
@@ -49,7 +49,7 @@ Jump_00_8035:
 	jsr Call_00_80d3.w                                                  ; $8050 : $20, $d3, $80
 	jsr Call_00_80e1.w                                                  ; $8053 : $20, $e1, $80
 	lda #$81.b                                                  ; $8056 : $a9, $81
-	sta $4200.w                                                  ; $8058 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $8058 : $8d, $00, $42
 	jsr Call_00_91df.w                                                  ; $805b : $20, $df, $91
 	jsr InitSound.l                                                  ; $805e : $22, $83, $93, $80
 	lda #$96.b                                                  ; $8062 : $a9, $96
@@ -60,7 +60,7 @@ Jump_00_8035:
 br_00_806d:
 	jsr Call_00_80e1.w                                                  ; $806d : $20, $e1, $80
 	lda #$81.b                                                  ; $8070 : $a9, $81
-	sta $4200.w                                                  ; $8072 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $8072 : $8d, $00, $42
 	jsr Call_00_91df.w                                                  ; $8075 : $20, $df, $91
 	jsr Call_00_9528.l                                                  ; $8078 : $22, $28, $95, $80
 	jsr Call_00_95d2.l                                                  ; $807c : $22, $d2, $95, $80
@@ -131,10 +131,16 @@ Call_00_80e1:
 	lda #$60.b                                                  ; $80ea : $a9, $60
 	sta $6b                                                  ; $80ec : $85, $6b
 	sta $70                                                  ; $80ee : $85, $70
+
+; mvn
 	lda #$54.b                                                  ; $80f0 : $a9, $54
-	sta $057d.w                                                  ; $80f2 : $8d, $7d, $05
+	sta wGenericMvn.w                                                  ; $80f2 : $8d, $7d, $05
+
+; rts
 	lda #$60.b                                                  ; $80f5 : $a9, $60
 	sta $0580.w                                                  ; $80f7 : $8d, $80, $05
+
+;
 	stz $0581.w                                                  ; $80fa : $9c, $81, $05
 	lda #$80.b                                                  ; $80fd : $a9, $80
 	sta $0583.w                                                  ; $80ff : $8d, $83, $05
@@ -7024,7 +7030,7 @@ br_00_ac0c:
 
 	rep #ACCU_8                                                  ; $ac18 : $c2, $20
 	tdc                                                  ; $ac1a : $7b
-	sta $7fd100.l                                                  ; $ac1b : $8f, $00, $d1, $7f
+	sta wPuzzleScriptBitFlags.l                                                  ; $ac1b : $8f, $00, $d1, $7f
 	sta $7fd102.l                                                  ; $ac1f : $8f, $02, $d1, $7f
 	sep #ACCU_8                                                  ; $ac23 : $e2, $20
 	brl Func_0_9d00                                                  ; $ac25 : $82, $d8, $f0
@@ -7517,10 +7523,10 @@ Call_00_af33:
 	and #$0a1f.w                                                  ; $af9b : $29, $1f, $0a
 	asl                                                  ; $af9e : $0a
 	asl                                                  ; $af9f : $0a
-	stz $4204.w                                                  ; $afa0 : $9c, $04, $42
+	stz WRDIVL.w                                                  ; $afa0 : $9c, $04, $42
 	sta $4205.w                                                  ; $afa3 : $8d, $05, $42
 	jsr AequNextScriptByte.w                                                  ; $afa6 : $20, $b7, $c0
-	sta $4206.w                                                  ; $afa9 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $afa9 : $8d, $06, $42
 	lda #$8d00.w                                                  ; $afac : $a9, $00, $8d
 	bmi br_00_afd2                                                  ; $afaf : $30, $21
 
@@ -8445,12 +8451,12 @@ br_00_b641:
 	jsr $80f47a.l                                                  ; $b65c : $22, $7a, $f4, $80
 	ldx #$0002.w                                                  ; $b660 : $a2, $02, $00
 	jsr $80f47a.l                                                  ; $b663 : $22, $7a, $f4, $80
-	stz $4200.w                                                  ; $b667 : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $b667 : $9c, $00, $42
 	lda #$a0.b                                                  ; $b66a : $a9, $a0
 	tsb $74                                                  ; $b66c : $04, $74
 	jsr $808285.l                                                  ; $b66e : $22, $85, $82, $80
 	lda #$81.b                                                  ; $b672 : $a9, $81
-	sta $4200.w                                                  ; $b674 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $b674 : $8d, $00, $42
 	jsr Call_00_bf0b.w                                                  ; $b677 : $20, $0b, $bf
 	brl Func_0_9d00                                                  ; $b67a : $82, $83, $e6
 
@@ -8969,14 +8975,14 @@ br_00_ba4f:
 	lda #$80.b                                                  ; $baa5 : $a9, $80
 	sta $0583.w                                                  ; $baa7 : $8d, $83, $05
 	jsr Call_00_bf0b.w                                                  ; $baaa : $20, $0b, $bf
-	stz $4200.w                                                  ; $baad : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $baad : $9c, $00, $42
 	jsr $848328.l                                                  ; $bab0 : $22, $28, $83, $84
 	lda #$08.b                                                  ; $bab4 : $a9, $08
 	sta $74                                                  ; $bab6 : $85, $74
 	jsr $808285.l                                                  ; $bab8 : $22, $85, $82, $80
 	jsr $83b007.l                                                  ; $babc : $22, $07, $b0, $83
 	lda #$81.b                                                  ; $bac0 : $a9, $81
-	sta $4200.w                                                  ; $bac2 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $bac2 : $8d, $00, $42
 	jsr Call_00_bf0b.w                                                  ; $bac5 : $20, $0b, $bf
 	rts                                                  ; $bac8 : $60
 
@@ -11648,62 +11654,62 @@ Func_0_cbae:
 	lda $05, X                                                  ; $cbb8 : $b5, $05
 	ldx #$0000.w                                                  ; $cbba : $a2, $00, $00
 
-br_00_cbbd:
-	lda $7fd18c.l, X                                                  ; $cbbd : $bf, $8c, $d1, $7f
-	bpl br_00_cbf0                                                  ; $cbc1 : $10, $2d
+@loop_cbbd:
+	lda wPuzzleScriptsEnabled.l, X                                                  ; $cbbd : $bf, $8c, $d1, $7f
+	bpl @toLoop_cbbd                                                  ; $cbc1 : $10, $2d
 
 	dea                                                  ; $cbc3 : $3a
-	sta $7fd18c.l, X                                                  ; $cbc4 : $9f, $8c, $d1, $7f
+	sta wPuzzleScriptsEnabled.l, X                                                  ; $cbc4 : $9f, $8c, $d1, $7f
 	and #$d07f.w                                                  ; $cbc8 : $29, $7f, $d0
 	bit $da                                                  ; $cbcb : $24, $da
-	stx wCurrChar                                                  ; $cbcd : $86, $a7
-	jsr $83ab4f.l                                                  ; $cbcf : $22, $4f, $ab, $83
+	stx wCurrPuzzleScript                                                  ; $cbcd : $86, $a7
+	jsr Call_03_ab4f.l                                                  ; $cbcf : $22, $4f, $ab, $83
 	rep #ACCU_8                                                  ; $cbd3 : $c2, $20
 	ldx $ab                                                  ; $cbd5 : $a6, $ab
 	lda $7fd134.l, X                                                  ; $cbd7 : $bf, $34, $d1, $7f
-	sta $7fd197.l                                                  ; $cbdb : $8f, $97, $d1, $7f
+	sta wPuzzleScriptCurrAddr.l                                                  ; $cbdb : $8f, $97, $d1, $7f
 	tay                                                  ; $cbdf : $a8
 	sep #ACCU_8                                                  ; $cbe0 : $e2, $20
 	lda $7fd136.l, X                                                  ; $cbe2 : $bf, $36, $d1, $7f
-	sta $7fd199.l                                                  ; $cbe6 : $8f, $99, $d1, $7f
+	sta wPuzzleScriptCurrBank.l                                                  ; $cbe6 : $8f, $99, $d1, $7f
 	pha                                                  ; $cbea : $48
 	plb                                                  ; $cbeb : $ab
-	jsr Call_00_cc35.w                                                  ; $cbec : $20, $35, $cc
+	jsr ExecPuzzleScriptCmd.w                                                  ; $cbec : $20, $35, $cc
 	plx                                                  ; $cbef : $fa
 
-br_00_cbf0:
+@toLoop_cbbd:
 	inx                                                  ; $cbf0 : $e8
 	cpx #$0008.w                                                  ; $cbf1 : $e0, $08, $00
-	bcc br_00_cbbd                                                  ; $cbf4 : $90, $c7
+	bcc @loop_cbbd                                                  ; $cbf4 : $90, $c7
 
 	ldx #$0007.w                                                  ; $cbf6 : $a2, $07, $00
 
-br_00_cbf9:
-	lda $7fd18c.l, X                                                  ; $cbf9 : $bf, $8c, $d1, $7f
-	bpl br_00_cc06                                                  ; $cbfd : $10, $07
+@loop_cbf9:
+	lda wPuzzleScriptsEnabled.l, X                                                  ; $cbf9 : $bf, $8c, $d1, $7f
+	bpl @toLoop_cbf9                                                  ; $cbfd : $10, $07
 
 	lda #$02.b                                                  ; $cbff : $a9, $02
 	tsb $05b5.w                                                  ; $cc01 : $0c, $b5, $05
-	bra br_00_cc09                                                  ; $cc04 : $80, $03
+	bra @cont_cc09                                                  ; $cc04 : $80, $03
 
-br_00_cc06:
+@toLoop_cbf9:
 	dex                                                  ; $cc06 : $ca
-	bpl br_00_cbf9                                                  ; $cc07 : $10, $f0
+	bpl @loop_cbf9                                                  ; $cc07 : $10, $f0
 
-br_00_cc09:
+@cont_cc09:
 	lda $1273.w                                                  ; $cc09 : $ad, $73, $12
-	beq br_00_cc23                                                  ; $cc0c : $f0, $15
+	beq @done                                                  ; $cc0c : $f0, $15
 
 	jsr Call_00_cc26.l                                                  ; $cc0e : $22, $26, $cc, $80
 	lda $0583.w                                                  ; $cc12 : $ad, $83, $05
-	bpl br_00_cc23                                                  ; $cc15 : $10, $0c
+	bpl @done                                                  ; $cc15 : $10, $0c
 
-	stz $4200.w                                                  ; $cc17 : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $cc17 : $9c, $00, $42
 	jsr $808285.l                                                  ; $cc1a : $22, $85, $82, $80
 	lda #$81.b                                                  ; $cc1e : $a9, $81
-	sta $4200.w                                                  ; $cc20 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $cc20 : $8d, $00, $42
 
-br_00_cc23:
+@done:
 	plp                                                  ; $cc23 : $28
 	plb                                                  ; $cc24 : $ab
 	rtl                                                  ; $cc25 : $6b
@@ -11724,64 +11730,67 @@ Call_00_cc26:
 	rtl                                                  ; $cc34 : $6b
 
 
-Call_00_cc35:
-br_00_cc35:
-	jsr Call_00_e8b9.w                                                  ; $cc35 : $20, $b9, $e8
+ExecPuzzleScriptCmd:
+	jsr AequPuzzleScriptByte.w                                                  ; $cc35 : $20, $b9, $e8
 	asl                                                  ; $cc38 : $0a
 	xba                                                  ; $cc39 : $eb
 	lda #$00.b                                                  ; $cc3a : $a9, $00
 	rol                                                  ; $cc3c : $2a
 	xba                                                  ; $cc3d : $eb
 	tax                                                  ; $cc3e : $aa
-	jmp ($e5a4.w, X)                                                  ; $cc3f : $7c, $a4, $e5
+	jmp (PuzzleScriptCommands.w, X)                                                  ; $cc3f : $7c, $a4, $e5
 
 
-br_00_cc42:
+PuzzleScriptCmd_End:
 	ldx wCurrChar                                                  ; $cc42 : $a6, $a7
 	tdc                                                  ; $cc44 : $7b
-	sta $7fd18c.l, X                                                  ; $cc45 : $9f, $8c, $d1, $7f
+	sta wPuzzleScriptsEnabled.l, X                                                  ; $cc45 : $9f, $8c, $d1, $7f
 	rts                                                  ; $cc49 : $60
 
 
+PuzzleScriptCmd01h_JumpIfFlagSet:
 	tdc                                                  ; $cc4a : $7b
-	jsr Call_00_e8b9.w                                                  ; $cc4b : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $cc4e : $20, $bc, $e9
-	jsr Call_00_e898.l                                                  ; $cc51 : $22, $98, $e8, $80
-	and $7fd100.l, X                                                  ; $cc55 : $3f, $00, $d1, $7f
-	beq br_00_cc5e                                                  ; $cc59 : $f0, $03
+	jsr AequPuzzleScriptByte.w                                                  ; $cc4b : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $cc4e : $20, $bc, $e9
+	jsr AXequFlagAndBitOfA.l                                                  ; $cc51 : $22, $98, $e8, $80
+	and wPuzzleScriptBitFlags.l, X                                                  ; $cc55 : $3f, $00, $d1, $7f
+	beq @br_cc5e                                                  ; $cc59 : $f0, $03
 
-	brl br_00_d2a2                                                  ; $cc5b : $82, $44, $06
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $cc5b : $82, $44, $06
 
-br_00_cc5e:
-	brl br_00_d2b2                                                  ; $cc5e : $82, $51, $06
+@br_cc5e:
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $cc5e : $82, $51, $06
 
+
+PuzzleScriptCmd0ch_JumpIfFlagClear:
 	tdc                                                  ; $cc61 : $7b
-	jsr Call_00_e8b9.w                                                  ; $cc62 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $cc65 : $20, $bc, $e9
-	jsr Call_00_e898.l                                                  ; $cc68 : $22, $98, $e8, $80
-	and $7fd100.l, X                                                  ; $cc6c : $3f, $00, $d1, $7f
-	bne br_00_cc75                                                  ; $cc70 : $d0, $03
+	jsr AequPuzzleScriptByte.w                                                  ; $cc62 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $cc65 : $20, $bc, $e9
+	jsr AXequFlagAndBitOfA.l                                                  ; $cc68 : $22, $98, $e8, $80
+	and wPuzzleScriptBitFlags.l, X                                                  ; $cc6c : $3f, $00, $d1, $7f
+	bne @br_cc75                                                  ; $cc70 : $d0, $03
 
-	brl br_00_d2a2                                                  ; $cc72 : $82, $2d, $06
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $cc72 : $82, $2d, $06
 
-br_00_cc75:
-	brl br_00_d2b2                                                  ; $cc75 : $82, $3a, $06
+@br_cc75:
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $cc75 : $82, $3a, $06
 
-br_00_cc78:
-	jsr Call_00_e8b9.w                                                  ; $cc78 : $20, $b9, $e8
+
+PuzzleScriptCmd02h:
+	jsr AequPuzzleScriptByte.w                                                  ; $cc78 : $20, $b9, $e8
 	jsr Call_00_e9b0.w                                                  ; $cc7b : $20, $b0, $e9
 	sta $7fd04e.l                                                  ; $cc7e : $8f, $4e, $d0, $7f
 	jsr $838ac9.l                                                  ; $cc82 : $22, $c9, $8a, $83
-	bne br_00_cca4                                                  ; $cc86 : $d0, $1c
+	bne @execCmd                                                  ; $cc86 : $d0, $1c
 
 	lda $0583.w                                                  ; $cc88 : $ad, $83, $05
-	bpl br_00_cc97                                                  ; $cc8b : $10, $0a
+	bpl @br_cc97                                                  ; $cc8b : $10, $0a
 
 	lda $7fd04e.l                                                  ; $cc8d : $af, $4e, $d0, $7f
 	jsr $838ad5.l                                                  ; $cc91 : $22, $d5, $8a, $83
-	bra br_00_cca4                                                  ; $cc95 : $80, $0d
+	bra @execCmd                                                  ; $cc95 : $80, $0d
 
-br_00_cc97:
+@br_cc97:
 	lda $7fd04e.l                                                  ; $cc97 : $af, $4e, $d0, $7f
 	xba                                                  ; $cc9b : $eb
 	lda #$00.b                                                  ; $cc9c : $a9, $00
@@ -11789,11 +11798,12 @@ br_00_cc97:
 	jsr $83f559.l                                                  ; $cc9f : $22, $59, $f5, $83
 	ply                                                  ; $cca3 : $7a
 
-br_00_cca4:
-	brl br_00_cc35                                                  ; $cca4 : $82, $8e, $ff
+@execCmd:
+	brl ExecPuzzleScriptCmd                                                  ; $cca4 : $82, $8e, $ff
 
-br_00_cca7:
-	jsr Call_00_e8b9.w                                                  ; $cca7 : $20, $b9, $e8
+
+PuzzleScriptCmd03h:
+	jsr AequPuzzleScriptByte.w                                                  ; $cca7 : $20, $b9, $e8
 	jsr Call_00_e9b0.w                                                  ; $ccaa : $20, $b0, $e9
 	sta $7fd04e.l                                                  ; $ccad : $8f, $4e, $d0, $7f
 	jsr $838ac9.l                                                  ; $ccb1 : $22, $c9, $8a, $83
@@ -11818,7 +11828,8 @@ br_00_ccc6:
 	ply                                                  ; $ccd7 : $7a
 
 br_00_ccd8:
-	brl br_00_cc35                                                  ; $ccd8 : $82, $5a, $ff
+	brl ExecPuzzleScriptCmd                                                  ; $ccd8 : $82, $5a, $ff
+
 
 Call_00_ccdb:
 	lda #$0f.b                                                  ; $ccdb : $a9, $0f
@@ -11858,33 +11869,33 @@ br_00_cd1b:
 
 
 	jsr Call_00_cd41.w                                                  ; $cd1d : $20, $41, $cd
-	brl br_00_e3d9                                                  ; $cd20 : $82, $b6, $16
+	brl Func_0_e3d9                                                  ; $cd20 : $82, $b6, $16
 
 	jsr Call_00_cd41.w                                                  ; $cd23 : $20, $41, $cd
 	lda $7fd19a.l                                                  ; $cd26 : $af, $9a, $d1, $7f
 	bpl br_00_cd2f                                                  ; $cd2a : $10, $03
 
-	brl br_00_d2a2                                                  ; $cd2c : $82, $73, $05
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $cd2c : $82, $73, $05
 
 br_00_cd2f:
-	brl br_00_d2b2                                                  ; $cd2f : $82, $80, $05
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $cd2f : $82, $80, $05
 
 	jsr Call_00_cd41.w                                                  ; $cd32 : $20, $41, $cd
 	lda $7fd19a.l                                                  ; $cd35 : $af, $9a, $d1, $7f
 	bmi br_00_cd3e                                                  ; $cd39 : $30, $03
 
-	brl br_00_d2a2                                                  ; $cd3b : $82, $64, $05
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $cd3b : $82, $64, $05
 
 br_00_cd3e:
-	brl br_00_d2b2                                                  ; $cd3e : $82, $71, $05
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $cd3e : $82, $71, $05
 
 Call_00_cd41:
 	tdc                                                  ; $cd41 : $7b
 	sta $7fd19a.l                                                  ; $cd42 : $8f, $9a, $d1, $7f
-	jsr Call_00_e8b9.w                                                  ; $cd46 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $cd49 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $cd46 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $cd49 : $20, $ed, $e9
 	sta $7fd19b.l                                                  ; $cd4c : $8f, $9b, $d1, $7f
-	jsr Call_00_e8b9.w                                                  ; $cd50 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $cd50 : $20, $b9, $e8
 	clc                                                  ; $cd53 : $18
 	adc #$10.b                                                  ; $cd54 : $69, $10
 	sta $ae                                                  ; $cd56 : $85, $ae
@@ -11975,72 +11986,80 @@ br_00_cdd0:
 	rts                                                  ; $cdd1 : $60
 
 
+PuzzleScriptCmd0eh:
 	lda #$ff.b                                                  ; $cdd2 : $a9, $ff
 	sta $ae                                                  ; $cdd4 : $85, $ae
-	brl br_00_d03f                                                  ; $cdd6 : $82, $66, $02
+	brl Func_0_d03f                                                  ; $cdd6 : $82, $66, $02
 
+
+PuzzleScriptCmd7ah:
 	stz $ae                                                  ; $cdd9 : $64, $ae
-	jsr Call_00_e8b9.w                                                  ; $cddb : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $cddb : $20, $b9, $e8
 	jsr Call_00_ea09.w                                                  ; $cdde : $20, $09, $ea
 	sta $7fd046.l                                                  ; $cde1 : $8f, $46, $d0, $7f
 	xba                                                  ; $cde5 : $eb
 	sta $7fd047.l                                                  ; $cde6 : $8f, $47, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $cdea : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $cded : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $cdea : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $cded : $20, $bc, $e9
 	phy                                                  ; $cdf0 : $5a
 	sta $7fd048.l                                                  ; $cdf1 : $8f, $48, $d0, $7f
-	jsr $838b40.l                                                  ; $cdf5 : $22, $40, $8b, $83
+	jsr Call_03_8b40.l                                                  ; $cdf5 : $22, $40, $8b, $83
 	jsr Call_00_d18c.w                                                  ; $cdf9 : $20, $8c, $d1
 	jsr $838b6a.l                                                  ; $cdfc : $22, $6a, $8b, $83
 	lda $7fd05f.l                                                  ; $ce00 : $af, $5f, $d0, $7f
 	tsb $1273.w                                                  ; $ce04 : $0c, $73, $12
 	bit #$22.b                                                  ; $ce07 : $89, $22
-	beq br_00_ce13                                                  ; $ce09 : $f0, $08
+	beq +                                                  ; $ce09 : $f0, $08
 
 	lda $0005aa.l                                                  ; $ce0b : $af, $aa, $05, $00
 	jsr $838c8a.l                                                  ; $ce0f : $22, $8a, $8c, $83
 
-br_00_ce13:
-	jsr $838e76.l                                                  ; $ce13 : $22, $76, $8e, $83
++	jsr $838e76.l                                                  ; $ce13 : $22, $76, $8e, $83
 	ply                                                  ; $ce17 : $7a
-	brl br_00_cc35                                                  ; $ce18 : $82, $1a, $fe
+	brl ExecPuzzleScriptCmd                                                  ; $ce18 : $82, $1a, $fe
 
+
+;
 	jsr Call_00_ce5c.w                                                  ; $ce1b : $20, $5c, $ce
 	jsr Call_00_ce7e.w                                                  ; $ce1e : $20, $7e, $ce
 	jsr Call_00_d0ba.w                                                  ; $ce21 : $20, $ba, $d0
-	brl br_00_cc35                                                  ; $ce24 : $82, $0e, $fe
+	brl ExecPuzzleScriptCmd                                                  ; $ce24 : $82, $0e, $fe
 
 	jsr Call_00_ce5c.w                                                  ; $ce27 : $20, $5c, $ce
 	jsr Call_00_ce7e.w                                                  ; $ce2a : $20, $7e, $ce
 	jsr Call_00_d112.w                                                  ; $ce2d : $20, $12, $d1
-	brl br_00_cc35                                                  ; $ce30 : $82, $02, $fe
+	brl ExecPuzzleScriptCmd                                                  ; $ce30 : $82, $02, $fe
 
+
+PuzzleScriptCmd8eh:
 	jsr Call_00_ce5c.w                                                  ; $ce33 : $20, $5c, $ce
 	jsr Call_00_ea09.w                                                  ; $ce36 : $20, $09, $ea
 	sta $7fd04a.l                                                  ; $ce39 : $8f, $4a, $d0, $7f
 	xba                                                  ; $ce3d : $eb
 	sta $7fd04b.l                                                  ; $ce3e : $8f, $4b, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $ce42 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $ce45 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $ce42 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $ce45 : $20, $ed, $e9
 	sta $7fd04c.l                                                  ; $ce48 : $8f, $4c, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $ce4c : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $ce4f : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $ce4c : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $ce4f : $20, $ed, $e9
 	sta $7fd04d.l                                                  ; $ce52 : $8f, $4d, $d0, $7f
 	jsr Call_00_d0ba.w                                                  ; $ce56 : $20, $ba, $d0
-	brl br_00_cc35                                                  ; $ce59 : $82, $d9, $fd
+	brl ExecPuzzleScriptCmd                                                  ; $ce59 : $82, $d9, $fd
 
+
+; takes 3 puzzle bytes
 Call_00_ce5c:
 	stz $ae                                                  ; $ce5c : $64, $ae
-	jsr Call_00_e8b9.w                                                  ; $ce5e : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $ce5e : $20, $b9, $e8
 	sta $7fd05f.l                                                  ; $ce61 : $8f, $5f, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $ce65 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $ce68 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $ce65 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $ce68 : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $ce6b : $20, $09, $ea
 	sta $7fd046.l                                                  ; $ce6e : $8f, $46, $d0, $7f
 	xba                                                  ; $ce72 : $eb
 	sta $7fd047.l                                                  ; $ce73 : $8f, $47, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $ce77 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $ce7a : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $ce77 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $ce7a : $20, $ed, $e9
 	rts                                                  ; $ce7d : $60
 
 
@@ -12062,12 +12081,12 @@ Call_00_ce7e:
 
 
 	jsr Call_00_ea47.w                                                  ; $cea0 : $20, $47, $ea
-	jsr Call_00_e8b9.w                                                  ; $cea3 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $cea3 : $20, $b9, $e8
 	clc                                                  ; $cea6 : $18
 	adc #$4f.b                                                  ; $cea7 : $69, $4f
 	jsr Call_00_bf92.l                                                  ; $cea9 : $22, $92, $bf, $80
-	jsr Call_00_e8b9.w                                                  ; $cead : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $ceb0 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $cead : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $ceb0 : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $ceb3 : $20, $09, $ea
 	sta $54                                                  ; $ceb6 : $85, $54
 	xba                                                  ; $ceb8 : $eb
@@ -12078,11 +12097,11 @@ Call_00_ce7e:
 	and #$fe.b                                                  ; $cec4 : $29, $fe
 	sta $0622.w, X                                                  ; $cec6 : $9d, $22, $06
 	jsr Call_00_ea50.w                                                  ; $cec9 : $20, $50, $ea
-	brl br_00_cc35                                                  ; $cecc : $82, $66, $fd
+	brl ExecPuzzleScriptCmd                                                  ; $cecc : $82, $66, $fd
 
-	jsr Call_00_e8b9.w                                                  ; $cecf : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $cecf : $20, $b9, $e8
 	jsr $83e033.l                                                  ; $ced2 : $22, $33, $e0, $83
-	brl br_00_cc35                                                  ; $ced6 : $82, $5c, $fd
+	brl ExecPuzzleScriptCmd                                                  ; $ced6 : $82, $5c, $fd
 
 	jsr Call_00_cf20.w                                                  ; $ced9 : $20, $20, $cf
 	inc $91                                                  ; $cedc : $e6, $91
@@ -12115,11 +12134,11 @@ br_00_cef5:
 	sta $0622.w, X                                                  ; $cf13 : $9d, $22, $06
 	jsr $83d416.l                                                  ; $cf16 : $22, $16, $d4, $83
 	jsr Call_00_ea50.w                                                  ; $cf1a : $20, $50, $ea
-	brl br_00_cc35                                                  ; $cf1d : $82, $15, $fd
+	brl ExecPuzzleScriptCmd                                                  ; $cf1d : $82, $15, $fd
 
 Call_00_cf20:
 	jsr Call_00_ea47.w                                                  ; $cf20 : $20, $47, $ea
-	jsr Call_00_e8b9.w                                                  ; $cf23 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $cf23 : $20, $b9, $e8
 	clc                                                  ; $cf26 : $18
 	adc #$4f.b                                                  ; $cf27 : $69, $4f
 	jsr Call_00_bf92.l                                                  ; $cf29 : $22, $92, $bf, $80
@@ -12131,11 +12150,11 @@ Call_00_cf20:
 	rts                                                  ; $cf39 : $60
 
 
-	jsr Call_00_e8b9.w                                                  ; $cf3a : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $cf3d : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $cf3a : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $cf3d : $20, $bc, $e9
 	sta $56                                                  ; $cf40 : $85, $56
-	jsr Call_00_e8b9.w                                                  ; $cf42 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $cf45 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $cf42 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $cf45 : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $cf48 : $20, $09, $ea
 	sta $8f                                                  ; $cf4b : $85, $8f
 	xba                                                  ; $cf4d : $eb
@@ -12146,17 +12165,17 @@ Call_00_cf20:
 	lda $56                                                  ; $cf57 : $a5, $56
 	tax                                                  ; $cf59 : $aa
 	lda $57                                                  ; $cf5a : $a5, $57
-	sta $7fd074.l, X                                                  ; $cf5c : $9f, $74, $d0, $7f
-	brl br_00_cc35                                                  ; $cf60 : $82, $d2, $fc
+	sta wPuzzleScriptVars.l, X                                                  ; $cf5c : $9f, $74, $d0, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $cf60 : $82, $d2, $fc
 
-	jsr Call_00_e8b9.w                                                  ; $cf63 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $cf66 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $cf63 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $cf66 : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $cf69 : $20, $09, $ea
 	sta $8f                                                  ; $cf6c : $85, $8f
 	xba                                                  ; $cf6e : $eb
 	sta $91                                                  ; $cf6f : $85, $91
-	jsr Call_00_e8b9.w                                                  ; $cf71 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $cf74 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $cf71 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $cf74 : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $cf77 : $20, $09, $ea
 	cmp $8f                                                  ; $cf7a : $c5, $8f
 	bne br_00_cf90                                                  ; $cf7c : $d0, $12
@@ -12168,132 +12187,144 @@ Call_00_cf20:
 	lda $7fd10b.l                                                  ; $cf83 : $af, $0b, $d1, $7f
 	ora #$80.b                                                  ; $cf87 : $09, $80
 	sta $7fd10b.l                                                  ; $cf89 : $8f, $0b, $d1, $7f
-	brl br_00_cc35                                                  ; $cf8d : $82, $a5, $fc
+	brl ExecPuzzleScriptCmd                                                  ; $cf8d : $82, $a5, $fc
 
 br_00_cf90:
 	lda $7fd10b.l                                                  ; $cf90 : $af, $0b, $d1, $7f
 	and #$7f.b                                                  ; $cf94 : $29, $7f
 	sta $7fd10b.l                                                  ; $cf96 : $8f, $0b, $d1, $7f
-	brl br_00_cc35                                                  ; $cf9a : $82, $98, $fc
+	brl ExecPuzzleScriptCmd                                                  ; $cf9a : $82, $98, $fc
 
-	jsr Call_00_e8b9.w                                                  ; $cf9d : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $cf9d : $20, $b9, $e8
 	jsr Call_00_e9b0.w                                                  ; $cfa0 : $20, $b0, $e9
 	jsr $838ad5.l                                                  ; $cfa3 : $22, $d5, $8a, $83
-	brl br_00_cc35                                                  ; $cfa7 : $82, $8b, $fc
+	brl ExecPuzzleScriptCmd                                                  ; $cfa7 : $82, $8b, $fc
 
-	jsr Call_00_e8b9.w                                                  ; $cfaa : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $cfaa : $20, $b9, $e8
 	jsr Call_00_e9b0.w                                                  ; $cfad : $20, $b0, $e9
 	jsr $838ae5.l                                                  ; $cfb0 : $22, $e5, $8a, $83
-	brl br_00_cc35                                                  ; $cfb4 : $82, $7e, $fc
+	brl ExecPuzzleScriptCmd                                                  ; $cfb4 : $82, $7e, $fc
 
 	lda #$20.b                                                  ; $cfb7 : $a9, $20
 	tsb $05b5.w                                                  ; $cfb9 : $0c, $b5, $05
-	brl br_00_cc35                                                  ; $cfbc : $82, $76, $fc
+	brl ExecPuzzleScriptCmd                                                  ; $cfbc : $82, $76, $fc
 
-	jsr Call_00_e8b9.w                                                  ; $cfbf : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $cfc2 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $cfbf : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $cfc2 : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $cfc5 : $20, $09, $ea
 	sta $8f                                                  ; $cfc8 : $85, $8f
 	xba                                                  ; $cfca : $eb
 	sta $91                                                  ; $cfcb : $85, $91
 	jsr $83fb71.l                                                  ; $cfcd : $22, $71, $fb, $83
 	sta $7fd133.l                                                  ; $cfd1 : $8f, $33, $d1, $7f
-	brl br_00_cc35                                                  ; $cfd5 : $82, $5d, $fc
+	brl ExecPuzzleScriptCmd                                                  ; $cfd5 : $82, $5d, $fc
 
 	jsr Call_00_cffc.w                                                  ; $cfd8 : $20, $fc, $cf
 	ldx $54                                                  ; $cfdb : $a6, $54
 	lda $7fd1a3.l, X                                                  ; $cfdd : $bf, $a3, $d1, $7f
 	ldx $56                                                  ; $cfe1 : $a6, $56
-	sta $7fd074.l, X                                                  ; $cfe3 : $9f, $74, $d0, $7f
-	brl br_00_cc35                                                  ; $cfe7 : $82, $4b, $fc
+	sta wPuzzleScriptVars.l, X                                                  ; $cfe3 : $9f, $74, $d0, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $cfe7 : $82, $4b, $fc
 
 	jsr Call_00_cffc.w                                                  ; $cfea : $20, $fc, $cf
 	ldx $56                                                  ; $cfed : $a6, $56
-	lda $7fd074.l, X                                                  ; $cfef : $bf, $74, $d0, $7f
+	lda wPuzzleScriptVars.l, X                                                  ; $cfef : $bf, $74, $d0, $7f
 	ldx $54                                                  ; $cff3 : $a6, $54
 	sta $7fd1a3.l, X                                                  ; $cff5 : $9f, $a3, $d1, $7f
-	brl br_00_cc35                                                  ; $cff9 : $82, $39, $fc
+	brl ExecPuzzleScriptCmd                                                  ; $cff9 : $82, $39, $fc
 
 Call_00_cffc:
-	jsr Call_00_e8b9.w                                                  ; $cffc : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $cfff : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $cffc : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $cfff : $20, $bc, $e9
 	sta $56                                                  ; $d002 : $85, $56
 	stz $57                                                  ; $d004 : $64, $57
-	jsr Call_00_e8b9.w                                                  ; $d006 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $d009 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d006 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $d009 : $20, $ed, $e9
 	sec                                                  ; $d00c : $38
 	sbc #$e0.b                                                  ; $d00d : $e9, $e0
 	sta $54                                                  ; $d00f : $85, $54
 	stz $55                                                  ; $d011 : $64, $55
 	tdc                                                  ; $d013 : $7b
-	jsr Call_00_e8b9.w                                                  ; $d014 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d014 : $20, $b9, $e8
 	clc                                                  ; $d017 : $18
 	adc $54                                                  ; $d018 : $65, $54
 	sta $54                                                  ; $d01a : $85, $54
 	rts                                                  ; $d01c : $60
 
 
-	jsr Call_00_e8b9.w                                                  ; $d01d : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $d020 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d01d : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $d020 : $20, $ed, $e9
 	jsr Call_00_ce7e.w                                                  ; $d023 : $20, $7e, $ce
 	lda $7fd04a.l                                                  ; $d026 : $af, $4a, $d0, $7f
 	sta $7fd046.l                                                  ; $d02a : $8f, $46, $d0, $7f
 	lda $7fd04b.l                                                  ; $d02e : $af, $4b, $d0, $7f
 	sta $7fd047.l                                                  ; $d032 : $8f, $47, $d0, $7f
 	jsr $838e76.l                                                  ; $d036 : $22, $76, $8e, $83
-	brl br_00_cc35                                                  ; $d03a : $82, $f8, $fb
+	brl ExecPuzzleScriptCmd                                                  ; $d03a : $82, $f8, $fb
 
+
+PuzzleScriptCmd06h:
 	stz $ae                                                  ; $d03d : $64, $ae
 
-br_00_d03f:
-	jsr Call_00_d077.w                                                  ; $d03f : $20, $77, $d0
-	jsr Call_00_e8b9.w                                                  ; $d042 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d045 : $20, $bc, $e9
+Func_0_d03f:
+	jsr SetTargetHardestTrickCoords.w                                                  ; $d03f : $20, $77, $d0
+	jsr AequPuzzleScriptByte.w                                                  ; $d042 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d045 : $20, $bc, $e9
 	jsr Call_00_d0ac.w                                                  ; $d048 : $20, $ac, $d0
 	jsr Call_00_d0ba.w                                                  ; $d04b : $20, $ba, $d0
-	brl br_00_cc35                                                  ; $d04e : $82, $e4, $fb
+	brl ExecPuzzleScriptCmd                                                  ; $d04e : $82, $e4, $fb
 
+
+;
 	stz $ae                                                  ; $d051 : $64, $ae
-	jsr Call_00_d077.w                                                  ; $d053 : $20, $77, $d0
-	jsr Call_00_e8b9.w                                                  ; $d056 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d059 : $20, $bc, $e9
+	jsr SetTargetHardestTrickCoords.w                                                  ; $d053 : $20, $77, $d0
+	jsr AequPuzzleScriptByte.w                                                  ; $d056 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d059 : $20, $bc, $e9
 	jsr Call_00_d0ac.w                                                  ; $d05c : $20, $ac, $d0
 	jsr Call_00_d112.w                                                  ; $d05f : $20, $12, $d1
-	brl br_00_cc35                                                  ; $d062 : $82, $d0, $fb
+	brl ExecPuzzleScriptCmd                                                  ; $d062 : $82, $d0, $fb
 
-	jsr Call_00_d077.w                                                  ; $d065 : $20, $77, $d0
-	jsr Call_00_e8b9.w                                                  ; $d068 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $d06b : $20, $ed, $e9
+
+;
+	jsr SetTargetHardestTrickCoords.w                                                  ; $d065 : $20, $77, $d0
+	jsr AequPuzzleScriptByte.w                                                  ; $d068 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $d06b : $20, $ed, $e9
 	jsr Call_00_d0ac.w                                                  ; $d06e : $20, $ac, $d0
 	jsr Call_00_d0ba.w                                                  ; $d071 : $20, $ba, $d0
-	brl br_00_cc35                                                  ; $d074 : $82, $be, $fb
+	brl ExecPuzzleScriptCmd                                                  ; $d074 : $82, $be, $fb
 
-Call_00_d077:
-	jsr Call_00_e8b9.w                                                  ; $d077 : $20, $b9, $e8
+
+SetTargetHardestTrickCoords:
+	jsr AequPuzzleScriptByte.w                                                  ; $d077 : $20, $b9, $e8
 	jsr Call_00_ea09.w                                                  ; $d07a : $20, $09, $ea
+
+; A = target highlighted X in worlds hardest
+; B = target highlighted Y
 	sta $7fd046.l                                                  ; $d07d : $8f, $46, $d0, $7f
 	xba                                                  ; $d081 : $eb
 	sta $7fd047.l                                                  ; $d082 : $8f, $47, $d0, $7f
 	rts                                                  ; $d086 : $60
 
 
+;
 	stz $ae                                                  ; $d087 : $64, $ae
-	jsr Call_00_e8b9.w                                                  ; $d089 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d08c : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d089 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d08c : $20, $bc, $e9
 	sta $7fd046.l                                                  ; $d08f : $8f, $46, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $d093 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d096 : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d093 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d096 : $20, $bc, $e9
 	sta $7fd047.l                                                  ; $d099 : $8f, $47, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $d09d : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d0a0 : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d09d : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d0a0 : $20, $bc, $e9
 	jsr Call_00_d0ac.w                                                  ; $d0a3 : $20, $ac, $d0
 	jsr Call_00_d0ba.w                                                  ; $d0a6 : $20, $ba, $d0
-	brl br_00_cc35                                                  ; $d0a9 : $82, $89, $fb
+	brl ExecPuzzleScriptCmd                                                  ; $d0a9 : $82, $89, $fb
+
 
 Call_00_d0ac:
 	phy                                                  ; $d0ac : $5a
 	sta $7fd048.l                                                  ; $d0ad : $8f, $48, $d0, $7f
-	jsr $838b40.l                                                  ; $d0b1 : $22, $40, $8b, $83
+	jsr Call_03_8b40.l                                                  ; $d0b1 : $22, $40, $8b, $83
 	jsr Call_00_d18c.w                                                  ; $d0b5 : $20, $8c, $d1
 	ply                                                  ; $d0b8 : $7a
 	rts                                                  ; $d0b9 : $60
@@ -12307,38 +12338,37 @@ Call_00_d0ba:
 	lda $7fd05f.l                                                  ; $d0c2 : $af, $5f, $d0, $7f
 	tsb $1273.w                                                  ; $d0c6 : $0c, $73, $12
 	bit #$02.b                                                  ; $d0c9 : $89, $02
-	beq br_00_d0e0                                                  ; $d0cb : $f0, $13
+	beq @cont_d0e0                                                  ; $d0cb : $f0, $13
 
 	jsr Call_00_d227.l                                                  ; $d0cd : $22, $27, $d2, $80
 	sta $7fd049.l                                                  ; $d0d1 : $8f, $49, $d0, $7f
 	ora #$00.b                                                  ; $d0d5 : $09, $00
-	bpl br_00_d0e0                                                  ; $d0d7 : $10, $07
+	bpl @cont_d0e0                                                  ; $d0d7 : $10, $07
 
 	jsr Call_00_d1e1.l                                                  ; $d0d9 : $22, $e1, $d1, $80
 	jsr Call_00_d15b.w                                                  ; $d0dd : $20, $5b, $d1
 
-br_00_d0e0:
+@cont_d0e0:
 	jsr $838b6a.l                                                  ; $d0e0 : $22, $6a, $8b, $83
 	lda $7fd05f.l                                                  ; $d0e4 : $af, $5f, $d0, $7f
 	tsb $1273.w                                                  ; $d0e8 : $0c, $73, $12
 	bit #$22.b                                                  ; $d0eb : $89, $22
-	beq br_00_d0f7                                                  ; $d0ed : $f0, $08
+	beq +                                                  ; $d0ed : $f0, $08
 
 	lda $0005aa.l                                                  ; $d0ef : $af, $aa, $05, $00
 	jsr $838c8a.l                                                  ; $d0f3 : $22, $8a, $8c, $83
 
-br_00_d0f7:
-	lda $7fd05f.l                                                  ; $d0f7 : $af, $5f, $d0, $7f
++	lda $7fd05f.l                                                  ; $d0f7 : $af, $5f, $d0, $7f
 	bit #$02.b                                                  ; $d0fb : $89, $02
-	beq br_00_d10c                                                  ; $d0fd : $f0, $0d
+	beq @end_d10c                                                  ; $d0fd : $f0, $0d
 
 	lda $7fd049.l                                                  ; $d0ff : $af, $49, $d0, $7f
-	bpl br_00_d10c                                                  ; $d103 : $10, $07
+	bpl @end_d10c                                                  ; $d103 : $10, $07
 
 	jsr Call_00_d19f.l                                                  ; $d105 : $22, $9f, $d1, $80
 	jsr Call_00_d15b.w                                                  ; $d109 : $20, $5b, $d1
 
-br_00_d10c:
+@end_d10c:
 	jsr $838e76.l                                                  ; $d10c : $22, $76, $8e, $83
 	ply                                                  ; $d110 : $7a
 	rts                                                  ; $d111 : $60
@@ -12430,7 +12460,7 @@ br_00_d1a7:
 	lda $d6fc.w, X                                                  ; $d1b8 : $bd, $fc, $d6
 	sec                                                  ; $d1bb : $38
 	sbc #$10.b                                                  ; $d1bc : $e9, $10
-	jsr $838b40.l                                                  ; $d1be : $22, $40, $8b, $83
+	jsr Call_03_8b40.l                                                  ; $d1be : $22, $40, $8b, $83
 	ldx $56                                                  ; $d1c2 : $a6, $56
 	lda $7fd69c.l, X                                                  ; $d1c4 : $bf, $9c, $d6, $7f
 	sta $8f                                                  ; $d1c8 : $85, $8f
@@ -12469,7 +12499,7 @@ br_00_d1e9:
 	lda $d6fc.w, X                                                  ; $d1f5 : $bd, $fc, $d6
 	sec                                                  ; $d1f8 : $38
 	sbc #$10.b                                                  ; $d1f9 : $e9, $10
-	jsr $838b40.l                                                  ; $d1fb : $22, $40, $8b, $83
+	jsr Call_03_8b40.l                                                  ; $d1fb : $22, $40, $8b, $83
 	ldx $56                                                  ; $d1ff : $a6, $56
 	lda $d69c.w, X                                                  ; $d201 : $bd, $9c, $d6
 	sta $8f                                                  ; $d204 : $85, $8f
@@ -12545,78 +12575,94 @@ br_00_d26d:
 	rtl                                                  ; $d273 : $6b
 
 
+PuzzleScriptCmd08h_SetFlag:
 	tdc                                                  ; $d274 : $7b
-	jsr Call_00_e8b9.w                                                  ; $d275 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d278 : $20, $bc, $e9
-	jsr Call_00_e898.l                                                  ; $d27b : $22, $98, $e8, $80
-	ora $7fd100.l, X                                                  ; $d27f : $1f, $00, $d1, $7f
-	sta $7fd100.l, X                                                  ; $d283 : $9f, $00, $d1, $7f
-	brl br_00_cc35                                                  ; $d287 : $82, $ab, $f9
+	jsr AequPuzzleScriptByte.w                                                  ; $d275 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d278 : $20, $bc, $e9
+	jsr AXequFlagAndBitOfA.l                                                  ; $d27b : $22, $98, $e8, $80
+	ora wPuzzleScriptBitFlags.l, X                                                  ; $d27f : $1f, $00, $d1, $7f
+	sta wPuzzleScriptBitFlags.l, X                                                  ; $d283 : $9f, $00, $d1, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $d287 : $82, $ab, $f9
 
+
+PuzzleScriptCmd09h_ClearFlag:
 	tdc                                                  ; $d28a : $7b
-	jsr Call_00_e8b9.w                                                  ; $d28b : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d28e : $20, $bc, $e9
-	jsr Call_00_e898.l                                                  ; $d291 : $22, $98, $e8, $80
+	jsr AequPuzzleScriptByte.w                                                  ; $d28b : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d28e : $20, $bc, $e9
+	jsr AXequFlagAndBitOfA.l                                                  ; $d291 : $22, $98, $e8, $80
 	eor #$ff.b                                                  ; $d295 : $49, $ff
-	and $7fd100.l, X                                                  ; $d297 : $3f, $00, $d1, $7f
-	sta $7fd100.l, X                                                  ; $d29b : $9f, $00, $d1, $7f
-	brl br_00_cc35                                                  ; $d29f : $82, $93, $f9
+	and wPuzzleScriptBitFlags.l, X                                                  ; $d297 : $3f, $00, $d1, $7f
+	sta wPuzzleScriptBitFlags.l, X                                                  ; $d29b : $9f, $00, $d1, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $d29f : $82, $93, $f9
 
-br_00_d2a2:
-	jsr Call_00_e8ad.w                                                  ; $d2a2 : $20, $ad, $e8
+
+PuzzleScriptCmd0ah_Jump:
+	jsr AequPuzzleScriptWord.w                                                  ; $d2a2 : $20, $ad, $e8
 	clc                                                  ; $d2a5 : $18
-	adc $7fd194.l                                                  ; $d2a6 : $6f, $94, $d1, $7f
-	jsr Call_00_e8f4.w                                                  ; $d2aa : $20, $f4, $e8
+	adc wPuzzleScriptBaseAddr.l                                                  ; $d2a6 : $6f, $94, $d1, $7f
+	jsr CheckIfPuzzleScriptOffsetAisValid.w                                                  ; $d2aa : $20, $f4, $e8
 	sep #ACCU_8                                                  ; $d2ad : $e2, $20
-	brl br_00_cc35                                                  ; $d2af : $82, $83, $f9
+	brl ExecPuzzleScriptCmd                                                  ; $d2af : $82, $83, $f9
 
-br_00_d2b2:
-	jsr Call_00_e8b9.w                                                  ; $d2b2 : $20, $b9, $e8
-	jsr Call_00_e8b9.w                                                  ; $d2b5 : $20, $b9, $e8
-	brl br_00_cc35                                                  ; $d2b8 : $82, $7a, $f9
 
-	jsr Call_00_e8b9.w                                                  ; $d2bb : $20, $b9, $e8
+ExecPuzzleScriptCmdSkippingAWord:
+	jsr AequPuzzleScriptByte.w                                                  ; $d2b2 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d2b5 : $20, $b9, $e8
+	brl ExecPuzzleScriptCmd                                                  ; $d2b8 : $82, $7a, $f9
+
+
+PuzzleScriptCmd0bh:
+	jsr AequPuzzleScriptByte.w                                                  ; $d2bb : $20, $b9, $e8
 	jsr $848775.l                                                  ; $d2be : $22, $75, $87, $84
-	brl br_00_cc35                                                  ; $d2c2 : $82, $70, $f9
+	brl ExecPuzzleScriptCmd                                                  ; $d2c2 : $82, $70, $f9
 
-	jsr Call_00_e8b9.w                                                  ; $d2c5 : $20, $b9, $e8
+
+PuzzleScriptCmd0dh:
+	jsr AequPuzzleScriptByte.w                                                  ; $d2c5 : $20, $b9, $e8
 	cmp wCharacterMovementDirs.w                                                  ; $d2c8 : $cd, $92, $06
 	bne br_00_d2d0                                                  ; $d2cb : $d0, $03
 
-	brl br_00_d2a2                                                  ; $d2cd : $82, $d2, $ff
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $d2cd : $82, $d2, $ff
 
 br_00_d2d0:
-	brl br_00_d2b2                                                  ; $d2d0 : $82, $df, $ff
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d2d0 : $82, $df, $ff
 
-	jsr Call_00_e8b9.w                                                  ; $d2d3 : $20, $b9, $e8
+
+PuzzleScriptCmd71h:
+	jsr AequPuzzleScriptByte.w                                                  ; $d2d3 : $20, $b9, $e8
 	cmp wCharacterMovementDirs.w                                                  ; $d2d6 : $cd, $92, $06
 	beq br_00_d2de                                                  ; $d2d9 : $f0, $03
 
-	brl br_00_d2a2                                                  ; $d2db : $82, $c4, $ff
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $d2db : $82, $c4, $ff
 
 br_00_d2de:
-	brl br_00_d2b2                                                  ; $d2de : $82, $d1, $ff
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d2de : $82, $d1, $ff
 
+
+PuzzleScriptCmd0fh:
 	jsr Call_00_d2fb.w                                                  ; $d2e1 : $20, $fb, $d2
 	bit #$01.b                                                  ; $d2e4 : $89, $01
 	beq br_00_d2eb                                                  ; $d2e6 : $f0, $03
 
-	brl br_00_d2a2                                                  ; $d2e8 : $82, $b7, $ff
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $d2e8 : $82, $b7, $ff
 
 br_00_d2eb:
-	brl br_00_d2b2                                                  ; $d2eb : $82, $c4, $ff
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d2eb : $82, $c4, $ff
 
+
+;
 	jsr Call_00_d2fb.w                                                  ; $d2ee : $20, $fb, $d2
 	bit #$01.b                                                  ; $d2f1 : $89, $01
 	bne br_00_d2f8                                                  ; $d2f3 : $d0, $03
 
-	brl br_00_d2a2                                                  ; $d2f5 : $82, $aa, $ff
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $d2f5 : $82, $aa, $ff
 
 br_00_d2f8:
-	brl br_00_d2b2                                                  ; $d2f8 : $82, $b7, $ff
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d2f8 : $82, $b7, $ff
+
 
 Call_00_d2fb:
-	jsr Call_00_e8b9.w                                                  ; $d2fb : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d2fb : $20, $b9, $e8
 	jsr Call_00_ea09.w                                                  ; $d2fe : $20, $09, $ea
 	sta $8f                                                  ; $d301 : $85, $8f
 	xba                                                  ; $d303 : $eb
@@ -12630,14 +12676,16 @@ Call_00_d2fb:
 	jsr $838e66.l                                                  ; $d30d : $22, $66, $8e, $83
 	lda #$03.b                                                  ; $d311 : $a9, $03
 	tsb $1273.w                                                  ; $d313 : $0c, $73, $12
-	brl br_00_cc35                                                  ; $d316 : $82, $1c, $f9
+	brl ExecPuzzleScriptCmd                                                  ; $d316 : $82, $1c, $f9
 
-	jsr Call_00_e8b9.w                                                  ; $d319 : $20, $b9, $e8
 
-br_00_d31c:
+PuzzleScriptCmd11h:
+	jsr AequPuzzleScriptByte.w                                                  ; $d319 : $20, $b9, $e8
+
+Func_0_d31c:
 	ldx wCurrChar                                                  ; $d31c : $a6, $a7
 	ora #$80.b                                                  ; $d31e : $09, $80
-	sta $7fd18c.l, X                                                  ; $d320 : $9f, $8c, $d1, $7f
+	sta wPuzzleScriptsEnabled.l, X                                                  ; $d320 : $9f, $8c, $d1, $7f
 	rep #ACCU_8                                                  ; $d324 : $c2, $20
 	ldx $ab                                                  ; $d326 : $a6, $ab
 	tya                                                  ; $d328 : $98
@@ -12649,20 +12697,20 @@ br_00_d31c:
 	rts                                                  ; $d335 : $60
 
 
-	jsr Call_00_e8b9.w                                                  ; $d336 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d336 : $20, $b9, $e8
 	sta $8f                                                  ; $d339 : $85, $8f
-	jsr Call_00_e8b9.w                                                  ; $d33b : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d33b : $20, $b9, $e8
 	sta $91                                                  ; $d33e : $85, $91
 	jsr Call_00_d357.w                                                  ; $d340 : $20, $57, $d3
-	brl br_00_cc35                                                  ; $d343 : $82, $ef, $f8
+	brl ExecPuzzleScriptCmd                                                  ; $d343 : $82, $ef, $f8
 
-	jsr Call_00_e8b9.w                                                  ; $d346 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d346 : $20, $b9, $e8
 	jsr Call_00_ea09.w                                                  ; $d349 : $20, $09, $ea
 	sta $8f                                                  ; $d34c : $85, $8f
 	xba                                                  ; $d34e : $eb
 	sta $91                                                  ; $d34f : $85, $91
 	jsr Call_00_d357.w                                                  ; $d351 : $20, $57, $d3
-	brl br_00_cc35                                                  ; $d354 : $82, $de, $f8
+	brl ExecPuzzleScriptCmd                                                  ; $d354 : $82, $de, $f8
 
 Call_00_d357:
 	ldx #$0000.w                                                  ; $d357 : $a2, $00, $00
@@ -12687,7 +12735,7 @@ br_00_d36a:
 
 	sec                                                  ; $d378 : $38
 	sbc #$10.b                                                  ; $d379 : $e9, $10
-	jsr $838b40.l                                                  ; $d37b : $22, $40, $8b, $83
+	jsr Call_03_8b40.l                                                  ; $d37b : $22, $40, $8b, $83
 	jsr $83f422.l                                                  ; $d37f : $22, $22, $f4, $83
 	sta $91                                                  ; $d383 : $85, $91
 	jsr $83f442.l                                                  ; $d385 : $22, $42, $f4, $83
@@ -12710,7 +12758,7 @@ br_00_d393:
 	lda $7fd6fc.l, X                                                  ; $d3a5 : $bf, $fc, $d6, $7f
 	sec                                                  ; $d3a9 : $38
 	sbc #$10.b                                                  ; $d3aa : $e9, $10
-	jsr $838b40.l                                                  ; $d3ac : $22, $40, $8b, $83
+	jsr Call_03_8b40.l                                                  ; $d3ac : $22, $40, $8b, $83
 	jsr $83f422.l                                                  ; $d3b0 : $22, $22, $f4, $83
 	sta $91                                                  ; $d3b4 : $85, $91
 	jsr $83f442.l                                                  ; $d3b6 : $22, $42, $f4, $83
@@ -12732,7 +12780,8 @@ Call_00_d3c6:
 	rts                                                  ; $d3d5 : $60
 
 
-	jsr Call_00_e8b9.w                                                  ; $d3d6 : $20, $b9, $e8
+PuzzleScriptCmd2ah:
+	jsr AequPuzzleScriptByte.w                                                  ; $d3d6 : $20, $b9, $e8
 	jsr Call_00_ea09.w                                                  ; $d3d9 : $20, $09, $ea
 	sta $8f                                                  ; $d3dc : $85, $8f
 	xba                                                  ; $d3de : $eb
@@ -12745,14 +12794,14 @@ Call_00_d3c6:
 	sta $7fd6cc.l, X                                                  ; $d3ee : $9f, $cc, $d6, $7f
 	lda #$80.b                                                  ; $d3f2 : $a9, $80
 	sta $7fd75c.l, X                                                  ; $d3f4 : $9f, $5c, $d7, $7f
-	jsr Call_00_e8b9.w                                                  ; $d3f8 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d3f8 : $20, $b9, $e8
 	phy                                                  ; $d3fb : $5a
 	clc                                                  ; $d3fc : $18
 	adc #$10.b                                                  ; $d3fd : $69, $10
 	sta $7fd6fc.l, X                                                  ; $d3ff : $9f, $fc, $d6, $7f
 	sec                                                  ; $d403 : $38
 	sbc #$10.b                                                  ; $d404 : $e9, $10
-	jsr $838b40.l                                                  ; $d406 : $22, $40, $8b, $83
+	jsr Call_03_8b40.l                                                  ; $d406 : $22, $40, $8b, $83
 	lda $7fd05f.l                                                  ; $d40a : $af, $5f, $d0, $7f
 	tsb $1273.w                                                  ; $d40e : $0c, $73, $12
 	ldx $56                                                  ; $d411 : $a6, $56
@@ -12762,7 +12811,7 @@ Call_00_d3c6:
 	jsr $83f86b.l                                                  ; $d41a : $22, $6b, $f8, $83
 	jsr $838e76.l                                                  ; $d41e : $22, $76, $8e, $83
 	ply                                                  ; $d422 : $7a
-	brl br_00_cc35                                                  ; $d423 : $82, $0f, $f8
+	brl ExecPuzzleScriptCmd                                                  ; $d423 : $82, $0f, $f8
 
 Call_00_d426:
 	ldx #$0000.w                                                  ; $d426 : $a2, $00, $00
@@ -12784,8 +12833,8 @@ br_00_d438:
 	lda wCurrChar                                                  ; $d439 : $a5, $a7
 	pha                                                  ; $d43b : $48
 	stz wCurrChar                                                  ; $d43c : $64, $a7
-	jsr $83ab4f.l                                                  ; $d43e : $22, $4f, $ab, $83
-	jsr Call_00_e8b9.w                                                  ; $d442 : $20, $b9, $e8
+	jsr Call_03_ab4f.l                                                  ; $d43e : $22, $4f, $ab, $83
+	jsr AequPuzzleScriptByte.w                                                  ; $d442 : $20, $b9, $e8
 	sta $54                                                  ; $d445 : $85, $54
 	tdc                                                  ; $d447 : $7b
 	lda wCharacterMovementDirs.w                                                  ; $d448 : $ad, $92, $06
@@ -12807,20 +12856,20 @@ br_00_d438:
 	sta $0736.w, X                                                  ; $d471 : $9d, $36, $07
 	pla                                                  ; $d474 : $68
 	sta wCurrChar                                                  ; $d475 : $85, $a7
-	jsr $83ab4f.l                                                  ; $d477 : $22, $4f, $ab, $83
-	brl br_00_cc35                                                  ; $d47b : $82, $b7, $f7
+	jsr Call_03_ab4f.l                                                  ; $d477 : $22, $4f, $ab, $83
+	brl ExecPuzzleScriptCmd                                                  ; $d47b : $82, $b7, $f7
 
 	lda wCurrChar                                                  ; $d47e : $a5, $a7
 	pha                                                  ; $d480 : $48
 	stz wCurrChar                                                  ; $d481 : $64, $a7
-	jsr $83ab4f.l                                                  ; $d483 : $22, $4f, $ab, $83
-	jsr Call_00_e8b9.w                                                  ; $d487 : $20, $b9, $e8
+	jsr Call_03_ab4f.l                                                  ; $d483 : $22, $4f, $ab, $83
+	jsr AequPuzzleScriptByte.w                                                  ; $d487 : $20, $b9, $e8
 	jsr $83d350.l                                                  ; $d48a : $22, $50, $d3, $83
 	jsr Call_00_d49b.w                                                  ; $d48e : $20, $9b, $d4
 	pla                                                  ; $d491 : $68
 	sta wCurrChar                                                  ; $d492 : $85, $a7
-	jsr $83ab4f.l                                                  ; $d494 : $22, $4f, $ab, $83
-	brl br_00_cc35                                                  ; $d498 : $82, $9a, $f7
+	jsr Call_03_ab4f.l                                                  ; $d494 : $22, $4f, $ab, $83
+	brl ExecPuzzleScriptCmd                                                  ; $d498 : $82, $9a, $f7
 
 Call_00_d49b:
 	lda $7fd0a1.l                                                  ; $d49b : $af, $a1, $d0, $7f
@@ -12839,11 +12888,11 @@ br_00_d4af:
 	jsr Call_00_ea47.w                                                  ; $d4b0 : $20, $47, $ea
 	lda $7fd0a2.l                                                  ; $d4b3 : $af, $a2, $d0, $7f
 	sta wCurrChar                                                  ; $d4b7 : $85, $a7
-	jsr $83ab4f.l                                                  ; $d4b9 : $22, $4f, $ab, $83
-	jsr Call_00_e8b9.w                                                  ; $d4bd : $20, $b9, $e8
+	jsr Call_03_ab4f.l                                                  ; $d4b9 : $22, $4f, $ab, $83
+	jsr AequPuzzleScriptByte.w                                                  ; $d4bd : $20, $b9, $e8
 	jsr $83d350.l                                                  ; $d4c0 : $22, $50, $d3, $83
 	jsr Call_00_ea50.w                                                  ; $d4c4 : $20, $50, $ea
-	brl br_00_cc35                                                  ; $d4c7 : $82, $6b, $f7
+	brl ExecPuzzleScriptCmd                                                  ; $d4c7 : $82, $6b, $f7
 
 	lda $0622.w                                                  ; $d4ca : $ad, $22, $06
 	bit #$04.b                                                  ; $d4cd : $89, $04
@@ -12852,20 +12901,20 @@ br_00_d4af:
 	bit #$80.b                                                  ; $d4d1 : $89, $80
 	beq br_00_d4dd                                                  ; $d4d3 : $f0, $08
 
-	jsr Call_00_e8d0.w                                                  ; $d4d5 : $20, $d0, $e8
+	jsr YequPrevPuzzleScriptAddr.w                                                  ; $d4d5 : $20, $d0, $e8
 	lda #$01.b                                                  ; $d4d8 : $a9, $01
-	brl br_00_d31c                                                  ; $d4da : $82, $3f, $fe
+	brl Func_0_d31c                                                  ; $d4da : $82, $3f, $fe
 
 br_00_d4dd:
-	brl br_00_cc35                                                  ; $d4dd : $82, $55, $f7
+	brl ExecPuzzleScriptCmd                                                  ; $d4dd : $82, $55, $f7
 
-	jsr Call_00_e8b9.w                                                  ; $d4e0 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d4e0 : $20, $b9, $e8
 	sta $8f                                                  ; $d4e3 : $85, $8f
-	jsr Call_00_e8b9.w                                                  ; $d4e5 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d4e5 : $20, $b9, $e8
 	sta $91                                                  ; $d4e8 : $85, $91
 	bra br_00_d4f7                                                  ; $d4ea : $80, $0b
 
-	jsr Call_00_e8b9.w                                                  ; $d4ec : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d4ec : $20, $b9, $e8
 	jsr Call_00_ea09.w                                                  ; $d4ef : $20, $09, $ea
 	sta $8f                                                  ; $d4f2 : $85, $8f
 	xba                                                  ; $d4f4 : $eb
@@ -12876,25 +12925,25 @@ br_00_d4f7:
 	stz $92                                                  ; $d4f9 : $64, $92
 	lda wCurrChar                                                  ; $d4fb : $a5, $a7
 	pha                                                  ; $d4fd : $48
-	jsr Call_00_e8b9.w                                                  ; $d4fe : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $d501 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d4fe : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $d501 : $20, $ed, $e9
 	jsr $83df87.l                                                  ; $d504 : $22, $87, $df, $83
 	jsr $83e018.l                                                  ; $d508 : $22, $18, $e0, $83
 	pla                                                  ; $d50c : $68
 	sta wCurrChar                                                  ; $d50d : $85, $a7
-	jsr $83ab4f.l                                                  ; $d50f : $22, $4f, $ab, $83
-	brl br_00_cc35                                                  ; $d513 : $82, $1f, $f7
+	jsr Call_03_ab4f.l                                                  ; $d50f : $22, $4f, $ab, $83
+	brl ExecPuzzleScriptCmd                                                  ; $d513 : $82, $1f, $f7
 
-	jsr Call_00_e8b9.w                                                  ; $d516 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $d519 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d516 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $d519 : $20, $ed, $e9
 	jsr Call_00_e92a.w                                                  ; $d51c : $20, $2a, $e9
-	jsr Call_00_e8b9.w                                                  ; $d51f : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d51f : $20, $b9, $e8
 	sta $00                                                  ; $d522 : $85, $00
-	jsr Call_00_e8b9.w                                                  ; $d524 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $d527 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d524 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $d527 : $20, $ed, $e9
 	sta $01                                                  ; $d52a : $85, $01
 	jsr Call_00_d533.l                                                  ; $d52c : $22, $33, $d5, $80
-	brl br_00_cc35                                                  ; $d530 : $82, $02, $f7
+	brl ExecPuzzleScriptCmd                                                  ; $d530 : $82, $02, $f7
 
 Call_00_d533:
 	tdc                                                  ; $d533 : $7b
@@ -12938,7 +12987,7 @@ br_00_d547:
 
 	pla                                                  ; $d57b : $68
 	sta wCurrChar                                                  ; $d57c : $85, $a7
-	jsr $83ab4f.l                                                  ; $d57e : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $d57e : $22, $4f, $ab, $83
 	rtl                                                  ; $d582 : $6b
 
 
@@ -12964,16 +13013,16 @@ Call_00_d583:
 	rts                                                  ; $d5a4 : $60
 
 
-	jsr Call_00_e8b9.w                                                  ; $d5a5 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d5a5 : $20, $b9, $e8
 	sta wEntityPriorityAttrBits.l                                                  ; $d5a8 : $8f, $16, $e3, $7f
-	brl br_00_cc35                                                  ; $d5ac : $82, $86, $f6
+	brl ExecPuzzleScriptCmd                                                  ; $d5ac : $82, $86, $f6
 
 	phy                                                  ; $d5af : $5a
 	sep #ACCU_8|IDX_8                                                  ; $d5b0 : $e2, $30
 	jsr Func_0e_bd77.l                                                  ; $d5b2 : $22, $77, $bd, $8e
 	rep #IDX_8                                                  ; $d5b6 : $c2, $10
 	ply                                                  ; $d5b8 : $7a
-	brl br_00_cc35                                                  ; $d5b9 : $82, $79, $f6
+	brl ExecPuzzleScriptCmd                                                  ; $d5b9 : $82, $79, $f6
 
 br_00_d5bc:
 	phy                                                  ; $d5bc : $5a
@@ -12990,20 +13039,20 @@ br_00_d5bc:
 	sta $0622.w                                                  ; $d5d4 : $8d, $22, $06
 	pla                                                  ; $d5d7 : $68
 	sta wCurrChar                                                  ; $d5d8 : $85, $a7
-	jsr $83ab4f.l                                                  ; $d5da : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $d5da : $22, $4f, $ab, $83
 	rep #IDX_8                                                  ; $d5de : $c2, $10
 	ply                                                  ; $d5e0 : $7a
-	brl br_00_cc35                                                  ; $d5e1 : $82, $51, $f6
+	brl ExecPuzzleScriptCmd                                                  ; $d5e1 : $82, $51, $f6
 
 	lda #$01.b                                                  ; $d5e4 : $a9, $01
 	tsb $72                                                  ; $d5e6 : $04, $72
-	brl br_00_cc35                                                  ; $d5e8 : $82, $4a, $f6
+	brl ExecPuzzleScriptCmd                                                  ; $d5e8 : $82, $4a, $f6
 
 	lda #$01.b                                                  ; $d5eb : $a9, $01
 	trb $72                                                  ; $d5ed : $14, $72
 	brl br_00_d5bc                                                  ; $d5ef : $82, $ca, $ff
 
-	jsr Call_00_e8b9.w                                                  ; $d5f2 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d5f2 : $20, $b9, $e8
 	sta $54                                                  ; $d5f5 : $85, $54
 	phb                                                  ; $d5f7 : $8b
 	phy                                                  ; $d5f8 : $5a
@@ -13012,7 +13061,7 @@ br_00_d5bc:
 	plb                                                  ; $d5fc : $ab
 	lda $7fd1a1.l                                                  ; $d5fd : $af, $a1, $d1, $7f
 	xba                                                  ; $d601 : $eb
-	lda $7fd1a0.l                                                  ; $d602 : $af, $a0, $d1, $7f
+	lda wCurrRoomChestContentsAddr.l                                                  ; $d602 : $af, $a0, $d1, $7f
 	tay                                                  ; $d606 : $a8
 
 br_00_d607:
@@ -13075,12 +13124,14 @@ br_00_d674:
 br_00_d681:
 	ply                                                  ; $d681 : $7a
 	plb                                                  ; $d682 : $ab
-	brl br_00_cc35                                                  ; $d683 : $82, $af, $f5
+	brl ExecPuzzleScriptCmd                                                  ; $d683 : $82, $af, $f5
 
-	jsr Call_00_e8b9.w                                                  ; $d686 : $20, $b9, $e8
+
+PuzzleScriptCmdBAh:
+	jsr AequPuzzleScriptByte.w                                                  ; $d686 : $20, $b9, $e8
 	sta $56                                                  ; $d689 : $85, $56
-	jsr Call_00_e8b9.w                                                  ; $d68b : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $d68e : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d68b : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $d68e : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $d691 : $20, $09, $ea
 	sta $8f                                                  ; $d694 : $85, $8f
 	xba                                                  ; $d696 : $eb
@@ -13094,36 +13145,41 @@ br_00_d681:
 	sta $7ef001.l, X                                                  ; $d6a7 : $9f, $01, $f0, $7e
 	lda $91                                                  ; $d6ab : $a5, $91
 	sta $7ef002.l, X                                                  ; $d6ad : $9f, $02, $f0, $7e
-	brl br_00_cc35                                                  ; $d6b1 : $82, $81, $f5
+	brl ExecPuzzleScriptCmd                                                  ; $d6b1 : $82, $81, $f5
 
+
+PuzzleScriptCmdBBh:
 	lda #$80.b                                                  ; $d6b4 : $a9, $80
 	trb $099c.w                                                  ; $d6b6 : $1c, $9c, $09
-	jsr Call_00_e8b9.w                                                  ; $d6b9 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d6b9 : $20, $b9, $e8
 	phb                                                  ; $d6bc : $8b
 	phy                                                  ; $d6bd : $5a
 	ldx #$0004.w                                                  ; $d6be : $a2, $04, $00
 	jsr $83b727.l                                                  ; $d6c1 : $22, $27, $b7, $83
 	ply                                                  ; $d6c5 : $7a
 	plb                                                  ; $d6c6 : $ab
-	brl br_00_cc35                                                  ; $d6c7 : $82, $6b, $f5
+	brl ExecPuzzleScriptCmd                                                  ; $d6c7 : $82, $6b, $f5
 
+
+;
 	ldx wCurrChar                                                  ; $d6ca : $a6, $a7
 	tdc                                                  ; $d6cc : $7b
 	lda $7fd14c.l, X                                                  ; $d6cd : $bf, $4c, $d1, $7f
 	sta $7fd19a.l                                                  ; $d6d1 : $8f, $9a, $d1, $7f
 	bit #$01.b                                                  ; $d6d5 : $89, $01
-	bne br_00_d6e9                                                  ; $d6d7 : $d0, $10
+	bne PuzzleScriptCmd27h                                                  ; $d6d7 : $d0, $10
 
 br_00_d6d9:
-	jsr Call_00_e8b9.w                                                  ; $d6d9 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d6d9 : $20, $b9, $e8
 	cmp #$ff.b                                                  ; $d6dc : $c9, $ff
 	bne br_00_d6d9                                                  ; $d6de : $d0, $f9
 
-	jsr Call_00_e8b9.w                                                  ; $d6e0 : $20, $b9, $e8
-	jsr Call_00_e8b9.w                                                  ; $d6e3 : $20, $b9, $e8
-	brl br_00_cc35                                                  ; $d6e6 : $82, $4c, $f5
+	jsr AequPuzzleScriptByte.w                                                  ; $d6e0 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d6e3 : $20, $b9, $e8
+	brl ExecPuzzleScriptCmd                                                  ; $d6e6 : $82, $4c, $f5
 
-br_00_d6e9:
+
+PuzzleScriptCmd27h:
 	lda wCurrChar                                                  ; $d6e9 : $a5, $a7
 	pha                                                  ; $d6eb : $48
 	ldx wCurrChar                                                  ; $d6ec : $a6, $a7
@@ -13133,13 +13189,13 @@ br_00_d6e9:
 	jsr Call_00_d73a.w                                                  ; $d6f9 : $20, $3a, $d7
 	ldx wCurrChar                                                  ; $d6fc : $a6, $a7
 	lda #$80.b                                                  ; $d6fe : $a9, $80
-	sta $7fd18c.l, X                                                  ; $d700 : $9f, $8c, $d1, $7f
-	jsr Call_00_e8ad.w                                                  ; $d704 : $20, $ad, $e8
+	sta wPuzzleScriptsEnabled.l, X                                                  ; $d700 : $9f, $8c, $d1, $7f
+	jsr AequPuzzleScriptWord.w                                                  ; $d704 : $20, $ad, $e8
 	phb                                                  ; $d707 : $8b
 	phy                                                  ; $d708 : $5a
 	clc                                                  ; $d709 : $18
-	adc $7fd194.l                                                  ; $d70a : $6f, $94, $d1, $7f
-	jsr Call_00_e8f4.w                                                  ; $d70e : $20, $f4, $e8
+	adc wPuzzleScriptBaseAddr.l                                                  ; $d70a : $6f, $94, $d1, $7f
+	jsr CheckIfPuzzleScriptOffsetAisValid.w                                                  ; $d70e : $20, $f4, $e8
 	ldx $ab                                                  ; $d711 : $a6, $ab
 	tya                                                  ; $d713 : $98
 	sta $7fd134.l, X                                                  ; $d714 : $9f, $34, $d1, $7f
@@ -13147,17 +13203,18 @@ br_00_d6e9:
 	phb                                                  ; $d71a : $8b
 	pla                                                  ; $d71b : $68
 	sta $7fd136.l, X                                                  ; $d71c : $9f, $36, $d1, $7f
-	jsr Call_00_cc35.w                                                  ; $d720 : $20, $35, $cc
+	jsr ExecPuzzleScriptCmd.w                                                  ; $d720 : $20, $35, $cc
 	ldx wCurrChar                                                  ; $d723 : $a6, $a7
-	lda $7fd18c.l, X                                                  ; $d725 : $bf, $8c, $d1, $7f
+	lda wPuzzleScriptsEnabled.l, X                                                  ; $d725 : $bf, $8c, $d1, $7f
 	ina                                                  ; $d729 : $1a
-	sta $7fd18c.l, X                                                  ; $d72a : $9f, $8c, $d1, $7f
+	sta wPuzzleScriptsEnabled.l, X                                                  ; $d72a : $9f, $8c, $d1, $7f
 	ply                                                  ; $d72e : $7a
 	plb                                                  ; $d72f : $ab
 	pla                                                  ; $d730 : $68
 	sta wCurrChar                                                  ; $d731 : $85, $a7
-	jsr $83ab4f.l                                                  ; $d733 : $22, $4f, $ab, $83
-	brl br_00_cc35                                                  ; $d737 : $82, $fb, $f4
+	jsr Call_03_ab4f.l                                                  ; $d733 : $22, $4f, $ab, $83
+	brl ExecPuzzleScriptCmd                                                  ; $d737 : $82, $fb, $f4
+
 
 Call_00_d73a:
 	phx                                                  ; $d73a : $da
@@ -13172,21 +13229,21 @@ Call_00_d73a:
 	sta $7fd19f.l                                                  ; $d759 : $8f, $9f, $d1, $7f
 	plx                                                  ; $d75d : $fa
 	stx wCurrChar                                                  ; $d75e : $86, $a7
-	jsr $83ab4f.l                                                  ; $d760 : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $d760 : $22, $4f, $ab, $83
 	ldx wCurrChar                                                  ; $d764 : $a6, $a7
 	lda $7fd19a.l                                                  ; $d766 : $af, $9a, $d1, $7f
 	sta $7fd14c.l, X                                                  ; $d76a : $9f, $4c, $d1, $7f
 	lda #$7f.b                                                  ; $d76e : $a9, $7f
 	sta $7fd154.l, X                                                  ; $d770 : $9f, $54, $d1, $7f
 
-br_00_d774:
+@loop_d774:
 	tdc                                                  ; $d774 : $7b
-	jsr Call_00_e8b9.w                                                  ; $d775 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d775 : $20, $b9, $e8
 	cmp #$ff.b                                                  ; $d778 : $c9, $ff
-	beq br_00_d79a                                                  ; $d77a : $f0, $1e
+	beq @done                                                  ; $d77a : $f0, $1e
 
 	cmp #$fb.b                                                  ; $d77c : $c9, $fb
-	bcc br_00_d78a                                                  ; $d77e : $90, $0a
+	bcc @cont_d78a                                                  ; $d77e : $90, $0a
 
 	phx                                                  ; $d780 : $da
 	sec                                                  ; $d781 : $38
@@ -13195,7 +13252,7 @@ br_00_d774:
 	lda $7fd19c.l, X                                                  ; $d785 : $bf, $9c, $d1, $7f
 	plx                                                  ; $d789 : $fa
 
-br_00_d78a:
+@cont_d78a:
 	sta $7fd164.l, X                                                  ; $d78a : $9f, $64, $d1, $7f
 	rep #ACCU_8                                                  ; $d78e : $c2, $20
 	txa                                                  ; $d790 : $8a
@@ -13203,12 +13260,13 @@ br_00_d78a:
 	adc #$0008.w                                                  ; $d792 : $69, $08, $00
 	tax                                                  ; $d795 : $aa
 	sep #ACCU_8                                                  ; $d796 : $e2, $20
-	bra br_00_d774                                                  ; $d798 : $80, $da
+	bra @loop_d774                                                  ; $d798 : $80, $da
 
-br_00_d79a:
+@done:
 	rts                                                  ; $d79a : $60
 
 
+PuzzleScriptCmdA9h_Call:
 	ldx wCurrChar                                                  ; $d79b : $a6, $a7
 	lda $7fd4e6.l, X                                                  ; $d79d : $bf, $e6, $d4, $7f
 	ina                                                  ; $d7a1 : $1a
@@ -13221,9 +13279,9 @@ br_00_d79a:
 	sta $54                                                  ; $d7ac : $85, $54
 	ldx #$0000.w                                                  ; $d7ae : $a2, $00, $00
 
-br_00_d7b1:
+@loop_d7b1:
 	lda $7fd466.l, X                                                  ; $d7b1 : $bf, $66, $d4, $7f
-	beq br_00_d7ca                                                  ; $d7b5 : $f0, $13
+	beq @cont_d7ca                                                  ; $d7b5 : $f0, $13
 
 	rep #ACCU_8                                                  ; $d7b7 : $c2, $20
 	txa                                                  ; $d7b9 : $8a
@@ -13232,12 +13290,12 @@ br_00_d7b1:
 	tax                                                  ; $d7be : $aa
 	sep #ACCU_8                                                  ; $d7bf : $e2, $20
 	cpx #$0080.w                                                  ; $d7c1 : $e0, $80, $00
-	bcc br_00_d7b1                                                  ; $d7c4 : $90, $eb
+	bcc @loop_d7b1                                                  ; $d7c4 : $90, $eb
 
 	tdc                                                  ; $d7c6 : $7b
 	ldx #$0000.w                                                  ; $d7c7 : $a2, $00, $00
 
-br_00_d7ca:
+@cont_d7ca:
 	lda $54                                                  ; $d7ca : $a5, $54
 	sta $7fd466.l, X                                                  ; $d7cc : $9f, $66, $d4, $7f
 	lda $7fd19a.l                                                  ; $d7d0 : $af, $9a, $d1, $7f
@@ -13250,13 +13308,13 @@ br_00_d7ca:
 	rep #ACCU_8                                                  ; $d7e6 : $c2, $20
 	lda wCurrChar                                                  ; $d7e8 : $a5, $a7
 	clc                                                  ; $d7ea : $18
-	adc #$d15c.w                                                  ; $d7eb : $69, $5c, $d1
+	adc #wPuzzleScriptFbhVars.w                                                  ; $d7eb : $69, $5c, $d1
 	sta $5d                                                  ; $d7ee : $85, $5d
 	sep #ACCU_8                                                  ; $d7f0 : $e2, $20
 	phy                                                  ; $d7f2 : $5a
 	ldy #$0000.w                                                  ; $d7f3 : $a0, $00, $00
 
-br_00_d7f6:
+@loop_d7f6:
 	lda [$5d], Y                                                  ; $d7f6 : $b7, $5d
 	sta $7fd46a.l, X                                                  ; $d7f8 : $9f, $6a, $d4, $7f
 	inx                                                  ; $d7fc : $e8
@@ -13267,12 +13325,12 @@ br_00_d7f6:
 	tay                                                  ; $d804 : $a8
 	cmp #$0020.w                                                  ; $d805 : $c9, $20, $00
 	sep #ACCU_8                                                  ; $d808 : $e2, $20
-	bcc br_00_d7f6                                                  ; $d80a : $90, $ea
+	bcc @loop_d7f6                                                  ; $d80a : $90, $ea
 
 	ply                                                  ; $d80c : $7a
 	ldx wCurrChar                                                  ; $d80d : $a6, $a7
 	jsr Call_00_d73a.w                                                  ; $d80f : $20, $3a, $d7
-	jsr Call_00_e8ad.w                                                  ; $d812 : $20, $ad, $e8
+	jsr AequPuzzleScriptWord.w                                                  ; $d812 : $20, $ad, $e8
 	pha                                                  ; $d815 : $48
 	ldx $56                                                  ; $d816 : $a6, $56
 	tya                                                  ; $d818 : $98
@@ -13284,11 +13342,13 @@ br_00_d7f6:
 	rep #ACCU_8                                                  ; $d825 : $c2, $20
 	pla                                                  ; $d827 : $68
 	clc                                                  ; $d828 : $18
-	adc $7fd194.l                                                  ; $d829 : $6f, $94, $d1, $7f
-	jsr Call_00_e8f4.w                                                  ; $d82d : $20, $f4, $e8
+	adc wPuzzleScriptBaseAddr.l                                                  ; $d829 : $6f, $94, $d1, $7f
+	jsr CheckIfPuzzleScriptOffsetAisValid.w                                                  ; $d82d : $20, $f4, $e8
 	sep #ACCU_8                                                  ; $d830 : $e2, $20
-	brl br_00_cc35                                                  ; $d832 : $82, $00, $f4
+	brl ExecPuzzleScriptCmd                                                  ; $d832 : $82, $00, $f4
 
+
+;
 	asl                                                  ; $d835 : $0a
 	adc $7fd4e6.l, X                                                  ; $d836 : $7f, $e6, $d4, $7f
 	sta $54                                                  ; $d83a : $85, $54
@@ -13303,6 +13363,7 @@ br_00_d7f6:
 	rts                                                  ; $d848 : $60
 
 
+PuzzleScriptCmdAAh_Ret:
 	ldx wCurrChar                                                  ; $d849 : $a6, $a7
 	lda $7fd4e6.l, X                                                  ; $d84b : $bf, $e6, $d4, $7f
 	asl                                                  ; $d84f : $0a
@@ -13316,10 +13377,10 @@ br_00_d7f6:
 	sta $7fd4e6.l, X                                                  ; $d85c : $9f, $e6, $d4, $7f
 	ldx #$0000.w                                                  ; $d860 : $a2, $00, $00
 
-br_00_d863:
+@loop_d863:
 	lda $7fd466.l, X                                                  ; $d863 : $bf, $66, $d4, $7f
 	cmp $54                                                  ; $d867 : $c5, $54
-	beq br_00_d87a                                                  ; $d869 : $f0, $0f
+	beq @cont_d87a                                                  ; $d869 : $f0, $0f
 
 	rep #ACCU_8                                                  ; $d86b : $c2, $20
 	txa                                                  ; $d86d : $8a
@@ -13328,9 +13389,9 @@ br_00_d863:
 	tax                                                  ; $d872 : $aa
 	sep #ACCU_8                                                  ; $d873 : $e2, $20
 	cpx #$0080.w                                                  ; $d875 : $e0, $80, $00
-	bcc br_00_d863                                                  ; $d878 : $90, $e9
+	bcc @loop_d863                                                  ; $d878 : $90, $e9
 
-br_00_d87a:
+@cont_d87a:
 	tdc                                                  ; $d87a : $7b
 	sta $7fd466.l, X                                                  ; $d87b : $9f, $66, $d4, $7f
 	lda $7fd46f.l, X                                                  ; $d87f : $bf, $6f, $d4, $7f
@@ -13342,7 +13403,7 @@ br_00_d87a:
 	rep #ACCU_8                                                  ; $d893 : $c2, $20
 	lda wCurrChar                                                  ; $d895 : $a5, $a7
 	clc                                                  ; $d897 : $18
-	adc #$d15c.w                                                  ; $d898 : $69, $5c, $d1
+	adc #wPuzzleScriptFbhVars.w                                                  ; $d898 : $69, $5c, $d1
 	sta $5d                                                  ; $d89b : $85, $5d
 	lda $7fd467.l, X                                                  ; $d89d : $bf, $67, $d4, $7f
 	tay                                                  ; $d8a1 : $a8
@@ -13353,7 +13414,7 @@ br_00_d87a:
 	plb                                                  ; $d8aa : $ab
 	ldy #$0000.w                                                  ; $d8ab : $a0, $00, $00
 
-br_00_d8ae:
+@loop_d8ae:
 	lda $7fd46a.l, X                                                  ; $d8ae : $bf, $6a, $d4, $7f
 	sta [$5d], Y                                                  ; $d8b2 : $97, $5d
 	inx                                                  ; $d8b4 : $e8
@@ -13364,186 +13425,219 @@ br_00_d8ae:
 	tay                                                  ; $d8bc : $a8
 	cmp #$0020.w                                                  ; $d8bd : $c9, $20, $00
 	sep #ACCU_8                                                  ; $d8c0 : $e2, $20
-	bcc br_00_d8ae                                                  ; $d8c2 : $90, $ea
+	bcc @loop_d8ae                                                  ; $d8c2 : $90, $ea
 
 	ply                                                  ; $d8c4 : $7a
-	brl br_00_cc35                                                  ; $d8c5 : $82, $6d, $f3
+	brl ExecPuzzleScriptCmd                                                  ; $d8c5 : $82, $6d, $f3
 
+
+;
 	lda #$ff.b                                                  ; $d8c8 : $a9, $ff
 	sta $7fd0bf.l                                                  ; $d8ca : $8f, $bf, $d0, $7f
-	brl br_00_cc35                                                  ; $d8ce : $82, $64, $f3
+	brl ExecPuzzleScriptCmd                                                  ; $d8ce : $82, $64, $f3
 
-	jsr Call_00_d9f0.w                                                  ; $d8d1 : $20, $f0, $d9
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d8d1 : $20, $f0, $d9
 	clc                                                  ; $d8d4 : $18
-	adc $7fd074.l, X                                                  ; $d8d5 : $7f, $74, $d0, $7f
-	sta $7fd074.l, X                                                  ; $d8d9 : $9f, $74, $d0, $7f
-	brl br_00_cc35                                                  ; $d8dd : $82, $55, $f3
+	adc wPuzzleScriptVars.l, X                                                  ; $d8d5 : $7f, $74, $d0, $7f
+	sta wPuzzleScriptVars.l, X                                                  ; $d8d9 : $9f, $74, $d0, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $d8dd : $82, $55, $f3
 
-	jsr Call_00_d9f0.w                                                  ; $d8e0 : $20, $f0, $d9
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d8e0 : $20, $f0, $d9
 	eor #$ff.b                                                  ; $d8e3 : $49, $ff
 	ina                                                  ; $d8e5 : $1a
 	clc                                                  ; $d8e6 : $18
-	adc $7fd074.l, X                                                  ; $d8e7 : $7f, $74, $d0, $7f
-	sta $7fd074.l, X                                                  ; $d8eb : $9f, $74, $d0, $7f
-	brl br_00_cc35                                                  ; $d8ef : $82, $43, $f3
+	adc wPuzzleScriptVars.l, X                                                  ; $d8e7 : $7f, $74, $d0, $7f
+	sta wPuzzleScriptVars.l, X                                                  ; $d8eb : $9f, $74, $d0, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $d8ef : $82, $43, $f3
 
+
+PuzzleScriptCmd32h_IncVar:
 	tdc                                                  ; $d8f2 : $7b
-	jsr Call_00_e8b9.w                                                  ; $d8f3 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d8f6 : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d8f3 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d8f6 : $20, $bc, $e9
 	tax                                                  ; $d8f9 : $aa
-	lda $7fd074.l, X                                                  ; $d8fa : $bf, $74, $d0, $7f
+	lda wPuzzleScriptVars.l, X                                                  ; $d8fa : $bf, $74, $d0, $7f
 	ina                                                  ; $d8fe : $1a
-	sta $7fd074.l, X                                                  ; $d8ff : $9f, $74, $d0, $7f
-	brl br_00_cc35                                                  ; $d903 : $82, $2f, $f3
+	sta wPuzzleScriptVars.l, X                                                  ; $d8ff : $9f, $74, $d0, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $d903 : $82, $2f, $f3
 
+
+;
 	tdc                                                  ; $d906 : $7b
-	jsr Call_00_e8b9.w                                                  ; $d907 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d90a : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d907 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d90a : $20, $bc, $e9
 	tax                                                  ; $d90d : $aa
-	lda $7fd074.l, X                                                  ; $d90e : $bf, $74, $d0, $7f
+	lda wPuzzleScriptVars.l, X                                                  ; $d90e : $bf, $74, $d0, $7f
 	dea                                                  ; $d912 : $3a
-	sta $7fd074.l, X                                                  ; $d913 : $9f, $74, $d0, $7f
-	brl br_00_cc35                                                  ; $d917 : $82, $1b, $f3
+	sta wPuzzleScriptVars.l, X                                                  ; $d913 : $9f, $74, $d0, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $d917 : $82, $1b, $f3
 
-	jsr Call_00_d9f0.w                                                  ; $d91a : $20, $f0, $d9
-	sta $7fd074.l, X                                                  ; $d91d : $9f, $74, $d0, $7f
-	brl br_00_cc35                                                  ; $d921 : $82, $11, $f3
 
+PuzzleScriptCmd34h_SetVar:
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d91a : $20, $f0, $d9
+	sta wPuzzleScriptVars.l, X                                                  ; $d91d : $9f, $74, $d0, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $d921 : $82, $11, $f3
+
+
+PuzzleScriptCmd2fh_SetVarFromOtherVar:
 	tdc                                                  ; $d924 : $7b
-	jsr Call_00_e8b9.w                                                  ; $d925 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d928 : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d925 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d928 : $20, $bc, $e9
 	tax                                                  ; $d92b : $aa
 	phx                                                  ; $d92c : $da
-	jsr Call_00_e8b9.w                                                  ; $d92d : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $d930 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d92d : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $d930 : $20, $ed, $e9
 	plx                                                  ; $d933 : $fa
-	sta $7fd074.l, X                                                  ; $d934 : $9f, $74, $d0, $7f
-	brl br_00_cc35                                                  ; $d938 : $82, $fa, $f2
+	sta wPuzzleScriptVars.l, X                                                  ; $d934 : $9f, $74, $d0, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $d938 : $82, $fa, $f2
 
-	jsr Call_00_d9f0.w                                                  ; $d93b : $20, $f0, $d9
-	cmp $7fd074.l, X                                                  ; $d93e : $df, $74, $d0, $7f
-	bne br_00_d947                                                  ; $d942 : $d0, $03
 
-	brl br_00_d9ea                                                  ; $d944 : $82, $a3, $00
+PuzzleScriptCmd35h_JumpIfVarEquVal:
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d93b : $20, $f0, $d9
+	cmp wPuzzleScriptVars.l, X                                                  ; $d93e : $df, $74, $d0, $7f
+	bne @br_d947                                                  ; $d942 : $d0, $03
 
-br_00_d947:
-	brl br_00_d2b2                                                  ; $d947 : $82, $68, $f9
+	brl _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d944 : $82, $a3, $00
 
-	jsr Call_00_d9f0.w                                                  ; $d94a : $20, $f0, $d9
-	cmp $7fd074.l, X                                                  ; $d94d : $df, $74, $d0, $7f
+@br_d947:
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d947 : $82, $68, $f9
+
+
+PuzzleScriptCmd36h_JumpIfVarNotEquVal:
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d94a : $20, $f0, $d9
+	cmp wPuzzleScriptVars.l, X                                                  ; $d94d : $df, $74, $d0, $7f
 	bne br_00_d956                                                  ; $d951 : $d0, $03
 
-	brl br_00_d9ed                                                  ; $d953 : $82, $97, $00
+	brl Func_0_d9ed                                                  ; $d953 : $82, $97, $00
 
 br_00_d956:
-	brl br_00_d2a2                                                  ; $d956 : $82, $49, $f9
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $d956 : $82, $49, $f9
 
-	jsr Call_00_d9f0.w                                                  ; $d959 : $20, $f0, $d9
-	cmp $7fd074.l, X                                                  ; $d95c : $df, $74, $d0, $7f
+
+;
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d959 : $20, $f0, $d9
+	cmp wPuzzleScriptVars.l, X                                                  ; $d95c : $df, $74, $d0, $7f
 	bcs br_00_d965                                                  ; $d960 : $b0, $03
 
-	brl br_00_d9ea                                                  ; $d962 : $82, $85, $00
+	brl _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d962 : $82, $85, $00
 
 br_00_d965:
-	brl br_00_d2b2                                                  ; $d965 : $82, $4a, $f9
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d965 : $82, $4a, $f9
 
-	jsr Call_00_d9f0.w                                                  ; $d968 : $20, $f0, $d9
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d968 : $20, $f0, $d9
 	dea                                                  ; $d96b : $3a
-	cmp $7fd074.l, X                                                  ; $d96c : $df, $74, $d0, $7f
-	bcs br_00_d9ea                                                  ; $d970 : $b0, $78
+	cmp wPuzzleScriptVars.l, X                                                  ; $d96c : $df, $74, $d0, $7f
+	bcs _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d970 : $b0, $78
 
-	brl br_00_d2b2                                                  ; $d972 : $82, $3d, $f9
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d972 : $82, $3d, $f9
 
-	jsr Call_00_d9f0.w                                                  ; $d975 : $20, $f0, $d9
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d975 : $20, $f0, $d9
 	dea                                                  ; $d978 : $3a
-	cmp $7fd074.l, X                                                  ; $d979 : $df, $74, $d0, $7f
-	bcc br_00_d9ea                                                  ; $d97d : $90, $6b
+	cmp wPuzzleScriptVars.l, X                                                  ; $d979 : $df, $74, $d0, $7f
+	bcc _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d97d : $90, $6b
 
-	brl br_00_d2b2                                                  ; $d97f : $82, $30, $f9
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d97f : $82, $30, $f9
 
-	jsr Call_00_d9f0.w                                                  ; $d982 : $20, $f0, $d9
-	cmp $7fd074.l, X                                                  ; $d985 : $df, $74, $d0, $7f
-	bcs br_00_d9ea                                                  ; $d989 : $b0, $5f
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d982 : $20, $f0, $d9
+	cmp wPuzzleScriptVars.l, X                                                  ; $d985 : $df, $74, $d0, $7f
+	bcs _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d989 : $b0, $5f
 
-	brl br_00_d2b2                                                  ; $d98b : $82, $24, $f9
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d98b : $82, $24, $f9
 
-	jsr Call_00_d9f0.w                                                  ; $d98e : $20, $f0, $d9
-	jsr Call_00_e9ed.w                                                  ; $d991 : $20, $ed, $e9
-	cmp $7fd074.l, X                                                  ; $d994 : $df, $74, $d0, $7f
-	beq br_00_d9ea                                                  ; $d998 : $f0, $50
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d98e : $20, $f0, $d9
+	jsr GetPuzzleScriptVar.w                                                  ; $d991 : $20, $ed, $e9
+	cmp wPuzzleScriptVars.l, X                                                  ; $d994 : $df, $74, $d0, $7f
+	beq _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d998 : $f0, $50
 
-	brl br_00_d2b2                                                  ; $d99a : $82, $15, $f9
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d99a : $82, $15, $f9
 
-	jsr Call_00_d9f0.w                                                  ; $d99d : $20, $f0, $d9
-	jsr Call_00_e9ed.w                                                  ; $d9a0 : $20, $ed, $e9
-	cmp $7fd074.l, X                                                  ; $d9a3 : $df, $74, $d0, $7f
-	beq br_00_d9ed                                                  ; $d9a7 : $f0, $44
 
-	brl br_00_d2a2                                                  ; $d9a9 : $82, $f6, $f8
+PuzzleScriptCmd3ch:
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d99d : $20, $f0, $d9
+	jsr GetPuzzleScriptVar.w                                                  ; $d9a0 : $20, $ed, $e9
+	cmp wPuzzleScriptVars.l, X                                                  ; $d9a3 : $df, $74, $d0, $7f
+	beq Func_0_d9ed                                                  ; $d9a7 : $f0, $44
 
-	jsr Call_00_d9f0.w                                                  ; $d9ac : $20, $f0, $d9
-	jsr Call_00_e9ed.w                                                  ; $d9af : $20, $ed, $e9
-	cmp $7fd074.l, X                                                  ; $d9b2 : $df, $74, $d0, $7f
-	bcc br_00_d9ea                                                  ; $d9b6 : $90, $32
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $d9a9 : $82, $f6, $f8
 
-	brl br_00_d2b2                                                  ; $d9b8 : $82, $f7, $f8
 
-	jsr Call_00_d9f0.w                                                  ; $d9bb : $20, $f0, $d9
-	jsr Call_00_e9ed.w                                                  ; $d9be : $20, $ed, $e9
+;
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d9ac : $20, $f0, $d9
+	jsr GetPuzzleScriptVar.w                                                  ; $d9af : $20, $ed, $e9
+	cmp wPuzzleScriptVars.l, X                                                  ; $d9b2 : $df, $74, $d0, $7f
+	bcc _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d9b6 : $90, $32
+
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d9b8 : $82, $f7, $f8
+
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d9bb : $20, $f0, $d9
+	jsr GetPuzzleScriptVar.w                                                  ; $d9be : $20, $ed, $e9
 	dea                                                  ; $d9c1 : $3a
-	cmp $7fd074.l, X                                                  ; $d9c2 : $df, $74, $d0, $7f
-	bcs br_00_d9ea                                                  ; $d9c6 : $b0, $22
+	cmp wPuzzleScriptVars.l, X                                                  ; $d9c2 : $df, $74, $d0, $7f
+	bcs _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d9c6 : $b0, $22
 
-	brl br_00_d2b2                                                  ; $d9c8 : $82, $e7, $f8
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d9c8 : $82, $e7, $f8
 
-	jsr Call_00_d9f0.w                                                  ; $d9cb : $20, $f0, $d9
-	jsr Call_00_e9ed.w                                                  ; $d9ce : $20, $ed, $e9
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d9cb : $20, $f0, $d9
+	jsr GetPuzzleScriptVar.w                                                  ; $d9ce : $20, $ed, $e9
 	dea                                                  ; $d9d1 : $3a
-	cmp $7fd074.l, X                                                  ; $d9d2 : $df, $74, $d0, $7f
-	bcc br_00_d9ea                                                  ; $d9d6 : $90, $12
+	cmp wPuzzleScriptVars.l, X                                                  ; $d9d2 : $df, $74, $d0, $7f
+	bcc _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d9d6 : $90, $12
 
-	brl br_00_d2b2                                                  ; $d9d8 : $82, $d7, $f8
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d9d8 : $82, $d7, $f8
 
-	jsr Call_00_d9f0.w                                                  ; $d9db : $20, $f0, $d9
-	jsr Call_00_e9ed.w                                                  ; $d9de : $20, $ed, $e9
-	cmp $7fd074.l, X                                                  ; $d9e1 : $df, $74, $d0, $7f
-	bcs br_00_d9ea                                                  ; $d9e5 : $b0, $03
+	jsr XthenAequPuzzleScriptBytes.w                                                  ; $d9db : $20, $f0, $d9
+	jsr GetPuzzleScriptVar.w                                                  ; $d9de : $20, $ed, $e9
+	cmp wPuzzleScriptVars.l, X                                                  ; $d9e1 : $df, $74, $d0, $7f
+	bcs _d9ea_PuzzleScriptCmd0ah_Jump                                                  ; $d9e5 : $b0, $03
 
-	brl br_00_d2b2                                                  ; $d9e7 : $82, $c8, $f8
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d9e7 : $82, $c8, $f8
 
-br_00_d9ea:
-	brl br_00_d2a2                                                  ; $d9ea : $82, $b5, $f8
 
-br_00_d9ed:
-	brl br_00_d2b2                                                  ; $d9ed : $82, $c2, $f8
+_d9ea_PuzzleScriptCmd0ah_Jump:
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $d9ea : $82, $b5, $f8
 
-Call_00_d9f0:
+
+Func_0_d9ed:
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $d9ed : $82, $c2, $f8
+
+
+XthenAequPuzzleScriptBytes:
 	tdc                                                  ; $d9f0 : $7b
-	jsr Call_00_e8b9.w                                                  ; $d9f1 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $d9f4 : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $d9f1 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $d9f4 : $20, $bc, $e9
 	tax                                                  ; $d9f7 : $aa
-	jsr Call_00_e8b9.w                                                  ; $d9f8 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $d9f8 : $20, $b9, $e8
 	rts                                                  ; $d9fb : $60
 
 
+PuzzleScriptCmd41hTo54h:
+; store op-$41
 	rep #ACCU_8                                                  ; $d9fc : $c2, $20
 	txa                                                  ; $d9fe : $8a
 	sec                                                  ; $d9ff : $38
 	sbc #$0082.w                                                  ; $da00 : $e9, $82, $00
 	lsr                                                  ; $da03 : $4a
-	sta $4204.w                                                  ; $da04 : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $da04 : $8d, $04, $42
+
+; /div 5
 	sep #ACCU_8                                                  ; $da07 : $e2, $20
 	lda #$05.b                                                  ; $da09 : $a9, $05
-	sta $4206.w                                                  ; $da0b : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $da0b : $8d, $06, $42
 	tdc                                                  ; $da0e : $7b
-	jsr Call_00_e8b9.w                                                  ; $da0f : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $da0f : $20, $b9, $e8
 	xba                                                  ; $da12 : $eb
-	lda $4214.w                                                  ; $da13 : $ad, $14, $42
+
+; 56 = quotient
+	lda RDDIVL.w                                                  ; $da13 : $ad, $14, $42
 	sta $56                                                  ; $da16 : $85, $56
+
+; 57 = remainder
 	lda RDMPYL.w                                                  ; $da18 : $ad, $16, $42
 	sta $57                                                  ; $da1b : $85, $57
+
+;
 	xba                                                  ; $da1d : $eb
-	jsr Call_00_e9ed.w                                                  ; $da1e : $20, $ed, $e9
+	jsr GetPuzzleScriptVar.w                                                  ; $da1e : $20, $ed, $e9
 	sec                                                  ; $da21 : $38
 	sbc #$e0.b                                                  ; $da22 : $e9, $e0
 	sta $54                                                  ; $da24 : $85, $54
@@ -13553,7 +13647,7 @@ Call_00_d9f0:
 	asl                                                  ; $da2b : $0a
 	rep #ACCU_8                                                  ; $da2c : $c2, $20
 	tax                                                  ; $da2e : $aa
-	lda $80da4b.l, X                                                  ; $da2f : $bf, $4b, $da, $80
+	lda @data_da4b.l, X                                                  ; $da2f : $bf, $4b, $da, $80
 	clc                                                  ; $da33 : $18
 	adc $54                                                  ; $da34 : $65, $54
 	sta $5d                                                  ; $da36 : $85, $5d
@@ -13561,35 +13655,42 @@ Call_00_d9f0:
 	lda #$7f.b                                                  ; $da3a : $a9, $7f
 	sta $5f                                                  ; $da3c : $85, $5f
 	tdc                                                  ; $da3e : $7b
+
+;
 	lda $57                                                  ; $da3f : $a5, $57
 	asl                                                  ; $da41 : $0a
 	tax                                                  ; $da42 : $aa
-	jsr ($da53.w, X)                                                  ; $da43 : $fc, $53, $da
+	jsr (@funcs_da53.w, X)                                                  ; $da43 : $fc, $53, $da
 	sep #ACCU_8                                                  ; $da46 : $e2, $20
-	brl br_00_cc35                                                  ; $da48 : $82, $ea, $f1
+	brl ExecPuzzleScriptCmd                                                  ; $da48 : $82, $ea, $f1
 
-	lda $d1, S                                                  ; $da4b : $a3, $d1
-	sbc $d1, S                                                  ; $da4d : $e3, $d1
-	and $d2, S                                                  ; $da4f : $23, $d2
-	adc $d2, S                                                  ; $da51 : $63, $d2
-	eor $63da.w, X                                                  ; $da53 : $5d, $da, $63
-	phx                                                  ; $da56 : $da
-	rtl                                                  ; $da57 : $6b
+; from quotient
+@data_da4b:
+	.dw $d1a3
+	.dw $d1e3
+	.dw $d223
+	.dw $d263
+
+; from remainder
+@funcs_da53:
+	.dw $da5d
+	.dw $da63
+	.dw $da6b
+	.dw $da76
+	.dw $da7c
+
+	jsr AequPuzzleScriptByte.w                                                  ; $da5d : $20, $b9, $e8
+	sta [$5d]                                                  ; $da60 : $87, $5d
+	rts                                                  ; $da62 : $60
 
 
-	phx                                                  ; $da58 : $da
-	ror $da, X                                                  ; $da59 : $76, $da
-	jmp ($20da.w, X)                                                  ; $da5b : $7c, $da, $20
-
-
-	lda $87e8.w, Y                                                  ; $da5e : $b9, $e8, $87
-	eor $2060.w, X                                                  ; $da61 : $5d, $60, $20
-	lda $67e8.w, Y                                                  ; $da64 : $b9, $e8, $67
-	eor $5d87.w, X                                                  ; $da67 : $5d, $87, $5d
+	jsr AequPuzzleScriptByte.w                                                  ; $da63 : $20, $b9, $e8
+	adc [$5d]                                                  ; $da66 : $67, $5d
+	sta [$5d]                                                  ; $da68 : $87, $5d
 	rts                                                  ; $da6a : $60
 
 
-	jsr Call_00_e8b9.w                                                  ; $da6b : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $da6b : $20, $b9, $e8
 	eor #$ff.b                                                  ; $da6e : $49, $ff
 	ina                                                  ; $da70 : $1a
 	adc [$5d]                                                  ; $da71 : $67, $5d
@@ -13610,30 +13711,32 @@ Call_00_d9f0:
 
 
 	tdc                                                  ; $da82 : $7b
-	jsr Call_00_e8b9.w                                                  ; $da83 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $da83 : $20, $b9, $e8
 	sec                                                  ; $da86 : $38
 	sbc #$e0.b                                                  ; $da87 : $e9, $e0
 	tax                                                  ; $da89 : $aa
 	phx                                                  ; $da8a : $da
-	jsr Call_00_e8b9.w                                                  ; $da8b : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $da8e : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $da8b : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $da8e : $20, $ed, $e9
 	jsr Call_00_e92a.w                                                  ; $da91 : $20, $2a, $e9
 	plx                                                  ; $da94 : $fa
-	brl br_00_daae                                                  ; $da95 : $82, $16, $00
+	brl Func_0_daae                                                  ; $da95 : $82, $16, $00
 
+
+PuzzleScriptCmd69h_MovVarVar:
 	tdc                                                  ; $da98 : $7b
-	jsr Call_00_e8b9.w                                                  ; $da99 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $da9c : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $da99 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $da9c : $20, $ed, $e9
 	sec                                                  ; $da9f : $38
 	sbc #$e0.b                                                  ; $daa0 : $e9, $e0
 	tax                                                  ; $daa2 : $aa
 	phx                                                  ; $daa3 : $da
-	jsr Call_00_e8b9.w                                                  ; $daa4 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $daa7 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $daa4 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $daa7 : $20, $ed, $e9
 	jsr Call_00_e92a.w                                                  ; $daaa : $20, $2a, $e9
 	plx                                                  ; $daad : $fa
 
-br_00_daae:
+Func_0_daae:
 	lda $9f                                                  ; $daae : $a5, $9f
 	sta $7fd1a3.l, X                                                  ; $dab0 : $9f, $a3, $d1, $7f
 	lda $a0                                                  ; $dab4 : $a5, $a0
@@ -13642,106 +13745,114 @@ br_00_daae:
 	sta $7fd223.l, X                                                  ; $dabc : $9f, $23, $d2, $7f
 	lda $a2                                                  ; $dac0 : $a5, $a2
 	sta $7fd263.l, X                                                  ; $dac2 : $9f, $63, $d2, $7f
-	brl br_00_cc35                                                  ; $dac6 : $82, $6c, $f1
+	brl ExecPuzzleScriptCmd                                                  ; $dac6 : $82, $6c, $f1
 
+
+;
 	jsr Call_00_dae5.w                                                  ; $dac9 : $20, $e5, $da
 	adc $7fd1a3.l, X                                                  ; $dacc : $7f, $a3, $d1, $7f
 	sta $7fd223.l, X                                                  ; $dad0 : $9f, $23, $d2, $7f
-	brl br_00_cc35                                                  ; $dad4 : $82, $5e, $f1
+	brl ExecPuzzleScriptCmd                                                  ; $dad4 : $82, $5e, $f1
 
 	jsr Call_00_dae5.w                                                  ; $dad7 : $20, $e5, $da
 	adc $7fd1e3.l, X                                                  ; $dada : $7f, $e3, $d1, $7f
 	sta $7fd263.l, X                                                  ; $dade : $9f, $63, $d2, $7f
-	brl br_00_cc35                                                  ; $dae2 : $82, $50, $f1
+	brl ExecPuzzleScriptCmd                                                  ; $dae2 : $82, $50, $f1
 
 Call_00_dae5:
 	tdc                                                  ; $dae5 : $7b
-	jsr Call_00_e8b9.w                                                  ; $dae6 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $dae6 : $20, $b9, $e8
 	sec                                                  ; $dae9 : $38
 	sbc #$e0.b                                                  ; $daea : $e9, $e0
 	tax                                                  ; $daec : $aa
-	jsr Call_00_e8b9.w                                                  ; $daed : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $daed : $20, $b9, $e8
 	clc                                                  ; $daf0 : $18
 	rts                                                  ; $daf1 : $60
 
 
-	jsr Call_00_e8b9.w                                                  ; $daf2 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $daf5 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $daf2 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $daf5 : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $daf8 : $20, $09, $ea
 	sta $05bd.w                                                  ; $dafb : $8d, $bd, $05
 	xba                                                  ; $dafe : $eb
 	sta $05be.w                                                  ; $daff : $8d, $be, $05
-	jsr Call_00_e8b9.w                                                  ; $db02 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db02 : $20, $b9, $e8
 	sta $05bf.w                                                  ; $db05 : $8d, $bf, $05
 	lda #$ff.b                                                  ; $db08 : $a9, $ff
 	sta $7fd0bf.l                                                  ; $db0a : $8f, $bf, $d0, $7f
-	brl br_00_cc35                                                  ; $db0e : $82, $24, $f1
+	brl ExecPuzzleScriptCmd                                                  ; $db0e : $82, $24, $f1
 
 	lda #$80.b                                                  ; $db11 : $a9, $80
 	tsb $05b5.w                                                  ; $db13 : $0c, $b5, $05
 	lda #$08.b                                                  ; $db16 : $a9, $08
 	tsb $05b3.w                                                  ; $db18 : $0c, $b3, $05
-	brl br_00_cc35                                                  ; $db1b : $82, $17, $f1
+	brl ExecPuzzleScriptCmd                                                  ; $db1b : $82, $17, $f1
 
-	brl br_00_cc35                                                  ; $db1e : $82, $14, $f1
+	brl ExecPuzzleScriptCmd                                                  ; $db1e : $82, $14, $f1
 
+
+PuzzleScriptCmd58h:
 	tdc                                                  ; $db21 : $7b
-	jsr Call_00_e8b9.w                                                  ; $db22 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db22 : $20, $b9, $e8
 	asl                                                  ; $db25 : $0a
 	tax                                                  ; $db26 : $aa
 	tdc                                                  ; $db27 : $7b
-	jsr Call_00_e8b9.w                                                  ; $db28 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db28 : $20, $b9, $e8
 	jsr Call_00_dbd2.w                                                  ; $db2b : $20, $d2, $db
 	clc                                                  ; $db2e : $18
 	adc $7fd0ce.l, X                                                  ; $db2f : $7f, $ce, $d0, $7f
 	sta $7fd0ce.l, X                                                  ; $db33 : $9f, $ce, $d0, $7f
 	sep #ACCU_8                                                  ; $db37 : $e2, $20
 	tdc                                                  ; $db39 : $7b
-	jsr Call_00_e8b9.w                                                  ; $db3a : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db3a : $20, $b9, $e8
 	jsr Call_00_dbd2.w                                                  ; $db3d : $20, $d2, $db
 	clc                                                  ; $db40 : $18
 	adc $7fd0d6.l, X                                                  ; $db41 : $7f, $d6, $d0, $7f
 	sta $7fd0d6.l, X                                                  ; $db45 : $9f, $d6, $d0, $7f
 	sep #ACCU_8                                                  ; $db49 : $e2, $20
-	jsr Call_00_e8b9.w                                                  ; $db4b : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db4b : $20, $b9, $e8
 	sta $7fd0de.l, X                                                  ; $db4e : $9f, $de, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $db52 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db52 : $20, $b9, $e8
 	sta $7fd0e6.l, X                                                  ; $db55 : $9f, $e6, $d0, $7f
 	tdc                                                  ; $db59 : $7b
 	sta $7fd0df.l, X                                                  ; $db5a : $9f, $df, $d0, $7f
 	sta $7fd0e7.l, X                                                  ; $db5e : $9f, $e7, $d0, $7f
 	lda #$40.b                                                  ; $db62 : $a9, $40
 	tsb $1261.w                                                  ; $db64 : $0c, $61, $12
-	brl br_00_cc35                                                  ; $db67 : $82, $cb, $f0
+	brl ExecPuzzleScriptCmd                                                  ; $db67 : $82, $cb, $f0
 
+
+PuzzleScriptCmdB4h:
 	ldx $05aa.w                                                  ; $db6a : $ae, $aa, $05
 	tdc                                                  ; $db6d : $7b
-	jsr Call_00_e8b9.w                                                  ; $db6e : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db6e : $20, $b9, $e8
 	jsr Call_00_dbd2.w                                                  ; $db71 : $20, $d2, $db
 	clc                                                  ; $db74 : $18
 	adc $121e.w, X                                                  ; $db75 : $7d, $1e, $12
 	sta $7fd08b.l                                                  ; $db78 : $8f, $8b, $d0, $7f
 	sep #ACCU_8                                                  ; $db7c : $e2, $20
 	tdc                                                  ; $db7e : $7b
-	jsr Call_00_e8b9.w                                                  ; $db7f : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db7f : $20, $b9, $e8
 	jsr Call_00_dbd2.w                                                  ; $db82 : $20, $d2, $db
 	clc                                                  ; $db85 : $18
 	adc $1226.w, X                                                  ; $db86 : $7d, $26, $12
 	sta $7fd08d.l                                                  ; $db89 : $8f, $8d, $d0, $7f
 	sep #ACCU_8                                                  ; $db8d : $e2, $20
-	jsr Call_00_e8b9.w                                                  ; $db8f : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db8f : $20, $b9, $e8
 	sta $05a8.w                                                  ; $db92 : $8d, $a8, $05
 	lda #$08.b                                                  ; $db95 : $a9, $08
 	tsb $1261.w                                                  ; $db97 : $0c, $61, $12
-	brl br_00_cc35                                                  ; $db9a : $82, $98, $f0
+	brl ExecPuzzleScriptCmd                                                  ; $db9a : $82, $98, $f0
 
+
+;
 	tdc                                                  ; $db9d : $7b
-	jsr Call_00_e8b9.w                                                  ; $db9e : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $db9e : $20, $b9, $e8
 	clc                                                  ; $dba1 : $18
 	adc wCharacterXsDiv16s.w                                                  ; $dba2 : $6d, $ba, $06
 	sta $56                                                  ; $dba5 : $85, $56
 	stz $57                                                  ; $dba7 : $64, $57
-	jsr Call_00_e8b9.w                                                  ; $dba9 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $dba9 : $20, $b9, $e8
 	clc                                                  ; $dbac : $18
 	adc wCharacterYsDiv16s.w                                                  ; $dbad : $6d, $e2, $06
 	sta $58                                                  ; $dbb0 : $85, $58
@@ -13755,11 +13866,11 @@ Call_00_dae5:
 	tsb $1261.w                                                  ; $dbc2 : $0c, $61, $12
 	plb                                                  ; $dbc5 : $ab
 	ply                                                  ; $dbc6 : $7a
-	brl br_00_cc35                                                  ; $dbc7 : $82, $6b, $f0
+	brl ExecPuzzleScriptCmd                                                  ; $dbc7 : $82, $6b, $f0
 
 	lda #$08.b                                                  ; $dbca : $a9, $08
 	trb $1261.w                                                  ; $dbcc : $1c, $61, $12
-	brl br_00_cc35                                                  ; $dbcf : $82, $63, $f0
+	brl ExecPuzzleScriptCmd                                                  ; $dbcf : $82, $63, $f0
 
 Call_00_dbd2:
 	ora #$00.b                                                  ; $dbd2 : $09, $00
@@ -13778,19 +13889,19 @@ br_00_dbda:
 	jsr $472006.l                                                  ; $dbe0 : $22, $06, $20, $47
 	nop                                                  ; $dbe4 : $ea
 	stz wCurrChar                                                  ; $dbe5 : $64, $a7
-	jsr $83ab4f.l                                                  ; $dbe7 : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $dbe7 : $22, $4f, $ab, $83
 	jsr $83fa12.l                                                  ; $dbeb : $22, $12, $fa, $83
 	jsr Call_00_ea50.w                                                  ; $dbef : $20, $50, $ea
-	brl br_00_cc35                                                  ; $dbf2 : $82, $40, $f0
+	brl ExecPuzzleScriptCmd                                                  ; $dbf2 : $82, $40, $f0
 
 	lda #$1c02.w                                                  ; $dbf5 : $a9, $02, $1c
 	jsr $472006.l                                                  ; $dbf8 : $22, $06, $20, $47
 	nop                                                  ; $dbfc : $ea
 	stz wCurrChar                                                  ; $dbfd : $64, $a7
-	jsr $83ab4f.l                                                  ; $dbff : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $dbff : $22, $4f, $ab, $83
 	jsr $83fa3f.l                                                  ; $dc03 : $22, $3f, $fa, $83
 	jsr Call_00_ea50.w                                                  ; $dc07 : $20, $50, $ea
-	brl br_00_cc35                                                  ; $dc0a : $82, $28, $f0
+	brl ExecPuzzleScriptCmd                                                  ; $dc0a : $82, $28, $f0
 
 	lda #$1c40.w                                                  ; $dc0d : $a9, $40, $1c
 	adc ($12, X)                                                  ; $dc10 : $61, $12
@@ -13864,7 +13975,7 @@ br_00_dc8a:
 
 br_00_dca7:
 	sep #ACCU_8                                                  ; $dca7 : $e2, $20
-	brl br_00_cc35                                                  ; $dca9 : $82, $89, $ef
+	brl ExecPuzzleScriptCmd                                                  ; $dca9 : $82, $89, $ef
 
 	lda #$04.b                                                  ; $dcac : $a9, $04
 	brl br_00_dcc0                                                  ; $dcae : $82, $0f, $00
@@ -13880,15 +13991,15 @@ br_00_dca7:
 
 br_00_dcc0:
 	sta $23                                                  ; $dcc0 : $85, $23
-	jsr Call_00_e8b9.w                                                  ; $dcc2 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $dcc5 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $dcc2 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $dcc5 : $20, $ed, $e9
 	sta $7fd0be.l                                                  ; $dcc8 : $8f, $be, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $dccc : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $dccc : $20, $b9, $e8
 	sta $22                                                  ; $dccf : $85, $22
 	phy                                                  ; $dcd1 : $5a
 	jsr Call_00_dcda.l                                                  ; $dcd2 : $22, $da, $dc, $80
 	ply                                                  ; $dcd6 : $7a
-	brl br_00_cc35                                                  ; $dcd7 : $82, $5b, $ef
+	brl ExecPuzzleScriptCmd                                                  ; $dcd7 : $82, $5b, $ef
 
 Call_00_dcda:
 	tdc                                                  ; $dcda : $7b
@@ -13950,7 +14061,7 @@ br_00_dd06:
 	and #$f7.b                                                  ; $dd5c : $29, $f7
 	sta $7e4000.l, X                                                  ; $dd5e : $9f, $00, $40, $7e
 	lda $23                                                  ; $dd62 : $a5, $23
-	jsr $83fb12.l                                                  ; $dd64 : $22, $12, $fb, $83
+	jsr Call_03_fb12.l                                                  ; $dd64 : $22, $12, $fb, $83
 	jsr $83f9a5.l                                                  ; $dd68 : $22, $a5, $f9, $83
 	lda $7e4000.l, X                                                  ; $dd6c : $bf, $00, $40, $7e
 	ora #$08.b                                                  ; $dd70 : $09, $08
@@ -13965,13 +14076,14 @@ br_00_dd06:
 	rtl                                                  ; $dd85 : $6b
 
 
+PuzzleScriptCmd68h:
 	tdc                                                  ; $dd86 : $7b
-	jsr Call_00_e8b9.w                                                  ; $dd87 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $dd8a : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $dd87 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $dd8a : $20, $ed, $e9
 	bra br_00_dd9b                                                  ; $dd8d : $80, $0c
 
-	jsr Call_00_e8b9.w                                                  ; $dd8f : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $dd92 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $dd8f : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $dd92 : $20, $ed, $e9
 	tax                                                  ; $dd95 : $aa
 	tdc                                                  ; $dd96 : $7b
 	lda $7fd72c.l, X                                                  ; $dd97 : $bf, $2c, $d7, $7f
@@ -13985,38 +14097,38 @@ br_00_dd9b:
 	bit #$80.b                                                  ; $dda3 : $89, $80
 	beq br_00_ddb2                                                  ; $dda5 : $f0, $0b
 
-	jsr Call_00_e8d0.w                                                  ; $dda7 : $20, $d0, $e8
-	jsr Call_00_e8d0.w                                                  ; $ddaa : $20, $d0, $e8
+	jsr YequPrevPuzzleScriptAddr.w                                                  ; $dda7 : $20, $d0, $e8
+	jsr YequPrevPuzzleScriptAddr.w                                                  ; $ddaa : $20, $d0, $e8
 	lda #$01.b                                                  ; $ddad : $a9, $01
-	brl br_00_d31c                                                  ; $ddaf : $82, $6a, $f5
+	brl Func_0_d31c                                                  ; $ddaf : $82, $6a, $f5
 
 br_00_ddb2:
-	brl br_00_cc35                                                  ; $ddb2 : $82, $80, $ee
+	brl ExecPuzzleScriptCmd                                                  ; $ddb2 : $82, $80, $ee
 
 	jsr Call_00_ea47.w                                                  ; $ddb5 : $20, $47, $ea
-	jsr Call_00_e8b9.w                                                  ; $ddb8 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $ddb8 : $20, $b9, $e8
 	clc                                                  ; $ddbb : $18
 	adc #$4f.b                                                  ; $ddbc : $69, $4f
 	jsr Call_00_bf92.l                                                  ; $ddbe : $22, $92, $bf, $80
 	jsr $8ebb17.l                                                  ; $ddc2 : $22, $17, $bb, $8e
 	jsr Call_00_ea50.w                                                  ; $ddc6 : $20, $50, $ea
-	brl br_00_cc35                                                  ; $ddc9 : $82, $69, $ee
+	brl ExecPuzzleScriptCmd                                                  ; $ddc9 : $82, $69, $ee
 
 	jsr Call_00_ea47.w                                                  ; $ddcc : $20, $47, $ea
-	jsr Call_00_e8b9.w                                                  ; $ddcf : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $ddcf : $20, $b9, $e8
 	clc                                                  ; $ddd2 : $18
 	adc #$4f.b                                                  ; $ddd3 : $69, $4f
 	jsr Call_00_bf92.l                                                  ; $ddd5 : $22, $92, $bf, $80
 	jsr $8ebaf6.l                                                  ; $ddd9 : $22, $f6, $ba, $8e
 	jsr Call_00_ea50.w                                                  ; $dddd : $20, $50, $ea
-	brl br_00_cc35                                                  ; $dde0 : $82, $52, $ee
+	brl ExecPuzzleScriptCmd                                                  ; $dde0 : $82, $52, $ee
 
 	phy                                                  ; $dde3 : $5a
 	ldx #$0000.w                                                  ; $dde4 : $a2, $00, $00
 	ldy #$0000.w                                                  ; $dde7 : $a0, $00, $00
-	jsr $80e722.l                                                  ; $ddea : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $ddea : $22, $22, $e7, $80
 	ply                                                  ; $ddee : $7a
-	brl br_00_cc42                                                  ; $ddef : $82, $50, $ee
+	brl PuzzleScriptCmd_End                                                  ; $ddef : $82, $50, $ee
 
 	lda #$04.b                                                  ; $ddf2 : $a9, $04
 	xba                                                  ; $ddf4 : $eb
@@ -14044,32 +14156,32 @@ br_00_ddb2:
 	xba                                                  ; $de17 : $eb
 	lda #$03.b                                                  ; $de18 : $a9, $03
 	jsr Call_00_e004.w                                                  ; $de1a : $20, $04, $e0
-	jsr Call_00_e8b9.w                                                  ; $de1d : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $de20 : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $de1d : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $de20 : $20, $bc, $e9
 	jsr Call_00_dfb5.w                                                  ; $de23 : $20, $b5, $df
 	lda #$5c.b                                                  ; $de26 : $a9, $5c
 	jsr $83d350.l                                                  ; $de28 : $22, $50, $d3, $83
 	jsr Call_00_ea50.w                                                  ; $de2c : $20, $50, $ea
-	brl br_00_cc35                                                  ; $de2f : $82, $03, $ee
+	brl ExecPuzzleScriptCmd                                                  ; $de2f : $82, $03, $ee
 
 	tdc                                                  ; $de32 : $7b
 	jsr Call_00_ea47.w                                                  ; $de33 : $20, $47, $ea
-	jsr Call_00_e8b9.w                                                  ; $de36 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $de39 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $de36 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $de39 : $20, $ed, $e9
 	sta wCurrChar                                                  ; $de3c : $85, $a7
-	jsr $83ab4f.l                                                  ; $de3e : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $de3e : $22, $4f, $ab, $83
 	lda #$5d.b                                                  ; $de42 : $a9, $5d
 	jsr $83d350.l                                                  ; $de44 : $22, $50, $d3, $83
 	jsr Call_00_ea50.w                                                  ; $de48 : $20, $50, $ea
 	jsr $83f7d4.l                                                  ; $de4b : $22, $d4, $f7, $83
-	brl br_00_cc35                                                  ; $de4f : $82, $e3, $ed
+	brl ExecPuzzleScriptCmd                                                  ; $de4f : $82, $e3, $ed
 
 	tdc                                                  ; $de52 : $7b
 	jsr Call_00_ea47.w                                                  ; $de53 : $20, $47, $ea
-	jsr Call_00_e8b9.w                                                  ; $de56 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $de59 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $de56 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $de59 : $20, $ed, $e9
 	sta wCurrChar                                                  ; $de5c : $85, $a7
-	jsr $83ab4f.l                                                  ; $de5e : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $de5e : $22, $4f, $ab, $83
 	jsr $83fa12.l                                                  ; $de62 : $22, $12, $fa, $83
 	ldx wCurrChar                                                  ; $de66 : $a6, $a7
 	lda $0622.w, X                                                  ; $de68 : $bd, $22, $06
@@ -14084,26 +14196,28 @@ br_00_ddb2:
 	sta $7fe48e.l, X                                                  ; $de7e : $9f, $8e, $e4, $7f
 	jsr Call_00_ea50.w                                                  ; $de82 : $20, $50, $ea
 	jsr $83f7d4.l                                                  ; $de85 : $22, $d4, $f7, $83
-	brl br_00_cc35                                                  ; $de89 : $82, $a9, $ed
+	brl ExecPuzzleScriptCmd                                                  ; $de89 : $82, $a9, $ed
 
 br_00_de8c:
 	jsr Call_00_ea47.w                                                  ; $de8c : $20, $47, $ea
 	jsr Call_00_e004.w                                                  ; $de8f : $20, $04, $e0
-	jsr Call_00_e8b9.w                                                  ; $de92 : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $de95 : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $de92 : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $de95 : $20, $bc, $e9
 	jsr Call_00_dfb5.w                                                  ; $de98 : $20, $b5, $df
 	lda $22                                                  ; $de9b : $a5, $22
 	clc                                                  ; $de9d : $18
 	adc #$4c.b                                                  ; $de9e : $69, $4c
 	jsr $83d350.l                                                  ; $dea0 : $22, $50, $d3, $83
 	jsr Call_00_ea50.w                                                  ; $dea4 : $20, $50, $ea
-	brl br_00_cc35                                                  ; $dea7 : $82, $8b, $ed
+	brl ExecPuzzleScriptCmd                                                  ; $dea7 : $82, $8b, $ed
 
 	lda #$04.b                                                  ; $deaa : $a9, $04
 	xba                                                  ; $deac : $eb
 	lda #$00.b                                                  ; $dead : $a9, $00
 	bra br_00_dec4                                                  ; $deaf : $80, $13
 
+
+PuzzleScriptCmdA4h:
 	lda #$00.b                                                  ; $deb1 : $a9, $00
 	xba                                                  ; $deb3 : $eb
 	lda #$01.b                                                  ; $deb4 : $a9, $01
@@ -14121,10 +14235,12 @@ br_00_de8c:
 br_00_dec4:
 	jsr Call_00_ea47.w                                                  ; $dec4 : $20, $47, $ea
 	jsr Call_00_e004.w                                                  ; $dec7 : $20, $04, $e0
-	jsr Call_00_e8b9.w                                                  ; $deca : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $decd : $20, $ed, $e9
-	brl br_00_df25                                                  ; $ded0 : $82, $52, $00
+	jsr AequPuzzleScriptByte.w                                                  ; $deca : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $decd : $20, $ed, $e9
+	brl Func_0_df25                                                  ; $ded0 : $82, $52, $00
 
+
+;
 	lda #$04.b                                                  ; $ded3 : $a9, $04
 	xba                                                  ; $ded5 : $eb
 	lda #$00.b                                                  ; $ded6 : $a9, $00
@@ -14151,51 +14267,51 @@ br_00_dec4:
 	xba                                                  ; $def5 : $eb
 	lda #$ff.b                                                  ; $def6 : $a9, $ff
 	jsr Call_00_e004.w                                                  ; $def8 : $20, $04, $e0
-	jsr Call_00_e8b9.w                                                  ; $defb : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $defe : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $defb : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $defe : $20, $bc, $e9
 	jsr Call_00_dfb5.w                                                  ; $df01 : $20, $b5, $df
 	lda #$5c.b                                                  ; $df04 : $a9, $5c
 	jsr $83d350.l                                                  ; $df06 : $22, $50, $d3, $83
-	jsr Call_00_e8b9.w                                                  ; $df0a : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $df0a : $20, $b9, $e8
 	ldx wCurrChar                                                  ; $df0d : $a6, $a7
 	sta wEntityPriorityAttrBits.l, X                                                  ; $df0f : $9f, $16, $e3, $7f
 	jsr Call_00_ea50.w                                                  ; $df13 : $20, $50, $ea
-	brl br_00_cc35                                                  ; $df16 : $82, $1c, $ed
+	brl ExecPuzzleScriptCmd                                                  ; $df16 : $82, $1c, $ed
 
 br_00_df19:
 	jsr Call_00_ea47.w                                                  ; $df19 : $20, $47, $ea
 	jsr Call_00_e004.w                                                  ; $df1c : $20, $04, $e0
-	jsr Call_00_e8b9.w                                                  ; $df1f : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $df22 : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $df1f : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $df22 : $20, $bc, $e9
 
-br_00_df25:
+Func_0_df25:
 	jsr Call_00_dfb5.w                                                  ; $df25 : $20, $b5, $df
 	lda $22                                                  ; $df28 : $a5, $22
 	clc                                                  ; $df2a : $18
 	adc #$4c.b                                                  ; $df2b : $69, $4c
 	jsr $83d350.l                                                  ; $df2d : $22, $50, $d3, $83
 	ldx wCurrChar                                                  ; $df31 : $a6, $a7
-	jsr Call_00_e8b9.w                                                  ; $df33 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $df33 : $20, $b9, $e8
 	sta wEntityPriorityAttrBits.l, X                                                  ; $df36 : $9f, $16, $e3, $7f
 	jsr Call_00_ea50.w                                                  ; $df3a : $20, $50, $ea
-	brl br_00_cc35                                                  ; $df3d : $82, $f5, $ec
+	brl ExecPuzzleScriptCmd                                                  ; $df3d : $82, $f5, $ec
 
 	jsr Call_00_ea47.w                                                  ; $df40 : $20, $47, $ea
 	lda #$ff.b                                                  ; $df43 : $a9, $ff
 	xba                                                  ; $df45 : $eb
 	lda #$ff.b                                                  ; $df46 : $a9, $ff
 	jsr Call_00_e004.w                                                  ; $df48 : $20, $04, $e0
-	jsr Call_00_e8b9.w                                                  ; $df4b : $20, $b9, $e8
-	jsr Call_00_e9bc.w                                                  ; $df4e : $20, $bc, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $df4b : $20, $b9, $e8
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $df4e : $20, $bc, $e9
 	jsr Call_00_dfc2.w                                                  ; $df51 : $20, $c2, $df
-	jsr Call_00_e8b9.w                                                  ; $df54 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $df54 : $20, $b9, $e8
 	ldx wCurrChar                                                  ; $df57 : $a6, $a7
 	sta wEntityPriorityAttrBits.l, X                                                  ; $df59 : $9f, $16, $e3, $7f
 	phy                                                  ; $df5d : $5a
 	jsr $83f5ea.l                                                  ; $df5e : $22, $ea, $f5, $83
 	ply                                                  ; $df62 : $7a
 	jsr Call_00_ea50.w                                                  ; $df63 : $20, $50, $ea
-	brl br_00_cc35                                                  ; $df66 : $82, $cc, $ec
+	brl ExecPuzzleScriptCmd                                                  ; $df66 : $82, $cc, $ec
 
 	lda #$04.b                                                  ; $df69 : $a9, $04
 	xba                                                  ; $df6b : $eb
@@ -14219,26 +14335,26 @@ br_00_df25:
 br_00_df83:
 	jsr Call_00_ea47.w                                                  ; $df83 : $20, $47, $ea
 	jsr Call_00_e004.w                                                  ; $df86 : $20, $04, $e0
-	jsr Call_00_e8b9.w                                                  ; $df89 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $df8c : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $df89 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $df8c : $20, $ed, $e9
 	sta wCurrChar                                                  ; $df8f : $85, $a7
-	jsr $83ab4f.l                                                  ; $df91 : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $df91 : $22, $4f, $ab, $83
 	lda $22                                                  ; $df95 : $a5, $22
 	clc                                                  ; $df97 : $18
 	adc #$74.b                                                  ; $df98 : $69, $74
 	jsr $83d350.l                                                  ; $df9a : $22, $50, $d3, $83
-	jsr Call_00_e8b9.w                                                  ; $df9e : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $df9e : $20, $b9, $e8
 	ldx wCurrChar                                                  ; $dfa1 : $a6, $a7
 	sta $7fe4de.l, X                                                  ; $dfa3 : $9f, $de, $e4, $7f
 	lda $0736.w, X                                                  ; $dfa7 : $bd, $36, $07
 	ora #$10.b                                                  ; $dfaa : $09, $10
 	sta $0736.w, X                                                  ; $dfac : $9d, $36, $07
 	jsr Call_00_ea50.w                                                  ; $dfaf : $20, $50, $ea
-	brl br_00_cc35                                                  ; $dfb2 : $82, $80, $ec
+	brl ExecPuzzleScriptCmd                                                  ; $dfb2 : $82, $80, $ec
 
 Call_00_dfb5:
 	jsr Call_00_dfc2.w                                                  ; $dfb5 : $20, $c2, $df
-	jsr Call_00_e8b9.w                                                  ; $dfb8 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $dfb8 : $20, $b9, $e8
 	ldx wCurrChar                                                  ; $dfbb : $a6, $a7
 	sta $7fe4de.l, X                                                  ; $dfbd : $9f, $de, $e4, $7f
 	rts                                                  ; $dfc1 : $60
@@ -14246,7 +14362,7 @@ Call_00_dfb5:
 
 Call_00_dfc2:
 	sta $24                                                  ; $dfc2 : $85, $24
-	jsr $838b40.l                                                  ; $dfc4 : $22, $40, $8b, $83
+	jsr Call_03_8b40.l                                                  ; $dfc4 : $22, $40, $8b, $83
 	jsr $83c108.l                                                  ; $dfc8 : $22, $08, $c1, $83
 	ldx wCurrChar                                                  ; $dfcc : $a6, $a7
 	txa                                                  ; $dfce : $8a
@@ -14279,8 +14395,8 @@ Call_00_e004:
 	sta $22                                                  ; $e004 : $85, $22
 	xba                                                  ; $e006 : $eb
 	sta $23                                                  ; $e007 : $85, $23
-	jsr Call_00_e8b9.w                                                  ; $e009 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e00c : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e009 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e00c : $20, $ed, $e9
 	sta $25                                                  ; $e00f : $85, $25
 	jsr Call_00_e92a.w                                                  ; $e011 : $20, $2a, $e9
 	lda $9f                                                  ; $e014 : $a5, $9f
@@ -14290,7 +14406,7 @@ Call_00_e004:
 	lda $23                                                  ; $e01c : $a5, $23
 	bmi br_00_e037                                                  ; $e01e : $30, $17
 
-	jsr $83fb12.l                                                  ; $e020 : $22, $12, $fb, $83
+	jsr Call_03_fb12.l                                                  ; $e020 : $22, $12, $fb, $83
 	tdc                                                  ; $e024 : $7b
 	lda $25                                                  ; $e025 : $a5, $25
 	sec                                                  ; $e027 : $38
@@ -14305,15 +14421,15 @@ br_00_e037:
 	rts                                                  ; $e037 : $60
 
 
-	jsr Call_00_e8b9.w                                                  ; $e038 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e03b : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e038 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e03b : $20, $ed, $e9
 	sec                                                  ; $e03e : $38
 	sbc #$e0.b                                                  ; $e03f : $e9, $e0
 	sta $56                                                  ; $e041 : $85, $56
 	stz $57                                                  ; $e043 : $64, $57
 	tdc                                                  ; $e045 : $7b
-	jsr Call_00_e8b9.w                                                  ; $e046 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e049 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e046 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e049 : $20, $ed, $e9
 	cmp #$ff.b                                                  ; $e04c : $c9, $ff
 	beq br_00_e075                                                  ; $e04e : $f0, $25
 
@@ -14334,13 +14450,13 @@ br_00_e037:
 	sta $7fd223.l, X                                                  ; $e071 : $9f, $23, $d2, $7f
 
 br_00_e075:
-	brl br_00_cc35                                                  ; $e075 : $82, $bd, $eb
+	brl ExecPuzzleScriptCmd                                                  ; $e075 : $82, $bd, $eb
 
 	tdc                                                  ; $e078 : $7b
-	jsr Call_00_e8b9.w                                                  ; $e079 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e079 : $20, $b9, $e8
 	sta $5d                                                  ; $e07c : $85, $5d
 	stz $5e                                                  ; $e07e : $64, $5e
-	jsr Call_00_e8b9.w                                                  ; $e080 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e080 : $20, $b9, $e8
 	jsr Call_00_ea09.w                                                  ; $e083 : $20, $09, $ea
 	sta $8f                                                  ; $e086 : $85, $8f
 	xba                                                  ; $e088 : $eb
@@ -14353,8 +14469,8 @@ br_00_e075:
 	lda #$ff.b                                                  ; $e094 : $a9, $ff
 
 br_00_e096:
-	sta $7fd074.l, X                                                  ; $e096 : $9f, $74, $d0, $7f
-	brl br_00_cc35                                                  ; $e09a : $82, $98, $eb
+	sta wPuzzleScriptVars.l, X                                                  ; $e096 : $9f, $74, $d0, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $e09a : $82, $98, $eb
 
 	lda wCurrChar                                                  ; $e09d : $a5, $a7
 	pha                                                  ; $e09f : $48
@@ -14363,7 +14479,7 @@ br_00_e096:
 
 br_00_e0a6:
 	tdc                                                  ; $e0a6 : $7b
-	jsr Call_00_e8b9.w                                                  ; $e0a7 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e0a7 : $20, $b9, $e8
 	cmp #$ff.b                                                  ; $e0aa : $c9, $ff
 	beq br_00_e0c3                                                  ; $e0ac : $f0, $15
 
@@ -14381,21 +14497,24 @@ br_00_e0a6:
 br_00_e0c3:
 	pla                                                  ; $e0c3 : $68
 	sta wCurrChar                                                  ; $e0c4 : $85, $a7
-	jsr $83ab4f.l                                                  ; $e0c6 : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $e0c6 : $22, $4f, $ab, $83
 	brl br_00_e4af                                                  ; $e0ca : $82, $e2, $03
 
 	jsr Call_00_e0dc.w                                                  ; $e0cd : $20, $dc, $e0
-	brl br_00_e4ba                                                  ; $e0d0 : $82, $e7, $03
+	brl Func_0_e4ba                                                  ; $e0d0 : $82, $e7, $03
 
+
+PuzzleScriptCmd6dh:
 	jsr Call_00_e0dc.w                                                  ; $e0d3 : $20, $dc, $e0
 	jsr Call_00_e55b.w                                                  ; $e0d6 : $20, $5b, $e5
-	brl br_00_e4ba                                                  ; $e0d9 : $82, $de, $03
+	brl Func_0_e4ba                                                  ; $e0d9 : $82, $de, $03
+
 
 Call_00_e0dc:
 	tdc                                                  ; $e0dc : $7b
 	sta $7fd19a.l                                                  ; $e0dd : $8f, $9a, $d1, $7f
-	jsr Call_00_e8b9.w                                                  ; $e0e1 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e0e4 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e0e1 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e0e4 : $20, $ed, $e9
 	sta $7fd19b.l                                                  ; $e0e7 : $8f, $9b, $d1, $7f
 	cmp #$e0.b                                                  ; $e0eb : $c9, $e0
 	bcs br_00_e0fc                                                  ; $e0ed : $b0, $0d
@@ -14420,30 +14539,32 @@ br_00_e104:
 	rts                                                  ; $e104 : $60
 
 
+PuzzleScriptCmd13h:
 	tdc                                                  ; $e105 : $7b
 	sta $7fd19a.l                                                  ; $e106 : $8f, $9a, $d1, $7f
-	jsr Call_00_e8b9.w                                                  ; $e10a : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e10d : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e10a : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e10d : $20, $ed, $e9
 	sta $7fd19b.l                                                  ; $e110 : $8f, $9b, $d1, $7f
 	cmp #$e0.b                                                  ; $e114 : $c9, $e0
-	bcs br_00_e126                                                  ; $e116 : $b0, $0e
+	bcs @br_e126                                                  ; $e116 : $b0, $0e
 
 	cmp #$80.b                                                  ; $e118 : $c9, $80
-	bcs br_00_e12c                                                  ; $e11a : $b0, $10
+	bcs @br_e12c                                                  ; $e11a : $b0, $10
 
 	cmp #$60.b                                                  ; $e11c : $c9, $60
-	bcs br_00_e126                                                  ; $e11e : $b0, $06
+	bcs @br_e126                                                  ; $e11e : $b0, $06
 
 	jsr Call_00_e132.w                                                  ; $e120 : $20, $32, $e1
-	brl br_00_e3d9                                                  ; $e123 : $82, $b3, $02
+	brl Func_0_e3d9                                                  ; $e123 : $82, $b3, $02
 
-br_00_e126:
+@br_e126:
 	jsr Call_00_e147.w                                                  ; $e126 : $20, $47, $e1
-	brl br_00_e3d9                                                  ; $e129 : $82, $ad, $02
+	brl Func_0_e3d9                                                  ; $e129 : $82, $ad, $02
 
-br_00_e12c:
+@br_e12c:
 	jsr Call_00_e153.w                                                  ; $e12c : $20, $53, $e1
-	brl br_00_e3d9                                                  ; $e12f : $82, $a7, $02
+	brl Func_0_e3d9                                                  ; $e12f : $82, $a7, $02
+
 
 Call_00_e132:
 	jsr Call_00_ea09.w                                                  ; $e132 : $20, $09, $ea
@@ -14506,47 +14627,47 @@ br_00_e175:
 	lda #$08.b                                                  ; $e177 : $a9, $08
 	sta $ae                                                  ; $e179 : $85, $ae
 	jsr Call_00_e365.w                                                  ; $e17b : $20, $65, $e3
-	brl br_00_e3d9                                                  ; $e17e : $82, $58, $02
+	brl Func_0_e3d9                                                  ; $e17e : $82, $58, $02
 
 	lda #$08.b                                                  ; $e181 : $a9, $08
 	sta $ae                                                  ; $e183 : $85, $ae
 	jsr Call_00_e365.w                                                  ; $e185 : $20, $65, $e3
-	brl br_00_e4ba                                                  ; $e188 : $82, $2f, $03
+	brl Func_0_e4ba                                                  ; $e188 : $82, $2f, $03
 
 	lda #$08.b                                                  ; $e18b : $a9, $08
 	sta $ae                                                  ; $e18d : $85, $ae
 	jsr Call_00_e365.w                                                  ; $e18f : $20, $65, $e3
 	jsr Call_00_e55b.w                                                  ; $e192 : $20, $5b, $e5
-	brl br_00_e4ba                                                  ; $e195 : $82, $22, $03
+	brl Func_0_e4ba                                                  ; $e195 : $82, $22, $03
 
 	lda #$01.b                                                  ; $e198 : $a9, $01
 	sta $ae                                                  ; $e19a : $85, $ae
 	jsr Call_00_e365.w                                                  ; $e19c : $20, $65, $e3
-	brl br_00_e3d9                                                  ; $e19f : $82, $37, $02
+	brl Func_0_e3d9                                                  ; $e19f : $82, $37, $02
 
 	lda #$01.b                                                  ; $e1a2 : $a9, $01
 	sta $ae                                                  ; $e1a4 : $85, $ae
 	jsr Call_00_e365.w                                                  ; $e1a6 : $20, $65, $e3
-	brl br_00_e4ba                                                  ; $e1a9 : $82, $0e, $03
+	brl Func_0_e4ba                                                  ; $e1a9 : $82, $0e, $03
 
 	lda #$01.b                                                  ; $e1ac : $a9, $01
 	sta $ae                                                  ; $e1ae : $85, $ae
 	jsr Call_00_e365.w                                                  ; $e1b0 : $20, $65, $e3
 	jsr Call_00_e55b.w                                                  ; $e1b3 : $20, $5b, $e5
-	brl br_00_e4ba                                                  ; $e1b6 : $82, $01, $03
+	brl Func_0_e4ba                                                  ; $e1b6 : $82, $01, $03
 
 	jsr Call_00_e1ce.w                                                  ; $e1b9 : $20, $ce, $e1
 	brl br_00_e40c                                                  ; $e1bc : $82, $4d, $02
 
 	jsr Call_00_e1ce.w                                                  ; $e1bf : $20, $ce, $e1
-	brl br_00_e4ba                                                  ; $e1c2 : $82, $f5, $02
+	brl Func_0_e4ba                                                  ; $e1c2 : $82, $f5, $02
 
 	jsr Call_00_e1ce.w                                                  ; $e1c5 : $20, $ce, $e1
 	jsr Call_00_e55b.w                                                  ; $e1c8 : $20, $5b, $e5
-	brl br_00_e4ba                                                  ; $e1cb : $82, $ec, $02
+	brl Func_0_e4ba                                                  ; $e1cb : $82, $ec, $02
 
 Call_00_e1ce:
-	jsr Call_00_e8b9.w                                                  ; $e1ce : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e1ce : $20, $b9, $e8
 	xba                                                  ; $e1d1 : $eb
 	lda #$01.b                                                  ; $e1d2 : $a9, $01
 	sta $7fd19a.l                                                  ; $e1d4 : $8f, $9a, $d1, $7f
@@ -14569,24 +14690,24 @@ br_00_e1ed:
 	brl br_00_e40c                                                  ; $e1f1 : $82, $18, $02
 
 	jsr Call_00_e203.w                                                  ; $e1f4 : $20, $03, $e2
-	brl br_00_e4ba                                                  ; $e1f7 : $82, $c0, $02
+	brl Func_0_e4ba                                                  ; $e1f7 : $82, $c0, $02
 
 	jsr Call_00_e203.w                                                  ; $e1fa : $20, $03, $e2
 	jsr Call_00_e55b.w                                                  ; $e1fd : $20, $5b, $e5
-	brl br_00_e4ba                                                  ; $e200 : $82, $b7, $02
+	brl Func_0_e4ba                                                  ; $e200 : $82, $b7, $02
 
 Call_00_e203:
-	jsr Call_00_e8b9.w                                                  ; $e203 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e203 : $20, $b9, $e8
 	sta $60                                                  ; $e206 : $85, $60
 	stz $61                                                  ; $e208 : $64, $61
-	jsr Call_00_e8b9.w                                                  ; $e20a : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e20d : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e20a : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e20d : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $e210 : $20, $09, $ea
 	xba                                                  ; $e213 : $eb
 	jsr $83f9ee.l                                                  ; $e214 : $22, $ee, $f9, $83
 	stx $58                                                  ; $e218 : $86, $58
-	jsr Call_00_e8b9.w                                                  ; $e21a : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e21d : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e21a : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e21d : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $e220 : $20, $09, $ea
 	xba                                                  ; $e223 : $eb
 	jsr $83f9ee.l                                                  ; $e224 : $22, $ee, $f9, $83
@@ -14640,23 +14761,26 @@ br_00_e266:
 	brl br_00_e40c                                                  ; $e27a : $82, $8f, $01
 
 	jsr Call_00_e28c.w                                                  ; $e27d : $20, $8c, $e2
-	brl br_00_e4ba                                                  ; $e280 : $82, $37, $02
+	brl Func_0_e4ba                                                  ; $e280 : $82, $37, $02
 
+
+PuzzleScriptCmd96h:
 	jsr Call_00_e28c.w                                                  ; $e283 : $20, $8c, $e2
 	jsr Call_00_e55b.w                                                  ; $e286 : $20, $5b, $e5
-	brl br_00_e4ba                                                  ; $e289 : $82, $2e, $02
+	brl Func_0_e4ba                                                  ; $e289 : $82, $2e, $02
+
 
 Call_00_e28c:
 	lda #$ff.b                                                  ; $e28c : $a9, $ff
 	sta $7fd19a.l                                                  ; $e28e : $8f, $9a, $d1, $7f
-	jsr Call_00_e8b9.w                                                  ; $e292 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e295 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e292 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e295 : $20, $ed, $e9
 	jsr Call_00_ea09.w                                                  ; $e298 : $20, $09, $ea
 	xba                                                  ; $e29b : $eb
 	jsr $83f9ee.l                                                  ; $e29c : $22, $ee, $f9, $83
 	stx $5d                                                  ; $e2a0 : $86, $5d
-	jsr Call_00_e8b9.w                                                  ; $e2a2 : $20, $b9, $e8
-	jsr $838b40.l                                                  ; $e2a5 : $22, $40, $8b, $83
+	jsr AequPuzzleScriptByte.w                                                  ; $e2a2 : $20, $b9, $e8
+	jsr Call_03_8b40.l                                                  ; $e2a5 : $22, $40, $8b, $83
 	lda $7fd04a.l                                                  ; $e2a9 : $af, $4a, $d0, $7f
 	xba                                                  ; $e2ad : $eb
 	lda $7fd04b.l                                                  ; $e2ae : $af, $4b, $d0, $7f
@@ -14761,22 +14885,22 @@ br_00_e340:
 	lda #$09.b                                                  ; $e344 : $a9, $09
 	sta $ae                                                  ; $e346 : $85, $ae
 	jsr Call_00_e365.w                                                  ; $e348 : $20, $65, $e3
-	brl br_00_e3d9                                                  ; $e34b : $82, $8b, $00
+	brl Func_0_e3d9                                                  ; $e34b : $82, $8b, $00
 
 	lda #$09.b                                                  ; $e34e : $a9, $09
 	sta $ae                                                  ; $e350 : $85, $ae
 	jsr Call_00_e365.w                                                  ; $e352 : $20, $65, $e3
-	brl br_00_e4ba                                                  ; $e355 : $82, $62, $01
+	brl Func_0_e4ba                                                  ; $e355 : $82, $62, $01
 
 	lda #$09.b                                                  ; $e358 : $a9, $09
 	sta $ae                                                  ; $e35a : $85, $ae
 	jsr Call_00_e365.w                                                  ; $e35c : $20, $65, $e3
 	jsr Call_00_e55b.w                                                  ; $e35f : $20, $5b, $e5
-	brl br_00_e4ba                                                  ; $e362 : $82, $55, $01
+	brl Func_0_e4ba                                                  ; $e362 : $82, $55, $01
 
 Call_00_e365:
-	jsr Call_00_e8b9.w                                                  ; $e365 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e368 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e365 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e368 : $20, $ed, $e9
 	sta $7fd19b.l                                                  ; $e36b : $8f, $9b, $d1, $7f
 	cmp #$e0.b                                                  ; $e36f : $c9, $e0
 	bcs br_00_e395                                                  ; $e371 : $b0, $22
@@ -14820,14 +14944,14 @@ br_00_e399:
 
 	lda #$09.b                                                  ; $e3a0 : $a9, $09
 	sta $ae                                                  ; $e3a2 : $85, $ae
-	jsr Call_00_e8b9.w                                                  ; $e3a4 : $20, $b9, $e8
-	jsr Call_00_e9ed.w                                                  ; $e3a7 : $20, $ed, $e9
+	jsr AequPuzzleScriptByte.w                                                  ; $e3a4 : $20, $b9, $e8
+	jsr GetPuzzleScriptVar.w                                                  ; $e3a7 : $20, $ed, $e9
 	sta $7fd19b.l                                                  ; $e3aa : $8f, $9b, $d1, $7f
-	jsr Call_00_e898.l                                                  ; $e3ae : $22, $98, $e8, $80
-	and $7fd100.l, X                                                  ; $e3b2 : $3f, $00, $d1, $7f
+	jsr AXequFlagAndBitOfA.l                                                  ; $e3ae : $22, $98, $e8, $80
+	and wPuzzleScriptBitFlags.l, X                                                  ; $e3b2 : $3f, $00, $d1, $7f
 	beq br_00_e3bb                                                  ; $e3b6 : $f0, $03
 
-	brl br_00_d2a2                                                  ; $e3b8 : $82, $e7, $ee
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $e3b8 : $82, $e7, $ee
 
 br_00_e3bb:
 	lda $7fd19b.l                                                  ; $e3bb : $af, $9b, $d1, $7f
@@ -14848,12 +14972,13 @@ br_00_e3d3:
 	jsr Call_00_e399.w                                                  ; $e3d3 : $20, $99, $e3
 	brl br_00_e4af                                                  ; $e3d6 : $82, $d6, $00
 
-br_00_e3d9:
+
+Func_0_e3d9:
 	tdc                                                  ; $e3d9 : $7b
 	lda $7fd19b.l                                                  ; $e3da : $af, $9b, $d1, $7f
-	jsr Call_00_e898.l                                                  ; $e3de : $22, $98, $e8, $80
+	jsr AXequFlagAndBitOfA.l                                                  ; $e3de : $22, $98, $e8, $80
 	sta $54                                                  ; $e3e2 : $85, $54
-	and $7fd100.l, X                                                  ; $e3e4 : $3f, $00, $d1, $7f
+	and wPuzzleScriptBitFlags.l, X                                                  ; $e3e4 : $3f, $00, $d1, $7f
 	sta $55                                                  ; $e3e8 : $85, $55
 	lda $54                                                  ; $e3ea : $a5, $54
 	and $7fd19a.l                                                  ; $e3ec : $2f, $9a, $d1, $7f
@@ -14877,29 +15002,32 @@ br_00_e40c:
 	sta $7fd14c.l, X                                                  ; $e412 : $9f, $4c, $d1, $7f
 	lda $7fd19b.l                                                  ; $e416 : $af, $9b, $d1, $7f
 	sta $7fd15c.l, X                                                  ; $e41a : $9f, $5c, $d1, $7f
-	brl br_00_cc35                                                  ; $e41e : $82, $14, $e8
+	brl ExecPuzzleScriptCmd                                                  ; $e41e : $82, $14, $e8
 
+
+PuzzleScriptCmd29h:
 	ldx wCurrChar                                                  ; $e421 : $a6, $a7
 	lda $7fd14c.l, X                                                  ; $e423 : $bf, $4c, $d1, $7f
 	sta $7fd19a.l                                                  ; $e427 : $8f, $9a, $d1, $7f
 	tdc                                                  ; $e42b : $7b
 	lda $7fd15c.l, X                                                  ; $e42c : $bf, $5c, $d1, $7f
-	jsr Call_00_e898.l                                                  ; $e430 : $22, $98, $e8, $80
+	jsr AXequFlagAndBitOfA.l                                                  ; $e430 : $22, $98, $e8, $80
 	sta $54                                                  ; $e434 : $85, $54
 	lda $7fd19a.l                                                  ; $e436 : $af, $9a, $d1, $7f
 	bmi br_00_e44b                                                  ; $e43a : $30, $0f
 
 	lda $54                                                  ; $e43c : $a5, $54
 	eor #$ff.b                                                  ; $e43e : $49, $ff
-	and $7fd100.l, X                                                  ; $e440 : $3f, $00, $d1, $7f
-	sta $7fd100.l, X                                                  ; $e444 : $9f, $00, $d1, $7f
-	brl br_00_cc35                                                  ; $e448 : $82, $ea, $e7
+	and wPuzzleScriptBitFlags.l, X                                                  ; $e440 : $3f, $00, $d1, $7f
+	sta wPuzzleScriptBitFlags.l, X                                                  ; $e444 : $9f, $00, $d1, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $e448 : $82, $ea, $e7
 
 br_00_e44b:
 	lda $54                                                  ; $e44b : $a5, $54
-	ora $7fd100.l, X                                                  ; $e44d : $1f, $00, $d1, $7f
-	sta $7fd100.l, X                                                  ; $e451 : $9f, $00, $d1, $7f
-	brl br_00_cc35                                                  ; $e455 : $82, $dd, $e7
+	ora wPuzzleScriptBitFlags.l, X                                                  ; $e44d : $1f, $00, $d1, $7f
+	sta wPuzzleScriptBitFlags.l, X                                                  ; $e451 : $9f, $00, $d1, $7f
+	brl ExecPuzzleScriptCmd                                                  ; $e455 : $82, $dd, $e7
+
 
 Call_00_e458:
 	jsr Call_00_e92a.w                                                  ; $e458 : $20, $2a, $e9
@@ -14954,28 +15082,28 @@ br_00_e499:
 	lda $7fd14c.l, X                                                  ; $e4a3 : $bf, $4c, $d1, $7f
 	bmi br_00_e4ac                                                  ; $e4a7 : $30, $03
 
-	brl br_00_cca7                                                  ; $e4a9 : $82, $fb, $e7
+	brl PuzzleScriptCmd03h                                                  ; $e4a9 : $82, $fb, $e7
 
 br_00_e4ac:
-	brl br_00_cc78                                                  ; $e4ac : $82, $c9, $e7
+	brl PuzzleScriptCmd02h                                                  ; $e4ac : $82, $c9, $e7
 
 br_00_e4af:
 	jsr Call_00_e4c5.w                                                  ; $e4af : $20, $c5, $e4
 	bmi br_00_e4b7                                                  ; $e4b2 : $30, $03
 
-	brl br_00_d2a2                                                  ; $e4b4 : $82, $eb, $ed
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $e4b4 : $82, $eb, $ed
 
 br_00_e4b7:
-	brl br_00_d2b2                                                  ; $e4b7 : $82, $f8, $ed
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $e4b7 : $82, $f8, $ed
 
-br_00_e4ba:
+Func_0_e4ba:
 	jsr Call_00_e4c5.w                                                  ; $e4ba : $20, $c5, $e4
 	bpl br_00_e4c2                                                  ; $e4bd : $10, $03
 
-	brl br_00_d2a2                                                  ; $e4bf : $82, $e0, $ed
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $e4bf : $82, $e0, $ed
 
 br_00_e4c2:
-	brl br_00_d2b2                                                  ; $e4c2 : $82, $ed, $ed
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $e4c2 : $82, $ed, $ed
 
 Call_00_e4c5:
 	ldx wCurrChar                                                  ; $e4c5 : $a6, $a7
@@ -14986,25 +15114,28 @@ Call_00_e4c5:
 	rts                                                  ; $e4d7 : $60
 
 
+PuzzleScriptCmd1eh:
 	ldx wCurrChar                                                  ; $e4d8 : $a6, $a7
 	lda $7fd14c.l, X                                                  ; $e4da : $bf, $4c, $d1, $7f
 	bit #$01.b                                                  ; $e4de : $89, $01
 	bne br_00_e4e5                                                  ; $e4e0 : $d0, $03
 
-	brl br_00_d2a2                                                  ; $e4e2 : $82, $bd, $ed
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $e4e2 : $82, $bd, $ed
 
 br_00_e4e5:
-	jsr Call_00_e8b9.w                                                  ; $e4e5 : $20, $b9, $e8
-	jsr Call_00_e8b9.w                                                  ; $e4e8 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e4e5 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e4e8 : $20, $b9, $e8
 	ldx wCurrChar                                                  ; $e4eb : $a6, $a7
 	lda $7fd14c.l, X                                                  ; $e4ed : $bf, $4c, $d1, $7f
 	bmi br_00_e4f6                                                  ; $e4f1 : $30, $03
 
-	brl br_00_d2a2                                                  ; $e4f3 : $82, $ac, $ed
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $e4f3 : $82, $ac, $ed
 
 br_00_e4f6:
-	brl br_00_d2b2                                                  ; $e4f6 : $82, $b9, $ed
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $e4f6 : $82, $b9, $ed
 
+
+;
 	ldx wCurrChar                                                  ; $e4f9 : $a6, $a7
 	lda $7fd14c.l, X                                                  ; $e4fb : $bf, $4c, $d1, $7f
 	bit #$01.b                                                  ; $e4ff : $89, $01
@@ -15012,12 +15143,12 @@ br_00_e4f6:
 
 	bmi br_00_e508                                                  ; $e503 : $30, $03
 
-	brl br_00_d2b2                                                  ; $e505 : $82, $aa, $ed
+	brl ExecPuzzleScriptCmdSkippingAWord                                                  ; $e505 : $82, $aa, $ed
 
 br_00_e508:
-	brl br_00_d2a2                                                  ; $e508 : $82, $97, $ed
+	brl PuzzleScriptCmd0ah_Jump                                                  ; $e508 : $82, $97, $ed
 
-	jsr Call_00_e8b9.w                                                  ; $e50b : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e50b : $20, $b9, $e8
 	phb                                                  ; $e50e : $8b
 	phy                                                  ; $e50f : $5a
 	jsr Call_00_ea47.w                                                  ; $e510 : $20, $47, $ea
@@ -15030,27 +15161,27 @@ br_00_e508:
 	jsr Call_00_ea50.w                                                  ; $e522 : $20, $50, $ea
 	ply                                                  ; $e525 : $7a
 	plb                                                  ; $e526 : $ab
-	brl br_00_cc35                                                  ; $e527 : $82, $0b, $e7
+	brl ExecPuzzleScriptCmd                                                  ; $e527 : $82, $0b, $e7
 
 	tdc                                                  ; $e52a : $7b
-	jsr Call_00_e8b9.w                                                  ; $e52b : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e52b : $20, $b9, $e8
 	tax                                                  ; $e52e : $aa
-	jsr Call_00_e8b9.w                                                  ; $e52f : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e52f : $20, $b9, $e8
 	sta $2100.w, X                                                  ; $e532 : $9d, $00, $21
-	brl br_00_cc35                                                  ; $e535 : $82, $fd, $e6
+	brl ExecPuzzleScriptCmd                                                  ; $e535 : $82, $fd, $e6
 
 	lda #$04.b                                                  ; $e538 : $a9, $04
 	tsb $1261.w                                                  ; $e53a : $0c, $61, $12
 	lda #$05.b                                                  ; $e53d : $a9, $05
 	sta $7fd07e.l                                                  ; $e53f : $8f, $7e, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $e543 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e543 : $20, $b9, $e8
 	sta $7fd07f.l                                                  ; $e546 : $8f, $7f, $d0, $7f
-	jsr Call_00_e8b9.w                                                  ; $e54a : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e54a : $20, $b9, $e8
 	sta $7fd080.l                                                  ; $e54d : $8f, $80, $d0, $7f
-	brl br_00_cc35                                                  ; $e551 : $82, $e1, $e6
+	brl ExecPuzzleScriptCmd                                                  ; $e551 : $82, $e1, $e6
 
 	jsr Call_00_b97e.l                                                  ; $e554 : $22, $7e, $b9, $80
-	brl br_00_cc35                                                  ; $e558 : $82, $da, $e6
+	brl ExecPuzzleScriptCmd                                                  ; $e558 : $82, $da, $e6
 
 Call_00_e55b:
 	lda $7fd19a.l                                                  ; $e55b : $af, $9a, $d1, $7f
@@ -15061,7 +15192,7 @@ Call_00_e55b:
 
 Call_00_e566:
 	stx $8b                                                  ; $e566 : $86, $8b
-	lda $7fd199.l                                                  ; $e568 : $af, $99, $d1, $7f
+	lda wPuzzleScriptCurrBank.l                                                  ; $e568 : $af, $99, $d1, $7f
 	pha                                                  ; $e56c : $48
 	phb                                                  ; $e56d : $8b
 	phy                                                  ; $e56e : $5a
@@ -15071,10 +15202,10 @@ Call_00_e566:
 	asl                                                  ; $e576 : $0a
 	tay                                                  ; $e577 : $a8
 	ldx #$000a.w                                                  ; $e578 : $a2, $0a, $00
-	jsr Call_00_e78d.l                                                  ; $e57b : $22, $8d, $e7, $80
+	jsr SetScriptAddrFromDictMapOfYdiv2.l                                                  ; $e57b : $22, $8d, $e7, $80
 
 br_00_e57f:
-	jsr Call_00_e8b9.w                                                  ; $e57f : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e57f : $20, $b9, $e8
 
 br_00_e582:
 	cmp #$ff.b                                                  ; $e582 : $c9, $ff
@@ -15093,220 +15224,241 @@ br_00_e596:
 	ply                                                  ; $e596 : $7a
 	plb                                                  ; $e597 : $ab
 	pla                                                  ; $e598 : $68
-	sta $7fd199.l                                                  ; $e599 : $8f, $99, $d1, $7f
+	sta wPuzzleScriptCurrBank.l                                                  ; $e599 : $8f, $99, $d1, $7f
 	rts                                                  ; $e59d : $60
 
 
 	phy                                                  ; $e59e : $5a
 	sbc ($58, X)                                                  ; $e59f : $e1, $58
 	cpx $88                                                  ; $e5a1 : $e4, $88
-	cmp $cc42.w                                                  ; $e5a3 : $cd, $42, $cc
-	lsr                                                  ; $e5a6 : $4a
-	cpy $cc78.w                                                  ; $e5a7 : $cc, $78, $cc
-	lda [$cc]                                                  ; $e5aa : $a7, $cc
-	and $cd, S                                                  ; $e5ac : $23, $cd
-	ora $3dcd.w, X                                                  ; $e5ae : $1d, $cd, $3d
-	bne br_00_e5f5                                                  ; $e5b1 : $d0, $42
-
-	cpy $d274.w                                                  ; $e5b3 : $cc, $74, $d2
-	txa                                                  ; $e5b6 : $8a
-	cmp ($a2)                                                  ; $e5b7 : $d2, $a2
-	cmp ($bb)                                                  ; $e5b9 : $d2, $bb
-	cmp ($61)                                                  ; $e5bb : $d2, $61
-	cpy $d2c5.w                                                  ; $e5bd : $cc, $c5, $d2
-	cmp ($cd)                                                  ; $e5c0 : $d2, $cd
-	sbc ($d2, X)                                                  ; $e5c2 : $e1, $d2
-	ora $19d3.w                                                  ; $e5c4 : $0d, $d3, $19
-	cmp ($cd, S), Y                                                  ; $e5c7 : $d3, $cd
-	cpx #$e105.w                                                  ; $e5c9 : $e0, $05, $e1
-	ldy #$44e3.w                                                  ; $e5cc : $a0, $e3, $44
-	sbc $4e, S                                                  ; $e5cf : $e3, $4e
-	sbc $77, S                                                  ; $e5d1 : $e3, $77
-	sbc ($81, X)                                                  ; $e5d3 : $e1, $81
-	sbc ($eb, X)                                                  ; $e5d5 : $e1, $eb
-	cpx $0b                                                  ; $e5d7 : $e4, $0b
-	sbc $2a                                                  ; $e5d9 : $e5, $2a
-	sbc $38                                                  ; $e5db : $e5, $38
-	sbc $54                                                  ; $e5dd : $e5, $54
-	sbc $d8                                                  ; $e5df : $e5, $d8
-	cpx $87                                                  ; $e5e1 : $e4, $87
-	bne br_00_e582                                                  ; $e5e3 : $d0, $9d
-
-	cpx #$d336.w                                                  ; $e5e5 : $e0, $36, $d3
-	lsr $d3                                                  ; $e5e8 : $46, $d3
-	and $e0d4.w, Y                                                  ; $e5ea : $39, $d4, $e0
-	pei ($ec)                                                  ; $e5ed : $d4, $ec
-	pei ($ca)                                                  ; $e5ef : $d4, $ca
-	dec $e9, X                                                  ; $e5f1 : $d6, $e9
-	dec $a1, X                                                  ; $e5f3 : $d6, $a1
-
-br_00_e5f5:
-	cpx $21                                                  ; $e5f5 : $e4, $21
-	cpx $d6                                                  ; $e5f7 : $e4, $d6
-	cmp ($f9, S), Y                                                  ; $e5f9 : $d3, $f9
-	cpx $42                                                  ; $e5fb : $e4, $42
-	cpy $cc42.w                                                  ; $e5fd : $cc, $42, $cc
-	wdm                                                  ; $e600 : $42
-	cpy $d924.w                                                  ; $e601 : $cc, $24, $d9
-	cmp ($d8), Y                                                  ; $e604 : $d1, $d8
-	cpx #$f2d8.w                                                  ; $e606 : $e0, $d8, $f2
-	cld                                                  ; $e609 : $d8
-	asl $d9                                                  ; $e60a : $06, $d9
-	ina                                                  ; $e60c : $1a
-	cmp $d93b.w, Y                                                  ; $e60d : $d9, $3b, $d9
-	lsr                                                  ; $e610 : $4a
-	cmp $d959.w, Y                                                  ; $e611 : $d9, $59, $d9
-	pla                                                  ; $e614 : $68
-	cmp $d975.w, Y                                                  ; $e615 : $d9, $75, $d9
-	.db $82                                                  ; $e618 : $82
-
-	cmp $d98e.w, Y                                                  ; $e619 : $d9, $8e, $d9
-	sta $acd9.w, X                                                  ; $e61c : $9d, $d9, $ac
-	cmp $d9bb.w, Y                                                  ; $e61f : $d9, $bb, $d9
-	wai                                                  ; $e622 : $cb
-	cmp $d9db.w, Y                                                  ; $e623 : $d9, $db, $d9
-	jsr ($fcd9.w, X)                                                  ; $e626 : $fc, $d9, $fc
-	cmp $d9fc.w, Y                                                  ; $e629 : $d9, $fc, $d9
-	jsr ($fcd9.w, X)                                                  ; $e62c : $fc, $d9, $fc
-	cmp $d9fc.w, Y                                                  ; $e62f : $d9, $fc, $d9
-	jsr ($fcd9.w, X)                                                  ; $e632 : $fc, $d9, $fc
-	cmp $d9fc.w, Y                                                  ; $e635 : $d9, $fc, $d9
-	jsr ($fcd9.w, X)                                                  ; $e638 : $fc, $d9, $fc
-	cmp $d9fc.w, Y                                                  ; $e63b : $d9, $fc, $d9
-	jsr ($fcd9.w, X)                                                  ; $e63e : $fc, $d9, $fc
-	cmp $d9fc.w, Y                                                  ; $e641 : $d9, $fc, $d9
-	jsr ($fcd9.w, X)                                                  ; $e644 : $fc, $d9, $fc
-	cmp $d9fc.w, Y                                                  ; $e647 : $d9, $fc, $d9
-	jsr ($fcd9.w, X)                                                  ; $e64a : $fc, $d9, $fc
-	cmp $da82.w, Y                                                  ; $e64d : $d9, $82, $da
-	wdm                                                  ; $e650 : $42
-	cpy $db1e.w                                                  ; $e651 : $cc, $1e, $db
-	and ($db, X)                                                  ; $e654 : $21, $db
-	ora $acdc.w                                                  ; $e656 : $0d, $dc, $ac
-	jml [$dcb1.w]                                                  ; $e659 : $dc, $b1, $dc
+	.db $cd
 
 
-	ldx $dc, Y                                                  ; $e65c : $b6, $dc
-	tyx                                                  ; $e65e : $bb
-	jml [$e078.w]                                                  ; $e65f : $dc, $78, $e0
+PuzzleScriptCommands:
+	.dw PuzzleScriptCmd_End
+	.dw PuzzleScriptCmd01h_JumpIfFlagSet
+	.dw PuzzleScriptCmd02h
+	.dw PuzzleScriptCmd03h
+	.dw $cd23
+	.dw $cd1d
+	.dw PuzzleScriptCmd06h
+	.dw PuzzleScriptCmd_End
+	.dw PuzzleScriptCmd08h_SetFlag
+	.dw PuzzleScriptCmd09h_ClearFlag
+	.dw PuzzleScriptCmd0ah_Jump
+	.dw PuzzleScriptCmd0bh
+	.dw PuzzleScriptCmd0ch_JumpIfFlagClear
+	.dw PuzzleScriptCmd0dh
+	.dw PuzzleScriptCmd0eh
+	.dw PuzzleScriptCmd0fh
+	.dw $d30d
+	.dw PuzzleScriptCmd11h
+	.dw $e0cd
+	.dw PuzzleScriptCmd13h
+	.dw $e3a0
+	.dw $e344
+	.dw $e34e
+	.dw $e177
+	.dw $e181
+	.dw $e4eb
+	.dw $e50b
+	.dw $e52a
+	.dw $e538
+	.dw $e554
+	.dw PuzzleScriptCmd1eh
+	.dw $d087
+	.dw $e09d
+	.dw $d336
+	.dw $d346
+	.dw $d439
+	.dw $d4e0
+	.dw $d4ec
+	.dw $d6ca
+	.dw PuzzleScriptCmd27h
+	.dw $e4a1
+	.dw PuzzleScriptCmd29h
+	.dw PuzzleScriptCmd2ah
+	.dw $e4f9
+	.dw PuzzleScriptCmd_End
+	.dw PuzzleScriptCmd_End
+	.dw PuzzleScriptCmd_End
+	.dw PuzzleScriptCmd2fh_SetVarFromOtherVar
+	.dw $d8d1
+	.dw $d8e0
+	.dw PuzzleScriptCmd32h_IncVar
+	.dw $d906
+	.dw PuzzleScriptCmd34h_SetVar
+	.dw PuzzleScriptCmd35h_JumpIfVarEquVal
+	.dw PuzzleScriptCmd36h_JumpIfVarNotEquVal
+	.dw $d959
+	.dw $d968
+	.dw $d975
+	.dw $d982
+	.dw $d98e
+	.dw PuzzleScriptCmd3ch
+	.dw $d9ac
+	.dw $d9bb
+	.dw $d9cb
+	.dw $d9db
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw PuzzleScriptCmd41hTo54h
+	.dw $da82
+	.dw PuzzleScriptCmd_End
+	.dw $db1e
+	.dw PuzzleScriptCmd58h
+	.dw $dc0d
+	.dw $dcac
+	.dw $dcb1
+	.dw $dcb6
+	.dw $dcbb
+	.dw $e078
+	.dw $dd8f
+	.dw $ddb5
+	.dw $ddcc
+	.dw PuzzleScriptCmd_End
+	.dw $dde3
+	.dw $ddf2
+	.dw $ddfa
+	.dw $de02
+	.dw $de0a
+	.dw PuzzleScriptCmd68h
+	.dw PuzzleScriptCmd69h_MovVarVar
+	.dw $d47e
+	.dw $d4ca
+	.dw $d2ee
+	.dw PuzzleScriptCmd6dh
+	.dw $e358
+	.dw $e18b
+	.dw $cd32
+	.dw PuzzleScriptCmd71h
+	.dw $e198
+	.dw $e1a2
+	.dw $e1ac
+	.dw $e1b9
+	.dw $e1bf
+	.dw $e1c5
+	.dw $d516
+	.dw $d5a5
+	.dw PuzzleScriptCmd7ah
+	.dw $d5af
+	.dw $ded3
+	.dw $deda
+	.dw $dee1
+	.dw $dee8
+	.dw $deef
+	.dw $de11
+	.dw $e038
+	.dw $dac9
+	.dw $dad7
+	.dw $daf2
+	.dw $db11
+	.dw $e1ee
+	.dw $e1f4
+	.dw $e1fa
+	.dw $de32
+	.dw $de52
+	.dw $d5bc
+	.dw $ce1b
+	.dw PuzzleScriptCmd8eh
+	.dw $d5f2
+	.dw $d01d
+	.dw $d051
+	.dw $ce27
+	.dw PuzzleScriptCmd_End
+	.dw $e277
+	.dw $e27d
+	.dw PuzzleScriptCmd96h
+	.dw $ced9
+	.dw $cee0
+	.dw $cee7
+	.dw $ceee
+	.dw PuzzleScriptCmd_End
+	.dw $cf3a
+	.dw $cfd8
+	.dw $cfea
+	.dw $cf63
+	.dw $cf9d
+	.dw $cfaa
+	.dw $cfb7
+	.dw $deaa
+	.dw PuzzleScriptCmdA4h
+	.dw $deb8
+	.dw $debf
+	.dw $cfbf
+	.dw $d065
+	.dw PuzzleScriptCmdA9h_Call
+	.dw PuzzleScriptCmdAAh_Ret
+	.dw $d8c8
+	.dw PuzzleScriptCmd_End
+	.dw PuzzleScriptCmd_End
+	.dw $d4b0
+	.dw $df69
+	.dw $df70
+	.dw $df77
+	.dw $df7e
+	.dw $df40
+	.dw PuzzleScriptCmdB4h
+	.dw $dbca
+	.dw $dbdd
+	.dw $dbf5
+	.dw $d5e4
+	.dw $d5eb
+	.dw PuzzleScriptCmdBAh
+	.dw PuzzleScriptCmdBBh
+	.dw $cea0
+	.dw $cecf
+	.dw $db9d
 
 
-	sta $ddb5dd.l                                                  ; $e662 : $8f, $dd, $b5, $dd
-	cpy $42dd.w                                                  ; $e666 : $cc, $dd, $42
-	cpy $dde3.w                                                  ; $e669 : $cc, $e3, $dd
-	sbc ($dd)                                                  ; $e66c : $f2, $dd
-	plx                                                  ; $e66e : $fa
-	cmp $de02.w, X                                                  ; $e66f : $dd, $02, $de
-	asl                                                  ; $e672 : $0a
-	dec $dd86.w, X                                                  ; $e673 : $de, $86, $dd
-	tya                                                  ; $e676 : $98
-	phx                                                  ; $e677 : $da
-	ror $cad4.w, X                                                  ; $e678 : $7e, $d4, $ca
-	pei ($ee)                                                  ; $e67b : $d4, $ee
-	cmp ($d3)                                                  ; $e67d : $d2, $d3
-	cpx #$e358.w                                                  ; $e67f : $e0, $58, $e3
-	phb                                                  ; $e682 : $8b
-	sbc ($32, X)                                                  ; $e683 : $e1, $32
-	cmp $d2d3.w                                                  ; $e685 : $cd, $d3, $d2
-	tya                                                  ; $e688 : $98
-	sbc ($a2, X)                                                  ; $e689 : $e1, $a2
-	sbc ($ac, X)                                                  ; $e68b : $e1, $ac
-	sbc ($b9, X)                                                  ; $e68d : $e1, $b9
-	sbc ($bf, X)                                                  ; $e68f : $e1, $bf
-	sbc ($c5, X)                                                  ; $e691 : $e1, $c5
-	sbc ($16, X)                                                  ; $e693 : $e1, $16
-	cmp $a5, X                                                  ; $e695 : $d5, $a5
-	cmp $d9, X                                                  ; $e697 : $d5, $d9
-	cmp $d5af.w                                                  ; $e699 : $cd, $af, $d5
-	cmp ($de, S), Y                                                  ; $e69c : $d3, $de
-	phx                                                  ; $e69e : $da
-	dec $dee1.w, X                                                  ; $e69f : $de, $e1, $de
-	inx                                                  ; $e6a2 : $e8
-	dec $deef.w, X                                                  ; $e6a3 : $de, $ef, $de
-	ora ($de), Y                                                  ; $e6a6 : $11, $de
-	sec                                                  ; $e6a8 : $38
-	cpx #$dac9.w                                                  ; $e6a9 : $e0, $c9, $da
-	cmp [$da], Y                                                  ; $e6ac : $d7, $da
-	sbc ($da)                                                  ; $e6ae : $f2, $da
-	ora ($db), Y                                                  ; $e6b0 : $11, $db
-	inc $f4e1.w                                                  ; $e6b2 : $ee, $e1, $f4
-	sbc ($fa, X)                                                  ; $e6b5 : $e1, $fa
-	sbc ($32, X)                                                  ; $e6b7 : $e1, $32
-	dec $de52.w, X                                                  ; $e6b9 : $de, $52, $de
-	ldy $1bd5.w, X                                                  ; $e6bc : $bc, $d5, $1b
-	dec $ce33.w                                                  ; $e6bf : $ce, $33, $ce
-	sbc ($d5)                                                  ; $e6c2 : $f2, $d5
-	ora $51d0.w, X                                                  ; $e6c4 : $1d, $d0, $51
-	.db $d0, $27                                                  ; $e6c7 : $d0, $27
+; X - table entry from puzzle script base table
+; Y - script to find
+StartPuzzleScript:
+	lda wPuzzleScriptBaseBank.l                                                  ; $e722 : $af, $96, $d1, $7f
+	cmp #$ff.b                                                  ; $e726 : $c9, $ff
+	bne @br_e72b                                                  ; $e728 : $d0, $01
 
-	dec $cc42.w                                                  ; $e6c9 : $ce, $42, $cc
-	adc [$e2], Y                                                  ; $e6cc : $77, $e2
-	adc $83e2.w, X                                                  ; $e6ce : $7d, $e2, $83
-	sep #$d9.b                                                  ; $e6d1 : $e2, $d9
-	dec $cee0.w                                                  ; $e6d3 : $ce, $e0, $ce
+	rtl                                                  ; $e72a : $6b
 
-br_00_e6d6:
-	sbc [$ce]                                                  ; $e6d6 : $e7, $ce
-	inc $42ce.w                                                  ; $e6d8 : $ee, $ce, $42
-	cpy $cf3a.w                                                  ; $e6db : $cc, $3a, $cf
-	cld                                                  ; $e6de : $d8
-	cmp $63cfea.l                                                  ; $e6df : $cf, $ea, $cf, $63
-	cmp $aacf9d.l                                                  ; $e6e3 : $cf, $9d, $cf, $aa
-	cmp $aacfb7.l                                                  ; $e6e7 : $cf, $b7, $cf, $aa
-	dec $deb1.w, X                                                  ; $e6eb : $de, $b1, $de
-	clv                                                  ; $e6ee : $b8
-	dec $debf.w, X                                                  ; $e6ef : $de, $bf, $de
-	lda $d065cf.l, X                                                  ; $e6f2 : $bf, $cf, $65, $d0
-	txy                                                  ; $e6f6 : $9b
-	cmp [$49], Y                                                  ; $e6f7 : $d7, $49
-	cld                                                  ; $e6f9 : $d8
-	iny                                                  ; $e6fa : $c8
-	cld                                                  ; $e6fb : $d8
-	wdm                                                  ; $e6fc : $42
-	cpy $cc42.w                                                  ; $e6fd : $cc, $42, $cc
-	bcs br_00_e6d6                                                  ; $e700 : $b0, $d4
-
-	adc #$df.b                                                  ; $e702 : $69, $df
-	.db $70, $df                                                  ; $e704 : $70, $df
-
-	adc [$df], Y                                                  ; $e706 : $77, $df
-	ror $40df.w, X                                                  ; $e708 : $7e, $df, $40
-	cmp $cadb6a.l, X                                                  ; $e70b : $df, $6a, $db, $ca
-	stp                                                  ; $e70f : $db
-	cmp $f5db.w, X                                                  ; $e710 : $dd, $db, $f5
-	stp                                                  ; $e713 : $db
-	cpx $d5                                                  ; $e714 : $e4, $d5
-	xba                                                  ; $e716 : $eb
-	cmp $86, X                                                  ; $e717 : $d5, $86
-	dec $b4, X                                                  ; $e719 : $d6, $b4
-	dec $a0, X                                                  ; $e71b : $d6, $a0
-	dec $cecf.w                                                  ; $e71d : $ce, $cf, $ce
-	sta $afdb.w, X                                                  ; $e720 : $9d, $db, $af
-	stx $d1, Y                                                  ; $e723 : $96, $d1
-	adc $d0ffc9.l, X                                                  ; $e725 : $7f, $c9, $ff, $d0
-	ora ($6b, X)                                                  ; $e729 : $01, $6b
+@br_e72b:
 	stx $5d                                                  ; $e72b : $86, $5d
-	jsr Call_00_e78d.l                                                  ; $e72d : $22, $8d, $e7, $80
-	bcs br_00_e78a                                                  ; $e731 : $b0, $57
+	jsr SetScriptAddrFromDictMapOfYdiv2.l                                                  ; $e72d : $22, $8d, $e7, $80
+	bcs @done                                                  ; $e731 : $b0, $57
 
-	ldx #$00.b                                                  ; $e733 : $a2, $00
-	.db $00                                                  ; $e735 : $00
+; find a free slot
+	ldx #$0000.w                                                  ; $e733 : $a2, $00, $00
 
-br_00_e736:
-	lda $7fd18c.l, X                                                  ; $e736 : $bf, $8c, $d1, $7f
-	bpl br_00_e745                                                  ; $e73a : $10, $09
+@loop_e736:
+	lda wPuzzleScriptsEnabled.l, X                                                  ; $e736 : $bf, $8c, $d1, $7f
+	bpl @cont_e745                                                  ; $e73a : $10, $09
 
 	inx                                                  ; $e73c : $e8
-	cpx #$08.b                                                  ; $e73d : $e0, $08
-	.db $00                                                  ; $e73f : $00
-	bne br_00_e736                                                  ; $e740 : $d0, $f4
+	cpx #$0008.w                                                  ; $e73d : $e0, $08, $00
+	bne @loop_e736                                                  ; $e740 : $d0, $f4
 
-	ldx #$00.b                                                  ; $e742 : $a2, $00
-	.db $00                                                  ; $e744 : $00
+	ldx #$0000.w                                                  ; $e742 : $a2, $00, $00
 
-br_00_e745:
+@cont_e745:
+; enable it to start
 	lda #$81.b                                                  ; $e745 : $a9, $81
-	sta $7fd18c.l, X                                                  ; $e747 : $9f, $8c, $d1, $7f
+	sta wPuzzleScriptsEnabled.l, X                                                  ; $e747 : $9f, $8c, $d1, $7f
 	tdc                                                  ; $e74b : $7b
 	sta $7fd4e6.l, X                                                  ; $e74c : $9f, $e6, $d4, $7f
 	stx $54                                                  ; $e750 : $86, $54
@@ -15321,10 +15473,10 @@ br_00_e745:
 	asl                                                  ; $e766 : $0a
 	adc $54                                                  ; $e767 : $65, $54
 	tax                                                  ; $e769 : $aa
-	lda $7fd197.l                                                  ; $e76a : $af, $97, $d1, $7f
+	lda wPuzzleScriptCurrAddr.l                                                  ; $e76a : $af, $97, $d1, $7f
 	sta $7fd134.l, X                                                  ; $e76e : $9f, $34, $d1, $7f
 	sep #ACCU_8                                                  ; $e772 : $e2, $20
-	lda $7fd199.l                                                  ; $e774 : $af, $99, $d1, $7f
+	lda wPuzzleScriptCurrBank.l                                                  ; $e774 : $af, $99, $d1, $7f
 	sta $7fd136.l, X                                                  ; $e778 : $9f, $36, $d1, $7f
 	ldx $54                                                  ; $e77c : $a6, $54
 	lda $8f                                                  ; $e77e : $a5, $8f
@@ -15332,54 +15484,60 @@ br_00_e745:
 	lda $91                                                  ; $e784 : $a5, $91
 	sta $7fd184.l, X                                                  ; $e786 : $9f, $84, $d1, $7f
 
-br_00_e78a:
+@done:
 	sep #ACCU_8                                                  ; $e78a : $e2, $20
 	rtl                                                  ; $e78c : $6b
 
 
-Call_00_e78d:
+; X - table entry from puzzle script base table
+; Y - script to find
+SetScriptAddrFromDictMapOfYdiv2:
 	phb                                                  ; $e78d : $8b
 	sty $56                                                  ; $e78e : $84, $56
 	lsr $56                                                  ; $e790 : $46, $56
-	lda $7fd196.l                                                  ; $e792 : $af, $96, $d1, $7f
+	lda wPuzzleScriptBaseBank.l                                                  ; $e792 : $af, $96, $d1, $7f
 	pha                                                  ; $e796 : $48
 	plb                                                  ; $e797 : $ab
 	rep #ACCU_8                                                  ; $e798 : $c2, $20
 	txa                                                  ; $e79a : $8a
 	clc                                                  ; $e79b : $18
-	adc $7fd194.l                                                  ; $e79c : $6f, $94, $d1, $7f
-	jsr Call_00_e8f4.w                                                  ; $e7a0 : $20, $f4, $e8
-	jsr $e8e2.w                                                  ; $e7a3 : $20, $e2, $e8
+	adc wPuzzleScriptBaseAddr.l                                                  ; $e79c : $6f, $94, $d1, $7f
+	jsr CheckIfPuzzleScriptOffsetAisValid.w                                                  ; $e7a0 : $20, $f4, $e8
+	jsr SetCurrPuzzleScriptAddr.w                                                  ; $e7a3 : $20, $e2, $e8
+
+; get an offset from a word here
 	sep #ACCU_8                                                  ; $e7a6 : $e2, $20
-	jsr Call_00_e8ad.w                                                  ; $e7a8 : $20, $ad, $e8
+	jsr AequPuzzleScriptWord.w                                                  ; $e7a8 : $20, $ad, $e8
 	clc                                                  ; $e7ab : $18
-	adc $7fd194.l                                                  ; $e7ac : $6f, $94, $d1, $7f
-	jsr Call_00_e8f4.w                                                  ; $e7b0 : $20, $f4, $e8
-	jsr $e8e2.w                                                  ; $e7b3 : $20, $e2, $e8
+	adc wPuzzleScriptBaseAddr.l                                                  ; $e7ac : $6f, $94, $d1, $7f
+	jsr CheckIfPuzzleScriptOffsetAisValid.w                                                  ; $e7b0 : $20, $f4, $e8
+
+;
+	jsr SetCurrPuzzleScriptAddr.w                                                  ; $e7b3 : $20, $e2, $e8
 	sep #ACCU_8                                                  ; $e7b6 : $e2, $20
 
-br_00_e7b8:
-	jsr Call_00_e8b9.w                                                  ; $e7b8 : $20, $b9, $e8
+@loop_e7b8:
+	jsr AequPuzzleScriptByte.w                                                  ; $e7b8 : $20, $b9, $e8
 	cmp #$ff.b                                                  ; $e7bb : $c9, $ff
 	sec                                                  ; $e7bd : $38
-	beq br_00_e7db                                                  ; $e7be : $f0, $1b
+	beq @done                                                  ; $e7be : $f0, $1b
 
 	cmp $56                                                  ; $e7c0 : $c5, $56
-	beq br_00_e7cc                                                  ; $e7c2 : $f0, $08
+	beq @br_e7cc                                                  ; $e7c2 : $f0, $08
 
-	jsr Call_00_e8b9.w                                                  ; $e7c4 : $20, $b9, $e8
-	jsr Call_00_e8b9.w                                                  ; $e7c7 : $20, $b9, $e8
-	bra br_00_e7b8                                                  ; $e7ca : $80, $ec
+	jsr AequPuzzleScriptByte.w                                                  ; $e7c4 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e7c7 : $20, $b9, $e8
+	bra @loop_e7b8                                                  ; $e7ca : $80, $ec
 
-br_00_e7cc:
-	jsr Call_00_e8ad.w                                                  ; $e7cc : $20, $ad, $e8
+@br_e7cc:
+	jsr AequPuzzleScriptWord.w                                                  ; $e7cc : $20, $ad, $e8
 	clc                                                  ; $e7cf : $18
-	adc $7fd194.l                                                  ; $e7d0 : $6f, $94, $d1, $7f
-	jsr Call_00_e8f4.w                                                  ; $e7d4 : $20, $f4, $e8
-	jsr $e8e2.w                                                  ; $e7d7 : $20, $e2, $e8
+	adc wPuzzleScriptBaseAddr.l                                                  ; $e7d0 : $6f, $94, $d1, $7f
+	jsr CheckIfPuzzleScriptOffsetAisValid.w                                                  ; $e7d4 : $20, $f4, $e8
+	jsr SetCurrPuzzleScriptAddr.w                                                  ; $e7d7 : $20, $e2, $e8
 	clc                                                  ; $e7da : $18
 
-br_00_e7db:
+@done:
 	sep #ACCU_8                                                  ; $e7db : $e2, $20
 	plb                                                  ; $e7dd : $ab
 	rtl                                                  ; $e7de : $6b
@@ -15390,7 +15548,7 @@ br_00_e7db:
 	.db $00                                                  ; $e7e2 : $00
 	ldy #$06.b                                                  ; $e7e3 : $a0, $06
 	.db $00                                                  ; $e7e5 : $00
-	jsr $80e722.l                                                  ; $e7e6 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $e7e6 : $22, $22, $e7, $80
 	ldx $54                                                  ; $e7ea : $a6, $54
 	lda $8f                                                  ; $e7ec : $a5, $8f
 	sta $7fd17c.l, X                                                  ; $e7ee : $9f, $7c, $d1, $7f
@@ -15403,7 +15561,7 @@ br_00_e7db:
 	phy                                                  ; $e7fa : $5a
 	ldy #$03.b                                                  ; $e7fb : $a0, $03
 	.db $00                                                  ; $e7fd : $00
-	jsr $83b851.l                                                  ; $e7fe : $22, $51, $b8, $83
+	jsr Call_03_b851.l                                                  ; $e7fe : $22, $51, $b8, $83
 	ply                                                  ; $e802 : $7a
 	bcc br_00_e816                                                  ; $e803 : $90, $11
 
@@ -15412,7 +15570,7 @@ br_00_e7db:
 	tyx                                                  ; $e80a : $bb
 	asl                                                  ; $e80b : $0a
 	tay                                                  ; $e80c : $a8
-	jsr $80e722.l                                                  ; $e80d : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $e80d : $22, $22, $e7, $80
 	lda #$14.b                                                  ; $e811 : $a9, $14
 	tsb $05b5.w                                                  ; $e813 : $0c, $b5, $05
 
@@ -15420,80 +15578,80 @@ br_00_e816:
 	rtl                                                  ; $e816 : $6b
 
 
+Func_0_e817:
 	lda wCharacterXsDiv16s.w                                                  ; $e817 : $ad, $ba, $06
 	sta $8f                                                  ; $e81a : $85, $8f
 	lda wCharacterYsDiv16s.w                                                  ; $e81c : $ad, $e2, $06
 	sta $91                                                  ; $e81f : $85, $91
 	lda wCharacterMovementDirs.w                                                  ; $e821 : $ad, $92, $06
-	jsr $83fb12.l                                                  ; $e824 : $22, $12, $fb, $83
-	ldx #$20.b                                                  ; $e828 : $a2, $20
-	.db $00                                                  ; $e82a : $00
-	ldy #$03.b                                                  ; $e82b : $a0, $03
-	.db $00                                                  ; $e82d : $00
-	jsr $83b851.l                                                  ; $e82e : $22, $51, $b8, $83
-	bcc br_00_e843                                                  ; $e832 : $90, $0f
+	jsr Call_03_fb12.l                                                  ; $e824 : $22, $12, $fb, $83
+	ldx #$0020.w                                                  ; $e828 : $a2, $20, $00
+	ldy #$0003.w                                                  ; $e82b : $a0, $03, $00
+	jsr Call_03_b851.l                                                  ; $e82e : $22, $51, $b8, $83
+	bcc @done                                                  ; $e832 : $90, $0f
 
 	tdc                                                  ; $e834 : $7b
 	lda $7ef000.l, X                                                  ; $e835 : $bf, $00, $f0, $7e
 	asl                                                  ; $e839 : $0a
 	tay                                                  ; $e83a : $a8
-	ldx #$02.b                                                  ; $e83b : $a2, $02
-	.db $00                                                  ; $e83d : $00
-	jsr $80e722.l                                                  ; $e83e : $22, $22, $e7, $80
+	ldx #$0002.w                                                  ; $e83b : $a2, $02, $00
+	jsr StartPuzzleScript.l                                                  ; $e83e : $22, $22, $e7, $80
 	sec                                                  ; $e842 : $38
 
-br_00_e843:
+@done:
 	rtl                                                  ; $e843 : $6b
 
 
+Func_0_e844:
 	rep #ACCU_8                                                  ; $e844 : $c2, $20
-	ldx #$7c.b                                                  ; $e846 : $a2, $7c
-	.db $00                                                  ; $e848 : $00
+	ldx #$007c.w                                                  ; $e846 : $a2, $7c, $00
 	tdc                                                  ; $e849 : $7b
 
-br_00_e84a:
+@loop_e84a:
 	sta $7fd466.l, X                                                  ; $e84a : $9f, $66, $d4, $7f
 	sta $7fd468.l, X                                                  ; $e84e : $9f, $68, $d4, $7f
 	dex                                                  ; $e852 : $ca
 	dex                                                  ; $e853 : $ca
 	dex                                                  ; $e854 : $ca
 	dex                                                  ; $e855 : $ca
-	bpl br_00_e84a                                                  ; $e856 : $10, $f2
+	bpl @loop_e84a                                                  ; $e856 : $10, $f2
 
+;
 	lda wCurrRoomIdx.w                                                  ; $e858 : $ad, $ac, $05
 	asl                                                  ; $e85b : $0a
 	tax                                                  ; $e85c : $aa
-	lda Data_11_b8b7.l-2, X                                                  ; $e85d : $bf, $b5, $b8, $91
-	sta $7fd1a0.l                                                  ; $e861 : $8f, $a0, $d1, $7f
+	lda RoomsChestContents.l-2, X                                                  ; $e85d : $bf, $b5, $b8, $91
+	sta wCurrRoomChestContentsAddr.l                                                  ; $e861 : $8f, $a0, $d1, $7f
+
+;
 	lda wCurrRoomIdx.w                                                  ; $e865 : $ad, $ac, $05
 	asl                                                  ; $e868 : $0a
 	adc wCurrRoomIdx.w                                                  ; $e869 : $6d, $ac, $05
 	tax                                                  ; $e86c : $aa
-	lda $8f8000.l, X                                                  ; $e86d : $bf, $00, $80, $8f
+	lda RoomPuzzleScripts.l, X                                                  ; $e86d : $bf, $00, $80, $8f
 	cmp #$ffff.w                                                  ; $e871 : $c9, $ff, $ff
-	bne br_00_e882                                                  ; $e874 : $d0, $0c
+	bne @br_e882                                                  ; $e874 : $d0, $0c
 
-	sta $7fd194.l                                                  ; $e876 : $8f, $94, $d1, $7f
+	sta wPuzzleScriptBaseAddr.l                                                  ; $e876 : $8f, $94, $d1, $7f
 	sep #ACCU_8                                                  ; $e87a : $e2, $20
-	sta $7fd196.l                                                  ; $e87c : $8f, $96, $d1, $7f
-	bra br_00_e897                                                  ; $e880 : $80, $15
+	sta wPuzzleScriptBaseBank.l                                                  ; $e87c : $8f, $96, $d1, $7f
+	bra @done                                                  ; $e880 : $80, $15
 
-br_00_e882:
+@br_e882:
 	clc                                                  ; $e882 : $18
-	adc #$00.b                                                  ; $e883 : $69, $00
-	bra br_00_e816                                                  ; $e885 : $80, $8f
+	adc #$8000.w                                                  ; $e883 : $69, $00, $80
+	sta wPuzzleScriptBaseAddr.l                                                  ; $e886 : $8f, $94, $d1, $7f
+	sep #ACCU_8                                                  ; $e88a : $e2, $20
+	lda RoomPuzzleScripts.l+2, X                                                  ; $e88d : $bf, $02, $80, $8f
+	clc                                                  ; $e890 : $18
+	adc #:RoomPuzzleScripts                                                  ; $e891 : $69, $8f
+	sta wPuzzleScriptBaseBank.l                                                  ; $e893 : $8f, $96, $d1, $7f
 
-	sty $d1, X                                                  ; $e887 : $94, $d1
-	adc $bf20e2.l, X                                                  ; $e889 : $7f, $e2, $20, $bf
-	cop $80.b                                                  ; $e88d : $02, $80
-	sta $8f6918.l                                                  ; $e88f : $8f, $18, $69, $8f
-	sta $7fd196.l                                                  ; $e893 : $8f, $96, $d1, $7f
-
-br_00_e897:
+@done:
 	rtl                                                  ; $e897 : $6b
 
 
-Call_00_e898:
+AXequFlagAndBitOfA:
 	sta $54                                                  ; $e898 : $85, $54
 	and #$07.b                                                  ; $e89a : $29, $07
 	tax                                                  ; $e89c : $aa
@@ -15509,72 +15667,90 @@ Call_00_e898:
 	rtl                                                  ; $e8ac : $6b
 
 
-Call_00_e8ad:
-	jsr Call_00_e8b9.w                                                  ; $e8ad : $20, $b9, $e8
+AequPuzzleScriptWord:
+	jsr AequPuzzleScriptByte.w                                                  ; $e8ad : $20, $b9, $e8
 	pha                                                  ; $e8b0 : $48
-	jsr Call_00_e8b9.w                                                  ; $e8b1 : $20, $b9, $e8
+	jsr AequPuzzleScriptByte.w                                                  ; $e8b1 : $20, $b9, $e8
 	xba                                                  ; $e8b4 : $eb
 	pla                                                  ; $e8b5 : $68
 	rep #ACCU_8                                                  ; $e8b6 : $c2, $20
 	rts                                                  ; $e8b8 : $60
 
 
-Call_00_e8b9:
+AequPuzzleScriptByte:
+; eg a0e7 when switching 1st highlighted block
 	lda $0000.w, Y                                                  ; $e8b9 : $b9, $00, $00
 	iny                                                  ; $e8bc : $c8
-	.db $30, $10                                                  ; $e8bd : $30, $10
+	bmi @done                                                  ; $e8bd : $30, $10
 
+; eg 90
 	pha                                                  ; $e8bf : $48
-	lda $7fd199.l                                                  ; $e8c0 : $af, $99, $d1, $7f
+	lda wPuzzleScriptCurrBank.l                                                  ; $e8c0 : $af, $99, $d1, $7f
 	ina                                                  ; $e8c4 : $1a
-	sta $7fd199.l                                                  ; $e8c5 : $8f, $99, $d1, $7f
+	sta wPuzzleScriptCurrBank.l                                                  ; $e8c5 : $8f, $99, $d1, $7f
 	pha                                                  ; $e8c9 : $48
 	plb                                                  ; $e8ca : $ab
 	pla                                                  ; $e8cb : $68
-	ldy #$00.b                                                  ; $e8cc : $a0, $00
-	bra br_00_e930                                                  ; $e8ce : $80, $60
+	ldy #$8000.w                                                  ; $e8cc : $a0, $00, $80
 
-Call_00_e8d0:
+@done:
+	rts                                                  ; $e8cf : $60
+
+
+YequPrevPuzzleScriptAddr:
 	dey                                                  ; $e8d0 : $88
-	.db $30, $0e                                                  ; $e8d1 : $30, $0e
+	bmi @done                                                  ; $e8d1 : $30, $0e
 
-	lda $7fd199.l                                                  ; $e8d3 : $af, $99, $d1, $7f
+	lda wPuzzleScriptCurrBank.l                                                  ; $e8d3 : $af, $99, $d1, $7f
 	dea                                                  ; $e8d7 : $3a
-	sta $7fd199.l                                                  ; $e8d8 : $8f, $99, $d1, $7f
+	sta wPuzzleScriptCurrBank.l                                                  ; $e8d8 : $8f, $99, $d1, $7f
 	pha                                                  ; $e8dc : $48
 	plb                                                  ; $e8dd : $ab
-	ldy #$ff.b                                                  ; $e8de : $a0, $ff
-	sbc $984860.l, X                                                  ; $e8e0 : $ff, $60, $48, $98
-	sta $7fd197.l                                                  ; $e8e4 : $8f, $97, $d1, $7f
+	ldy #$ffff.w                                                  ; $e8de : $a0, $ff, $ff
+
+@done:
+	rts                                                  ; $e8e1 : $60
+
+
+SetCurrPuzzleScriptAddr:
+	pha                                                  ; $e8e2 : $48
+	tya                                                  ; $e8e3 : $98
+	sta wPuzzleScriptCurrAddr.l                                                  ; $e8e4 : $8f, $97, $d1, $7f
 	sep #ACCU_8                                                  ; $e8e8 : $e2, $20
 	phb                                                  ; $e8ea : $8b
 	pla                                                  ; $e8eb : $68
-	sta $7fd199.l                                                  ; $e8ec : $8f, $99, $d1, $7f
+	sta wPuzzleScriptCurrBank.l                                                  ; $e8ec : $8f, $99, $d1, $7f
 	rep #ACCU_8                                                  ; $e8f0 : $c2, $20
 	pla                                                  ; $e8f2 : $68
 	rts                                                  ; $e8f3 : $60
 
 
-Call_00_e8f4:
+; A -
+CheckIfPuzzleScriptOffsetAisValid:
 	tay                                                  ; $e8f4 : $a8
 	sep #ACCU_8                                                  ; $e8f5 : $e2, $20
-	lda $7fd196.l                                                  ; $e8f7 : $af, $96, $d1, $7f
+
+; get data bank from here
+	lda wPuzzleScriptBaseBank.l                                                  ; $e8f7 : $af, $96, $d1, $7f
 	pha                                                  ; $e8fb : $48
 	plb                                                  ; $e8fc : $ab
+
+; done if our A is good (still in bank)
 	rep #ACCU_8                                                  ; $e8fd : $c2, $20
 	tya                                                  ; $e8ff : $98
-	bmi br_00_e911                                                  ; $e900 : $30, $0f
+	bmi @done                                                  ; $e900 : $30, $0f
 
+; else set new bank
 	ora #$8000.w                                                  ; $e902 : $09, $00, $80
 	tay                                                  ; $e905 : $a8
 	sep #ACCU_8                                                  ; $e906 : $e2, $20
-	lda $7fd196.l                                                  ; $e908 : $af, $96, $d1, $7f
+	lda wPuzzleScriptBaseBank.l                                                  ; $e908 : $af, $96, $d1, $7f
 	ina                                                  ; $e90c : $1a
 	pha                                                  ; $e90d : $48
 	plb                                                  ; $e90e : $ab
 	rep #ACCU_8                                                  ; $e90f : $c2, $20
 
-br_00_e911:
+@done:
 	rts                                                  ; $e911 : $60
 
 
@@ -15598,11 +15774,9 @@ br_00_e929:
 
 Call_00_e92a:
 	cmp #$fb.b                                                  ; $e92a : $c9, $fb
-	bne br_00_e945                                                  ; $e92c : $d0, $17
+	bne @br_e945                                                  ; $e92c : $d0, $17
 
 	ldx wCurrChar                                                  ; $e92e : $a6, $a7
-
-br_00_e930:
 	lda $7fd17c.l, X                                                  ; $e930 : $bf, $7c, $d1, $7f
 	sta $9f                                                  ; $e934 : $85, $9f
 	ina                                                  ; $e936 : $1a
@@ -15611,12 +15785,13 @@ br_00_e930:
 	sta $a0                                                  ; $e93d : $85, $a0
 	ina                                                  ; $e93f : $1a
 	sta $a2                                                  ; $e940 : $85, $a2
-	brl br_00_e99c                                                  ; $e942 : $82, $57, $00
+	brl @done                                                  ; $e942 : $82, $57, $00
 
-br_00_e945:
+@br_e945:
 	cmp #$e0.b                                                  ; $e945 : $c9, $e0
-	bcc br_00_e96b                                                  ; $e947 : $90, $22
+	bcc @br_e96b                                                  ; $e947 : $90, $22
 
+; ex is a double idx
 	sec                                                  ; $e949 : $38
 	sbc #$e0.b                                                  ; $e94a : $e9, $e0
 	xba                                                  ; $e94c : $eb
@@ -15631,40 +15806,39 @@ br_00_e945:
 	sta $a1                                                  ; $e961 : $85, $a1
 	lda $7fd263.l, X                                                  ; $e963 : $bf, $63, $d2, $7f
 	sta $a2                                                  ; $e967 : $85, $a2
-	bra br_00_e99c                                                  ; $e969 : $80, $31
+	bra @done                                                  ; $e969 : $80, $31
 
-br_00_e96b:
+@br_e96b:
 	cmp #$60.b                                                  ; $e96b : $c9, $60
-	bcc br_00_e994                                                  ; $e96d : $90, $25
+	bcc @br_e994                                                  ; $e96d : $90, $25
 
 	sec                                                  ; $e96f : $38
 	sbc #$60.b                                                  ; $e970 : $e9, $60
 	xba                                                  ; $e972 : $eb
 	lda #$05.b                                                  ; $e973 : $a9, $05
 	xba                                                  ; $e975 : $eb
-	ldx #$24.b                                                  ; $e976 : $a2, $24
-	.db $00                                                  ; $e978 : $00
+	ldx #$0024.w                                                  ; $e976 : $a2, $24, $00
 	jsr Call_00_bfaa.l                                                  ; $e979 : $22, $aa, $bf, $80
-	bcc br_00_e982                                                  ; $e97d : $90, $03
+	bcc @br_e982                                                  ; $e97d : $90, $03
 
-	brl br_00_e99c                                                  ; $e97f : $82, $1a, $00
+	brl @done                                                  ; $e97f : $82, $1a, $00
 
-br_00_e982:
+@br_e982:
 	rep #ACCU_8                                                  ; $e982 : $c2, $20
 	lda $7ef001.l, X                                                  ; $e984 : $bf, $01, $f0, $7e
 	sta $9f                                                  ; $e988 : $85, $9f
 	lda $7ef003.l, X                                                  ; $e98a : $bf, $03, $f0, $7e
 	sta $a1                                                  ; $e98e : $85, $a1
 	sep #ACCU_8                                                  ; $e990 : $e2, $20
-	bra br_00_e99c                                                  ; $e992 : $80, $08
+	bra @done                                                  ; $e992 : $80, $08
 
-br_00_e994:
+@br_e994:
 	jsr Call_00_ea09.w                                                  ; $e994 : $20, $09, $ea
 	sta $9f                                                  ; $e997 : $85, $9f
 	xba                                                  ; $e999 : $eb
 	sta $a0                                                  ; $e99a : $85, $a0
 
-br_00_e99c:
+@done:
 	rts                                                  ; $e99c : $60
 
 
@@ -15673,7 +15847,7 @@ Call_00_e99d:
 	.db $00                                                  ; $e99f : $00
 
 br_00_e9a0:
-	lda $7fd18c.l, X                                                  ; $e9a0 : $bf, $8c, $d1, $7f
+	lda wPuzzleScriptsEnabled.l, X                                                  ; $e9a0 : $bf, $8c, $d1, $7f
 	bpl br_00_e9af                                                  ; $e9a4 : $10, $09
 
 	inx                                                  ; $e9a6 : $e8
@@ -15690,7 +15864,7 @@ br_00_e9af:
 
 Call_00_e9b0:
 	cmp #$fb.b                                                  ; $e9b0 : $c9, $fb
-	bcs br_00_e9bc                                                  ; $e9b2 : $b0, $08
+	bcs todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode                                                  ; $e9b2 : $b0, $08
 
 	cmp #$c0.b                                                  ; $e9b4 : $c9, $c0
 	bcc br_00_e9bb                                                  ; $e9b6 : $90, $03
@@ -15702,84 +15876,83 @@ br_00_e9bb:
 	rts                                                  ; $e9bb : $60
 
 
-Call_00_e9bc:
-br_00_e9bc:
+todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode:
 	cmp #$fb.b                                                  ; $e9bc : $c9, $fb
-	bcc br_00_e9ec                                                  ; $e9be : $90, $2c
+	bcc @done                                                  ; $e9be : $90, $2c
 
 	sec                                                  ; $e9c0 : $38
 	sbc #$fb.b                                                  ; $e9c1 : $e9, $fb
 	sta WRMPYA.w                                                  ; $e9c3 : $8d, $02, $42
 	lda #$08.b                                                  ; $e9c6 : $a9, $08
 	sta WRMPYB.w                                                  ; $e9c8 : $8d, $03, $42
-	lda #$7f.b                                                  ; $e9cb : $a9, $7f
+	lda #:wPuzzleScriptFbhVars.b                                                  ; $e9cb : $a9, $7f
 	sta $5f                                                  ; $e9cd : $85, $5f
 	rep #ACCU_8                                                  ; $e9cf : $c2, $20
 	clc                                                  ; $e9d1 : $18
-	lda wCurrChar                                                  ; $e9d2 : $a5, $a7
-	adc #$d15c.w                                                  ; $e9d4 : $69, $5c, $d1
+	lda wCurrPuzzleScript                                                  ; $e9d2 : $a5, $a7
+	adc #wPuzzleScriptFbhVars.w                                                  ; $e9d4 : $69, $5c, $d1
 	adc RDMPYL.w                                                  ; $e9d7 : $6d, $16, $42
 	sta $5d                                                  ; $e9da : $85, $5d
 	sep #ACCU_8                                                  ; $e9dc : $e2, $20
 	tdc                                                  ; $e9de : $7b
 	lda [$5d]                                                  ; $e9df : $a7, $5d
 	cmp #$e0.b                                                  ; $e9e1 : $c9, $e0
-	bcs br_00_e9ec                                                  ; $e9e3 : $b0, $07
+	bcs @done                                                  ; $e9e3 : $b0, $07
 
 	cmp #$c0.b                                                  ; $e9e5 : $c9, $c0
-	bcc br_00_e9ec                                                  ; $e9e7 : $90, $03
+	bcc @done                                                  ; $e9e7 : $90, $03
 
 	sec                                                  ; $e9e9 : $38
 	sbc #$c0.b                                                  ; $e9ea : $e9, $c0
 
-br_00_e9ec:
+@done:
 	rts                                                  ; $e9ec : $60
 
 
-Call_00_e9ed:
+GetPuzzleScriptVar:
 	cmp #$fb.b                                                  ; $e9ed : $c9, $fb
-	beq br_00_ea08                                                  ; $e9ef : $f0, $17
+	beq @done                                                  ; $e9ef : $f0, $17
 
-	jsr Call_00_e9bc.w                                                  ; $e9f1 : $20, $bc, $e9
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $e9f1 : $20, $bc, $e9
 	cmp #$c0.b                                                  ; $e9f4 : $c9, $c0
-	bcs br_00_ea08                                                  ; $e9f6 : $b0, $10
+	bcs @done                                                  ; $e9f6 : $b0, $10
 
 	cmp #$a0.b                                                  ; $e9f8 : $c9, $a0
-	bcc br_00_ea08                                                  ; $e9fa : $90, $0c
+	bcc @done                                                  ; $e9fa : $90, $0c
 
+; code is a0 to c0
 	phx                                                  ; $e9fc : $da
 	xba                                                  ; $e9fd : $eb
 	lda #$00.b                                                  ; $e9fe : $a9, $00
 	xba                                                  ; $ea00 : $eb
 	tax                                                  ; $ea01 : $aa
 	tdc                                                  ; $ea02 : $7b
-	lda $7fd074.l, X                                                  ; $ea03 : $bf, $74, $d0, $7f
+	lda wPuzzleScriptVars.l, X                                                  ; $ea03 : $bf, $74, $d0, $7f
 	plx                                                  ; $ea07 : $fa
 
-br_00_ea08:
+@done:
 	rts                                                  ; $ea08 : $60
 
 
 Call_00_ea09:
 	sta $54                                                  ; $ea09 : $85, $54
-	jsr Call_00_e9bc.w                                                  ; $ea0b : $20, $bc, $e9
+	jsr todo_ConvertPuzzleScriptCodeFbhToCharRelatedCode.w                                                  ; $ea0b : $20, $bc, $e9
 	sta $55                                                  ; $ea0e : $85, $55
 	lda $54                                                  ; $ea10 : $a5, $54
 	cmp #$fb.b                                                  ; $ea12 : $c9, $fb
-	bne br_00_ea22                                                  ; $ea14 : $d0, $0c
+	bne @br_ea22                                                  ; $ea14 : $d0, $0c
 
-	ldx wCurrChar                                                  ; $ea16 : $a6, $a7
+	ldx wCurrPuzzleScript                                                  ; $ea16 : $a6, $a7
 	lda $7fd184.l, X                                                  ; $ea18 : $bf, $84, $d1, $7f
 	xba                                                  ; $ea1c : $eb
 	lda $7fd17c.l, X                                                  ; $ea1d : $bf, $7c, $d1, $7f
 	rts                                                  ; $ea21 : $60
 
-
-br_00_ea22:
+@br_ea22:
 	tdc                                                  ; $ea22 : $7b
 	lda $55                                                  ; $ea23 : $a5, $55
 	cmp #$e0.b                                                  ; $ea25 : $c9, $e0
-	bcc br_00_ea37                                                  ; $ea27 : $90, $0e
+	bcc @br_ea37                                                  ; $ea27 : $90, $0e
 
 	sec                                                  ; $ea29 : $38
 	sbc #$e0.b                                                  ; $ea2a : $e9, $e0
@@ -15789,8 +15962,7 @@ br_00_ea22:
 	lda $7fd1a3.l, X                                                  ; $ea32 : $bf, $a3, $d1, $7f
 	rts                                                  ; $ea36 : $60
 
-
-br_00_ea37:
+@br_ea37:
 	sec                                                  ; $ea37 : $38
 	sbc #$20.b                                                  ; $ea38 : $e9, $20
 	jsr Call_00_e912.w                                                  ; $ea3a : $20, $12, $e9
@@ -15811,7 +15983,7 @@ Call_00_ea47:
 Call_00_ea50:
 	lda $7fd2a3.l                                                  ; $ea50 : $af, $a3, $d2, $7f
 	sta wCurrChar                                                  ; $ea54 : $85, $a7
-	jsr $83ab4f.l                                                  ; $ea56 : $22, $4f, $ab, $83
+	jsr Call_03_ab4f.l                                                  ; $ea56 : $22, $4f, $ab, $83
 	rts                                                  ; $ea5a : $60
 
 
@@ -15889,7 +16061,7 @@ br_00_ead4:
 	plb                                                  ; $ead5 : $ab
 	ldx #$0000.w                                                  ; $ead6 : $a2, $00, $00
 	ldy #$0004.w                                                  ; $ead9 : $a0, $04, $00
-	jsr $80e722.l                                                  ; $eadc : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $eadc : $22, $22, $e7, $80
 	jsr Func_0_cbae.l                                                  ; $eae0 : $22, $ae, $cb, $80
 	plb                                                  ; $eae4 : $ab
 	plp                                                  ; $eae5 : $28

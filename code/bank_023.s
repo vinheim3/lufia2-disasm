@@ -1883,7 +1883,7 @@ br_23_8a16:
 	and $3c3c.w, X                                                  ; $8a9b : $3d, $3c, $3c
 	dea                                                  ; $8a9e : $3a
 	ina                                                  ; $8a9f : $1a
-	bit $4200.w, X                                                  ; $8aa0 : $3c, $00, $42
+	bit NMITIMEN.w, X                                                  ; $8aa0 : $3c, $00, $42
 	tsb $ba                                                  ; $8aa3 : $04, $ba
 	.db $10, $2a                                                  ; $8aa5 : $10, $2a
 
@@ -2071,7 +2071,7 @@ br_23_8b81:
 
 br_23_8ba1:
 	.db $00                                                  ; $8ba1 : $00
-	bit $4200.w, X                                                  ; $8ba2 : $3c, $00, $42
+	bit NMITIMEN.w, X                                                  ; $8ba2 : $3c, $00, $42
 	tsb $ba                                                  ; $8ba5 : $04, $ba
 	.db $10, $2a                                                  ; $8ba7 : $10, $2a
 

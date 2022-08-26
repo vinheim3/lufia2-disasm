@@ -351,9 +351,9 @@ br_05_8247:
 	txa                                                  ; $824e : $8a
 	tyx                                                  ; $824f : $bb
 	tay                                                  ; $8250 : $a8
-	lda $7fd100.l, X                                                  ; $8251 : $bf, $00, $d1, $7f
+	lda wPuzzleScriptBitFlags.l, X                                                  ; $8251 : $bf, $00, $d1, $7f
 	eor $830a.w, Y                                                  ; $8255 : $59, $0a, $83
-	sta $7fd100.l, X                                                  ; $8258 : $9f, $00, $d1, $7f
+	sta wPuzzleScriptBitFlags.l, X                                                  ; $8258 : $9f, $00, $d1, $7f
 	rts                                                  ; $825c : $60
 
 
@@ -421,7 +421,7 @@ br_05_82aa:
 
 	phx                                                  ; $82b1 : $da
 	tyx                                                  ; $82b2 : $bb
-	lda $7fd100.l, X                                                  ; $82b3 : $bf, $00, $d1, $7f
+	lda wPuzzleScriptBitFlags.l, X                                                  ; $82b3 : $bf, $00, $d1, $7f
 	plx                                                  ; $82b7 : $fa
 	bra br_05_82bd                                                  ; $82b8 : $80, $03
 
@@ -7447,7 +7447,7 @@ br_05_b22a:
 	tdc                                                  ; $b232 : $7b
 
 br_05_b233:
-	sta $4200.w, X                                                  ; $b233 : $9d, $00, $42
+	sta NMITIMEN.w, X                                                  ; $b233 : $9d, $00, $42
 	inx                                                  ; $b236 : $e8
 	lda #$80.b                                                  ; $b237 : $a9, $80
 	clc                                                  ; $b239 : $18
@@ -7457,7 +7457,7 @@ br_05_b233:
 	lda #$ff.b                                                  ; $b23f : $a9, $ff
 
 br_05_b241:
-	sta $4200.w, X                                                  ; $b241 : $9d, $00, $42
+	sta NMITIMEN.w, X                                                  ; $b241 : $9d, $00, $42
 	inx                                                  ; $b244 : $e8
 	iny                                                  ; $b245 : $c8
 	dec $c6                                                  ; $b246 : $c6, $c6
@@ -7471,9 +7471,9 @@ br_05_b24e:
 	lda #$ff.b                                                  ; $b251 : $a9, $ff
 
 br_05_b253:
-	sta $4200.w, X                                                  ; $b253 : $9d, $00, $42
+	sta NMITIMEN.w, X                                                  ; $b253 : $9d, $00, $42
 	inx                                                  ; $b256 : $e8
-	stz $4200.w, X                                                  ; $b257 : $9e, $00, $42
+	stz NMITIMEN.w, X                                                  ; $b257 : $9e, $00, $42
 	inx                                                  ; $b25a : $e8
 
 br_05_b25b:
@@ -11754,15 +11754,15 @@ br_05_cea7:
 	lda [$b5], Y                                                  ; $cea7 : $b7, $b5
 	bmi br_05_cec2                                                  ; $cea9 : $30, $17
 
-	sta $4204.w                                                  ; $ceab : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $ceab : $8d, $04, $42
 	sep #ACCU_8                                                  ; $ceae : $e2, $20
 	lda $09f3.w                                                  ; $ceb0 : $ad, $f3, $09
-	sta $4206.w                                                  ; $ceb3 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $ceb3 : $8d, $06, $42
 	rep #ACCU_8                                                  ; $ceb6 : $c2, $20
 	phx                                                  ; $ceb8 : $da
 	plx                                                  ; $ceb9 : $fa
 	nop                                                  ; $ceba : $ea
-	lda $4214.w                                                  ; $cebb : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $cebb : $ad, $14, $42
 	sta [$b5], Y                                                  ; $cebe : $97, $b5
 	bra br_05_cee3                                                  ; $cec0 : $80, $21
 
@@ -11795,15 +11795,15 @@ br_05_cee3:
 
 br_05_ceee:
 	lda [$b5], Y                                                  ; $ceee : $b7, $b5
-	sta $4204.w                                                  ; $cef0 : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $cef0 : $8d, $04, $42
 	sep #ACCU_8                                                  ; $cef3 : $e2, $20
 	lda $09f3.w                                                  ; $cef5 : $ad, $f3, $09
-	sta $4206.w                                                  ; $cef8 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $cef8 : $8d, $06, $42
 	rep #ACCU_8                                                  ; $cefb : $c2, $20
 	phx                                                  ; $cefd : $da
 	plx                                                  ; $cefe : $fa
 	nop                                                  ; $ceff : $ea
-	lda $4214.w                                                  ; $cf00 : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $cf00 : $ad, $14, $42
 	sta [$b5], Y                                                  ; $cf03 : $97, $b5
 	iny                                                  ; $cf05 : $c8
 	iny                                                  ; $cf06 : $c8
@@ -12776,15 +12776,15 @@ Call_05_d0cd:
 	nop                                                  ; $d58c : $ea
 	nop                                                  ; $d58d : $ea
 	ldx RDMPYL.w                                                  ; $d58e : $ae, $16, $42
-	stx $4204.w                                                  ; $d591 : $8e, $04, $42
+	stx WRDIVL.w                                                  ; $d591 : $8e, $04, $42
 	lda #$64.b                                                  ; $d594 : $a9, $64
-	sta $4206.w                                                  ; $d596 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $d596 : $8d, $06, $42
 	pha                                                  ; $d599 : $48
 	pla                                                  ; $d59a : $68
 	phx                                                  ; $d59b : $da
 	plx                                                  ; $d59c : $fa
 	rep #ACCU_8                                                  ; $d59d : $c2, $20
-	lda $4214.w                                                  ; $d59f : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $d59f : $ad, $14, $42
 	bit #$ff00.w                                                  ; $d5a2 : $89, $00, $ff
 	beq +                                                  ; $d5a5 : $f0, $03
 	lda #$00ff.w                                                  ; $d5a7 : $a9, $ff, $00
@@ -13059,15 +13059,15 @@ br_05_d732:
 
 br_05_d758:
 	lda [$b5], Y                                                  ; $d758 : $b7, $b5
-	sta $4204.w                                                  ; $d75a : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $d75a : $8d, $04, $42
 	sep #ACCU_8                                                  ; $d75d : $e2, $20
 	lda $09f3.w                                                  ; $d75f : $ad, $f3, $09
-	sta $4206.w                                                  ; $d762 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $d762 : $8d, $06, $42
 	rep #ACCU_8                                                  ; $d765 : $c2, $20
 	phx                                                  ; $d767 : $da
 	plx                                                  ; $d768 : $fa
 	nop                                                  ; $d769 : $ea
-	lda $4214.w                                                  ; $d76a : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $d76a : $ad, $14, $42
 	sta [$b5], Y                                                  ; $d76d : $97, $b5
 	iny                                                  ; $d76f : $c8
 	iny                                                  ; $d770 : $c8
@@ -13078,15 +13078,15 @@ br_05_d758:
 
 br_05_d778:
 	lda [$b5], Y                                                  ; $d778 : $b7, $b5
-	sta $4204.w                                                  ; $d77a : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $d77a : $8d, $04, $42
 	sep #ACCU_8                                                  ; $d77d : $e2, $20
 	lda $09f3.w                                                  ; $d77f : $ad, $f3, $09
-	sta $4206.w                                                  ; $d782 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $d782 : $8d, $06, $42
 	rep #ACCU_8                                                  ; $d785 : $c2, $20
 	phx                                                  ; $d787 : $da
 	plx                                                  ; $d788 : $fa
 	nop                                                  ; $d789 : $ea
-	lda $4214.w                                                  ; $d78a : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $d78a : $ad, $14, $42
 	sta [$b5], Y                                                  ; $d78d : $97, $b5
 	iny                                                  ; $d78f : $c8
 	iny                                                  ; $d790 : $c8
@@ -13900,20 +13900,20 @@ Call_05_dc6f:
 	phk                                                  ; $dc70 : $4b
 	plb                                                  ; $dc71 : $ab
 	ldx $5e                                                  ; $dc72 : $a6, $5e
-	stx $4204.w                                                  ; $dc74 : $8e, $04, $42
+	stx WRDIVL.w                                                  ; $dc74 : $8e, $04, $42
 	lda $54                                                  ; $dc77 : $a5, $54
-	sta $4206.w                                                  ; $dc79 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $dc79 : $8d, $06, $42
 	phx                                                  ; $dc7c : $da
 	plx                                                  ; $dc7d : $fa
 	lda $5d                                                  ; $dc7e : $a5, $5d
 	xba                                                  ; $dc80 : $eb
-	ldx $4214.w                                                  ; $dc81 : $ae, $14, $42
+	ldx RDDIVL.w                                                  ; $dc81 : $ae, $14, $42
 	lda RDMPYL.w                                                  ; $dc84 : $ad, $16, $42
 	xba                                                  ; $dc87 : $eb
 	tay                                                  ; $dc88 : $a8
-	sty $4204.w                                                  ; $dc89 : $8c, $04, $42
+	sty WRDIVL.w                                                  ; $dc89 : $8c, $04, $42
 	lda $54                                                  ; $dc8c : $a5, $54
-	sta $4206.w                                                  ; $dc8e : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $dc8e : $8d, $06, $42
 	txa                                                  ; $dc91 : $8a
 	xba                                                  ; $dc92 : $eb
 	sta $5f                                                  ; $dc93 : $85, $5f
@@ -15805,14 +15805,14 @@ br_05_e882:
 	phb                                                  ; $e88c : $8b
 	phk                                                  ; $e88d : $4b
 	plb                                                  ; $e88e : $ab
-	sty $4204.w                                                  ; $e88f : $8c, $04, $42
+	sty WRDIVL.w                                                  ; $e88f : $8c, $04, $42
 	lda $11                                                  ; $e892 : $a5, $11
-	sta $4206.w                                                  ; $e894 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $e894 : $8d, $06, $42
 	phx                                                  ; $e897 : $da
 	plx                                                  ; $e898 : $fa
 	nop                                                  ; $e899 : $ea
 	rep #ACCU_8                                                  ; $e89a : $c2, $20
-	ldx $4214.w                                                  ; $e89c : $ae, $14, $42
+	ldx RDDIVL.w                                                  ; $e89c : $ae, $14, $42
 	lda RDMPYL.w                                                  ; $e89f : $ad, $16, $42
 	asl                                                  ; $e8a2 : $0a
 	asl                                                  ; $e8a3 : $0a

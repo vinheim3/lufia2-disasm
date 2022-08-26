@@ -12376,7 +12376,7 @@ Call_08_e406:
 	jsr Call_08_d206.w                                                  ; $e4c9 : $20, $06, $d2
 	jsr Call_08_be06.w                                                  ; $e4cc : $20, $06, $be
 	jsr $7606.w                                                  ; $e4cf : $20, $06, $76
-	tsb $4206.w                                                  ; $e4d2 : $0c, $06, $42
+	tsb WRDIVB.w                                                  ; $e4d2 : $0c, $06, $42
 	jsr $208b.w                                                  ; $e4d5 : $20, $8b, $20
 	sty $9ed0.w                                                  ; $e4d8 : $8c, $d0, $9e
 	sta ($cc, X)                                                  ; $e4db : $81, $cc

@@ -7407,7 +7407,7 @@ br_16_efed:
 	.db $00                                                  ; $eff2 : $00
 	lsr $03                                                  ; $eff3 : $46, $03
 	jsr $810c00.l                                                  ; $eff5 : $22, $00, $0c, $81
-	jsr $4200.w                                                  ; $eff9 : $20, $00, $42
+	jsr NMITIMEN.w                                                  ; $eff9 : $20, $00, $42
 	ina                                                  ; $effc : $1a
 	.db $00                                                  ; $effd : $00
 

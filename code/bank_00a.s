@@ -121,7 +121,7 @@ br_0a_80da:
 	asl $be                                                  ; $8119 : $06, $be
 	and $536101.l, X                                                  ; $811b : $3f, $01, $61, $53
 	lda $f6, X                                                  ; $811f : $b5, $f6
-	jsr $4206.w                                                  ; $8121 : $20, $06, $42
+	jsr WRDIVB.w                                                  ; $8121 : $20, $06, $42
 	jsr $208b.w                                                  ; $8124 : $20, $8b, $20
 	asl $e1                                                  ; $8127 : $06, $e1
 	asl $a98c.w                                                  ; $8129 : $0e, $8c, $a9
@@ -7761,7 +7761,7 @@ Call_0a_bca8:
 	sbc $ffffff.l, X                                                  ; $beea : $ff, $ff, $ff, $ff
 	.db $00                                                  ; $beee : $00
 	clv                                                  ; $beef : $b8
-	stz $4206.w, X                                                  ; $bef0 : $9e, $06, $42
+	stz WRDIVB.w, X                                                  ; $bef0 : $9e, $06, $42
 	adc $8e626d.l                                                  ; $bef3 : $6f, $6d, $62, $8e
 	ora $51                                                  ; $bef7 : $05, $51
 	jsr $bd06.w                                                  ; $bef9 : $20, $06, $bd
@@ -14789,7 +14789,7 @@ br_0a_f893:
 	jsr $be06.w                                                  ; $f8be : $20, $06, $be
 	jsr $85bf.w                                                  ; $f8c1 : $20, $bf, $85
 	cpx $be                                                  ; $f8c4 : $e4, $be
-	tsb $4206.w                                                  ; $f8c6 : $0c, $06, $42
+	tsb WRDIVB.w                                                  ; $f8c6 : $0c, $06, $42
 	jsr $208b.w                                                  ; $f8c9 : $20, $8b, $20
 	sty $e005.w                                                  ; $f8cc : $8c, $05, $e0
 	jsr $5106.w                                                  ; $f8cf : $20, $06, $51

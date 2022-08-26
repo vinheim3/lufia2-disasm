@@ -15524,7 +15524,7 @@ br_1c_ca95:
 	cmp ($7f, S), Y                                                  ; $caa7 : $d3, $7f
 	sty $9d, X                                                  ; $caa9 : $94, $9d
 	adc $6d503a.l                                                  ; $caab : $6f, $3a, $50, $6d
-	dec $4200.w, X                                                  ; $caaf : $de, $00, $42
+	dec NMITIMEN.w, X                                                  ; $caaf : $de, $00, $42
 	.db $00                                                  ; $cab2 : $00
 	.db $10, $10                                                  ; $cab3 : $10, $10
 

@@ -2344,12 +2344,12 @@ Call_06_9009:
 	lda #$8d7e.w                                                  ; $9009 : $a9, $7e, $8d
 	ror $a505.w, X                                                  ; $900c : $7e, $05, $a5
 	tcs                                                  ; $900f : $1b
-	sta $057f.w                                                  ; $9010 : $8d, $7f, $05
+	sta wGenericMvnSrcBank.w                                                  ; $9010 : $8d, $7f, $05
 	rep #ACCU_8                                                  ; $9013 : $c2, $20
 	ldx $08                                                  ; $9015 : $a6, $08
 	ldy $0b                                                  ; $9017 : $a4, $0b
 	lda #$00ff.w                                                  ; $9019 : $a9, $ff, $00
-	jsr $057d.w                                                  ; $901c : $20, $7d, $05
+	jsr wGenericMvn.w                                                  ; $901c : $20, $7d, $05
 	sep #ACCU_8                                                  ; $901f : $e2, $20
 	rts                                                  ; $9021 : $60
 
@@ -2398,14 +2398,14 @@ br_06_905a:
 Call_06_906a:
 	sep #ACCU_8                                                  ; $906a : $e2, $20
 	lda #$7e.b                                                  ; $906c : $a9, $7e
-	sta $057e.w                                                  ; $906e : $8d, $7e, $05
+	sta wGenericMvnDestBank.w                                                  ; $906e : $8d, $7e, $05
 	lda $0a                                                  ; $9071 : $a5, $0a
-	sta $057f.w                                                  ; $9073 : $8d, $7f, $05
+	sta wGenericMvnSrcBank.w                                                  ; $9073 : $8d, $7f, $05
 	rep #ACCU_8                                                  ; $9076 : $c2, $20
 	ldx $08                                                  ; $9078 : $a6, $08
 	ldy $0b                                                  ; $907a : $a4, $0b
 	lda #$007f.w                                                  ; $907c : $a9, $7f, $00
-	jsr $057d.w                                                  ; $907f : $20, $7d, $05
+	jsr wGenericMvn.w                                                  ; $907f : $20, $7d, $05
 	lda $08                                                  ; $9082 : $a5, $08
 	clc                                                  ; $9084 : $18
 	adc #$0080.w                                                  ; $9085 : $69, $80, $00
@@ -3337,7 +3337,7 @@ br_06_96fc:
 	stz $16e7.w                                                  ; $970b : $9c, $e7, $16
 	jsr Call_06_cbbf.w                                                  ; $970e : $20, $bf, $cb
 	lda #$81.b                                                  ; $9711 : $a9, $81
-	sta $4200.w                                                  ; $9713 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $9713 : $8d, $00, $42
 	jsr Call_06_d3ae.w                                                  ; $9716 : $20, $ae, $d3
 
 br_06_9719:
@@ -7022,7 +7022,7 @@ br_06_ada6:
 	bne br_06_ada6                                                  ; $adae : $d0, $f6
 
 	jsr Call_06_d3a5.w                                                  ; $adb0 : $20, $a5, $d3
-	stz $4200.w                                                  ; $adb3 : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $adb3 : $9c, $00, $42
 	stz $420c.w                                                  ; $adb6 : $9c, $0c, $42
 	stz VMAIN.w                                                  ; $adb9 : $9c, $15, $21
 	ldx #$0000.w                                                  ; $adbc : $a2, $00, $00
@@ -7041,7 +7041,7 @@ br_06_ada6:
 	lda #$80.b                                                  ; $ade0 : $a9, $80
 	sta VMAIN.w                                                  ; $ade2 : $8d, $15, $21
 	lda #$81.b                                                  ; $ade5 : $a9, $81
-	sta $4200.w                                                  ; $ade7 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $ade7 : $8d, $00, $42
 	jsr SetNewPrevOverworldCoords.w                                                  ; $adea : $20, $44, $9a
 	rts                                                  ; $aded : $60
 
@@ -9662,7 +9662,7 @@ br_06_bf7a:
 
 Call_06_bf99:
 	jsr Call_06_d3a5.w                                                  ; $bf99 : $20, $a5, $d3
-	stz $4200.w                                                  ; $bf9c : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $bf9c : $9c, $00, $42
 	stz $420c.w                                                  ; $bf9f : $9c, $0c, $42
 	ldx #$0293.w                                                  ; $bfa2 : $a2, $93, $02
 	stx $54                                                  ; $bfa5 : $86, $54
@@ -9686,7 +9686,7 @@ Call_06_bf99:
 	lda #$80.b                                                  ; $bfd3 : $a9, $80
 	sta MDMAEN.w                                                  ; $bfd5 : $8d, $0b, $42
 	lda #$81.b                                                  ; $bfd8 : $a9, $81
-	sta $4200.w                                                  ; $bfda : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $bfda : $8d, $00, $42
 	rts                                                  ; $bfdd : $60
 
 
@@ -11629,7 +11629,7 @@ Call_06_cb9e:
 
 Call_06_cbbf:
 	jsr Call_06_d3a5.w                                                  ; $cbbf : $20, $a5, $d3
-	stz $4200.w                                                  ; $cbc2 : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $cbc2 : $9c, $00, $42
 	stz $420c.w                                                  ; $cbc5 : $9c, $0c, $42
 	ldx #$0000.w                                                  ; $cbc8 : $a2, $00, $00
 	stx $0320.w                                                  ; $cbcb : $8e, $20, $03
@@ -11825,7 +11825,7 @@ br_06_cd40:
 
 Call_06_cd41:
 	jsr Call_06_d3a5.w                                                  ; $cd41 : $20, $a5, $d3
-	stz $4200.w                                                  ; $cd44 : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $cd44 : $9c, $00, $42
 	stz $420c.w                                                  ; $cd47 : $9c, $0c, $42
 	jsr Call_06_cdf5.w                                                  ; $cd4a : $20, $f5, $cd
 	lda $11e2.w                                                  ; $cd4d : $ad, $e2, $11
@@ -11839,7 +11839,7 @@ br_06_cd55:
 	jsr Call_06_cbf0.w                                                  ; $cd5b : $20, $f0, $cb
 	jsr Call_06_cbbf.w                                                  ; $cd5e : $20, $bf, $cb
 	lda #$81.b                                                  ; $cd61 : $a9, $81
-	sta $4200.w                                                  ; $cd63 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $cd63 : $8d, $00, $42
 	rts                                                  ; $cd66 : $60
 
 
@@ -11981,7 +11981,7 @@ Data_6_ce36:
 
 Call_06_ce68:
 	jsr Call_06_d3a5.w                                                  ; $ce68 : $20, $a5, $d3
-	stz $4200.w                                                  ; $ce6b : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $ce6b : $9c, $00, $42
 	stz $420c.w                                                  ; $ce6e : $9c, $0c, $42
 	ldx #$028d.w                                                  ; $ce71 : $a2, $8d, $02
 	stx $54                                                  ; $ce74 : $86, $54
@@ -12031,7 +12031,7 @@ Call_06_ce68:
 	stx $16ff.w                                                  ; $ceea : $8e, $ff, $16
 	jsr Call_06_95ca.w                                                  ; $ceed : $20, $ca, $95
 	lda #$81.b                                                  ; $cef0 : $a9, $81
-	sta $4200.w                                                  ; $cef2 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $cef2 : $8d, $00, $42
 	rts                                                  ; $cef5 : $60
 
 

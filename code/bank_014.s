@@ -1241,7 +1241,7 @@ br_14_88e5:
 	.db $00                                                  ; $89da : $00
 	sbc $2c019f.l, X                                                  ; $89db : $ff, $9f, $01, $2c
 	.db $00                                                  ; $89df : $00
-	and $4200.w                                                  ; $89e0 : $2d, $00, $42
+	and NMITIMEN.w                                                  ; $89e0 : $2d, $00, $42
 	.db $00                                                  ; $89e3 : $00
 	bit $2c00.w                                                  ; $89e4 : $2c, $00, $2c
 	.db $00                                                  ; $89e7 : $00
@@ -1862,7 +1862,7 @@ br_14_8e54:
 	ora $0f, S                                                  ; $8eb3 : $03, $0f
 	sta $2c01.w, X                                                  ; $8eb5 : $9d, $01, $2c
 	.db $00                                                  ; $8eb8 : $00
-	and $4200.w                                                  ; $8eb9 : $2d, $00, $42
+	and NMITIMEN.w                                                  ; $8eb9 : $2d, $00, $42
 	.db $00                                                  ; $8ebc : $00
 	bit $2c00.w                                                  ; $8ebd : $2c, $00, $2c
 	.db $00                                                  ; $8ec0 : $00
@@ -3646,7 +3646,7 @@ br_14_9c28:
 	sei                                                  ; $9c9f : $78
 	ora ($2c, X)                                                  ; $9ca0 : $01, $2c
 	.db $00                                                  ; $9ca2 : $00
-	and $4200.w                                                  ; $9ca3 : $2d, $00, $42
+	and NMITIMEN.w                                                  ; $9ca3 : $2d, $00, $42
 	.db $00                                                  ; $9ca6 : $00
 	bit $2c00.w                                                  ; $9ca7 : $2c, $00, $2c
 	.db $00                                                  ; $9caa : $00
@@ -4534,7 +4534,7 @@ br_14_a2c2:
 	.db $00                                                  ; $a3e5 : $00
 	iny                                                  ; $a3e6 : $c8
 	.db $00                                                  ; $a3e7 : $00
-	bit $4200.w                                                  ; $a3e8 : $2c, $00, $42
+	bit NMITIMEN.w                                                  ; $a3e8 : $2c, $00, $42
 	ora ($2c, X)                                                  ; $a3eb : $01, $2c
 	.db $00                                                  ; $a3ed : $00
 	sbc $100c00.l, X                                                  ; $a3ee : $ff, $00, $0c, $10
@@ -11753,7 +11753,7 @@ br_14_dbec:
 	asl                                                  ; $dc71 : $0a
 	sbc $2c00c2.l, X                                                  ; $dc72 : $ff, $c2, $00, $2c
 	.db $00                                                  ; $dc76 : $00
-	and $4200.w                                                  ; $dc77 : $2d, $00, $42
+	and NMITIMEN.w                                                  ; $dc77 : $2d, $00, $42
 	.db $00                                                  ; $dc7a : $00
 	bit $2c00.w                                                  ; $dc7b : $2c, $00, $2c
 	.db $00                                                  ; $dc7e : $00
@@ -13149,7 +13149,7 @@ br_14_e5eb:
 	.db $00                                                  ; $e6ca : $00
 
 br_14_e6cb:
-	and $4200.w                                                  ; $e6cb : $2d, $00, $42
+	and NMITIMEN.w                                                  ; $e6cb : $2d, $00, $42
 	.db $00                                                  ; $e6ce : $00
 	bit $2c00.w                                                  ; $e6cf : $2c, $00, $2c
 	.db $00                                                  ; $e6d2 : $00

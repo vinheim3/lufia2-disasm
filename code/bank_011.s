@@ -8630,7 +8630,7 @@ br_11_b803:
 	.db $0f, $a4, $00
 	
 
-Data_11_b8b7:
+RoomsChestContents:
 	.dw $0201
 	.dw $0202
 	.dw $0203
@@ -8917,7 +8917,7 @@ Data_11_b8b7:
 
 
 	tsb $41a8.w                                                  ; $baeb : $0c, $a8, $41
-	ora $4214.w                                                  ; $baee : $0d, $14, $42
+	ora RDDIVL.w                                                  ; $baee : $0d, $14, $42
 	asl $ff76.w                                                  ; $baf1 : $0e, $76, $ff
 	.db $00                                                  ; $baf4 : $00
 	ora $100129.l                                                  ; $baf5 : $0f, $29, $01, $10

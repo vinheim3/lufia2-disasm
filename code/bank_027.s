@@ -7700,7 +7700,7 @@ Data_4f_fcbc:
 	.db $a4, $c8, $94
 	.db $73, $dc, $94
 	.db $55, $c4, $92
-	.db $52, $90, $92
+	.dl Data_12_9052 ; c2 - worlds hardest
 	.db $d1, $c3, $93
 	.db $ad, $e3, $92
 	.db $73, $e8, $94

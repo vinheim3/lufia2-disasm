@@ -4412,42 +4412,50 @@ br_10_9f11:
 	lda $44217a.l, X                                                  ; $a0dc : $bf, $7a, $21, $44
 	adc $0920.w, Y                                                  ; $a0e0 : $79, $20, $09
 	bit $00                                                  ; $a0e3 : $24, $00
-	jsr $2d00.w                                                  ; $a0e5 : $20, $00, $2d
-	.db $00                                                  ; $a0e8 : $00
-	dea                                                  ; $a0e9 : $3a
-	.db $00                                                  ; $a0ea : $00
-	tsc                                                  ; $a0eb : $3b
-	.db $00                                                  ; $a0ec : $00
-	bit $3d00.w, X                                                  ; $a0ed : $3c, $00, $3d
-	.db $00                                                  ; $a0f0 : $00
-	rol $3f00.w, X                                                  ; $a0f1 : $3e, $00, $3f
-	.db $00                                                  ; $a0f4 : $00
-	rti                                                  ; $a0f5 : $40
 
 
-	.db $00                                                  ; $a0f6 : $00
-	eor ($00, X)                                                  ; $a0f7 : $41, $00
-	wdm                                                  ; $a0f9 : $42
-	.db $00                                                  ; $a0fa : $00
-	eor $00, S                                                  ; $a0fb : $43, $00
-	mvp $45, $00                                                  ; $a0fd : $44, $00, $45
-	.db $00                                                  ; $a100 : $00
-	lsr $00                                                  ; $a101 : $46, $00
-	eor [$00]                                                  ; $a103 : $47, $00
-	.db $00                                                  ; $a105 : $00
-	and ($01, S), Y                                                  ; $a106 : $33, $01
-	cop $48.b                                                  ; $a108 : $02, $48
-	.db $00                                                  ; $a10a : $00
-	ora $110099.l                                                  ; $a10b : $0f, $99, $00, $11
-	lda $00ff00.l                                                  ; $a10f : $af, $00, $ff, $00
-	ldy $0100.w, X                                                  ; $a113 : $bc, $00, $01
-	ldy $0200.w, X                                                  ; $a116 : $bc, $00, $02
-	ldy $0300.w, X                                                  ; $a119 : $bc, $00, $03
-	ldy $ff00.w, X                                                  ; $a11c : $bc, $00, $ff
+.redef PZ_START = $a0e5
+RoomPuzzleScriptC2h_WorldsHardest:
+	.dw @a105-PZ_START
+	.dw @a112-PZ_START
+	.dw $003a ; these point to the ffs
+	.dw $003b
+	.dw $003c
+	.dw $003d
+	.dw $003e
+	.dw $003f
+	.dw $0040
+	.dw $0041
+	.dw $0042
+	.dw $0043
+	.dw $0044
+	.dw $0045
+	.dw $0046
+	.dw $0047
+
+.table byte, word
+@a105:
+	.row $00, @a218-PZ_START
+	.row $02, @a12d-PZ_START
+	.db $0f, $99, $00
+	.db $11, $af, $00
+	.db $ff
+
+@a112:
+	.row $00, @main-PZ_START
+	.row $01, @main-PZ_START
+	.row $02, @main-PZ_START
+	.row $03, @main-PZ_START
+	.db $ff
+
+;
 	sbc $ffffff.l, X                                                  ; $a11f : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $a123 : $ff, $ff, $ff, $ff
 	sbc $ffffff.l, X                                                  ; $a127 : $ff, $ff, $ff, $ff
-	sbc $080cff.l, X                                                  ; $a12b : $ff, $ff, $0c, $08
+	.db $ff, $ff
+
+@a12d:
+	.db $0c, $08
 	ror $00                                                  ; $a12f : $66, $00
 	ply                                                  ; $a131 : $7a
 	and ($14, X)                                                  ; $a132 : $21, $14
@@ -4512,82 +4520,106 @@ br_10_9f11:
 	tyx                                                  ; $a19a : $bb
 	.db $00                                                  ; $a19b : $00
 	ldx $fb00.w, Y                                                  ; $a19c : $be, $00, $fb
-	bpl br_10_a1a1                                                  ; $a19f : $10, $00
+	.db $10, $00
 
-br_10_a1a1:
-	ora ($0a, X)                                                  ; $a1a1 : $01, $0a
-	and ($01)                                                  ; $a1a3 : $32, $01
-	tsb $3234.w                                                  ; $a1a5 : $0c, $34, $32
-	ora ($35, X)                                                  ; $a1a8 : $01, $35
-	ldy #$00.b                                                  ; $a1aa : $a0, $00
-	sed                                                  ; $a1ac : $f8
-	.db $00                                                  ; $a1ad : $00
-	and $a0, X                                                  ; $a1ae : $35, $a0
-	ora ($fe, X)                                                  ; $a1b0 : $01, $fe
-	.db $00                                                  ; $a1b2 : $00
-	and $a0, X                                                  ; $a1b3 : $35, $a0
-	cop $04.b                                                  ; $a1b5 : $02, $04
-	ora ($35, X)                                                  ; $a1b7 : $01, $35
-	ldy #$03.b                                                  ; $a1b9 : $a0, $03
-	asl                                                  ; $a1bb : $0a
-	ora ($35, X)                                                  ; $a1bc : $01, $35
-	ldy #$04.b                                                  ; $a1be : $a0, $04
-	.db $10, $01                                                  ; $a1c0 : $10, $01
+@main:
+	.db $01, $0a ; jump if flag set
+		.dw @done-PZ_START
+	.db $0c, $34 ; jump if flag clear
+		.dw @done-PZ_START
+	.db $35, $a0, $00 ; jump if selected piece == 0
+		.dw @selectedPieceIs0-PZ_START
+	.db $35, $a0, $01
+		.dw @_00fe-PZ_START
+	.db $35, $a0, $02
+		.dw @_0104-PZ_START
+	.db $35, $a0, $03
+		.dw @_010a-PZ_START
+	.db $35, $a0, $04
+		.dw @_0110-PZ_START
+	.db $35, $a0, $05
+		.dw @selectedPieceIs5-PZ_START
+	.db $35, $a0, $06
+		.dw @selectedPieceIs6-PZ_START
+	.db $35, $a0, $07
+		.dw @_0122-PZ_START
+	.db $35, $a0, $08
+		.dw @selectedPieceIs8-PZ_START
 
-	and $a0, X                                                  ; $a1c2 : $35, $a0
-	ora $16                                                  ; $a1c4 : $05, $16
-	ora ($35, X)                                                  ; $a1c6 : $01, $35
-	ldy #$06.b                                                  ; $a1c8 : $a0, $06
-	trb $3501.w                                                  ; $a1ca : $1c, $01, $35
-	ldy #$07.b                                                  ; $a1cd : $a0, $07
-	jsr $a03501.l                                                  ; $a1cf : $22, $01, $35, $a0
-	php                                                  ; $a1d3 : $08
-	plp                                                  ; $a1d4 : $28
-	ora ($34, X)                                                  ; $a1d5 : $01, $34
-	ldy #$00.b                                                  ; $a1d7 : $a0, $00
-	ora ($2a, X)                                                  ; $a1d9 : $01, $2a
-	rol $3201.w                                                  ; $a1db : $2e, $01, $32
-	ldy #$01.b                                                  ; $a1de : $a0, $01
-	pld                                                  ; $a1e0 : $2b
-	rol $3201.w                                                  ; $a1e1 : $2e, $01, $32
-	ldy #$01.b                                                  ; $a1e4 : $a0, $01
-	bit $012e.w                                                  ; $a1e6 : $2c, $2e, $01
-	and ($a0)                                                  ; $a1e9 : $32, $a0
-	ora ($2d, X)                                                  ; $a1eb : $01, $2d
-	rol $3201.w                                                  ; $a1ed : $2e, $01, $32
-	ldy #$01.b                                                  ; $a1f0 : $a0, $01
-	rol $012e.w                                                  ; $a1f2 : $2e, $2e, $01
-	and ($a0)                                                  ; $a1f5 : $32, $a0
-	ora ($2f, X)                                                  ; $a1f7 : $01, $2f
-	rol $3201.w                                                  ; $a1f9 : $2e, $01, $32
-	ldy #$01.b                                                  ; $a1fc : $a0, $01
-	bmi br_10_a22e                                                  ; $a1fe : $30, $2e
+@selectedPieceIs9:
+	.db $34, $a0, $00
+	.db $01, $2a
+		.dw @_012e-PZ_START
 
-	ora ($32, X)                                                  ; $a200 : $01, $32
-	ldy #$01.b                                                  ; $a202 : $a0, $01
-	and ($2e), Y                                                  ; $a204 : $31, $2e
-	ora ($32, X)                                                  ; $a206 : $01, $32
-	ldy #$01.b                                                  ; $a208 : $a0, $01
-	and ($2e)                                                  ; $a20a : $32, $2e
-	ora ($32, X)                                                  ; $a20c : $01, $32
-	ldy #$0c.b                                                  ; $a20e : $a0, $0c
-	and ($f1, S), Y                                                  ; $a210 : $33, $f1
-	.db $00                                                  ; $a212 : $00
-	lda #$ff.b                                                  ; $a213 : $a9, $ff
-	lda $0005.w, X                                                  ; $a215 : $bd, $05, $00
-	ora ($0a, X)                                                  ; $a218 : $01, $0a
-	stz $01                                                  ; $a21a : $64, $01
-	tsb $3f34.w                                                  ; $a21c : $0c, $34, $3f
-	ora ($01, X)                                                  ; $a21f : $01, $01
-	and $ee, X                                                  ; $a221 : $35, $ee
-	ora ($13, X)                                                  ; $a223 : $01, $13
+@selectedPieceIs0:
+	.db $32, $a0
+	.db $01, $2b
+		.dw @_012e-PZ_START
+
+@_00fe:
+	.db $32, $a0
+	.db $01, $2c
+		.dw @_012e-PZ_START
+
+@_0104:
+	.db $32, $a0
+	.db $01, $2d
+		.dw @_012e-PZ_START
+
+@_010a:
+	.db $32, $a0
+	.db $01, $2e
+		.dw @_012e-PZ_START
+
+@_0110:
+	.db $32, $a0
+	.db $01, $2f
+		.dw @_012e-PZ_START
+
+@selectedPieceIs5:
+	.db $32, $a0 ; inc var
+	.db $01, $30
+		.dw @_012e-PZ_START
+
+@selectedPieceIs6:
+	.db $32, $a0
+	.db $01, $31
+		.dw @_012e-PZ_START
+
+@_0122:
+	.db $32, $a0
+	.db $01, $32
+		.dw @_012e-PZ_START
+
+@selectedPieceIs8:
+	.db $32, $a0
+	.db $0c, $33
+		.dw @selectedPieceIs9-$a0e5
+
+@_012e:
+	.db $a9, $ff ; call?
+		.dw @sub_a6a2-PZ_START
+
+@done:
+	.db $00
+
+
+@a218:
+	.db $01, $0a
+		.dw $0164
+	.db $0c, $34
+		.dw $013f
+	.db $01, $35
+		.dw @a2d3-PZ_START
+
+;
+	.db $13                                                  ; $a224 :  $13
 	bit $1e, X                                                  ; $a225 : $34, $1e
 	stz $01                                                  ; $a227 : $64, $01
 	adc $01, S                                                  ; $a229 : $63, $01
 	tyx                                                  ; $a22b : $bb
 	ora ($0b, X)                                                  ; $a22c : $01, $0b
 
-br_10_a22e:
 	ora $377a.w, Y                                                  ; $a22e : $19, $7a, $37
 	and $3508.w, X                                                  ; $a231 : $3d, $08, $35
 	ora ($1e), Y                                                  ; $a234 : $11, $1e
@@ -4669,41 +4701,44 @@ br_10_a22e:
 	asl                                                  ; $a2ce : $0a
 	cpx $2901.w                                                  ; $a2cf : $ec, $01, $29
 	.db $00                                                  ; $a2d2 : $00
-	rol $a0, X                                                  ; $a2d3 : $36, $a0
-	.db $00                                                  ; $a2d5 : $00
-	sbc $a901.w, Y                                                  ; $a2d6 : $f9, $01, $a9
-	nop                                                  ; $a2d9 : $ea
-	rol                                                  ; $a2da : $2a
-	sbc $360303.l, X                                                  ; $a2db : $ff, $03, $03, $36
-	ldy #$01.b                                                  ; $a2df : $a0, $01
-	tsb $02                                                  ; $a2e1 : $04, $02
-	lda #$eb.b                                                  ; $a2e3 : $a9, $eb
-	pld                                                  ; $a2e5 : $2b
-	sbc $36037a.l, X                                                  ; $a2e6 : $ff, $7a, $03, $36
-	ldy #$02.b                                                  ; $a2ea : $a0, $02
-	ora $eca902.l                                                  ; $a2ec : $0f, $02, $a9, $ec
-	bit $7aff.w                                                  ; $a2f0 : $2c, $ff, $7a
-	ora $36, S                                                  ; $a2f3 : $03, $36
-	ldy #$03.b                                                  ; $a2f5 : $a0, $03
-	ina                                                  ; $a2f7 : $1a
-	cop $a9.b                                                  ; $a2f8 : $02, $a9
-	sbc $ff2d.w                                                  ; $a2fa : $ed, $2d, $ff
-	ply                                                  ; $a2fd : $7a
-	ora $36, S                                                  ; $a2fe : $03, $36
-	ldy #$04.b                                                  ; $a300 : $a0, $04
-	and $02                                                  ; $a302 : $25, $02
-	lda #$ee.b                                                  ; $a304 : $a9, $ee
-	rol $7aff.w                                                  ; $a306 : $2e, $ff, $7a
 
-br_10_a309:
-	ora $36, S                                                  ; $a309 : $03, $36
-	ldy #$05.b                                                  ; $a30b : $a0, $05
-	bmi br_10_a311                                                  ; $a30d : $30, $02
+@a2d3:
+	.db $36, $a0, $00
+		.dw @_01f9-PZ_START
+	.db $a9, $ea, $2a, $ff
+		.dw $0303
 
-	lda #$ef.b                                                  ; $a30f : $a9, $ef
+@_01f9:
+	.db $36, $a0, $01
+		.dw @_0204-PZ_START
+	.db $a9, $eb, $2b, $ff
+		.dw $037a
 
-br_10_a311:
-	and $0418ff.l                                                  ; $a311 : $2f, $ff, $18, $04
+@_0204:
+	.db $36, $a0, $02
+		.dw @_020f-PZ_START
+	.db $a9, $ec, $2c, $ff
+		.dw $037a
+
+@_020f:
+	.db $36, $a0, $03
+		.dw @_021a-PZ_START
+	.db $a9, $ed, $2d, $ff
+		.dw $037a
+
+@_021a:
+	.db $36, $a0, $04
+		.dw @_0225-PZ_START
+	.db $a9, $ee, $2e, $ff
+		.dw $037a
+
+@_0225:
+	.db $36, $a0, $05
+		.dw $0230
+	.db $a9, $ef, $2f, $ff
+		.dw @sub_a4fd-PZ_START
+	
+;
 	rol $a0, X                                                  ; $a315 : $36, $a0
 	asl $3b                                                  ; $a317 : $06, $3b
 	cop $a9.b                                                  ; $a319 : $02, $a9
@@ -4745,7 +4780,7 @@ br_10_a311:
 
 	.db $f0, $11                                                  ; $a35c : $f0, $11
 
-	bvc br_10_a309                                                  ; $a35e : $50, $a9
+	.db $50, $a9
 
 	sbc ($5c, S), Y                                                  ; $a360 : $f3, $5c
 	lsr $ff, X                                                  ; $a362 : $56, $ff
@@ -4919,38 +4954,57 @@ br_10_a311:
 	sbc $a90453.l, X                                                  ; $a4f0 : $ff, $53, $04, $a9
 	jsr ($f444.w, X)                                                  ; $a4f4 : $fc, $44, $f4
 	sbc $680489.l, X                                                  ; $a4f7 : $ff, $89, $04, $68
-	lda $fca9aa.l, X                                                  ; $a4fb : $bf, $aa, $a9, $fc
-	sbc $2cff.w, X                                                  ; $a4ff : $fd, $ff, $2c
-	ora $0d                                                  ; $a502 : $05, $0d
-	tsb $30                                                  ; $a504 : $04, $30
-	tsb $0d                                                  ; $a506 : $04, $0d
-	cop $36.b                                                  ; $a508 : $02, $36
-	tsb $0d                                                  ; $a50a : $04, $0d
-	.db $00                                                  ; $a50c : $00
-	bit $3504.w, X                                                  ; $a50d : $3c, $04, $35
-	lda $ff                                                  ; $a510 : $a5, $ff
-	wdm                                                  ; $a512 : $42
-	tsb $aa                                                  ; $a513 : $04, $aa
-	and $a2, X                                                  ; $a515 : $35, $a2
-	sbc $aa0442.l, X                                                  ; $a517 : $ff, $42, $04, $aa
-	and $a3, X                                                  ; $a51b : $35, $a3
-	sbc $aa0442.l, X                                                  ; $a51d : $ff, $42, $04, $aa
-	and $a4, X                                                  ; $a521 : $35, $a4
-	sbc $aa0442.l, X                                                  ; $a523 : $ff, $42, $04, $aa
-	lda #$fc.b                                                  ; $a527 : $a9, $fc
-	wdm                                                  ; $a529 : $42
-	sbc $680453.l, X                                                  ; $a52a : $ff, $53, $04, $68
-	lda $42fca9.l, X                                                  ; $a52e : $bf, $a9, $fc, $42
-	sbc $680453.l, X                                                  ; $a532 : $ff, $53, $04, $68
-	lda $e069aa.l, X                                                  ; $a536 : $bf, $aa, $69, $e0
-	jsr ($be2f.w, X)                                                  ; $a53a : $fc, $2f, $be
-	sbc $040d.w, X                                                  ; $a53d : $fd, $0d, $04
-	ror $0d04.w                                                  ; $a540 : $6e, $04, $0d
-	cop $77.b                                                  ; $a543 : $02, $77
-	tsb $0d                                                  ; $a545 : $04, $0d
-	.db $00                                                  ; $a547 : $00
-	.db $80, $04                                                  ; $a548 : $80, $04
+	.db $bf, $aa
 
+@sub_a4fd:
+	.db $a9, $fc, $fd, $ff
+		.dw @sub_a611-PZ_START
+	.db $0d, $04
+		.dw @_0430-PZ_START
+	.db $0d, $02
+		.dw @_0436-PZ_START
+	.db $0d, $00
+		.dw @_043c-PZ_START
+	.db $35, $a5, $ff
+		.dw @_0442-PZ_START
+	RET
+
+@_0430:
+	.db $35, $a2, $ff
+		.dw @_0442-PZ_START
+	RET
+
+@_0436:
+	.db $35, $a3, $ff
+		.dw @_0442-PZ_START
+	RET
+
+@_043c:
+	.db $35, $a4, $ff
+		.dw @_0442-PZ_START
+	RET
+
+@_0442:
+	.db $a9, $fc, $42, $ff
+		.dw @sub_a538-PZ_START
+	.db $68, $bf
+	.db $a9, $fc, $42, $ff
+		.dw @sub_a538-PZ_START
+	.db $68, $bf
+	RET
+
+
+@sub_a538:
+	MOV_VAR_VAR, $e0, $fc
+	.db $2f, $be, $fd
+	.db $0d, $04
+		.dw $046e
+	.db $0d, $02
+		.dw $0477
+	.db $0d, $00
+		.dw @a565-PZ_START
+
+;
 	ldx $e0                                                  ; $a54a : $a6, $e0
 	ldx $2010.w, Y                                                  ; $a54c : $be, $10, $20
 	adc #$fc.b                                                  ; $a54f : $69, $fc
@@ -4963,10 +5017,14 @@ br_10_a311:
 	ldx $2010.w, Y                                                  ; $a55e : $be, $10, $20
 	adc #$fc.b                                                  ; $a561 : $69, $fc
 	cpx #$aa.b                                                  ; $a563 : $e0, $aa
-	ldy $e0                                                  ; $a565 : $a4, $e0
-	ldx $2010.w, Y                                                  ; $a567 : $be, $10, $20
-	adc #$fc.b                                                  ; $a56a : $69, $fc
-	cpx #$aa.b                                                  ; $a56c : $e0, $aa
+
+@a565:
+	.db $a4, $e0, $be, $10, $20
+	MOV_VAR_VAR, $fc, $e0
+	RET
+
+
+
 	adc #$e0.b                                                  ; $a56e : $69, $e0
 	inc $be2f.w, X                                                  ; $a570 : $fe, $2f, $be
 	sbc $040d.w, X                                                  ; $a573 : $fd, $0d, $04
@@ -5008,7 +5066,7 @@ br_10_a311:
 	ora $a9                                                  ; $a5c1 : $05, $a9
 	sbc $2cff2f.l                                                  ; $a5c3 : $ef, $2f, $ff, $2c
 	ora $a9                                                  ; $a5c7 : $05, $a9
-	beq br_10_a5fb                                                  ; $a5c9 : $f0, $30
+	.db $f0, $30
 
 	sbc $a9052c.l, X                                                  ; $a5cb : $ff, $2c, $05, $a9
 	sbc ($31), Y                                                  ; $a5cf : $f1, $31
@@ -5030,7 +5088,6 @@ br_10_a311:
 	eor $e6, S                                                  ; $a5f7 : $43, $e6
 	cop $69.b                                                  ; $a5f9 : $02, $69
 
-br_10_a5fb:
 	sbc $e4                                                  ; $a5fb : $e5, $e4
 	asl                                                  ; $a5fd : $0a
 	eor $05, S                                                  ; $a5fe : $43, $05
@@ -5042,143 +5099,185 @@ br_10_a5fb:
 	sbc [$e6]                                                  ; $a60c : $e7, $e6
 	asl                                                  ; $a60e : $0a
 	eor $05, S                                                  ; $a60f : $43, $05
-	lda #$fc.b                                                  ; $a611 : $a9, $fc
-	sbc $47058e.l, X                                                  ; $a613 : $ff, $8e, $05, $47
-	cpx #$02.b                                                  ; $a617 : $e0, $02
-	eor $e1, S                                                  ; $a619 : $43, $e1
-	cop $69.b                                                  ; $a61b : $02, $69
-	sbc $e2, S                                                  ; $a61d : $e3, $e2
-	adc #$e5.b                                                  ; $a61f : $69, $e5
-	cpx $43                                                  ; $a621 : $e4, $43
-	inc $02                                                  ; $a623 : $e6, $02
-	eor [$e7]                                                  ; $a625 : $47, $e7
-	cop $09.b                                                  ; $a627 : $02, $09
-	sbc $a234.w, X                                                  ; $a629 : $fd, $34, $a2
-	.db $00                                                  ; $a62c : $00
-	stx $e0, Y                                                  ; $a62d : $96, $e0
-	ora $57, X                                                  ; $a62f : $15, $57
-	ora $96                                                  ; $a631 : $05, $96
-	sbc ($15, X)                                                  ; $a633 : $e1, $15
-	eor [$05], Y                                                  ; $a635 : $57, $05
-	bit $a2, X                                                  ; $a637 : $34, $a2
-	sbc $34fd08.l, X                                                  ; $a639 : $ff, $08, $fd, $34
-	lda $00, S                                                  ; $a63d : $a3, $00
-	stx $e2, Y                                                  ; $a63f : $96, $e2
-	ora $69, X                                                  ; $a641 : $15, $69
-	ora $96                                                  ; $a643 : $05, $96
-	sbc $15, S                                                  ; $a645 : $e3, $15
-	adc #$05.b                                                  ; $a647 : $69, $05
-	bit $a3, X                                                  ; $a649 : $34, $a3
-	sbc $34fd08.l, X                                                  ; $a64b : $ff, $08, $fd, $34
-	ldy $00                                                  ; $a64f : $a4, $00
-	stx $e4, Y                                                  ; $a651 : $96, $e4
-	ora $7b, X                                                  ; $a653 : $15, $7b
-	ora $96                                                  ; $a655 : $05, $96
-	sbc $15                                                  ; $a657 : $e5, $15
-	tdc                                                  ; $a659 : $7b
-	ora $34                                                  ; $a65a : $05, $34
-	ldy $ff                                                  ; $a65c : $a4, $ff
-	php                                                  ; $a65e : $08
-	sbc $a534.w, X                                                  ; $a65f : $fd, $34, $a5
-	.db $00                                                  ; $a662 : $00
-	stx $e6, Y                                                  ; $a663 : $96, $e6
-	ora $8d, X                                                  ; $a665 : $15, $8d
-	ora $96                                                  ; $a667 : $05, $96
-	sbc [$15]                                                  ; $a669 : $e7, $15
-	sta $3405.w                                                  ; $a66b : $8d, $05, $34
-	lda $ff                                                  ; $a66e : $a5, $ff
-	php                                                  ; $a670 : $08
-	sbc $69aa.w, X                                                  ; $a671 : $fd, $aa, $69
-	sep #$fc.b                                                  ; $a674 : $e2, $fc
-	eor $e2                                                  ; $a676 : $45, $e2
-	adc #$e3.b                                                  ; $a678 : $69, $e3
-	sep #$48.b                                                  ; $a67a : $e2, $48
-	sbc $02, S                                                  ; $a67c : $e3, $02
-	adc #$e4.b                                                  ; $a67e : $69, $e4
-	jsr ($e449.w, X)                                                  ; $a680 : $fc, $49, $e4
-	adc #$e5.b                                                  ; $a683 : $69, $e5
-	cpx $42                                                  ; $a685 : $e4, $42
-	sbc $02                                                  ; $a687 : $e5, $02
-	adc #$e0.b                                                  ; $a689 : $69, $e0
-	cpx $48                                                  ; $a68b : $e4, $48
-	cpx #$05.b                                                  ; $a68d : $e0, $05
-	adc #$e1.b                                                  ; $a68f : $69, $e1
-	sbc $48                                                  ; $a691 : $e5, $48
-	sbc ($03, X)                                                  ; $a693 : $e1, $03
-	adc #$e6.b                                                  ; $a695 : $69, $e6
-	sep #$42.b                                                  ; $a697 : $e2, $42
-	inc $05                                                  ; $a699 : $e6, $05
-	adc #$e7.b                                                  ; $a69b : $69, $e7
-	sbc $42, S                                                  ; $a69d : $e3, $42
-	sbc [$03]                                                  ; $a69f : $e7, $03
-	tax                                                  ; $a6a1 : $aa
-	and $09a1bf.l                                                  ; $a6a2 : $2f, $bf, $a1, $09
-	eor $d3ffa9.l, X                                                  ; $a6a6 : $5f, $a9, $ff, $d3
-	ora $2f                                                  ; $a6aa : $05, $2f
-	lda $5f08a0.l, X                                                  ; $a6ac : $bf, $a0, $08, $5f
-	lda #$ff.b                                                  ; $a6b0 : $a9, $ff
-	cmp ($05, S), Y                                                  ; $a6b2 : $d3, $05
-	and $aaa0a1.l                                                  ; $a6b4 : $2f, $a1, $a0, $aa
-	and $bf, X                                                  ; $a6b8 : $35, $bf
-	.db $00                                                  ; $a6ba : $00
-	bit $06                                                  ; $a6bb : $24, $06
-	adc #$e0.b                                                  ; $a6bd : $69, $e0
-	xba                                                  ; $a6bf : $eb
-	and $bf, X                                                  ; $a6c0 : $35, $bf
-	ora ($30, X)                                                  ; $a6c2 : $01, $30
-	asl $69                                                  ; $a6c4 : $06, $69
-	cpx #$ec.b                                                  ; $a6c6 : $e0, $ec
-	and $bf, X                                                  ; $a6c8 : $35, $bf
-	cop $30.b                                                  ; $a6ca : $02, $30
-	asl $69                                                  ; $a6cc : $06, $69
-	cpx #$ed.b                                                  ; $a6ce : $e0, $ed
-	and $bf, X                                                  ; $a6d0 : $35, $bf
-	ora $30, S                                                  ; $a6d2 : $03, $30
-	asl $69                                                  ; $a6d4 : $06, $69
-	cpx #$ee.b                                                  ; $a6d6 : $e0, $ee
-	and $bf, X                                                  ; $a6d8 : $35, $bf
-	tsb $30                                                  ; $a6da : $04, $30
-	asl $69                                                  ; $a6dc : $06, $69
-	cpx #$ef.b                                                  ; $a6de : $e0, $ef
-	and $bf, X                                                  ; $a6e0 : $35, $bf
-	ora $3c                                                  ; $a6e2 : $05, $3c
-	asl $69                                                  ; $a6e4 : $06, $69
-	cpx #$f0.b                                                  ; $a6e6 : $e0, $f0
-	and $bf, X                                                  ; $a6e8 : $35, $bf
-	asl $3c                                                  ; $a6ea : $06, $3c
-	asl $69                                                  ; $a6ec : $06, $69
-	cpx #$f1.b                                                  ; $a6ee : $e0, $f1
-	and $bf, X                                                  ; $a6f0 : $35, $bf
-	ora [$3c]                                                  ; $a6f2 : $07, $3c
-	asl $69                                                  ; $a6f4 : $06, $69
-	cpx #$f2.b                                                  ; $a6f6 : $e0, $f2
-	and $bf, X                                                  ; $a6f8 : $35, $bf
-	php                                                  ; $a6fa : $08
-	bit $0106.w, X                                                  ; $a6fb : $3c, $06, $01
-	eor $0e0620.l, X                                                  ; $a6fe : $5f, $20, $06, $0e
-	sbc ($56, S), Y                                                  ; $a702 : $f3, $56
-	tax                                                  ; $a704 : $aa
-	asl $57f3.w                                                  ; $a705 : $0e, $f3, $57
-	tax                                                  ; $a708 : $aa
-	ora ($5f, X)                                                  ; $a709 : $01, $5f
-	bit $0e06.w                                                  ; $a70b : $2c, $06, $0e
-	nop                                                  ; $a70e : $ea
-	eor ($aa)                                                  ; $a70f : $52, $aa
-	asl $53ea.w                                                  ; $a711 : $0e, $ea, $53
-	tax                                                  ; $a714 : $aa
-	ora ($5f, X)                                                  ; $a715 : $01, $5f
-	sec                                                  ; $a717 : $38
-	asl $0e                                                  ; $a718 : $06, $0e
-	cpx #$54.b                                                  ; $a71a : $e0, $54
-	tax                                                  ; $a71c : $aa
-	asl $55e0.w                                                  ; $a71d : $0e, $e0, $55
-	tax                                                  ; $a720 : $aa
-	ora ($5f, X)                                                  ; $a721 : $01, $5f
-	mvp $0e, $06                                                  ; $a723 : $44, $06, $0e
-	cpx #$58.b                                                  ; $a726 : $e0, $58
-	tax                                                  ; $a728 : $aa
-	asl $59e0.w                                                  ; $a729 : $0e, $e0, $59
-	tax                                                  ; $a72c : $aa
+
+
+@sub_a611:
+	.db $a9, $fc, $ff
+		.dw @sub_a673-PZ_START
+	ADD_GROUP1, $e0, $02
+	SUB_GROUP0, $e1, $02
+	MOV_VAR_VAR, $e3, $e2
+	MOV_VAR_VAR, $e5, $e4
+	SUB_GROUP0, $e6, $02
+	ADD_GROUP1, $e7, $02
+	.db $09, $fd
+	.db $34, $a2, $00
+	.db $96, $e0, $15
+		.dw @_0557-PZ_START
+	.db $96, $e1, $15
+		.dw @_0557-PZ_START
+	.db $34, $a2, $ff
+	.db $08, $fd
+
+@_0557:
+	.db $34, $a3, $00
+	.db $96, $e2, $15
+		.dw @_0569-PZ_START
+	.db $96, $e3, $15
+		.dw @_0569-PZ_START
+	.db $34, $a3, $ff
+	.db $08, $fd
+
+@_0569:
+	.db $34, $a4, $00
+	.db $96, $e4, $15
+		.dw @_057b-PZ_START
+	.db $96, $e5, $15
+		.dw @_057b-PZ_START
+	.db $34, $a4, $ff
+	.db $08, $fd
+
+@_057b:
+	.db $34, $a5, $00
+	.db $96, $e6, $15
+		.dw $058d
+	.db $96, $e7, $15
+		.dw $058d
+	.db $34, $a5, $ff
+	.db $08, $fd
+	RET
+
+
+@sub_a673:
+; group0.e2 = fc-1
+	MOV_VAR_VAR, $e2, $fc
+	DEC_GROUP0, $e2
+; group1.e3 = fc-2
+	MOV_VAR_VAR, $e3, $e2
+	SUB_GROUP1, $e3, $02
+; group1.e4 = fc+1
+	MOV_VAR_VAR, $e4, $fc
+	INC_GROUP1, $e4
+; group0.e5 = fc+2
+	MOV_VAR_VAR, $e5, $e4
+	ADD_GROUP0, $e5, $02
+; group1.e0 = fc-5
+	MOV_VAR_VAR, $e0, $e4
+	SUB_GROUP1, $e0, $05
+; group1.e1 = fc-3
+	MOV_VAR_VAR, $e1, $e5
+	SUB_GROUP1, $e1, $03
+; group1.e6 = fc+5
+	MOV_VAR_VAR, $e6, $e2
+	ADD_GROUP0, $e6, $05
+; group1.e7 = fc+3
+	MOV_VAR_VAR, $e7, $e3
+	ADD_GROUP0, $e7, $03
+	RET
+
+
+@sub_a6a2:
+	.db $2f, $bf, $a1
+	.db $09, $5f ; clear flag
+	.db $a9, $ff
+		.dw @sub_a6b8-PZ_START
+
+	.db $2f, $bf, $a0
+	.db $08, $5f ; set flag
+	.db $a9, $ff ; call
+		.dw @sub_a6b8-PZ_START
+
+	.db $2f, $a1, $a0
+	.db $aa
+
+
+@sub_a6b8:
+	.db $35, $bf, $00 ; 2x2
+		.dw @a709-PZ_START
+
+	.db $69, $e0, $eb ; transfers 4 bytes from eb thing to e0 thing
+
+	.db $35, $bf, $01 ; 1x2
+		.dw @a715-PZ_START
+
+	.db $69, $e0, $ec
+
+	.db $35, $bf, $02
+		.dw @a715-PZ_START
+
+	.db $69, $e0, $ed
+	
+	.db $35, $bf, $03
+		.dw @a715-PZ_START
+
+	.db $69, $e0, $ee
+	
+	.db $35, $bf, $04
+		.dw @a715-PZ_START
+
+	.db $69, $e0, $ef
+
+	.db $35, $bf, $05 ; 1x1
+		.dw @a721-PZ_START
+
+	.db $69, $e0, $f0
+
+	.db $35, $bf, $06
+		.dw @a721-PZ_START
+
+	.db $69, $e0, $f1
+
+	.db $35, $bf, $07
+		.dw @a721-PZ_START
+
+	.db $69, $e0, $f2
+	
+	.db $35, $bf, $08
+		.dw @a721-PZ_START
+
+	.db $01, $5f ; 2x1
+		.dw @a705-PZ_START
+
+; none of the above
+	.db $0e, $f3, $56
+	.db $aa
+
+@a705: ; 2x1
+	.db $0e, $f3, $57
+	.db $aa
+
+@a709: ; 2x2
+	.db $01, $5f
+		.dw @a711-PZ_START
+	.db $0e, $ea, $52
+	.db $aa
+
+@a711:
+	.db $0e, $ea, $53
+	.db $aa
+
+@a715: ; 1x2
+	.db $01, $5f
+		.dw @a71d-PZ_START
+	.db $0e, $e0, $54
+	.db $aa
+
+@a71d:
+	.db $0e, $e0, $55
+	.db $aa
+
+@a721: ; 1x1
+	.db $01, $5f
+		.dw @a729-PZ_START
+	.db $0e, $e0, $58
+	.db $aa ; ret
+
+@a729:
+	.db $0e, $e0, $59
+	.db $aa
+
+
+;
 	ora $0662fc.l                                                  ; $a72d : $0f, $fc, $62, $06
 	and $fffd.w, Y                                                  ; $a731 : $39, $fd, $ff
 	eor ($06, S), Y                                                  ; $a734 : $53, $06

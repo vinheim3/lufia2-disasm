@@ -16115,7 +16115,7 @@ Call_07_fc05:
 	sbc $ffffff.l, X                                                  ; $fc24 : $ff, $ff, $ff, $ff
 	.db $00                                                  ; $fc28 : $00
 	clv                                                  ; $fc29 : $b8
-	stz $4206.w, X                                                  ; $fc2a : $9e, $06, $42
+	stz WRDIVB.w, X                                                  ; $fc2a : $9e, $06, $42
 	adc $f3                                                  ; $fc2d : $65, $f3
 	ldy $0620.w, X                                                  ; $fc2f : $bc, $20, $06
 	rol $20, X                                                  ; $fc32 : $36, $20

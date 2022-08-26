@@ -330,7 +330,7 @@ br_03_8218:
 	jsr Call_03_c0ef.w                                                  ; $822a : $20, $ef, $c0
 	ldx #$0000.w                                                  ; $822d : $a2, $00, $00
 	ldy #$0000.w                                                  ; $8230 : $a0, $00, $00
-	jsr $80e722.l                                                  ; $8233 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $8233 : $22, $22, $e7, $80
 	jsr Func_0_cbae.l                                                  ; $8237 : $22, $ae, $cb, $80
 
 br_03_823b:
@@ -642,7 +642,7 @@ br_03_843e:
 br_03_8450:
 	ldx #$0000.w                                                  ; $8450 : $a2, $00, $00
 	ldy #$000c.w                                                  ; $8453 : $a0, $0c, $00
-	jsr $80e722.l                                                  ; $8456 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $8456 : $22, $22, $e7, $80
 
 br_03_845a:
 	rtl                                                  ; $845a : $6b
@@ -760,7 +760,7 @@ br_03_850f:
 	jsr Call_03_c0ef.w                                                  ; $8523 : $20, $ef, $c0
 	ldx #$0000.w                                                  ; $8526 : $a2, $00, $00
 	ldy #$0020.w                                                  ; $8529 : $a0, $20, $00
-	jsr $80e722.l                                                  ; $852c : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $852c : $22, $22, $e7, $80
 	jsr Func_0_cbae.l                                                  ; $8530 : $22, $ae, $cb, $80
 	lda #$14.b                                                  ; $8534 : $a9, $14
 	tsb $05b3.w                                                  ; $8536 : $0c, $b3, $05
@@ -802,7 +802,7 @@ br_03_8587:
 	rep #IDX_8                                                  ; $859d : $c2, $10
 	ldx #$0000.w                                                  ; $859f : $a2, $00, $00
 	ldy #$0000.w                                                  ; $85a2 : $a0, $00, $00
-	jsr $80e722.l                                                  ; $85a5 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $85a5 : $22, $22, $e7, $80
 	jsr Func_0_cbae.l                                                  ; $85a9 : $22, $ae, $cb, $80
 	sep #IDX_8                                                  ; $85ad : $e2, $10
 
@@ -837,7 +837,7 @@ Call_03_85dc:
 	plb                                                  ; $85df : $ab
 	sep #ACCU_8                                                  ; $85e0 : $e2, $20
 	rep #IDX_8                                                  ; $85e2 : $c2, $10
-	stz $4200.w                                                  ; $85e4 : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $85e4 : $9c, $00, $42
 	tdc                                                  ; $85e7 : $7b
 	sta $7fd0ff.l                                                  ; $85e8 : $8f, $ff, $d0, $7f
 	sta $0562.w                                                  ; $85ec : $8d, $62, $05
@@ -884,7 +884,7 @@ Call_03_85dc:
 	lda $05aa.w                                                  ; $8661 : $ad, $aa, $05
 	jsr $80ed9c.l                                                  ; $8664 : $22, $9c, $ed, $80
 	lda #$81.b                                                  ; $8668 : $a9, $81
-	sta $4200.w                                                  ; $866a : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $866a : $8d, $00, $42
 	jsr Call_03_a21a.l                                                  ; $866d : $22, $1a, $a2, $83
 	plb                                                  ; $8671 : $ab
 	plp                                                  ; $8672 : $28
@@ -982,7 +982,7 @@ Call_03_86ea:
 	plb                                                  ; $86ee : $ab
 	lda $7fd1a1.l                                                  ; $86ef : $af, $a1, $d1, $7f
 	xba                                                  ; $86f3 : $eb
-	lda $7fd1a0.l                                                  ; $86f4 : $af, $a0, $d1, $7f
+	lda wCurrRoomChestContentsAddr.l                                                  ; $86f4 : $af, $a0, $d1, $7f
 	tay                                                  ; $86f8 : $a8
 
 br_03_86f9:
@@ -1431,7 +1431,7 @@ br_03_8a24:
 	lda $7fd020.l, X                                                  ; $8a24 : $bf, $20, $d0, $7f
 	bne br_03_8a64                                                  ; $8a28 : $d0, $3a
 
-	lda $8c82.w, X                                                  ; $8a2a : $bd, $82, $8c
+	lda Data_3_8c82.w, X                                                  ; $8a2a : $bd, $82, $8c
 	and $7fd05f.l                                                  ; $8a2d : $2f, $5f, $d0, $7f
 	bit #$0f.b                                                  ; $8a31 : $89, $0f
 	beq br_03_8a64                                                  ; $8a33 : $f0, $2f
@@ -1614,10 +1614,14 @@ Call_03_8b6a:
 	pha                                                  ; $8b6f : $48
 	plb                                                  ; $8b70 : $ab
 	tdc                                                  ; $8b71 : $7b
+
+; eg 2 (height-related?)
 	lda $d04c.w                                                  ; $8b72 : $ad, $4c, $d0
 	rep #ACCU_8                                                  ; $8b75 : $c2, $20
 	asl                                                  ; $8b77 : $0a
 	sta $54                                                  ; $8b78 : $85, $54
+
+; eg 003a
 	lda $0005b9.l                                                  ; $8b7a : $af, $b9, $05, $00
 	asl                                                  ; $8b7e : $0a
 	sec                                                  ; $8b7f : $38
@@ -1626,11 +1630,16 @@ Call_03_8b6a:
 	ina                                                  ; $8b83 : $1a
 	sta $5a                                                  ; $8b84 : $85, $5a
 	sep #ACCU_8                                                  ; $8b86 : $e2, $20
+
 	lda $0005b9.l                                                  ; $8b88 : $af, $b9, $05, $00
 	sta WRMPYA.l                                                  ; $8b8c : $8f, $02, $42, $00
+
+; eg 1e
 	lda $d04b.w                                                  ; $8b90 : $ad, $4b, $d0
 	sta WRMPYB.l                                                  ; $8b93 : $8f, $03, $42, $00
 	tdc                                                  ; $8b97 : $7b
+
+; eg 31 (2d for 2x1 horiz piece)
 	lda $d04a.w                                                  ; $8b98 : $ad, $4a, $d0
 	rep #ACCU_8                                                  ; $8b9b : $c2, $20
 	clc                                                  ; $8b9d : $18
@@ -1638,9 +1647,13 @@ Call_03_8b6a:
 	asl                                                  ; $8ba2 : $0a
 	sta $5d                                                  ; $8ba3 : $85, $5d
 	sep #ACCU_8                                                  ; $8ba5 : $e2, $20
+
+; eg c (y-related?)
 	lda $d047.w                                                  ; $8ba7 : $ad, $47, $d0
 	sta WRMPYB.l                                                  ; $8baa : $8f, $03, $42, $00
 	tdc                                                  ; $8bae : $7b
+
+; eg 31 (x-related)
 	lda $d046.w                                                  ; $8baf : $ad, $46, $d0
 	rep #ACCU_8                                                  ; $8bb2 : $c2, $20
 	clc                                                  ; $8bb4 : $18
@@ -1648,37 +1661,44 @@ Call_03_8b6a:
 	asl                                                  ; $8bb9 : $0a
 	sta $60                                                  ; $8bba : $85, $60
 	sep #ACCU_8                                                  ; $8bbc : $e2, $20
+
+; runs for X = 0, 2, 4, 6
 	ldx #$0000.w                                                  ; $8bbe : $a2, $00, $00
 
-br_03_8bc1:
+@nextDoubleX:
+; eg 7fd020 has 0 0 ff ff for even Xs
 	lda $d020.w, X                                                  ; $8bc1 : $bd, $20, $d0
-	bne br_03_8bd0                                                  ; $8bc4 : $d0, $0a
+	bne @toToNextDoubleX                                                  ; $8bc4 : $d0, $0a
 
-	lda $838c82.l, X                                                  ; $8bc6 : $bf, $82, $8c, $83
+; eg 7fd05f = 2
+	lda Data_3_8c82.l, X                                                  ; $8bc6 : $bf, $82, $8c, $83
 	and $7fd05f.l                                                  ; $8bca : $2f, $5f, $d0, $7f
-	bne br_03_8bd3                                                  ; $8bce : $d0, $03
+	bne @br_8bd3                                                  ; $8bce : $d0, $03
 
-br_03_8bd0:
-	brl br_03_8c76                                                  ; $8bd0 : $82, $a3, $00
+@toToNextDoubleX:
+	brl @toNextDoubleX                                                  ; $8bd0 : $82, $a3, $00
 
-br_03_8bd3:
+@br_8bd3:
 	stx $63                                                  ; $8bd3 : $86, $63
 	stz $65                                                  ; $8bd5 : $64, $65
 	stz $66                                                  ; $8bd7 : $64, $66
-	cmp $838c82.l, X                                                  ; $8bd9 : $df, $82, $8c, $83
-	beq br_03_8be7                                                  ; $8bdd : $f0, $08
+	cmp Data_3_8c82.l, X                                                  ; $8bd9 : $df, $82, $8c, $83
+	beq @connt_8be7                                                  ; $8bdd : $f0, $08
 
 	dec $65                                                  ; $8bdf : $c6, $65
 	bit #$0f.b                                                  ; $8be1 : $89, $0f
-	bne br_03_8be7                                                  ; $8be3 : $d0, $02
+	bne @connt_8be7                                                  ; $8be3 : $d0, $02
 
 	dec $66                                                  ; $8be5 : $c6, $66
 
-br_03_8be7:
+@connt_8be7:
+; eg 7fd04d = 2
 	lda $d04d.w                                                  ; $8be7 : $ad, $4d, $d0
 	sta $56                                                  ; $8bea : $85, $56
 	stz $57                                                  ; $8bec : $64, $57
 	rep #ACCU_8                                                  ; $8bee : $c2, $20
+
+;
 	lda $d008.w, X                                                  ; $8bf0 : $bd, $08, $d0
 	clc                                                  ; $8bf3 : $18
 	adc $60                                                  ; $8bf4 : $65, $60
@@ -1688,16 +1708,19 @@ br_03_8be7:
 	adc $5d                                                  ; $8bfb : $65, $5d
 	tax                                                  ; $8bfd : $aa
 
-br_03_8bfe:
+@loop_56:
+; eg 2
 	lda $d04c.w                                                  ; $8bfe : $ad, $4c, $d0
 	and #$00ff.w                                                  ; $8c01 : $29, $ff, $00
 	sta $58                                                  ; $8c04 : $85, $58
 	lda $65                                                  ; $8c06 : $a5, $65
-	beq br_03_8c29                                                  ; $8c08 : $f0, $1f
+	beq @brLoop_8c29                                                  ; $8c08 : $f0, $1f
 
-	bmi br_03_8c46                                                  ; $8c0a : $30, $3a
+	bmi @brLoop_8c46                                                  ; $8c0a : $30, $3a
 
-br_03_8c0c:
+@loop_58:
+; 65 = positive
+; do (x)&3ff, ie x has the tile idx
 	lda $0000.w, X                                                  ; $8c0c : $bd, $00, $00
 	and #$03ff.w                                                  ; $8c0f : $29, $ff, $03
 	sta $54                                                  ; $8c12 : $85, $54
@@ -1705,16 +1728,17 @@ br_03_8c0c:
 	and #$fc00.w                                                  ; $8c17 : $29, $00, $fc
 	ora $54                                                  ; $8c1a : $05, $54
 	sta $0000.w, Y                                                  ; $8c1c : $99, $00, $00
+
 	dec $58                                                  ; $8c1f : $c6, $58
-	beq br_03_8c63                                                  ; $8c21 : $f0, $40
+	beq @cont_8c63                                                  ; $8c21 : $f0, $40
 
 	inx                                                  ; $8c23 : $e8
 	inx                                                  ; $8c24 : $e8
 	iny                                                  ; $8c25 : $c8
 	iny                                                  ; $8c26 : $c8
-	bra br_03_8c0c                                                  ; $8c27 : $80, $e3
+	bra @loop_58                                                  ; $8c27 : $80, $e3
 
-br_03_8c29:
+@brLoop_8c29:
 	lda $0000.w, Y                                                  ; $8c29 : $b9, $00, $00
 	and #$3000.w                                                  ; $8c2c : $29, $00, $30
 	sta $54                                                  ; $8c2f : $85, $54
@@ -1723,15 +1747,15 @@ br_03_8c29:
 	ora $54                                                  ; $8c37 : $05, $54
 	sta $0000.w, Y                                                  ; $8c39 : $99, $00, $00
 	dec $58                                                  ; $8c3c : $c6, $58
-	beq br_03_8c63                                                  ; $8c3e : $f0, $23
+	beq @cont_8c63                                                  ; $8c3e : $f0, $23
 
 	inx                                                  ; $8c40 : $e8
 	inx                                                  ; $8c41 : $e8
 	iny                                                  ; $8c42 : $c8
 	iny                                                  ; $8c43 : $c8
-	bra br_03_8c29                                                  ; $8c44 : $80, $e3
+	bra @brLoop_8c29                                                  ; $8c44 : $80, $e3
 
-br_03_8c46:
+@brLoop_8c46:
 	lda $0000.w, X                                                  ; $8c46 : $bd, $00, $00
 	and #$0c00.w                                                  ; $8c49 : $29, $00, $0c
 	sta $54                                                  ; $8c4c : $85, $54
@@ -1740,17 +1764,17 @@ br_03_8c46:
 	ora $54                                                  ; $8c54 : $05, $54
 	sta $0000.w, Y                                                  ; $8c56 : $99, $00, $00
 	dec $58                                                  ; $8c59 : $c6, $58
-	beq br_03_8c63                                                  ; $8c5b : $f0, $06
+	beq @cont_8c63                                                  ; $8c5b : $f0, $06
 
 	inx                                                  ; $8c5d : $e8
 	inx                                                  ; $8c5e : $e8
 	iny                                                  ; $8c5f : $c8
 	iny                                                  ; $8c60 : $c8
-	bra br_03_8c46                                                  ; $8c61 : $80, $e3
+	bra @brLoop_8c46                                                  ; $8c61 : $80, $e3
 
-br_03_8c63:
+@cont_8c63:
 	dec $56                                                  ; $8c63 : $c6, $56
-	beq br_03_8c72                                                  ; $8c65 : $f0, $0b
+	beq @toNextDblXFromSaved                                                  ; $8c65 : $f0, $0b
 
 	clc                                                  ; $8c67 : $18
 	tya                                                  ; $8c68 : $98
@@ -1759,29 +1783,31 @@ br_03_8c63:
 	txa                                                  ; $8c6c : $8a
 	adc $5a                                                  ; $8c6d : $65, $5a
 	tax                                                  ; $8c6f : $aa
-	bra br_03_8bfe                                                  ; $8c70 : $80, $8c
+	bra @loop_56                                                  ; $8c70 : $80, $8c
 
-br_03_8c72:
+@toNextDblXFromSaved:
 	sep #ACCU_8                                                  ; $8c72 : $e2, $20
 	ldx $63                                                  ; $8c74 : $a6, $63
 
-br_03_8c76:
+@toNextDoubleX:
 	inx                                                  ; $8c76 : $e8
 	inx                                                  ; $8c77 : $e8
 	cpx #$0008.w                                                  ; $8c78 : $e0, $08, $00
-	beq br_03_8c80                                                  ; $8c7b : $f0, $03
+	beq @done                                                  ; $8c7b : $f0, $03
 
-	brl br_03_8bc1                                                  ; $8c7d : $82, $41, $ff
+	brl @nextDoubleX                                                  ; $8c7d : $82, $41, $ff
 
-br_03_8c80:
+@done:
 	plb                                                  ; $8c80 : $ab
 	rtl                                                  ; $8c81 : $6b
 
 
-	ora ($00), Y                                                  ; $8c82 : $11, $00
-	jsr $004400.l                                                  ; $8c84 : $22, $00, $44, $00
-	dey                                                  ; $8c88 : $88
-	.db $00                                                  ; $8c89 : $00
+Data_3_8c82:
+	.db $11, $00
+	.db $22, $00
+	.db $44, $00
+	.db $88, $00
+
 
 Call_03_8c8a:
 	php                                                  ; $8c8a : $08
@@ -2183,50 +2209,50 @@ Call_03_8e85:
 	sep #ACCU_8                                                  ; $8ec7 : $e2, $20
 	lda $8f                                                  ; $8ec9 : $a5, $8f
 	cmp wCameraTopLeftX                                                  ; $8ecb : $c5, $9f
-	bmi br_03_8ed7                                                  ; $8ecd : $30, $08
+	bmi @br_8ed7                                                  ; $8ecd : $30, $08
 
 	cmp wCameraTopLeftY                                                  ; $8ecf : $c5, $a1
-	bpl br_03_8eff                                                  ; $8ed1 : $10, $2c
+	bpl @br_8eff                                                  ; $8ed1 : $10, $2c
 
 	sta wCameraTopLeftX                                                  ; $8ed3 : $85, $9f
-	bra br_03_8ee3                                                  ; $8ed5 : $80, $0c
+	bra @br_8ee3                                                  ; $8ed5 : $80, $0c
 
-br_03_8ed7:
+@br_8ed7:
 	lda $95                                                  ; $8ed7 : $a5, $95
 	cmp wCameraTopLeftX                                                  ; $8ed9 : $c5, $9f
-	bmi br_03_8eff                                                  ; $8edb : $30, $22
+	bmi @br_8eff                                                  ; $8edb : $30, $22
 
 	cmp wCameraTopLeftY                                                  ; $8edd : $c5, $a1
-	bpl br_03_8ee3                                                  ; $8edf : $10, $02
+	bpl @br_8ee3                                                  ; $8edf : $10, $02
 
 	sta wCameraTopLeftY                                                  ; $8ee1 : $85, $a1
 
-br_03_8ee3:
+@br_8ee3:
 	lda $91                                                  ; $8ee3 : $a5, $91
 	cmp $a0                                                  ; $8ee5 : $c5, $a0
-	bmi br_03_8ef1                                                  ; $8ee7 : $30, $08
+	bmi @br_8ef1                                                  ; $8ee7 : $30, $08
 
 	cmp $a2                                                  ; $8ee9 : $c5, $a2
-	bpl br_03_8eff                                                  ; $8eeb : $10, $12
+	bpl @br_8eff                                                  ; $8eeb : $10, $12
 
 	sta $a0                                                  ; $8eed : $85, $a0
-	bra br_03_8f02                                                  ; $8eef : $80, $11
+	bra @br_8f02                                                  ; $8eef : $80, $11
 
-br_03_8ef1:
+@br_8ef1:
 	lda $96                                                  ; $8ef1 : $a5, $96
 	cmp $a0                                                  ; $8ef3 : $c5, $a0
-	bmi br_03_8eff                                                  ; $8ef5 : $30, $08
+	bmi @br_8eff                                                  ; $8ef5 : $30, $08
 
 	cmp $a2                                                  ; $8ef7 : $c5, $a2
-	bpl br_03_8f02                                                  ; $8ef9 : $10, $07
+	bpl @br_8f02                                                  ; $8ef9 : $10, $07
 
 	sta $a2                                                  ; $8efb : $85, $a2
-	bra br_03_8f02                                                  ; $8efd : $80, $03
+	bra @br_8f02                                                  ; $8efd : $80, $03
 
-br_03_8eff:
-	brl br_03_8fea                                                  ; $8eff : $82, $e8, $00
+@br_8eff:
+	brl @end_8fea                                                  ; $8eff : $82, $e8, $00
 
-br_03_8f02:
+@br_8f02:
 	tdc                                                  ; $8f02 : $7b
 	lda $a0                                                  ; $8f03 : $a5, $a0
 	and #$0f.b                                                  ; $8f05 : $29, $0f
@@ -2264,19 +2290,19 @@ br_03_8f02:
 	sta $54                                                  ; $8f40 : $85, $54
 	and #$00ff.w                                                  ; $8f42 : $29, $ff, $00
 	sta $56                                                  ; $8f45 : $85, $56
-	bne br_03_8f4c                                                  ; $8f47 : $d0, $03
+	bne @br_8f4c                                                  ; $8f47 : $d0, $03
 
-	brl br_03_8fea                                                  ; $8f49 : $82, $9e, $00
+	brl @end_8fea                                                  ; $8f49 : $82, $9e, $00
 
-br_03_8f4c:
+@br_8f4c:
 	lda $55                                                  ; $8f4c : $a5, $55
 	and #$00ff.w                                                  ; $8f4e : $29, $ff, $00
 	sta $5a                                                  ; $8f51 : $85, $5a
-	bne br_03_8f58                                                  ; $8f53 : $d0, $03
+	bne @br_8f58                                                  ; $8f53 : $d0, $03
 
-	brl br_03_8fea                                                  ; $8f55 : $82, $92, $00
+	brl @end_8fea                                                  ; $8f55 : $82, $92, $00
 
-br_03_8f58:
+@br_8f58:
 	lda $0005b9.l                                                  ; $8f58 : $af, $b9, $05, $00
 	and #$00ff.w                                                  ; $8f5c : $29, $ff, $00
 	sec                                                  ; $8f5f : $38
@@ -2290,7 +2316,9 @@ br_03_8f58:
 	and #$003f.w                                                  ; $8f6c : $29, $3f, $00
 	sta $65                                                  ; $8f6f : $85, $65
 
-br_03_8f71:
+@nextMetatileRow:
+; 56 is num metatile col
+; 5a is num metatile rows
 	lda $56                                                  ; $8f71 : $a5, $56
 	sta $58                                                  ; $8f73 : $85, $58
 	lda $60                                                  ; $8f75 : $a5, $60
@@ -2299,23 +2327,27 @@ br_03_8f71:
 	sta $5d                                                  ; $8f7b : $85, $5d
 	ldy $65                                                  ; $8f7d : $a4, $65
 
-br_03_8f7f:
+@nextMetatileCol:
+; X = pointer to metatile idx
 	stx $54                                                  ; $8f7f : $86, $54
 	lda $0000.w, X                                                  ; $8f81 : $bd, $00, $00
 	and #$3000.w                                                  ; $8f84 : $29, $00, $30
 	cmp #$3000.w                                                  ; $8f87 : $c9, $00, $30
-	bne br_03_8f8f                                                  ; $8f8a : $d0, $03
-
+	bne +                                                  ; $8f8a : $d0, $03
 	ldx $d008.w                                                  ; $8f8c : $ae, $08, $d0
 
-br_03_8f8f:
-	lda $0000.w, X                                                  ; $8f8f : $bd, $00, $00
+; get metatile idx * 8
++	lda $0000.w, X                                                  ; $8f8f : $bd, $00, $00
 	and #$03ff.w                                                  ; $8f92 : $29, $ff, $03
 	asl                                                  ; $8f95 : $0a
 	asl                                                  ; $8f96 : $0a
 	asl                                                  ; $8f97 : $0a
 	adc $7fd03c.l                                                  ; $8f98 : $6f, $3c, $d0, $7f
 	tax                                                  ; $8f9c : $aa
+
+; 5d is bottom row, 60 is top row
+; 1st word in top-left, 2nd word in bottom-left
+; 3rd word in top-right, 4th word in bottom-right
 	lda $0000.w, X                                                  ; $8f9d : $bd, $00, $00
 	sta [$60], Y                                                  ; $8fa0 : $97, $60
 	iny                                                  ; $8fa2 : $c8
@@ -2331,22 +2363,25 @@ br_03_8f8f:
 	lda $0006.w, X                                                  ; $8fb2 : $bd, $06, $00
 	sta [$5d], Y                                                  ; $8fb5 : $97, $5d
 	dec $58                                                  ; $8fb7 : $c6, $58
-	beq br_03_8fc8                                                  ; $8fb9 : $f0, $0d
+	beq @cont_8fc8                                                  ; $8fb9 : $f0, $0d
 
 	tya                                                  ; $8fbb : $98
 	ina                                                  ; $8fbc : $1a
 	ina                                                  ; $8fbd : $1a
 	and #$003f.w                                                  ; $8fbe : $29, $3f, $00
 	tay                                                  ; $8fc1 : $a8
+
+; next 2x2, point to the the next metatile idx
 	ldx $54                                                  ; $8fc2 : $a6, $54
 	inx                                                  ; $8fc4 : $e8
 	inx                                                  ; $8fc5 : $e8
-	bra br_03_8f7f                                                  ; $8fc6 : $80, $b7
+	bra @nextMetatileCol                                                  ; $8fc6 : $80, $b7
 
-br_03_8fc8:
+@cont_8fc8:
 	dec $5a                                                  ; $8fc8 : $c6, $5a
-	beq br_03_8fea                                                  ; $8fca : $f0, $1e
+	beq @end_8fea                                                  ; $8fca : $f0, $1e
 
+;
 	lda $54                                                  ; $8fcc : $a5, $54
 	clc                                                  ; $8fce : $18
 	adc $63                                                  ; $8fcf : $65, $63
@@ -2361,9 +2396,9 @@ br_03_8fc8:
 	and #$f800.w                                                  ; $8fe1 : $29, $00, $f8
 	ora $60                                                  ; $8fe4 : $05, $60
 	sta $60                                                  ; $8fe6 : $85, $60
-	bra br_03_8f71                                                  ; $8fe8 : $80, $87
+	bra @nextMetatileRow                                                  ; $8fe8 : $80, $87
 
-br_03_8fea:
+@end_8fea:
 	sep #ACCU_8                                                  ; $8fea : $e2, $20
 	ply                                                  ; $8fec : $7a
 	plx                                                  ; $8fed : $fa
@@ -7036,7 +7071,7 @@ br_03_acef:
 	stz $420c.w                                                  ; $ad07 : $9c, $0c, $42
 	stz $f2                                                  ; $ad0a : $64, $f2
 	lda #$81.b                                                  ; $ad0c : $a9, $81
-	sta $4200.w                                                  ; $ad0e : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $ad0e : $8d, $00, $42
 	jsr Call_03_900c.w                                                  ; $ad11 : $20, $0c, $90
 	stz $30                                                  ; $ad14 : $64, $30
 	stz $31                                                  ; $ad16 : $64, $31
@@ -7052,7 +7087,7 @@ br_03_acef:
 	tdc                                                  ; $ad31 : $7b
 	sta $7fd0fe.l                                                  ; $ad32 : $8f, $fe, $d0, $7f
 	sta $7fe75a.l                                                  ; $ad36 : $8f, $5a, $e7, $7f
-	jsr $80e844.l                                                  ; $ad3a : $22, $44, $e8, $80
+	jsr Func_0_e844.l                                                  ; $ad3a : $22, $44, $e8, $80
 	jsr SetRoomScriptSrc.w                                                  ; $ad3e : $20, $ad, $b5
 	jsr Call_03_b5d3.l                                                  ; $ad41 : $22, $d3, $b5, $83
 	jsr Call_03_ab61.w                                                  ; $ad45 : $20, $61, $ab
@@ -7658,9 +7693,9 @@ br_03_b116:
 	lda #$80.b                                                  ; $b19a : $a9, $80
 	sta $0583.w                                                  ; $b19c : $8d, $83, $05
 	lda #$81.b                                                  ; $b19f : $a9, $81
-	sta $4200.w                                                  ; $b1a1 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $b1a1 : $8d, $00, $42
 	jsr Call_03_900c.w                                                  ; $b1a4 : $20, $0c, $90
-	stz $4200.w                                                  ; $b1a7 : $9c, $00, $42
+	stz NMITIMEN.w                                                  ; $b1a7 : $9c, $00, $42
 	sta $2100.w                                                  ; $b1aa : $8d, $00, $21
 	stz $81                                                  ; $b1ad : $64, $81
 	stz $420c.w                                                  ; $b1af : $9c, $0c, $42
@@ -7681,7 +7716,7 @@ br_03_b116:
 	tdc                                                  ; $b1d9 : $7b
 
 br_03_b1da:
-	sta $7fd18c.l, X                                                  ; $b1da : $9f, $8c, $d1, $7f
+	sta wPuzzleScriptsEnabled.l, X                                                  ; $b1da : $9f, $8c, $d1, $7f
 	dex                                                  ; $b1de : $ca
 	bpl br_03_b1da                                                  ; $b1df : $10, $f9
 
@@ -7727,7 +7762,7 @@ br_03_b20e:
 	pla                                                  ; $b227 : $68
 	rep #ACCU_8                                                  ; $b228 : $c2, $20
 	tdc                                                  ; $b22a : $7b
-	sta $7fd100.l                                                  ; $b22b : $8f, $00, $d1, $7f
+	sta wPuzzleScriptBitFlags.l                                                  ; $b22b : $8f, $00, $d1, $7f
 	sta $7fd102.l                                                  ; $b22f : $8f, $02, $d1, $7f
 	sta $7fd0c4.l                                                  ; $b233 : $8f, $c4, $d0, $7f
 	sta $05ae.w                                                  ; $b237 : $8d, $ae, $05
@@ -7763,7 +7798,7 @@ br_03_b268:
 br_03_b271:
 	jsr $83ac7a.l                                                  ; $b271 : $22, $7a, $ac, $83
 	jsr Call_03_ab61.w                                                  ; $b275 : $20, $61, $ab
-	jsr $80e844.l                                                  ; $b278 : $22, $44, $e8, $80
+	jsr Func_0_e844.l                                                  ; $b278 : $22, $44, $e8, $80
 	jsr SetRoomScriptSrc.w                                                  ; $b27c : $20, $ad, $b5
 	jsr Call_03_b5d3.l                                                  ; $b27f : $22, $d3, $b5, $83
 	lda $0005b3.l                                                  ; $b283 : $af, $b3, $05, $00
@@ -7975,7 +8010,7 @@ br_03_b41c:
 	jsr Call_03_b52e.w                                                  ; $b424 : $20, $2e, $b5
 	jsr Call_03_85dc.l                                                  ; $b427 : $22, $dc, $85, $83
 	lda #$81.b                                                  ; $b42b : $a9, $81
-	sta $4200.w                                                  ; $b42d : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $b42d : $8d, $00, $42
 	tdc                                                  ; $b430 : $7b
 	sta $1261.w                                                  ; $b431 : $8d, $61, $12
 	sta $1262.w                                                  ; $b434 : $8d, $62, $12
@@ -8071,7 +8106,7 @@ br_03_b4e7:
 	jsr Call_03_c0ef.w                                                  ; $b4e9 : $20, $ef, $c0
 	ldx #$0000.w                                                  ; $b4ec : $a2, $00, $00
 	ldy #$0000.w                                                  ; $b4ef : $a0, $00, $00
-	jsr $80e722.l                                                  ; $b4f2 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $b4f2 : $22, $22, $e7, $80
 	jsr Func_0_cbae.l                                                  ; $b4f6 : $22, $ae, $cb, $80
 	sep #ACCU_8|IDX_8                                                  ; $b4fa : $e2, $30
 	jsr Call_03_afcd.l                                                  ; $b4fc : $22, $cd, $af, $83
@@ -8220,7 +8255,7 @@ Call_03_b5d3:
 	php                                                  ; $b5d3 : $08
 	phb                                                  ; $b5d4 : $8b
 	lda #$7e.b                                                  ; $b5d5 : $a9, $7e
-	sta $057e.w                                                  ; $b5d7 : $8d, $7e, $05
+	sta wGenericMvnDestBank.w                                                  ; $b5d7 : $8d, $7e, $05
 	rep #ACCU_8|IDX_8                                                  ; $b5da : $c2, $30
 	lda $05b6.w                                                  ; $b5dc : $ad, $b6, $05
 	bit #$0001.w                                                  ; $b5df : $89, $01, $00
@@ -8228,7 +8263,7 @@ Call_03_b5d3:
 
 	sep #ACCU_8                                                  ; $b5e4 : $e2, $20
 	lda $7fe6a7.l                                                  ; $b5e6 : $af, $a7, $e6, $7f
-	sta $057f.w                                                  ; $b5ea : $8d, $7f, $05
+	sta wGenericMvnSrcBank.w                                                  ; $b5ea : $8d, $7f, $05
 	sta $5f                                                  ; $b5ed : $85, $5f
 	rep #ACCU_8                                                  ; $b5ef : $c2, $20
 	lda $7fe6a5.l                                                  ; $b5f1 : $af, $a5, $e6, $7f
@@ -8241,7 +8276,7 @@ br_03_b5f7:
 	tax                                                  ; $b5fe : $aa
 	sep #ACCU_8                                                  ; $b5ff : $e2, $20
 	lda Data_4f_fcbc.l+2, X                                                  ; $b601 : $bf, $be, $fc, $cf
-	sta $057f.w                                                  ; $b605 : $8d, $7f, $05
+	sta wGenericMvnSrcBank.w                                                  ; $b605 : $8d, $7f, $05
 	sta $5f                                                  ; $b608 : $85, $5f
 	rep #ACCU_8                                                  ; $b60a : $c2, $20
 	lda Data_4f_fcbc.l, X                                                  ; $b60c : $bf, $bc, $fc, $cf
@@ -8251,7 +8286,7 @@ br_03_b610:
 	tax                                                  ; $b612 : $aa
 	ldy #$f000.w                                                  ; $b613 : $a0, $00, $f0
 	lda [$5d]                                                  ; $b616 : $a7, $5d
-	jsr $057d.w                                                  ; $b618 : $20, $7d, $05
+	jsr wGenericMvn.w                                                  ; $b618 : $20, $7d, $05
 	lda $05b6.w                                                  ; $b61b : $ad, $b6, $05
 	bit #$0001.w                                                  ; $b61e : $89, $01, $00
 	beq br_03_b627                                                  ; $b621 : $f0, $04
@@ -8289,10 +8324,10 @@ br_03_b635:
 	bra br_03_b635                                                  ; $b657 : $80, $dc
 
 br_03_b659:
-	jsr $80e844.l                                                  ; $b659 : $22, $44, $e8, $80
+	jsr Func_0_e844.l                                                  ; $b659 : $22, $44, $e8, $80
 	ldx #$0000.w                                                  ; $b65d : $a2, $00, $00
 	ldy #$001e.w                                                  ; $b660 : $a0, $1e, $00
-	jsr $80e722.l                                                  ; $b663 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $b663 : $22, $22, $e7, $80
 	jsr Func_0_cbae.l                                                  ; $b667 : $22, $ae, $cb, $80
 	plb                                                  ; $b66b : $ab
 	plp                                                  ; $b66c : $28
@@ -8566,6 +8601,8 @@ br_03_b850:
 	rtl                                                  ; $b850 : $6b
 
 
+; X - double table entry
+; Y - subtable entry size
 Call_03_b851:
 	rep #ACCU_8                                                  ; $b851 : $c2, $20
 	sty $54                                                  ; $b853 : $84, $54
@@ -8573,31 +8610,31 @@ Call_03_b851:
 	tax                                                  ; $b859 : $aa
 	sep #ACCU_8                                                  ; $b85a : $e2, $20
 
-br_03_b85c:
+@loop_b85c:
 	lda $7ef000.l, X                                                  ; $b85c : $bf, $00, $f0, $7e
 	cmp #$ff.b                                                  ; $b860 : $c9, $ff
 	clc                                                  ; $b862 : $18
-	beq br_03_b881                                                  ; $b863 : $f0, $1c
+	beq @done                                                  ; $b863 : $f0, $1c
 
 	lda $7ef001.l, X                                                  ; $b865 : $bf, $01, $f0, $7e
 	cmp $8f                                                  ; $b869 : $c5, $8f
-	bne br_03_b876                                                  ; $b86b : $d0, $09
+	bne @br_b876                                                  ; $b86b : $d0, $09
 
 	lda $7ef002.l, X                                                  ; $b86d : $bf, $02, $f0, $7e
 	cmp $91                                                  ; $b871 : $c5, $91
 	sec                                                  ; $b873 : $38
-	beq br_03_b881                                                  ; $b874 : $f0, $0b
+	beq @done                                                  ; $b874 : $f0, $0b
 
-br_03_b876:
+@br_b876:
 	rep #ACCU_8                                                  ; $b876 : $c2, $20
 	txa                                                  ; $b878 : $8a
 	clc                                                  ; $b879 : $18
 	adc $54                                                  ; $b87a : $65, $54
 	tax                                                  ; $b87c : $aa
 	sep #ACCU_8                                                  ; $b87d : $e2, $20
-	bra br_03_b85c                                                  ; $b87f : $80, $db
+	bra @loop_b85c                                                  ; $b87f : $80, $db
 
-br_03_b881:
+@done:
 	rtl                                                  ; $b881 : $6b
 
 
@@ -9464,7 +9501,7 @@ Call_03_bdfc:
 	.db $00                                                  ; $be1d : $00
 	ldy #$02.b                                                  ; $be1e : $a0, $02
 	.db $00                                                  ; $be20 : $00
-	jsr $80e722.l                                                  ; $be21 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $be21 : $22, $22, $e7, $80
 	lda $22                                                  ; $be25 : $a5, $22
 	clc                                                  ; $be27 : $18
 	adc #$08.b                                                  ; $be28 : $69, $08
@@ -9550,7 +9587,7 @@ Call_03_be90:
 	jsr Call_03_867b.w                                                  ; $be95 : $20, $7b, $86
 	beq br_03_bf13                                                  ; $be98 : $f0, $79
 
-	jsr $80e817.l                                                  ; $be9a : $22, $17, $e8, $80
+	jsr Func_0_e817.l                                                  ; $be9a : $22, $17, $e8, $80
 	bcc br_03_beb0                                                  ; $be9e : $90, $10
 
 	jsr $c32d.w                                                  ; $bea0 : $20, $2d, $c3
@@ -10107,7 +10144,7 @@ br_03_c289:
 	.db $00                                                  ; $c2a4 : $00
 	ldy #$16.b                                                  ; $c2a5 : $a0, $16
 	.db $00                                                  ; $c2a7 : $00
-	jsr $80e722.l                                                  ; $c2a8 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $c2a8 : $22, $22, $e7, $80
 	lda #$eb04.w                                                  ; $c2ac : $a9, $04, $eb
 	lda #$2005.w                                                  ; $c2af : $a9, $05, $20
 	inc $80c2.w, X                                                  ; $c2b2 : $fe, $c2, $80
@@ -10230,7 +10267,7 @@ Call_03_c375:
 	.db $00                                                  ; $c380 : $00
 	ldy #$0e.b                                                  ; $c381 : $a0, $0e
 	.db $00                                                  ; $c383 : $00
-	jsr $80e722.l                                                  ; $c384 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $c384 : $22, $22, $e7, $80
 	ldx #$1c.b                                                  ; $c388 : $a2, $1c
 	.db $00                                                  ; $c38a : $00
 	ldy #$04.b                                                  ; $c38b : $a0, $04
@@ -10825,10 +10862,10 @@ Call_03_c729:
 	php                                                  ; $c729 : $08
 	sep #ACCU_8|IDX_8                                                  ; $c72a : $e2, $30
 	lda #$01.b                                                  ; $c72c : $a9, $01
-	stz $4204.w                                                  ; $c72e : $9c, $04, $42
+	stz WRDIVL.w                                                  ; $c72e : $9c, $04, $42
 	sta $4205.w                                                  ; $c731 : $8d, $05, $42
 	lda $00                                                  ; $c734 : $a5, $00
-	sta $4206.w                                                  ; $c736 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $c736 : $8d, $06, $42
 	stz $07                                                  ; $c739 : $64, $07
 	nop                                                  ; $c73b : $ea
 	nop                                                  ; $c73c : $ea
@@ -10836,7 +10873,7 @@ Call_03_c729:
 	nop                                                  ; $c73e : $ea
 	nop                                                  ; $c73f : $ea
 	nop                                                  ; $c740 : $ea
-	lda $4214.w                                                  ; $c741 : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $c741 : $ad, $14, $42
 	sta $1719.w                                                  ; $c744 : $8d, $19, $17
 
 br_03_c747:
@@ -14895,7 +14932,7 @@ Call_03_e200:
 	.db $00                                                  ; $e264 : $00
 	ldy #$12.b                                                  ; $e265 : $a0, $12
 	.db $00                                                  ; $e267 : $00
-	jsr $80e722.l                                                  ; $e268 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $e268 : $22, $22, $e7, $80
 	ply                                                  ; $e26c : $7a
 	brl br_03_e10f                                                  ; $e26d : $82, $9f, $fe
 
@@ -15416,11 +15453,11 @@ Call_03_e60e:
 	wdm                                                  ; $e61d : $42
 	sep #ACCU_8                                                  ; $e61e : $e2, $20
 	lda #$04.b                                                  ; $e620 : $a9, $04
-	sta $4206.w                                                  ; $e622 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $e622 : $8d, $06, $42
 	jsr Call_03_e650.w                                                  ; $e625 : $20, $50, $e6
 	nop                                                  ; $e628 : $ea
 	nop                                                  ; $e629 : $ea
-	lda $4214.w                                                  ; $e62a : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $e62a : $ad, $14, $42
 	sta $211b.w                                                  ; $e62d : $8d, $1b, $21
 	lda $4215.w                                                  ; $e630 : $ad, $15, $42
 	sta $211b.w                                                  ; $e633 : $8d, $1b, $21
@@ -15669,10 +15706,10 @@ br_03_e7ca:
 	xba                                                  ; $e7ca : $eb
 	rep #ACCU_8|IDX_8                                                  ; $e7cb : $c2, $30
 	lsr                                                  ; $e7cd : $4a
-	sta $4204.w                                                  ; $e7ce : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $e7ce : $8d, $04, $42
 	sep #ACCU_8                                                  ; $e7d1 : $e2, $20
 	lda $51                                                  ; $e7d3 : $a5, $51
-	sta $4206.w                                                  ; $e7d5 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $e7d5 : $8d, $06, $42
 	tdc                                                  ; $e7d8 : $7b
 	lda $5a                                                  ; $e7d9 : $a5, $5a
 	bpl br_03_e7e0                                                  ; $e7db : $10, $03
@@ -15684,11 +15721,11 @@ br_03_e7e0:
 	xba                                                  ; $e7e0 : $eb
 	rep #ACCU_8                                                  ; $e7e1 : $c2, $20
 	lsr                                                  ; $e7e3 : $4a
-	ldx $4214.w                                                  ; $e7e4 : $ae, $14, $42
-	sta $4204.w                                                  ; $e7e7 : $8d, $04, $42
+	ldx RDDIVL.w                                                  ; $e7e4 : $ae, $14, $42
+	sta WRDIVL.w                                                  ; $e7e7 : $8d, $04, $42
 	sep #ACCU_8                                                  ; $e7ea : $e2, $20
 	lda $51                                                  ; $e7ec : $a5, $51
-	sta $4206.w                                                  ; $e7ee : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $e7ee : $8d, $06, $42
 	lda $58                                                  ; $e7f1 : $a5, $58
 	asl                                                  ; $e7f3 : $0a
 	rep #ACCU_8                                                  ; $e7f4 : $c2, $20
@@ -15702,7 +15739,7 @@ br_03_e7fd:
 	sta $54                                                  ; $e7fd : $85, $54
 	lda $59                                                  ; $e7ff : $a5, $59
 	asl                                                  ; $e801 : $0a
-	lda $4214.w                                                  ; $e802 : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $e802 : $ad, $14, $42
 	bcc br_03_e80b                                                  ; $e805 : $90, $04
 
 	eor #$ffff.w                                                  ; $e807 : $49, $ff, $ff
@@ -16073,7 +16110,7 @@ br_03_ea37:
 	.db $00                                                  ; $eaa9 : $00
 	ldy #$0a.b                                                  ; $eaaa : $a0, $0a
 	.db $00                                                  ; $eaac : $00
-	jsr $80e722.l                                                  ; $eaad : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $eaad : $22, $22, $e7, $80
 	ply                                                  ; $eab1 : $7a
 	brl br_03_e10f                                                  ; $eab2 : $82, $5a, $f6
 
@@ -16281,7 +16318,7 @@ br_03_ec03:
 	.db $00                                                  ; $ec18 : $00
 	ldy #$18.b                                                  ; $ec19 : $a0, $18
 	.db $00                                                  ; $ec1b : $00
-	jsr $80e722.l                                                  ; $ec1c : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $ec1c : $22, $22, $e7, $80
 	ply                                                  ; $ec20 : $7a
 	bra br_03_ec48                                                  ; $ec21 : $80, $25
 
@@ -16501,7 +16538,7 @@ Call_03_ed63:
 	phy                                                  ; $edb2 : $5a
 	ldx #$0000.w                                                  ; $edb3 : $a2, $00, $00
 	ldy #$001a.w                                                  ; $edb6 : $a0, $1a, $00
-	jsr $80e722.l                                                  ; $edb9 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $edb9 : $22, $22, $e7, $80
 	ply                                                  ; $edbd : $7a
 	iny                                                  ; $edbe : $c8
 	brl br_03_e10f                                                  ; $edbf : $82, $4d, $f3
@@ -16701,7 +16738,7 @@ br_03_ef1c:
 	jsr $80e7fa.l                                                  ; $ef32 : $22, $fa, $e7, $80
 	ldx #$0000.w                                                  ; $ef36 : $a2, $00, $00
 	ldy #$0010.w                                                  ; $ef39 : $a0, $10, $00
-	jsr $80e722.l                                                  ; $ef3c : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $ef3c : $22, $22, $e7, $80
 	ply                                                  ; $ef40 : $7a
 	ldx wCurrChar                                                  ; $ef41 : $a6, $a7
 	lda $7fdb0c.l, X                                                  ; $ef43 : $bf, $0c, $db, $7f
@@ -16892,7 +16929,7 @@ br_03_f079:
 br_03_f08e:
 	ldx #$0000.w                                                  ; $f08e : $a2, $00, $00
 	ldy #$0008.w                                                  ; $f091 : $a0, $08, $00
-	jsr $80e722.l                                                  ; $f094 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $f094 : $22, $22, $e7, $80
 	ply                                                  ; $f098 : $7a
 	bra br_03_f065                                                  ; $f099 : $80, $ca
 
@@ -17895,7 +17932,7 @@ Call_03_f7df:
 	.db $00                                                  ; $f7ee : $00
 	ldy #$1c.b                                                  ; $f7ef : $a0, $1c
 	.db $00                                                  ; $f7f1 : $00
-	jsr $80e722.l                                                  ; $f7f2 : $22, $22, $e7, $80
+	jsr StartPuzzleScript.l                                                  ; $f7f2 : $22, $22, $e7, $80
 	ply                                                  ; $f7f6 : $7a
 	rts                                                  ; $f7f7 : $60
 
@@ -19019,10 +19056,10 @@ br_03_fedf:
 
 	eor #$ff.b                                                  ; $fee1 : $49, $ff
 	ina                                                  ; $fee3 : $1a
-	sta $4204.w                                                  ; $fee4 : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $fee4 : $8d, $04, $42
 	stz $4205.w                                                  ; $fee7 : $9c, $05, $42
 	lda $05                                                  ; $feea : $a5, $05
-	sta $4206.w                                                  ; $feec : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $feec : $8d, $06, $42
 	rep #ACCU_8                                                  ; $feef : $c2, $20
 	txa                                                  ; $fef1 : $8a
 	clc                                                  ; $fef2 : $18
@@ -19032,7 +19069,7 @@ br_03_fedf:
 	lda $0c                                                  ; $fef8 : $a5, $0c
 	bmi br_03_ff07                                                  ; $fefa : $30, $0b
 
-	lda $4214.w                                                  ; $fefc : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $fefc : $ad, $14, $42
 	ina                                                  ; $feff : $1a
 	clc                                                  ; $ff00 : $18
 	adc $09                                                  ; $ff01 : $65, $09
@@ -19042,7 +19079,7 @@ br_03_fedf:
 br_03_ff07:
 	lda $09                                                  ; $ff07 : $a5, $09
 	sec                                                  ; $ff09 : $38
-	sbc $4214.w                                                  ; $ff0a : $ed, $14, $42
+	sbc RDDIVL.w                                                  ; $ff0a : $ed, $14, $42
 	dea                                                  ; $ff0d : $3a
 	sta $09                                                  ; $ff0e : $85, $09
 

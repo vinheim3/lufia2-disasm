@@ -22078,7 +22078,7 @@ br_24_fa79:
 	.db $00                                                  ; $fa9d : $00
 	.db $00                                                  ; $fa9e : $00
 	ina                                                  ; $fa9f : $1a
-	ldx $4200.w, Y                                                  ; $faa0 : $be, $00, $42
+	ldx NMITIMEN.w, Y                                                  ; $faa0 : $be, $00, $42
 	.db $00                                                  ; $faa3 : $00
 	phy                                                  ; $faa4 : $5a
 	.db $00                                                  ; $faa5 : $00
@@ -22266,7 +22266,7 @@ br_24_fb80:
 	.db $00                                                  ; $fb9f : $00
 	ina                                                  ; $fba0 : $1a
 	.db $00                                                  ; $fba1 : $00
-	ldy $4200.w, X                                                  ; $fba2 : $bc, $00, $42
+	ldy NMITIMEN.w, X                                                  ; $fba2 : $bc, $00, $42
 	.db $00                                                  ; $fba5 : $00
 	phy                                                  ; $fba6 : $5a
 	.db $00                                                  ; $fba7 : $00

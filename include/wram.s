@@ -109,8 +109,17 @@ wCameraTopLeftY: ; $a1
 wa3:
     ds 7-3
 
-wCurrChar: ; $a7
-    db
+.union
+
+    wCurrChar: ; $a7
+        db
+
+.nextu
+
+    wCurrPuzzleScript: ; $a7
+        db
+
+.endu
 
 wa8:
     ds 9-8
@@ -167,7 +176,17 @@ wNumToConvertToBCD: ; $0570
     dl
 
 w0573:
-    ds $a4-$73
+    ds $d-3
+
+wGenericMvn: ; $057d
+    db
+wGenericMvnDestBank: ; $057e
+    db
+wGenericMvnSrcBank: ; $057f
+    db
+
+w0580:
+    ds $a4-$80
 
 ; Every tile is -/+ $10
 wInAreaPlayerX: ; $05a4
@@ -320,10 +339,10 @@ w0a7f:
 ; low 9 bits is inventory item, upper 7 bits>>1 = count
 ; since count is bcd, max is 127, though display will render as 27
 wInventoryItemsAndCounts: ; $0a8d
-    ds $be
+    ds $c0
 
-w0b4b:
-    ds $77-$4b
+w0b4d:
+    ds $77-$4d
 
 ; todo: unknown size
 wBufferedTextToDisplay: ; $0b77
@@ -410,14 +429,57 @@ wEntitiesReservingSpriteSlots: ; $e100
 .ramsection "Ram 7fh" bank $7f slot 1
 
 w7f2000:
-    ds $d0f2-$2000
+    ds $d074-$2000
+
+wPuzzleScriptVars: ; $d074
+    ds $20
+
+w7fd094:
+    ds $f2-$94
 
 ; ie uppper nybble of MOSAIC
 wMosaicPixelSize: ; $d0f2
     db
 
 w7fd0f3:
-    ds $dae-$f3
+    ds $100-$f3
+
+; todo: unknown size
+wPuzzleScriptBitFlags: ; $d100
+    db
+
+w7fd101:
+    ds $5c-1
+
+; idxed (code-$fb)*8 + curr script
+wPuzzleScriptFbhVars: ; $d15c
+    ds NUM_PUZZLE_SCRIPTS*4
+
+w7fd17c:
+    ds $8c-$7c
+
+wPuzzleScriptsEnabled: ; $d18c
+    ds NUM_PUZZLE_SCRIPTS
+
+; if $ffff, there is no script
+wPuzzleScriptBaseAddr: ; $d194
+    dw
+wPuzzleScriptBaseBank: ; $d196
+    db
+
+wPuzzleScriptCurrAddr: ; $d197
+    dw
+wPuzzleScriptCurrBank: ; $d199
+    db
+
+w7fd19a:
+    ds $a0-$9a
+
+wCurrRoomChestContentsAddr: ; $d1a0
+    dw
+
+w7fd1a2:
+    ds $dae-$1a2
 
 wEntityXs: ; $ddae
     ds NUM_ENTITIES*2

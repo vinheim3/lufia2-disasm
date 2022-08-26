@@ -17,10 +17,20 @@ WMDATA = $2180 ; WRAM Data Register
 WMADDL = $2181 ; WRAM Address Registers
 WMADDM = $2182 ; WRAM Address Registers
 WMADDH = $2183 ; WRAM Address Registers
+
+NMITIMEN = $4200 ; Interrupt Enable Register
+NMI_ENABLE = $80
+IRQ_ENABLE_3 = $30
+AUTO_JOYPAD_READ_ENABLE = $01
+
 WRMPYA = $4202 ; Multiplicand Registers
 WRMPYB = $4203 ; Multiplicand Registers
+WRDIVL = $4204 ; Divisor & Dividend Registers
+WRDIVH = $4205 ; Divisor & Dividend Registers
+WRDIVB = $4206 ; Divisor & Dividend Registers
 MDMAEN = $420b ; DMA Enable Register
 HVBJOY = $4212 ; PPU Status Register
+RDDIVL = $4214 ; Multiplication Or Divide Result Registers (Low)
 RDMPYL = $4216 ; Multiplication Or Divide Result Registers (Low)
 JOY1L = $4218 ; Controller Port Data Registers (Pad 1 - Low)
 

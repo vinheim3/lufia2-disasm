@@ -9222,10 +9222,10 @@ Jump_01_bf7b:
 br_01_bf85:
 	sta wCurrItemIdx.w+1                                                  ; $bf85 : $8d, $07, $0a
 	lsr                                                  ; $bf88 : $4a
-	sta $4204.w                                                  ; $bf89 : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $bf89 : $8d, $04, $42
 	stz $4205.w                                                  ; $bf8c : $9c, $05, $42
 	lda #$0a.b                                                  ; $bf8f : $a9, $0a
-	sta $4206.w                                                  ; $bf91 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $bf91 : $8d, $06, $42
 	lda wInventoryItemsAndCounts.w, X                                                  ; $bf94 : $bd, $8d, $0a
 	sta wCurrItemIdx.w                                                  ; $bf97 : $8d, $06, $0a
 	lda $0a8e.w, X                                                  ; $bf9a : $bd, $8e, $0a
@@ -9267,7 +9267,7 @@ br_01_bfce:
 
 	lda #$3a.b                                                  ; $bfda : $a9, $3a
 	sta WMDATA.w                                                  ; $bfdc : $8d, $80, $21
-	lda $4214.w                                                  ; $bfdf : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $bfdf : $ad, $14, $42
 	beq br_01_bfec                                                  ; $bfe2 : $f0, $08
 
 	clc                                                  ; $bfe4 : $18
@@ -9421,16 +9421,16 @@ br_01_c0c8:
 	bne br_01_c0c8                                                  ; $c0d2 : $d0, $f4
 
 	lda $0b84.w                                                  ; $c0d4 : $ad, $84, $0b
-	sta $4204.w                                                  ; $c0d7 : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $c0d7 : $8d, $04, $42
 	stz $4205.w                                                  ; $c0da : $9c, $05, $42
 	lda #$0a.b                                                  ; $c0dd : $a9, $0a
-	sta $4206.w                                                  ; $c0df : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $c0df : $8d, $06, $42
 	stz WMDATA.w                                                  ; $c0e2 : $9c, $80, $21
 	lda #$3a.b                                                  ; $c0e5 : $a9, $3a
 	sta WMDATA.w                                                  ; $c0e7 : $8d, $80, $21
 	pha                                                  ; $c0ea : $48
 	pla                                                  ; $c0eb : $68
-	lda $4214.w                                                  ; $c0ec : $ad, $14, $42
+	lda RDDIVL.w                                                  ; $c0ec : $ad, $14, $42
 	beq br_01_c0f4                                                  ; $c0ef : $f0, $03
 
 	clc                                                  ; $c0f1 : $18
@@ -10132,52 +10132,52 @@ br_01_c503:
 br_01_c51b:
 	tay                                                  ; $c51b : $a8
 	sep #ACCU_8                                                  ; $c51c : $e2, $20
-	sty $4204.w                                                  ; $c51e : $8c, $04, $42
+	sty WRDIVL.w                                                  ; $c51e : $8c, $04, $42
 	lda #$0a.b                                                  ; $c521 : $a9, $0a
-	sta $4206.w                                                  ; $c523 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $c523 : $8d, $06, $42
 	phx                                                  ; $c526 : $da
 	plx                                                  ; $c527 : $fa
 	pha                                                  ; $c528 : $48
 	pla                                                  ; $c529 : $68
 	lda RDMPYL.w                                                  ; $c52a : $ad, $16, $42
 	sta $7e4f13.l, X                                                  ; $c52d : $9f, $13, $4f, $7e
-	ldy $4214.w                                                  ; $c531 : $ac, $14, $42
+	ldy RDDIVL.w                                                  ; $c531 : $ac, $14, $42
 	beq br_01_c57c                                                  ; $c534 : $f0, $46
 
-	sty $4204.w                                                  ; $c536 : $8c, $04, $42
+	sty WRDIVL.w                                                  ; $c536 : $8c, $04, $42
 	lda #$0a.b                                                  ; $c539 : $a9, $0a
-	sta $4206.w                                                  ; $c53b : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $c53b : $8d, $06, $42
 	phx                                                  ; $c53e : $da
 	plx                                                  ; $c53f : $fa
 	pha                                                  ; $c540 : $48
 	pla                                                  ; $c541 : $68
 	lda RDMPYL.w                                                  ; $c542 : $ad, $16, $42
 	sta $7e4f12.l, X                                                  ; $c545 : $9f, $12, $4f, $7e
-	ldy $4214.w                                                  ; $c549 : $ac, $14, $42
+	ldy RDDIVL.w                                                  ; $c549 : $ac, $14, $42
 	beq br_01_c57c                                                  ; $c54c : $f0, $2e
 
-	sty $4204.w                                                  ; $c54e : $8c, $04, $42
+	sty WRDIVL.w                                                  ; $c54e : $8c, $04, $42
 	lda #$0a.b                                                  ; $c551 : $a9, $0a
-	sta $4206.w                                                  ; $c553 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $c553 : $8d, $06, $42
 	phx                                                  ; $c556 : $da
 	plx                                                  ; $c557 : $fa
 	pha                                                  ; $c558 : $48
 	pla                                                  ; $c559 : $68
 	lda RDMPYL.w                                                  ; $c55a : $ad, $16, $42
 	sta $7e4f11.l, X                                                  ; $c55d : $9f, $11, $4f, $7e
-	ldy $4214.w                                                  ; $c561 : $ac, $14, $42
+	ldy RDDIVL.w                                                  ; $c561 : $ac, $14, $42
 	beq br_01_c57c                                                  ; $c564 : $f0, $16
 
-	sty $4204.w                                                  ; $c566 : $8c, $04, $42
+	sty WRDIVL.w                                                  ; $c566 : $8c, $04, $42
 	lda #$0a.b                                                  ; $c569 : $a9, $0a
-	sta $4206.w                                                  ; $c56b : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $c56b : $8d, $06, $42
 	phx                                                  ; $c56e : $da
 	plx                                                  ; $c56f : $fa
 	pha                                                  ; $c570 : $48
 	pla                                                  ; $c571 : $68
 	lda RDMPYL.w                                                  ; $c572 : $ad, $16, $42
 	sta $7e4f10.l, X                                                  ; $c575 : $9f, $10, $4f, $7e
-	ldy $4214.w                                                  ; $c579 : $ac, $14, $42
+	ldy RDDIVL.w                                                  ; $c579 : $ac, $14, $42
 
 br_01_c57c:
 	sta $4f13.w, Y                                                  ; $c57c : $99, $13, $4f
@@ -10348,10 +10348,10 @@ br_01_c685:
 	tyx                                                  ; $c68c : $bb
 	rep #ACCU_8                                                  ; $c68d : $c2, $20
 	lda $0011.w, X                                                  ; $c68f : $bd, $11, $00
-	sta $4204.w                                                  ; $c692 : $8d, $04, $42
+	sta WRDIVL.w                                                  ; $c692 : $8d, $04, $42
 	sep #ACCU_8                                                  ; $c695 : $e2, $20
 	lda #$14.b                                                  ; $c697 : $a9, $14
-	sta $4206.w                                                  ; $c699 : $8d, $06, $42
+	sta WRDIVB.w                                                  ; $c699 : $8d, $06, $42
 	rep #ACCU_8                                                  ; $c69c : $c2, $20
 	pha                                                  ; $c69e : $48
 	pla                                                  ; $c69f : $68
@@ -10360,7 +10360,7 @@ br_01_c685:
 	clc                                                  ; $c6a4 : $18
 	adc #$ffff.w                                                  ; $c6a5 : $69, $ff, $ff
 	tdc                                                  ; $c6a8 : $7b
-	adc $4214.w                                                  ; $c6a9 : $6d, $14, $42
+	adc RDDIVL.w                                                  ; $c6a9 : $6d, $14, $42
 	phx                                                  ; $c6ac : $da
 	jsr $85dcea.l                                                  ; $c6ad : $22, $ea, $dc, $85
 	plx                                                  ; $c6b1 : $fa
@@ -12573,7 +12573,7 @@ br_01_d5d3:
 
 br_01_d5f0:
 	dea                                                  ; $d5f0 : $3a
-	sta $4200.w                                                  ; $d5f1 : $8d, $00, $42
+	sta NMITIMEN.w                                                  ; $d5f1 : $8d, $00, $42
 	dea                                                  ; $d5f4 : $3a
 	sta WRMPYA.w                                                  ; $d5f5 : $8d, $02, $42
 	clc                                                  ; $d5f8 : $18
@@ -16608,7 +16608,7 @@ GetCurrItemCount:
 	sta wCurrInvItemId.w                                                  ; $f05f : $8d, $f2, $09
 
 ; Loop through inventory items
-	ldx #_sizeof_wInventoryItemsAndCounts.w                                                  ; $f062 : $a2, $be, $00
+	ldx #_sizeof_wInventoryItemsAndCounts.w-2                                                  ; $f062 : $a2, $be, $00
 
 @nextInvSlot:
 ; If the item count is 0, check the next inv item

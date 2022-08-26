@@ -12605,7 +12605,7 @@ br_1f_bda2:
 	bpl br_1f_bda4                                                  ; $bda2 : $10, $00
 
 br_1f_bda4:
-	jsr $4200.w                                                  ; $bda4 : $20, $00, $42
+	jsr NMITIMEN.w                                                  ; $bda4 : $20, $00, $42
 	.db $00                                                  ; $bda7 : $00
 	lsr $f000.w, X                                                  ; $bda8 : $5e, $00, $f0
 	.db $00                                                  ; $bdab : $00
@@ -14856,7 +14856,7 @@ br_1f_c7ba:
 	.db $00                                                  ; $c7c3 : $00
 	bit $0200.w, X                                                  ; $c7c4 : $3c, $00, $02
 	.db $00                                                  ; $c7c7 : $00
-	rol $4200.w, X                                                  ; $c7c8 : $3e, $00, $42
+	rol NMITIMEN.w, X                                                  ; $c7c8 : $3e, $00, $42
 	.db $00                                                  ; $c7cb : $00
 	and $0000.w, X                                                  ; $c7cc : $3d, $00, $00
 	.db $00                                                  ; $c7cf : $00
@@ -15049,7 +15049,7 @@ br_1f_c86a:
 	.db $00                                                  ; $c8a1 : $00
 	.db $00                                                  ; $c8a2 : $00
 	.db $00                                                  ; $c8a3 : $00
-	bit $4200.w, X                                                  ; $c8a4 : $3c, $00, $42
+	bit NMITIMEN.w, X                                                  ; $c8a4 : $3c, $00, $42
 	.db $00                                                  ; $c8a7 : $00
 	wdm                                                  ; $c8a8 : $42
 	.db $00                                                  ; $c8a9 : $00
