@@ -4415,6 +4415,7 @@ br_10_9f11:
 
 
 .redef PZ_START = $a0e5
+.redef VAR_SELECTED_PIECE = $a0
 RoomPuzzleScriptC2h_WorldsHardest:
 	.dw @a105-PZ_START
 	.dw @a112-PZ_START
@@ -4435,11 +4436,12 @@ RoomPuzzleScriptC2h_WorldsHardest:
 
 .table byte, word
 @a105:
-	.row $00, @a218-PZ_START
-	.row $02, @a12d-PZ_START
-	.db $0f, $99, $00
-	.db $11, $af, $00
+	.row $00, @row0_00-PZ_START
+	.row $02, @row0_02-PZ_START
+	.row $0f, @row0_0f-PZ_START
+	.row $11, @row0_11-PZ_START
 	.db $ff
+
 
 @a112:
 	.row $00, @main-PZ_START
@@ -4454,841 +4456,854 @@ RoomPuzzleScriptC2h_WorldsHardest:
 	sbc $ffffff.l, X                                                  ; $a127 : $ff, $ff, $ff, $ff
 	.db $ff, $ff
 
-@a12d:
-	.db $0c, $08
-	ror $00                                                  ; $a12f : $66, $00
-	ply                                                  ; $a131 : $7a
-	and ($14, X)                                                  ; $a132 : $21, $14
-	ply                                                  ; $a134 : $7a
-	jsr $237a14.l                                                  ; $a135 : $22, $14, $7a, $23
-	trb $7a                                                  ; $a139 : $14, $7a
-	bit $14                                                  ; $a13b : $24, $14
-	ply                                                  ; $a13d : $7a
-	and $14                                                  ; $a13e : $25, $14
-	ply                                                  ; $a140 : $7a
-	rol $14                                                  ; $a141 : $26, $14
-	ply                                                  ; $a143 : $7a
-	and [$14]                                                  ; $a144 : $27, $14
-	ply                                                  ; $a146 : $7a
-	plp                                                  ; $a147 : $28
-	trb $02                                                  ; $a148 : $14, $02
-	rep #$0c.b                                                  ; $a14a : $c2, $0c
-	ora #$6d.b                                                  ; $a14c : $09, $6d
-	.db $00                                                  ; $a14e : $00
-	ply                                                  ; $a14f : $7a
-	and #$2c.b                                                  ; $a150 : $29, $2c
-	tsb $7a0a.w                                                  ; $a152 : $0c, $0a, $7a
-	.db $00                                                  ; $a155 : $00
-	ply                                                  ; $a156 : $7a
-	rol $3e, X                                                  ; $a157 : $36, $3e
-	ply                                                  ; $a159 : $7a
-	eor $5e                                                  ; $a15a : $45, $5e
-	ply                                                  ; $a15c : $7a
-	mvp $69, $53                                                  ; $a15d : $44, $53, $69
-	nop                                                  ; $a160 : $ea
-	rol                                                  ; $a161 : $2a
-	adc #$eb.b                                                  ; $a162 : $69, $eb
-	pld                                                  ; $a164 : $2b
-	adc #$ec.b                                                  ; $a165 : $69, $ec
-	bit $ed69.w                                                  ; $a167 : $2c, $69, $ed
-	and $ee69.w                                                  ; $a16a : $2d, $69, $ee
-	rol $ef69.w                                                  ; $a16d : $2e, $69, $ef
-	and $30f069.l                                                  ; $a170 : $2f, $69, $f0, $30
-	adc #$f1.b                                                  ; $a174 : $69, $f1
-	and ($69), Y                                                  ; $a176 : $31, $69
-	sbc ($32)                                                  ; $a178 : $f2, $32
-	adc #$f3.b                                                  ; $a17a : $69, $f3
-	and ($00, S), Y                                                  ; $a17c : $33, $00
-	ora ($0a, X)                                                  ; $a17e : $01, $0a
-	tax                                                  ; $a180 : $aa
-	.db $00                                                  ; $a181 : $00
-	tsx                                                  ; $a182 : $ba
-	ora ($40, X)                                                  ; $a183 : $01, $40
-	tsx                                                  ; $a185 : $ba
-	cop $41.b                                                  ; $a186 : $02, $41
-	tsx                                                  ; $a188 : $ba
-	ora $42, S                                                  ; $a189 : $03, $42
-	tsx                                                  ; $a18b : $ba
-	tsb $43                                                  ; $a18c : $04, $43
-	.db $00                                                  ; $a18e : $00
-	lda #$ff.b                                                  ; $a18f : $a9, $ff
-	inc $02, X                                                  ; $a191 : $f6, $02
-	.db $00                                                  ; $a193 : $00
-	tsb $bb34.w                                                  ; $a194 : $0c, $34, $bb
-	.db $00                                                  ; $a197 : $00
-	ora ($0a, X)                                                  ; $a198 : $01, $0a
-	tyx                                                  ; $a19a : $bb
-	.db $00                                                  ; $a19b : $00
-	ldx $fb00.w, Y                                                  ; $a19c : $be, $00, $fb
-	.db $10, $00
+
+@row0_02:
+	JUMP_IF_FLAG_CLEAR, $08
+		.dw @_0066-PZ_START
+	.db $7a, $21, $14
+	.db $7a, $22, $14
+	.db $7a, $23, $14
+	.db $7a, $24, $14
+	.db $7a, $25, $14
+	.db $7a, $26, $14
+	.db $7a, $27, $14
+	.db $7a, $28, $14
+	.db $02, $c2
+
+@_0066: ; $0066, $8214b
+	JUMP_IF_FLAG_CLEAR, $09
+		.dw @_006d-PZ_START
+	.db $7a, $29, $2c
+
+@_006d: ; $006d, $82152
+	JUMP_IF_FLAG_CLEAR, $0a
+		.dw @_007a-PZ_START
+	.db $7a, $36, $3e
+	.db $7a, $45, $5e
+	.db $7a, $44, $53
+
+@_007a: ; $007a, $8215f
+	MOV_VAR_VAR, $ea, $2a
+	MOV_VAR_VAR, $eb, $2b
+	MOV_VAR_VAR, $ec, $2c
+	MOV_VAR_VAR, $ed, $2d
+	MOV_VAR_VAR, $ee, $2e
+	MOV_VAR_VAR, $ef, $2f
+	MOV_VAR_VAR, $f0, $30
+	MOV_VAR_VAR, $f1, $31
+	MOV_VAR_VAR, $f2, $32
+	MOV_VAR_VAR, $f3, $33
+	HALT
+
+
+@row0_0f:
+	JUMP_IF_FLAG_SET, $0a
+		.dw @_00aa-PZ_START
+	.db $ba, $01, $40
+	.db $ba, $02, $41
+	.db $ba, $03, $42
+	.db $ba, $04, $43
+	HALT
+
+@_00aa: ; $00aa, $8218f
+	CALL $ff
+		.dw Sub_823db-PZ_START
+	HALT
+
+
+@row0_11:
+	JUMP_IF_FLAG_CLEAR, $34
+		.dw @halt_00bb-PZ_START
+	JUMP_IF_FLAG_SET, $0a
+		.dw @halt_00bb-PZ_START
+	.db $be, $00, $fb
+	.db $10
+
+@halt_00bb: ; $00bb, $821a0
+	HALT
+
 
 @main:
-	.db $01, $0a ; jump if flag set
-		.dw @done-PZ_START
-	.db $0c, $34 ; jump if flag clear
-		.dw @done-PZ_START
-	.db $35, $a0, $00 ; jump if selected piece == 0
-		.dw @selectedPieceIs0-PZ_START
-	.db $35, $a0, $01
+	JUMP_IF_FLAG_SET, $0a
+		.dw @halt_0132-PZ_START
+	JUMP_IF_FLAG_CLEAR, $34
+		.dw @halt_0132-PZ_START
+	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $00
+		.dw @_00f8-PZ_START
+	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $01
 		.dw @_00fe-PZ_START
-	.db $35, $a0, $02
+	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $02
 		.dw @_0104-PZ_START
-	.db $35, $a0, $03
+	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $03
 		.dw @_010a-PZ_START
-	.db $35, $a0, $04
+	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $04
 		.dw @_0110-PZ_START
-	.db $35, $a0, $05
-		.dw @selectedPieceIs5-PZ_START
-	.db $35, $a0, $06
-		.dw @selectedPieceIs6-PZ_START
-	.db $35, $a0, $07
+	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $05
+		.dw @_0116-PZ_START
+	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $06
+		.dw @_011c-PZ_START
+	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $07
 		.dw @_0122-PZ_START
-	.db $35, $a0, $08
-		.dw @selectedPieceIs8-PZ_START
+	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $08
+		.dw @_0128-PZ_START
 
-@selectedPieceIs9:
-	.db $34, $a0, $00
-	.db $01, $2a
+@_00f1: ; $00f1, $821d6
+	SET_VAR, VAR_SELECTED_PIECE, $00
+	JUMP_IF_FLAG_SET, $2a
 		.dw @_012e-PZ_START
 
-@selectedPieceIs0:
-	.db $32, $a0
-	.db $01, $2b
+@_00f8: ; $00f8, $821dd
+	INC_VAR, VAR_SELECTED_PIECE
+	JUMP_IF_FLAG_SET, $2b
 		.dw @_012e-PZ_START
 
-@_00fe:
-	.db $32, $a0
-	.db $01, $2c
+@_00fe: ; $00fe, $821e3
+	INC_VAR, VAR_SELECTED_PIECE
+	JUMP_IF_FLAG_SET, $2c
 		.dw @_012e-PZ_START
 
-@_0104:
-	.db $32, $a0
-	.db $01, $2d
+@_0104: ; $0104, $821e9
+	INC_VAR, VAR_SELECTED_PIECE
+	JUMP_IF_FLAG_SET, $2d
 		.dw @_012e-PZ_START
 
-@_010a:
-	.db $32, $a0
-	.db $01, $2e
+@_010a: ; $010a, $821ef
+	INC_VAR, VAR_SELECTED_PIECE
+	JUMP_IF_FLAG_SET, $2e
 		.dw @_012e-PZ_START
 
-@_0110:
-	.db $32, $a0
-	.db $01, $2f
+@_0110: ; $0110, $821f5
+	INC_VAR, VAR_SELECTED_PIECE
+	JUMP_IF_FLAG_SET, $2f
 		.dw @_012e-PZ_START
 
-@selectedPieceIs5:
-	.db $32, $a0 ; inc var
-	.db $01, $30
+@_0116: ; $0116, $821fb
+	INC_VAR, VAR_SELECTED_PIECE
+	JUMP_IF_FLAG_SET, $30
 		.dw @_012e-PZ_START
 
-@selectedPieceIs6:
-	.db $32, $a0
-	.db $01, $31
+@_011c: ; $011c, $82201
+	INC_VAR, VAR_SELECTED_PIECE
+	JUMP_IF_FLAG_SET, $31
 		.dw @_012e-PZ_START
 
-@_0122:
-	.db $32, $a0
-	.db $01, $32
+@_0122: ; $0122, $82207
+	INC_VAR, VAR_SELECTED_PIECE
+	JUMP_IF_FLAG_SET, $32
 		.dw @_012e-PZ_START
 
-@selectedPieceIs8:
-	.db $32, $a0
-	.db $0c, $33
-		.dw @selectedPieceIs9-$a0e5
+@_0128: ; $0128, $8220d
+	INC_VAR, VAR_SELECTED_PIECE
+	JUMP_IF_FLAG_CLEAR, $33
+		.dw @_00f1-$a0e5
 
-@_012e:
-	.db $a9, $ff ; call?
-		.dw @sub_a6a2-PZ_START
+@_012e: ; $012e, $82213
+	CALL $ff
+		.dw Sub_826a2-PZ_START
 
-@done:
-	.db $00
-
-
-@a218:
-	.db $01, $0a
-		.dw $0164
-	.db $0c, $34
-		.dw $013f
-	.db $01, $35
-		.dw @a2d3-PZ_START
-
-;
-	.db $13                                                  ; $a224 :  $13
-	bit $1e, X                                                  ; $a225 : $34, $1e
-	stz $01                                                  ; $a227 : $64, $01
-	adc $01, S                                                  ; $a229 : $63, $01
-	tyx                                                  ; $a22b : $bb
-	ora ($0b, X)                                                  ; $a22c : $01, $0b
-
-	ora $377a.w, Y                                                  ; $a22e : $19, $7a, $37
-	and $3508.w, X                                                  ; $a231 : $3d, $08, $35
-	ora ($1e), Y                                                  ; $a234 : $11, $1e
-	ldy $00, X                                                  ; $a236 : $b4, $00
-	.db $b0, $01                                                  ; $a238 : $b0, $01
-
-	ora ($50), Y                                                  ; $a23a : $11, $50
-	lda #$ff.b                                                  ; $a23c : $a9, $ff
-	lda $340804.l, X                                                  ; $a23e : $bf, $04, $08, $34
-	asl                                                  ; $a242 : $0a
-	sbc ($00), Y                                                  ; $a243 : $f1, $00
-	asl                                                  ; $a245 : $0a
-	adc $01, S                                                  ; $a246 : $63, $01
-	and #$6d.b                                                  ; $a248 : $29, $6d
-	and #$71.b                                                  ; $a24a : $29, $71
-	ora ($08, X)                                                  ; $a24c : $01, $08
-	ora #$06.b                                                  ; $a24e : $09, $06
-	and #$3c.b                                                  ; $a250 : $29, $3c
-	ora ($0a), Y                                                  ; $a252 : $11, $0a
-	ina                                                  ; $a254 : $1a
-	asl $01                                                  ; $a255 : $06, $01
-	php                                                  ; $a257 : $08
-	lda $01                                                  ; $a258 : $a5, $01
-	and [$21]                                                  ; $a25a : $27, $21
-	lda ($ff, X)                                                  ; $a25c : $a1, $ff
-	pha                                                  ; $a25e : $48
-	asl $27                                                  ; $a25f : $06, $27
-	jsr $48ffa2.l                                                  ; $a261 : $22, $a2, $ff, $48
-	asl $27                                                  ; $a265 : $06, $27
-	and $a3, S                                                  ; $a267 : $23, $a3
-	sbc $270648.l, X                                                  ; $a269 : $ff, $48, $06, $27
-	bit $a4                                                  ; $a26d : $24, $a4
-	sbc $270648.l, X                                                  ; $a26f : $ff, $48, $06, $27
-	and $a5                                                  ; $a273 : $25, $a5
-	sbc $270648.l, X                                                  ; $a275 : $ff, $48, $06, $27
-	rol $a6                                                  ; $a279 : $26, $a6
-	sbc $270648.l, X                                                  ; $a27b : $ff, $48, $06, $27
-	and [$a7]                                                  ; $a27f : $27, $a7
-	sbc $270648.l, X                                                  ; $a281 : $ff, $48, $06, $27
-	plp                                                  ; $a285 : $28
-	tay                                                  ; $a286 : $a8
-	sbc $0f0648.l, X                                                  ; $a287 : $ff, $48, $06, $0f
-	and ($c9, X)                                                  ; $a28b : $21, $c9
-	ora ($0f, X)                                                  ; $a28d : $01, $0f
-	jsr $0f01c9.l                                                  ; $a28f : $22, $c9, $01, $0f
-	and $c9, S                                                  ; $a293 : $23, $c9
-	ora ($0f, X)                                                  ; $a295 : $01, $0f
-	bit $c9                                                  ; $a297 : $24, $c9
-	ora ($0f, X)                                                  ; $a299 : $01, $0f
-	and $c9                                                  ; $a29b : $25, $c9
-	ora ($0f, X)                                                  ; $a29d : $01, $0f
-	rol $c9                                                  ; $a29f : $26, $c9
-	ora ($0f, X)                                                  ; $a2a1 : $01, $0f
-	and [$c9]                                                  ; $a2a3 : $27, $c9
-	ora ($0f, X)                                                  ; $a2a5 : $01, $0f
-	plp                                                  ; $a2a7 : $28
-	cmp #$01.b                                                  ; $a2a8 : $c9, $01
-	cop $c2.b                                                  ; $a2aa : $02, $c2
-	php                                                  ; $a2ac : $08
-	php                                                  ; $a2ad : $08
-	ora ($0a, X)                                                  ; $a2ae : $01, $0a
-	sbc $1301.w                                                  ; $a2b0 : $ed, $01, $13
-	rts                                                  ; $a2b3 : $60
+@halt_0132: ; $0132, $82217
+	HALT
 
 
-	asl $01ed.w, X                                                  ; $a2b4 : $1e, $ed, $01
-	cpx $6901.w                                                  ; $a2b7 : $ec, $01, $69
-	cpx #$40.b                                                  ; $a2ba : $e0, $40
-	adc #$e1.b                                                  ; $a2bc : $69, $e1
-	bit $028e.w, X                                                  ; $a2be : $3c, $8e, $02
-	sbc ($e0, X)                                                  ; $a2c1 : $e1, $e0
-	cop $02.b                                                  ; $a2c3 : $02, $02
-	adc #$e0.b                                                  ; $a2c5 : $69, $e0
-	nop                                                  ; $a2c7 : $ea
-	pha                                                  ; $a2c8 : $48
-	cpx #$03.b                                                  ; $a2c9 : $e0, $03
-	ply                                                  ; $a2cb : $7a
-	cpx #$52.b                                                  ; $a2cc : $e0, $52
-	asl                                                  ; $a2ce : $0a
-	cpx $2901.w                                                  ; $a2cf : $ec, $01, $29
-	.db $00                                                  ; $a2d2 : $00
+@row0_00:
+	JUMP_IF_FLAG_SET, $0a
+		.dw @_0164-PZ_START
+	JUMP_IF_FLAG_CLEAR, $34
+		.dw @_013f-PZ_START
+	JUMP_IF_FLAG_SET, $35
+		.dw @_01ee-PZ_START
 
-@a2d3:
-	.db $36, $a0, $00
+@_013f: ; $013f, $82224
+	.db $13, $34
+	.db $1e
+		.dw @_0164-PZ_START
+		.dw @_0163-PZ_START
+	.db $bb, $01
+	.db $0b, $19
+	.db $7a, $37, $3d
+	.db $08, $35
+	.db $11, $1e
+	.db $b4, $00, $b0, $01
+	.db $11, $50
+	CALL $ff
+		.dw Sub_825a4-PZ_START
+	.db $08, $34
+	.db $0a
+		.dw @_00f1-$a0e5
+	.db $0a
+		.dw @_0163-PZ_START
+
+@_0163: ; $0163, $82248
+	.db $29
+
+@_0164: ; $0164, $82249
+	.db $6d, $29
+		.dw @_0171-PZ_START
+	.db $08, $09
+	.db $06, $29, $3c
+	.db $11, $0a
+	.db $1a, $06
+
+@_0171: ; $0171, $82256
+	JUMP_IF_FLAG_SET, $08
+		.dw @_01a5-PZ_START
+	.db $27, $21, $a1, $ff
+		.dw Sub_8272d-PZ_START
+	.db $27, $22, $a2, $ff
+		.dw Sub_8272d-PZ_START
+	.db $27, $23, $a3, $ff
+		.dw Sub_8272d-PZ_START
+	.db $27, $24, $a4, $ff
+		.dw Sub_8272d-PZ_START
+	.db $27, $25, $a5, $ff
+		.dw Sub_8272d-PZ_START
+	.db $27, $26, $a6, $ff
+		.dw Sub_8272d-PZ_START
+	.db $27, $27, $a7, $ff
+		.dw Sub_8272d-PZ_START
+	.db $27, $28, $a8, $ff
+		.dw Sub_8272d-PZ_START
+
+@_01a5: ; $01a5, $8228a
+	.db $0f, $21
+		.dw @_01c9-PZ_START
+	.db $0f, $22
+		.dw @_01c9-PZ_START
+	.db $0f, $23
+		.dw @_01c9-PZ_START
+	.db $0f, $24
+		.dw @_01c9-PZ_START
+	.db $0f, $25
+		.dw @_01c9-PZ_START
+	.db $0f, $26
+		.dw @_01c9-PZ_START
+	.db $0f, $27
+		.dw @_01c9-PZ_START
+	.db $0f, $28
+		.dw @_01c9-PZ_START
+	.db $02, $c2
+	.db $08, $08
+
+@_01c9: ; $01c9, $822ae
+	JUMP_IF_FLAG_SET, $0a
+		.dw @halt_01ed-PZ_START
+	.db $13, $60
+	.db $1e
+		.dw @halt_01ed-PZ_START
+		.dw @_01ec-PZ_START
+	MOV_VAR_VAR, $e0, $40
+	MOV_VAR_VAR, $e1, $3c
+	.db $8e, $02, $e1, $e0, $02, $02
+	MOV_VAR_VAR, $e0, $ea
+	SUB_GROUP1, $e0, $03
+	.db $7a, $e0, $52
+	.db $0a
+		.dw @_01ec-PZ_START
+
+@_01ec: ; $01ec, $822d1
+	.db $29
+
+@halt_01ed: ; $01ed, $822d2
+	HALT
+
+@_01ee: ; $01ee, $822d3
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $00
 		.dw @_01f9-PZ_START
-	.db $a9, $ea, $2a, $ff
-		.dw $0303
+	CALL $ea, $2a, $ff
+		.dw Sub_823e8-PZ_START
 
-@_01f9:
-	.db $36, $a0, $01
+@_01f9: ; $01f9, $822de
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $01
 		.dw @_0204-PZ_START
-	.db $a9, $eb, $2b, $ff
-		.dw $037a
+	CALL $eb, $2b, $ff
+		.dw Sub_8245f-PZ_START
 
-@_0204:
-	.db $36, $a0, $02
+@_0204: ; $0204, $822e9
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $02
 		.dw @_020f-PZ_START
-	.db $a9, $ec, $2c, $ff
-		.dw $037a
+	CALL $ec, $2c, $ff
+		.dw Sub_8245f-PZ_START
 
-@_020f:
-	.db $36, $a0, $03
+@_020f: ; $020f, $822f4
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $03
 		.dw @_021a-PZ_START
-	.db $a9, $ed, $2d, $ff
-		.dw $037a
+	CALL $ed, $2d, $ff
+		.dw Sub_8245f-PZ_START
 
-@_021a:
-	.db $36, $a0, $04
+@_021a: ; $021a, $822ff
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $04
 		.dw @_0225-PZ_START
-	.db $a9, $ee, $2e, $ff
-		.dw $037a
+	CALL $ee, $2e, $ff
+		.dw Sub_8245f-PZ_START
 
-@_0225:
-	.db $36, $a0, $05
-		.dw $0230
-	.db $a9, $ef, $2f, $ff
-		.dw @sub_a4fd-PZ_START
-	
-;
-	rol $a0, X                                                  ; $a315 : $36, $a0
-	asl $3b                                                  ; $a317 : $06, $3b
-	cop $a9.b                                                  ; $a319 : $02, $a9
-	.db $f0, $30                                                  ; $a31b : $f0, $30
+@_0225: ; $0225, $8230a
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $05
+		.dw @_0230-PZ_START
+	CALL $ef, $2f, $ff
+		.dw Sub_824fd-PZ_START
 
-	sbc $360418.l, X                                                  ; $a31d : $ff, $18, $04, $36
-	ldy #$07.b                                                  ; $a321 : $a0, $07
-	lsr $02                                                  ; $a323 : $46, $02
-	lda #$f1.b                                                  ; $a325 : $a9, $f1
-	and ($ff), Y                                                  ; $a327 : $31, $ff
-	clc                                                  ; $a329 : $18
-	tsb $36                                                  ; $a32a : $04, $36
-	ldy #$08.b                                                  ; $a32c : $a0, $08
-	eor ($02), Y                                                  ; $a32e : $51, $02
-	lda #$f2.b                                                  ; $a330 : $a9, $f2
-	and ($ff)                                                  ; $a332 : $32, $ff
-	clc                                                  ; $a334 : $18
-	tsb $36                                                  ; $a335 : $04, $36
-	ldy #$09.b                                                  ; $a337 : $a0, $09
-	jmp $f3a902.l                                                  ; $a339 : $5c, $02, $a9, $f3
+@_0230: ; $0230, $82315
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $06
+		.dw @_023b-PZ_START
+	CALL $f0, $30, $ff
+		.dw Sub_824fd-PZ_START
 
+@_023b: ; $023b, $82320
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $07
+		.dw @_0246-PZ_START
+	CALL $f1, $31, $ff
+		.dw Sub_824fd-PZ_START
 
-	and ($ff, S), Y                                                  ; $a33d : $33, $ff
-	cmp #$03.b                                                  ; $a33f : $c9, $03
-	lda #$ff.b                                                  ; $a341 : $a9, $ff
-	lda $a29d04.l, X                                                  ; $a343 : $bf, $04, $9d, $a2
-	nop                                                  ; $a347 : $ea
-	.db $00                                                  ; $a348 : $00
-	rol $a2, X                                                  ; $a349 : $36, $a2
-	and $9d02e0.l                                                  ; $a34b : $2f, $e0, $02, $9d
-	ldx #$ea.b                                                  ; $a34f : $a2, $ea
-	rti                                                  ; $a351 : $40
+@_0246: ; $0246, $8232b
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $08
+		.dw @_0251-PZ_START
+	CALL $f2, $32, $ff
+		.dw Sub_824fd-PZ_START
 
+@_0251: ; $0251, $82336
+	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $09
+		.dw @_025c-PZ_START
+	CALL $f3, $33, $ff
+		.dw Sub_824ae-PZ_START
 
-	rol $a2, X                                                  ; $a352 : $36, $a2
-	ora $bb02e0.l                                                  ; $a354 : $0f, $e0, $02, $bb
-	cop $11.b                                                  ; $a358 : $02, $11
-	.db $f0, $11                                                  ; $a35a : $f0, $11
+@_025c: ; $025c, $82341
+	CALL $ff
+		.dw Sub_825a4-PZ_START
+	.db $9d, $a2, $ea, $00
+	JUMP_IF_VAR_NE, $a2, $2f
+		.dw @halt_02e0-PZ_START
+	.db $9d, $a2, $ea, $40
+	JUMP_IF_VAR_NE, $a2, $0f
+		.dw @halt_02e0-PZ_START
+	.db $bb, $02
+	.db $11, $f0
+	.db $11, $f0
+	.db $11, $50
+	CALL $f3, $5c, $56, $ff
+		.dw Sub_823c6-PZ_START
+	CALL $eb, $5b, $54, $ff
+		.dw Sub_823c6-PZ_START
+	CALL $ec, $5b, $54, $ff
+		.dw Sub_823c6-PZ_START
+	CALL $ed, $5b, $54, $ff
+		.dw Sub_823c6-PZ_START
+	CALL $ee, $5b, $54, $ff
+		.dw Sub_823c6-PZ_START
+	CALL $ef, $5d, $58, $ff
+		.dw Sub_823c6-PZ_START
+	CALL $f0, $5d, $58, $ff
+		.dw Sub_823c6-PZ_START
+	CALL $f1, $5d, $58, $ff
+		.dw Sub_823c6-PZ_START
+	CALL $f2, $5d, $58, $ff
+		.dw Sub_823c6-PZ_START
+	.db $7a, $45, $5e
+	.db $7a, $44, $53
+	.db $11, $01
+	.db $b4, $00, $50, $01
+	.db $11, $50
+	.db $b5
+	.db $0b, $19
+	.db $7a, $36, $3e
+	.db $7a, $37, $3f
+	CALL $ff
+		.dw Sub_823db-PZ_START
+	.db $8f, $01
+	.db $8f, $02
+	.db $8f, $03
+	.db $8f, $04
+	.db $08, $0a
+	.db $bb, $03
 
-	.db $f0, $11                                                  ; $a35c : $f0, $11
-
-	.db $50, $a9
-
-	sbc ($5c, S), Y                                                  ; $a360 : $f3, $5c
-	lsr $ff, X                                                  ; $a362 : $56, $ff
-	sbc ($02, X)                                                  ; $a364 : $e1, $02
-	lda #$eb.b                                                  ; $a366 : $a9, $eb
-	tcd                                                  ; $a368 : $5b
-	mvn $e1, $ff                                                  ; $a369 : $54, $ff, $e1
-	cop $a9.b                                                  ; $a36c : $02, $a9
-	cpx $545b.w                                                  ; $a36e : $ec, $5b, $54
-	sbc $a902e1.l, X                                                  ; $a371 : $ff, $e1, $02, $a9
-	sbc $545b.w                                                  ; $a375 : $ed, $5b, $54
-	sbc $a902e1.l, X                                                  ; $a378 : $ff, $e1, $02, $a9
-	inc $545b.w                                                  ; $a37c : $ee, $5b, $54
-	sbc $a902e1.l, X                                                  ; $a37f : $ff, $e1, $02, $a9
-	sbc $ff585d.l                                                  ; $a383 : $ef, $5d, $58, $ff
-	sbc ($02, X)                                                  ; $a387 : $e1, $02
-	lda #$f0.b                                                  ; $a389 : $a9, $f0
-	eor $ff58.w, X                                                  ; $a38b : $5d, $58, $ff
-	sbc ($02, X)                                                  ; $a38e : $e1, $02
-	lda #$f1.b                                                  ; $a390 : $a9, $f1
-	eor $ff58.w, X                                                  ; $a392 : $5d, $58, $ff
-	sbc ($02, X)                                                  ; $a395 : $e1, $02
-	lda #$f2.b                                                  ; $a397 : $a9, $f2
-	eor $ff58.w, X                                                  ; $a399 : $5d, $58, $ff
-	sbc ($02, X)                                                  ; $a39c : $e1, $02
-	ply                                                  ; $a39e : $7a
-	eor $5e                                                  ; $a39f : $45, $5e
-	ply                                                  ; $a3a1 : $7a
-	mvp $11, $53                                                  ; $a3a2 : $44, $53, $11
-	ora ($b4, X)                                                  ; $a3a5 : $01, $b4
-	.db $00                                                  ; $a3a7 : $00
-	.db $50, $01                                                  ; $a3a8 : $50, $01
-
-	ora ($50), Y                                                  ; $a3aa : $11, $50
-	lda $0b, X                                                  ; $a3ac : $b5, $0b
-	ora $367a.w, Y                                                  ; $a3ae : $19, $7a, $36
-	rol $377a.w, X                                                  ; $a3b1 : $3e, $7a, $37
-	and $f6ffa9.l, X                                                  ; $a3b4 : $3f, $a9, $ff, $f6
-	cop $8f.b                                                  ; $a3b8 : $02, $8f
-	ora ($8f, X)                                                  ; $a3ba : $01, $8f
-	cop $8f.b                                                  ; $a3bc : $02, $8f
-	ora $8f, S                                                  ; $a3be : $03, $8f
-	tsb $08                                                  ; $a3c0 : $04, $08
-	asl                                                  ; $a3c2 : $0a
-	tyx                                                  ; $a3c3 : $bb
-	ora $00, S                                                  ; $a3c4 : $03, $00
-	bit $be, X                                                  ; $a3c6 : $34, $be
-	tsb $0e                                                  ; $a3c8 : $04, $0e
-	jsr ($11fe.w, X)                                                  ; $a3ca : $fc, $fe, $11
-	ora ($0e, X)                                                  ; $a3cd : $01, $0e
-	jsr ($11fd.w, X)                                                  ; $a3cf : $fc, $fd, $11
-	ora ($33, X)                                                  ; $a3d2 : $01, $33
-	ldx $be36.w, Y                                                  ; $a3d4 : $be, $36, $be
-	.db $00                                                  ; $a3d7 : $00
-	cpx $02                                                  ; $a3d8 : $e4, $02
-	tax                                                  ; $a3da : $aa
-	tsx                                                  ; $a3db : $ba
-	ora ($38, X)                                                  ; $a3dc : $01, $38
-	tsx                                                  ; $a3de : $ba
-	cop $39.b                                                  ; $a3df : $02, $39
-	tsx                                                  ; $a3e1 : $ba
-	ora $3a, S                                                  ; $a3e2 : $03, $3a
-	tsx                                                  ; $a3e4 : $ba
-	tsb $3b                                                  ; $a3e5 : $04, $3b
-	tax                                                  ; $a3e7 : $aa
-	lda #$fc.b                                                  ; $a3e8 : $a9, $fc
-	sbc $fcff.w, X                                                  ; $a3ea : $fd, $ff, $fc
-	tsb $0d                                                  ; $a3ed : $04, $0d
-	tsb $1b                                                  ; $a3ef : $04, $1b
-	ora $0d, S                                                  ; $a3f1 : $03, $0d
-	cop $21.b                                                  ; $a3f3 : $02, $21
-	ora $0d, S                                                  ; $a3f5 : $03, $0d
-	.db $00                                                  ; $a3f7 : $00
-	and [$03]                                                  ; $a3f8 : $27, $03
-	and $a5, X                                                  ; $a3fa : $35, $a5
-	sbc $aa032d.l, X                                                  ; $a3fc : $ff, $2d, $03, $aa
-	and $a2, X                                                  ; $a400 : $35, $a2
-	sbc $aa032d.l, X                                                  ; $a402 : $ff, $2d, $03, $aa
-	and $a3, X                                                  ; $a406 : $35, $a3
-	sbc $aa032d.l, X                                                  ; $a408 : $ff, $2d, $03, $aa
-	and $a4, X                                                  ; $a40c : $35, $a4
-	sbc $aa032d.l, X                                                  ; $a40e : $ff, $2d, $03, $aa
-	adc #$f4.b                                                  ; $a412 : $69, $f4
-	jsr ($f448.w, X)                                                  ; $a414 : $fc, $48, $f4
-	cop $69.b                                                  ; $a417 : $02, $69
-	inc $fc, X                                                  ; $a419 : $f6, $fc
-	wdm                                                  ; $a41b : $42
-	inc $02, X                                                  ; $a41c : $f6, $02
-	adc #$f5.b                                                  ; $a41e : $69, $f5
-	inc $48, X                                                  ; $a420 : $f6, $48
-	sbc $02, X                                                  ; $a422 : $f5, $02
-	lda #$fc.b                                                  ; $a424 : $a9, $fc
-	eor [$ff]                                                  ; $a426 : $47, $ff
-	eor ($04, S), Y                                                  ; $a428 : $53, $04
-	lda #$fc.b                                                  ; $a42a : $a9, $fc
-	eor $f4                                                  ; $a42c : $45, $f4
-	sbc $a90489.l, X                                                  ; $a42e : $ff, $89, $04, $a9
-	jsr ($f546.w, X)                                                  ; $a432 : $fc, $46, $f5
-	sbc $a90489.l, X                                                  ; $a435 : $ff, $89, $04, $a9
-	jsr ($f648.w, X)                                                  ; $a439 : $fc, $48, $f6
-	sbc $680489.l, X                                                  ; $a43c : $ff, $89, $04, $68
-	lda $47fca9.l, X                                                  ; $a440 : $bf, $a9, $fc, $47
-	sbc $a90453.l, X                                                  ; $a444 : $ff, $53, $04, $a9
-	jsr ($f445.w, X)                                                  ; $a448 : $fc, $45, $f4
-	sbc $a90489.l, X                                                  ; $a44b : $ff, $89, $04, $a9
-	jsr ($f546.w, X)                                                  ; $a44f : $fc, $46, $f5
-	sbc $a90489.l, X                                                  ; $a452 : $ff, $89, $04, $a9
-	jsr ($f648.w, X)                                                  ; $a456 : $fc, $48, $f6
-	sbc $680489.l, X                                                  ; $a459 : $ff, $89, $04, $68
-	lda $fca9aa.l, X                                                  ; $a45d : $bf, $aa, $a9, $fc
-	sbc $0aff.w, X                                                  ; $a461 : $fd, $ff, $0a
-	ora $0d                                                  ; $a464 : $05, $0d
-	tsb $92                                                  ; $a466 : $04, $92
-	ora $0d, S                                                  ; $a468 : $03, $0d
-	cop $98.b                                                  ; $a46a : $02, $98
-	ora $0d, S                                                  ; $a46c : $03, $0d
-	.db $00                                                  ; $a46e : $00
-	stz $3503.w, X                                                  ; $a46f : $9e, $03, $35
-	lda $ff                                                  ; $a472 : $a5, $ff
-	ldy $03                                                  ; $a474 : $a4, $03
-	tax                                                  ; $a476 : $aa
-	and $a2, X                                                  ; $a477 : $35, $a2
-	sbc $aa03a4.l, X                                                  ; $a479 : $ff, $a4, $03, $aa
-	and $a3, X                                                  ; $a47d : $35, $a3
-	sbc $aa03a4.l, X                                                  ; $a47f : $ff, $a4, $03, $aa
-	and $a4, X                                                  ; $a483 : $35, $a4
-	sbc $aa03a4.l, X                                                  ; $a485 : $ff, $a4, $03, $aa
-	adc #$f4.b                                                  ; $a489 : $69, $f4
-	jsr ($f448.w, X)                                                  ; $a48b : $fc, $48, $f4
-	cop $a9.b                                                  ; $a48e : $02, $a9
-	jsr ($ff41.w, X)                                                  ; $a490 : $fc, $41, $ff
-	eor ($04, S), Y                                                  ; $a493 : $53, $04
-	lda #$fc.b                                                  ; $a495 : $a9, $fc
-	rti                                                  ; $a497 : $40
+@halt_02e0: ; $02e0, $823c5
+	HALT
 
 
-	pea $89ff.w                                                  ; $a498 : $f4, $ff, $89
-	tsb $68                                                  ; $a49b : $04, $68
-	lda $41fca9.l, X                                                  ; $a49d : $bf, $a9, $fc, $41
-	sbc $a90453.l, X                                                  ; $a4a1 : $ff, $53, $04, $a9
-	jsr ($f440.w, X)                                                  ; $a4a5 : $fc, $40, $f4
-	sbc $680489.l, X                                                  ; $a4a8 : $ff, $89, $04, $68
-	lda $fca9aa.l, X                                                  ; $a4ac : $bf, $aa, $a9, $fc
-	sbc $1bff.w, X                                                  ; $a4b0 : $fd, $ff, $1b
-	ora $0d                                                  ; $a4b3 : $05, $0d
-	tsb $e1                                                  ; $a4b5 : $04, $e1
-	ora $0d, S                                                  ; $a4b7 : $03, $0d
-	cop $e7.b                                                  ; $a4b9 : $02, $e7
-	ora $0d, S                                                  ; $a4bb : $03, $0d
-	.db $00                                                  ; $a4bd : $00
-	sbc $3503.w                                                  ; $a4be : $ed, $03, $35
-	lda $ff                                                  ; $a4c1 : $a5, $ff
-	sbc ($03, S), Y                                                  ; $a4c3 : $f3, $03
-	tax                                                  ; $a4c5 : $aa
-	and $a2, X                                                  ; $a4c6 : $35, $a2
-	sbc $aa03f3.l, X                                                  ; $a4c8 : $ff, $f3, $03, $aa
-	and $a3, X                                                  ; $a4cc : $35, $a3
-	sbc $aa03f3.l, X                                                  ; $a4ce : $ff, $f3, $03, $aa
-	and $a4, X                                                  ; $a4d2 : $35, $a4
-	sbc $aa03f3.l, X                                                  ; $a4d4 : $ff, $f3, $03, $aa
-	adc #$f4.b                                                  ; $a4d8 : $69, $f4
-	jsr ($f442.w, X)                                                  ; $a4da : $fc, $42, $f4
-	cop $a9.b                                                  ; $a4dd : $02, $a9
-	jsr ($ff43.w, X)                                                  ; $a4df : $fc, $43, $ff
-	eor ($04, S), Y                                                  ; $a4e2 : $53, $04
-	lda #$fc.b                                                  ; $a4e4 : $a9, $fc
-	mvp $ff, $f4                                                  ; $a4e6 : $44, $f4, $ff
-	bit #$04.b                                                  ; $a4e9 : $89, $04
-	pla                                                  ; $a4eb : $68
-	lda $43fca9.l, X                                                  ; $a4ec : $bf, $a9, $fc, $43
-	sbc $a90453.l, X                                                  ; $a4f0 : $ff, $53, $04, $a9
-	jsr ($f444.w, X)                                                  ; $a4f4 : $fc, $44, $f4
-	sbc $680489.l, X                                                  ; $a4f7 : $ff, $89, $04, $68
-	.db $bf, $aa
+Sub_823c6: ; $02e1, $823c6
+	SET_VAR, $be, $04
 
-@sub_a4fd:
-	.db $a9, $fc, $fd, $ff
-		.dw @sub_a611-PZ_START
-	.db $0d, $04
+@_02e4: ; $02e4, $823c9
+	.db $0e, $fc, $fe
+	.db $11, $01
+	.db $0e, $fc, $fd
+	.db $11, $01
+	DEC_VAR, $be
+	JUMP_IF_VAR_NE, $be, $00
+		.dw @_02e4-$a0e5
+	RET
+
+
+Sub_823db: ; $02f6, $823db
+	.db $ba, $01, $38
+	.db $ba, $02, $39
+	.db $ba, $03, $3a
+	.db $ba, $04, $3b
+	RET
+
+
+Sub_823e8: ; $0303, $823e8
+	CALL $fc, $fd, $ff
+		.dw Sub_825e1-PZ_START
+	JUMP_IF_FACING_DIR, $04
+		.dw @_031b-PZ_START
+	JUMP_IF_FACING_DIR, $02
+		.dw @_0321-PZ_START
+	JUMP_IF_FACING_DIR, $00
+		.dw @_0327-PZ_START
+	JUMP_IF_VAR_EQU, $a5, $ff
+		.dw @_032d-PZ_START
+	RET
+
+@_031b: ; $031b, $82400
+	JUMP_IF_VAR_EQU, $a2, $ff
+		.dw @_032d-PZ_START
+	RET
+
+@_0321: ; $0321, $82406
+	JUMP_IF_VAR_EQU, $a3, $ff
+		.dw @_032d-PZ_START
+	RET
+
+@_0327: ; $0327, $8240c
+	JUMP_IF_VAR_EQU, $a4, $ff
+		.dw @_032d-PZ_START
+	RET
+
+@_032d: ; $032d, $82412
+	MOV_VAR_VAR, $f4, $fc
+	SUB_GROUP1, $f4, $02
+	MOV_VAR_VAR, $f6, $fc
+	ADD_GROUP0, $f6, $02
+	MOV_VAR_VAR, $f5, $f6
+	SUB_GROUP1, $f5, $02
+	CALL $fc, $47, $ff
+		.dw Sub_82538-PZ_START
+	CALL $fc, $45, $f4, $ff
+		.dw Sub_8256e-PZ_START
+	CALL $fc, $46, $f5, $ff
+		.dw Sub_8256e-PZ_START
+	CALL $fc, $48, $f6, $ff
+		.dw Sub_8256e-PZ_START
+	.db $68, $bf
+	CALL $fc, $47, $ff
+		.dw Sub_82538-PZ_START
+	CALL $fc, $45, $f4, $ff
+		.dw Sub_8256e-PZ_START
+	CALL $fc, $46, $f5, $ff
+		.dw Sub_8256e-PZ_START
+	CALL $fc, $48, $f6, $ff
+		.dw Sub_8256e-PZ_START
+	.db $68, $bf
+	RET
+
+
+Sub_8245f: ; $037a, $8245f
+	CALL $fc, $fd, $ff
+		.dw Sub_825ef-PZ_START
+	JUMP_IF_FACING_DIR, $04
+		.dw @_0392-PZ_START
+	JUMP_IF_FACING_DIR, $02
+		.dw @_0398-PZ_START
+	JUMP_IF_FACING_DIR, $00
+		.dw @_039e-PZ_START
+	JUMP_IF_VAR_EQU, $a5, $ff
+		.dw @_03a4-PZ_START
+	RET
+
+@_0392: ; $0392, $82477
+	JUMP_IF_VAR_EQU, $a2, $ff
+		.dw @_03a4-PZ_START
+	RET
+
+@_0398: ; $0398, $8247d
+	JUMP_IF_VAR_EQU, $a3, $ff
+		.dw @_03a4-PZ_START
+	RET
+
+@_039e: ; $039e, $82483
+	JUMP_IF_VAR_EQU, $a4, $ff
+		.dw @_03a4-PZ_START
+	RET
+
+@_03a4: ; $03a4, $82489
+	MOV_VAR_VAR, $f4, $fc
+	SUB_GROUP1, $f4, $02
+	CALL $fc, $41, $ff
+		.dw Sub_82538-PZ_START
+	CALL $fc, $40, $f4, $ff
+		.dw Sub_8256e-PZ_START
+	.db $68, $bf
+	CALL $fc, $41, $ff
+		.dw Sub_82538-PZ_START
+	CALL $fc, $40, $f4, $ff
+		.dw Sub_8256e-PZ_START
+	.db $68, $bf
+	RET
+
+
+Sub_824ae: ; $03c9, $824ae
+	CALL $fc, $fd, $ff
+		.dw Sub_82600-PZ_START
+	JUMP_IF_FACING_DIR, $04
+		.dw @_03e1-PZ_START
+	JUMP_IF_FACING_DIR, $02
+		.dw @_03e7-PZ_START
+	JUMP_IF_FACING_DIR, $00
+		.dw @_03ed-PZ_START
+	JUMP_IF_VAR_EQU, $a5, $ff
+		.dw @_03f3-PZ_START
+	RET
+
+@_03e1: ; $03e1, $824c6
+	JUMP_IF_VAR_EQU, $a2, $ff
+		.dw @_03f3-PZ_START
+	RET
+
+@_03e7: ; $03e7, $824cc
+	JUMP_IF_VAR_EQU, $a3, $ff
+		.dw @_03f3-PZ_START
+	RET
+
+@_03ed: ; $03ed, $824d2
+	JUMP_IF_VAR_EQU, $a4, $ff
+		.dw @_03f3-PZ_START
+	RET
+
+@_03f3: ; $03f3, $824d8
+	MOV_VAR_VAR, $f4, $fc
+	ADD_GROUP0, $f4, $02
+	CALL $fc, $43, $ff
+		.dw Sub_82538-PZ_START
+	CALL $fc, $44, $f4, $ff
+		.dw Sub_8256e-PZ_START
+	.db $68, $bf
+	CALL $fc, $43, $ff
+		.dw Sub_82538-PZ_START
+	CALL $fc, $44, $f4, $ff
+		.dw Sub_8256e-PZ_START
+	.db $68, $bf
+	RET
+
+
+Sub_824fd: ; $0418, $824fd
+	CALL $fc, $fd, $ff
+		.dw Sub_82611-PZ_START
+	JUMP_IF_FACING_DIR, $04
 		.dw @_0430-PZ_START
-	.db $0d, $02
+	JUMP_IF_FACING_DIR, $02
 		.dw @_0436-PZ_START
-	.db $0d, $00
+	JUMP_IF_FACING_DIR, $00
 		.dw @_043c-PZ_START
-	.db $35, $a5, $ff
+	JUMP_IF_VAR_EQU, $a5, $ff
 		.dw @_0442-PZ_START
 	RET
 
-@_0430:
-	.db $35, $a2, $ff
+@_0430: ; $0430, $82515
+	JUMP_IF_VAR_EQU, $a2, $ff
 		.dw @_0442-PZ_START
 	RET
 
-@_0436:
-	.db $35, $a3, $ff
+@_0436: ; $0436, $8251b
+	JUMP_IF_VAR_EQU, $a3, $ff
 		.dw @_0442-PZ_START
 	RET
 
-@_043c:
-	.db $35, $a4, $ff
+@_043c: ; $043c, $82521
+	JUMP_IF_VAR_EQU, $a4, $ff
 		.dw @_0442-PZ_START
 	RET
 
-@_0442:
-	.db $a9, $fc, $42, $ff
-		.dw @sub_a538-PZ_START
+@_0442: ; $0442, $82527
+	CALL $fc, $42, $ff
+		.dw Sub_82538-PZ_START
 	.db $68, $bf
-	.db $a9, $fc, $42, $ff
-		.dw @sub_a538-PZ_START
+	CALL $fc, $42, $ff
+		.dw Sub_82538-PZ_START
 	.db $68, $bf
 	RET
 
 
-@sub_a538:
+Sub_82538: ; $0453, $82538
 	MOV_VAR_VAR, $e0, $fc
-	.db $2f, $be, $fd
-	.db $0d, $04
-		.dw $046e
-	.db $0d, $02
-		.dw $0477
-	.db $0d, $00
-		.dw @a565-PZ_START
+	MOV_VAR_OTHERS_VAR, $be, $fd
+	JUMP_IF_FACING_DIR, $04
+		.dw @_046e-PZ_START
+	JUMP_IF_FACING_DIR, $02
+		.dw @_0477-PZ_START
+	JUMP_IF_FACING_DIR, $00
+		.dw @_0480-PZ_START
+	.db $a6, $e0, $be, $10, $20
+	MOV_VAR_VAR, $fc, $e0
+	RET
 
-;
-	ldx $e0                                                  ; $a54a : $a6, $e0
-	ldx $2010.w, Y                                                  ; $a54c : $be, $10, $20
-	adc #$fc.b                                                  ; $a54f : $69, $fc
-	cpx #$aa.b                                                  ; $a551 : $e0, $aa
-	lda $e0, S                                                  ; $a553 : $a3, $e0
-	ldx $2010.w, Y                                                  ; $a555 : $be, $10, $20
-	adc #$fc.b                                                  ; $a558 : $69, $fc
-	cpx #$aa.b                                                  ; $a55a : $e0, $aa
-	lda $e0                                                  ; $a55c : $a5, $e0
-	ldx $2010.w, Y                                                  ; $a55e : $be, $10, $20
-	adc #$fc.b                                                  ; $a561 : $69, $fc
-	cpx #$aa.b                                                  ; $a563 : $e0, $aa
+@_046e: ; $046e, $82553
+	.db $a3, $e0, $be, $10, $20
+	MOV_VAR_VAR, $fc, $e0
+	RET
 
-@a565:
+@_0477: ; $0477, $8255c
+	.db $a5, $e0, $be, $10, $20
+	MOV_VAR_VAR, $fc, $e0
+	RET
+
+@_0480: ; $0480, $82565
 	.db $a4, $e0, $be, $10, $20
 	MOV_VAR_VAR, $fc, $e0
 	RET
 
 
+Sub_8256e: ; $0489, $8256e
+	MOV_VAR_VAR, $e0, $fe
+	MOV_VAR_OTHERS_VAR, $be, $fd
+	JUMP_IF_FACING_DIR, $04
+		.dw @_04a4-PZ_START
+	JUMP_IF_FACING_DIR, $02
+		.dw @_04ad-PZ_START
+	JUMP_IF_FACING_DIR, $00
+		.dw @_04b6-PZ_START
+	.db $a6, $e0, $be, $10, $20
+	MOV_VAR_VAR, $fe, $e0
+	RET
 
-	adc #$e0.b                                                  ; $a56e : $69, $e0
-	inc $be2f.w, X                                                  ; $a570 : $fe, $2f, $be
-	sbc $040d.w, X                                                  ; $a573 : $fd, $0d, $04
-	ldy $04                                                  ; $a576 : $a4, $04
-	ora $ad02.w                                                  ; $a578 : $0d, $02, $ad
-	tsb $0d                                                  ; $a57b : $04, $0d
-	.db $00                                                  ; $a57d : $00
-	ldx $04, Y                                                  ; $a57e : $b6, $04
-	ldx $e0                                                  ; $a580 : $a6, $e0
-	ldx $2010.w, Y                                                  ; $a582 : $be, $10, $20
-	adc #$fe.b                                                  ; $a585 : $69, $fe
-	cpx #$aa.b                                                  ; $a587 : $e0, $aa
-	lda $e0, S                                                  ; $a589 : $a3, $e0
-	ldx $2010.w, Y                                                  ; $a58b : $be, $10, $20
-	adc #$fe.b                                                  ; $a58e : $69, $fe
-	cpx #$aa.b                                                  ; $a590 : $e0, $aa
-	lda $e0                                                  ; $a592 : $a5, $e0
-	ldx $2010.w, Y                                                  ; $a594 : $be, $10, $20
-	adc #$fe.b                                                  ; $a597 : $69, $fe
-	cpx #$aa.b                                                  ; $a599 : $e0, $aa
-	ldy $e0                                                  ; $a59b : $a4, $e0
-	ldx $2010.w, Y                                                  ; $a59d : $be, $10, $20
-	adc #$fe.b                                                  ; $a5a0 : $69, $fe
-	cpx #$aa.b                                                  ; $a5a2 : $e0, $aa
-	lda #$ea.b                                                  ; $a5a4 : $a9, $ea
-	rol                                                  ; $a5a6 : $2a
-	sbc $a904fc.l, X                                                  ; $a5a7 : $ff, $fc, $04, $a9
-	xba                                                  ; $a5ab : $eb
-	pld                                                  ; $a5ac : $2b
-	sbc $a9050a.l, X                                                  ; $a5ad : $ff, $0a, $05, $a9
-	cpx $ff2c.w                                                  ; $a5b1 : $ec, $2c, $ff
-	asl                                                  ; $a5b4 : $0a
-	ora $a9                                                  ; $a5b5 : $05, $a9
-	sbc $ff2d.w                                                  ; $a5b7 : $ed, $2d, $ff
-	asl                                                  ; $a5ba : $0a
-	ora $a9                                                  ; $a5bb : $05, $a9
-	inc $ff2e.w                                                  ; $a5bd : $ee, $2e, $ff
-	asl                                                  ; $a5c0 : $0a
-	ora $a9                                                  ; $a5c1 : $05, $a9
-	sbc $2cff2f.l                                                  ; $a5c3 : $ef, $2f, $ff, $2c
-	ora $a9                                                  ; $a5c7 : $05, $a9
-	.db $f0, $30
+@_04a4: ; $04a4, $82589
+	.db $a3, $e0, $be, $10, $20
+	MOV_VAR_VAR, $fe, $e0
+	RET
 
-	sbc $a9052c.l, X                                                  ; $a5cb : $ff, $2c, $05, $a9
-	sbc ($31), Y                                                  ; $a5cf : $f1, $31
-	sbc $a9052c.l, X                                                  ; $a5d1 : $ff, $2c, $05, $a9
-	sbc ($32)                                                  ; $a5d5 : $f2, $32
-	sbc $a9052c.l, X                                                  ; $a5d7 : $ff, $2c, $05, $a9
-	sbc ($33, S), Y                                                  ; $a5db : $f3, $33
-	sbc $aa051b.l, X                                                  ; $a5dd : $ff, $1b, $05, $aa
-	lda #$fc.b                                                  ; $a5e1 : $a9, $fc
-	sbc $48058e.l, X                                                  ; $a5e3 : $ff, $8e, $05, $48
-	sbc ($02, X)                                                  ; $a5e7 : $e1, $02
-	wdm                                                  ; $a5e9 : $42
-	sbc [$02]                                                  ; $a5ea : $e7, $02
-	asl                                                  ; $a5ec : $0a
-	eor $05, S                                                  ; $a5ed : $43, $05
-	lda #$fc.b                                                  ; $a5ef : $a9, $fc
-	sbc $69058e.l, X                                                  ; $a5f1 : $ff, $8e, $05, $69
-	sbc ($e0, X)                                                  ; $a5f5 : $e1, $e0
-	eor $e6, S                                                  ; $a5f7 : $43, $e6
-	cop $69.b                                                  ; $a5f9 : $02, $69
+@_04ad: ; $04ad, $82592
+	.db $a5, $e0, $be, $10, $20
+	MOV_VAR_VAR, $fe, $e0
+	RET
 
-	sbc $e4                                                  ; $a5fb : $e5, $e4
-	asl                                                  ; $a5fd : $0a
-	eor $05, S                                                  ; $a5fe : $43, $05
-	lda #$fc.b                                                  ; $a600 : $a9, $fc
-	sbc $47058e.l, X                                                  ; $a602 : $ff, $8e, $05, $47
-	cpx #$02.b                                                  ; $a606 : $e0, $02
-	adc #$e3.b                                                  ; $a608 : $69, $e3
-	sep #$69.b                                                  ; $a60a : $e2, $69
-	sbc [$e6]                                                  ; $a60c : $e7, $e6
-	asl                                                  ; $a60e : $0a
-	eor $05, S                                                  ; $a60f : $43, $05
+@_04b6: ; $04b6, $8259b
+	.db $a4, $e0, $be, $10, $20
+	MOV_VAR_VAR, $fe, $e0
+	RET
 
 
-@sub_a611:
-	.db $a9, $fc, $ff
-		.dw @sub_a673-PZ_START
+Sub_825a4: ; $04bf, $825a4
+	CALL $ea, $2a, $ff
+		.dw Sub_825e1-PZ_START
+	CALL $eb, $2b, $ff
+		.dw Sub_825ef-PZ_START
+	CALL $ec, $2c, $ff
+		.dw Sub_825ef-PZ_START
+	CALL $ed, $2d, $ff
+		.dw Sub_825ef-PZ_START
+	CALL $ee, $2e, $ff
+		.dw Sub_825ef-PZ_START
+	CALL $ef, $2f, $ff
+		.dw Sub_82611-PZ_START
+	CALL $f0, $30, $ff
+		.dw Sub_82611-PZ_START
+	CALL $f1, $31, $ff
+		.dw Sub_82611-PZ_START
+	CALL $f2, $32, $ff
+		.dw Sub_82611-PZ_START
+	CALL $f3, $33, $ff
+		.dw Sub_82600-PZ_START
+	RET
+
+
+Sub_825e1: ; $04fc, $825e1
+	CALL $fc, $ff
+		.dw Sub_82673-PZ_START
+	SUB_GROUP1, $e1, $02
+	ADD_GROUP0, $e7, $02
+	.db $0a
+		.dw Sub_82628-PZ_START
+
+
+Sub_825ef: ; $050a, $825ef
+	CALL $fc, $ff
+		.dw Sub_82673-PZ_START
+	MOV_VAR_VAR, $e1, $e0
+	SUB_GROUP0, $e6, $02
+	MOV_VAR_VAR, $e5, $e4
+	.db $0a
+		.dw Sub_82628-PZ_START
+
+
+Sub_82600: ; $051b, $82600
+	CALL $fc, $ff
+		.dw Sub_82673-PZ_START
+	ADD_GROUP1, $e0, $02
+	MOV_VAR_VAR, $e3, $e2
+	MOV_VAR_VAR, $e7, $e6
+	.db $0a
+		.dw Sub_82628-PZ_START
+
+
+Sub_82611: ; $052c, $82611
+	CALL $fc, $ff
+		.dw Sub_82673-PZ_START
 	ADD_GROUP1, $e0, $02
 	SUB_GROUP0, $e1, $02
 	MOV_VAR_VAR, $e3, $e2
 	MOV_VAR_VAR, $e5, $e4
 	SUB_GROUP0, $e6, $02
 	ADD_GROUP1, $e7, $02
+
+Sub_82628: ; $0543, $82628
 	.db $09, $fd
-	.db $34, $a2, $00
+	SET_VAR, $a2, $00
 	.db $96, $e0, $15
 		.dw @_0557-PZ_START
 	.db $96, $e1, $15
 		.dw @_0557-PZ_START
-	.db $34, $a2, $ff
+	SET_VAR, $a2, $ff
 	.db $08, $fd
 
-@_0557:
-	.db $34, $a3, $00
+@_0557: ; $0557, $8263c
+	SET_VAR, $a3, $00
 	.db $96, $e2, $15
 		.dw @_0569-PZ_START
 	.db $96, $e3, $15
 		.dw @_0569-PZ_START
-	.db $34, $a3, $ff
+	SET_VAR, $a3, $ff
 	.db $08, $fd
 
-@_0569:
-	.db $34, $a4, $00
+@_0569: ; $0569, $8264e
+	SET_VAR, $a4, $00
 	.db $96, $e4, $15
 		.dw @_057b-PZ_START
 	.db $96, $e5, $15
 		.dw @_057b-PZ_START
-	.db $34, $a4, $ff
+	SET_VAR, $a4, $ff
 	.db $08, $fd
 
-@_057b:
-	.db $34, $a5, $00
+@_057b: ; $057b, $82660
+	SET_VAR, $a5, $00
 	.db $96, $e6, $15
-		.dw $058d
+		.dw @done-PZ_START
 	.db $96, $e7, $15
-		.dw $058d
-	.db $34, $a5, $ff
+		.dw @done-PZ_START
+	SET_VAR, $a5, $ff
 	.db $08, $fd
+
+@done: ; $058d, $82672
 	RET
 
 
-@sub_a673:
-; group0.e2 = fc-1
+Sub_82673: ; $058e, $82673
 	MOV_VAR_VAR, $e2, $fc
 	DEC_GROUP0, $e2
-; group1.e3 = fc-2
 	MOV_VAR_VAR, $e3, $e2
 	SUB_GROUP1, $e3, $02
-; group1.e4 = fc+1
 	MOV_VAR_VAR, $e4, $fc
 	INC_GROUP1, $e4
-; group0.e5 = fc+2
 	MOV_VAR_VAR, $e5, $e4
 	ADD_GROUP0, $e5, $02
-; group1.e0 = fc-5
 	MOV_VAR_VAR, $e0, $e4
 	SUB_GROUP1, $e0, $05
-; group1.e1 = fc-3
 	MOV_VAR_VAR, $e1, $e5
 	SUB_GROUP1, $e1, $03
-; group1.e6 = fc+5
 	MOV_VAR_VAR, $e6, $e2
 	ADD_GROUP0, $e6, $05
-; group1.e7 = fc+3
 	MOV_VAR_VAR, $e7, $e3
 	ADD_GROUP0, $e7, $03
 	RET
 
 
-@sub_a6a2:
-	.db $2f, $bf, $a1
-	.db $09, $5f ; clear flag
-	.db $a9, $ff
-		.dw @sub_a6b8-PZ_START
+Sub_826a2: ; $05bd, $826a2
+	MOV_VAR_OTHERS_VAR, $bf, $a1
+	.db $09, $5f
+	CALL $ff
+		.dw @_05d3-PZ_START
+	MOV_VAR_OTHERS_VAR, $bf, VAR_SELECTED_PIECE
+	.db $08, $5f
+	CALL $ff
+		.dw @_05d3-PZ_START
+	MOV_VAR_OTHERS_VAR, $a1, VAR_SELECTED_PIECE
+	RET
 
-	.db $2f, $bf, $a0
-	.db $08, $5f ; set flag
-	.db $a9, $ff ; call
-		.dw @sub_a6b8-PZ_START
-
-	.db $2f, $a1, $a0
-	.db $aa
-
-
-@sub_a6b8:
-	.db $35, $bf, $00 ; 2x2
-		.dw @a709-PZ_START
-
-	.db $69, $e0, $eb ; transfers 4 bytes from eb thing to e0 thing
-
-	.db $35, $bf, $01 ; 1x2
-		.dw @a715-PZ_START
-
-	.db $69, $e0, $ec
-
-	.db $35, $bf, $02
-		.dw @a715-PZ_START
-
-	.db $69, $e0, $ed
-	
-	.db $35, $bf, $03
-		.dw @a715-PZ_START
-
-	.db $69, $e0, $ee
-	
-	.db $35, $bf, $04
-		.dw @a715-PZ_START
-
-	.db $69, $e0, $ef
-
-	.db $35, $bf, $05 ; 1x1
-		.dw @a721-PZ_START
-
-	.db $69, $e0, $f0
-
-	.db $35, $bf, $06
-		.dw @a721-PZ_START
-
-	.db $69, $e0, $f1
-
-	.db $35, $bf, $07
-		.dw @a721-PZ_START
-
-	.db $69, $e0, $f2
-	
-	.db $35, $bf, $08
-		.dw @a721-PZ_START
-
-	.db $01, $5f ; 2x1
-		.dw @a705-PZ_START
-
-; none of the above
+@_05d3: ; $05d3, $826b8
+	JUMP_IF_VAR_EQU, $bf, $00
+		.dw @_0624-PZ_START
+	MOV_VAR_VAR, $e0, $eb
+	JUMP_IF_VAR_EQU, $bf, $01
+		.dw @_0630-PZ_START
+	MOV_VAR_VAR, $e0, $ec
+	JUMP_IF_VAR_EQU, $bf, $02
+		.dw @_0630-PZ_START
+	MOV_VAR_VAR, $e0, $ed
+	JUMP_IF_VAR_EQU, $bf, $03
+		.dw @_0630-PZ_START
+	MOV_VAR_VAR, $e0, $ee
+	JUMP_IF_VAR_EQU, $bf, $04
+		.dw @_0630-PZ_START
+	MOV_VAR_VAR, $e0, $ef
+	JUMP_IF_VAR_EQU, $bf, $05
+		.dw @_063c-PZ_START
+	MOV_VAR_VAR, $e0, $f0
+	JUMP_IF_VAR_EQU, $bf, $06
+		.dw @_063c-PZ_START
+	MOV_VAR_VAR, $e0, $f1
+	JUMP_IF_VAR_EQU, $bf, $07
+		.dw @_063c-PZ_START
+	MOV_VAR_VAR, $e0, $f2
+	JUMP_IF_VAR_EQU, $bf, $08
+		.dw @_063c-PZ_START
+	JUMP_IF_FLAG_SET, $5f
+		.dw @_0620-PZ_START
 	.db $0e, $f3, $56
-	.db $aa
+	RET
 
-@a705: ; 2x1
+@_0620: ; $0620, $82705
 	.db $0e, $f3, $57
-	.db $aa
+	RET
 
-@a709: ; 2x2
-	.db $01, $5f
-		.dw @a711-PZ_START
+@_0624: ; $0624, $82709
+	JUMP_IF_FLAG_SET, $5f
+		.dw @_062c-PZ_START
 	.db $0e, $ea, $52
-	.db $aa
+	RET
 
-@a711:
+@_062c: ; $062c, $82711
 	.db $0e, $ea, $53
-	.db $aa
+	RET
 
-@a715: ; 1x2
-	.db $01, $5f
-		.dw @a71d-PZ_START
+@_0630: ; $0630, $82715
+	JUMP_IF_FLAG_SET, $5f
+		.dw @_0638-PZ_START
 	.db $0e, $e0, $54
-	.db $aa
+	RET
 
-@a71d:
+@_0638: ; $0638, $8271d
 	.db $0e, $e0, $55
-	.db $aa
+	RET
 
-@a721: ; 1x1
-	.db $01, $5f
-		.dw @a729-PZ_START
+@_063c: ; $063c, $82721
+	JUMP_IF_FLAG_SET, $5f
+		.dw @_0644-PZ_START
 	.db $0e, $e0, $58
-	.db $aa ; ret
+	RET
 
-@a729:
+@_0644: ; $0644, $82729
 	.db $0e, $e0, $59
-	.db $aa
+	RET
+
+
+Sub_8272d: ; $0648, $8272d
+	.db $0f, $fc
+		.dw @halt-PZ_START
+	.db $39, $fd, $ff
+		.dw @_0653-PZ_START
+	INC_VAR, $fd
+
+@_0653: ; $0653, $82738
+	.db $16, $fc
+		.dw @halt-PZ_START
+	.db $3a, $fd, $03
+		.dw @halt-PZ_START
+	.db $06, $fc, $00
+	SET_VAR, $fd, $00
+
+@halt: ; $0662, $82747
+	HALT
 
 
 ;
-	ora $0662fc.l                                                  ; $a72d : $0f, $fc, $62, $06
-	and $fffd.w, Y                                                  ; $a731 : $39, $fd, $ff
-	eor ($06, S), Y                                                  ; $a734 : $53, $06
-	and ($fd)                                                  ; $a736 : $32, $fd
-	asl $fc, X                                                  ; $a738 : $16, $fc
-	.db $62, $06, $3a                                                  ; $a73a : $62, $06, $3a
-
-	sbc $6203.w, X                                                  ; $a73d : $fd, $03, $62
-	asl $06                                                  ; $a740 : $06, $06
-	jsr ($3400.w, X)                                                  ; $a742 : $fc, $00, $34
-	sbc $0000.w, X                                                  ; $a745 : $fd, $00, $00
 	jsr $2a00.w                                                  ; $a748 : $20, $00, $2a
 	.db $00                                                  ; $a74b : $00
 	pld                                                  ; $a74c : $2b

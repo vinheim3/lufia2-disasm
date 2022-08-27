@@ -6708,7 +6708,7 @@ br_0e_b087:
 	lsr                                                  ; $b0c9 : $4a
 	lsr                                                  ; $b0ca : $4a
 	sta $58                                                  ; $b0cb : $85, $58
-	jsr $838d42.l                                                  ; $b0cd : $22, $42, $8d, $83
+	jsr Func_3_8d42.l                                                  ; $b0cd : $22, $42, $8d, $83
 	sep #ACCU_8                                                  ; $b0d1 : $e2, $20
 	rtl                                                  ; $b0d3 : $6b
 
@@ -6997,9 +6997,9 @@ br_0e_b28a:
 	jsr StartPuzzleScript.l                                                  ; $b2a7 : $22, $22, $e7, $80
 	jsr Func_0_cbae.l                                                  ; $b2ab : $22, $ae, $cb, $80
 	ldx #$0000.w                                                  ; $b2af : $a2, $00, $00
-	jsr $80f47a.l                                                  ; $b2b2 : $22, $7a, $f4, $80
+	jsr Func_0_f47a.l                                                  ; $b2b2 : $22, $7a, $f4, $80
 	ldx #$0002.w                                                  ; $b2b6 : $a2, $02, $00
-	jsr $80f47a.l                                                  ; $b2b9 : $22, $7a, $f4, $80
+	jsr Func_0_f47a.l                                                  ; $b2b9 : $22, $7a, $f4, $80
 
 br_0e_b2bd:
 	lda $0583.w                                                  ; $b2bd : $ad, $83, $05
@@ -7743,7 +7743,7 @@ br_0e_b72c:
 	lda $7fd04e.l                                                  ; $b72c : $af, $4e, $d0, $7f
 	xba                                                  ; $b730 : $eb
 	lda #$00.b                                                  ; $b731 : $a9, $00
-	jsr $83f559.l                                                  ; $b733 : $22, $59, $f5, $83
+	jsr Func_3_f559.l                                                  ; $b733 : $22, $59, $f5, $83
 	sec                                                  ; $b737 : $38
 
 br_0e_b738:
@@ -7791,7 +7791,7 @@ Call_0e_b760:
 	lda $7fd04e.l                                                  ; $b793 : $af, $4e, $d0, $7f
 	xba                                                  ; $b797 : $eb
 	lda #$00.b                                                  ; $b798 : $a9, $00
-	jsr $83f559.l                                                  ; $b79a : $22, $59, $f5, $83
+	jsr Func_3_f559.l                                                  ; $b79a : $22, $59, $f5, $83
 	lda #$01.b                                                  ; $b79e : $a9, $01
 	tsb $0622.w                                                  ; $b7a0 : $0c, $22, $06
 	stz $42                                                  ; $b7a3 : $64, $42
@@ -8326,7 +8326,7 @@ br_0e_bb5e:
 	sta $00070a.l                                                  ; $bb80 : $8f, $0a, $07, $00
 	jsr $83d416.l                                                  ; $bb84 : $22, $16, $d4, $83
 	sep #ACCU_8|IDX_8                                                  ; $bb88 : $e2, $30
-	jsr $83a21a.l                                                  ; $bb8a : $22, $1a, $a2, $83
+	jsr Call_03_a21a.l                                                  ; $bb8a : $22, $1a, $a2, $83
 	stz $a7                                                  ; $bb8e : $64, $a7
 	jsr Call_03_ab4f.l                                                  ; $bb90 : $22, $4f, $ab, $83
 	lda $05aa.w                                                  ; $bb94 : $ad, $aa, $05
@@ -9396,7 +9396,7 @@ br_0e_c258:
 	cop $a9.b                                                  ; $c26b : $02, $a9
 	rol $22, X                                                  ; $c26d : $36, $22
 	inc $8093.w, X                                                  ; $c26f : $fe, $93, $80
-	jsr $838e66.l                                                  ; $c272 : $22, $66, $8e, $83
+	jsr Call_03_8e66.l                                                  ; $c272 : $22, $66, $8e, $83
 	tdc                                                  ; $c276 : $7b
 	lda wCharacterMovementDirs.w                                                  ; $c277 : $ad, $92, $06
 	tax                                                  ; $c27a : $aa
@@ -9427,7 +9427,7 @@ br_0e_c258:
 	jsr $9dad06.l                                                  ; $c2b7 : $22, $06, $ad, $9d
 	ora #$9f22.w                                                  ; $c2bb : $09, $22, $9f
 	stx $80, Y                                                  ; $c2be : $96, $80
-	jsr $838e66.l                                                  ; $c2c0 : $22, $66, $8e, $83
+	jsr Call_03_8e66.l                                                  ; $c2c0 : $22, $66, $8e, $83
 	lda $40                                                  ; $c2c4 : $a5, $40
 
 br_0e_c2c6:
