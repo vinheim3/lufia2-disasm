@@ -10631,7 +10631,7 @@ br_18_d2f7:
 	jml [$45de.w]                                                  ; $d39b : $dc, $de, $45
 
 
-	and $2100.w, X                                                  ; $d39e : $3d, $00, $21
+	and INIDISP.w, X                                                  ; $d39e : $3d, $00, $21
 	txs                                                  ; $d3a1 : $9a
 	cmp $0200f2.l                                                  ; $d3a2 : $cf, $f2, $00, $02
 	.db $30, $ce                                                  ; $d3a6 : $30, $ce
@@ -11952,7 +11952,7 @@ Call_18_dddd:
 	.db $00                                                  ; $de06 : $00
 	txs                                                  ; $de07 : $9a
 	cmp $0f24.w                                                  ; $de08 : $cd, $24, $0f
-	cpx $2100.w                                                  ; $de0b : $ec, $00, $21
+	cpx INIDISP.w                                                  ; $de0b : $ec, $00, $21
 	rol $9600.w                                                  ; $de0e : $2e, $00, $96
 	eor [$66]                                                  ; $de11 : $47, $66
 	trb $f1bd.w                                                  ; $de13 : $1c, $bd, $f1

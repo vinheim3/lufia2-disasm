@@ -4070,8 +4070,12 @@ Call_09_a006:
 	clc                                                  ; $a008 : $18
 	eor [$5b], Y                                                  ; $a009 : $57, $5b
 	tsb $16                                                  ; $a00b : $04, $16
+
+; Here begins credits
 	eor $5b34.w                                                  ; $a00d : $4d, $34, $5b
 	ora $00                                                  ; $a010 : $05, $00
+
+; Resumes here (you're not from around here?)
 	rts                                                  ; $a012 : $60
 
 

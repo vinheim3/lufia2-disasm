@@ -6977,10 +6977,10 @@ Call_0e_b287:
 	rts                                                  ; $b287 : $60
 
 
-	lda $40                                                  ; $b288 : $a5, $40
+	lda wNmiCounter                                                  ; $b288 : $a5, $40
 
 br_0e_b28a:
-	cmp $40                                                  ; $b28a : $c5, $40
+	cmp wNmiCounter                                                  ; $b28a : $c5, $40
 	beq br_0e_b28a                                                  ; $b28c : $f0, $fc
 
 	rts                                                  ; $b28e : $60
@@ -7002,12 +7002,12 @@ br_0e_b28a:
 	jsr Func_0_f47a.l                                                  ; $b2b9 : $22, $7a, $f4, $80
 
 br_0e_b2bd:
-	lda $0583.w                                                  ; $b2bd : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $b2bd : $ad, $83, $05
 	bpl br_0e_b2bd                                                  ; $b2c0 : $10, $fb
 
 	stz NMITIMEN.w                                                  ; $b2c2 : $9c, $00, $42
 	lda #$80.b                                                  ; $b2c5 : $a9, $80
-	sta $2100.w                                                  ; $b2c7 : $8d, $00, $21
+	sta INIDISP.w                                                  ; $b2c7 : $8d, $00, $21
 	lda #$a8.b                                                  ; $b2ca : $a9, $a8
 	sta $74                                                  ; $b2cc : $85, $74
 	jsr $808285.l                                                  ; $b2ce : $22, $85, $82, $80
@@ -7027,99 +7027,81 @@ br_0e_b2e6:
 	rtl                                                  ; $b2ed : $6b
 
 
+Func_e_b2ee:
 	phb                                                  ; $b2ee : $8b
 	phk                                                  ; $b2ef : $4b
 	plb                                                  ; $b2f0 : $ab
 	lda #$80.b                                                  ; $b2f1 : $a9, $80
-	sta $0583.w                                                  ; $b2f3 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $b2f3 : $8d, $83, $05
 	jsr Call_0e_b550.w                                                  ; $b2f6 : $20, $50, $b5
 	stz NMITIMEN.w                                                  ; $b2f9 : $9c, $00, $42
 	lda $0b51.w                                                  ; $b2fc : $ad, $51, $0b
 	bit #$02.b                                                  ; $b2ff : $89, $02
-	bne br_0e_b318                                                  ; $b301 : $d0, $15
+	bne @cont_b318                                                  ; $b301 : $d0, $15
 
 	lsr                                                  ; $b303 : $4a
 	lda $700000.l                                                  ; $b304 : $af, $00, $00, $70
-	bcc br_0e_b310                                                  ; $b308 : $90, $06
+	bcc @br_b310                                                  ; $b308 : $90, $06
 
 	and #$fb.b                                                  ; $b30a : $29, $fb
 	ora #$08.b                                                  ; $b30c : $09, $08
-	bra br_0e_b314                                                  ; $b30e : $80, $04
+	bra +                                                  ; $b30e : $80, $04
 
-br_0e_b310:
+@br_b310:
 	and #$f7.b                                                  ; $b310 : $29, $f7
 	ora #$04.b                                                  ; $b312 : $09, $04
 
-br_0e_b314:
-	sta $700000.l                                                  ; $b314 : $8f, $00, $00, $70
++	sta $700000.l                                                  ; $b314 : $8f, $00, $00, $70
 
-br_0e_b318:
-	ldx #$00.b                                                  ; $b318 : $a2, $00
-	rti                                                  ; $b31a : $40
-
-
+@cont_b318:
+	ldx #$4000.w                                                  ; $b318 : $a2, $00, $40
 	stx $60                                                  ; $b31b : $86, $60
 	lda #$7e.b                                                  ; $b31d : $a9, $7e
 	sta $62                                                  ; $b31f : $85, $62
-	ldx #$40.b                                                  ; $b321 : $a2, $40
-	.db $00                                                  ; $b323 : $00
+	ldx #$0040.w                                                  ; $b321 : $a2, $40, $00
 	stx $54                                                  ; $b324 : $86, $54
 	jsr $808e9d.l                                                  ; $b326 : $22, $9d, $8e, $80
 	phb                                                  ; $b32a : $8b
 	rep #ACCU_8                                                  ; $b32b : $c2, $20
-	ldx #$00.b                                                  ; $b32d : $a2, $00
-	rti                                                  ; $b32f : $40
+	ldx #$4000.w                                                  ; $b32d : $a2, $00, $40
+	ldy #$6000.w                                                  ; $b330 : $a0, $00, $60
 
-
-	ldy #$00.b                                                  ; $b330 : $a0, $00
-	rts                                                  ; $b332 : $60
-
-
-br_0e_b333:
+@loop_b333:
 	lda #$000f.w                                                  ; $b333 : $a9, $0f, $00
 	mvn $7e, $7e                                                  ; $b336 : $54, $7e, $7e
 	lda #$0010.w                                                  ; $b339 : $a9, $10, $00
 	sta $54                                                  ; $b33c : $85, $54
 	tdc                                                  ; $b33e : $7b
 
-br_0e_b33f:
-	sta $0000.w, Y                                                  ; $b33f : $99, $00, $00
+-	sta $0000.w, Y                                                  ; $b33f : $99, $00, $00
 	iny                                                  ; $b342 : $c8
 	dec $54                                                  ; $b343 : $c6, $54
-	bne br_0e_b33f                                                  ; $b345 : $d0, $f8
+	bne -                                                  ; $b345 : $d0, $f8
 
 	cpx #$00.b                                                  ; $b347 : $e0, $00
 	cli                                                  ; $b349 : $58
-	bcc br_0e_b333                                                  ; $b34a : $90, $e7
+	bcc @loop_b333                                                  ; $b34a : $90, $e7
 
-	ldx #$fe.b                                                  ; $b34c : $a2, $fe
-	ora [$a9]                                                  ; $b34e : $07, $a9
-	.db $00                                                  ; $b350 : $00
-	.db $00                                                  ; $b351 : $00
+	ldx #$07fe.w                                                  ; $b34c : $a2, $fe, $07
+	lda #$0000.w                                                  ; $b34f : $a9, $00, $00
 
-br_0e_b352:
+@loop_b352:
 	sta $2000.w, X                                                  ; $b352 : $9d, $00, $20
 	sta $2800.w, X                                                  ; $b355 : $9d, $00, $28
 	sta $3000.w, X                                                  ; $b358 : $9d, $00, $30
 	sta $3800.w, X                                                  ; $b35b : $9d, $00, $38
 	dex                                                  ; $b35e : $ca
 	dex                                                  ; $b35f : $ca
-	bpl br_0e_b352                                                  ; $b360 : $10, $f0
+	bpl @loop_b352                                                  ; $b360 : $10, $f0
 
 	plb                                                  ; $b362 : $ab
 	sep #ACCU_8                                                  ; $b363 : $e2, $20
-	ldx #$00.b                                                  ; $b365 : $a2, $00
-	rti                                                  ; $b367 : $40
+	ldx #$4000.w                                                  ; $b365 : $a2, $00, $40
+	ldy #$3000.w                                                  ; $b368 : $a0, $00, $30
+	jsr Func_e_b557                                                  ; $b36b : $20, $57, $b5
+	ldx #$0006.w                                                  ; $b36e : $a2, $06, $00
 
-
-	ldy #$00.b                                                  ; $b368 : $a0, $00
-	bmi br_0e_b38c                                                  ; $b36a : $30, $20
-
-	eor [$b5], Y                                                  ; $b36c : $57, $b5
-	ldx #$06.b                                                  ; $b36e : $a2, $06
-	.db $00                                                  ; $b370 : $00
-
-br_0e_b371:
+@loop_b371:
 	stz $210d.w, X                                                  ; $b371 : $9e, $0d, $21
 	stz $210d.w, X                                                  ; $b374 : $9e, $0d, $21
 	stz $210e.w, X                                                  ; $b377 : $9e, $0e, $21
@@ -7129,9 +7111,8 @@ br_0e_b371:
 	stz $0596.w, X                                                  ; $b383 : $9e, $96, $05
 	stz $0597.w, X                                                  ; $b386 : $9e, $97, $05
 	dex                                                  ; $b389 : $ca
-	bpl br_0e_b371                                                  ; $b38a : $10, $e5
+	bpl @loop_b371                                                  ; $b38a : $10, $e5
 
-br_0e_b38c:
 	lda #$02.b                                                  ; $b38c : $a9, $02
 	sta $2107.w                                                  ; $b38e : $8d, $07, $21
 	sta $2108.w                                                  ; $b391 : $8d, $08, $21
@@ -7173,7 +7154,7 @@ br_0e_b38c:
 	lda #$80.b                                                  ; $b3f2 : $a9, $80
 	sta $73                                                  ; $b3f4 : $85, $73
 	lda #$0f.b                                                  ; $b3f6 : $a9, $0f
-	sta $0583.w                                                  ; $b3f8 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $b3f8 : $8d, $83, $05
 	lda #$81.b                                                  ; $b3fb : $a9, $81
 	sta NMITIMEN.w                                                  ; $b3fd : $8d, $00, $42
 	lda #$7e.b                                                  ; $b400 : $a9, $7e
@@ -7183,25 +7164,23 @@ br_0e_b38c:
 	sta $74                                                  ; $b406 : $85, $74
 	stz $65                                                  ; $b408 : $64, $65
 
-br_0e_b40a:
-	lda $00213f.l                                                  ; $b40a : $af, $3f, $21, $00
-	bmi br_0e_b40a                                                  ; $b40e : $30, $fa
+-	lda $00213f.l                                                  ; $b40a : $af, $3f, $21, $00
+	bmi -                                                  ; $b40e : $30, $fa
 
-	ldx #$00.b                                                  ; $b410 : $a2, $00
-	ora $a26086.l                                                  ; $b412 : $0f, $86, $60, $a2
-	.db $00                                                  ; $b416 : $00
-	.db $00                                                  ; $b417 : $00
+	ldx #$0f00.w                                                  ; $b410 : $a2, $00, $0f
+	stx $60                                                  ; $b413 : $86, $60
+	ldx #$0000.w                                                  ; $b415 : $a2, $00, $00
 	stx $5d                                                  ; $b418 : $86, $5d
 	stx $5a                                                  ; $b41a : $86, $5a
 
-br_0e_b41c:
+@bigLoop_b41c:
 	lda $65                                                  ; $b41c : $a5, $65
-	beq br_0e_b448                                                  ; $b41e : $f0, $28
+	beq @br_b448                                                  ; $b41e : $f0, $28
 
 	lda #$08.b                                                  ; $b420 : $a9, $08
 	sta $55                                                  ; $b422 : $85, $55
 
-br_0e_b424:
+@loop_b424:
 	rep #ACCU_8                                                  ; $b424 : $c2, $20
 	lda $5d                                                  ; $b426 : $a5, $5d
 	sta $0596.w                                                  ; $b428 : $8d, $96, $05
@@ -7214,23 +7193,23 @@ br_0e_b424:
 	jsr Call_0e_b550.w                                                  ; $b437 : $20, $50, $b5
 	jsr Call_0e_b550.w                                                  ; $b43a : $20, $50, $b5
 	dec $55                                                  ; $b43d : $c6, $55
-	bne br_0e_b424                                                  ; $b43f : $d0, $e3
+	bne @loop_b424                                                  ; $b43f : $d0, $e3
 
 	jsr Call_0e_b578.w                                                  ; $b441 : $20, $78, $b5
 	dec $65                                                  ; $b444 : $c6, $65
-	bra br_0e_b41c                                                  ; $b446 : $80, $d4
+	bra @bigLoop_b41c                                                  ; $b446 : $80, $d4
 
-br_0e_b448:
+@br_b448:
 	lda $919aff.l, X                                                  ; $b448 : $bf, $ff, $9a, $91
 	inx                                                  ; $b44c : $e8
 	cmp #$00.b                                                  ; $b44d : $c9, $00
-	bne br_0e_b454                                                  ; $b44f : $d0, $03
+	bne @br_b454                                                  ; $b44f : $d0, $03
 
-	brl br_0e_b4bc                                                  ; $b451 : $82, $68, $00
+	brl @bigCont_b4bc                                                  ; $b451 : $82, $68, $00
 
-br_0e_b454:
+@br_b454:
 	cmp #$05.b                                                  ; $b454 : $c9, $05
-	bne br_0e_b464                                                  ; $b456 : $d0, $0c
+	bne @br_b464                                                  ; $b456 : $d0, $0c
 
 	ldy $60                                                  ; $b458 : $a4, $60
 	iny                                                  ; $b45a : $c8
@@ -7238,11 +7217,11 @@ br_0e_b454:
 	iny                                                  ; $b45c : $c8
 	iny                                                  ; $b45d : $c8
 	jsr Call_0e_b50f.w                                                  ; $b45e : $20, $0f, $b5
-	brl br_0e_b41c                                                  ; $b461 : $82, $b8, $ff
+	brl @bigLoop_b41c                                                  ; $b461 : $82, $b8, $ff
 
-br_0e_b464:
+@br_b464:
 	cmp #$01.b                                                  ; $b464 : $c9, $01
-	bne br_0e_b481                                                  ; $b466 : $d0, $19
+	bne @br_b481                                                  ; $b466 : $d0, $19
 
 	jsr Call_0e_b4fc.w                                                  ; $b468 : $20, $fc, $b4
 	rep #ACCU_8                                                  ; $b46b : $c2, $20
@@ -7255,19 +7234,19 @@ br_0e_b464:
 	tay                                                  ; $b478 : $a8
 	sep #ACCU_8                                                  ; $b479 : $e2, $20
 	jsr Call_0e_b50f.w                                                  ; $b47b : $20, $0f, $b5
-	brl br_0e_b41c                                                  ; $b47e : $82, $9b, $ff
+	brl @bigLoop_b41c                                                  ; $b47e : $82, $9b, $ff
 
-br_0e_b481:
+@br_b481:
 	cmp #$04.b                                                  ; $b481 : $c9, $04
-	bne br_0e_b48d                                                  ; $b483 : $d0, $08
+	bne @br_b48d                                                  ; $b483 : $d0, $08
 
 	lda #$80.b                                                  ; $b485 : $a9, $80
-	sta $0583.w                                                  ; $b487 : $8d, $83, $05
-	brl br_0e_b41c                                                  ; $b48a : $82, $8f, $ff
+	sta wIniDisp.w                                                  ; $b487 : $8d, $83, $05
+	brl @bigLoop_b41c                                                  ; $b48a : $82, $8f, $ff
 
-br_0e_b48d:
+@br_b48d:
 	cmp #$03.b                                                  ; $b48d : $c9, $03
-	bne br_0e_b4b2                                                  ; $b48f : $d0, $21
+	bne @br_b4b2                                                  ; $b48f : $d0, $21
 
 	rep #ACCU_8                                                  ; $b491 : $c2, $20
 	ldy $60                                                  ; $b493 : $a4, $60
@@ -7282,47 +7261,46 @@ br_0e_b48d:
 	inx                                                  ; $b4aa : $e8
 	lda #$01.b                                                  ; $b4ab : $a9, $01
 	sta $65                                                  ; $b4ad : $85, $65
-	brl br_0e_b41c                                                  ; $b4af : $82, $6a, $ff
+	brl @bigLoop_b41c                                                  ; $b4af : $82, $6a, $ff
 
-br_0e_b4b2:
+@br_b4b2:
 	lda $919aff.l, X                                                  ; $b4b2 : $bf, $ff, $9a, $91
 	sta $65                                                  ; $b4b6 : $85, $65
 	inx                                                  ; $b4b8 : $e8
-	brl br_0e_b41c                                                  ; $b4b9 : $82, $60, $ff
+	brl @bigLoop_b41c                                                  ; $b4b9 : $82, $60, $ff
 
-br_0e_b4bc:
-	stz $40                                                  ; $b4bc : $64, $40
+@bigCont_b4bc:
+	stz wNmiCounter                                                  ; $b4bc : $64, $40
 
-br_0e_b4be:
-	lda $40                                                  ; $b4be : $a5, $40
+@loop_b4be:
+	lda wNmiCounter                                                  ; $b4be : $a5, $40
 	lsr                                                  ; $b4c0 : $4a
 	lsr                                                  ; $b4c1 : $4a
 	lsr                                                  ; $b4c2 : $4a
 	lsr                                                  ; $b4c3 : $4a
-	sta $0583.w                                                  ; $b4c4 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $b4c4 : $8d, $83, $05
 	cmp #$0f.b                                                  ; $b4c7 : $c9, $0f
-	bne br_0e_b4be                                                  ; $b4c9 : $d0, $f3
+	bne @loop_b4be                                                  ; $b4c9 : $d0, $f3
 
 	lda #$3c.b                                                  ; $b4cb : $a9, $3c
 	sta $54                                                  ; $b4cd : $85, $54
 
-br_0e_b4cf:
-	stz $40                                                  ; $b4cf : $64, $40
+@loop_b4cf:
+	stz wNmiCounter                                                  ; $b4cf : $64, $40
 
-br_0e_b4d1:
-	lda $40                                                  ; $b4d1 : $a5, $40
+-	lda wNmiCounter                                                  ; $b4d1 : $a5, $40
 	cmp #$3c.b                                                  ; $b4d3 : $c9, $3c
-	bcc br_0e_b4d1                                                  ; $b4d5 : $90, $fa
+	bcc -                                                  ; $b4d5 : $90, $fa
 
 	dec $54                                                  ; $b4d7 : $c6, $54
-	bne br_0e_b4cf                                                  ; $b4d9 : $d0, $f4
+	bne @loop_b4cf                                                  ; $b4d9 : $d0, $f4
 
 	lda #$0f.b                                                  ; $b4db : $a9, $0f
 	sta $54                                                  ; $b4dd : $85, $54
-	stz $40                                                  ; $b4df : $64, $40
+	stz wNmiCounter                                                  ; $b4df : $64, $40
 
-br_0e_b4e1:
-	lda $40                                                  ; $b4e1 : $a5, $40
+@loop_b4e1:
+	lda wNmiCounter                                                  ; $b4e1 : $a5, $40
 	lsr                                                  ; $b4e3 : $4a
 	lsr                                                  ; $b4e4 : $4a
 	lsr                                                  ; $b4e5 : $4a
@@ -7331,11 +7309,11 @@ br_0e_b4e1:
 	sbc #$0f.b                                                  ; $b4e8 : $e9, $0f
 	eor #$ff.b                                                  ; $b4ea : $49, $ff
 	ina                                                  ; $b4ec : $1a
-	sta $0583.w                                                  ; $b4ed : $8d, $83, $05
-	bne br_0e_b4e1                                                  ; $b4f0 : $d0, $ef
+	sta wIniDisp.w                                                  ; $b4ed : $8d, $83, $05
+	bne @loop_b4e1                                                  ; $b4f0 : $d0, $ef
 
 	lda #$80.b                                                  ; $b4f2 : $a9, $80
-	sta $0583.w                                                  ; $b4f4 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $b4f4 : $8d, $83, $05
 	jsr Call_0e_b550.w                                                  ; $b4f7 : $20, $50, $b5
 	plb                                                  ; $b4fa : $ab
 	rtl                                                  ; $b4fb : $6b
@@ -7413,15 +7391,16 @@ br_0e_b53b:
 
 
 Call_0e_b550:
-	lda $40                                                  ; $b550 : $a5, $40
+	lda wNmiCounter                                                  ; $b550 : $a5, $40
 
 br_0e_b552:
-	cmp $40                                                  ; $b552 : $c5, $40
+	cmp wNmiCounter                                                  ; $b552 : $c5, $40
 	beq br_0e_b552                                                  ; $b554 : $f0, $fc
 
 	rts                                                  ; $b556 : $60
 
 
+Func_e_b557:
 	stx VMADDL.w                                                  ; $b557 : $8e, $16, $21
 	sty DAS0L.w                                                  ; $b55a : $8c, $05, $43
 	lda #$01.b                                                  ; $b55d : $a9, $01
@@ -9428,10 +9407,10 @@ br_0e_c258:
 	ora #$9f22.w                                                  ; $c2bb : $09, $22, $9f
 	stx $80, Y                                                  ; $c2be : $96, $80
 	jsr Call_03_8e66.l                                                  ; $c2c0 : $22, $66, $8e, $83
-	lda $40                                                  ; $c2c4 : $a5, $40
+	lda wNmiCounter                                                  ; $c2c4 : $a5, $40
 
 br_0e_c2c6:
-	cmp $40                                                  ; $c2c6 : $c5, $40
+	cmp wNmiCounter                                                  ; $c2c6 : $c5, $40
 	beq br_0e_c2c6                                                  ; $c2c8 : $f0, $fc
 
 	rep #IDX_8                                                  ; $c2ca : $c2, $10

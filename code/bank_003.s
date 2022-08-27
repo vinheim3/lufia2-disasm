@@ -70,7 +70,7 @@ Jump_03_8000:
 
 @br_8070:
 	jsr Call_03_aeb5.w                                                  ; $8070 : $20, $b5, $ae
-	jsr $809c72.l                                                  ; $8073 : $22, $72, $9c, $80
+	jsr Func_0_9c72.l                                                  ; $8073 : $22, $72, $9c, $80
 	jsr Call_03_83a0.w                                                  ; $8077 : $20, $a0, $83
 	jsr Call_03_8682.w                                                  ; $807a : $20, $82, $86
 	jsr Call_03_bb93.l                                                  ; $807d : $22, $93, $bb, $83
@@ -250,7 +250,7 @@ Call_03_8192:
 	jsr Call_03_900c.w                                                  ; $8195 : $20, $0c, $90
 	lda #$ff.b                                                  ; $8198 : $a9, $ff
 	sta $17ac.w                                                  ; $819a : $8d, $ac, $17
-	jsr $809c72.l                                                  ; $819d : $22, $72, $9c, $80
+	jsr Func_0_9c72.l                                                  ; $819d : $22, $72, $9c, $80
 	jsr Call_03_8682.w                                                  ; $81a1 : $20, $82, $86
 	jsr Call_03_bb93.l                                                  ; $81a4 : $22, $93, $bb, $83
 	jsr Call_03_e03e.w                                                  ; $81a8 : $20, $3e, $e0
@@ -561,7 +561,7 @@ Call_03_83a0:
 br_03_83bd:
 	jsr Call_03_afea.l                                                  ; $83bd : $22, $ea, $af, $83
 	stz $81                                                  ; $83c1 : $64, $81
-	stz $420c.w                                                  ; $83c3 : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $83c3 : $9c, $0c, $42
 	jsr Call_03_900c.w                                                  ; $83c6 : $20, $0c, $90
 	lda #$1f.b                                                  ; $83c9 : $a9, $1f
 	sta $212c.w                                                  ; $83cb : $8d, $2c, $21
@@ -843,8 +843,8 @@ Call_03_85dc:
 	sta $0562.w                                                  ; $85ec : $8d, $62, $05
 	sta $0563.w                                                  ; $85ef : $8d, $63, $05
 	lda #$80.b                                                  ; $85f2 : $a9, $80
-	sta $0583.w                                                  ; $85f4 : $8d, $83, $05
-	sta $2100.w                                                  ; $85f7 : $8d, $00, $21
+	sta wIniDisp.w                                                  ; $85f4 : $8d, $83, $05
+	sta INIDISP.w                                                  ; $85f7 : $8d, $00, $21
 	tdc                                                  ; $85fa : $7b
 	sta $6a                                                  ; $85fb : $85, $6a
 	sta $6f                                                  ; $85fd : $85, $6f
@@ -854,7 +854,7 @@ Call_03_85dc:
 	sta $1255.w                                                  ; $8605 : $8d, $55, $12
 	sta $1256.w                                                  ; $8608 : $8d, $56, $12
 	sta $81                                                  ; $860b : $85, $81
-	sta $420c.w                                                  ; $860d : $8d, $0c, $42
+	sta HDMAEN.w                                                  ; $860d : $8d, $0c, $42
 	lda #$ff.b                                                  ; $8610 : $a9, $ff
 	sta $7fd0b0.l                                                  ; $8612 : $8f, $b0, $d0, $7f
 	sta $7fd4f5.l                                                  ; $8616 : $8f, $f5, $d4, $7f
@@ -7067,10 +7067,10 @@ br_03_acef:
 	jsr Call_03_b062.w                                                  ; $acf9 : $20, $62, $b0
 	stz $74                                                  ; $acfc : $64, $74
 	lda #$80.b                                                  ; $acfe : $a9, $80
-	sta $0583.w                                                  ; $ad00 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $ad00 : $8d, $83, $05
 	stz $6a                                                  ; $ad03 : $64, $6a
 	stz $81                                                  ; $ad05 : $64, $81
-	stz $420c.w                                                  ; $ad07 : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $ad07 : $9c, $0c, $42
 	stz $f2                                                  ; $ad0a : $64, $f2
 	lda #$81.b                                                  ; $ad0c : $a9, $81
 	sta NMITIMEN.w                                                  ; $ad0e : $8d, $00, $42
@@ -7447,7 +7447,7 @@ br_03_afcc:
 Call_03_afcd:
 	php                                                  ; $afcd : $08
 	sep #ACCU_8|IDX_8                                                  ; $afce : $e2, $30
-	lda $0583.w                                                  ; $afd0 : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $afd0 : $ad, $83, $05
 	bpl br_03_afe8                                                  ; $afd3 : $10, $13
 
 	stz $0582.w                                                  ; $afd5 : $9c, $82, $05
@@ -7468,7 +7468,7 @@ br_03_afe8:
 Call_03_afea:
 	php                                                  ; $afea : $08
 	sep #ACCU_8|IDX_8                                                  ; $afeb : $e2, $30
-	lda $0583.w                                                  ; $afed : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $afed : $ad, $83, $05
 	bmi br_03_b005                                                  ; $aff0 : $30, $13
 
 	stz $0582.w                                                  ; $aff2 : $9c, $82, $05
@@ -7583,7 +7583,7 @@ br_03_b0b8:
 	sta $73                                                  ; $b0d0 : $85, $73
 	stz $72                                                  ; $b0d2 : $64, $72
 	stz $81                                                  ; $b0d4 : $64, $81
-	stz $420c.w                                                  ; $b0d6 : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $b0d6 : $9c, $0c, $42
 	stz $74                                                  ; $b0d9 : $64, $74
 	stz $09aa.w                                                  ; $b0db : $9c, $aa, $09
 	stz $1209.w                                                  ; $b0de : $9c, $09, $12
@@ -7693,14 +7693,14 @@ br_03_b116:
 	ldx #$0f30.w                                                  ; $b194 : $a2, $30, $0f
 	stx $0562.w                                                  ; $b197 : $8e, $62, $05
 	lda #$80.b                                                  ; $b19a : $a9, $80
-	sta $0583.w                                                  ; $b19c : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $b19c : $8d, $83, $05
 	lda #$81.b                                                  ; $b19f : $a9, $81
 	sta NMITIMEN.w                                                  ; $b1a1 : $8d, $00, $42
 	jsr Call_03_900c.w                                                  ; $b1a4 : $20, $0c, $90
 	stz NMITIMEN.w                                                  ; $b1a7 : $9c, $00, $42
-	sta $2100.w                                                  ; $b1aa : $8d, $00, $21
+	sta INIDISP.w                                                  ; $b1aa : $8d, $00, $21
 	stz $81                                                  ; $b1ad : $64, $81
-	stz $420c.w                                                  ; $b1af : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $b1af : $9c, $0c, $42
 	stz $72                                                  ; $b1b2 : $64, $72
 	stz $73                                                  ; $b1b4 : $64, $73
 	stz $74                                                  ; $b1b6 : $64, $74
@@ -7713,7 +7713,7 @@ br_03_b116:
 	sta $7fd0fe.l                                                  ; $b1c9 : $8f, $fe, $d0, $7f
 	sta $7fd0a1.l                                                  ; $b1cd : $8f, $a1, $d0, $7f
 	lda #$80.b                                                  ; $b1d1 : $a9, $80
-	sta $2100.w                                                  ; $b1d3 : $8d, $00, $21
+	sta INIDISP.w                                                  ; $b1d3 : $8d, $00, $21
 	ldx #$0007.w                                                  ; $b1d6 : $a2, $07, $00
 	tdc                                                  ; $b1d9 : $7b
 

@@ -2267,7 +2267,7 @@ br_02_8de9:
 
 	trb $1565.w                                                  ; $8df0 : $1c, $65, $15
 	lda $f2                                                  ; $8df3 : $a5, $f2
-	sta $420c.w                                                  ; $8df5 : $8d, $0c, $42
+	sta HDMAEN.w                                                  ; $8df5 : $8d, $0c, $42
 
 br_02_8df8:
 	lda $1565.w                                                  ; $8df8 : $ad, $65, $15
@@ -15489,7 +15489,7 @@ Func_2_e80c:
 
 	sep #ACCU_8                                                  ; $e81b : $e2, $20
 	jsr $868e6b.l                                                  ; $e81d : $22, $6b, $8e, $86
-	lda $0583.w                                                  ; $e821 : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $e821 : $ad, $83, $05
 	and #$0f.b                                                  ; $e824 : $29, $0f
 	beq br_02_e82c                                                  ; $e826 : $f0, $04
 

@@ -11,7 +11,14 @@ wCurrCharMovePatternAddr: ; $2a
     dw
 
 w2c:
-    ds $46-$2c
+    ds $40-$2c
+
+; can be set
+wNmiCounter: ; $40
+    dw
+
+w42:
+    ds 6-2
 
 wJoy1CurrHeld: ; $46
     dw
@@ -200,7 +207,13 @@ wGenericMvnSrcBank: ; $057f
     db
 
 w0580:
-    ds $a4-$80
+    ds 3-0
+
+wIniDisp: ; $0583
+    db
+
+w0584:
+    ds $a4-$84
 
 ; Every tile is -/+ $10
 wInAreaPlayerX: ; $05a4

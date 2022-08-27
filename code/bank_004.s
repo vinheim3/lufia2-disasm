@@ -137,7 +137,7 @@ br_04_80ad:
 	bne br_04_8183                                                  ; $8102 : $d0, $7f
 
 	sta $7fd091.l                                                  ; $8104 : $8f, $91, $d0, $7f
-	sta $0583.w                                                  ; $8108 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $8108 : $8d, $83, $05
 	cmp #$900f.w                                                  ; $810b : $c9, $0f, $90
 	ora $a9                                                  ; $810e : $05, $a9
 	cop $1c.b                                                  ; $8110 : $02, $1c
@@ -160,7 +160,7 @@ br_04_8114:
 	.db $d0, $7f                                                  ; $8131 : $d0, $7f
 
 	sta $7fd091.l                                                  ; $8133 : $8f, $91, $d0, $7f
-	sta $0583.w                                                  ; $8137 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $8137 : $8d, $83, $05
 	bpl br_04_8144                                                  ; $813a : $10, $08
 
 	lda #$8d80.w                                                  ; $813c : $a9, $80, $8d
@@ -4295,7 +4295,7 @@ br_04_9c91:
 	pha                                                  ; $9ca1 : $48
 	plb                                                  ; $9ca2 : $ab
 	lda #$80.b                                                  ; $9ca3 : $a9, $80
-	sta $0583.w                                                  ; $9ca5 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $9ca5 : $8d, $83, $05
 	stz $00d9.w                                                  ; $9ca8 : $9c, $d9, $00
 	stz $00d8.w                                                  ; $9cab : $9c, $d8, $00
 	stz $00da.w                                                  ; $9cae : $9c, $da, $00
@@ -5813,7 +5813,7 @@ br_04_a6f4:
 	php                                                  ; $a705 : $08
 	sep #ACCU_8                                                  ; $a706 : $e2, $20
 	lda #$80.b                                                  ; $a708 : $a9, $80
-	sta $0583.w                                                  ; $a70a : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $a70a : $8d, $83, $05
 	jsr Call_04_b57f.w                                                  ; $a70d : $20, $7f, $b5
 	phb                                                  ; $a710 : $8b
 	lda #$7e.b                                                  ; $a711 : $a9, $7e
@@ -8102,7 +8102,7 @@ Call_04_b57f:
 	ora $001f00.l, X                                                  ; $b635 : $1f, $00, $1f, $00
 	tcs                                                  ; $b639 : $1b
 	.db $00                                                  ; $b63a : $00
-	ora $2100.w, X                                                  ; $b63b : $1d, $00, $21
+	ora INIDISP.w, X                                                  ; $b63b : $1d, $00, $21
 	.db $00                                                  ; $b63e : $00
 	and ($00, X)                                                  ; $b63f : $21, $00
 	trb $1d00.w                                                  ; $b641 : $1c, $00, $1d
@@ -8468,7 +8468,7 @@ br_04_b775:
 	php                                                  ; $b827 : $08
 	sep #ACCU_8                                                  ; $b828 : $e2, $20
 	lda #$80.b                                                  ; $b82a : $a9, $80
-	sta $0583.w                                                  ; $b82c : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $b82c : $8d, $83, $05
 	jsr Call_04_b57f.w                                                  ; $b82f : $20, $7f, $b5
 	phb                                                  ; $b832 : $8b
 	lda #$7e.b                                                  ; $b833 : $a9, $7e
@@ -10831,7 +10831,7 @@ Call_04_c819:
 
 	sep #ACCU_8                                                  ; $c826 : $e2, $20
 	lda #$80.b                                                  ; $c828 : $a9, $80
-	sta $0583.w                                                  ; $c82a : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $c82a : $8d, $83, $05
 	rep #ACCU_8                                                  ; $c82d : $c2, $20
 	phb                                                  ; $c82f : $8b
 	ldx #$ee20.w                                                  ; $c830 : $a2, $20, $ee
@@ -13595,7 +13595,7 @@ Call_04_da9b:
 	sep #ACCU_8                                                  ; $da9c : $e2, $20
 	rep #IDX_8                                                  ; $da9e : $c2, $10
 	lda #$80.b                                                  ; $daa0 : $a9, $80
-	sta $0583.w                                                  ; $daa2 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $daa2 : $8d, $83, $05
 	lda #$44.b                                                  ; $daa5 : $a9, $44
 	sta $210b.w                                                  ; $daa7 : $8d, $0b, $21
 	lda #$11.b                                                  ; $daaa : $a9, $11
@@ -16626,7 +16626,7 @@ Call_04_ee4b:
 	rep #ACCU_8                                                  ; $ee4c : $c2, $20
 	jsr Call_04_a5ca.w                                                  ; $ee4e : $20, $ca, $a5
 	lda #$0080.w                                                  ; $ee51 : $a9, $80, $00
-	sta $0583.w                                                  ; $ee54 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $ee54 : $8d, $83, $05
 	phb                                                  ; $ee57 : $8b
 	ldx #$f120.w                                                  ; $ee58 : $a2, $20, $f1
 	ldy #$0320.w                                                  ; $ee5b : $a0, $20, $03
@@ -16701,7 +16701,7 @@ br_04_eeeb:
 	jsr Call_04_a5ca.w                                                  ; $eeeb : $20, $ca, $a5
 	jsr Call_04_efc4.w                                                  ; $eeee : $20, $c4, $ef
 	lda #$0080.w                                                  ; $eef1 : $a9, $80, $00
-	sta $0583.w                                                  ; $eef4 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $eef4 : $8d, $83, $05
 	phb                                                  ; $eef7 : $8b
 	ldx #$f020.w                                                  ; $eef8 : $a2, $20, $f0
 	ldy #$0320.w                                                  ; $eefb : $a0, $20, $03
@@ -17095,7 +17095,7 @@ br_04_f10e:
 	lda #$00.b                                                  ; $f155 : $a9, $00
 	sta $4340.w                                                  ; $f157 : $8d, $40, $43
 	lda #$10.b                                                  ; $f15a : $a9, $10
-	sta $420c.w                                                  ; $f15c : $8d, $0c, $42
+	sta HDMAEN.w                                                  ; $f15c : $8d, $0c, $42
 	bra br_04_f16e                                                  ; $f15f : $80, $0d
 
 br_04_f161:
@@ -17104,7 +17104,7 @@ br_04_f161:
 
 	lda #$00.b                                                  ; $f165 : $a9, $00
 	sta $7e6000.l                                                  ; $f167 : $8f, $00, $60, $7e
-	sta $420c.w                                                  ; $f16b : $8d, $0c, $42
+	sta HDMAEN.w                                                  ; $f16b : $8d, $0c, $42
 
 br_04_f16e:
 	plp                                                  ; $f16e : $28
@@ -17461,7 +17461,7 @@ Call_04_f38a:
 	sep #ACCU_8                                                  ; $f38b : $e2, $20
 	rep #IDX_8                                                  ; $f38d : $c2, $10
 	lda #$80.b                                                  ; $f38f : $a9, $80
-	sta $0583.w                                                  ; $f391 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $f391 : $8d, $83, $05
 	lda #$44.b                                                  ; $f394 : $a9, $44
 	sta $210b.w                                                  ; $f396 : $8d, $0b, $21
 	lda #$11.b                                                  ; $f399 : $a9, $11

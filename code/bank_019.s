@@ -17926,7 +17926,7 @@ br_19_fd5c:
 	cpy #$c0.b                                                  ; $fd6a : $c0, $c0
 	ora ($00, X)                                                  ; $fd6c : $01, $00
 	cop $01.b                                                  ; $fd6e : $02, $01
-	ora $2100.w, X                                                  ; $fd70 : $1d, $00, $21
+	ora INIDISP.w, X                                                  ; $fd70 : $1d, $00, $21
 	asl $3f1c.w, X                                                  ; $fd73 : $1e, $1c, $3f
 	clc                                                  ; $fd76 : $18
 	adc $90700e.l, X                                                  ; $fd77 : $7f, $0e, $70, $90

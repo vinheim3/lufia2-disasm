@@ -1,3 +1,4 @@
+INIDISP = $2100 ; Screen Display Register
 OAMADDL = $2102 ; OAM Address Registers (Low)
 OAMDATA = $2104 ; OAM Data Write Register
 BGMODE = $2105 ; BG Mode and Character Size Register
@@ -29,6 +30,8 @@ WRDIVL = $4204 ; Divisor & Dividend Registers
 WRDIVH = $4205 ; Divisor & Dividend Registers
 WRDIVB = $4206 ; Divisor & Dividend Registers
 MDMAEN = $420b ; DMA Enable Register
+HDMAEN = $420c ; HDMA Enable Register
+RDNMI = $4210 ; Interrupt Flag Registers
 HVBJOY = $4212 ; PPU Status Register
 RDDIVL = $4214 ; Multiplication Or Divide Result Registers (Low)
 RDMPYL = $4216 ; Multiplication Or Divide Result Registers (Low)

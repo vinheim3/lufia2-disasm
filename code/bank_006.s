@@ -9,7 +9,7 @@ Jump_06_8000:
 	sep #ACCU_8                                                  ; $8000 : $e2, $20
 	rep #IDX_8                                                  ; $8002 : $c2, $10
 	lda #$80.b                                                  ; $8004 : $a9, $80
-	sta $0583.w                                                  ; $8006 : $8d, $83, $05
+	sta wIniDisp.w                                                  ; $8006 : $8d, $83, $05
 	jsr Call_06_8b48.w                                                  ; $8009 : $20, $48, $8b
 	jsr Call_06_8dbb.l                                                  ; $800c : $22, $bb, $8d, $86
 	lda #$ff.b                                                  ; $8010 : $a9, $ff
@@ -2055,7 +2055,7 @@ br_06_8d4a:
 	ora ($01)                                                  ; $8db9 : $12, $01
 
 Call_06_8dbb:
-	stz $420c.w                                                  ; $8dbb : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $8dbb : $9c, $0c, $42
 	stz $71                                                  ; $8dbe : $64, $71
 	stz $6a                                                  ; $8dc0 : $64, $6a
 	stz $f2                                                  ; $8dc2 : $64, $f2
@@ -2792,7 +2792,7 @@ Call_06_92a1:
 	jsr Call_06_e9d4.w                                                  ; $9355 : $20, $d4, $e9
 	lda #$02.b                                                  ; $9358 : $a9, $02
 	jsr Call_06_d385.w                                                  ; $935a : $20, $85, $d3
-	stz $0583.w                                                  ; $935d : $9c, $83, $05
+	stz wIniDisp.w                                                  ; $935d : $9c, $83, $05
 	ldx #$0000.w                                                  ; $9360 : $a2, $00, $00
 	stx $42                                                  ; $9363 : $86, $42
 
@@ -2902,7 +2902,7 @@ br_06_941d:
 	jsr Call_06_d37d.w                                                  ; $9438 : $20, $7d, $d3
 
 br_06_943b:
-	lda $0583.w                                                  ; $943b : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $943b : $ad, $83, $05
 	bpl br_06_9415                                                  ; $943e : $10, $d5
 
 br_06_9440:
@@ -2915,7 +2915,7 @@ br_06_9440:
 
 
 Call_06_944e:
-	lda $0583.w                                                  ; $944e : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $944e : $ad, $83, $05
 	bmi br_06_946e                                                  ; $9451 : $30, $1b
 
 	lda $0581.w                                                  ; $9453 : $ad, $81, $05
@@ -4501,7 +4501,7 @@ br_06_9e17:
 	jsr Call_06_d37d.w                                                  ; $9e1e : $20, $7d, $d3
 
 br_06_9e21:
-	lda $0583.w                                                  ; $9e21 : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $9e21 : $ad, $83, $05
 	bmi br_06_9e3a                                                  ; $9e24 : $30, $14
 
 	jsr Call_06_94d4.w                                                  ; $9e26 : $20, $d4, $94
@@ -5111,7 +5111,7 @@ br_06_a244:
 	jsr Call_06_e1b9.w                                                  ; $a24a : $20, $b9, $e1
 	jsr Call_06_973e.w                                                  ; $a24d : $20, $3e, $97
 	jsr Call_06_974f.w                                                  ; $a250 : $20, $4f, $97
-	lda $0583.w                                                  ; $a253 : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $a253 : $ad, $83, $05
 	bpl br_06_a22d                                                  ; $a256 : $10, $d5
 
 	lda #$8d01.w                                                  ; $a258 : $a9, $01, $8d
@@ -7023,7 +7023,7 @@ br_06_ada6:
 
 	jsr Call_06_d3a5.w                                                  ; $adb0 : $20, $a5, $d3
 	stz NMITIMEN.w                                                  ; $adb3 : $9c, $00, $42
-	stz $420c.w                                                  ; $adb6 : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $adb6 : $9c, $0c, $42
 	stz VMAIN.w                                                  ; $adb9 : $9c, $15, $21
 	ldx #$0000.w                                                  ; $adbc : $a2, $00, $00
 	stx VMADDL.w                                                  ; $adbf : $8e, $16, $21
@@ -7210,7 +7210,7 @@ br_06_aeed:
 	sta $1230.w                                                  ; $aef2 : $8d, $30, $12
 	plx                                                  ; $aef5 : $fa
 	jsr ($af0a.w, X)                                                  ; $aef6 : $fc, $0a, $af
-	lda $0583.w                                                  ; $aef9 : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $aef9 : $ad, $83, $05
 	bmi br_06_af01                                                  ; $aefc : $30, $03
 
 	jsr Call_06_d37d.w                                                  ; $aefe : $20, $7d, $d3
@@ -9663,7 +9663,7 @@ br_06_bf7a:
 Call_06_bf99:
 	jsr Call_06_d3a5.w                                                  ; $bf99 : $20, $a5, $d3
 	stz NMITIMEN.w                                                  ; $bf9c : $9c, $00, $42
-	stz $420c.w                                                  ; $bf9f : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $bf9f : $9c, $0c, $42
 	ldx #$0293.w                                                  ; $bfa2 : $a2, $93, $02
 	stx $54                                                  ; $bfa5 : $86, $54
 	ldx #$e000.w                                                  ; $bfa7 : $a2, $00, $e0
@@ -10007,7 +10007,7 @@ br_06_c227:
 br_06_c231:
 	jsr Call_06_973e.w                                                  ; $c231 : $20, $3e, $97
 	jsr Call_06_974f.w                                                  ; $c234 : $20, $4f, $97
-	lda $0583.w                                                  ; $c237 : $ad, $83, $05
+	lda wIniDisp.w                                                  ; $c237 : $ad, $83, $05
 	bmi br_06_c245                                                  ; $c23a : $30, $09
 
 	ldx $1226.w                                                  ; $c23c : $ae, $26, $12
@@ -11630,7 +11630,7 @@ Call_06_cb9e:
 Call_06_cbbf:
 	jsr Call_06_d3a5.w                                                  ; $cbbf : $20, $a5, $d3
 	stz NMITIMEN.w                                                  ; $cbc2 : $9c, $00, $42
-	stz $420c.w                                                  ; $cbc5 : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $cbc5 : $9c, $0c, $42
 	ldx #$0000.w                                                  ; $cbc8 : $a2, $00, $00
 	stx $0320.w                                                  ; $cbcb : $8e, $20, $03
 	stz CGADD.w                                                  ; $cbce : $9c, $21, $21
@@ -11826,7 +11826,7 @@ br_06_cd40:
 Call_06_cd41:
 	jsr Call_06_d3a5.w                                                  ; $cd41 : $20, $a5, $d3
 	stz NMITIMEN.w                                                  ; $cd44 : $9c, $00, $42
-	stz $420c.w                                                  ; $cd47 : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $cd47 : $9c, $0c, $42
 	jsr Call_06_cdf5.w                                                  ; $cd4a : $20, $f5, $cd
 	lda $11e2.w                                                  ; $cd4d : $ad, $e2, $11
 	bne br_06_cd55                                                  ; $cd50 : $d0, $03
@@ -11982,7 +11982,7 @@ Data_6_ce36:
 Call_06_ce68:
 	jsr Call_06_d3a5.w                                                  ; $ce68 : $20, $a5, $d3
 	stz NMITIMEN.w                                                  ; $ce6b : $9c, $00, $42
-	stz $420c.w                                                  ; $ce6e : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $ce6e : $9c, $0c, $42
 	ldx #$028d.w                                                  ; $ce71 : $a2, $8d, $02
 	stx $54                                                  ; $ce74 : $86, $54
 	ldx #$0000.w                                                  ; $ce76 : $a2, $00, $00
@@ -12043,8 +12043,8 @@ Call_06_ce68:
 	pha                                                  ; $cefe : $48
 	plb                                                  ; $ceff : $ab
 	lda #$8f.b                                                  ; $cf00 : $a9, $8f
-	sta $2100.w                                                  ; $cf02 : $8d, $00, $21
-	stz $420c.w                                                  ; $cf05 : $9c, $0c, $42
+	sta INIDISP.w                                                  ; $cf02 : $8d, $00, $21
+	stz HDMAEN.w                                                  ; $cf05 : $9c, $0c, $42
 	lda $11d9.w                                                  ; $cf08 : $ad, $d9, $11
 	beq br_06_cf15                                                  ; $cf0b : $f0, $08
 
@@ -12325,7 +12325,7 @@ br_06_d12c:
 	beq br_06_d136                                                  ; $d12f : $f0, $05
 
 	lda $33                                                  ; $d131 : $a5, $33
-	sta $420c.w                                                  ; $d133 : $8d, $0c, $42
+	sta HDMAEN.w                                                  ; $d133 : $8d, $0c, $42
 
 br_06_d136:
 	lda $11f8.w                                                  ; $d136 : $ad, $f8, $11
@@ -12604,7 +12604,7 @@ Call_06_d330:
 	stz $73                                                  ; $d334 : $64, $73
 	stz $74                                                  ; $d336 : $64, $74
 	stz $81                                                  ; $d338 : $64, $81
-	stz $420c.w                                                  ; $d33a : $9c, $0c, $42
+	stz HDMAEN.w                                                  ; $d33a : $9c, $0c, $42
 	jsr Call_06_d3a5.w                                                  ; $d33d : $20, $a5, $d3
 	ldy #$ff00.w                                                  ; $d340 : $a0, $00, $ff
 	sty $2126.w                                                  ; $d343 : $8c, $26, $21
@@ -12687,15 +12687,15 @@ br_06_d3a4:
 
 Call_06_d3a5:
 	lda #$8f.b                                                  ; $d3a5 : $a9, $8f
-	sta $0583.w                                                  ; $d3a7 : $8d, $83, $05
-	sta $2100.w                                                  ; $d3aa : $8d, $00, $21
+	sta wIniDisp.w                                                  ; $d3a7 : $8d, $83, $05
+	sta INIDISP.w                                                  ; $d3aa : $8d, $00, $21
 	rts                                                  ; $d3ad : $60
 
 
 Call_06_d3ae:
 	lda #$0f.b                                                  ; $d3ae : $a9, $0f
-	sta $0583.w                                                  ; $d3b0 : $8d, $83, $05
-	sta $2100.w                                                  ; $d3b3 : $8d, $00, $21
+	sta wIniDisp.w                                                  ; $d3b0 : $8d, $83, $05
+	sta INIDISP.w                                                  ; $d3b3 : $8d, $00, $21
 	rts                                                  ; $d3b6 : $60
 
 
