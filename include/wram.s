@@ -100,8 +100,20 @@ wSpriteTileIdx: ; $9d
 w9e:
     ds $f-$e
 
-wCameraTopLeftX: ; $9f
-    dw
+.union
+
+    wCameraTopLeftX: ; $9f
+        dw
+
+.nextu
+
+    wCurrPuzzlePieceX: ; $9f
+        db
+
+    wCurrPuzzlePieceY: ; $a0
+        db
+
+.endu
 
 wCameraTopLeftY: ; $a1
     dw
@@ -109,6 +121,8 @@ wCameraTopLeftY: ; $a1
 wa3:
     ds 7-3
 
+; todo: refers to the same thing? as in 8 static NPCs per room?
+; or 1st 8 can use scripts?
 .union
 
     wCurrChar: ; $a7
@@ -203,7 +217,19 @@ wCurrRoomIdx: ; $05ac
     db
 
 w05ad:
-    ds $d2-$ad
+    ds $b9-$ad
+
+wRoomMetatilesWide: ; $05b9
+    db
+
+w05ba:
+    ds $b-$a
+
+wRoomMetatilesHigh: ; $05bb
+    db
+
+w05bc:
+    ds $d2-$bc
 
 ; ie how they look
 wCharacterType: ; $05d2
@@ -215,6 +241,7 @@ wCharacterIds: ; $05fa
 w0622:
     ds $92-$22
 
+; D - 0, L - 2, U - 4, R - 6
 wCharacterMovementDirs: ; $0692
     ds NUM_CHARS
 
@@ -424,6 +451,13 @@ w7e3800:
 wEntitiesReservingSpriteSlots: ; $e100
     ds $80
 
+w7ee180:
+    ds $f000-$e180
+
+; todo: unknown size
+wRoomMetadataDicts: ; $f000
+    db
+
 .ends
 
 .ramsection "Ram 7fh" bank $7f slot 1
@@ -449,16 +483,33 @@ wPuzzleScriptBitFlags: ; $d100
     db
 
 w7fd101:
-    ds $5c-1
+    ds $4c-1
+
+wCurrScriptBtnPressedStatus: ; $d14c
+    ds NUM_PUZZLE_SCRIPTS
+
+w7fd154: ; $d154
+    ds NUM_PUZZLE_SCRIPTS
 
 ; idxed (code-$fb)*8 + curr script
-wPuzzleScriptFbhVars: ; $d15c
-    ds NUM_PUZZLE_SCRIPTS*4
+; container 0 - eg contains btn stepped on for curr script
+wPuzzleScriptContainer0Vars: ; $d15c
+    ds NUM_PUZZLE_SCRIPTS
+wPuzzleScriptContainer1Vars: ; $d164
+    ds NUM_PUZZLE_SCRIPTS
+wPuzzleScriptContainer2Vars: ; $d16c
+    ds NUM_PUZZLE_SCRIPTS
+wPuzzleScriptContainer3Vars: ; $d174
+    ds NUM_PUZZLE_SCRIPTS
 
-w7fd17c:
-    ds $8c-$7c
+wtodo_PzScriptVars_d17c: ; $d17c
+    ds NUM_PUZZLE_SCRIPTS
 
-wPuzzleScriptsEnabled: ; $d18c
+wtodo_PzScriptVars_d184: ; $d184
+    ds NUM_PUZZLE_SCRIPTS
+
+; enabled if bit 7 set, delay is the other 7(?) bytes
+wPuzzleScriptsEnabledAndDelay: ; $d18c
     ds NUM_PUZZLE_SCRIPTS
 
 ; if $ffff, there is no script
@@ -472,14 +523,59 @@ wPuzzleScriptCurrAddr: ; $d197
 wPuzzleScriptCurrBank: ; $d199
     db
 
-w7fd19a:
-    ds $a0-$9a
+; eg for detecting stepping on button for world's hardest trick:
+; $ff is set when player is on button
+; bit 0 is set if the player just stepped on the button, else cleared
+wPuzzleScriptGenericCheck: ; $d19a
+    db
+
+; with the +$20, eg for world's hardest, the original $34 btn idx
+; they start at $20 as they get morphed into a bitflag from idx 4+
+wPuzzleBtnEntryIdx: ; $d19b
+    db
+
+w7fd19c: ; $d19c
+    ds 4
 
 wCurrRoomChestContentsAddr: ; $d1a0
     dw
 
 w7fd1a2:
-    ds $dae-$1a2
+    ds 3-2
+
+; todo: unknown size, $20 makes sense if e0 to ff is allowed
+wPuzzleScriptArithmeticVars0: ; $d1a3
+    ds $20
+
+w7fd1c3:
+    ds $e3-$c3
+
+; todo: unknown size, $20 makes sense if e0 to ff is allowed
+wPuzzleScriptArithmeticVars1: ; $d1e3
+    ds $20
+
+w7fd203:
+    ds $23-3
+
+; todo: unknown size, $20 makes sense if e0 to ff is allowed
+wPuzzleScriptArithmeticVars2: ; $d223
+    ds $20
+
+w7fd243:
+    ds $63-$43
+
+; todo: unknown size, $20 makes sense if e0 to ff is allowed
+wPuzzleScriptArithmeticVars3: ; $d263
+    ds $20
+
+w7fd283:
+    ds $a3-$83
+
+wtodo_SavedPuzzleScriptIdx: ; $d2a3
+    db
+
+w7fd2a4:
+    ds $dae-$2a4
 
 wEntityXs: ; $ddae
     ds NUM_ENTITIES*2

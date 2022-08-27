@@ -1102,7 +1102,7 @@ Call_03_87a3:
 	lda $7fd04e.l                                                  ; $87a6 : $af, $4e, $d0, $7f
 	and #$7f.b                                                  ; $87aa : $29, $7f
 	ldx #$0026.w                                                  ; $87ac : $a2, $26, $00
-	jsr $80bfaa.l                                                  ; $87af : $22, $aa, $bf, $80
+	jsr GetRoomMetadataDictValue.l                                                  ; $87af : $22, $aa, $bf, $80
 	lda $7ef001.l, X                                                  ; $87b3 : $bf, $01, $f0, $7e
 	sta $7fd046.l                                                  ; $87b7 : $8f, $46, $d0, $7f
 	lda $7ef002.l, X                                                  ; $87bb : $bf, $02, $f0, $7e
@@ -1196,7 +1196,7 @@ Call_03_8848:
 	lda #$0f.b                                                  ; $8849 : $a9, $0f
 	xba                                                  ; $884b : $eb
 	ldx #$0002.w                                                  ; $884c : $a2, $02, $00
-	jsr $80bfaa.l                                                  ; $884f : $22, $aa, $bf, $80
+	jsr GetRoomMetadataDictValue.l                                                  ; $884f : $22, $aa, $bf, $80
 	lda $7ef001.l, X                                                  ; $8853 : $bf, $01, $f0, $7e
 	sta $7fd046.l                                                  ; $8857 : $8f, $46, $d0, $7f
 	lda $7ef002.l, X                                                  ; $885b : $bf, $02, $f0, $7e
@@ -1213,7 +1213,7 @@ Call_03_8874:
 	xba                                                  ; $8876 : $eb
 	lda $7fd048.l                                                  ; $8877 : $af, $48, $d0, $7f
 	ldx #$0004.w                                                  ; $887b : $a2, $04, $00
-	jsr $80bfaa.l                                                  ; $887e : $22, $aa, $bf, $80
+	jsr GetRoomMetadataDictValue.l                                                  ; $887e : $22, $aa, $bf, $80
 	lda $7ef001.l, X                                                  ; $8882 : $bf, $01, $f0, $7e
 	sta $7fd05f.l                                                  ; $8886 : $8f, $5f, $d0, $7f
 	sec                                                  ; $888a : $38
@@ -1348,7 +1348,7 @@ Call_03_898e:
 br_03_899f:
 	clc                                                  ; $899f : $18
 	adc $7fd047.l                                                  ; $89a0 : $6f, $47, $d0, $7f
-	jsr Call_03_f9f7.w                                                  ; $89a4 : $20, $f7, $f9
+	jsr XequMetatileOffsRowAColB.w                                                  ; $89a4 : $20, $f7, $f9
 	rep #ACCU_8                                                  ; $89a7 : $c2, $20
 	txa                                                  ; $89a9 : $8a
 	ldx $05aa.w                                                  ; $89aa : $ae, $aa, $05
@@ -1474,7 +1474,7 @@ Call_03_8a6f:
 	lda $7fd046.l                                                  ; $8a73 : $af, $46, $d0, $7f
 	xba                                                  ; $8a77 : $eb
 	lda $7fd047.l                                                  ; $8a78 : $af, $47, $d0, $7f
-	jsr Call_03_f9f7.w                                                  ; $8a7c : $20, $f7, $f9
+	jsr XequMetatileOffsRowAColB.w                                                  ; $8a7c : $20, $f7, $f9
 	rep #ACCU_8                                                  ; $8a7f : $c2, $20
 	txa                                                  ; $8a81 : $8a
 	ldx $54                                                  ; $8a82 : $a6, $54
@@ -1483,7 +1483,7 @@ Call_03_8a6f:
 	tax                                                  ; $8a89 : $aa
 	sep #ACCU_8                                                  ; $8a8a : $e2, $20
 	tdc                                                  ; $8a8c : $7b
-	lda $05b9.w                                                  ; $8a8d : $ad, $b9, $05
+	lda wRoomMetatilesWide.w                                                  ; $8a8d : $ad, $b9, $05
 	sec                                                  ; $8a90 : $38
 	sbc $7fd04c.l                                                  ; $8a91 : $ef, $4c, $d0, $7f
 	rep #ACCU_8                                                  ; $8a95 : $c2, $20
@@ -1587,16 +1587,16 @@ Call_03_8b0e:
 	rts                                                  ; $8b3f : $60
 
 
+; A - dict value to search for
 Call_03_8b40:
 	xba                                                  ; $8b40 : $eb
 	lda #$0a.b                                                  ; $8b41 : $a9, $0a
 	xba                                                  ; $8b43 : $eb
 	ldx #$0016.w                                                  ; $8b44 : $a2, $16, $00
-	jsr $80bfaa.l                                                  ; $8b47 : $22, $aa, $bf, $80
-	bcc br_03_8b4d                                                  ; $8b4b : $90, $00
+	jsr GetRoomMetadataDictValue.l                                                  ; $8b47 : $22, $aa, $bf, $80
+	bcc +                                                  ; $8b4b : $90, $00
 
-br_03_8b4d:
-	rep #ACCU_8                                                  ; $8b4d : $c2, $20
++	rep #ACCU_8                                                  ; $8b4d : $c2, $20
 	lda $7ef002.l, X                                                  ; $8b4f : $bf, $02, $f0, $7e
 	sta $7fd04a.l                                                  ; $8b53 : $8f, $4a, $d0, $7f
 	lda $7ef004.l, X                                                  ; $8b57 : $bf, $04, $f0, $7e
@@ -1622,7 +1622,7 @@ Call_03_8b6a:
 	sta $54                                                  ; $8b78 : $85, $54
 
 ; eg 003a
-	lda $0005b9.l                                                  ; $8b7a : $af, $b9, $05, $00
+	lda wRoomMetatilesWide.l                                                  ; $8b7a : $af, $b9, $05, $00
 	asl                                                  ; $8b7e : $0a
 	sec                                                  ; $8b7f : $38
 	sbc $54                                                  ; $8b80 : $e5, $54
@@ -1631,7 +1631,7 @@ Call_03_8b6a:
 	sta $5a                                                  ; $8b84 : $85, $5a
 	sep #ACCU_8                                                  ; $8b86 : $e2, $20
 
-	lda $0005b9.l                                                  ; $8b88 : $af, $b9, $05, $00
+	lda wRoomMetatilesWide.l                                                  ; $8b88 : $af, $b9, $05, $00
 	sta WRMPYA.l                                                  ; $8b8c : $8f, $02, $42, $00
 
 ; eg 1e
@@ -1819,7 +1819,7 @@ Call_03_8c8a:
 	lda $7fd046.l                                                  ; $8c92 : $af, $46, $d0, $7f
 	xba                                                  ; $8c96 : $eb
 	lda $7fd047.l                                                  ; $8c97 : $af, $47, $d0, $7f
-	jsr Call_03_f9f7.w                                                  ; $8c9b : $20, $f7, $f9
+	jsr XequMetatileOffsRowAColB.w                                                  ; $8c9b : $20, $f7, $f9
 	stx $54                                                  ; $8c9e : $86, $54
 	rep #ACCU_8                                                  ; $8ca0 : $c2, $20
 	ldx $05aa.w                                                  ; $8ca2 : $ae, $aa, $05
@@ -1833,7 +1833,7 @@ Call_03_8c8a:
 	tay                                                  ; $8cb3 : $a8
 	sep #ACCU_8                                                  ; $8cb4 : $e2, $20
 	tdc                                                  ; $8cb6 : $7b
-	lda $05b9.w                                                  ; $8cb7 : $ad, $b9, $05
+	lda wRoomMetatilesWide.w                                                  ; $8cb7 : $ad, $b9, $05
 	sec                                                  ; $8cba : $38
 	sbc $7fd04c.l                                                  ; $8cbb : $ef, $4c, $d0, $7f
 	rep #ACCU_8                                                  ; $8cbf : $c2, $20
@@ -2279,7 +2279,7 @@ Call_03_8e85:
 	lda wCameraTopLeftX                                                  ; $8f2a : $a5, $9f
 	xba                                                  ; $8f2c : $eb
 	lda $a0                                                  ; $8f2d : $a5, $a0
-	jsr Call_03_f9f7.w                                                  ; $8f2f : $20, $f7, $f9
+	jsr XequMetatileOffsRowAColB.w                                                  ; $8f2f : $20, $f7, $f9
 	rep #ACCU_8                                                  ; $8f32 : $c2, $20
 	txa                                                  ; $8f34 : $8a
 	clc                                                  ; $8f35 : $18
@@ -2305,7 +2305,7 @@ Call_03_8e85:
 	brl @end_8fea                                                  ; $8f55 : $82, $92, $00
 
 @br_8f58:
-	lda $0005b9.l                                                  ; $8f58 : $af, $b9, $05, $00
+	lda wRoomMetatilesWide.l                                                  ; $8f58 : $af, $b9, $05, $00
 	and #$00ff.w                                                  ; $8f5c : $29, $ff, $00
 	sec                                                  ; $8f5f : $38
 	sbc $56                                                  ; $8f60 : $e5, $56
@@ -3557,7 +3557,7 @@ br_03_96fc:
 	xba                                                  ; $9709 : $eb
 	txa                                                  ; $970a : $8a
 	ldx #$000a.w                                                  ; $970b : $a2, $0a, $00
-	jsr $80bfaa.l                                                  ; $970e : $22, $aa, $bf, $80
+	jsr GetRoomMetadataDictValue.l                                                  ; $970e : $22, $aa, $bf, $80
 	bcs br_03_974c                                                  ; $9712 : $b0, $38
 
 	lda $7ef001.l, X                                                  ; $9714 : $bf, $01, $f0, $7e
@@ -3703,7 +3703,7 @@ br_03_97ef:
 	xba                                                  ; $97f2 : $eb
 	txa                                                  ; $97f3 : $8a
 	ldx #$0004.w                                                  ; $97f4 : $a2, $04, $00
-	jsr $80bfaa.l                                                  ; $97f7 : $22, $aa, $bf, $80
+	jsr GetRoomMetadataDictValue.l                                                  ; $97f7 : $22, $aa, $bf, $80
 	ldy $56                                                  ; $97fb : $a4, $56
 	bcc br_03_980d                                                  ; $97fd : $90, $0e
 
@@ -7718,7 +7718,7 @@ br_03_b116:
 	tdc                                                  ; $b1d9 : $7b
 
 br_03_b1da:
-	sta wPuzzleScriptsEnabled.l, X                                                  ; $b1da : $9f, $8c, $d1, $7f
+	sta wPuzzleScriptsEnabledAndDelay.l, X                                                  ; $b1da : $9f, $8c, $d1, $7f
 	dex                                                  ; $b1de : $ca
 	bpl br_03_b1da                                                  ; $b1df : $10, $f9
 
@@ -8032,7 +8032,7 @@ br_03_b41c:
 	rep #IDX_8                                                  ; $b458 : $c2, $10
 	lda $05b8.w                                                  ; $b45a : $ad, $b8, $05
 	ldx #$0004.w                                                  ; $b45d : $a2, $04, $00
-	jsr $80c12e.l                                                  ; $b460 : $22, $2e, $c1, $80
+	jsr GetRoomScriptX.l                                                  ; $b460 : $22, $2e, $c1, $80
 	sty $09b7.w                                                  ; $b464 : $8c, $b7, $09
 	sep #ACCU_8                                                  ; $b467 : $e2, $20
 	jsr Call_03_bb76.w                                                  ; $b469 : $20, $76, $bb
@@ -8209,10 +8209,10 @@ br_03_b585:
 	ldx #$003f.w                                                  ; $b58c : $a2, $3f, $00
 
 br_03_b58f:
-	sta $7fd1a3.l, X                                                  ; $b58f : $9f, $a3, $d1, $7f
-	sta $7fd1e3.l, X                                                  ; $b593 : $9f, $e3, $d1, $7f
-	sta $7fd223.l, X                                                  ; $b597 : $9f, $23, $d2, $7f
-	sta $7fd263.l, X                                                  ; $b59b : $9f, $63, $d2, $7f
+	sta wPuzzleScriptArithmeticVars0.l, X                                                  ; $b58f : $9f, $a3, $d1, $7f
+	sta wPuzzleScriptArithmeticVars1.l, X                                                  ; $b593 : $9f, $e3, $d1, $7f
+	sta wPuzzleScriptArithmeticVars2.l, X                                                  ; $b597 : $9f, $23, $d2, $7f
+	sta wPuzzleScriptArithmeticVars3.l, X                                                  ; $b59b : $9f, $63, $d2, $7f
 	dex                                                  ; $b59f : $ca
 	bpl br_03_b58f                                                  ; $b5a0 : $10, $ed
 
@@ -8447,12 +8447,12 @@ br_03_b726:
 
 Call_03_b727:
 	sta $00120a.l                                                  ; $b727 : $8f, $0a, $12, $00
-	jsr $80c12e.l                                                  ; $b72b : $22, $2e, $c1, $80
+	jsr GetRoomScriptX.l                                                  ; $b72b : $22, $2e, $c1, $80
 	sty $09b7.w                                                  ; $b72f : $8c, $b7, $09
 	jsr Call_03_bb76.w                                                  ; $b732 : $20, $76, $bb
 	lda #$01.b                                                  ; $b735 : $a9, $01
 	tsb $0622.w                                                  ; $b737 : $0c, $22, $06
-	jsr $80c195.l                                                  ; $b73a : $22, $95, $c1, $80
+	jsr Call_00_c195.l                                                  ; $b73a : $22, $95, $c1, $80
 	lda #$ff.b                                                  ; $b73e : $a9, $ff
 	sta $09ac.w                                                  ; $b740 : $8d, $ac, $09
 	sta $09ab.w                                                  ; $b743 : $8d, $ab, $09
@@ -10391,7 +10391,7 @@ br_03_c440:
 	xba                                                  ; $c445 : $eb
 	ldx #$16.b                                                  ; $c446 : $a2, $16
 	.db $00                                                  ; $c448 : $00
-	jsr $80bfaa.l                                                  ; $c449 : $22, $aa, $bf, $80
+	jsr GetRoomMetadataDictValue.l                                                  ; $c449 : $22, $aa, $bf, $80
 	lda wCurrChar                                                  ; $c44d : $a5, $a7
 	pha                                                  ; $c44f : $48
 	lda $7ef006.l, X                                                  ; $c450 : $bf, $06, $f0, $7e
@@ -16288,7 +16288,7 @@ br_03_ebcc:
 	sbc #$10.b                                                  ; $ebe2 : $e9, $10
 	ldx #$16.b                                                  ; $ebe4 : $a2, $16
 	.db $00                                                  ; $ebe6 : $00
-	jsr $80bfaa.l                                                  ; $ebe7 : $22, $aa, $bf, $80
+	jsr GetRoomMetadataDictValue.l                                                  ; $ebe7 : $22, $aa, $bf, $80
 	lda $7ef005.l, X                                                  ; $ebeb : $bf, $05, $f0, $7e
 	cmp #$02.b                                                  ; $ebef : $c9, $02
 	bcs br_03_ec23                                                  ; $ebf1 : $b0, $30
@@ -16945,7 +16945,7 @@ br_03_f08e:
 	tyx                                                  ; $f0a6 : $bb
 	ora $80                                                  ; $f0a7 : $05, $80
 	ora $8fa5.w                                                  ; $f0a9 : $0d, $a5, $8f
-	cmp $05b9.w                                                  ; $f0ac : $cd, $b9, $05
+	cmp wRoomMetatilesWide.w                                                  ; $f0ac : $cd, $b9, $05
 	bra br_03_f0b7                                                  ; $f0af : $80, $06
 
 	lda $8f                                                  ; $f0b1 : $a5, $8f
@@ -17466,7 +17466,7 @@ br_03_f472:
 	rep #ACCU_8                                                  ; $f472 : $c2, $20
 	txa                                                  ; $f474 : $8a
 	clc                                                  ; $f475 : $18
-	adc $0005b9.l                                                  ; $f476 : $6f, $b9, $05, $00
+	adc wRoomMetatilesWide.l                                                  ; $f476 : $6f, $b9, $05, $00
 	tax                                                  ; $f47a : $aa
 	sep #ACCU_8                                                  ; $f47b : $e2, $20
 
@@ -17514,7 +17514,7 @@ Call_03_f4b4:
 	sbc #$10.b                                                  ; $f4bf : $e9, $10
 	ldx #$16.b                                                  ; $f4c1 : $a2, $16
 	.db $00                                                  ; $f4c3 : $00
-	jsr $80bfaa.l                                                  ; $f4c4 : $22, $aa, $bf, $80
+	jsr GetRoomMetadataDictValue.l                                                  ; $f4c4 : $22, $aa, $bf, $80
 	lda $7ef006.l, X                                                  ; $f4c8 : $bf, $06, $f0, $7e
 	cmp #$ff.b                                                  ; $f4cc : $c9, $ff
 	beq br_03_f4f8                                                  ; $f4ce : $f0, $28
@@ -17556,7 +17556,7 @@ br_03_f4f8:
 	lda $7fd06e.l                                                  ; $f51d : $af, $6e, $d0, $7f
 	ldx #$16.b                                                  ; $f521 : $a2, $16
 	.db $00                                                  ; $f523 : $00
-	jsr $80bfaa.l                                                  ; $f524 : $22, $aa, $bf, $80
+	jsr GetRoomMetadataDictValue.l                                                  ; $f524 : $22, $aa, $bf, $80
 	lda $7ef007.l, X                                                  ; $f528 : $bf, $07, $f0, $7e
 	ora $7ef008.l, X                                                  ; $f52c : $1f, $08, $f0, $7e
 	bne br_03_f547                                                  ; $f530 : $d0, $15
@@ -17868,8 +17868,8 @@ Call_03_f747:
 
 	txa                                                  ; $f76f : $8a
 	clc                                                  ; $f770 : $18
-	adc $0005b9.l                                                  ; $f771 : $6f, $b9, $05, $00
-	adc $0005b9.l                                                  ; $f775 : $6f, $b9, $05, $00
+	adc wRoomMetatilesWide.l                                                  ; $f771 : $6f, $b9, $05, $00
+	adc wRoomMetatilesWide.l                                                  ; $f775 : $6f, $b9, $05, $00
 	tax                                                  ; $f779 : $aa
 	lda $d5de.w, Y                                                  ; $f77a : $b9, $de, $d5
 	jsr Call_03_f784.w                                                  ; $f77d : $20, $84, $f7
@@ -17979,7 +17979,7 @@ Call_03_f80d:
 	txa                                                  ; $f83f : $8a
 	sta $54                                                  ; $f840 : $85, $54
 	sec                                                  ; $f842 : $38
-	sbc $0005b9.l                                                  ; $f843 : $ef, $b9, $05, $00
+	sbc wRoomMetatilesWide.l                                                  ; $f843 : $ef, $b9, $05, $00
 	tax                                                  ; $f847 : $aa
 	sep #ACCU_8                                                  ; $f848 : $e2, $20
 	lda $7e4000.l, X                                                  ; $f84a : $bf, $00, $40, $7e
@@ -18082,7 +18082,7 @@ br_03_f89c:
 	rep #ACCU_8                                                  ; $f8eb : $c2, $20
 	sta $56                                                  ; $f8ed : $85, $56
 	tax                                                  ; $f8ef : $aa
-	lda $0005b9.l                                                  ; $f8f0 : $af, $b9, $05, $00
+	lda wRoomMetatilesWide.l                                                  ; $f8f0 : $af, $b9, $05, $00
 	asl                                                  ; $f8f4 : $0a
 	sta $54                                                  ; $f8f5 : $85, $54
 	lda $0000.w, Y                                                  ; $f8f7 : $b9, $00, $00
@@ -18197,7 +18197,7 @@ Call_03_f9ad:
 
 Call_03_f9b6:
 	sta WRMPYA.l                                                  ; $f9b6 : $8f, $02, $42, $00
-	lda $0005b9.l                                                  ; $f9ba : $af, $b9, $05, $00
+	lda wRoomMetatilesWide.l                                                  ; $f9ba : $af, $b9, $05, $00
 	sta WRMPYB.l                                                  ; $f9be : $8f, $03, $42, $00
 	lda #$00.b                                                  ; $f9c2 : $a9, $00
 	xba                                                  ; $f9c4 : $eb
@@ -18219,7 +18219,7 @@ Call_03_f9d4:
 	lda $91                                                  ; $f9d7 : $a5, $91
 
 Call_03_f9d9:
-	jsr Call_03_f9f7.w                                                  ; $f9d9 : $20, $f7, $f9
+	jsr XequMetatileOffsRowAColB.w                                                  ; $f9d9 : $20, $f7, $f9
 	rep #ACCU_8                                                  ; $f9dc : $c2, $20
 	phx                                                  ; $f9de : $da
 	lda $0005aa.l                                                  ; $f9df : $af, $aa, $05, $00
@@ -18232,7 +18232,8 @@ Call_03_f9d9:
 	rts                                                  ; $f9ed : $60
 
 
-	jsr Call_03_f9f7.w                                                  ; $f9ee : $20, $f7, $f9
+FarXequMetatileOffsRowAColB:
+	jsr XequMetatileOffsRowAColB.w                                                  ; $f9ee : $20, $f7, $f9
 	rtl                                                  ; $f9f1 : $6b
 
 
@@ -18240,9 +18241,13 @@ Call_03_f9d9:
 	xba                                                  ; $f9f4 : $eb
 	lda $91                                                  ; $f9f5 : $a5, $91
 
-Call_03_f9f7:
+; A - row
+; B - col
+; wRoomMetatilesWide
+; Returns metatile word offset in X
+XequMetatileOffsRowAColB:
 	sta WRMPYA.l                                                  ; $f9f7 : $8f, $02, $42, $00
-	lda $0005b9.l                                                  ; $f9fb : $af, $b9, $05, $00
+	lda wRoomMetatilesWide.l                                                  ; $f9fb : $af, $b9, $05, $00
 	sta WRMPYB.l                                                  ; $f9ff : $8f, $03, $42, $00
 	lda #$00.b                                                  ; $fa03 : $a9, $00
 	xba                                                  ; $fa05 : $eb

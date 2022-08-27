@@ -7699,7 +7699,7 @@ br_0e_b6d4:
 	sta $7fd04e.l                                                  ; $b6d7 : $8f, $4e, $d0, $7f
 	lda #$03.b                                                  ; $b6db : $a9, $03
 	ldx #$0002.w                                                  ; $b6dd : $a2, $02, $00
-	jsr $80c12e.l                                                  ; $b6e0 : $22, $2e, $c1, $80
+	jsr GetRoomScriptX.l                                                  ; $b6e0 : $22, $2e, $c1, $80
 	cpy #$ffff.w                                                  ; $b6e4 : $c0, $ff, $ff
 	beq br_0e_b72c                                                  ; $b6e7 : $f0, $43
 
@@ -8212,7 +8212,7 @@ br_0e_baa0:
 	ldx #$0007.w                                                  ; $baab : $a2, $07, $00
 
 br_0e_baae:
-	sta wPuzzleScriptsEnabled.l, X                                                  ; $baae : $9f, $8c, $d1, $7f
+	sta wPuzzleScriptsEnabledAndDelay.l, X                                                  ; $baae : $9f, $8c, $d1, $7f
 	dex                                                  ; $bab2 : $ca
 	bpl br_0e_baae                                                  ; $bab3 : $10, $f9
 

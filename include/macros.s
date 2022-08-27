@@ -6,12 +6,36 @@
     .db $01, \1
 .endm
 
+.macro SET_FLAG
+    .db $08, \1
+.endm
+
+.macro CLEAR_FLAG
+    .db $09, \1
+.endm
+
+.macro JUMP
+    .db $0a
+.endm
+
 .macro JUMP_IF_FLAG_CLEAR
     .db $0c, \1
 .endm
 
 .macro JUMP_IF_FACING_DIR
     .db $0d, \1
+.endm
+
+.macro WAIT_FRAMES
+    .db $11, \1
+.endm
+
+.macro CHECK_CHAR_ON_POINT
+    .db $13, \1
+.endm
+
+.macro JUMP_IF_NOT_ON_POINT
+    .db $1e
 .endm
 
 .macro MOV_VAR_OTHERS_VAR
@@ -62,7 +86,7 @@
     .db $49, \1
 .endm
 
-.macro MOV_VAR_VAR
+.macro MOV_ARITHVAR_DICTVAR
     .db $69, \1, \2
 .endm
 

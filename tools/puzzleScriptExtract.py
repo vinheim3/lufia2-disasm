@@ -80,8 +80,14 @@ ops = {
 names = {
     0x00: 'HALT',
     0x01: 'JUMP_IF_FLAG_SET',
+    0x08: 'SET_FLAG',
+    0x09: 'CLEAR_FLAG',
+    0x0a: 'JUMP',
     0x0c: 'JUMP_IF_FLAG_CLEAR',
     0x0d: 'JUMP_IF_FACING_DIR',
+    0x11: 'WAIT_FRAMES',
+    0x13: 'CHECK_CHAR_ON_POINT',
+    0x1e: 'JUMP_IF_NOT_ON_POINT',
     0x2f: 'MOV_VAR_OTHERS_VAR',
     0x32: 'INC_VAR',
     0x33: 'DEC_VAR',
@@ -94,7 +100,7 @@ names = {
     0x47: 'ADD_GROUP1',
     0x48: 'SUB_GROUP1',
     0x49: 'INC_GROUP1',
-    0x69: 'MOV_VAR_VAR',
+    0x69: 'MOV_ARITHVAR_DICTVAR',
     0xa9: 'CALL',
     0xaa: 'RET',
 }

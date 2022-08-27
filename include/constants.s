@@ -3,3 +3,8 @@ NUM_CHARS = $28 ; people like player+team+npcs
 NUM_PUZZLE_SCRIPTS = 8
 
 NUM_ENEMIES_IN_BATTLE = 6
+
+FACING_DIR_D = 0
+FACING_DIR_L = 2
+FACING_DIR_U = 4
+FACING_DIR_R = 6

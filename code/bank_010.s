@@ -4416,48 +4416,113 @@ br_10_9f11:
 
 .redef PZ_START = $a0e5
 .redef VAR_SELECTED_PIECE = $a0
+.redef VAR_LAST_PIECE = $a1
+; these movable flags also correspond to locations in 12:91a1 (a-13)
+.redef FLAG_PIECE_0_MOVABLE = $2a
+.redef FLAG_PIECE_1_MOVABLE = $2b
+.redef FLAG_PIECE_2_MOVABLE = $2c
+.redef FLAG_PIECE_3_MOVABLE = $2d
+.redef FLAG_PIECE_4_MOVABLE = $2e
+.redef FLAG_PIECE_5_MOVABLE = $2f
+.redef FLAG_PIECE_6_MOVABLE = $30
+.redef FLAG_PIECE_7_MOVABLE = $31
+.redef FLAG_PIECE_8_MOVABLE = $32
+.redef FLAG_PIECE_9_MOVABLE = $33
+.redef FLAG_STEPPED_ON_BTN = $35
+.redef ARITH_PIECE_0_COORDS = $ea
+.redef ARITH_PIECE_1_COORDS = $eb
+.redef ARITH_PIECE_2_COORDS = $ec
+.redef ARITH_PIECE_3_COORDS = $ed
+.redef ARITH_PIECE_4_COORDS = $ee
+.redef ARITH_PIECE_5_COORDS = $ef
+.redef ARITH_PIECE_6_COORDS = $f0
+.redef ARITH_PIECE_7_COORDS = $f1
+.redef ARITH_PIECE_8_COORDS = $f2
+.redef ARITH_PIECE_9_COORDS = $f3
+.redef CONTAINER_0 = $fb
+.redef CONTAINER_1 = $fc
+.redef CONTAINER_2 = $fd
+.redef CONTAINER_3 = $fe
 RoomPuzzleScriptC2h_WorldsHardest:
-	.dw @a105-PZ_START
-	.dw @a112-PZ_START
-	.dw $003a ; these point to the ffs
-	.dw $003b
-	.dw $003c
-	.dw $003d
-	.dw $003e
-	.dw $003f
-	.dw $0040
-	.dw $0041
-	.dw $0042
-	.dw $0043
-	.dw $0044
-	.dw $0045
-	.dw $0046
-	.dw $0047
+	.dw @row0-PZ_START
+	.dw @row1-PZ_START
+	.dw @row2-PZ_START
+	.dw @row3-PZ_START
+	.dw @row4-PZ_START
+	.dw @row5-PZ_START
+	.dw @row6-PZ_START
+	.dw @row7-PZ_START
+	.dw @row8-PZ_START
+	.dw @row9-PZ_START
+	.dw @rowA-PZ_START
+	.dw @rowB-PZ_START
+	.dw @rowC-PZ_START
+	.dw @rowD-PZ_START
+	.dw @rowE-PZ_START
+	.dw @rowF-PZ_START
 
 .table byte, word
-@a105:
-	.row $00, @row0_00-PZ_START
-	.row $02, @row0_02-PZ_START
-	.row $0f, @row0_0f-PZ_START
-	.row $11, @row0_11-PZ_START
+@row0:
+	.row $00, PzScriptC2h_Row0_00-PZ_START
+	.row $02, PzScriptC2h_Row0_02-PZ_START
+	.row $0f, PzScriptC2h_Row0_0f-PZ_START
+	.row $11, PzScriptC2h_Row0_11-PZ_START
 	.db $ff
 
 
-@a112:
-	.row $00, @main-PZ_START
-	.row $01, @main-PZ_START
-	.row $02, @main-PZ_START
-	.row $03, @main-PZ_START
+@row1:
+	.row $00, PzScriptC2_Row1_main-PZ_START
+	.row $01, PzScriptC2_Row1_main-PZ_START
+	.row $02, PzScriptC2_Row1_main-PZ_START
+	.row $03, PzScriptC2_Row1_main-PZ_START
 	.db $ff
 
-;
-	sbc $ffffff.l, X                                                  ; $a11f : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $a123 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $a127 : $ff, $ff, $ff, $ff
-	.db $ff, $ff
+@row2:
+	.db $ff
+
+@row3:
+	.db $ff
+
+@row4:
+	.db $ff
+
+@row5:
+	.db $ff
+
+@row6:
+	.db $ff
+
+@row7:
+	.db $ff
+
+@row8:
+	.db $ff
+
+@row9:
+	.db $ff
+
+@rowA:
+	.db $ff
+
+@rowB:
+	.db $ff
+
+@rowC:
+	.db $ff
+
+@rowD:
+	.db $ff
+
+@rowE:
+	.db $ff
+
+@rowF:
+	.db $ff
 
 
-@row0_02:
+; executed on room load 2nd
+; 08 and 09 seem to be set during a random revisit
+PzScriptC2h_Row0_02:
 	JUMP_IF_FLAG_CLEAR, $08
 		.dw @_0066-PZ_START
 	.db $7a, $21, $14
@@ -4473,7 +4538,7 @@ RoomPuzzleScriptC2h_WorldsHardest:
 @_0066: ; $0066, $8214b
 	JUMP_IF_FLAG_CLEAR, $09
 		.dw @_006d-PZ_START
-	.db $7a, $29, $2c
+	.db $7a, $29, FLAG_PIECE_2_MOVABLE
 
 @_006d: ; $006d, $82152
 	JUMP_IF_FLAG_CLEAR, $0a
@@ -4483,20 +4548,23 @@ RoomPuzzleScriptC2h_WorldsHardest:
 	.db $7a, $44, $53
 
 @_007a: ; $007a, $8215f
-	MOV_VAR_VAR, $ea, $2a
-	MOV_VAR_VAR, $eb, $2b
-	MOV_VAR_VAR, $ec, $2c
-	MOV_VAR_VAR, $ed, $2d
-	MOV_VAR_VAR, $ee, $2e
-	MOV_VAR_VAR, $ef, $2f
-	MOV_VAR_VAR, $f0, $30
-	MOV_VAR_VAR, $f1, $31
-	MOV_VAR_VAR, $f2, $32
-	MOV_VAR_VAR, $f3, $33
+; ie get movable pieces bottom-left x/ys and store X
+; in arith var 0+(a-13), and store Y in arith var1+(a-13)
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_0_COORDS, FLAG_PIECE_0_MOVABLE
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_1_COORDS, FLAG_PIECE_1_MOVABLE
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_2_COORDS, FLAG_PIECE_2_MOVABLE
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_3_COORDS, FLAG_PIECE_3_MOVABLE
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_4_COORDS, FLAG_PIECE_4_MOVABLE
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_5_COORDS, FLAG_PIECE_5_MOVABLE
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_6_COORDS, FLAG_PIECE_6_MOVABLE
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_7_COORDS, FLAG_PIECE_7_MOVABLE
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_8_COORDS, FLAG_PIECE_8_MOVABLE
+	MOV_ARITHVAR_DICTVAR, ARITH_PIECE_9_COORDS, FLAG_PIECE_9_MOVABLE
 	HALT
+; this will flow into below
 
-
-@row0_0f:
+; executed on room load 1st
+PzScriptC2h_Row0_0f:
 	JUMP_IF_FLAG_SET, $0a
 		.dw @_00aa-PZ_START
 	.db $ba, $01, $40
@@ -4511,137 +4579,148 @@ RoomPuzzleScriptC2h_WorldsHardest:
 	HALT
 
 
-@row0_11:
+PzScriptC2h_Row0_11:
 	JUMP_IF_FLAG_CLEAR, $34
-		.dw @halt_00bb-PZ_START
+		.dw @halt-PZ_START
 	JUMP_IF_FLAG_SET, $0a
-		.dw @halt_00bb-PZ_START
+		.dw @halt-PZ_START
 	.db $be, $00, $fb
 	.db $10
 
-@halt_00bb: ; $00bb, $821a0
+@halt: ; $00bb, $821a0
 	HALT
 
 
-@main:
+PzScriptC2_Row1_main:
 	JUMP_IF_FLAG_SET, $0a
-		.dw @halt_0132-PZ_START
+		.dw @halt-PZ_START
 	JUMP_IF_FLAG_CLEAR, $34
-		.dw @halt_0132-PZ_START
+		.dw @halt-PZ_START
 	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $00
-		.dw @_00f8-PZ_START
+		.dw @selectedPieceIs0-PZ_START
 	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $01
-		.dw @_00fe-PZ_START
+		.dw @selectedPieceIs1-PZ_START
 	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $02
-		.dw @_0104-PZ_START
+		.dw @selectedPieceIs2-PZ_START
 	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $03
-		.dw @_010a-PZ_START
+		.dw @selectedPieceIs3-PZ_START
 	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $04
-		.dw @_0110-PZ_START
+		.dw @selectedPieceIs4-PZ_START
 	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $05
-		.dw @_0116-PZ_START
+		.dw @selectedPieceIs5-PZ_START
 	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $06
-		.dw @_011c-PZ_START
+		.dw @selectedPieceIs6-PZ_START
 	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $07
-		.dw @_0122-PZ_START
+		.dw @selectedPieceIs7-PZ_START
 	JUMP_IF_VAR_EQU, VAR_SELECTED_PIECE, $08
-		.dw @_0128-PZ_START
+		.dw @selectedPieceIs8-PZ_START
 
-@_00f1: ; $00f1, $821d6
+; get the next piece to select based on the curr and what's movable
+@selectedPieceIs9: ; $00f1, $821d6
 	SET_VAR, VAR_SELECTED_PIECE, $00
-	JUMP_IF_FLAG_SET, $2a
-		.dw @_012e-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_PIECE_0_MOVABLE
+		.dw @gotNextMovablePiece-PZ_START
 
-@_00f8: ; $00f8, $821dd
+@selectedPieceIs0: ; $00f8, $821dd
 	INC_VAR, VAR_SELECTED_PIECE
-	JUMP_IF_FLAG_SET, $2b
-		.dw @_012e-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_PIECE_1_MOVABLE
+		.dw @gotNextMovablePiece-PZ_START
 
-@_00fe: ; $00fe, $821e3
+@selectedPieceIs1: ; $00fe, $821e3
 	INC_VAR, VAR_SELECTED_PIECE
-	JUMP_IF_FLAG_SET, $2c
-		.dw @_012e-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_PIECE_2_MOVABLE
+		.dw @gotNextMovablePiece-PZ_START
 
-@_0104: ; $0104, $821e9
+@selectedPieceIs2: ; $0104, $821e9
 	INC_VAR, VAR_SELECTED_PIECE
-	JUMP_IF_FLAG_SET, $2d
-		.dw @_012e-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_PIECE_3_MOVABLE
+		.dw @gotNextMovablePiece-PZ_START
 
-@_010a: ; $010a, $821ef
+@selectedPieceIs3: ; $010a, $821ef
 	INC_VAR, VAR_SELECTED_PIECE
-	JUMP_IF_FLAG_SET, $2e
-		.dw @_012e-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_PIECE_4_MOVABLE
+		.dw @gotNextMovablePiece-PZ_START
 
-@_0110: ; $0110, $821f5
+@selectedPieceIs4: ; $0110, $821f5
 	INC_VAR, VAR_SELECTED_PIECE
-	JUMP_IF_FLAG_SET, $2f
-		.dw @_012e-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_PIECE_5_MOVABLE
+		.dw @gotNextMovablePiece-PZ_START
 
-@_0116: ; $0116, $821fb
+@selectedPieceIs5: ; $0116, $821fb
 	INC_VAR, VAR_SELECTED_PIECE
-	JUMP_IF_FLAG_SET, $30
-		.dw @_012e-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_PIECE_6_MOVABLE
+		.dw @gotNextMovablePiece-PZ_START
 
-@_011c: ; $011c, $82201
+@selectedPieceIs6: ; $011c, $82201
 	INC_VAR, VAR_SELECTED_PIECE
-	JUMP_IF_FLAG_SET, $31
-		.dw @_012e-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_PIECE_7_MOVABLE
+		.dw @gotNextMovablePiece-PZ_START
 
-@_0122: ; $0122, $82207
+@selectedPieceIs7: ; $0122, $82207
 	INC_VAR, VAR_SELECTED_PIECE
-	JUMP_IF_FLAG_SET, $32
-		.dw @_012e-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_PIECE_8_MOVABLE
+		.dw @gotNextMovablePiece-PZ_START
 
-@_0128: ; $0128, $8220d
+@selectedPieceIs8: ; $0128, $8220d
 	INC_VAR, VAR_SELECTED_PIECE
-	JUMP_IF_FLAG_CLEAR, $33
-		.dw @_00f1-$a0e5
+	JUMP_IF_FLAG_CLEAR, FLAG_PIECE_9_MOVABLE
+		.dw @selectedPieceIs9-$a0e5
 
-@_012e: ; $012e, $82213
+@gotNextMovablePiece: ; $012e, $82213
 	CALL $ff
 		.dw Sub_826a2-PZ_START
 
-@halt_0132: ; $0132, $82217
+@halt: ; $0132, $82217
 	HALT
 
 
-@row0_00:
+; gets executed whenever moving/slashing
+PzScriptC2h_Row0_00:
 	JUMP_IF_FLAG_SET, $0a
-		.dw @_0164-PZ_START
+		.dw @notOnBtn-PZ_START
 	JUMP_IF_FLAG_CLEAR, $34
 		.dw @_013f-PZ_START
-	JUMP_IF_FLAG_SET, $35
-		.dw @_01ee-PZ_START
+	JUMP_IF_FLAG_SET, FLAG_STEPPED_ON_BTN
+		.dw @steppedOnBtn-PZ_START
 
 @_013f: ; $013f, $82224
-	.db $13, $34
-	.db $1e
-		.dw @_0164-PZ_START
+; check if player is on tile $14 (in 12:91a1)
+; tile $14 is the world's hardest's button
+; then it will set wPuzzleScriptGenericCheck with
+;   bit 0 set if player just stepped on button
+;   bit 7 set if player is on button
+	CHECK_CHAR_ON_POINT, $34
+; jump to 1st entry (bit 0 clear) if we didn't step on the button
+; jump to 2nd button (bit 7 clear) ???
+	JUMP_IF_NOT_ON_POINT
+		.dw @notOnBtn-PZ_START
 		.dw @_0163-PZ_START
+; otherwise we stepped on the button, so start game here
 	.db $bb, $01
-	.db $0b, $19
-	.db $7a, $37, $3d
-	.db $08, $35
-	.db $11, $1e
+	.db $0b, $19 ; snd-related
+	.db $7a, $37, $3d ; check point $17, then ???
+	SET_FLAG, FLAG_STEPPED_ON_BTN
+	WAIT_FRAMES, $1e ; frames get played allowing player to move
 	.db $b4, $00, $b0, $01
-	.db $11, $50
+	WAIT_FRAMES, $50 ; frames get played while camera pans up
 	CALL $ff
 		.dw Sub_825a4-PZ_START
-	.db $08, $34
-	.db $0a
-		.dw @_00f1-$a0e5
-	.db $0a
+	SET_FLAG, $34
+	JUMP
+		.dw PzScriptC2_Row1_main@selectedPieceIs9-$a0e5
+	JUMP
 		.dw @_0163-PZ_START
 
 @_0163: ; $0163, $82248
 	.db $29
 
-@_0164: ; $0164, $82249
+; jump here if moving, but not on worlds hardest trick square
+@notOnBtn: ; $0164, $82249
 	.db $6d, $29
 		.dw @_0171-PZ_START
-	.db $08, $09
+	SET_FLAG, $09
 	.db $06, $29, $3c
-	.db $11, $0a
+	WAIT_FRAMES, $0a
 	.db $1a, $06
 
 @_0171: ; $0171, $82256
@@ -4682,103 +4761,103 @@ RoomPuzzleScriptC2h_WorldsHardest:
 	.db $0f, $28
 		.dw @_01c9-PZ_START
 	.db $02, $c2
-	.db $08, $08
+	SET_FLAG, $08
 
 @_01c9: ; $01c9, $822ae
 	JUMP_IF_FLAG_SET, $0a
-		.dw @halt_01ed-PZ_START
-	.db $13, $60
-	.db $1e
-		.dw @halt_01ed-PZ_START
+		.dw @halt_1-PZ_START
+	CHECK_CHAR_ON_POINT, $60
+	JUMP_IF_NOT_ON_POINT
+		.dw @halt_1-PZ_START
 		.dw @_01ec-PZ_START
-	MOV_VAR_VAR, $e0, $40
-	MOV_VAR_VAR, $e1, $3c
+	MOV_ARITHVAR_DICTVAR, $e0, $40
+	MOV_ARITHVAR_DICTVAR, $e1, $3c
 	.db $8e, $02, $e1, $e0, $02, $02
-	MOV_VAR_VAR, $e0, $ea
+	MOV_ARITHVAR_DICTVAR, $e0, $ea
 	SUB_GROUP1, $e0, $03
 	.db $7a, $e0, $52
-	.db $0a
+	JUMP
 		.dw @_01ec-PZ_START
 
 @_01ec: ; $01ec, $822d1
 	.db $29
 
-@halt_01ed: ; $01ed, $822d2
+@halt_1: ; $01ed, $822d2
 	HALT
 
-@_01ee: ; $01ee, $822d3
+@steppedOnBtn: ; $01ee, $822d3
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $00
-		.dw @_01f9-PZ_START
-	CALL $ea, $2a, $ff
+		.dw @checkPieceSelectedIs1-PZ_START
+	CALL ARITH_PIECE_0_COORDS, FLAG_PIECE_0_MOVABLE, $ff
 		.dw Sub_823e8-PZ_START
 
-@_01f9: ; $01f9, $822de
+@checkPieceSelectedIs1: ; $01f9, $822de
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $01
-		.dw @_0204-PZ_START
-	CALL $eb, $2b, $ff
+		.dw @checkPieceSelectedIs2-PZ_START
+	CALL ARITH_PIECE_1_COORDS, FLAG_PIECE_1_MOVABLE, $ff
 		.dw Sub_8245f-PZ_START
 
-@_0204: ; $0204, $822e9
+@checkPieceSelectedIs2: ; $0204, $822e9
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $02
-		.dw @_020f-PZ_START
-	CALL $ec, $2c, $ff
+		.dw @checkPieceSelectedIs3-PZ_START
+	CALL ARITH_PIECE_2_COORDS, FLAG_PIECE_2_MOVABLE, $ff
 		.dw Sub_8245f-PZ_START
 
-@_020f: ; $020f, $822f4
+@checkPieceSelectedIs3: ; $020f, $822f4
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $03
-		.dw @_021a-PZ_START
-	CALL $ed, $2d, $ff
+		.dw @checkPieceSelectedIs4-PZ_START
+	CALL ARITH_PIECE_3_COORDS, FLAG_PIECE_3_MOVABLE, $ff
 		.dw Sub_8245f-PZ_START
 
-@_021a: ; $021a, $822ff
+@checkPieceSelectedIs4: ; $021a, $822ff
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $04
-		.dw @_0225-PZ_START
-	CALL $ee, $2e, $ff
+		.dw @checkPieceSelectedIs5-PZ_START
+	CALL ARITH_PIECE_4_COORDS, FLAG_PIECE_4_MOVABLE, $ff
 		.dw Sub_8245f-PZ_START
 
-@_0225: ; $0225, $8230a
+@checkPieceSelectedIs5: ; $0225, $8230a
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $05
-		.dw @_0230-PZ_START
-	CALL $ef, $2f, $ff
+		.dw @checkPieceSelectedIs6-PZ_START
+	CALL ARITH_PIECE_5_COORDS, FLAG_PIECE_5_MOVABLE, $ff
 		.dw Sub_824fd-PZ_START
 
-@_0230: ; $0230, $82315
+@checkPieceSelectedIs6: ; $0230, $82315
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $06
-		.dw @_023b-PZ_START
-	CALL $f0, $30, $ff
+		.dw @checkPieceSelectedIs7-PZ_START
+	CALL ARITH_PIECE_6_COORDS, FLAG_PIECE_6_MOVABLE, $ff
 		.dw Sub_824fd-PZ_START
 
-@_023b: ; $023b, $82320
+@checkPieceSelectedIs7: ; $023b, $82320
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $07
-		.dw @_0246-PZ_START
-	CALL $f1, $31, $ff
+		.dw @checkPieceSelectedIs8-PZ_START
+	CALL ARITH_PIECE_7_COORDS, FLAG_PIECE_7_MOVABLE, $ff
 		.dw Sub_824fd-PZ_START
 
-@_0246: ; $0246, $8232b
+@checkPieceSelectedIs8: ; $0246, $8232b
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $08
-		.dw @_0251-PZ_START
-	CALL $f2, $32, $ff
+		.dw @checkPieceSelectedIs9-PZ_START
+	CALL ARITH_PIECE_8_COORDS, FLAG_PIECE_8_MOVABLE, $ff
 		.dw Sub_824fd-PZ_START
 
-@_0251: ; $0251, $82336
+@checkPieceSelectedIs9: ; $0251, $82336
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $09
-		.dw @_025c-PZ_START
-	CALL $f3, $33, $ff
+		.dw @pieceSelectedIs0-PZ_START
+	CALL ARITH_PIECE_9_COORDS, FLAG_PIECE_9_MOVABLE, $ff
 		.dw Sub_824ae-PZ_START
 
-@_025c: ; $025c, $82341
+@pieceSelectedIs0: ; $025c, $82341
 	CALL $ff
 		.dw Sub_825a4-PZ_START
 	.db $9d, $a2, $ea, $00
 	JUMP_IF_VAR_NE, $a2, $2f
-		.dw @halt_02e0-PZ_START
+		.dw @halt_2-PZ_START
 	.db $9d, $a2, $ea, $40
 	JUMP_IF_VAR_NE, $a2, $0f
-		.dw @halt_02e0-PZ_START
+		.dw @halt_2-PZ_START
 	.db $bb, $02
-	.db $11, $f0
-	.db $11, $f0
-	.db $11, $50
+	WAIT_FRAMES, $f0
+	WAIT_FRAMES, $f0
+	WAIT_FRAMES, $50
 	CALL $f3, $5c, $56, $ff
 		.dw Sub_823c6-PZ_START
 	CALL $eb, $5b, $54, $ff
@@ -4799,9 +4878,9 @@ RoomPuzzleScriptC2h_WorldsHardest:
 		.dw Sub_823c6-PZ_START
 	.db $7a, $45, $5e
 	.db $7a, $44, $53
-	.db $11, $01
+	WAIT_FRAMES, $01
 	.db $b4, $00, $50, $01
-	.db $11, $50
+	WAIT_FRAMES, $50
 	.db $b5
 	.db $0b, $19
 	.db $7a, $36, $3e
@@ -4812,10 +4891,10 @@ RoomPuzzleScriptC2h_WorldsHardest:
 	.db $8f, $02
 	.db $8f, $03
 	.db $8f, $04
-	.db $08, $0a
+	SET_FLAG, $0a
 	.db $bb, $03
 
-@halt_02e0: ; $02e0, $823c5
+@halt_2: ; $02e0, $823c5
 	HALT
 
 
@@ -4824,9 +4903,9 @@ Sub_823c6: ; $02e1, $823c6
 
 @_02e4: ; $02e4, $823c9
 	.db $0e, $fc, $fe
-	.db $11, $01
-	.db $0e, $fc, $fd
-	.db $11, $01
+	WAIT_FRAMES, $01
+	.db $0e, $fc, CONTAINER_2
+	WAIT_FRAMES, $01
 	DEC_VAR, $be
 	JUMP_IF_VAR_NE, $be, $00
 		.dw @_02e4-$a0e5
@@ -4842,39 +4921,40 @@ Sub_823db: ; $02f6, $823db
 
 
 Sub_823e8: ; $0303, $823e8
-	CALL $fc, $fd, $ff
-		.dw Sub_825e1-PZ_START
-	JUMP_IF_FACING_DIR, $04
-		.dw @_031b-PZ_START
-	JUMP_IF_FACING_DIR, $02
-		.dw @_0321-PZ_START
-	JUMP_IF_FACING_DIR, $00
-		.dw @_0327-PZ_START
+	CALL $fc, CONTAINER_2, $ff
+		.dw Sub_825e1_2x2-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_U
+		.dw @facingUp-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_L
+		.dw @facingLeft-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_D
+		.dw @facingDown-PZ_START
+; facing right
 	JUMP_IF_VAR_EQU, $a5, $ff
 		.dw @_032d-PZ_START
 	RET
 
-@_031b: ; $031b, $82400
+@facingUp: ; $031b, $82400
 	JUMP_IF_VAR_EQU, $a2, $ff
 		.dw @_032d-PZ_START
 	RET
 
-@_0321: ; $0321, $82406
+@facingLeft: ; $0321, $82406
 	JUMP_IF_VAR_EQU, $a3, $ff
 		.dw @_032d-PZ_START
 	RET
 
-@_0327: ; $0327, $8240c
+@facingDown: ; $0327, $8240c
 	JUMP_IF_VAR_EQU, $a4, $ff
 		.dw @_032d-PZ_START
 	RET
 
 @_032d: ; $032d, $82412
-	MOV_VAR_VAR, $f4, $fc
+	MOV_ARITHVAR_DICTVAR, $f4, $fc
 	SUB_GROUP1, $f4, $02
-	MOV_VAR_VAR, $f6, $fc
+	MOV_ARITHVAR_DICTVAR, $f6, $fc
 	ADD_GROUP0, $f6, $02
-	MOV_VAR_VAR, $f5, $f6
+	MOV_ARITHVAR_DICTVAR, $f5, $f6
 	SUB_GROUP1, $f5, $02
 	CALL $fc, $47, $ff
 		.dw Sub_82538-PZ_START
@@ -4898,35 +4978,36 @@ Sub_823e8: ; $0303, $823e8
 
 
 Sub_8245f: ; $037a, $8245f
-	CALL $fc, $fd, $ff
-		.dw Sub_825ef-PZ_START
-	JUMP_IF_FACING_DIR, $04
-		.dw @_0392-PZ_START
-	JUMP_IF_FACING_DIR, $02
-		.dw @_0398-PZ_START
-	JUMP_IF_FACING_DIR, $00
-		.dw @_039e-PZ_START
+	CALL $fc, CONTAINER_2, $ff
+		.dw Sub_825ef_1x2-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_U
+		.dw @facingUp-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_L
+		.dw @facingLeft-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_D
+		.dw @facingDown-PZ_START
+; facing right
 	JUMP_IF_VAR_EQU, $a5, $ff
 		.dw @_03a4-PZ_START
 	RET
 
-@_0392: ; $0392, $82477
+@facingUp: ; $0392, $82477
 	JUMP_IF_VAR_EQU, $a2, $ff
 		.dw @_03a4-PZ_START
 	RET
 
-@_0398: ; $0398, $8247d
+@facingLeft: ; $0398, $8247d
 	JUMP_IF_VAR_EQU, $a3, $ff
 		.dw @_03a4-PZ_START
 	RET
 
-@_039e: ; $039e, $82483
+@facingDown: ; $039e, $82483
 	JUMP_IF_VAR_EQU, $a4, $ff
 		.dw @_03a4-PZ_START
 	RET
 
 @_03a4: ; $03a4, $82489
-	MOV_VAR_VAR, $f4, $fc
+	MOV_ARITHVAR_DICTVAR, $f4, $fc
 	SUB_GROUP1, $f4, $02
 	CALL $fc, $41, $ff
 		.dw Sub_82538-PZ_START
@@ -4942,35 +5023,36 @@ Sub_8245f: ; $037a, $8245f
 
 
 Sub_824ae: ; $03c9, $824ae
-	CALL $fc, $fd, $ff
-		.dw Sub_82600-PZ_START
-	JUMP_IF_FACING_DIR, $04
-		.dw @_03e1-PZ_START
-	JUMP_IF_FACING_DIR, $02
-		.dw @_03e7-PZ_START
-	JUMP_IF_FACING_DIR, $00
-		.dw @_03ed-PZ_START
+	CALL $fc, CONTAINER_2, $ff
+		.dw Sub_82600_2x1-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_U
+		.dw @facingUp-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_L
+		.dw @facingLeft-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_D
+		.dw @facingDown-PZ_START
+; facing right
 	JUMP_IF_VAR_EQU, $a5, $ff
 		.dw @_03f3-PZ_START
 	RET
 
-@_03e1: ; $03e1, $824c6
+@facingUp: ; $03e1, $824c6
 	JUMP_IF_VAR_EQU, $a2, $ff
 		.dw @_03f3-PZ_START
 	RET
 
-@_03e7: ; $03e7, $824cc
+@facingLeft: ; $03e7, $824cc
 	JUMP_IF_VAR_EQU, $a3, $ff
 		.dw @_03f3-PZ_START
 	RET
 
-@_03ed: ; $03ed, $824d2
+@facingDown: ; $03ed, $824d2
 	JUMP_IF_VAR_EQU, $a4, $ff
 		.dw @_03f3-PZ_START
 	RET
 
 @_03f3: ; $03f3, $824d8
-	MOV_VAR_VAR, $f4, $fc
+	MOV_ARITHVAR_DICTVAR, $f4, $fc
 	ADD_GROUP0, $f4, $02
 	CALL $fc, $43, $ff
 		.dw Sub_82538-PZ_START
@@ -4986,29 +5068,30 @@ Sub_824ae: ; $03c9, $824ae
 
 
 Sub_824fd: ; $0418, $824fd
-	CALL $fc, $fd, $ff
-		.dw Sub_82611-PZ_START
-	JUMP_IF_FACING_DIR, $04
-		.dw @_0430-PZ_START
-	JUMP_IF_FACING_DIR, $02
-		.dw @_0436-PZ_START
-	JUMP_IF_FACING_DIR, $00
-		.dw @_043c-PZ_START
+	CALL $fc, CONTAINER_2, $ff
+		.dw Sub_82611_1x1-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_U
+		.dw @facingUp-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_L
+		.dw @facingLeft-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_D
+		.dw @facingDown-PZ_START
+; facing right
 	JUMP_IF_VAR_EQU, $a5, $ff
 		.dw @_0442-PZ_START
 	RET
 
-@_0430: ; $0430, $82515
+@facingUp: ; $0430, $82515
 	JUMP_IF_VAR_EQU, $a2, $ff
 		.dw @_0442-PZ_START
 	RET
 
-@_0436: ; $0436, $8251b
+@facingLeft: ; $0436, $8251b
 	JUMP_IF_VAR_EQU, $a3, $ff
 		.dw @_0442-PZ_START
 	RET
 
-@_043c: ; $043c, $82521
+@facingDown: ; $043c, $82521
 	JUMP_IF_VAR_EQU, $a4, $ff
 		.dw @_0442-PZ_START
 	RET
@@ -5024,135 +5107,145 @@ Sub_824fd: ; $0418, $824fd
 
 
 Sub_82538: ; $0453, $82538
-	MOV_VAR_VAR, $e0, $fc
-	MOV_VAR_OTHERS_VAR, $be, $fd
-	JUMP_IF_FACING_DIR, $04
-		.dw @_046e-PZ_START
-	JUMP_IF_FACING_DIR, $02
-		.dw @_0477-PZ_START
-	JUMP_IF_FACING_DIR, $00
-		.dw @_0480-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $fc
+	MOV_VAR_OTHERS_VAR, $be, CONTAINER_2
+	JUMP_IF_FACING_DIR, FACING_DIR_U
+		.dw @facingUp-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_L
+		.dw @facingLeft-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_D
+		.dw @facingDown-PZ_START
+; facing right
 	.db $a6, $e0, $be, $10, $20
-	MOV_VAR_VAR, $fc, $e0
+	MOV_ARITHVAR_DICTVAR, $fc, $e0
 	RET
 
-@_046e: ; $046e, $82553
+@facingUp: ; $046e, $82553
 	.db $a3, $e0, $be, $10, $20
-	MOV_VAR_VAR, $fc, $e0
+	MOV_ARITHVAR_DICTVAR, $fc, $e0
 	RET
 
-@_0477: ; $0477, $8255c
+@facingLeft: ; $0477, $8255c
 	.db $a5, $e0, $be, $10, $20
-	MOV_VAR_VAR, $fc, $e0
+	MOV_ARITHVAR_DICTVAR, $fc, $e0
 	RET
 
-@_0480: ; $0480, $82565
+@facingDown: ; $0480, $82565
 	.db $a4, $e0, $be, $10, $20
-	MOV_VAR_VAR, $fc, $e0
+	MOV_ARITHVAR_DICTVAR, $fc, $e0
 	RET
 
 
 Sub_8256e: ; $0489, $8256e
-	MOV_VAR_VAR, $e0, $fe
-	MOV_VAR_OTHERS_VAR, $be, $fd
-	JUMP_IF_FACING_DIR, $04
-		.dw @_04a4-PZ_START
-	JUMP_IF_FACING_DIR, $02
-		.dw @_04ad-PZ_START
-	JUMP_IF_FACING_DIR, $00
-		.dw @_04b6-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $fe
+	MOV_VAR_OTHERS_VAR, $be, CONTAINER_2
+	JUMP_IF_FACING_DIR, FACING_DIR_U
+		.dw @facingUp-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_L
+		.dw @facingLeft-PZ_START
+	JUMP_IF_FACING_DIR, FACING_DIR_D
+		.dw @facingDown-PZ_START
+; 3rd byte be is converted to var 1e
+
+; facing right
 	.db $a6, $e0, $be, $10, $20
-	MOV_VAR_VAR, $fe, $e0
+	MOV_ARITHVAR_DICTVAR, $fe, $e0
 	RET
 
-@_04a4: ; $04a4, $82589
+@facingUp: ; $04a4, $82589
 	.db $a3, $e0, $be, $10, $20
-	MOV_VAR_VAR, $fe, $e0
+	MOV_ARITHVAR_DICTVAR, $fe, $e0
 	RET
 
-@_04ad: ; $04ad, $82592
+@facingLeft: ; $04ad, $82592
 	.db $a5, $e0, $be, $10, $20
-	MOV_VAR_VAR, $fe, $e0
+	MOV_ARITHVAR_DICTVAR, $fe, $e0
 	RET
 
-@_04b6: ; $04b6, $8259b
+@facingDown: ; $04b6, $8259b
 	.db $a4, $e0, $be, $10, $20
-	MOV_VAR_VAR, $fe, $e0
+	MOV_ARITHVAR_DICTVAR, $fe, $e0
 	RET
 
 
 Sub_825a4: ; $04bf, $825a4
-	CALL $ea, $2a, $ff
-		.dw Sub_825e1-PZ_START
-	CALL $eb, $2b, $ff
-		.dw Sub_825ef-PZ_START
-	CALL $ec, $2c, $ff
-		.dw Sub_825ef-PZ_START
-	CALL $ed, $2d, $ff
-		.dw Sub_825ef-PZ_START
-	CALL $ee, $2e, $ff
-		.dw Sub_825ef-PZ_START
-	CALL $ef, $2f, $ff
-		.dw Sub_82611-PZ_START
-	CALL $f0, $30, $ff
-		.dw Sub_82611-PZ_START
-	CALL $f1, $31, $ff
-		.dw Sub_82611-PZ_START
-	CALL $f2, $32, $ff
-		.dw Sub_82611-PZ_START
-	CALL $f3, $33, $ff
-		.dw Sub_82600-PZ_START
+; fill container 1 for curr script with ea, then container 2 with 2a
+	CALL ARITH_PIECE_0_COORDS, FLAG_PIECE_0_MOVABLE, $ff
+		.dw Sub_825e1_2x2-PZ_START
+	CALL ARITH_PIECE_1_COORDS, FLAG_PIECE_1_MOVABLE, $ff
+		.dw Sub_825ef_1x2-PZ_START
+	CALL ARITH_PIECE_2_COORDS, FLAG_PIECE_2_MOVABLE, $ff
+		.dw Sub_825ef_1x2-PZ_START
+	CALL ARITH_PIECE_3_COORDS, FLAG_PIECE_3_MOVABLE, $ff
+		.dw Sub_825ef_1x2-PZ_START
+	CALL ARITH_PIECE_4_COORDS, FLAG_PIECE_4_MOVABLE, $ff
+		.dw Sub_825ef_1x2-PZ_START
+	CALL ARITH_PIECE_5_COORDS, FLAG_PIECE_5_MOVABLE, $ff
+		.dw Sub_82611_1x1-PZ_START
+	CALL ARITH_PIECE_6_COORDS, FLAG_PIECE_6_MOVABLE, $ff
+		.dw Sub_82611_1x1-PZ_START
+	CALL ARITH_PIECE_7_COORDS, FLAG_PIECE_7_MOVABLE, $ff
+		.dw Sub_82611_1x1-PZ_START
+	CALL ARITH_PIECE_8_COORDS, FLAG_PIECE_8_MOVABLE, $ff
+		.dw Sub_82611_1x1-PZ_START
+	CALL ARITH_PIECE_9_COORDS, FLAG_PIECE_9_MOVABLE, $ff
+		.dw Sub_82600_2x1-PZ_START
 	RET
 
 
-Sub_825e1: ; $04fc, $825e1
-	CALL $fc, $ff
+Sub_825e1_2x2: ; $04fc, $825e1
+; get container 1 var from saved (coords of curr piece)
+	CALL CONTAINER_1, $ff
 		.dw Sub_82673-PZ_START
+;
 	SUB_GROUP1, $e1, $02
 	ADD_GROUP0, $e7, $02
-	.db $0a
-		.dw Sub_82628-PZ_START
+	JUMP
+		.dw _CheckIfPieceCanMove-PZ_START
 
 
-Sub_825ef: ; $050a, $825ef
-	CALL $fc, $ff
+Sub_825ef_1x2: ; $050a, $825ef
+	CALL CONTAINER_1, $ff
 		.dw Sub_82673-PZ_START
-	MOV_VAR_VAR, $e1, $e0
+	MOV_ARITHVAR_DICTVAR, $e1, $e0
 	SUB_GROUP0, $e6, $02
-	MOV_VAR_VAR, $e5, $e4
-	.db $0a
-		.dw Sub_82628-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e5, $e4
+	JUMP
+		.dw _CheckIfPieceCanMove-PZ_START
 
 
-Sub_82600: ; $051b, $82600
-	CALL $fc, $ff
+Sub_82600_2x1: ; $051b, $82600
+	CALL CONTAINER_1, $ff
 		.dw Sub_82673-PZ_START
 	ADD_GROUP1, $e0, $02
-	MOV_VAR_VAR, $e3, $e2
-	MOV_VAR_VAR, $e7, $e6
-	.db $0a
-		.dw Sub_82628-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e3, $e2
+	MOV_ARITHVAR_DICTVAR, $e7, $e6
+	JUMP
+		.dw _CheckIfPieceCanMove-PZ_START
 
 
-Sub_82611: ; $052c, $82611
-	CALL $fc, $ff
+Sub_82611_1x1: ; $052c, $82611
+	CALL CONTAINER_1, $ff
 		.dw Sub_82673-PZ_START
 	ADD_GROUP1, $e0, $02
 	SUB_GROUP0, $e1, $02
-	MOV_VAR_VAR, $e3, $e2
-	MOV_VAR_VAR, $e5, $e4
+	MOV_ARITHVAR_DICTVAR, $e3, $e2
+	MOV_ARITHVAR_DICTVAR, $e5, $e4
 	SUB_GROUP0, $e6, $02
 	ADD_GROUP1, $e7, $02
 
-Sub_82628: ; $0543, $82628
-	.db $09, $fd
+_CheckIfPieceCanMove: ; $0543, $82628
+; clear bit represented by param2 (movable flag)
+	CLEAR_FLAG, CONTAINER_2
+
+;
 	SET_VAR, $a2, $00
 	.db $96, $e0, $15
 		.dw @_0557-PZ_START
 	.db $96, $e1, $15
 		.dw @_0557-PZ_START
 	SET_VAR, $a2, $ff
-	.db $08, $fd
+	SET_FLAG, CONTAINER_2
 
 @_0557: ; $0557, $8263c
 	SET_VAR, $a3, $00
@@ -5161,7 +5254,7 @@ Sub_82628: ; $0543, $82628
 	.db $96, $e3, $15
 		.dw @_0569-PZ_START
 	SET_VAR, $a3, $ff
-	.db $08, $fd
+	SET_FLAG, CONTAINER_2
 
 @_0569: ; $0569, $8264e
 	SET_VAR, $a4, $00
@@ -5170,7 +5263,7 @@ Sub_82628: ; $0543, $82628
 	.db $96, $e5, $15
 		.dw @_057b-PZ_START
 	SET_VAR, $a4, $ff
-	.db $08, $fd
+	SET_FLAG, CONTAINER_2
 
 @_057b: ; $057b, $82660
 	SET_VAR, $a5, $00
@@ -5179,107 +5272,110 @@ Sub_82628: ; $0543, $82628
 	.db $96, $e7, $15
 		.dw @done-PZ_START
 	SET_VAR, $a5, $ff
-	.db $08, $fd
+; set flag in container 2
+	SET_FLAG, CONTAINER_2
 
 @done: ; $058d, $82672
 	RET
 
 
 Sub_82673: ; $058e, $82673
-	MOV_VAR_VAR, $e2, $fc
+	MOV_ARITHVAR_DICTVAR, $e2, $fc
 	DEC_GROUP0, $e2
-	MOV_VAR_VAR, $e3, $e2
+	MOV_ARITHVAR_DICTVAR, $e3, $e2
 	SUB_GROUP1, $e3, $02
-	MOV_VAR_VAR, $e4, $fc
+	MOV_ARITHVAR_DICTVAR, $e4, $fc
 	INC_GROUP1, $e4
-	MOV_VAR_VAR, $e5, $e4
+	MOV_ARITHVAR_DICTVAR, $e5, $e4
 	ADD_GROUP0, $e5, $02
-	MOV_VAR_VAR, $e0, $e4
+	MOV_ARITHVAR_DICTVAR, $e0, $e4
 	SUB_GROUP1, $e0, $05
-	MOV_VAR_VAR, $e1, $e5
+	MOV_ARITHVAR_DICTVAR, $e1, $e5
 	SUB_GROUP1, $e1, $03
-	MOV_VAR_VAR, $e6, $e2
+	MOV_ARITHVAR_DICTVAR, $e6, $e2
 	ADD_GROUP0, $e6, $05
-	MOV_VAR_VAR, $e7, $e3
+	MOV_ARITHVAR_DICTVAR, $e7, $e3
 	ADD_GROUP0, $e7, $03
 	RET
 
 
+; this is called after we found a movable pieces
 Sub_826a2: ; $05bd, $826a2
-	MOV_VAR_OTHERS_VAR, $bf, $a1
-	.db $09, $5f
+	MOV_VAR_OTHERS_VAR, $bf, VAR_LAST_PIECE
+	CLEAR_FLAG, $5f
 	CALL $ff
-		.dw @_05d3-PZ_START
+		.dw Sun_826b8-PZ_START
 	MOV_VAR_OTHERS_VAR, $bf, VAR_SELECTED_PIECE
-	.db $08, $5f
+	SET_FLAG, $5f
 	CALL $ff
-		.dw @_05d3-PZ_START
-	MOV_VAR_OTHERS_VAR, $a1, VAR_SELECTED_PIECE
+		.dw Sun_826b8-PZ_START
+	MOV_VAR_OTHERS_VAR, VAR_LAST_PIECE, VAR_SELECTED_PIECE
 	RET
 
-@_05d3: ; $05d3, $826b8
+
+Sun_826b8: ; $05d3, $826b8
 	JUMP_IF_VAR_EQU, $bf, $00
-		.dw @_0624-PZ_START
-	MOV_VAR_VAR, $e0, $eb
+		.dw @chosenPieceIs2x2-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $eb
 	JUMP_IF_VAR_EQU, $bf, $01
-		.dw @_0630-PZ_START
-	MOV_VAR_VAR, $e0, $ec
+		.dw @chosenPieceIs1x2-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $ec
 	JUMP_IF_VAR_EQU, $bf, $02
-		.dw @_0630-PZ_START
-	MOV_VAR_VAR, $e0, $ed
+		.dw @chosenPieceIs1x2-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $ed
 	JUMP_IF_VAR_EQU, $bf, $03
-		.dw @_0630-PZ_START
-	MOV_VAR_VAR, $e0, $ee
+		.dw @chosenPieceIs1x2-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $ee
 	JUMP_IF_VAR_EQU, $bf, $04
-		.dw @_0630-PZ_START
-	MOV_VAR_VAR, $e0, $ef
+		.dw @chosenPieceIs1x2-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $ef
 	JUMP_IF_VAR_EQU, $bf, $05
-		.dw @_063c-PZ_START
-	MOV_VAR_VAR, $e0, $f0
+		.dw @chosenPieceIs1x1-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $f0
 	JUMP_IF_VAR_EQU, $bf, $06
-		.dw @_063c-PZ_START
-	MOV_VAR_VAR, $e0, $f1
+		.dw @chosenPieceIs1x1-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $f1
 	JUMP_IF_VAR_EQU, $bf, $07
-		.dw @_063c-PZ_START
-	MOV_VAR_VAR, $e0, $f2
+		.dw @chosenPieceIs1x1-PZ_START
+	MOV_ARITHVAR_DICTVAR, $e0, $f2
 	JUMP_IF_VAR_EQU, $bf, $08
-		.dw @_063c-PZ_START
+		.dw @chosenPieceIs1x1-PZ_START
 	JUMP_IF_FLAG_SET, $5f
-		.dw @_0620-PZ_START
+		.dw @chosenPieceIs2x1-PZ_START
 	.db $0e, $f3, $56
 	RET
 
-@_0620: ; $0620, $82705
+@chosenPieceIs2x1: ; $0620, $82705
 	.db $0e, $f3, $57
 	RET
 
-@_0624: ; $0624, $82709
+@chosenPieceIs2x2: ; $0624, $82709
 	JUMP_IF_FLAG_SET, $5f
-		.dw @_062c-PZ_START
+		.dw @@secondRun-PZ_START
 	.db $0e, $ea, $52
 	RET
 
-@_062c: ; $062c, $82711
+@@secondRun: ; $062c, $82711
 	.db $0e, $ea, $53
 	RET
 
-@_0630: ; $0630, $82715
+@chosenPieceIs1x2: ; $0630, $82715
 	JUMP_IF_FLAG_SET, $5f
-		.dw @_0638-PZ_START
+		.dw @@secondRun-PZ_START
 	.db $0e, $e0, $54
 	RET
 
-@_0638: ; $0638, $8271d
+@@secondRun: ; $0638, $8271d
 	.db $0e, $e0, $55
 	RET
 
-@_063c: ; $063c, $82721
+@chosenPieceIs1x1: ; $063c, $82721
 	JUMP_IF_FLAG_SET, $5f
-		.dw @_0644-PZ_START
+		.dw @@secondRun-PZ_START
 	.db $0e, $e0, $58
 	RET
 
-@_0644: ; $0644, $82729
+@@secondRun: ; $0644, $82729
 	.db $0e, $e0, $59
 	RET
 
@@ -5287,17 +5383,17 @@ Sub_826a2: ; $05bd, $826a2
 Sub_8272d: ; $0648, $8272d
 	.db $0f, $fc
 		.dw @halt-PZ_START
-	.db $39, $fd, $ff
+	.db $39, CONTAINER_2, $ff
 		.dw @_0653-PZ_START
-	INC_VAR, $fd
+	INC_VAR, CONTAINER_2
 
 @_0653: ; $0653, $82738
 	.db $16, $fc
 		.dw @halt-PZ_START
-	.db $3a, $fd, $03
+	.db $3a, CONTAINER_2, $03
 		.dw @halt-PZ_START
 	.db $06, $fc, $00
-	SET_VAR, $fd, $00
+	SET_VAR, CONTAINER_2, $00
 
 @halt: ; $0662, $82747
 	HALT
