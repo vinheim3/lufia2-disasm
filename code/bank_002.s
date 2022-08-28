@@ -791,7 +791,7 @@ Call_02_8483:
 	bra br_02_84b7                                                  ; $84b5 : $80, $00
 
 br_02_84b7:
-	jsr $81f3f4.l                                                  ; $84b7 : $22, $f4, $f3, $81
+	jsr Call_01_f3f4.l                                                  ; $84b7 : $22, $f4, $f3, $81
 	rep #ACCU_8                                                  ; $84bb : $c2, $20
 	and #$00ff.w                                                  ; $84bd : $29, $ff, $00
 	cmp $151d.w                                                  ; $84c0 : $cd, $1d, $15
@@ -8166,7 +8166,7 @@ Call_02_b5cf:
 	sta wCurrSpellIdx.w                                                  ; $b5de : $8d, $0b, $0a
 	phx                                                  ; $b5e1 : $da
 	phy                                                  ; $b5e2 : $5a
-	jsr $81f414.l                                                  ; $b5e3 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $b5e3 : $22, $14, $f4, $81
 	ply                                                  ; $b5e7 : $7a
 	plx                                                  ; $b5e8 : $fa
 	clc                                                  ; $b5e9 : $18
@@ -13239,7 +13239,7 @@ Call_02_d905:
 	jsr Call_02_9214.l                                                  ; $d908 : $22, $14, $92, $82
 	lda $09cf.w                                                  ; $d90c : $ad, $cf, $09
 	sta wCurrSpellIdx.w                                                  ; $d90f : $8d, $0b, $0a
-	jsr $81f414.l                                                  ; $d912 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $d912 : $22, $14, $f4, $81
 	ldx $0b87.w                                                  ; $d916 : $ae, $87, $0b
 	jsr Call_02_9918.w                                                  ; $d919 : $20, $18, $99
 	stx $1545.w                                                  ; $d91c : $8e, $45, $15
@@ -15286,7 +15286,7 @@ br_02_e67f:
 	jsr Call_02_e6fc.w                                                  ; $e698 : $20, $fc, $e6
 	sep #ACCU_8                                                  ; $e69b : $e2, $20
 	sta wCurrSpellIdx.w                                                  ; $e69d : $8d, $0b, $0a
-	jsr $81f414.l                                                  ; $e6a0 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $e6a0 : $22, $14, $f4, $81
 	ldx #$0000.w                                                  ; $e6a4 : $a2, $00, $00
 	stx $22                                                  ; $e6a7 : $86, $22
 
@@ -18746,7 +18746,7 @@ GiveCurrSpell:
 	sta $2a                                                  ; $fd4e : $85, $2a
 	sep #ACCU_8                                                  ; $fd50 : $e2, $20
 	lda wCurrSpellIdx.w                                                  ; $fd52 : $ad, $0b, $0a
-	jsr $81f414.l                                                  ; $fd55 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $fd55 : $22, $14, $f4, $81
 	ldx $22                                                  ; $fd59 : $a6, $22
 	lda $8ed8bb.l, X                                                  ; $fd5b : $bf, $bb, $d8, $8e
 	bit $0b82.w                                                  ; $fd5f : $2c, $82, $0b
@@ -18947,7 +18947,7 @@ Call_02_fec8:
 br_02_feed:
 	lda $1513.w                                                  ; $feed : $ad, $13, $15
 	sta wCurrSpellIdx.w                                                  ; $fef0 : $8d, $0b, $0a
-	jsr $81f414.l                                                  ; $fef3 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $fef3 : $22, $14, $f4, $81
 	ldx #$0001.w                                                  ; $fef7 : $a2, $01, $00
 	stx $1517.w                                                  ; $fefa : $8e, $17, $15
 	rts                                                  ; $fefd : $60

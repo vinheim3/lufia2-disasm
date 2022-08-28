@@ -9327,7 +9327,7 @@ Call_0e_c1de:
 
 	lda $7fd4ef.l                                                  ; $c1fa : $af, $ef, $d4, $7f
 	sta wCurrSpellIdx.w                                                  ; $c1fe : $8d, $0b, $0a
-	jsr $81f414.l                                                  ; $c201 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $c201 : $22, $14, $f4, $81
 
 Call_0e_c205:
 	ldx #$0b77.w                                                  ; $c205 : $a2, $77, $0b

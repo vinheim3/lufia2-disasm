@@ -1917,7 +1917,7 @@ Call_00_8b57:
 	sta wCurrSpellIdx.w                                                  ; $8b5b : $8d, $0b, $0a
 	sep #ACCU_8                                                  ; $8b5e : $e2, $20
 	phy                                                  ; $8b60 : $5a
-	jsr $81f414.l                                                  ; $8b61 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $8b61 : $22, $14, $f4, $81
 	ply                                                  ; $8b65 : $7a
 	ldx #$0b77.w                                                  ; $8b66 : $a2, $77, $0b
 	stx $60                                                  ; $8b69 : $86, $60

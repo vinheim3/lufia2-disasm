@@ -9103,18 +9103,16 @@ br_03_bb73:
 
 
 Call_03_bb76:
-	lda #$8d80.w                                                  ; $bb76 : $a9, $80, $8d
-	txy                                                  ; $bb79 : $9b
-	ora #$549c.w                                                  ; $bb7a : $09, $9c, $54
-	ora ($9c)                                                  ; $bb7d : $12, $9c
-	eor $9c12.w, Y                                                  ; $bb7f : $59, $12, $9c
-	eor $12, X                                                  ; $bb82 : $55, $12
+	lda #$80.b                                                  ; $bb76 : $a9, $80
+	sta $099b.w                                                  ; $bb78 : $8d, $9b, $09
+	stz $1254.w                                                  ; $bb7b : $9c, $54, $12
+	stz $1259.w                                                  ; $bb7e : $9c, $59, $12
+	stz $1255.w                                                  ; $bb81 : $9c, $55, $12
 	stz $1256.w                                                  ; $bb84 : $9c, $56, $12
-	lda #$8fff.w                                                  ; $bb87 : $a9, $ff, $8f
-	cmp ($d0, X)                                                  ; $bb8a : $c1, $d0
-	adc $ff8f7b.l, X                                                  ; $bb8c : $7f, $7b, $8f, $ff
-	bne br_03_bc11                                                  ; $bb90 : $d0, $7f
-
+	lda #$ff.b                                                  ; $bb87 : $a9, $ff
+	sta $7fd0c1.l                                                  ; $bb89 : $8f, $c1, $d0, $7f
+	tdc                                                  ; $bb8d : $7b
+	sta $7fd0ff.l                                                  ; $bb8e : $8f, $ff, $d0, $7f
 	rts                                                  ; $bb92 : $60
 
 
@@ -9195,7 +9193,6 @@ Call_03_bbf3:
 	bit #$80.b                                                  ; $bc0d : $89, $80
 	bne br_03_bc25                                                  ; $bc0f : $d0, $14
 
-br_03_bc11:
 	lda $099b.w                                                  ; $bc11 : $ad, $9b, $09
 	bmi br_03_bc25                                                  ; $bc14 : $30, $0f
 

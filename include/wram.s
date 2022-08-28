@@ -158,7 +158,22 @@ wCurrCharMovePatternIdx: ; $ab
     db
 
 wac:
-    ds $100-$ac
+    ds $b2-$ac
+
+wLoadedInBattleEnemyStruct: ; $b2
+    dl
+
+wb5:
+    ds $b-5
+
+wCurrInBattleEnemyScriptAddr: ; $bb
+    dl
+
+wCurrInBattleEnemyStruct: ; $be
+    dw
+
+wc0:
+    ds $100-$c0
 
 wOam: ; $0100
     ds $100
@@ -384,7 +399,16 @@ wCurrSpellIdx: ; $0a0b
     db
 
 w0a0c:
-    ds $7a-$c
+    ds $42-$c
+
+; in the form of bank:0000
+wBaseInBattleEnemyScriptAddr: ; $0a42
+    dw
+wBaseInBattleEnemyScriptBank: ; $0a44
+    db
+
+w0a45:
+    ds $7a-$45
 
 wNumPartyChars: ; $0a7a
     db

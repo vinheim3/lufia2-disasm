@@ -94,7 +94,7 @@ Call_01_8000:
 	stz $160b.w                                                  ; $80c2 : $9c, $0b, $16
 	ldx #$0000.w                                                  ; $80c5 : $a2, $00, $00
 
--	lda $859ec8.l, X                                                  ; $80c8 : $bf, $c8, $9e, $85
+-	lda Data_5_9ec8.l, X                                                  ; $80c8 : $bf, $c8, $9e, $85
 	sta $0a6e.w, X                                                  ; $80cc : $9d, $6e, $0a
 	inx                                                  ; $80cf : $e8
 	inx                                                  ; $80d0 : $e8
@@ -5787,13 +5787,13 @@ br_01_a8e9:
 
 br_01_a8ec:
 	ldy $0a09.w                                                  ; $a8ec : $ac, $09, $0a
-	sty $0a42.w                                                  ; $a8ef : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $a8ef : $8c, $42, $0a
 	lda #$96.b                                                  ; $a8f2 : $a9, $96
-	sta $0a44.w                                                  ; $a8f4 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $a8f4 : $8d, $44, $0a
 	ldy $0b91.w                                                  ; $a8f7 : $ac, $91, $0b
 	beq br_01_a902                                                  ; $a8fa : $f0, $06
 
-	jsr Call_01_fac9.l                                                  ; $a8fc : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $a8fc : $22, $c9, $fa, $81
 	bra br_01_a92c                                                  ; $a900 : $80, $2a
 
 br_01_a902:
@@ -5802,21 +5802,21 @@ br_01_a902:
 	bmi br_01_a91a                                                  ; $a908 : $30, $10
 
 	ldy #$0000.w                                                  ; $a90a : $a0, $00, $00
-	sty $0a42.w                                                  ; $a90d : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $a90d : $8c, $42, $0a
 	lda #$85.b                                                  ; $a910 : $a9, $85
-	sta $0a44.w                                                  ; $a912 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $a912 : $8d, $44, $0a
 	ldy #$ef26.w                                                  ; $a915 : $a0, $26, $ef
 	bra br_01_a928                                                  ; $a918 : $80, $0e
 
 br_01_a91a:
 	ldy #$0000.w                                                  ; $a91a : $a0, $00, $00
-	sty $0a42.w                                                  ; $a91d : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $a91d : $8c, $42, $0a
 	lda #$85.b                                                  ; $a920 : $a9, $85
-	sta $0a44.w                                                  ; $a922 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $a922 : $8d, $44, $0a
 	ldy #$ef24.w                                                  ; $a925 : $a0, $24, $ef
 
 br_01_a928:
-	jsr Call_01_fac9.l                                                  ; $a928 : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $a928 : $22, $c9, $fa, $81
 
 br_01_a92c:
 	lda $7ff44e.l                                                  ; $a92c : $af, $4e, $f4, $7f
@@ -5835,13 +5835,13 @@ br_01_a92c:
 	sep #ACCU_8                                                  ; $a947 : $e2, $20
 	jsr Call_01_f1c5.l                                                  ; $a949 : $22, $c5, $f1, $81
 	ldy $0a09.w                                                  ; $a94d : $ac, $09, $0a
-	sty $0a42.w                                                  ; $a950 : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $a950 : $8c, $42, $0a
 	lda #$96.b                                                  ; $a953 : $a9, $96
-	sta $0a44.w                                                  ; $a955 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $a955 : $8d, $44, $0a
 	ldy $0b91.w                                                  ; $a958 : $ac, $91, $0b
 	beq br_01_a961                                                  ; $a95b : $f0, $04
 
-	jsr Call_01_fac9.l                                                  ; $a95d : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $a95d : $22, $c9, $fa, $81
 
 br_01_a961:
 	sep #ACCU_8                                                  ; $a961 : $e2, $20
@@ -5851,7 +5851,7 @@ br_01_a961:
 
 	lda $7ff456.l                                                  ; $a968 : $af, $56, $f4, $7f
 	sta wCurrSpellIdx.w                                                  ; $a96c : $8d, $0b, $0a
-	jsr Call_01_f414.l                                                  ; $a96f : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $a96f : $22, $14, $f4, $81
 	jsr $859510.l                                                  ; $a973 : $22, $10, $95, $85
 	lda $7ff456.l                                                  ; $a977 : $af, $56, $f4, $7f
 	sta wCurrSpellIdx.w                                                  ; $a97b : $8d, $0b, $0a
@@ -5885,13 +5885,13 @@ br_01_a9ae:
 	clc                                                  ; $a9ba : $18
 	adc #$12.b                                                  ; $a9bb : $69, $12
 	sta $1262.w                                                  ; $a9bd : $8d, $62, $12
-	jsr Call_01_f414.l                                                  ; $a9c0 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $a9c0 : $22, $14, $f4, $81
 	ldy $0a0d.w                                                  ; $a9c4 : $ac, $0d, $0a
-	sty $0a42.w                                                  ; $a9c7 : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $a9c7 : $8c, $42, $0a
 	lda #$95.b                                                  ; $a9ca : $a9, $95
-	sta $0a44.w                                                  ; $a9cc : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $a9cc : $8d, $44, $0a
 	ldy $0b89.w                                                  ; $a9cf : $ac, $89, $0b
-	jsr Call_01_fac9.l                                                  ; $a9d2 : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $a9d2 : $22, $c9, $fa, $81
 	lda $7ff44e.l                                                  ; $a9d6 : $af, $4e, $f4, $7f
 	bpl br_01_a9e8                                                  ; $a9da : $10, $0c
 
@@ -5965,16 +5965,16 @@ br_01_aa46:
 
 br_01_aa57:
 	ldy $0a09.w                                                  ; $aa57 : $ac, $09, $0a
-	sty $0a42.w                                                  ; $aa5a : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $aa5a : $8c, $42, $0a
 	lda #$96.b                                                  ; $aa5d : $a9, $96
-	sta $0a44.w                                                  ; $aa5f : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $aa5f : $8d, $44, $0a
 	ldy $0b8f.w                                                  ; $aa62 : $ac, $8f, $0b
 	bne br_01_aa6a                                                  ; $aa65 : $d0, $03
 
 	ldy $0b8d.w                                                  ; $aa67 : $ac, $8d, $0b
 
 br_01_aa6a:
-	jsr Call_01_fac9.l                                                  ; $aa6a : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $aa6a : $22, $c9, $fa, $81
 	jsr Call_01_b057.l                                                  ; $aa6e : $22, $57, $b0, $81
 	rtl                                                  ; $aa72 : $6b
 
@@ -6088,12 +6088,12 @@ br_01_ab42:
 	rep #ACCU_8                                                  ; $ab4b : $c2, $20
 	lda $0000.w, Y                                                  ; $ab4d : $b9, $00, $00
 	jsr Call_01_f46b.l                                                  ; $ab50 : $22, $6b, $f4, $81
-	sta $0a42.w                                                  ; $ab54 : $8d, $42, $0a
+	sta wBaseInBattleEnemyScriptAddr.w                                                  ; $ab54 : $8d, $42, $0a
 	sep #ACCU_8                                                  ; $ab57 : $e2, $20
 	lda #$95.b                                                  ; $ab59 : $a9, $95
-	sta $0a44.w                                                  ; $ab5b : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $ab5b : $8d, $44, $0a
 	ldy #$0001.w                                                  ; $ab5e : $a0, $01, $00
-	jsr Call_01_fac9.l                                                  ; $ab61 : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $ab61 : $22, $c9, $fa, $81
 	jsr Call_01_b057.l                                                  ; $ab65 : $22, $57, $b0, $81
 	rtl                                                  ; $ab69 : $6b
 
@@ -6345,11 +6345,11 @@ br_01_ad4b:
 	lda $7ff456.l                                                  ; $ad4d : $af, $56, $f4, $7f
 	jsr Call_01_f476.l                                                  ; $ad51 : $22, $76, $f4, $81
 	tay                                                  ; $ad55 : $a8
-	sta $0a42.w                                                  ; $ad56 : $8d, $42, $0a
+	sta wBaseInBattleEnemyScriptAddr.w                                                  ; $ad56 : $8d, $42, $0a
 	sta $0e                                                  ; $ad59 : $85, $0e
 	sep #ACCU_8                                                  ; $ad5b : $e2, $20
 	lda #$97.b                                                  ; $ad5d : $a9, $97
-	sta $0a44.w                                                  ; $ad5f : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $ad5f : $8d, $44, $0a
 	sta $10                                                  ; $ad62 : $85, $10
 	rep #ACCU_8                                                  ; $ad64 : $c2, $20
 	lda [$0e]                                                  ; $ad66 : $a7, $0e
@@ -6372,7 +6372,7 @@ br_01_ad7b:
 br_01_ad7d:
 	sta $1262.w                                                  ; $ad7d : $8d, $62, $12
 	ldy #$0002.w                                                  ; $ad80 : $a0, $02, $00
-	jsr Call_01_fac9.l                                                  ; $ad83 : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $ad83 : $22, $c9, $fa, $81
 	jsr Call_01_b057.l                                                  ; $ad87 : $22, $57, $b0, $81
 	rtl                                                  ; $ad8b : $6b
 
@@ -6648,7 +6648,7 @@ br_01_af5e:
 
 	lda $7ff456.l                                                  ; $af7a : $af, $56, $f4, $7f
 	sta wCurrSpellIdx.w                                                  ; $af7e : $8d, $0b, $0a
-	jsr Call_01_f414.l                                                  ; $af81 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $af81 : $22, $14, $f4, $81
 	jsr $859510.l                                                  ; $af85 : $22, $10, $95, $85
 	lda $7ff44e.l                                                  ; $af89 : $af, $4e, $f4, $7f
 	jsr Call_01_b2b5.l                                                  ; $af8d : $22, $b5, $b2, $81
@@ -6661,13 +6661,13 @@ br_01_af5e:
 	clc                                                  ; $afa3 : $18
 	adc #$12.b                                                  ; $afa4 : $69, $12
 	sta $1262.w                                                  ; $afa6 : $8d, $62, $12
-	jsr Call_01_f414.l                                                  ; $afa9 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $afa9 : $22, $14, $f4, $81
 	ldy $0a0d.w                                                  ; $afad : $ac, $0d, $0a
-	sty $0a42.w                                                  ; $afb0 : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $afb0 : $8c, $42, $0a
 	lda #$95.b                                                  ; $afb3 : $a9, $95
-	sta $0a44.w                                                  ; $afb5 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $afb5 : $8d, $44, $0a
 	ldy $0b89.w                                                  ; $afb8 : $ac, $89, $0b
-	jsr Call_01_fac9.l                                                  ; $afbb : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $afbb : $22, $c9, $fa, $81
 	jsr Call_01_b057.l                                                  ; $afbf : $22, $57, $b0, $81
 	rtl                                                  ; $afc3 : $6b
 
@@ -6948,20 +6948,20 @@ Call_01_b1a3:
 	beq br_01_b1b6                                                  ; $b1a6 : $f0, $0e
 
 	ldx $1124.w                                                  ; $b1a8 : $ae, $24, $11
-	stx $0a42.w                                                  ; $b1ab : $8e, $42, $0a
+	stx wBaseInBattleEnemyScriptAddr.w                                                  ; $b1ab : $8e, $42, $0a
 	lda $1126.w                                                  ; $b1ae : $ad, $26, $11
-	sta $0a44.w                                                  ; $b1b1 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $b1b1 : $8d, $44, $0a
 	bra br_01_b1c4                                                  ; $b1b4 : $80, $0e
 
 br_01_b1b6:
 	ldx #$0000.w                                                  ; $b1b6 : $a2, $00, $00
 	ldy #$ef20.w                                                  ; $b1b9 : $a0, $20, $ef
-	stx $0a42.w                                                  ; $b1bc : $8e, $42, $0a
+	stx wBaseInBattleEnemyScriptAddr.w                                                  ; $b1bc : $8e, $42, $0a
 	lda #$85.b                                                  ; $b1bf : $a9, $85
-	sta $0a44.w                                                  ; $b1c1 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $b1c1 : $8d, $44, $0a
 
 br_01_b1c4:
-	jsr Call_01_fac9.l                                                  ; $b1c4 : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $b1c4 : $22, $c9, $fa, $81
 	rtl                                                  ; $b1c8 : $6b
 
 
@@ -6971,22 +6971,22 @@ Call_01_b1c9:
 	sep #ACCU_8                                                  ; $b1cf : $e2, $20
 	jsr Call_01_c5cf.w                                                  ; $b1d1 : $20, $cf, $c5
 	ldy $004a.w, X                                                  ; $b1d4 : $bc, $4a, $00
-	beq br_01_b1e7                                                  ; $b1d7 : $f0, $0e
+	beq @br_b1e7                                                  ; $b1d7 : $f0, $0e
 
 	lda $0050.w, X                                                  ; $b1d9 : $bd, $50, $00
-	jsr Call_01_fce2.l                                                  ; $b1dc : $22, $e2, $fc, $81
-	stx $0a42.w                                                  ; $b1e0 : $8e, $42, $0a
+	jsr XequAddrOfInBattleEnemyAsData.l                                                  ; $b1dc : $22, $e2, $fc, $81
+	stx wBaseInBattleEnemyScriptAddr.w                                                  ; $b1e0 : $8e, $42, $0a
 	lda #$96.b                                                  ; $b1e3 : $a9, $96
-	bra br_01_b1ef                                                  ; $b1e5 : $80, $08
+	bra @cont_b1ef                                                  ; $b1e5 : $80, $08
 
-br_01_b1e7:
-	sty $0a42.w                                                  ; $b1e7 : $8c, $42, $0a
+@br_b1e7:
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $b1e7 : $8c, $42, $0a
 	ldy #$ef20.w                                                  ; $b1ea : $a0, $20, $ef
 	lda #$85.b                                                  ; $b1ed : $a9, $85
 
-br_01_b1ef:
-	sta $0a44.w                                                  ; $b1ef : $8d, $44, $0a
-	jsr Call_01_fac9.l                                                  ; $b1f2 : $22, $c9, $fa, $81
+@cont_b1ef:
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $b1ef : $8d, $44, $0a
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $b1f2 : $22, $c9, $fa, $81
 	rtl                                                  ; $b1f6 : $6b
 
 
@@ -6999,20 +6999,20 @@ br_01_b1ef:
 	bne br_01_b218                                                  ; $b206 : $d0, $10
 
 	ldy #$0000.w                                                  ; $b208 : $a0, $00, $00
-	sty $0a42.w                                                  ; $b20b : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $b20b : $8c, $42, $0a
 	lda #$85.b                                                  ; $b20e : $a9, $85
-	sta $0a44.w                                                  ; $b210 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $b210 : $8d, $44, $0a
 	ldy #$ef24.w                                                  ; $b213 : $a0, $24, $ef
 	bra br_01_b223                                                  ; $b216 : $80, $0b
 
 br_01_b218:
-	sty $0a42.w                                                  ; $b218 : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $b218 : $8c, $42, $0a
 	lda #$96.b                                                  ; $b21b : $a9, $96
-	sta $0a44.w                                                  ; $b21d : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $b21d : $8d, $44, $0a
 	ldy $0b93.w                                                  ; $b220 : $ac, $93, $0b
 
 br_01_b223:
-	jsr Call_01_fac9.l                                                  ; $b223 : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $b223 : $22, $c9, $fa, $81
 	rts                                                  ; $b227 : $60
 
 
@@ -9375,7 +9375,7 @@ Jump_01_c085:
 br_01_c08f:
 	sta wCurrSpellIdx.w                                                  ; $c08f : $8d, $0b, $0a
 	phx                                                  ; $c092 : $da
-	jsr Call_01_f414.l                                                  ; $c093 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $c093 : $22, $14, $f4, $81
 	plx                                                  ; $c097 : $fa
 	lda $0b80.w                                                  ; $c098 : $ad, $80, $0b
 	and #$80.b                                                  ; $c09b : $29, $80
@@ -10234,14 +10234,13 @@ Call_01_c5cf:
 	sta $30                                                  ; $c5d3 : $85, $30
 	lda #$ff.b                                                  ; $c5d5 : $a9, $ff
 
-br_01_c5d7:
-	ina                                                  ; $c5d7 : $1a
+-	ina                                                  ; $c5d7 : $1a
 	lsr $31                                                  ; $c5d8 : $46, $31
-	bcc br_01_c5d7                                                  ; $c5da : $90, $fb
+	bcc -                                                  ; $c5da : $90, $fb
 
 	ora $30                                                  ; $c5dc : $05, $30
 	bit #$80.b                                                  ; $c5de : $89, $80
-	bne br_01_c5f1                                                  ; $c5e0 : $d0, $0f
+	bne @br_c5f1                                                  ; $c5e0 : $d0, $0f
 
 	rep #ACCU_8                                                  ; $c5e2 : $c2, $20
 	and #$007f.w                                                  ; $c5e4 : $29, $7f, $00
@@ -10252,13 +10251,12 @@ br_01_c5d7:
 	sep #ACCU_8                                                  ; $c5ee : $e2, $20
 	rts                                                  ; $c5f0 : $60
 
-
-br_01_c5f1:
+@br_c5f1:
 	rep #ACCU_8                                                  ; $c5f1 : $c2, $20
 	and #$007f.w                                                  ; $c5f3 : $29, $7f, $00
 	asl                                                  ; $c5f6 : $0a
 	tax                                                  ; $c5f7 : $aa
-	lda $859ec8.l, X                                                  ; $c5f8 : $bf, $c8, $9e, $85
+	lda Data_5_9ec8.l, X                                                  ; $c5f8 : $bf, $c8, $9e, $85
 	tax                                                  ; $c5fc : $aa
 	sep #ACCU_8                                                  ; $c5fd : $e2, $20
 	rts                                                  ; $c5ff : $60
@@ -12544,7 +12542,7 @@ br_01_d5b4:
 	asl                                                  ; $d5ba : $0a
 	tax                                                  ; $d5bb : $aa
 	rep #ACCU_8                                                  ; $d5bc : $c2, $20
-	lda $859ec8.l, X                                                  ; $d5be : $bf, $c8, $9e, $85
+	lda Data_5_9ec8.l, X                                                  ; $d5be : $bf, $c8, $9e, $85
 	tay                                                  ; $d5c2 : $a8
 	lda $4abe.w                                                  ; $d5c3 : $ad, $be, $4a
 	and #$00ff.w                                                  ; $d5c6 : $29, $ff, $00
@@ -16511,13 +16509,13 @@ br_01_ef00:
 	jsr $85ccce.l                                                  ; $efa8 : $22, $ce, $cc, $85
 	jsr Call_01_f1c5.l                                                  ; $efac : $22, $c5, $f1, $81
 	lda $0a09.w                                                  ; $efb0 : $ad, $09, $0a
-	sta $0a42.w                                                  ; $efb3 : $8d, $42, $0a
+	sta wBaseInBattleEnemyScriptAddr.w                                                  ; $efb3 : $8d, $42, $0a
 	ldy $0b8d.w                                                  ; $efb6 : $ac, $8d, $0b
 	sep #ACCU_8                                                  ; $efb9 : $e2, $20
 	lda #$96.b                                                  ; $efbb : $a9, $96
-	sta $0a44.w                                                  ; $efbd : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $efbd : $8d, $44, $0a
 	stz $0a62.w                                                  ; $efc0 : $9c, $62, $0a
-	jsr Call_01_fac9.l                                                  ; $efc3 : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $efc3 : $22, $c9, $fa, $81
 	jsr $85cd8c.l                                                  ; $efc7 : $22, $8c, $cd, $85
 	jsr $85ce21.l                                                  ; $efcb : $22, $21, $ce, $85
 	jsr $85cd10.l                                                  ; $efcf : $22, $10, $cd, $85
@@ -16546,13 +16544,13 @@ br_01_ef00:
 	jsr $85ccce.l                                                  ; $eff6 : $22, $ce, $cc, $85
 	jsr Call_01_f1c5.l                                                  ; $effa : $22, $c5, $f1, $81
 	lda $0a09.w                                                  ; $effe : $ad, $09, $0a
-	sta $0a42.w                                                  ; $f001 : $8d, $42, $0a
+	sta wBaseInBattleEnemyScriptAddr.w                                                  ; $f001 : $8d, $42, $0a
 	ldy $0b8d.w                                                  ; $f004 : $ac, $8d, $0b
 	sep #ACCU_8                                                  ; $f007 : $e2, $20
 	lda #$96.b                                                  ; $f009 : $a9, $96
-	sta $0a44.w                                                  ; $f00b : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $f00b : $8d, $44, $0a
 	stz $0a62.w                                                  ; $f00e : $9c, $62, $0a
-	jsr Call_01_fac9.l                                                  ; $f011 : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $f011 : $22, $c9, $fa, $81
 	jsr $85cd8c.l                                                  ; $f015 : $22, $8c, $cd, $85
 	jsr $85d711.l                                                  ; $f019 : $22, $11, $d7, $85
 	stz $54                                                  ; $f01d : $64, $54
@@ -17058,17 +17056,17 @@ LoadItemName:
 	lda $0a04.w                                                  ; $f2fe : $ad, $04, $0a
 	sta $7ff450.l                                                  ; $f301 : $8f, $50, $f4, $7f
 	jsr $85ccce.l                                                  ; $f305 : $22, $ce, $cc, $85
-	jsr Call_01_f414.l                                                  ; $f309 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $f309 : $22, $14, $f4, $81
 	lda $0b84.w                                                  ; $f30d : $ad, $84, $0b
 	sta $0a0f.w                                                  ; $f310 : $8d, $0f, $0a
 	ldy $0a0d.w                                                  ; $f313 : $ac, $0d, $0a
-	sty $0a42.w                                                  ; $f316 : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $f316 : $8c, $42, $0a
 	ldy $0b89.w                                                  ; $f319 : $ac, $89, $0b
 	sep #ACCU_8                                                  ; $f31c : $e2, $20
 	lda #$95.b                                                  ; $f31e : $a9, $95
-	sta $0a44.w                                                  ; $f320 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $f320 : $8d, $44, $0a
 	stz $0a62.w                                                  ; $f323 : $9c, $62, $0a
-	jsr Call_01_fac9.l                                                  ; $f326 : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $f326 : $22, $c9, $fa, $81
 	jsr $85cd8c.l                                                  ; $f32a : $22, $8c, $cd, $85
 	rep #ACCU_8                                                  ; $f32e : $c2, $20
 	lda #$01dc.w                                                  ; $f330 : $a9, $dc, $01
@@ -17096,7 +17094,7 @@ LoadItemName:
 	jsr $85ccce.l                                                  ; $f354 : $22, $ce, $cc, $85
 	stz $54                                                  ; $f358 : $64, $54
 	sep #ACCU_8                                                  ; $f35a : $e2, $20
-	jsr Call_01_f414.l                                                  ; $f35c : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $f35c : $22, $14, $f4, $81
 	lda $0b84.w                                                  ; $f360 : $ad, $84, $0b
 	sta $0a0f.w                                                  ; $f363 : $8d, $0f, $0a
 	stz $0a10.w                                                  ; $f366 : $9c, $10, $0a
@@ -17114,13 +17112,13 @@ LoadItemName:
 	sta $7ff450.l                                                  ; $f382 : $8f, $50, $f4, $7f
 	sta $0a5d.w                                                  ; $f386 : $8d, $5d, $0a
 	lda $0a0d.w                                                  ; $f389 : $ad, $0d, $0a
-	sta $0a42.w                                                  ; $f38c : $8d, $42, $0a
+	sta wBaseInBattleEnemyScriptAddr.w                                                  ; $f38c : $8d, $42, $0a
 	ldy $0b89.w                                                  ; $f38f : $ac, $89, $0b
 	sep #ACCU_8                                                  ; $f392 : $e2, $20
 	lda #$95.b                                                  ; $f394 : $a9, $95
-	sta $0a44.w                                                  ; $f396 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $f396 : $8d, $44, $0a
 	stz $0a62.w                                                  ; $f399 : $9c, $62, $0a
-	jsr Call_01_fac9.l                                                  ; $f39c : $22, $c9, $fa, $81
+	jsr StartExecutingEnemyScriptAddrY.l                                                  ; $f39c : $22, $c9, $fa, $81
 	jsr $85cd8c.l                                                  ; $f3a0 : $22, $8c, $cd, $85
 	jsr $85d711.l                                                  ; $f3a4 : $22, $11, $d7, $85
 	stz $54                                                  ; $f3a8 : $64, $54
@@ -17185,7 +17183,8 @@ Call_01_f3f4:
 	jsr LoadCurrSpellDataSrc.w                                                  ; $f3f4 : $20, $46, $f4
 	ldy $0a0d.w                                                  ; $f3f7 : $ac, $0d, $0a
 	phb                                                  ; $f3fa : $8b
-	lda #$4895.w                                                  ; $f3fb : $a9, $95, $48
+	lda #$95.b                                                  ; $f3fb : $a9, $95
+	pha                                                  ; $f3fd : $48
 	plb                                                  ; $f3fe : $ab
 	lda $000c.w, Y                                                  ; $f3ff : $b9, $0c, $00
 	plb                                                  ; $f402 : $ab
@@ -17195,14 +17194,15 @@ Call_01_f3f4:
 	jsr LoadCurrSpellDataSrc.w                                                  ; $f404 : $20, $46, $f4
 	ldy $0a0d.w                                                  ; $f407 : $ac, $0d, $0a
 	phb                                                  ; $f40a : $8b
-	lda #$4895.w                                                  ; $f40b : $a9, $95, $48
+	lda #$95.b                                                  ; $f40b : $a9, $95
+	pha                                                  ; $f40d : $48
 	plb                                                  ; $f40e : $ab
 	lda $0008.w, Y                                                  ; $f40f : $b9, $08, $00
 	plb                                                  ; $f412 : $ab
 	rtl                                                  ; $f413 : $6b
 
 
-Call_01_f414:
+BufferSpellTextDisplay:
 ; data bank is 15
 	phb                                                  ; $f414 : $8b
 	lda #$95.b                                                  ; $f415 : $a9, $95
@@ -18326,7 +18326,8 @@ br_01_fac6:
 	rtl                                                  ; $fac8 : $6b
 
 
-Call_01_fac9:
+; Y - new enemy script addr
+StartExecutingEnemyScriptAddrY:
 	php                                                  ; $fac9 : $08
 	phb                                                  ; $faca : $8b
 	rep #ACCU_8|IDX_8                                                  ; $facb : $c2, $30
@@ -18337,19 +18338,19 @@ Call_01_fac9:
 	phk                                                  ; $fad2 : $4b
 	plb                                                  ; $fad3 : $ab
 	cpy #$0000.w                                                  ; $fad4 : $c0, $00, $00
-	beq br_01_faed                                                  ; $fad7 : $f0, $14
+	beq @done                                                  ; $fad7 : $f0, $14
 
-	lda $0a44.w                                                  ; $fad9 : $ad, $44, $0a
-	sta $bd                                                  ; $fadc : $85, $bd
+	lda wBaseInBattleEnemyScriptBank.w                                                  ; $fad9 : $ad, $44, $0a
+	sta wCurrInBattleEnemyScriptAddr+2                                                 ; $fadc : $85, $bd
 	rep #ACCU_8                                                  ; $fade : $c2, $20
 	tya                                                  ; $fae0 : $98
 	clc                                                  ; $fae1 : $18
-	adc $0a42.w                                                  ; $fae2 : $6d, $42, $0a
-	sta $bb                                                  ; $fae5 : $85, $bb
+	adc wBaseInBattleEnemyScriptAddr.w                                                  ; $fae2 : $6d, $42, $0a
+	sta wCurrInBattleEnemyScriptAddr                                                  ; $fae5 : $85, $bb
 	sep #ACCU_8                                                  ; $fae7 : $e2, $20
-	jsr $85b452.l                                                  ; $fae9 : $22, $52, $b4, $85
+	jsr StartExecutingEnemyScriptCommands.l                                                  ; $fae9 : $22, $52, $b4, $85
 
-br_01_faed:
+@done:
 	rep #ACCU_8|IDX_8                                                  ; $faed : $c2, $30
 	ply                                                  ; $faef : $7a
 	plx                                                  ; $faf0 : $fa
@@ -18542,25 +18543,26 @@ Call_01_fbdb:
 
 LoadAnInBattleEnemy:
 	lda #$7e.b                                                  ; $fc0b : $a9, $7e
-	sta $b4                                                  ; $fc0d : $85, $b4
+	sta wLoadedInBattleEnemyStruct+2                                                  ; $fc0d : $85, $b4
 	ldy #$00bd.w                                                  ; $fc0f : $a0, $bd, $00
 	tdc                                                  ; $fc12 : $7b
 
--	sta [$b2], Y                                                  ; $fc13 : $97, $b2
+-	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fc13 : $97, $b2
 	dey                                                  ; $fc15 : $88
 	bpl -                                                  ; $fc16 : $10, $fb
 
+; Load bank of enemy data in +47
 	phb                                                  ; $fc18 : $8b
 	lda #:InBattleEnemyData.b                                                  ; $fc19 : $a9, $96
 	pha                                                  ; $fc1b : $48
 	plb                                                  ; $fc1c : $ab
 	ldy #$0047.w                                                  ; $fc1d : $a0, $47, $00
-	sta [$b2], Y                                                  ; $fc20 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fc20 : $97, $b2
 
-; store ??? in struct+50
+; Enemy idx in struct+50
 	lda wCurrInBattleEnemyIdx.w                                                  ; $fc22 : $ad, $f2, $09
 	ldy #$0050.w                                                  ; $fc25 : $a0, $50, $00
-	sta [$b2], Y                                                  ; $fc28 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fc28 : $97, $b2
 
 ; get address of enemy name in X
 	rep #ACCU_8                                                  ; $fc2a : $c2, $20
@@ -18572,25 +18574,25 @@ LoadAnInBattleEnemy:
 	adc #InBattleEnemyData.w                                                  ; $fc35 : $69, $c0, $85
 	tax                                                  ; $fc38 : $aa
 
-;
+; Load addr of enemy data in +45
 	ldy #$0045.w                                                  ; $fc39 : $a0, $45, $00
-	sta [$b2], Y                                                  ; $fc3c : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fc3c : $97, $b2
 	sep #ACCU_8                                                  ; $fc3e : $e2, $20
 
 ; Load enemy name
 	ldy #$0000.w                                                  ; $fc40 : $a0, $00, $00
 -	lda $0000.w, X                                                  ; $fc43 : $bd, $00, $00
-	sta [$b2], Y                                                  ; $fc46 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fc46 : $97, $b2
 	iny                                                  ; $fc48 : $c8
 	inx                                                  ; $fc49 : $e8
 	cpy #$000d.w                                                  ; $fc4a : $c0, $0d, $00
 	bne -                                                  ; $fc4d : $d0, $f4
 
-;
+; skip next byte, load the next in +e, then skip 3 bytes
 	inx                                                  ; $fc4f : $e8
 	lda $0000.w, X                                                  ; $fc50 : $bd, $00, $00
 	ldy #$000e.w                                                  ; $fc53 : $a0, $0e, $00
-	sta [$b2], Y                                                  ; $fc56 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fc56 : $97, $b2
 	inx                                                  ; $fc58 : $e8
 	inx                                                  ; $fc59 : $e8
 	inx                                                  ; $fc5a : $e8
@@ -18598,7 +18600,7 @@ LoadAnInBattleEnemy:
 
 	ldy #$0025.w                                                  ; $fc5d : $a0, $25, $00
 -	lda $0000.w, X                                                  ; $fc60 : $bd, $00, $00
-	sta [$b2], Y                                                  ; $fc63 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fc63 : $97, $b2
 	inx                                                  ; $fc65 : $e8
 	inx                                                  ; $fc66 : $e8
 	iny                                                  ; $fc67 : $c8
@@ -18608,7 +18610,7 @@ LoadAnInBattleEnemy:
 
 	ldy #$0078.w                                                  ; $fc6e : $a0, $78, $00
 -	lda $0000.w, X                                                  ; $fc71 : $bd, $00, $00
-	sta [$b2], Y                                                  ; $fc74 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fc74 : $97, $b2
 	inx                                                  ; $fc76 : $e8
 	inx                                                  ; $fc77 : $e8
 	iny                                                  ; $fc78 : $c8
@@ -18623,13 +18625,14 @@ LoadAnInBattleEnemy:
 	lda $0000.w, X                                                  ; $fc81 : $bd, $00, $00
 	and #$00ff.w                                                  ; $fc84 : $29, $ff, $00
 	asl                                                  ; $fc87 : $0a
-	sta [$b2], Y                                                  ; $fc88 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fc88 : $97, $b2
 	inx                                                  ; $fc8a : $e8
 	iny                                                  ; $fc8b : $c8
 	iny                                                  ; $fc8c : $c8
 	cpy #$0086.w                                                  ; $fc8d : $c0, $86, $00
 	bne @loop_fc81                                                  ; $fc90 : $d0, $ef
 
+;
 	sep #ACCU_8                                                  ; $fc92 : $e2, $20
 	inx                                                  ; $fc94 : $e8
 	inx                                                  ; $fc95 : $e8
@@ -18649,7 +18652,7 @@ LoadAnInBattleEnemy:
 	adc #$0048.w                                                  ; $fca5 : $69, $48, $00
 	tay                                                  ; $fca8 : $a8
 	lda $0000.w, X                                                  ; $fca9 : $bd, $00, $00
-	sta [$b2], Y                                                  ; $fcac : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fcac : $97, $b2
 	sep #ACCU_8                                                  ; $fcae : $e2, $20
 
 @cont_fcb0:
@@ -18663,25 +18666,25 @@ LoadAnInBattleEnemy:
 
 	rep #ACCU_8                                                  ; $fcb8 : $c2, $20
 	ldy #$0025.w                                                  ; $fcba : $a0, $25, $00
-	lda [$b2], Y                                                  ; $fcbd : $b7, $b2
+	lda [wLoadedInBattleEnemyStruct], Y                                                  ; $fcbd : $b7, $b2
 	ldy #$0011.w                                                  ; $fcbf : $a0, $11, $00
-	sta [$b2], Y                                                  ; $fcc2 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fcc2 : $97, $b2
 	ldy #$0051.w                                                  ; $fcc4 : $a0, $51, $00
-	sta [$b2], Y                                                  ; $fcc7 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fcc7 : $97, $b2
 	ldy #$0027.w                                                  ; $fcc9 : $a0, $27, $00
-	lda [$b2], Y                                                  ; $fccc : $b7, $b2
+	lda [wLoadedInBattleEnemyStruct], Y                                                  ; $fccc : $b7, $b2
 	ldy #$0013.w                                                  ; $fcce : $a0, $13, $00
-	sta [$b2], Y                                                  ; $fcd1 : $97, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fcd1 : $97, $b2
 	ldy #$0053.w                                                  ; $fcd3 : $a0, $53, $00
-	sta [$b2], Y                                                  ; $fcd6 : $97, $b2
-	ldx $b2                                                  ; $fcd8 : $a6, $b2
+	sta [wLoadedInBattleEnemyStruct], Y                                                  ; $fcd6 : $97, $b2
+	ldx wLoadedInBattleEnemyStruct                                                  ; $fcd8 : $a6, $b2
 	jsr Call_01_f4d5.l                                                  ; $fcda : $22, $d5, $f4, $81
 	sep #ACCU_8                                                  ; $fcde : $e2, $20
 	plb                                                  ; $fce0 : $ab
 	rtl                                                  ; $fce1 : $6b
 
 
-Call_01_fce2:
+XequAddrOfInBattleEnemyAsData:
 	phb                                                  ; $fce2 : $8b
 	phy                                                  ; $fce3 : $5a
 	rep #ACCU_8                                                  ; $fce4 : $c2, $20
@@ -18689,7 +18692,7 @@ Call_01_fce2:
 	asl                                                  ; $fce9 : $0a
 	tay                                                  ; $fcea : $a8
 	sep #ACCU_8                                                  ; $fceb : $e2, $20
-	lda #$96.b                                                  ; $fced : $a9, $96
+	lda #:InBattleEnemyData.b                                                  ; $fced : $a9, $96
 	pha                                                  ; $fcef : $48
 	plb                                                  ; $fcf0 : $ab
 	rep #ACCU_8                                                  ; $fcf1 : $c2, $20

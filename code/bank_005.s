@@ -1182,7 +1182,7 @@ br_05_874a:
 	eor $47, X                                                  ; $87de : $55, $47
 	jsr $4f43.w                                                  ; $87e0 : $20, $43, $4f
 	eor $414d.w                                                  ; $87e3 : $4d, $4d, $41
-	lsr $0a44.w                                                  ; $87e6 : $4e, $44, $0a
+	lsr wBaseInBattleEnemyScriptBank.w                                                  ; $87e6 : $4e, $44, $0a
 	asl                                                  ; $87e9 : $0a
 	jsr $4720.w                                                  ; $87ea : $20, $20, $47
 	eor $4f5420.l                                                  ; $87ed : $4f, $20, $54, $4f
@@ -3948,7 +3948,7 @@ br_05_996a:
 	sta wCurrSpellIdx.w                                                  ; $9979 : $8d, $0b, $0a
 	lda #$02.b                                                  ; $997c : $a9, $02
 	sta $0a12.w                                                  ; $997e : $8d, $12, $0a
-	jsr $81f414.l                                                  ; $9981 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $9981 : $22, $14, $f4, $81
 	jsr Call_05_9510.l                                                  ; $9985 : $22, $10, $95, $85
 	bra br_05_99a1                                                  ; $9989 : $80, $16
 
@@ -4516,7 +4516,7 @@ Call_05_9dbd:
 	ldx $aeea.w                                                  ; $9e0c : $ae, $ea, $ae
 	eor $dfaf.w, X                                                  ; $9e0f : $5d, $af, $df
 	lda $c2b057.l                                                  ; $9e12 : $af, $57, $b0, $c2
-	bcs br_05_9e52                                                  ; $9e16 : $b0, $3a
+	.db $b0, $3a
 
 	lda ($a3), Y                                                  ; $9e18 : $b1, $a3
 	lda ($07), Y                                                  ; $9e1a : $b1, $07
@@ -4535,30 +4535,34 @@ Call_05_9dbd:
 	ora ($00, X)                                                  ; $9e41 : $01, $00
 	cop $00.b                                                  ; $9e43 : $02, $00
 	ora ($00, X)                                                  ; $9e45 : $01, $00
-	ora ($00), Y                                                  ; $9e47 : $11, $00
-	ora ($00, S), Y                                                  ; $9e49 : $13, $00
-	and $00                                                  ; $9e4b : $25, $00
-	and [$00]                                                  ; $9e4d : $27, $00
-	and #$00.b                                                  ; $9e4f : $29, $00
-	pld                                                  ; $9e51 : $2b
 
-br_05_9e52:
-	.db $00                                                  ; $9e52 : $00
-	and $2f00.w                                                  ; $9e53 : $2d, $00, $2f
-	.db $00                                                  ; $9e56 : $00
-	and ($00), Y                                                  ; $9e57 : $31, $00
-	and ($00, S), Y                                                  ; $9e59 : $33, $00
-	and $00, X                                                  ; $9e5b : $35, $00
-	ldy $0e00.w, X                                                  ; $9e5d : $bc, $00, $0e
-	.db $00                                                  ; $9e60 : $00
-	and [$00], Y                                                  ; $9e61 : $37, $00
-	and $3b00.w, Y                                                  ; $9e63 : $39, $00, $3b
-	.db $00                                                  ; $9e66 : $00
-	and $3f00.w, X                                                  ; $9e67 : $3d, $00, $3f
-	.db $00                                                  ; $9e6a : $00
-	eor ($00, X)                                                  ; $9e6b : $41, $00
-	eor $00, S                                                  ; $9e6d : $43, $00
-	ora $800200.l                                                  ; $9e6f : $0f, $00, $02, $80
+
+EnemyAttributeIdxToOffsMap:
+	.dw $0011 ; max hp.w
+	.dw $0013 ; max mp.w
+	.dw $0025
+	.dw $0027
+	.dw $0029
+	.dw $002b
+	.dw $002d
+	.dw $002f
+	.dw $0031
+	.dw $0033
+	.dw $0035
+	.dw $00bc
+	.dw $000e ; unknown
+	.dw $0037
+	.dw $0039
+	.dw $003b
+	.dw $003d
+	.dw $003f
+	.dw $0041
+	.dw $0043
+	.dw $000f ; battle sprite.b
+
+
+;
+	.db $02, $80                                                  ; $9e71 : $02, $80
 	cop $c0.b                                                  ; $9e73 : $02, $c0
 	ora $81, S                                                  ; $9e75 : $03, $81
 	ora $c1, S                                                  ; $9e77 : $03, $c1
@@ -4608,6 +4612,9 @@ br_05_9e52:
 	lda $0e                                                  ; $9ec2 : $a5, $0e
 	adc $0f, S                                                  ; $9ec4 : $63, $0f
 	and ($10, X)                                                  ; $9ec6 : $21, $10
+
+
+Data_5_9ec8:
 	tcs                                                  ; $9ec8 : $1b
 	asl $d9, X                                                  ; $9ec9 : $16, $d9
 	asl $97, X                                                  ; $9ecb : $16, $97
@@ -7817,6 +7824,9 @@ br_05_b3f8:
 	.db $00                                                  ; $b44e : $00
 	trb $00                                                  ; $b44f : $14, $00
 	.db $00                                                  ; $b451 : $00
+
+
+StartExecutingEnemyScriptCommands:
 	phb                                                  ; $b452 : $8b
 	php                                                  ; $b453 : $08
 	rep #ACCU_8|IDX_8                                                  ; $b454 : $c2, $30
@@ -7826,28 +7836,26 @@ br_05_b3f8:
 	sep #ACCU_8                                                  ; $b459 : $e2, $20
 	stz $0a60.w                                                  ; $b45b : $9c, $60, $0a
 
-Jump_05_b45e:
+ExecNextEnemyScriptCommand:
 	sep #ACCU_8                                                  ; $b45e : $e2, $20
 	jsr Call_05_c4de.w                                                  ; $b460 : $20, $de, $c4
 	tdc                                                  ; $b463 : $7b
-	lda [$bb]                                                  ; $b464 : $a7, $bb
+	lda [wCurrInBattleEnemyScriptAddr]                                                  ; $b464 : $a7, $bb
 	rep #ACCU_8                                                  ; $b466 : $c2, $20
 	asl                                                  ; $b468 : $0a
 	tax                                                  ; $b469 : $aa
-	inc $bb                                                  ; $b46a : $e6, $bb
+	inc wCurrInBattleEnemyScriptAddr                                                  ; $b46a : $e6, $bb
 	sep #ACCU_8                                                  ; $b46c : $e2, $20
 	phk                                                  ; $b46e : $4b
 	plb                                                  ; $b46f : $ab
-	jmp ($b483.w, X)                                                  ; $b470 : $7c, $83, $b4
+	jmp (EnemyScriptCommands.w, X)                                                  ; $b470 : $7c, $83, $b4
 
 
+EnemyScriptCmd00h_End:
 	tdc                                                  ; $b473 : $7b
-	bra br_05_b478                                                  ; $b474 : $80, $02
-
+	bra +                                                  ; $b474 : $80, $02
 	lda #$ff.b                                                  ; $b476 : $a9, $ff
-
-br_05_b478:
-	sta $0a5b.w                                                  ; $b478 : $8d, $5b, $0a
++	sta $0a5b.w                                                  ; $b478 : $8d, $5b, $0a
 	rep #ACCU_8|IDX_8                                                  ; $b47b : $c2, $30
 	ply                                                  ; $b47d : $7a
 	plx                                                  ; $b47e : $fa
@@ -7857,168 +7865,185 @@ br_05_b478:
 	rtl                                                  ; $b482 : $6b
 
 
-	adc ($b4, S), Y                                                  ; $b483 : $73, $b4
-	and $50b5.w, X                                                  ; $b485 : $3d, $b5, $50
-	lda $51, X                                                  ; $b488 : $b5, $51
-	lda $60, X                                                  ; $b48a : $b5, $60
-	lda $82, X                                                  ; $b48c : $b5, $82
-	lda $98, X                                                  ; $b48e : $b5, $98
-	lda $ad, X                                                  ; $b490 : $b5, $ad
-	lda $c2, X                                                  ; $b492 : $b5, $c2
-	lda $e7, X                                                  ; $b494 : $b5, $e7
-	lda $0a, X                                                  ; $b496 : $b5, $0a
-	ldx $2d, Y                                                  ; $b498 : $b6, $2d
-	ldx $70, Y                                                  ; $b49a : $b6, $70
-	ldx $7c, Y                                                  ; $b49c : $b6, $7c
-	ldx $98, Y                                                  ; $b49e : $b6, $98
-	ldx $b7, Y                                                  ; $b4a0 : $b6, $b7
-	ldx $d2, Y                                                  ; $b4a2 : $b6, $d2
-	ldx $3b, Y                                                  ; $b4a4 : $b6, $3b
-	lda [$53], Y                                                  ; $b4a6 : $b7, $53
-	lda [$7b], Y                                                  ; $b4a8 : $b7, $7b
-	lda [$a8], Y                                                  ; $b4aa : $b7, $a8
-	lda [$cf], Y                                                  ; $b4ac : $b7, $cf
-	lda [$49], Y                                                  ; $b4ae : $b7, $49
-	clv                                                  ; $b4b0 : $b8
-	stz $b8                                                  ; $b4b1 : $64, $b8
-	adc $b89ab8.l, X                                                  ; $b4b3 : $7f, $b8, $9a, $b8
-	ldy $b8, X                                                  ; $b4b7 : $b4, $b8
-	cpy $ebb8.w                                                  ; $b4b9 : $cc, $b8, $eb
-	clv                                                  ; $b4bc : $b8
-	tsb $b9                                                  ; $b4bd : $04, $b9
-	phd                                                  ; $b4bf : $0b
-	lda $b91f.w, Y                                                  ; $b4c0 : $b9, $1f, $b9
-	bit $3db9.w                                                  ; $b4c3 : $2c, $b9, $3d
-	lda $b96e.w, Y                                                  ; $b4c6 : $b9, $6e, $b9
-	clv                                                  ; $b4c9 : $b8
-	lda $b9da.w, Y                                                  ; $b4ca : $b9, $da, $b9
-	cop $ba.b                                                  ; $b4cd : $02, $ba
-	plp                                                  ; $b4cf : $28
-	tsx                                                  ; $b4d0 : $ba
-	eor [$ba]                                                  ; $b4d1 : $47, $ba
-	stz $ba                                                  ; $b4d3 : $64, $ba
-	sta ($ba, X)                                                  ; $b4d5 : $81, $ba
-	txa                                                  ; $b4d7 : $8a
-	tsx                                                  ; $b4d8 : $ba
-	sta ($ba, S), Y                                                  ; $b4d9 : $93, $ba
-	ldx $ba                                                  ; $b4db : $a6, $ba
-	ora $bb, X                                                  ; $b4dd : $15, $bb
-	lsr $bb                                                  ; $b4df : $46, $bb
-	eor $bb7ebb.l                                                  ; $b4e1 : $4f, $bb, $7e, $bb
-	lda ($bb, X)                                                  ; $b4e5 : $a1, $bb
-	ldx #$cdbb.w                                                  ; $b4e7 : $a2, $bb, $cd
-	ldy $bcce.w, X                                                  ; $b4ea : $bc, $ce, $bc
-	cmp $bcd8bc.l                                                  ; $b4ed : $cf, $bc, $d8, $bc
-	sbc $2bbc.w                                                  ; $b4f1 : $ed, $bc, $2b
-	lda $bd2b.w, X                                                  ; $b4f4 : $bd, $2b, $bd
-	pld                                                  ; $b4f7 : $2b
-	lda $bd2b.w, X                                                  ; $b4f8 : $bd, $2b, $bd
-	bit $54bd.w                                                  ; $b4fb : $2c, $bd, $54
-	lda $bd5e.w, X                                                  ; $b4fe : $bd, $5e, $bd
-	eor ($b6)                                                  ; $b501 : $52, $b6
-	sbc [$b8], Y                                                  ; $b503 : $f7, $b8
-	ror $77bd.w                                                  ; $b505 : $6e, $bd, $77
-	lda $bdb2.w, X                                                  ; $b508 : $bd, $b2, $bd
-	wai                                                  ; $b50b : $cb
-	lda $bdda.w, X                                                  ; $b50c : $bd, $da, $bd
-	sbc ($bd, S), Y                                                  ; $b50f : $f3, $bd
-	asl $be                                                  ; $b511 : $06, $be
-	ora ($be, S), Y                                                  ; $b513 : $13, $be
-	ina                                                  ; $b515 : $1a
-	ldx $be2b.w, Y                                                  ; $b516 : $be, $2b, $be
-	eor $be, S                                                  ; $b519 : $43, $be
-	jmp $56be.w                                                  ; $b51b : $4c, $be, $56
+EnemyScriptCommands:
+	.dw EnemyScriptCmd00h_End
+	.dw $b53d
+	.dw $b550
+	.dw $b551
+	.dw EnemyScriptCmd04h
+	.dw EnemyScriptCmd05h_JumpIfRNGltScriptByte
+	.dw $b598
+	.dw $b5ad
+	.dw $b5c2
+	.dw $b5e7
+	.dw $b60a
+	.dw $b62d
+	.dw $b670
+	.dw $b67c
+	.dw $b698
+	.dw $b6b7
+	.dw $b6d2
+	.dw $b73b
+	.dw $b753
+	.dw $b77b
+	.dw $b7a8
+	.dw $b7cf
+	.dw $b849
+	.dw $b864
+	.dw $b87f
+	.dw $b89a
+	.dw $b8b4
+	.dw $b8cc
+	.dw $b8eb
+	.dw $b904
+	.dw EnemyScriptCmd1eh
+	.dw EnemyScriptCmd1fh
+	.dw $b92c
+	.dw $b93d
+	.dw EnemyScriptCmd22h
+	.dw $b9b8
+	.dw $b9da
+	.dw $ba02
+	.dw $ba28
+	.dw $ba47
+	.dw EnemyScriptCmd28h
+	.dw $ba81
+	.dw $ba8a
+	.dw $ba93
+	.dw EnemyScriptCmd2ch
+	.dw $bb15
+	.dw $bb46
+	.dw $bb4f
+	.dw $bb7e
+	.dw $bba1
+	.dw EnemyScriptCmd32h
+	.dw $bccd
+	.dw $bcce
+	.dw $bccf
+	.dw $bcd8
+	.dw EnemyScriptCmd37h
+	.dw $bd2b
+	.dw $bd2b
+	.dw $bd2b
+	.dw $bd2b
+	.dw $bd2c
+	.dw $bd54
+	.dw $bd5e
+	.dw $b652
+	.dw $b8f7
+	.dw $bd6e
+	.dw $bd77
+	.dw $bdb2
+	.dw $bdcb
+	.dw $bdda
+	.dw $bdf3
+	.dw $be06
+	.dw $be13
+	.dw $be1a
+	.dw $be2b
+	.dw $be43
+	.dw $be4c
+	.dw $be56
+	.dw $b81c
+	.dw $b476
+	.dw $be68
+	.dw $be7d
+	.dw $be96
+	.dw $bebf
+	.dw $beda
+	.dw $b71d
+	.dw $be22
+	.dw $bef5
+	.dw $bf97
+	.dw $bf9e
+	.dw EnemyScriptCmd5ah
+	.dw $bfae
+	.dw $bfb6
 
 
-	ldx $b81c.w, Y                                                  ; $b51e : $be, $1c, $b8
-	ror $b4, X                                                  ; $b521 : $76, $b4
-	pla                                                  ; $b523 : $68
-	ldx $be7d.w, Y                                                  ; $b524 : $be, $7d, $be
-	stx $be, Y                                                  ; $b527 : $96, $be
-	lda $bedabe.l, X                                                  ; $b529 : $bf, $be, $da, $be
-	ora $22b7.w, X                                                  ; $b52d : $1d, $b7, $22
-	ldx $bef5.w, Y                                                  ; $b530 : $be, $f5, $be
-	sta [$bf], Y                                                  ; $b533 : $97, $bf
-	stz $a5bf.w, X                                                  ; $b535 : $9e, $bf, $a5
-	lda $b6bfae.l, X                                                  ; $b538 : $bf, $ae, $bf, $b6
-	lda $c28f20.l, X                                                  ; $b53c : $bf, $20, $8f, $c2
+;
+	jsr Func_5_c28f.w                                                  ; $b53d : $20, $8f, $c2
 	jsr $81a832.l                                                  ; $b540 : $22, $32, $a8, $81
 	jsr Call_05_ccce.l                                                  ; $b544 : $22, $ce, $cc, $85
 	rep #ACCU_8                                                  ; $b548 : $c2, $20
 	jsr Call_05_c2c9.w                                                  ; $b54a : $20, $c9, $c2
-	jmp Jump_05_b45e.w                                                  ; $b54d : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b54d : $4c, $5e, $b4
 
 
 	.db $00                                                  ; $b550 : $00
 
-Jump_05_b551:
-br_05_b551:
+
+JumpEnemyScriptWord:
 	rep #ACCU_8                                                  ; $b551 : $c2, $20
-	jsr Call_05_bfca.w                                                  ; $b553 : $20, $ca, $bf
+	jsr XequEnemyScriptWord.w                                                  ; $b553 : $20, $ca, $bf
 	txa                                                  ; $b556 : $8a
 	clc                                                  ; $b557 : $18
-	adc $0a42.w                                                  ; $b558 : $6d, $42, $0a
-	sta $bb                                                  ; $b55b : $85, $bb
-	jmp Jump_05_b45e.w                                                  ; $b55d : $4c, $5e, $b4
+	adc wBaseInBattleEnemyScriptAddr.w                                                  ; $b558 : $6d, $42, $0a
+	sta wCurrInBattleEnemyScriptAddr                                                  ; $b55b : $85, $bb
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b55d : $4c, $5e, $b4
 
 
+EnemyScriptCmd04h:
 	rep #ACCU_8                                                  ; $b560 : $c2, $20
 	lda $7ff42e.l                                                  ; $b562 : $af, $2e, $f4, $7f
-	bne br_05_b551                                                  ; $b566 : $d0, $e9
+	bne JumpEnemyScriptWord                                                  ; $b566 : $d0, $e9
 
-	jsr Call_05_bfca.w                                                  ; $b568 : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b56b : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b568 : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b56b : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b56e : $20, $bf, $bf
+;
+	jsr AequEnemyScriptByte.w                                                  ; $b56e : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $b571 : $c2, $20
 	and #$00ff.w                                                  ; $b573 : $29, $ff, $00
 	cmp $7ff42e.l                                                  ; $b576 : $cf, $2e, $f4, $7f
-	beq br_05_b551                                                  ; $b57a : $f0, $d5
+	beq JumpEnemyScriptWord                                                  ; $b57a : $f0, $d5
 
-	jsr Call_05_bfca.w                                                  ; $b57c : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b57f : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b57c : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b57f : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b582 : $20, $bf, $bf
+EnemyScriptCmd05h_JumpIfRNGltScriptByte:
+	jsr AequEnemyScriptByte.w                                                  ; $b582 : $20, $bf, $bf
 	sta $54                                                  ; $b585 : $85, $54
-	lda #$22ff.w                                                  ; $b587 : $a9, $ff, $22
-	sta $8082.w, Y                                                  ; $b58a : $99, $82, $80
+	lda #$ff.b                                                  ; $b587 : $a9, $ff
+	jsr AequRNGtimesA.l                                                  ; $b589 : $22, $99, $82, $80
 	sec                                                  ; $b58d : $38
 	sbc $54                                                  ; $b58e : $e5, $54
-	bcc br_05_b551                                                  ; $b590 : $90, $bf
+	bcc JumpEnemyScriptWord                                                  ; $b590 : $90, $bf
 
-	jsr Call_05_bfca.w                                                  ; $b592 : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b595 : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b592 : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b595 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b598 : $20, $bf, $bf
+;
+	jsr AequEnemyScriptByte.w                                                  ; $b598 : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b59b : $20, $ed, $bf
 	stx $54                                                  ; $b59e : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b5a0 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b5a0 : $20, $d8, $bf
 	cpx $54                                                  ; $b5a3 : $e4, $54
-	beq br_05_b551                                                  ; $b5a5 : $f0, $aa
+	beq JumpEnemyScriptWord                                                  ; $b5a5 : $f0, $aa
 
-	jsr Call_05_bfca.w                                                  ; $b5a7 : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b5aa : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b5a7 : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b5aa : $4c, $5e, $b4
 
 
 Call_05_b5ad:
-	jsr Call_05_bfbf.w                                                  ; $b5ad : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b5ad : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b5b0 : $20, $ed, $bf
 	stx $54                                                  ; $b5b3 : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b5b5 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b5b5 : $20, $d8, $bf
 	cpx $54                                                  ; $b5b8 : $e4, $54
-	bne br_05_b551                                                  ; $b5ba : $d0, $95
+	bne JumpEnemyScriptWord                                                  ; $b5ba : $d0, $95
 
-	jsr Call_05_bfca.w                                                  ; $b5bc : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b5bf : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b5bc : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b5bf : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b5c2 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b5c2 : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b5c5 : $20, $ed, $bf
 	stx $54                                                  ; $b5c8 : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b5ca : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b5ca : $20, $d8, $bf
 	rep #ACCU_8                                                  ; $b5cd : $c2, $20
 	lda $54                                                  ; $b5cf : $a5, $54
 	stx $54                                                  ; $b5d1 : $86, $54
@@ -8031,21 +8056,21 @@ Call_05_b5ad:
 	bvc br_05_b5e1                                                  ; $b5da : $50, $05
 
 br_05_b5dc:
-	jmp Jump_05_b551.w                                                  ; $b5dc : $4c, $51, $b5
+	jmp JumpEnemyScriptWord.w                                                  ; $b5dc : $4c, $51, $b5
 
 
 br_05_b5df:
 	bvc br_05_b5dc                                                  ; $b5df : $50, $fb
 
 br_05_b5e1:
-	jsr Call_05_bfca.w                                                  ; $b5e1 : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b5e4 : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b5e1 : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b5e4 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b5e7 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b5e7 : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b5ea : $20, $ed, $bf
 	stx $54                                                  ; $b5ed : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b5ef : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b5ef : $20, $d8, $bf
 	rep #ACCU_8                                                  ; $b5f2 : $c2, $20
 	lda $54                                                  ; $b5f4 : $a5, $54
 	stx $54                                                  ; $b5f6 : $86, $54
@@ -8056,21 +8081,21 @@ br_05_b5e1:
 	bvs br_05_b604                                                  ; $b5fd : $70, $05
 
 br_05_b5ff:
-	jmp Jump_05_b551.w                                                  ; $b5ff : $4c, $51, $b5
+	jmp JumpEnemyScriptWord.w                                                  ; $b5ff : $4c, $51, $b5
 
 
 br_05_b602:
 	bvs br_05_b5ff                                                  ; $b602 : $70, $fb
 
 br_05_b604:
-	jsr Call_05_bfca.w                                                  ; $b604 : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b607 : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b604 : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b607 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b60a : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b60a : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b60d : $20, $ed, $bf
 	stx $54                                                  ; $b610 : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b612 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b612 : $20, $d8, $bf
 	rep #ACCU_8                                                  ; $b615 : $c2, $20
 	lda $54                                                  ; $b617 : $a5, $54
 	stx $54                                                  ; $b619 : $86, $54
@@ -8081,21 +8106,21 @@ br_05_b604:
 	bvc br_05_b627                                                  ; $b620 : $50, $05
 
 br_05_b622:
-	jmp Jump_05_b551.w                                                  ; $b622 : $4c, $51, $b5
+	jmp JumpEnemyScriptWord.w                                                  ; $b622 : $4c, $51, $b5
 
 
 br_05_b625:
 	bvc br_05_b622                                                  ; $b625 : $50, $fb
 
 br_05_b627:
-	jsr Call_05_bfca.w                                                  ; $b627 : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b62a : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b627 : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b62a : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b62d : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b62d : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b630 : $20, $ed, $bf
 	stx $54                                                  ; $b633 : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b635 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b635 : $20, $d8, $bf
 	rep #ACCU_8                                                  ; $b638 : $c2, $20
 	lda $54                                                  ; $b63a : $a5, $54
 	stx $54                                                  ; $b63c : $86, $54
@@ -8108,15 +8133,15 @@ br_05_b627:
 	bvs br_05_b64c                                                  ; $b645 : $70, $05
 
 br_05_b647:
-	jmp Jump_05_b551.w                                                  ; $b647 : $4c, $51, $b5
+	jmp JumpEnemyScriptWord.w                                                  ; $b647 : $4c, $51, $b5
 
 
 br_05_b64a:
 	bvs br_05_b647                                                  ; $b64a : $70, $fb
 
 br_05_b64c:
-	jsr Call_05_bfca.w                                                  ; $b64c : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b64f : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b64c : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b64f : $4c, $5e, $b4
 
 
 	lda #$8501.w                                                  ; $b652 : $a9, $01, $85
@@ -8129,20 +8154,20 @@ br_05_b64c:
 	eor $f0, X                                                  ; $b664 : $55, $f0
 	ora $4c, S                                                  ; $b666 : $03, $4c
 	eor ($b5), Y                                                  ; $b668 : $51, $b5
-	jsr Call_05_bfca.w                                                  ; $b66a : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $b66d : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $b66a : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b66d : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b670 : $20, $bf, $bf
-	jsr Call_05_bfd8.w                                                  ; $b673 : $20, $d8, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b670 : $20, $bf, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b673 : $20, $d8, $bf
 	jsr Call_05_c023.w                                                  ; $b676 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b679 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b679 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b67c : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b67c : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b67f : $20, $ed, $bf
 	stx $54                                                  ; $b682 : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b684 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b684 : $20, $d8, $bf
 	pha                                                  ; $b687 : $48
 	rep #ACCU_8                                                  ; $b688 : $c2, $20
 	txa                                                  ; $b68a : $8a
@@ -8152,13 +8177,13 @@ br_05_b64c:
 	sep #ACCU_8                                                  ; $b68f : $e2, $20
 	pla                                                  ; $b691 : $68
 	jsr Call_05_c023.w                                                  ; $b692 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b695 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b695 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b698 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b698 : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b69b : $20, $ed, $bf
 	stx $54                                                  ; $b69e : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b6a0 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b6a0 : $20, $d8, $bf
 	pha                                                  ; $b6a3 : $48
 	rep #ACCU_8                                                  ; $b6a4 : $c2, $20
 	lda $54                                                  ; $b6a6 : $a5, $54
@@ -8171,23 +8196,23 @@ Call_05_b6ad:
 	sep #ACCU_8                                                  ; $b6ae : $e2, $20
 	pla                                                  ; $b6b0 : $68
 	jsr Call_05_c023.w                                                  ; $b6b1 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b6b4 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b6b4 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b6b7 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b6b7 : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b6ba : $20, $ed, $bf
 	stx $54                                                  ; $b6bd : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b6bf : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b6bf : $20, $d8, $bf
 	stx $56                                                  ; $b6c2 : $86, $56
 	pha                                                  ; $b6c4 : $48
 	jsr Call_05_dca3.l                                                  ; $b6c5 : $22, $a3, $dc, $85
 	pla                                                  ; $b6c9 : $68
 	ldx $63                                                  ; $b6ca : $a6, $63
 	jsr Call_05_c023.w                                                  ; $b6cc : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b6cf : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b6cf : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b6d2 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b6d2 : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b6d5 : $20, $ed, $bf
 	pha                                                  ; $b6d8 : $48
 	rep #ACCU_8                                                  ; $b6d9 : $c2, $20
@@ -8196,7 +8221,7 @@ Call_05_b6ad:
 
 	stx $5d                                                  ; $b6de : $86, $5d
 	sep #ACCU_8                                                  ; $b6e0 : $e2, $20
-	jsr Call_05_bfd8.w                                                  ; $b6e2 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b6e2 : $20, $d8, $bf
 	txa                                                  ; $b6e5 : $8a
 	sta $54                                                  ; $b6e6 : $85, $54
 	stz $5f                                                  ; $b6e8 : $64, $5f
@@ -8204,14 +8229,14 @@ Call_05_b6ad:
 	ldx $5d                                                  ; $b6ee : $a6, $5d
 	pla                                                  ; $b6f0 : $68
 	jsr Call_05_c023.w                                                  ; $b6f1 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b6f4 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b6f4 : $4c, $5e, $b4
 
 
 br_05_b6f7:
 	eor #$ff.b                                                  ; $b6f7 : $49, $ff
 	sbc $5d851a.l, X                                                  ; $b6f9 : $ff, $1a, $85, $5d
 	sep #ACCU_8                                                  ; $b6fd : $e2, $20
-	jsr Call_05_bfd8.w                                                  ; $b6ff : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b6ff : $20, $d8, $bf
 	txa                                                  ; $b702 : $8a
 	sta $54                                                  ; $b703 : $85, $54
 	stz $5f                                                  ; $b705 : $64, $5f
@@ -8224,14 +8249,14 @@ br_05_b6f7:
 	sep #ACCU_8                                                  ; $b714 : $e2, $20
 	pla                                                  ; $b716 : $68
 	jsr Call_05_c023.w                                                  ; $b717 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b71a : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b71a : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b71d : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b71d : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b720 : $20, $ed, $bf
 	pha                                                  ; $b723 : $48
 	stx $5d                                                  ; $b724 : $86, $5d
-	jsr Call_05_bfd8.w                                                  ; $b726 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b726 : $20, $d8, $bf
 	txa                                                  ; $b729 : $8a
 	sta $54                                                  ; $b72a : $85, $54
 	stz $5f                                                  ; $b72c : $64, $5f
@@ -8239,10 +8264,10 @@ br_05_b6f7:
 	ldx $5d                                                  ; $b732 : $a6, $5d
 	pla                                                  ; $b734 : $68
 	jsr Call_05_c023.w                                                  ; $b735 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b738 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b738 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b73b : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b73b : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b73e : $20, $ed, $bf
 	pha                                                  ; $b741 : $48
 	rep #ACCU_8                                                  ; $b742 : $c2, $20
@@ -8252,14 +8277,14 @@ br_05_b6f7:
 	sep #ACCU_8                                                  ; $b74a : $e2, $20
 	pla                                                  ; $b74c : $68
 	jsr Call_05_c023.w                                                  ; $b74d : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b750 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b750 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b753 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b753 : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b756 : $20, $ed, $bf
 	pha                                                  ; $b759 : $48
 	stx $58                                                  ; $b75a : $86, $58
-	jsr Call_05_bfbf.w                                                  ; $b75c : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b75c : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b75f : $20, $ed, $bf
 	stx $65                                                  ; $b762 : $86, $65
 	rep #ACCU_8                                                  ; $b764 : $c2, $20
@@ -8271,13 +8296,13 @@ br_05_b6f7:
 	sep #ACCU_8                                                  ; $b772 : $e2, $20
 	pla                                                  ; $b774 : $68
 	jsr Call_05_c023.w                                                  ; $b775 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b778 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b778 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b77b : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b77b : $20, $bf, $bf
 	pha                                                  ; $b77e : $48
 	rep #ACCU_8                                                  ; $b77f : $c2, $20
-	jsr Call_05_bfbf.w                                                  ; $b781 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b781 : $20, $bf, $bf
 	and #$00ff.w                                                  ; $b784 : $29, $ff, $00
 	sta $7ffaa8.l                                                  ; $b787 : $8f, $a8, $fa, $7f
 	lda $7ff450.l                                                  ; $b78b : $af, $50, $f4, $7f
@@ -8290,30 +8315,30 @@ br_05_b6f7:
 	sep #ACCU_8                                                  ; $b79f : $e2, $20
 	pla                                                  ; $b7a1 : $68
 	jsr Call_05_c023.w                                                  ; $b7a2 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b7a5 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b7a5 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b7a8 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b7a8 : $20, $bf, $bf
 	jsr Call_05_bfed.w                                                  ; $b7ab : $20, $ed, $bf
 	rep #ACCU_8                                                  ; $b7ae : $c2, $20
 	txa                                                  ; $b7b0 : $8a
 	sta $7ffaa6.l                                                  ; $b7b1 : $8f, $a6, $fa, $7f
 	lda $7ff450.l                                                  ; $b7b5 : $af, $50, $f4, $7f
 	sta $7ffaaa.l                                                  ; $b7b9 : $8f, $aa, $fa, $7f
-	jsr Call_05_bfbf.w                                                  ; $b7bd : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b7bd : $20, $bf, $bf
 	and #$00ff.w                                                  ; $b7c0 : $29, $ff, $00
 	sta $7ffaa8.l                                                  ; $b7c3 : $8f, $a8, $fa, $7f
 	sep #ACCU_8                                                  ; $b7c7 : $e2, $20
 	jsr Call_05_c23f.w                                                  ; $b7c9 : $20, $3f, $c2
-	jmp Jump_05_b45e.w                                                  ; $b7cc : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b7cc : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b7cf : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b7cf : $20, $bf, $bf
 	pha                                                  ; $b7d2 : $48
 	lda $0a52.w                                                  ; $b7d3 : $ad, $52, $0a
 	bne br_05_b7f3                                                  ; $b7d6 : $d0, $1b
 
-	jsr Call_05_bfbf.w                                                  ; $b7d8 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b7d8 : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $b7db : $c2, $20
 	and #$00ff.w                                                  ; $b7dd : $29, $ff, $00
 	sta $7ffaa8.l                                                  ; $b7e0 : $8f, $a8, $fa, $7f
@@ -8324,7 +8349,7 @@ br_05_b6f7:
 	bra br_05_b80c                                                  ; $b7f1 : $80, $19
 
 br_05_b7f3:
-	jsr Call_05_bfbf.w                                                  ; $b7f3 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b7f3 : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $b7f6 : $c2, $20
 	and #$00ff.w                                                  ; $b7f8 : $29, $ff, $00
 	sta $7ffaa8.l                                                  ; $b7fb : $8f, $a8, $fa, $7f
@@ -8340,12 +8365,12 @@ br_05_b80c:
 	sep #ACCU_8                                                  ; $b813 : $e2, $20
 	pla                                                  ; $b815 : $68
 	jsr Call_05_c023.w                                                  ; $b816 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b819 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b819 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b81c : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b81c : $20, $bf, $bf
 	pha                                                  ; $b81f : $48
-	jsr Call_05_bfbf.w                                                  ; $b820 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b820 : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $b823 : $c2, $20
 	and #$00ff.w                                                  ; $b825 : $29, $ff, $00
 	sta $7ffaa8.l                                                  ; $b828 : $8f, $a8, $fa, $7f
@@ -8359,14 +8384,14 @@ br_05_b80c:
 	sep #ACCU_8                                                  ; $b840 : $e2, $20
 	pla                                                  ; $b842 : $68
 	jsr Call_05_c023.w                                                  ; $b843 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b846 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b846 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b849 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b849 : $20, $bf, $bf
 	pha                                                  ; $b84c : $48
 	jsr Call_05_bfed.w                                                  ; $b84d : $20, $ed, $bf
 	stx $54                                                  ; $b850 : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b852 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b852 : $20, $d8, $bf
 	rep #ACCU_8                                                  ; $b855 : $c2, $20
 	txa                                                  ; $b857 : $8a
 	and $54                                                  ; $b858 : $25, $54
@@ -8374,14 +8399,14 @@ br_05_b80c:
 	sep #ACCU_8                                                  ; $b85b : $e2, $20
 	pla                                                  ; $b85d : $68
 	jsr Call_05_c023.w                                                  ; $b85e : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b861 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b861 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b864 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b864 : $20, $bf, $bf
 	pha                                                  ; $b867 : $48
 	jsr Call_05_bfed.w                                                  ; $b868 : $20, $ed, $bf
 	stx $54                                                  ; $b86b : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b86d : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b86d : $20, $d8, $bf
 	rep #ACCU_8                                                  ; $b870 : $c2, $20
 	txa                                                  ; $b872 : $8a
 	ora $54                                                  ; $b873 : $05, $54
@@ -8389,14 +8414,14 @@ br_05_b80c:
 	sep #ACCU_8                                                  ; $b876 : $e2, $20
 	pla                                                  ; $b878 : $68
 	jsr Call_05_c023.w                                                  ; $b879 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b87c : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b87c : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b87f : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b87f : $20, $bf, $bf
 	pha                                                  ; $b882 : $48
 	jsr Call_05_bfed.w                                                  ; $b883 : $20, $ed, $bf
 	stx $54                                                  ; $b886 : $86, $54
-	jsr Call_05_bfd8.w                                                  ; $b888 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b888 : $20, $d8, $bf
 	rep #ACCU_8                                                  ; $b88b : $c2, $20
 	txa                                                  ; $b88d : $8a
 	eor $54                                                  ; $b88e : $45, $54
@@ -8404,10 +8429,10 @@ br_05_b80c:
 	sep #ACCU_8                                                  ; $b891 : $e2, $20
 	pla                                                  ; $b893 : $68
 	jsr Call_05_c023.w                                                  ; $b894 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b897 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b897 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b89a : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b89a : $20, $bf, $bf
 	pha                                                  ; $b89d : $48
 	jsr Call_05_bfed.w                                                  ; $b89e : $20, $ed, $bf
 	rep #ACCU_8                                                  ; $b8a1 : $c2, $20
@@ -8422,10 +8447,10 @@ br_05_b8aa:
 	sep #ACCU_8                                                  ; $b8ab : $e2, $20
 	pla                                                  ; $b8ad : $68
 	jsr Call_05_c023.w                                                  ; $b8ae : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b8b1 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b8b1 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b8b4 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b8b4 : $20, $bf, $bf
 	pha                                                  ; $b8b7 : $48
 	jsr Call_05_bfed.w                                                  ; $b8b8 : $20, $ed, $bf
 	rep #ACCU_8                                                  ; $b8bb : $c2, $20
@@ -8436,10 +8461,10 @@ br_05_b8aa:
 	sep #ACCU_8                                                  ; $b8c3 : $e2, $20
 	pla                                                  ; $b8c5 : $68
 	jsr Call_05_c023.w                                                  ; $b8c6 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b8c9 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b8c9 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b8cc : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b8cc : $20, $bf, $bf
 	pha                                                  ; $b8cf : $48
 	jsr Call_05_bfed.w                                                  ; $b8d0 : $20, $ed, $bf
 	rep #ACCU_8                                                  ; $b8d3 : $c2, $20
@@ -8458,49 +8483,52 @@ br_05_b8e2:
 	sep #ACCU_8                                                  ; $b8e2 : $e2, $20
 	pla                                                  ; $b8e4 : $68
 	jsr Call_05_c023.w                                                  ; $b8e5 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b8e8 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b8e8 : $4c, $5e, $b4
 
 
 	ldx $11e8.w                                                  ; $b8eb : $ae, $e8, $11
-	jsr Call_05_bfbf.w                                                  ; $b8ee : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b8ee : $20, $bf, $bf
 	jsr Call_05_c023.w                                                  ; $b8f1 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b8f4 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b8f4 : $4c, $5e, $b4
 
 
 	jsr Call_05_c1a1.w                                                  ; $b8f7 : $20, $a1, $c1
 	tax                                                  ; $b8fa : $aa
-	jsr Call_05_bfbf.w                                                  ; $b8fb : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b8fb : $20, $bf, $bf
 	jsr Call_05_c023.w                                                  ; $b8fe : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $b901 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b901 : $4c, $5e, $b4
 
 
 	jsr Call_05_ccce.l                                                  ; $b904 : $22, $ce, $cc, $85
-	jmp Jump_05_b45e.w                                                  ; $b908 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b908 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b90b : $20, $bf, $bf
+EnemyScriptCmd1eh:
+	jsr AequEnemyScriptByte.w                                                  ; $b90b : $20, $bf, $bf
 	sta $7ff458.l                                                  ; $b90e : $8f, $58, $f4, $7f
 	jsr Call_05_9532.l                                                  ; $b912 : $22, $32, $95, $85
 	ldx #$0078.w                                                  ; $b916 : $a2, $78, $00
 	stx $1264.w                                                  ; $b919 : $8e, $64, $12
-	jmp Jump_05_b45e.w                                                  ; $b91c : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b91c : $4c, $5e, $b4
 
 
-	jsr Call_05_bfca.w                                                  ; $b91f : $20, $ca, $bf
+EnemyScriptCmd1fh:
+	jsr XequEnemyScriptWord.w                                                  ; $b91f : $20, $ca, $bf
 	rep #ACCU_8                                                  ; $b922 : $c2, $20
 	txa                                                  ; $b924 : $8a
 	sta $7ff45c.l                                                  ; $b925 : $8f, $5c, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $b929 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b929 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b92c : $20, $bf, $bf
+;
+	jsr AequEnemyScriptByte.w                                                  ; $b92c : $20, $bf, $bf
 	sta $7ff45e.l                                                  ; $b92f : $8f, $5e, $f4, $7f
-	jsr Call_05_bfbf.w                                                  ; $b933 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b933 : $20, $bf, $bf
 	sta $7ff460.l                                                  ; $b936 : $8f, $60, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $b93a : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b93a : $4c, $5e, $b4
 
 
-	jsr Call_05_bfca.w                                                  ; $b93d : $20, $ca, $bf
+	jsr XequEnemyScriptWord.w                                                  ; $b93d : $20, $ca, $bf
 	rep #ACCU_8                                                  ; $b940 : $c2, $20
 	txa                                                  ; $b942 : $8a
 	sta $7ff45c.l                                                  ; $b943 : $8f, $5c, $f4, $7f
@@ -8508,18 +8536,19 @@ br_05_b8e2:
 	sta $7ff45a.l                                                  ; $b94a : $8f, $5a, $f4, $7f
 	lda #$0005.w                                                  ; $b94e : $a9, $05, $00
 	sta $7ff454.l                                                  ; $b951 : $8f, $54, $f4, $7f
-	jsr Call_05_bfd8.w                                                  ; $b955 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b955 : $20, $d8, $bf
 	txa                                                  ; $b958 : $8a
 	eor #$ffff.w                                                  ; $b959 : $49, $ff, $ff
 	ina                                                  ; $b95c : $1a
 	sta wPlayerHPAdjust.l                                                  ; $b95d : $8f, $62, $f4, $7f
 	lda #$0020.w                                                  ; $b961 : $a9, $20, $00
 	sta $7ff464.l                                                  ; $b964 : $8f, $64, $f4, $7f
-	jsr Call_05_bfbf.w                                                  ; $b968 : $20, $bf, $bf
-	jmp Jump_05_b45e.w                                                  ; $b96b : $4c, $5e, $b4
+	jsr AequEnemyScriptByte.w                                                  ; $b968 : $20, $bf, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b96b : $4c, $5e, $b4
 
 
-	jsr Call_05_bfca.w                                                  ; $b96e : $20, $ca, $bf
+EnemyScriptCmd22h:
+	jsr XequEnemyScriptWord.w                                                  ; $b96e : $20, $ca, $bf
 	rep #ACCU_8                                                  ; $b971 : $c2, $20
 	txa                                                  ; $b973 : $8a
 	sta $7ff45c.l                                                  ; $b974 : $8f, $5c, $f4, $7f
@@ -8527,16 +8556,16 @@ br_05_b8e2:
 	sta $7ff45a.l                                                  ; $b97b : $8f, $5a, $f4, $7f
 	lda #$000a.w                                                  ; $b97f : $a9, $0a, $00
 	sta $7ff454.l                                                  ; $b982 : $8f, $54, $f4, $7f
-	jsr Call_05_bfd8.w                                                  ; $b986 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b986 : $20, $d8, $bf
 	stx $ca                                                  ; $b989 : $86, $ca
 	lda #$0008.w                                                  ; $b98b : $a9, $08, $00
-	jsr Call_05_c05f.w                                                  ; $b98e : $20, $5f, $c0
+	jsr XequCurrInBattleEnemyAttr.w                                                  ; $b98e : $20, $5f, $c0
 	txa                                                  ; $b991 : $8a
 	clc                                                  ; $b992 : $18
 	adc $ca                                                  ; $b993 : $65, $ca
 	sta $ca                                                  ; $b995 : $85, $ca
 	lda #$0011.w                                                  ; $b997 : $a9, $11, $00
-	jsr Call_05_c05f.w                                                  ; $b99a : $20, $5f, $c0
+	jsr XequCurrInBattleEnemyAttr.w                                                  ; $b99a : $20, $5f, $c0
 	txa                                                  ; $b99d : $8a
 	clc                                                  ; $b99e : $18
 	adc $ca                                                  ; $b99f : $65, $ca
@@ -8546,11 +8575,11 @@ br_05_b8e2:
 	sta wPlayerHPAdjust.l                                                  ; $b9a7 : $8f, $62, $f4, $7f
 	lda #$0020.w                                                  ; $b9ab : $a9, $20, $00
 	sta $7ff464.l                                                  ; $b9ae : $8f, $64, $f4, $7f
-	jsr Call_05_bfbf.w                                                  ; $b9b2 : $20, $bf, $bf
-	jmp Jump_05_b45e.w                                                  ; $b9b5 : $4c, $5e, $b4
+	jsr AequEnemyScriptByte.w                                                  ; $b9b2 : $20, $bf, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b9b5 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfca.w                                                  ; $b9b8 : $20, $ca, $bf
+	jsr XequEnemyScriptWord.w                                                  ; $b9b8 : $20, $ca, $bf
 	rep #ACCU_8                                                  ; $b9bb : $c2, $20
 	txa                                                  ; $b9bd : $8a
 	eor #$ffff.w                                                  ; $b9be : $49, $ff, $ff
@@ -8561,29 +8590,29 @@ br_05_b8e2:
 	lda #$0020.w                                                  ; $b9cd : $a9, $20, $00
 	sta $7ff45a.l                                                  ; $b9d0 : $8f, $5a, $f4, $7f
 	lda #$0005.w                                                  ; $b9d4 : $a9, $05, $00
-	jmp Jump_05_b45e.w                                                  ; $b9d7 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b9d7 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $b9da : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b9da : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $b9dd : $c2, $20
 	and #$00ff.w                                                  ; $b9df : $29, $ff, $00
 	tax                                                  ; $b9e2 : $aa
 	lda $859f04.l, X                                                  ; $b9e3 : $bf, $04, $9f, $85
 	and #$00ff.w                                                  ; $b9e7 : $29, $ff, $00
 	pha                                                  ; $b9ea : $48
-	jsr Call_05_bfd8.w                                                  ; $b9eb : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $b9eb : $20, $d8, $bf
 	txa                                                  ; $b9ee : $8a
 	plx                                                  ; $b9ef : $fa
 	sta $7ff44e.l, X                                                  ; $b9f0 : $9f, $4e, $f4, $7f
 	inx                                                  ; $b9f4 : $e8
 	inx                                                  ; $b9f5 : $e8
 	sep #ACCU_8                                                  ; $b9f6 : $e2, $20
-	jsr Call_05_bfbf.w                                                  ; $b9f8 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $b9f8 : $20, $bf, $bf
 	sta $7ff44e.l, X                                                  ; $b9fb : $9f, $4e, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $b9ff : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $b9ff : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $ba02 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $ba02 : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $ba05 : $c2, $20
 	and #$00ff.w                                                  ; $ba07 : $29, $ff, $00
 	tax                                                  ; $ba0a : $aa
@@ -8592,16 +8621,16 @@ br_05_b8e2:
 	clc                                                  ; $ba12 : $18
 	adc #$0004.w                                                  ; $ba13 : $69, $04, $00
 	tax                                                  ; $ba16 : $aa
-	jsr Call_05_bfbf.w                                                  ; $ba17 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $ba17 : $20, $bf, $bf
 	sta $7ff44e.l, X                                                  ; $ba1a : $9f, $4e, $f4, $7f
 	dex                                                  ; $ba1e : $ca
 	dex                                                  ; $ba1f : $ca
 	tdc                                                  ; $ba20 : $7b
 	sta $7ff44e.l, X                                                  ; $ba21 : $9f, $4e, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $ba25 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $ba25 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $ba28 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $ba28 : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $ba2b : $c2, $20
 	and #$00ff.w                                                  ; $ba2d : $29, $ff, $00
 	tax                                                  ; $ba30 : $aa
@@ -8611,12 +8640,12 @@ br_05_b8e2:
 	ina                                                  ; $ba39 : $1a
 	tax                                                  ; $ba3a : $aa
 	sep #ACCU_8                                                  ; $ba3b : $e2, $20
-	jsr Call_05_bfbf.w                                                  ; $ba3d : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $ba3d : $20, $bf, $bf
 	sta $7ff44e.l, X                                                  ; $ba40 : $9f, $4e, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $ba44 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $ba44 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $ba47 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $ba47 : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $ba4a : $c2, $20
 	and #$00ff.w                                                  ; $ba4c : $29, $ff, $00
 	tax                                                  ; $ba4f : $aa
@@ -8624,11 +8653,12 @@ br_05_b8e2:
 	and #$00ff.w                                                  ; $ba54 : $29, $ff, $00
 	tax                                                  ; $ba57 : $aa
 	sep #ACCU_8                                                  ; $ba58 : $e2, $20
-	jsr Call_05_bfbf.w                                                  ; $ba5a : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $ba5a : $20, $bf, $bf
 	sta $7ff44e.l, X                                                  ; $ba5d : $9f, $4e, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $ba61 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $ba61 : $4c, $5e, $b4
 
 
+EnemyScriptCmd28h:
 	rep #ACCU_8                                                  ; $ba64 : $c2, $20
 	lda #$0001.w                                                  ; $ba66 : $a9, $01, $00
 	sta $7ff454.l                                                  ; $ba69 : $8f, $54, $f4, $7f
@@ -8638,42 +8668,47 @@ br_05_b8e2:
 	lda #$ff.b                                                  ; $ba76 : $a9, $ff
 	sta $1262.w                                                  ; $ba78 : $8d, $62, $12
 	stz $1269.w                                                  ; $ba7b : $9c, $69, $12
-	jmp Jump_05_b45e.w                                                  ; $ba7e : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $ba7e : $4c, $5e, $b4
 
 
+;
 	lda #$04.b                                                  ; $ba81 : $a9, $04
 	sta $7ff454.l                                                  ; $ba83 : $8f, $54, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $ba87 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $ba87 : $4c, $5e, $b4
 
 
 	lda #$06.b                                                  ; $ba8a : $a9, $06
 	sta $7ff454.l                                                  ; $ba8c : $8f, $54, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $ba90 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $ba90 : $4c, $5e, $b4
 
 
 	lda #$03.b                                                  ; $ba93 : $a9, $03
 	sta $7ff454.l                                                  ; $ba95 : $8f, $54, $f4, $7f
-	jsr Call_05_bfca.w                                                  ; $ba99 : $20, $ca, $bf
+	jsr XequEnemyScriptWord.w                                                  ; $ba99 : $20, $ca, $bf
 	rep #ACCU_8                                                  ; $ba9c : $c2, $20
 	txa                                                  ; $ba9e : $8a
 	sta $7ff456.l                                                  ; $ba9f : $8f, $56, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $baa3 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $baa3 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $baa6 : $20, $bf, $bf
+EnemyScriptCmd2ch:
+	jsr AequEnemyScriptByte.w                                                  ; $baa6 : $20, $bf, $bf
 	sta wCurrSpellIdx.w                                                  ; $baa9 : $8d, $0b, $0a
-	jsr $81f3f4.l                                                  ; $baac : $22, $f4, $f3, $81
+	jsr Call_01_f3f4.l                                                  ; $baac : $22, $f4, $f3, $81
 	sta $00                                                  ; $bab0 : $85, $00
 	stz $01                                                  ; $bab2 : $64, $01
-	lda #$2001.w                                                  ; $bab4 : $a9, $01, $20
-	eor $00e4c0.l, X                                                  ; $bab7 : $5f, $c0, $e4, $00
-	bcc br_05_baf7                                                  ; $babb : $90, $3a
+	lda #$01.b                                                  ; $bab4 : $a9, $01
+	jsr XequCurrInBattleEnemyAttr.w                                                  ; $bab6 : $20, $5f, $c0
+	cpx $00                                                  ; $bab9 : $e4, $00
+	bcc @br_baf7                                                  ; $babb : $90, $3a
 
-	lda #$2014.w                                                  ; $babd : $a9, $14, $20
-	eor $898ac0.l, X                                                  ; $bac0 : $5f, $c0, $8a, $89
-	cop $d0.b                                                  ; $bac4 : $02, $d0
-	bmi br_05_bb43                                                  ; $bac6 : $30, $7b
+	lda #$14.b                                                  ; $babd : $a9, $14
+	jsr XequCurrInBattleEnemyAttr.w                                                  ; $babf : $20, $5f, $c0
+	txa                                                  ; $bac2 : $8a
+	bit #$02.b                                                  ; $bac3 : $89, $02
+	bne @br_baf7                                                 ; $bac5 : $d0, $30
 
+	tdc                                                  ; $bac7 : $7b
 	lda wCurrSpellIdx.w                                                  ; $bac8 : $ad, $0b, $0a
 	rep #ACCU_8                                                  ; $bacb : $c2, $20
 	sta $7ff456.l                                                  ; $bacd : $8f, $56, $f4, $7f
@@ -8684,14 +8719,13 @@ br_05_b8e2:
 	lda $7ff456.l                                                  ; $badd : $af, $56, $f4, $7f
 	sta wCurrSpellIdx.w                                                  ; $bae1 : $8d, $0b, $0a
 	sep #ACCU_8                                                  ; $bae4 : $e2, $20
-	jsr $81f414.l                                                  ; $bae6 : $22, $14, $f4, $81
+	jsr BufferSpellTextDisplay.l                                                  ; $bae6 : $22, $14, $f4, $81
 	jsr Call_05_9510.l                                                  ; $baea : $22, $10, $95, $85
 	ldx #$0078.w                                                  ; $baee : $a2, $78, $00
 	stx $1264.w                                                  ; $baf1 : $8e, $64, $12
-	jmp Jump_05_b45e.w                                                  ; $baf4 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $baf4 : $4c, $5e, $b4
 
-
-br_05_baf7:
+@br_baf7:
 	tdc                                                  ; $baf7 : $7b
 	stz $1269.w                                                  ; $baf8 : $9c, $69, $12
 	lda wCurrSpellIdx.w                                                  ; $bafb : $ad, $0b, $0a
@@ -8701,10 +8735,11 @@ br_05_baf7:
 	sta $7ff454.l                                                  ; $bb07 : $8f, $54, $f4, $7f
 	lda #$0002.w                                                  ; $bb0b : $a9, $02, $00
 	sta $7ff42e.l                                                  ; $bb0e : $8f, $2e, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bb12 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bb12 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $bb15 : $20, $bf, $bf
+;
+	jsr AequEnemyScriptByte.w                                                  ; $bb15 : $20, $bf, $bf
 	sta $54                                                  ; $bb18 : $85, $54
 	jsr Call_05_e0e4.l                                                  ; $bb1a : $22, $e4, $e0, $85
 	bcs br_05_bb3a                                                  ; $bb1e : $b0, $1a
@@ -8717,21 +8752,19 @@ br_05_baf7:
 	sta $7ff456.l                                                  ; $bb2e : $8f, $56, $f4, $7f
 	tdc                                                  ; $bb32 : $7b
 	sta $7ff42e.l                                                  ; $bb33 : $8f, $2e, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bb37 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bb37 : $4c, $5e, $b4
 
 
 br_05_bb3a:
 	rep #ACCU_8                                                  ; $bb3a : $c2, $20
 	lda #$0002.w                                                  ; $bb3c : $a9, $02, $00
 	sta $7ff42e.l                                                  ; $bb3f : $8f, $2e, $f4, $7f
-
-br_05_bb43:
-	jmp Jump_05_b45e.w                                                  ; $bb43 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bb43 : $4c, $5e, $b4
 
 
 	lda #$8f0d.w                                                  ; $bb46 : $a9, $0d, $8f
 	mvn $7f, $f4                                                  ; $bb49 : $54, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bb4c : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bb4c : $4c, $5e, $b4
 
 
 	lda $7ff450.l                                                  ; $bb4f : $af, $50, $f4, $7f
@@ -8759,9 +8792,9 @@ br_05_bb5f:
 	tax                                                  ; $bb74 : $aa
 
 br_05_bb75:
-	jsr Call_05_bfbf.w                                                  ; $bb75 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bb75 : $20, $bf, $bf
 	jsr Call_05_c023.w                                                  ; $bb78 : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $bb7b : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bb7b : $4c, $5e, $b4
 
 
 	tdc                                                  ; $bb7e : $7b
@@ -8783,13 +8816,16 @@ br_05_bb94:
 
 br_05_bb97:
 	tax                                                  ; $bb97 : $aa
-	jsr Call_05_bfbf.w                                                  ; $bb98 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bb98 : $20, $bf, $bf
 	jsr Call_05_c023.w                                                  ; $bb9b : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $bb9e : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bb9e : $4c, $5e, $b4
 
 
 	.db $00                                                  ; $bba1 : $00
-	jsr Call_05_bfbf.w                                                  ; $bba2 : $20, $bf, $bf
+
+
+EnemyScriptCmd32h:
+	jsr AequEnemyScriptByte.w                                                  ; $bba2 : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $bba5 : $c2, $20
 	and #$00ff.w                                                  ; $bba7 : $29, $ff, $00
 	asl                                                  ; $bbaa : $0a
@@ -8797,21 +8833,26 @@ br_05_bb97:
 	tdc                                                  ; $bbac : $7b
 	sta $7ff42e.l                                                  ; $bbad : $8f, $2e, $f4, $7f
 	sep #ACCU_8                                                  ; $bbb1 : $e2, $20
-	jmp ($bbb6.w, X)                                                  ; $bbb3 : $7c, $b6, $bb
+	jmp (@funcs.w, X)                                                  ; $bbb3 : $7c, $b6, $bb
+
+@funcs:
+	.dw $bbca
+	.dw $bbcd
+	.dw $bbf8
+	.dw $bc26
+	.dw $bc39
+	.dw $bc56
+	.dw $bc66
+	.dw $bc73
+	.dw $bc9c
+	.dw $bccd
 
 
-	dex                                                  ; $bbb6 : $ca
-	tyx                                                  ; $bbb7 : $bb
-	cmp $f8bb.w                                                  ; $bbb8 : $cd, $bb, $f8
-	tyx                                                  ; $bbbb : $bb
-	rol $bc                                                  ; $bbbc : $26, $bc
-	and $56bc.w, Y                                                  ; $bbbe : $39, $bc, $56
-	ldy $bc66.w, X                                                  ; $bbc1 : $bc, $66, $bc
-	adc ($bc, S), Y                                                  ; $bbc4 : $73, $bc
-	stz $cdbc.w                                                  ; $bbc6 : $9c, $bc, $cd
-	ldy $5e4c.w, X                                                  ; $bbc9 : $bc, $4c, $5e
-	ldy $af, X                                                  ; $bbcc : $b4, $af
-	lsr $7ff4.w                                                  ; $bbce : $4e, $f4, $7f
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bbca : $4c, $5e, $b4
+
+
+;
+	lda $7ff44e.l                                                  ; $bbcd : $af, $4e, $f4, $7f
 	and #$80.b                                                  ; $bbd1 : $29, $80
 	eor #$80.b                                                  ; $bbd3 : $49, $80
 	jsr Call_05_c117.w                                                  ; $bbd5 : $20, $17, $c1
@@ -8830,7 +8871,7 @@ br_05_bbdc:
 	ora #$80.b                                                  ; $bbed : $09, $80
 	and $54                                                  ; $bbef : $25, $54
 	sta $7ff450.l                                                  ; $bbf1 : $8f, $50, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bbf5 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bbf5 : $4c, $5e, $b4
 
 
 	jsr Call_05_c306.w                                                  ; $bbf8 : $20, $06, $c3
@@ -8856,7 +8897,7 @@ br_05_bc16:
 	jsr Call_05_c45e.w                                                  ; $bc19 : $20, $5e, $c4
 	jsr Call_05_c428.w                                                  ; $bc1c : $20, $28, $c4
 	sta $7ff450.l                                                  ; $bc1f : $8f, $50, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bc23 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bc23 : $4c, $5e, $b4
 
 
 	jsr Call_05_c306.w                                                  ; $bc26 : $20, $06, $c3
@@ -8864,7 +8905,7 @@ br_05_bc16:
 	jsr Call_05_c45e.w                                                  ; $bc2c : $20, $5e, $c4
 	jsr Call_05_c428.w                                                  ; $bc2f : $20, $28, $c4
 	sta $7ff450.l                                                  ; $bc32 : $8f, $50, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bc36 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bc36 : $4c, $5e, $b4
 
 
 	lda $7ff450.l                                                  ; $bc39 : $af, $50, $f4, $7f
@@ -8876,20 +8917,20 @@ br_05_bc16:
 	and #$10.b                                                  ; $bc4a : $29, $10
 	ora wCurrEnemyExpGiven.w                                                  ; $bc4c : $0d, $fc, $09
 	sta $7ff450.l                                                  ; $bc4f : $8f, $50, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bc53 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bc53 : $4c, $5e, $b4
 
 
 	lda $7ff450.l                                                  ; $bc56 : $af, $50, $f4, $7f
 	and #$80.b                                                  ; $bc5a : $29, $80
 	jsr Call_05_c117.w                                                  ; $bc5c : $20, $17, $c1
 	sta $7ff450.l                                                  ; $bc5f : $8f, $50, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bc63 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bc63 : $4c, $5e, $b4
 
 
 	rep #ACCU_8                                                  ; $bc66 : $c2, $20
 	lda $7ff44e.l                                                  ; $bc68 : $af, $4e, $f4, $7f
 	sta $7ff450.l                                                  ; $bc6c : $8f, $50, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bc70 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bc70 : $4c, $5e, $b4
 
 
 	lda $7ff44e.l                                                  ; $bc73 : $af, $4e, $f4, $7f
@@ -8933,12 +8974,12 @@ br_05_bca8:
 	adc $b45e4c.l, X                                                  ; $bcc9 : $7f, $4c, $5e, $b4
 	.db $00                                                  ; $bccd : $00
 	.db $00                                                  ; $bcce : $00
-	jsr Call_05_bfbf.w                                                  ; $bccf : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bccf : $20, $bf, $bf
 	sta $0a62.w                                                  ; $bcd2 : $8d, $62, $0a
-	jmp Jump_05_b45e.w                                                  ; $bcd5 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bcd5 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $bcd8 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bcd8 : $20, $bf, $bf
 	sta $54                                                  ; $bcdb : $85, $54
 	rep #ACCU_8                                                  ; $bcdd : $c2, $20
 	lda $7ff42e.l                                                  ; $bcdf : $af, $2e, $f4, $7f
@@ -8948,25 +8989,28 @@ br_05_bca8:
 	sta $0a62.w                                                  ; $bce7 : $8d, $62, $0a
 
 br_05_bcea:
-	jmp Jump_05_b45e.w                                                  ; $bcea : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bcea : $4c, $5e, $b4
 
 
+EnemyScriptCmd37h:
 	rep #ACCU_8                                                  ; $bced : $c2, $20
 	lda #$0001.w                                                  ; $bcef : $a9, $01, $00
 	sta $7ff454.l                                                  ; $bcf2 : $8f, $54, $f4, $7f
 	tdc                                                  ; $bcf6 : $7b
 	sta $7ff456.l                                                  ; $bcf7 : $8f, $56, $f4, $7f
 	lda wPlayerHPAdjust.l                                                  ; $bcfb : $af, $62, $f4, $7f
-	bne br_05_bd21                                                  ; $bcff : $d0, $20
+	bne @cont_bd21                                                  ; $bcff : $d0, $20
 
 	lda #$0004.w                                                  ; $bd01 : $a9, $04, $00
-	jsr Call_05_c05f.w                                                  ; $bd04 : $20, $5f, $c0
+	jsr XequCurrInBattleEnemyAttr.w                                                  ; $bd04 : $20, $5f, $c0
 	txa                                                  ; $bd07 : $8a
 	clc                                                  ; $bd08 : $18
+
+; eg 0
 	adc $7ff4ca.l                                                  ; $bd09 : $6f, $ca, $f4, $7f
 	pha                                                  ; $bd0d : $48
 	lda #$000d.w                                                  ; $bd0e : $a9, $0d, $00
-	jsr Call_05_c05f.w                                                  ; $bd11 : $20, $5f, $c0
+	jsr XequCurrInBattleEnemyAttr.w                                                  ; $bd11 : $20, $5f, $c0
 	txa                                                  ; $bd14 : $8a
 	clc                                                  ; $bd15 : $18
 	adc $01, S                                                  ; $bd16 : $63, $01
@@ -8975,10 +9019,10 @@ br_05_bcea:
 	sta wPlayerHPAdjust.l                                                  ; $bd1c : $8f, $62, $f4, $7f
 	pla                                                  ; $bd20 : $68
 
-br_05_bd21:
+@cont_bd21:
 	lda #$0040.w                                                  ; $bd21 : $a9, $40, $00
 	sta $7ff464.l                                                  ; $bd24 : $8f, $64, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bd28 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bd28 : $4c, $5e, $b4
 
 
 	.db $00                                                  ; $bd2b : $00
@@ -9006,27 +9050,27 @@ br_05_bd4d:
 	sta wPlayerHPAdjust.l                                                  ; $bd4d : $8f, $62, $f4, $7f
 
 br_05_bd51:
-	jmp Jump_05_b45e.w                                                  ; $bd51 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bd51 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $bd54 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bd54 : $20, $bf, $bf
 	jsr $81895e.l                                                  ; $bd57 : $22, $5e, $89, $81
-	jmp Jump_05_b45e.w                                                  ; $bd5b : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bd5b : $4c, $5e, $b4
 
 
 	lda #$8f0b.w                                                  ; $bd5e : $a9, $0b, $8f
 	mvn $7f, $f4                                                  ; $bd61 : $54, $f4, $7f
-	jsr Call_05_bfbf.w                                                  ; $bd64 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bd64 : $20, $bf, $bf
 	sta $7ff456.l                                                  ; $bd67 : $8f, $56, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bd6b : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bd6b : $4c, $5e, $b4
 
 
 	lda #$8f0c.w                                                  ; $bd6e : $a9, $0c, $8f
 	mvn $7f, $f4                                                  ; $bd71 : $54, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bd74 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bd74 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfca.w                                                  ; $bd77 : $20, $ca, $bf
+	jsr XequEnemyScriptWord.w                                                  ; $bd77 : $20, $ca, $bf
 	stx $ca                                                  ; $bd7a : $86, $ca
 	rep #ACCU_8                                                  ; $bd7c : $c2, $20
 	txa                                                  ; $bd7e : $8a
@@ -9037,20 +9081,20 @@ br_05_bd51:
 	sty $0a48.w                                                  ; $bd85 : $8c, $48, $0a
 	lda $bd                                                  ; $bd88 : $a5, $bd
 	sta $0a4a.w                                                  ; $bd8a : $8d, $4a, $0a
-	ldy $0a42.w                                                  ; $bd8d : $ac, $42, $0a
+	ldy wBaseInBattleEnemyScriptAddr.w                                                  ; $bd8d : $ac, $42, $0a
 	sty $0a45.w                                                  ; $bd90 : $8c, $45, $0a
-	lda $0a44.w                                                  ; $bd93 : $ad, $44, $0a
+	lda wBaseInBattleEnemyScriptBank.w                                                  ; $bd93 : $ad, $44, $0a
 	sta $0a47.w                                                  ; $bd96 : $8d, $47, $0a
 	lda #$96.b                                                  ; $bd99 : $a9, $96
 	sta $bd                                                  ; $bd9b : $85, $bd
-	sta $0a44.w                                                  ; $bd9d : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $bd9d : $8d, $44, $0a
 	rep #ACCU_8                                                  ; $bda0 : $c2, $20
 	lda $96fadd.l, X                                                  ; $bda2 : $bf, $dd, $fa, $96
 	clc                                                  ; $bda6 : $18
 	adc #$fadd.w                                                  ; $bda7 : $69, $dd, $fa
-	sta $0a42.w                                                  ; $bdaa : $8d, $42, $0a
+	sta wBaseInBattleEnemyScriptAddr.w                                                  ; $bdaa : $8d, $42, $0a
 	sta $bb                                                  ; $bdad : $85, $bb
-	jmp Jump_05_b45e.w                                                  ; $bdaf : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bdaf : $4c, $5e, $b4
 
 
 	ldy $0a48.w                                                  ; $bdb2 : $ac, $48, $0a
@@ -9058,24 +9102,24 @@ br_05_bd51:
 	lda $0a4a.w                                                  ; $bdb7 : $ad, $4a, $0a
 	sta $bd                                                  ; $bdba : $85, $bd
 	ldy $0a45.w                                                  ; $bdbc : $ac, $45, $0a
-	sty $0a42.w                                                  ; $bdbf : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $bdbf : $8c, $42, $0a
 	lda $0a47.w                                                  ; $bdc2 : $ad, $47, $0a
-	sta $0a44.w                                                  ; $bdc5 : $8d, $44, $0a
-	jmp Jump_05_b45e.w                                                  ; $bdc8 : $4c, $5e, $b4
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $bdc5 : $8d, $44, $0a
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bdc8 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $bdcb : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bdcb : $20, $bf, $bf
 	pha                                                  ; $bdce : $48
-	jsr Call_05_bfbf.w                                                  ; $bdcf : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bdcf : $20, $bf, $bf
 	tax                                                  ; $bdd2 : $aa
 	pla                                                  ; $bdd3 : $68
 	jsr Call_05_c0b3.w                                                  ; $bdd4 : $20, $b3, $c0
-	jmp Jump_05_b45e.w                                                  ; $bdd7 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bdd7 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $bdda : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bdda : $20, $bf, $bf
 	pha                                                  ; $bddd : $48
-	jsr Call_05_bfbf.w                                                  ; $bdde : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bdde : $20, $bf, $bf
 	jsr Call_05_c0aa.w                                                  ; $bde1 : $20, $aa, $c0
 	rep #ACCU_8                                                  ; $bde4 : $c2, $20
 	and #$00ff.w                                                  ; $bde6 : $29, $ff, $00
@@ -9083,45 +9127,45 @@ br_05_bd51:
 	sep #ACCU_8                                                  ; $bdea : $e2, $20
 	pla                                                  ; $bdec : $68
 	jsr Call_05_c023.w                                                  ; $bded : $20, $23, $c0
-	jmp Jump_05_b45e.w                                                  ; $bdf0 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bdf0 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $bdf3 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bdf3 : $20, $bf, $bf
 	jsr Call_05_c0aa.w                                                  ; $bdf6 : $20, $aa, $c0
 	bit #$ff.b                                                  ; $bdf9 : $89, $ff
 	bne br_05_be00                                                  ; $bdfb : $d0, $03
 
-	jmp Jump_05_b551.w                                                  ; $bdfd : $4c, $51, $b5
+	jmp JumpEnemyScriptWord.w                                                  ; $bdfd : $4c, $51, $b5
 
 
 br_05_be00:
-	jsr Call_05_bfca.w                                                  ; $be00 : $20, $ca, $bf
-	jmp Jump_05_b45e.w                                                  ; $be03 : $4c, $5e, $b4
+	jsr XequEnemyScriptWord.w                                                  ; $be00 : $20, $ca, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be03 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfd8.w                                                  ; $be06 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $be06 : $20, $d8, $bf
 	stx $1264.w                                                  ; $be09 : $8e, $64, $12
 	jsr Call_05_95fe.l                                                  ; $be0c : $22, $fe, $95, $85
-	jmp Jump_05_b45e.w                                                  ; $be10 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be10 : $4c, $5e, $b4
 
 
 	jsr Call_05_9671.l                                                  ; $be13 : $22, $71, $96, $85
-	jmp Jump_05_b45e.w                                                  ; $be17 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be17 : $4c, $5e, $b4
 
 
 br_05_be1a:
 	ldx $1264.w                                                  ; $be1a : $ae, $64, $12
 	bne br_05_be1a                                                  ; $be1d : $d0, $fb
 
-	jmp Jump_05_b45e.w                                                  ; $be1f : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be1f : $4c, $5e, $b4
 
 
-	jsr Call_05_bfd8.w                                                  ; $be22 : $20, $d8, $bf
+	jsr Call_05_bfd8_1enWord.w                                                  ; $be22 : $20, $d8, $bf
 	stx $1264.w                                                  ; $be25 : $8e, $64, $12
-	jmp Jump_05_b45e.w                                                  ; $be28 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be28 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $be2b : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $be2b : $20, $bf, $bf
 
 br_05_be2e:
 	pha                                                  ; $be2e : $48
@@ -9133,24 +9177,24 @@ br_05_be2e:
 	dea                                                  ; $be3d : $3a
 	bne br_05_be2e                                                  ; $be3e : $d0, $ee
 
-	jmp Jump_05_b45e.w                                                  ; $be40 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be40 : $4c, $5e, $b4
 
 
 	lda #$04.b                                                  ; $be43 : $a9, $04
 	jsr $81c35f.l                                                  ; $be45 : $22, $5f, $c3, $81
-	jmp Jump_05_b45e.w                                                  ; $be49 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be49 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $be4c : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $be4c : $20, $bf, $bf
 	jsr $81c35f.l                                                  ; $be4f : $22, $5f, $c3, $81
-	jmp Jump_05_b45e.w                                                  ; $be53 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be53 : $4c, $5e, $b4
 
 
 	lda $7ff450.l                                                  ; $be56 : $af, $50, $f4, $7f
 	jsr Call_05_c117.w                                                  ; $be5a : $20, $17, $c1
 	and $7ff450.l                                                  ; $be5d : $2f, $50, $f4, $7f
 	sta $7ff450.l                                                  ; $be61 : $8f, $50, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $be65 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be65 : $4c, $5e, $b4
 
 
 	lda $0a5d.w                                                  ; $be68 : $ad, $5d, $0a
@@ -9162,7 +9206,7 @@ br_05_be2e:
 	sta $7ff450.l                                                  ; $be76 : $8f, $50, $f4, $7f
 
 br_05_be7a:
-	jmp Jump_05_b45e.w                                                  ; $be7a : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be7a : $4c, $5e, $b4
 
 
 	rep #ACCU_8                                                  ; $be7d : $c2, $20
@@ -9175,14 +9219,14 @@ br_05_be7a:
 	sta $7ff4d0.l                                                  ; $be8f : $8f, $d0, $f4, $7f
 
 br_05_be93:
-	jmp Jump_05_b45e.w                                                  ; $be93 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $be93 : $4c, $5e, $b4
 
 
 	rep #ACCU_8                                                  ; $be96 : $c2, $20
 	lda #$0004.w                                                  ; $be98 : $a9, $04, $00
 	ora $7ff4d0.l                                                  ; $be9b : $0f, $d0, $f4, $7f
 	sta $7ff4d0.l                                                  ; $be9f : $8f, $d0, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bea3 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bea3 : $4c, $5e, $b4
 
 
 	rep #ACCU_8                                                  ; $bea6 : $c2, $20
@@ -9195,10 +9239,10 @@ br_05_be93:
 	sta $7ff4d0.l                                                  ; $beb8 : $8f, $d0, $f4, $7f
 
 br_05_bebc:
-	jmp Jump_05_b45e.w                                                  ; $bebc : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bebc : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $bebf : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bebf : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $bec2 : $c2, $20
 	and #$00ff.w                                                  ; $bec4 : $29, $ff, $00
 	sta $7ff456.l                                                  ; $bec7 : $8f, $56, $f4, $7f
@@ -9206,10 +9250,10 @@ br_05_bebc:
 	sta $7ff454.l                                                  ; $bece : $8f, $54, $f4, $7f
 	tdc                                                  ; $bed2 : $7b
 	sta $7ff42e.l                                                  ; $bed3 : $8f, $2e, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bed7 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bed7 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $beda : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $beda : $20, $bf, $bf
 	rep #ACCU_8                                                  ; $bedd : $c2, $20
 	and #$00ff.w                                                  ; $bedf : $29, $ff, $00
 	sta $7ff456.l                                                  ; $bee2 : $8f, $56, $f4, $7f
@@ -9217,10 +9261,10 @@ br_05_bebc:
 	sta $7ff454.l                                                  ; $bee9 : $8f, $54, $f4, $7f
 	tdc                                                  ; $beed : $7b
 	sta $7ff42e.l                                                  ; $beee : $8f, $2e, $f4, $7f
-	jmp Jump_05_b45e.w                                                  ; $bef2 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bef2 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfca.w                                                  ; $bef5 : $20, $ca, $bf
+	jsr XequEnemyScriptWord.w                                                  ; $bef5 : $20, $ca, $bf
 	stx wCurrEnemyExpGiven.w                                                  ; $bef8 : $8e, $fc, $09
 	lda $7ff44e.l                                                  ; $befb : $af, $4e, $f4, $7f
 	bmi br_05_bf13                                                  ; $beff : $30, $12
@@ -9235,12 +9279,12 @@ br_05_bebc:
 	sep #ACCU_8                                                  ; $bf11 : $e2, $20
 
 br_05_bf13:
-	jsr Call_05_bfbf.w                                                  ; $bf13 : $20, $bf, $bf
-	jmp Jump_05_b45e.w                                                  ; $bf16 : $4c, $5e, $b4
+	jsr AequEnemyScriptByte.w                                                  ; $bf13 : $20, $bf, $bf
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bf16 : $4c, $5e, $b4
 
 
 br_05_bf19:
-	jsr Call_05_bfbf.w                                                  ; $bf19 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $bf19 : $20, $bf, $bf
 	sta wHitEnemyIdx.w                                                  ; $bf1c : $8d, $fa, $09
 	rep #ACCU_8                                                  ; $bf1f : $c2, $20
 	ldx #$0014.w                                                  ; $bf21 : $a2, $14, $00
@@ -9291,7 +9335,7 @@ br_05_bf6c:
 	sta $7ff44e.l, X                                                  ; $bf6c : $9f, $4e, $f4, $7f
 
 br_05_bf70:
-	jmp Jump_05_b45e.w                                                  ; $bf70 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bf70 : $4c, $5e, $b4
 
 
 Call_05_bf73:
@@ -9322,66 +9366,67 @@ br_05_bf96:
 
 
 	jsr Call_05_da71.l                                                  ; $bf97 : $22, $71, $da, $85
-	jmp Jump_05_b45e.w                                                  ; $bf9b : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bf9b : $4c, $5e, $b4
 
 
 	jsr Call_05_da9c.l                                                  ; $bf9e : $22, $9c, $da, $85
-	jmp Jump_05_b45e.w                                                  ; $bfa2 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bfa2 : $4c, $5e, $b4
 
 
-	jsr Call_05_bfbf.w                                                  ; $bfa5 : $20, $bf, $bf
+EnemyScriptCmd5ah:
+	jsr AequEnemyScriptByte.w                                                  ; $bfa5 : $20, $bf, $bf
 	sta $1262.w                                                  ; $bfa8 : $8d, $62, $12
-	jmp Jump_05_b45e.w                                                  ; $bfab : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bfab : $4c, $5e, $b4
 
 
 	tdc                                                  ; $bfae : $7b
 	sta $7ff8a5.l                                                  ; $bfaf : $8f, $a5, $f8, $7f
-	jmp Jump_05_b45e.w                                                  ; $bfb3 : $4c, $5e, $b4
+	jmp ExecNextEnemyScriptCommand.w                                                  ; $bfb3 : $4c, $5e, $b4
 
 
 	lda #$8fff.w                                                  ; $bfb6 : $a9, $ff, $8f
 	ldx $fa, Y                                                  ; $bfb9 : $b6, $fa
 	adc $b45e4c.l, X                                                  ; $bfbb : $7f, $4c, $5e, $b4
 
-Call_05_bfbf:
+
+AequEnemyScriptByte:
 	php                                                  ; $bfbf : $08
 	sep #ACCU_8                                                  ; $bfc0 : $e2, $20
-	lda [$bb]                                                  ; $bfc2 : $a7, $bb
+	lda [wCurrInBattleEnemyScriptAddr]                                                  ; $bfc2 : $a7, $bb
 	rep #ACCU_8                                                  ; $bfc4 : $c2, $20
-	inc $bb                                                  ; $bfc6 : $e6, $bb
+	inc wCurrInBattleEnemyScriptAddr                                                  ; $bfc6 : $e6, $bb
 	plp                                                  ; $bfc8 : $28
 	rts                                                  ; $bfc9 : $60
 
 
-Call_05_bfca:
+XequEnemyScriptWord:
 	php                                                  ; $bfca : $08
 	rep #ACCU_8|IDX_8                                                  ; $bfcb : $c2, $30
 	pha                                                  ; $bfcd : $48
-	lda [$bb]                                                  ; $bfce : $a7, $bb
-	inc $bb                                                  ; $bfd0 : $e6, $bb
-	inc $bb                                                  ; $bfd2 : $e6, $bb
+	lda [wCurrInBattleEnemyScriptAddr]                                                  ; $bfce : $a7, $bb
+	inc wCurrInBattleEnemyScriptAddr                                                  ; $bfd0 : $e6, $bb
+	inc wCurrInBattleEnemyScriptAddr                                                  ; $bfd2 : $e6, $bb
 	tax                                                  ; $bfd4 : $aa
 	pla                                                  ; $bfd5 : $68
 	plp                                                  ; $bfd6 : $28
 	rts                                                  ; $bfd7 : $60
 
 
-Call_05_bfd8:
+Call_05_bfd8_1enWord:
 	php                                                  ; $bfd8 : $08
 	rep #ACCU_8|IDX_8                                                  ; $bfd9 : $c2, $30
 	pha                                                  ; $bfdb : $48
-	lda [$bb]                                                  ; $bfdc : $a7, $bb
-	bpl br_05_bfe5                                                  ; $bfde : $10, $05
+	lda [wCurrInBattleEnemyScriptAddr]                                                  ; $bfdc : $a7, $bb
+	bpl @br_bfe5                                                  ; $bfde : $10, $05
 
 	jsr Call_05_bfed.w                                                  ; $bfe0 : $20, $ed, $bf
-	bra br_05_bfe6                                                  ; $bfe3 : $80, $01
+	bra +                                                  ; $bfe3 : $80, $01
 
-br_05_bfe5:
+@br_bfe5:
 	tax                                                  ; $bfe5 : $aa
 
-br_05_bfe6:
-	inc $bb                                                  ; $bfe6 : $e6, $bb
-	inc $bb                                                  ; $bfe8 : $e6, $bb
++	inc wCurrInBattleEnemyScriptAddr                                                  ; $bfe6 : $e6, $bb
+	inc wCurrInBattleEnemyScriptAddr                                                  ; $bfe8 : $e6, $bb
 	pla                                                  ; $bfea : $68
 	plp                                                  ; $bfeb : $28
 	rts                                                  ; $bfec : $60
@@ -9475,25 +9520,30 @@ br_05_c05a:
 	rts                                                  ; $c05e : $60
 
 
-Call_05_c05f:
+; A - attribute idx
+XequCurrInBattleEnemyAttr:
 	php                                                  ; $c05f : $08
 	rep #ACCU_8|IDX_8                                                  ; $c060 : $c2, $30
 	pha                                                  ; $c062 : $48
 	phy                                                  ; $c063 : $5a
-	jsr Call_05_c099.w                                                  ; $c064 : $20, $99, $c0
+
+; eg 4 => 29, d => 37
+	jsr XequEnemyStructAttrOffs.w                                                  ; $c064 : $20, $99, $c0
 	txy                                                  ; $c067 : $9b
-	lda ($be), Y                                                  ; $c068 : $b1, $be
+
+; eg 161b for red jelly, 0c then 00
+	lda (wCurrInBattleEnemyStruct), Y                                                  ; $c068 : $b1, $be
 	cpy #$00bc.w                                                  ; $c06a : $c0, $bc, $00
-	beq br_05_c074                                                  ; $c06d : $f0, $05
+	beq @br_c074                                                  ; $c06d : $f0, $05
 
+; unknown
 	cpy #$000e.w                                                  ; $c06f : $c0, $0e, $00
-	bne br_05_c077                                                  ; $c072 : $d0, $03
+	bne +                                                  ; $c072 : $d0, $03
 
-br_05_c074:
+@br_c074:
 	and #$00ff.w                                                  ; $c074 : $29, $ff, $00
 
-br_05_c077:
-	tax                                                  ; $c077 : $aa
++	tax                                                  ; $c077 : $aa
 	ply                                                  ; $c078 : $7a
 	pla                                                  ; $c079 : $68
 	plp                                                  ; $c07a : $28
@@ -9504,7 +9554,7 @@ br_05_c077:
 	rep #ACCU_8|IDX_8                                                  ; $c07d : $c2, $30
 	pha                                                  ; $c07f : $48
 	phy                                                  ; $c080 : $5a
-	jsr Call_05_c099.w                                                  ; $c081 : $20, $99, $c0
+	jsr XequEnemyStructAttrOffs.w                                                  ; $c081 : $20, $99, $c0
 	txy                                                  ; $c084 : $9b
 	lda ($c1), Y                                                  ; $c085 : $b1, $c1
 	cpy #$00bc.w                                                  ; $c087 : $c0, $bc, $00
@@ -9524,14 +9574,15 @@ br_05_c094:
 	rts                                                  ; $c098 : $60
 
 
-Call_05_c099:
+; A - table entry idx
+XequEnemyStructAttrOffs:
 	php                                                  ; $c099 : $08
 	rep #ACCU_8|IDX_8                                                  ; $c09a : $c2, $30
 	pha                                                  ; $c09c : $48
 	and #$00ff.w                                                  ; $c09d : $29, $ff, $00
 	asl                                                  ; $c0a0 : $0a
 	tax                                                  ; $c0a1 : $aa
-	lda $859e47.l, X                                                  ; $c0a2 : $bf, $47, $9e, $85
+	lda EnemyAttributeIdxToOffsMap.l, X                                                  ; $c0a2 : $bf, $47, $9e, $85
 	tax                                                  ; $c0a6 : $aa
 	pla                                                  ; $c0a7 : $68
 	plp                                                  ; $c0a8 : $28
@@ -9688,26 +9739,22 @@ br_05_c15b:
 Call_05_c168:
 	sta $09fb.w                                                  ; $c168 : $8d, $fb, $09
 	bit #$3f.b                                                  ; $c16b : $89, $3f
-	beq br_05_c184                                                  ; $c16d : $f0, $15
+	beq @cont_c184                                                  ; $c16d : $f0, $15
 
 	and #$80.b                                                  ; $c16f : $29, $80
-	beq br_05_c175                                                  ; $c171 : $f0, $02
-
+	beq +                                                  ; $c171 : $f0, $02
 	lda #$05.b                                                  ; $c173 : $a9, $05
-
-br_05_c175:
-	sta wHitEnemyIdx.w                                                  ; $c175 : $8d, $fa, $09
++	sta wHitEnemyIdx.w                                                  ; $c175 : $8d, $fa, $09
 	lda #$ff.b                                                  ; $c178 : $a9, $ff
 
-br_05_c17a:
-	ina                                                  ; $c17a : $1a
+-	ina                                                  ; $c17a : $1a
 	lsr $09fb.w                                                  ; $c17b : $4e, $fb, $09
-	bcc br_05_c17a                                                  ; $c17e : $90, $fa
+	bcc -                                                  ; $c17e : $90, $fa
 
 	clc                                                  ; $c180 : $18
 	adc wHitEnemyIdx.w                                                  ; $c181 : $6d, $fa, $09
 
-br_05_c184:
+@cont_c184:
 	rep #ACCU_8                                                  ; $c184 : $c2, $20
 	and #$00ff.w                                                  ; $c186 : $29, $ff, $00
 	asl                                                  ; $c189 : $0a
@@ -9763,7 +9810,7 @@ br_05_c1c1:
 
 Call_05_c1c7:
 	lda $7ffaa8.l                                                  ; $c1c7 : $af, $a8, $fa, $7f
-	jsr Call_05_c099.w                                                  ; $c1cb : $20, $99, $c0
+	jsr XequEnemyStructAttrOffs.w                                                  ; $c1cb : $20, $99, $c0
 	rep #ACCU_8                                                  ; $c1ce : $c2, $20
 	txa                                                  ; $c1d0 : $8a
 	sta $7ffaa8.l                                                  ; $c1d1 : $8f, $a8, $fa, $7f
@@ -9836,7 +9883,7 @@ br_05_c23e:
 
 Call_05_c23f:
 	lda $7ffaa8.l                                                  ; $c23f : $af, $a8, $fa, $7f
-	jsr Call_05_c099.w                                                  ; $c243 : $20, $99, $c0
+	jsr XequEnemyStructAttrOffs.w                                                  ; $c243 : $20, $99, $c0
 	rep #ACCU_8                                                  ; $c246 : $c2, $20
 	txa                                                  ; $c248 : $8a
 	sta $7ffaa8.l                                                  ; $c249 : $8f, $a8, $fa, $7f
@@ -9881,6 +9928,9 @@ br_05_c285:
 
 br_05_c28e:
 	.db $00                                                  ; $c28e : $00
+
+
+Func_5_c28f:
 	php                                                  ; $c28f : $08
 	rep #ACCU_8|IDX_8                                                  ; $c290 : $c2, $30
 	pha                                                  ; $c292 : $48
@@ -9892,12 +9942,12 @@ br_05_c28e:
 	jsr Call_05_c2c2.w                                                  ; $c29e : $20, $c2, $c2
 	lda $bb                                                  ; $c2a1 : $a5, $bb
 	jsr Call_05_c2c2.w                                                  ; $c2a3 : $20, $c2, $c2
-	lda $0a42.w                                                  ; $c2a6 : $ad, $42, $0a
+	lda wBaseInBattleEnemyScriptAddr.w                                                  ; $c2a6 : $ad, $42, $0a
 	jsr Call_05_c2c2.w                                                  ; $c2a9 : $20, $c2, $c2
 	sep #ACCU_8                                                  ; $c2ac : $e2, $20
 	lda $bd                                                  ; $c2ae : $a5, $bd
 	jsr Call_05_c2c3.w                                                  ; $c2b0 : $20, $c3, $c2
-	lda $0a44.w                                                  ; $c2b3 : $ad, $44, $0a
+	lda wBaseInBattleEnemyScriptBank.w                                                  ; $c2b3 : $ad, $44, $0a
 	jsr Call_05_c2c3.w                                                  ; $c2b6 : $20, $c3, $c2
 	rep #ACCU_8|IDX_8                                                  ; $c2b9 : $c2, $30
 	stx $0a4b.w                                                  ; $c2bb : $8e, $4b, $0a
@@ -9924,13 +9974,13 @@ Call_05_c2c9:
 	sep #ACCU_8                                                  ; $c2ce : $e2, $20
 	ldx $0a4b.w                                                  ; $c2d0 : $ae, $4b, $0a
 	jsr Call_05_c300.w                                                  ; $c2d3 : $20, $00, $c3
-	sta $0a44.w                                                  ; $c2d6 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $c2d6 : $8d, $44, $0a
 	jsr Call_05_c300.w                                                  ; $c2d9 : $20, $00, $c3
 	sta $bd                                                  ; $c2dc : $85, $bd
 	rep #ACCU_8|IDX_8                                                  ; $c2de : $c2, $30
 	jsr Call_05_c300.w                                                  ; $c2e0 : $20, $00, $c3
 	inx                                                  ; $c2e3 : $e8
-	sta $0a42.w                                                  ; $c2e4 : $8d, $42, $0a
+	sta wBaseInBattleEnemyScriptAddr.w                                                  ; $c2e4 : $8d, $42, $0a
 	jsr Call_05_c300.w                                                  ; $c2e7 : $20, $00, $c3
 	inx                                                  ; $c2ea : $e8
 	sta $bb                                                  ; $c2eb : $85, $bb
@@ -9955,10 +10005,10 @@ Call_05_c300:
 
 Call_05_c306:
 	tdc                                                  ; $c306 : $7b
-	jsr Call_05_bfbf.w                                                  ; $c307 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $c307 : $20, $bf, $bf
 	sta $22                                                  ; $c30a : $85, $22
 	tax                                                  ; $c30c : $aa
-	lda $859e47.l, X                                                  ; $c30d : $bf, $47, $9e, $85
+	lda EnemyAttributeIdxToOffsMap.l, X                                                  ; $c30d : $bf, $47, $9e, $85
 	tax                                                  ; $c311 : $aa
 	stx $2a                                                  ; $c312 : $86, $2a
 	ldx #$0023.w                                                  ; $c314 : $a2, $23, $00
@@ -10121,9 +10171,9 @@ br_05_c427:
 
 
 Call_05_c428:
-	jsr Call_05_bfbf.w                                                  ; $c428 : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $c428 : $20, $bf, $bf
 	sta $02                                                  ; $c42b : $85, $02
-	jsr Call_05_bfbf.w                                                  ; $c42d : $20, $bf, $bf
+	jsr AequEnemyScriptByte.w                                                  ; $c42d : $20, $bf, $bf
 	sta $03                                                  ; $c430 : $85, $03
 	sep #IDX_8                                                  ; $c432 : $e2, $10
 	lda $00                                                  ; $c434 : $a5, $00
@@ -11447,6 +11497,7 @@ Call_05_cc69:
 	rts                                                  ; $cccd : $60
 
 
+; A -
 Call_05_ccce:
 	php                                                  ; $ccce : $08
 	rep #ACCU_8|IDX_8                                                  ; $cccf : $c2, $30
@@ -11455,11 +11506,10 @@ Call_05_ccce:
 	ldx #$0082.w                                                  ; $ccd3 : $a2, $82, $00
 	tdc                                                  ; $ccd6 : $7b
 
-br_05_ccd7:
-	sta $7ff452.l, X                                                  ; $ccd7 : $9f, $52, $f4, $7f
+-	sta $7ff452.l, X                                                  ; $ccd7 : $9f, $52, $f4, $7f
 	dex                                                  ; $ccdb : $ca
 	dex                                                  ; $ccdc : $ca
-	bpl br_05_ccd7                                                  ; $ccdd : $10, $f8
+	bpl -                                                  ; $ccdd : $10, $f8
 
 	plx                                                  ; $ccdf : $fa
 	pla                                                  ; $cce0 : $68
@@ -11741,11 +11791,11 @@ br_05_ce82:
 	lda [$b5], Y                                                  ; $ce92 : $b7, $b5
 	bit #$0100.w                                                  ; $ce94 : $89, $00, $01
 	sep #ACCU_8                                                  ; $ce97 : $e2, $20
-	beq br_05_cf0e                                                  ; $ce99 : $f0, $73
+	beq Jump_05_cf0e                                                  ; $ce99 : $f0, $73
 
 	lda $09f3.w                                                  ; $ce9b : $ad, $f3, $09
 	cmp #$01.b                                                  ; $ce9e : $c9, $01
-	beq br_05_cf0e                                                  ; $cea0 : $f0, $6c
+	beq Jump_05_cf0e                                                  ; $cea0 : $f0, $6c
 
 	ldy #$0014.w                                                  ; $cea2 : $a0, $14, $00
 	rep #ACCU_8                                                  ; $cea5 : $c2, $20
@@ -11813,7 +11863,6 @@ br_05_ceee:
 	sep #ACCU_8                                                  ; $cf0c : $e2, $20
 
 Jump_05_cf0e:
-br_05_cf0e:
 	lda $7ff4d8.l                                                  ; $cf0e : $af, $d8, $f4, $7f
 	bit wCurrInBattleEnemyIdx.w                                                  ; $cf12 : $2c, $f2, $09
 	beq br_05_cf59                                                  ; $cf15 : $f0, $42
@@ -11823,11 +11872,10 @@ br_05_cf0e:
 	sta $ca                                                  ; $cf1c : $85, $ca
 	ldy #$0087.w                                                  ; $cf1e : $a0, $87, $00
 
-br_05_cf21:
-	lda [$b5], Y                                                  ; $cf21 : $b7, $b5
+-	lda [$b5], Y                                                  ; $cf21 : $b7, $b5
 	sta [$b8], Y                                                  ; $cf23 : $97, $b8
 	dey                                                  ; $cf25 : $88
-	bpl br_05_cf21                                                  ; $cf26 : $10, $f9
+	bpl -                                                  ; $cf26 : $10, $f9
 
 	lda $ca                                                  ; $cf28 : $a5, $ca
 	sta $7ff450.l                                                  ; $cf2a : $8f, $50, $f4, $7f
@@ -12153,9 +12201,9 @@ Call_05_d0cd:
 
 	lda #$ff.b                                                  ; $d15d : $a9, $ff
 	sta $0a52.w                                                  ; $d15f : $8d, $52, $0a
-	sty $0a42.w                                                  ; $d162 : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $d162 : $8c, $42, $0a
 	lda $0047.w, X                                                  ; $d165 : $bd, $47, $00
-	sta $0a44.w                                                  ; $d168 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $d168 : $8d, $44, $0a
 	ldy $004c.w, X                                                  ; $d16b : $bc, $4c, $00
 	jsr $81fac9.l                                                  ; $d16e : $22, $c9, $fa, $81
 	stz $0a52.w                                                  ; $d172 : $9c, $52, $0a
@@ -12186,9 +12234,9 @@ Call_05_d0cd:
 
 	lda #$ff.b                                                  ; $d19e : $a9, $ff
 	sta $0a52.w                                                  ; $d1a0 : $8d, $52, $0a
-	sty $0a42.w                                                  ; $d1a3 : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $d1a3 : $8c, $42, $0a
 	lda $0047.w, X                                                  ; $d1a6 : $bd, $47, $00
-	sta $0a44.w                                                  ; $d1a9 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $d1a9 : $8d, $44, $0a
 	ldy $004c.w, X                                                  ; $d1ac : $bc, $4c, $00
 	jsr $81fac9.l                                                  ; $d1af : $22, $c9, $fa, $81
 	stz $0a52.w                                                  ; $d1b3 : $9c, $52, $0a
@@ -13511,9 +13559,9 @@ Call_05_da43:
 	jsr $81f1c5.l                                                  ; $da47 : $22, $c5, $f1, $81
 	plx                                                  ; $da4b : $fa
 	ldy $0a09.w                                                  ; $da4c : $ac, $09, $0a
-	sty $0a42.w                                                  ; $da4f : $8c, $42, $0a
+	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $da4f : $8c, $42, $0a
 	lda #$96.b                                                  ; $da52 : $a9, $96
-	sta $0a44.w                                                  ; $da54 : $8d, $44, $0a
+	sta wBaseInBattleEnemyScriptBank.w                                                  ; $da54 : $8d, $44, $0a
 	ldy $0b93.w                                                  ; $da57 : $ac, $93, $0b
 	jsr $81fac9.l                                                  ; $da5a : $22, $c9, $fa, $81
 	rts                                                  ; $da5e : $60
@@ -14800,7 +14848,7 @@ br_05_e273:
 	lda $1269.w, Y                                                  ; $e273 : $b9, $69, $12
 	ora #$00.b                                                  ; $e276 : $09, $00
 	sbc $04f01a.l, X                                                  ; $e278 : $ff, $1a, $f0, $04
-	lda $859ec8.l, X                                                  ; $e27c : $bf, $c8, $9e, $85
+	lda Data_5_9ec8.l, X                                                  ; $e27c : $bf, $c8, $9e, $85
 	sta $0a6e.w, X                                                  ; $e280 : $9d, $6e, $0a
 	dex                                                  ; $e283 : $ca
 	dex                                                  ; $e284 : $ca
@@ -15019,7 +15067,7 @@ br_05_e433:
 	bra br_05_e433                                                  ; $e43b : $80, $f6
 
 br_05_e43d:
-	lda $859ec8.l, X                                                  ; $e43d : $bf, $c8, $9e, $85
+	lda Data_5_9ec8.l, X                                                  ; $e43d : $bf, $c8, $9e, $85
 	sta $0a6e.w, X                                                  ; $e441 : $9d, $6e, $0a
 	tax                                                  ; $e444 : $aa
 	stx $06                                                  ; $e445 : $86, $06
@@ -16925,7 +16973,7 @@ br_05_f0cc:
 	ora ($8a, X)                                                  ; $f0f9 : $01, $8a
 	asl                                                  ; $f0fb : $0a
 	jsr $4f47.w                                                  ; $f0fc : $20, $47, $4f
-	jmp $0a44.w                                                  ; $f0ff : $4c, $44, $0a
+	jmp wBaseInBattleEnemyScriptBank.w                                                  ; $f0ff : $4c, $44, $0a
 
 
 	.db $00                                                  ; $f102 : $00

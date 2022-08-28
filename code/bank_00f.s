@@ -7507,7 +7507,7 @@ br_0f_b8c4:
 
 	ldx $aa01.w                                                  ; $ba94 : $ae, $01, $aa
 	ora ($06, X)                                                  ; $ba97 : $01, $06
-	lsr $0a44.w, X                                                  ; $ba99 : $5e, $44, $0a
+	lsr wBaseInBattleEnemyScriptBank.w, X                                                  ; $ba99 : $5e, $44, $0a
 	lda $0601.w                                                  ; $ba9c : $ad, $01, $06
 	lsr $2945.w, X                                                  ; $ba9f : $5e, $45, $29
 	.db $00                                                  ; $baa2 : $00
