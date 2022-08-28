@@ -4218,15 +4218,23 @@ Call_09_a106:
 
 	eor #$2041.w                                                  ; $a12d : $49, $41, $20
 	and ($00), Y                                                  ; $a130 : $31, $00
-	eor $7618.w, Y                                                  ; $a132 : $59, $18, $76
-	sec                                                  ; $a135 : $38
-	sei                                                  ; $a136 : $78
-	cli                                                  ; $a137 : $58
-	clc                                                  ; $a138 : $18
-	ror $bb, X                                                  ; $a139 : $76, $bb
+
+; after text
+	.db $59, $18
+	.db $76
+
+; waiting on 'To be continued' until $78 frames passed
+	.db $38, $78
+	.db $58, $18
+	.db $76 ; wait on results screen?
+	.db $bb
 	tcd                                                  ; $a13b : $5b
 	asl $00                                                  ; $a13c : $06, $00
 	.db $00                                                  ; $a13e : $00
+
+
+
+; room 2e scripts
 	.db $50, $48                                                  ; $a13f : $50, $48
 
 	asl $1200.w                                                  ; $a141 : $0e, $00, $12

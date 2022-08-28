@@ -6012,7 +6012,7 @@ br_0c_b100:
 	jsr $0a13.w                                                  ; $b159 : $20, $13, $0a
 	jsr $0a16.w                                                  ; $b15c : $20, $16, $0a
 	phk                                                  ; $b15f : $4b
-	bit $081e.w                                                  ; $b160 : $2c, $1e, $08
+	bit wMovableNPCsIds.w                                                  ; $b160 : $2c, $1e, $08
 	ora ($ad, X)                                                  ; $b163 : $01, $ad
 	and ($00), Y                                                  ; $b165 : $31, $00
 	ora ($1c, X)                                                  ; $b167 : $01, $1c
@@ -6058,7 +6058,7 @@ br_0c_b100:
 	jsr $1434.w                                                  ; $b1b7 : $20, $34, $14
 	jsr $1435.w                                                  ; $b1ba : $20, $35, $14
 	phk                                                  ; $b1bd : $4b
-	bit $081e.w                                                  ; $b1be : $2c, $1e, $08
+	bit wMovableNPCsIds.w                                                  ; $b1be : $2c, $1e, $08
 	ora ($ad, X)                                                  ; $b1c1 : $01, $ad
 	and ($00), Y                                                  ; $b1c3 : $31, $00
 	ora ($1c, X)                                                  ; $b1c5 : $01, $1c
@@ -6100,7 +6100,7 @@ Call_0c_b1fd:
 	eor #$2100.w                                                  ; $b202 : $49, $00, $21
 	ora $01                                                  ; $b205 : $05, $01
 	phk                                                  ; $b207 : $4b
-	bit $081e.w                                                  ; $b208 : $2c, $1e, $08
+	bit wMovableNPCsIds.w                                                  ; $b208 : $2c, $1e, $08
 	ora ($ad, X)                                                  ; $b20b : $01, $ad
 	and ($00), Y                                                  ; $b20d : $31, $00
 	ora ($1c, X)                                                  ; $b20f : $01, $1c
@@ -6155,7 +6155,7 @@ Call_0c_b24a:
 	and ($58, X)                                                  ; $b265 : $21, $58
 	ora ($21, X)                                                  ; $b267 : $01, $21
 	eor $4b01.w, Y                                                  ; $b269 : $59, $01, $4b
-	bit $081e.w                                                  ; $b26c : $2c, $1e, $08
+	bit wMovableNPCsIds.w                                                  ; $b26c : $2c, $1e, $08
 	ora ($ad, X)                                                  ; $b26f : $01, $ad
 	and ($00), Y                                                  ; $b271 : $31, $00
 	ora ($1c, X)                                                  ; $b273 : $01, $1c
@@ -14445,6 +14445,10 @@ br_0c_f77c:
 	asl $1c, X                                                  ; $f7ee : $16, $1c
 	ora ($08, X)                                                  ; $f7f0 : $01, $08
 	.db $00                                                  ; $f7f2 : $00
+
+
+
+; room a7 scripts
 	bvc br_0c_f83d                                                  ; $f7f3 : $50, $48
 
 	asl $1200.w                                                  ; $f7f5 : $0e, $00, $12

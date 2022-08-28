@@ -13,12 +13,15 @@ wCurrCharMovePatternAddr: ; $2a
 w2c:
     ds $40-$2c
 
-; can be set
-wNmiCounter: ; $40
+; both can be set
+wNmiCounter1: ; $40
     dw
 
-w42:
-    ds 6-2
+wNmiCounter2: ; $42
+    dw
+
+w44:
+    ds 6-4
 
 wJoy1CurrHeld: ; $46
     dw
@@ -274,7 +277,19 @@ wtodo_SomeFlagsBitfield: ; $077e
     ds $20
 
 w079e:
-    ds $91e-$79e
+    ds $81e-$79e
+
+wMovableNPCsIds: ; $081e
+    ds $40
+
+wMovableNPCsRoomIds: ; $085e
+    ds $40
+
+w089e:
+    ds $de-$9e
+
+wMovableNPCsTypeIds: ; $08de
+    ds $40
 
 ; todo: unknown size
 wScenarioItemsBitsSet: ; $091e
@@ -476,7 +491,20 @@ wRoomMetadataDicts: ; $f000
 .ramsection "Ram 7fh" bank $7f slot 1
 
 w7f2000:
-    ds $d074-$2000
+    ds $d010-$2000
+
+; todo: the wide/high vars seem to be 8 bytes in size
+wOrigRoomMetatilesWide: ; $d010
+    db
+
+w7fd011:
+    ds 8-1
+
+wOrigRoomMetatilesHigh: ; $d018
+    db
+
+w7fd019:
+    ds $74-$19
 
 wPuzzleScriptVars: ; $d074
     ds $20

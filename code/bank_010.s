@@ -3590,7 +3590,7 @@ br_10_99c8:
 	stx $01                                                  ; $9a9c : $86, $01
 	asl                                                  ; $9a9e : $0a
 	sbc $132900.l                                                  ; $9a9f : $ef, $00, $29, $13
-	and $081e.w                                                  ; $9aa3 : $2d, $1e, $08
+	and wMovableNPCsIds.w                                                  ; $9aa3 : $2d, $1e, $08
 	ora ($07, X)                                                  ; $9aa6 : $01, $07
 	ora ($01, X)                                                  ; $9aa8 : $01, $01
 	and [$20], Y                                                  ; $9aaa : $37, $20
@@ -13214,7 +13214,7 @@ br_10_dc58:
 	cli                                                  ; $dc82 : $58
 	asl $0202.w, X                                                  ; $dc83 : $1e, $02, $02
 	cli                                                  ; $dc86 : $58
-	stz $081e.w, X                                                  ; $dc87 : $9e, $1e, $08
+	stz wMovableNPCsIds.w, X                                                  ; $dc87 : $9e, $1e, $08
 	php                                                  ; $dc8a : $08
 	cli                                                  ; $dc8b : $58
 	asl $0202.w, X                                                  ; $dc8c : $1e, $02, $02
@@ -13238,7 +13238,7 @@ br_10_dc58:
 	asl $0908.w, X                                                  ; $dcac : $1e, $08, $09
 	plp                                                  ; $dcaf : $28
 	asl $0908.w, X                                                  ; $dcb0 : $1e, $08, $09
-	jsr $081e.w                                                  ; $dcb3 : $20, $1e, $08
+	jsr wMovableNPCsIds.w                                                  ; $dcb3 : $20, $1e, $08
 	ora #$1e10.w                                                  ; $dcb6 : $09, $10, $1e
 	php                                                  ; $dcb9 : $08
 	ora #$1e01.w                                                  ; $dcba : $09, $01, $1e

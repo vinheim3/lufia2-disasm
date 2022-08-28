@@ -23,6 +23,26 @@ BP: 7f0c20 (value = 30 00)
 
 $24 seems to start from 2
 
+Elcid City layout
+-----------------
+like above, but hopefully clearer
+wide/high from eg decompress idx 42 for Elcid at 7f:0008/9, loaded in at 0:ebe1
+then transferred to 7f:d010/8 at 0:ec83
+then transferred to eg wRoomMetatilesWide at 0:edb6
+
+24 is room idx from 3:b545->0:eae7
+
+idx 42 (metatiles) from 0:eb34, due to 3f+3
+3 from 24, from A input to the routine (eae7)
+
+idx 132 (metatile tiles) from 0:eca8, due to 130+2
+2 from 4f:f730 + (3-2), 3 from 24
+
+idx 2 at 943b (sound-related)
+
+idx 14d (tiledata) from 0:f058, due to 14b+2
+14b from 4f:f820 + (3-2), 3 from room idx
+
 
 Sprites
 -------

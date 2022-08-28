@@ -8,17 +8,17 @@
         <div id="root">
             <div class="section">
                 <div class="box container is-flex" style="flex-wrap:wrap">
-                    <div v-for="screen of screens">
+                    <div v-for="screen of screens" :id="screen.name+' canvases'">
                         <div>{{ screen.name }}</div>
-                        <canvas :id="screen.name+' map'" width="800" height="800"></canvas>
-                        <canvas :id="screen.name+' data'" width="128" height="440"></canvas>
-                        <canvas :id="screen.name+' metatiles'" width="256" height="640"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
         <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomIdx = parseInt(urlParams.get('room') || '3', 16);
+
             let greyCols = [];
             for (let i = 0; i < 16; i++) {
                 let greyCol = i * 17;
@@ -103,15 +103,25 @@
                     return this.screenSpec.name;
                 }
 
+                createCanvas(suffix, width, height) {
+                    const canvas = document.createElement("canvas");
+                    canvas.setAttribute('id', this.screenSpec.name + ' ' + suffix);
+                    canvas.setAttribute('width', width);
+                    canvas.setAttribute('height', height);
+                    let canvases = document.getElementById(this.screenSpec.name + ' canvases');
+                    canvases.appendChild(canvas);
+                    return canvas;
+                }
+
                 drawMetatile(data, col, row, width, metatileIdx) {
-                    let start = metatileIdx * 8 + 0x259e;
+                    let start = metatileIdx * 8 + this.label_metatileTiles + 0x10;
                     for (let j = 0; j < 4; j++) {
                         let tileVal = wordIn(this.mem7fh, start);
                         let tileIdx = tileVal & 0x3ff;
                         let vflip = tileVal & 0x8000;
                         let hflip = tileVal & 0x4000;
                         start += 2;
-                        let base = 0x4000+tileIdx*0x20;
+                        let base = this.label_tiledata+tileIdx*0x20;
                         let colAdd = (j >= 2) ? 8 : 0;
                         let rowAdd = (j & 1) ? 8 : 0;
                         drawTile(
@@ -122,7 +132,9 @@
                     }
                 }
 
-                DecompressData(idx, memRegion, dest) {
+                DecompressData(idx, memRegion, dest, label) {
+                    this['label_'+label] = dest;
+
                     let offs = this.longIn(bankConv(0x27, idx*3));
                     let src = bankConv(0x27, 0) + offs;
                     this.numBytes = this.wordIn(src);
@@ -169,6 +181,8 @@
 
                 TileData() {
                     // temp
+                    this.createCanvas('data', 128, 440);
+
                     let [ctx, imgData, width, height] = this.getCanvas(' data');
                     let data = imgData.data;
                     let numTiles = Math.floor(this.numBytes / 0x20);
@@ -176,7 +190,9 @@
                     for (let i = 0; i < numTiles; i++) {
                         let row = Math.floor(i / tilesPerRow) * 8;
                         let col = Math.floor(i % tilesPerRow) * 8;
-                        let tileBytes = this.mem7eh.slice(0x4000+i * 0x20, 0x4000+(i+1) * 0x20);
+                        let tileBytes = this.mem7eh.slice(
+                            this.label_tiledata+i * 0x20, this.label_tiledata+(i+1) * 0x20,
+                        );
                         drawTile(data, col, row, width, tileBytes);
                     }
                     ctx.putImageData(imgData, 0, 0);
@@ -184,11 +200,13 @@
 
                 Metatiles() {
                     // temp
+                    this.createCanvas('metatiles', 256, 640);
+
                     let [ctx, imgData, width, height] = this.getCanvas(' metatiles');
                     let data = imgData.data;
                     let numMetatiles = Math.floor(this.numBytes / 8);
                     let tilesPerRow = Math.floor(width / 16);
-                    let start = 0x259e;
+                    let start = this.label_metatileTiles+0x10;
                     for (let i = 0; i < numMetatiles; i++) {
                         let row = Math.floor(i / tilesPerRow) * 16;
                         let col = Math.floor(i % tilesPerRow) * 16;
@@ -199,18 +217,36 @@
                 }
 
                 Map() {
+                    let mWide = this.mem7fh[8];
+                    let mHigh = this.mem7fh[9];
+
                     // temp
+                    this.createCanvas('map', mWide*16, mHigh*16);
+
                     let [ctx, imgData, width, height] = this.getCanvas(' map');
                     let data = imgData.data;
                     let start = 10;
-                    for (let row = 0; row < 0x32; row++) {
-                        for (let col = 0; col < 0x30; col++) {
+
+                    for (let row = 0; row < mHigh; row++) {
+                        for (let col = 0; col < mWide; col++) {
                             let metatileIdx = wordIn(this.mem7fh, start); // & 0x3ff
                             start += 2;
                             this.drawMetatile(data, col*16, row*16, width, metatileIdx);
                         }
                     }
                     ctx.putImageData(imgData, 0, 0);
+                }
+
+                FullRoom(room_idx) {
+                    let tileDataDecompIdx = 0x14b+this.rom[bankConv(0x4f, 0xf820)+room_idx-2];
+                    this.DecompressData(tileDataDecompIdx, 'mem7eh', 0x4000, 'tiledata');
+                    // this.TileData();
+                    let metatileTilesDecompIdx = 0x130+this.rom[bankConv(0x4f, 0xf730)+room_idx-2];
+                    this.DecompressData(metatileTilesDecompIdx, 'mem7fh', 0x8000, 'metatileTiles');
+                    // this.Metatiles();
+                    let metatilesDecompIdx = 0x3f+room_idx;
+                    this.DecompressData(metatilesDecompIdx, 'mem7fh', 0x0000);
+                    this.Map();
                 }
 
                 drawScreen() {
@@ -253,15 +289,21 @@
                     uint8view: null,
                     screenMap: {},
                     screens: [
+                        // {
+                        //     name: "test",
+                        //     sources: [
+                        //         ["DecompressData", 0x14d, 'mem7eh', 0x4000], // tiledata
+                        //         ["TileData"],
+                        //         ["DecompressData", 0x132, 'mem7fh', 0x258e], // metatile tiles
+                        //         ["Metatiles"],
+                        //         ["DecompressData", 0x42, 'mem7fh', 0x0000], // metatiles
+                        //         ["Map"],
+                        //     ],
+                        // },
                         {
                             name: "test",
                             sources: [
-                                ["DecompressData", 0x14d, 'mem7eh', 0x4000], // tiledata
-                                ["TileData"],
-                                ["DecompressData", 0x132, 'mem7fh', 0x258e], // metatile tiles
-                                ["Metatiles"],
-                                ["DecompressData", 0x42, 'mem7fh', 0x0000], // metatiles
-                                ["Map"],
+                                ["FullRoom", roomIdx],
                             ],
                         },
                     ],

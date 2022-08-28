@@ -4,7 +4,14 @@
 .org $0
 
 	eor $0348.w                                                  ; $8000 : $4d, $48, $03
-	lsr $002e.w                                                  ; $8003 : $4e, $2e, $00
+
+
+Data_7_8003:
+	.dw Data_7_ae4e-$8000
+
+
+;
+	.db $00                                                  ; $8005 : $00
 	.db $00                                                  ; $8006 : $00
 	.db $00                                                  ; $8007 : $00
 	.db $00                                                  ; $8008 : $00
@@ -70,7 +77,7 @@ Data_7_8010:
 	.db $7c, $6d, $01, $ff, $16, $00, $c6, $09
 	.db $7c, $74, $01, $23, $17, $00, $d0, $09
 	.db $2c, $75, $01, $30, $17, $00, $e5, $09
-	.db $dd, $15, $02, $a0, $17, $00, $e9, $09
+	.db $dd, $15, $02, $a0, $17, $00, $e9, $09 ; 2d - ending sequence
 	.db $3f, $21, $02, $f1, $17, $00, $ed, $09
 	.db $30, $30, $02, $17, $18, $00, $f5, $09
 	.db $81, $55, $02, $49, $18, $00, $fd, $09
@@ -191,7 +198,7 @@ Data_7_8010:
 	.db $d4, $66, $05, $41, $26, $00, $55, $0e
 	.db $05, $6d, $05, $6d, $26, $00, $65, $0e
 	.db $1d, $6d, $05, $82, $26, $00, $6f, $0e
-	.db $72, $6d, $05, $8e, $26, $00, $79, $0e
+	.db $72, $6d, $05, $8e, $26, $00, $79, $0e ; a6 report screen
 	.db $f3, $77, $05, $e8, $26, $00, $81, $0e
 	.db $72, $79, $05, $01, $27, $00, $89, $0e
 	.db $ab, $79, $05, $2b, $27, $00, $96, $0e
@@ -6532,7 +6539,7 @@ br_07_ae01:
 	ora ($69, X)                                                  ; $ae20 : $01, $69
 	ora ($69, X)                                                  ; $ae22 : $01, $69
 	cmp $68a6.w, Y                                                  ; $ae24 : $d9, $a6, $68
-	bvc br_07_ae85                                                  ; $ae27 : $50, $5c
+	.db $50, $5c
 
 	pla                                                  ; $ae29 : $68
 	eor ($18), Y                                                  ; $ae2a : $51, $18
@@ -6560,116 +6567,77 @@ br_07_ae3b:
 	asl                                                  ; $ae4b : $0a
 	.db $00                                                  ; $ae4c : $00
 	.db $00                                                  ; $ae4d : $00
-	bpl br_07_ae54                                                  ; $ae4e : $10, $04
-
-	tsb $08                                                  ; $ae50 : $04, $08
-	ora ($10), Y                                                  ; $ae52 : $11, $10
-
-br_07_ae54:
-	ora $05, S                                                  ; $ae54 : $03, $05
-	ora ($6d)                                                  ; $ae56 : $12, $6d
-	ora [$02]                                                  ; $ae58 : $07, $02
-	ora ($0d, S), Y                                                  ; $ae5a : $13, $0d
-	ora $06, S                                                  ; $ae5c : $03, $06
-	trb $39                                                  ; $ae5e : $14, $39
-	.db $10, $0e                                                  ; $ae60 : $10, $0e
-
-	ora $3a, X                                                  ; $ae62 : $15, $3a
-	bpl br_07_ae75                                                  ; $ae64 : $10, $0f
-
-	asl $0a, X                                                  ; $ae66 : $16, $0a
-	ora [$03], Y                                                  ; $ae68 : $17, $03
-	ora [$3b], Y                                                  ; $ae6a : $17, $3b
-	ora [$04], Y                                                  ; $ae6c : $17, $04
-	clc                                                  ; $ae6e : $18
-	bit $022a.w, X                                                  ; $ae6f : $3c, $2a, $02
-	ora $2c01.w, Y                                                  ; $ae72 : $19, $01, $2c
-
-br_07_ae75:
-	ora $3d7a1a.l                                                  ; $ae75 : $0f, $1a, $7a, $3d
-	ora ($1b, X)                                                  ; $ae79 : $01, $1b
-	tcs                                                  ; $ae7b : $1b
-	rti                                                  ; $ae7c : $40
 
 
-	ora ($1c, X)                                                  ; $ae7d : $01, $1c
-	cop $1c.b                                                  ; $ae7f : $02, $1c
-	ora ($1d, X)                                                  ; $ae81 : $01, $1d
-	ora $45                                                  ; $ae83 : $05, $45
+Data_7_ae4e:
+; ID - type ID - room ID - ???
+	.db $10, $04, $04, $08
+	.db $11, $10, $03, $05
+	.db $12, $6d, $07, $02
+	.db $13, $0d, $03, $06
+	.db $14, $39, $10, $0e
+	.db $15, $3a, $10, $0f
+	.db $16, $0a, $17, $03
+	.db $17, $3b, $17, $04
+	.db $18, $3c, $2a, $02
+	.db $19, $01, $2c, $0f
+	.db $1a, $7a, $3d, $01
+	.db $1b, $1b, $40, $01
+	.db $1c, $02, $1c, $01
+	.db $1d, $05, $45, $05
+	.db $1e, $14, $45, $06
+	.db $1f, $16, $45, $07
+	.db $20, $74, $45, $08
+	.db $21, $5f, $2d, $09
+	.db $22, $1b, $67, $01
+	.db $23, $49, $5e, $0a
+	.db $24, $3f, $7a, $10
+	.db $25, $14, $89, $0d
+	.db $26, $15, $88, $02
+	.db $27, $16, $89, $11
+	.db $28, $19, $92, $15
+	.db $29, $79, $98, $01
+	.db $2a, $37, $a2, $01
+	.db $2b, $03, $a3, $06
+	.db $2c, $06, $7d, $01
+	.db $2d, $10, $bf, $09
+	.db $2e, $41, $ca, $09
+	.db $2f, $44, $d9, $0b ; maiden
+	.db $30, $44, $d9, $0c
+	.db $31, $44, $d9, $0d
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
+	.db $ff, $ff, $ff, $ff
 
-br_07_ae85:
-	ora $1e                                                  ; $ae85 : $05, $1e
-	trb $45                                                  ; $ae87 : $14, $45
-	asl $1f                                                  ; $ae89 : $06, $1f
-	asl $45, X                                                  ; $ae8b : $16, $45
-	ora [$20]                                                  ; $ae8d : $07, $20
-	stz $45, X                                                  ; $ae8f : $74, $45
-	php                                                  ; $ae91 : $08
-	and ($5f, X)                                                  ; $ae92 : $21, $5f
-	and $2209.w                                                  ; $ae94 : $2d, $09, $22
-	tcs                                                  ; $ae97 : $1b
-	adc [$01]                                                  ; $ae98 : $67, $01
-	and $49, S                                                  ; $ae9a : $23, $49
-	lsr $240a.w, X                                                  ; $ae9c : $5e, $0a, $24
-	and $25107a.l, X                                                  ; $ae9f : $3f, $7a, $10, $25
-	trb $89                                                  ; $aea3 : $14, $89
-	ora $1526.w                                                  ; $aea5 : $0d, $26, $15
-	dey                                                  ; $aea8 : $88
-	cop $27.b                                                  ; $aea9 : $02, $27
-	asl $89, X                                                  ; $aeab : $16, $89
-	ora ($28), Y                                                  ; $aead : $11, $28
-	ora $1592.w, Y                                                  ; $aeaf : $19, $92, $15
-	and #$79.b                                                  ; $aeb2 : $29, $79
-	tya                                                  ; $aeb4 : $98
-	ora ($2a, X)                                                  ; $aeb5 : $01, $2a
-	and [$a2], Y                                                  ; $aeb7 : $37, $a2
-	ora ($2b, X)                                                  ; $aeb9 : $01, $2b
-	ora $a3, S                                                  ; $aebb : $03, $a3
-	asl $2c                                                  ; $aebd : $06, $2c
-	asl $7d                                                  ; $aebf : $06, $7d
-	ora ($2d, X)                                                  ; $aec1 : $01, $2d
-	.db $10, $bf                                                  ; $aec3 : $10, $bf
 
-	ora #$2e.b                                                  ; $aec5 : $09, $2e
-	eor ($ca, X)                                                  ; $aec7 : $41, $ca
-	ora #$2f.b                                                  ; $aec9 : $09, $2f
-	mvp $0b, $d9                                                  ; $aecb : $44, $d9, $0b
-	.db $30, $44                                                  ; $aece : $30, $44
-
-	cmp $310c.w, Y                                                  ; $aed0 : $d9, $0c, $31
-	mvp $0d, $d9                                                  ; $aed3 : $44, $d9, $0d
-	sbc $ffffff.l, X                                                  ; $aed6 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aeda : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aede : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aee2 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aee6 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aeea : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aeee : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aef2 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aef6 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aefa : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $aefe : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af02 : $ff, $ff, $ff, $ff
-
-Call_07_af06:
-	sbc $ffffff.l, X                                                  ; $af06 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af0a : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af0e : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af12 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af16 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af1a : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af1e : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af22 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af26 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af2a : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af2e : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af32 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af36 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af3a : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af3e : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af42 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af46 : $ff, $ff, $ff, $ff
-	sbc $ffffff.l, X                                                  ; $af4a : $ff, $ff, $ff, $ff
+;
 	bvc br_07_af98                                                  ; $af4e : $50, $48
 
 	asl $1200.w                                                  ; $af50 : $0e, $00, $12
@@ -15151,7 +15119,7 @@ br_07_f4b4:
 	jsr $1c05.w                                                  ; $f4c3 : $20, $05, $1c
 	jsr $038b.w                                                  ; $f4c6 : $20, $8b, $03
 	asl $43                                                  ; $f4c9 : $06, $43
-	jsr Call_07_af06.w                                                  ; $f4cb : $20, $06, $af
+	jsr $af06.w                                                  ; $f4cb : $20, $06, $af
 	jsr $4981.w                                                  ; $f4ce : $20, $81, $49
 	bvc br_07_f4f3                                                  ; $f4d1 : $50, $20
 

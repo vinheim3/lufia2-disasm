@@ -12491,7 +12491,7 @@ br_13_e507:
 	sbc ($10, S), Y                                                  ; $e52b : $f3, $10
 
 br_13_e52d:
-	trb $08de.w                                                  ; $e52d : $1c, $de, $08
+	trb wMovableNPCsTypeIds.w                                                  ; $e52d : $1c, $de, $08
 	pld                                                  ; $e530 : $2b
 	ora [$2c], Y                                                  ; $e531 : $17, $2c
 	clc                                                  ; $e533 : $18

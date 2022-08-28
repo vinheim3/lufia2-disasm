@@ -6977,10 +6977,10 @@ Call_0e_b287:
 	rts                                                  ; $b287 : $60
 
 
-	lda wNmiCounter                                                  ; $b288 : $a5, $40
+	lda wNmiCounter1                                                  ; $b288 : $a5, $40
 
 br_0e_b28a:
-	cmp wNmiCounter                                                  ; $b28a : $c5, $40
+	cmp wNmiCounter1                                                  ; $b28a : $c5, $40
 	beq br_0e_b28a                                                  ; $b28c : $f0, $fc
 
 	rts                                                  ; $b28e : $60
@@ -7270,10 +7270,10 @@ Func_e_b2ee:
 	brl @bigLoop_b41c                                                  ; $b4b9 : $82, $60, $ff
 
 @bigCont_b4bc:
-	stz wNmiCounter                                                  ; $b4bc : $64, $40
+	stz wNmiCounter1                                                  ; $b4bc : $64, $40
 
 @loop_b4be:
-	lda wNmiCounter                                                  ; $b4be : $a5, $40
+	lda wNmiCounter1                                                  ; $b4be : $a5, $40
 	lsr                                                  ; $b4c0 : $4a
 	lsr                                                  ; $b4c1 : $4a
 	lsr                                                  ; $b4c2 : $4a
@@ -7286,9 +7286,9 @@ Func_e_b2ee:
 	sta $54                                                  ; $b4cd : $85, $54
 
 @loop_b4cf:
-	stz wNmiCounter                                                  ; $b4cf : $64, $40
+	stz wNmiCounter1                                                  ; $b4cf : $64, $40
 
--	lda wNmiCounter                                                  ; $b4d1 : $a5, $40
+-	lda wNmiCounter1                                                  ; $b4d1 : $a5, $40
 	cmp #$3c.b                                                  ; $b4d3 : $c9, $3c
 	bcc -                                                  ; $b4d5 : $90, $fa
 
@@ -7297,10 +7297,10 @@ Func_e_b2ee:
 
 	lda #$0f.b                                                  ; $b4db : $a9, $0f
 	sta $54                                                  ; $b4dd : $85, $54
-	stz wNmiCounter                                                  ; $b4df : $64, $40
+	stz wNmiCounter1                                                  ; $b4df : $64, $40
 
 @loop_b4e1:
-	lda wNmiCounter                                                  ; $b4e1 : $a5, $40
+	lda wNmiCounter1                                                  ; $b4e1 : $a5, $40
 	lsr                                                  ; $b4e3 : $4a
 	lsr                                                  ; $b4e4 : $4a
 	lsr                                                  ; $b4e5 : $4a
@@ -7391,10 +7391,10 @@ br_0e_b53b:
 
 
 Call_0e_b550:
-	lda wNmiCounter                                                  ; $b550 : $a5, $40
+	lda wNmiCounter1                                                  ; $b550 : $a5, $40
 
 br_0e_b552:
-	cmp wNmiCounter                                                  ; $b552 : $c5, $40
+	cmp wNmiCounter1                                                  ; $b552 : $c5, $40
 	beq br_0e_b552                                                  ; $b554 : $f0, $fc
 
 	rts                                                  ; $b556 : $60
@@ -9407,10 +9407,10 @@ br_0e_c258:
 	ora #$9f22.w                                                  ; $c2bb : $09, $22, $9f
 	stx $80, Y                                                  ; $c2be : $96, $80
 	jsr Call_03_8e66.l                                                  ; $c2c0 : $22, $66, $8e, $83
-	lda wNmiCounter                                                  ; $c2c4 : $a5, $40
+	lda wNmiCounter1                                                  ; $c2c4 : $a5, $40
 
 br_0e_c2c6:
-	cmp wNmiCounter                                                  ; $c2c6 : $c5, $40
+	cmp wNmiCounter1                                                  ; $c2c6 : $c5, $40
 	beq br_0e_c2c6                                                  ; $c2c8 : $f0, $fc
 
 	rep #IDX_8                                                  ; $c2ca : $c2, $10

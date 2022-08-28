@@ -3089,7 +3089,7 @@ br_4f_e3ba:
 	jmp ($9e7c.w, X)                                                  ; $e3cb : $7c, $7c, $9e
 
 
-	bit $08de.w                                                  ; $e3ce : $2c, $de, $08
+	bit wMovableNPCsTypeIds.w                                                  ; $e3ce : $2c, $de, $08
 	tya                                                  ; $e3d1 : $98
 	php                                                  ; $e3d2 : $08
 	php                                                  ; $e3d3 : $08
@@ -5193,7 +5193,7 @@ br_4f_ed88:
 
 	php                                                  ; $edaa : $08
 	jsr ($9e7c.w, X)                                                  ; $edab : $fc, $7c, $9e
-	bit $08de.w                                                  ; $edae : $2c, $de, $08
+	bit wMovableNPCsTypeIds.w                                                  ; $edae : $2c, $de, $08
 	sed                                                  ; $edb1 : $f8
 	php                                                  ; $edb2 : $08
 	inx                                                  ; $edb3 : $e8
@@ -5588,7 +5588,7 @@ br_4f_ef48:
 	jmp ($9e7c.w, X)                                                  ; $efab : $7c, $7c, $9e
 
 
-	bit $08de.w                                                  ; $efae : $2c, $de, $08
+	bit wMovableNPCsTypeIds.w                                                  ; $efae : $2c, $de, $08
 	tya                                                  ; $efb1 : $98
 	php                                                  ; $efb2 : $08
 	php                                                  ; $efb3 : $08

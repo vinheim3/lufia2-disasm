@@ -6367,7 +6367,7 @@ Call_03_a82e:
 	sec                                                  ; $a8f0 : $38
 	sbc #$10.b                                                  ; $a8f1 : $e9, $10
 	tax                                                  ; $a8f3 : $aa
-	lda $085e.w, X                                                  ; $a8f4 : $bd, $5e, $08
+	lda wMovableNPCsRoomIds.w, X                                                  ; $a8f4 : $bd, $5e, $08
 	cmp wCurrRoomIdx.w                                                  ; $a8f7 : $cd, $ac, $05
 	bne @cont_a96b                                                  ; $a8fa : $d0, $6f
 
@@ -7165,33 +7165,35 @@ Call_03_adca:
 
 Call_03_addf:
 	jsr Call_03_b062.w                                                  ; $addf : $20, $62, $b0
+
+;
 	lda #$87.b                                                  ; $ade2 : $a9, $87
 	pha                                                  ; $ade4 : $48
 	plb                                                  ; $ade5 : $ab
 	ldy #$0000.w                                                  ; $ade6 : $a0, $00, $00
-	ldx $8003.w                                                  ; $ade9 : $ae, $03, $80
+	ldx Data_7_8003.w                                                  ; $ade9 : $ae, $03, $80
 
-br_03_adec:
+@loop_adec:
 	lda $8000.w, X                                                  ; $adec : $bd, $00, $80
-	sta $081e.w, Y                                                  ; $adef : $99, $1e, $08
+	sta wMovableNPCsIds.w, Y                                                  ; $adef : $99, $1e, $08
 	cmp #$ff.b                                                  ; $adf2 : $c9, $ff
-	beq br_03_ae08                                                  ; $adf4 : $f0, $12
+	beq @cont_ae08                                                  ; $adf4 : $f0, $12
 
 	lda $8001.w, X                                                  ; $adf6 : $bd, $01, $80
-	sta $08de.w, Y                                                  ; $adf9 : $99, $de, $08
+	sta wMovableNPCsTypeIds.w, Y                                                  ; $adf9 : $99, $de, $08
 	lda $8002.w, X                                                  ; $adfc : $bd, $02, $80
-	sta $085e.w, Y                                                  ; $adff : $99, $5e, $08
+	sta wMovableNPCsRoomIds.w, Y                                                  ; $adff : $99, $5e, $08
 	lda $8003.w, X                                                  ; $ae02 : $bd, $03, $80
 	sta $089e.w, Y                                                  ; $ae05 : $99, $9e, $08
 
-br_03_ae08:
+@cont_ae08:
 	inx                                                  ; $ae08 : $e8
 	inx                                                  ; $ae09 : $e8
 	inx                                                  ; $ae0a : $e8
 	inx                                                  ; $ae0b : $e8
 	iny                                                  ; $ae0c : $c8
 	cpy #$0040.w                                                  ; $ae0d : $c0, $40, $00
-	bne br_03_adec                                                  ; $ae10 : $d0, $da
+	bne @loop_adec                                                  ; $ae10 : $d0, $da
 
 	phk                                                  ; $ae12 : $4b
 	plb                                                  ; $ae13 : $ab
@@ -7910,21 +7912,21 @@ br_03_b347:
 	ldx #$003e.w                                                  ; $b34c : $a2, $3e, $00
 
 @loop_3e:
-	lda $081e.w, X                                                  ; $b34f : $bd, $1e, $08
+	lda wMovableNPCsIds.w, X                                                  ; $b34f : $bd, $1e, $08
 	cmp #$ff.b                                                  ; $b352 : $c9, $ff
 	beq @toLoop_3e                                                  ; $b354 : $f0, $49
 
 	jsr Call_03_ab4f.l                                                  ; $b356 : $22, $4f, $ab, $83
-	lda $085e.w, X                                                  ; $b35a : $bd, $5e, $08
+	lda wMovableNPCsRoomIds.w, X                                                  ; $b35a : $bd, $5e, $08
 	cmp wCurrRoomIdx.w                                                  ; $b35d : $cd, $ac, $05
 	bne @toLoop_3e                                                  ; $b360 : $d0, $3d
 
 	ldy wCurrChar                                                  ; $b362 : $a4, $a7
-	lda $08de.w, X                                                  ; $b364 : $bd, $de, $08
+	lda wMovableNPCsTypeIds.w, X                                                  ; $b364 : $bd, $de, $08
 	sta wCharacterType.w, Y                                                  ; $b367 : $99, $d2, $05
-	lda $081e.w, X                                                  ; $b36a : $bd, $1e, $08
+	lda wMovableNPCsIds.w, X                                                  ; $b36a : $bd, $1e, $08
 	and #$7f.b                                                  ; $b36d : $29, $7f
-	sta $081e.w, X                                                  ; $b36f : $9d, $1e, $08
+	sta wMovableNPCsIds.w, X                                                  ; $b36f : $9d, $1e, $08
 	sta wCharacterIds.w, Y                                                  ; $b372 : $99, $fa, $05
 	phx                                                  ; $b375 : $da
 	lda $089e.w, X                                                  ; $b376 : $bd, $9e, $08
@@ -8169,7 +8171,7 @@ Call_03_b53b:
 	bne br_03_b57f                                                  ; $b543 : $d0, $3a
 
 	lda wCurrRoomIdx.w                                                  ; $b545 : $ad, $ac, $05
-	jsr $80eae7.l                                                  ; $b548 : $22, $e7, $ea, $80
+	jsr Func_0_eae7.l                                                  ; $b548 : $22, $e7, $ea, $80
 	lda $7fd012.l                                                  ; $b54c : $af, $12, $d0, $7f
 	sta WRMPYA.w                                                  ; $b550 : $8d, $02, $42
 	lda $7fd01a.l                                                  ; $b553 : $af, $1a, $d0, $7f

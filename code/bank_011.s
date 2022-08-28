@@ -11579,7 +11579,7 @@ br_11_cf1c:
 	ora $051f.w                                                  ; $d081 : $0d, $1f, $05
 	asl $061f.w                                                  ; $d084 : $0e, $1f, $06
 	tsb $071f.w                                                  ; $d087 : $0c, $1f, $07
-	ora $081e.w                                                  ; $d08a : $0d, $1e, $08
+	ora wMovableNPCsIds.w                                                  ; $d08a : $0d, $1e, $08
 	asl $0920.w                                                  ; $d08d : $0e, $20, $09
 	ora #$19.b                                                  ; $d090 : $09, $19
 	asl                                                  ; $d092 : $0a
@@ -16550,7 +16550,7 @@ br_11_f804:
 	asl $081c.w                                                  ; $f818 : $0e, $1c, $08
 	cop $0f.b                                                  ; $f81b : $02, $0f
 	tsb $1210.w                                                  ; $f81d : $0c, $10, $12
-	tsb $081e.w                                                  ; $f820 : $0c, $1e, $08
+	tsb wMovableNPCsIds.w                                                  ; $f820 : $0c, $1e, $08
 	.db $00                                                  ; $f823 : $00
 	ora $12100c.l                                                  ; $f824 : $0f, $0c, $10, $12
 	tsb $081c.w                                                  ; $f828 : $0c, $1c, $08
