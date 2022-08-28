@@ -11547,7 +11547,7 @@ br_07_d58c:
 	sbc ($be, S), Y                                                  ; $d67c : $f3, $be
 	jsr $bd06.w                                                  ; $d67e : $20, $06, $bd
 	asl                                                  ; $d681 : $0a
-	rol $0320.w, X                                                  ; $d682 : $3e, $20, $03
+	rol wShadowPalettes.w, X                                                  ; $d682 : $3e, $20, $03
 
 br_07_d685:
 	ora $a3                                                  ; $d685 : $05, $a3

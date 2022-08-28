@@ -3096,7 +3096,7 @@ br_01_9637:
 
 br_01_96b2:
 	lda $7ff1db.l, X                                                  ; $96b2 : $bf, $db, $f1, $7f
-	sta $0320.w, X                                                  ; $96b6 : $9d, $20, $03
+	sta wShadowPalettes.w, X                                                  ; $96b6 : $9d, $20, $03
 	inx                                                  ; $96b9 : $e8
 	inx                                                  ; $96ba : $e8
 	dec $02                                                  ; $96bb : $c6, $02
@@ -7203,7 +7203,7 @@ br_01_b319:
 	sta $15                                                  ; $b321 : $85, $15
 	jsr Call_01_b54a.w                                                  ; $b323 : $20, $4a, $b5
 	lda $15                                                  ; $b326 : $a5, $15
-	sta $0320.w, X                                                  ; $b328 : $9d, $20, $03
+	sta wShadowPalettes.w, X                                                  ; $b328 : $9d, $20, $03
 	sep #ACCU_8                                                  ; $b32b : $e2, $20
 	dec $13                                                  ; $b32d : $c6, $13
 	bne br_01_b319                                                  ; $b32f : $d0, $e8
@@ -7234,7 +7234,7 @@ br_01_b347:
 	jsr Call_01_b54a.w                                                  ; $b351 : $20, $4a, $b5
 	lda $15                                                  ; $b354 : $a5, $15
 	eor #$ffff.w                                                  ; $b356 : $49, $ff, $ff
-	sta $0320.w, X                                                  ; $b359 : $9d, $20, $03
+	sta wShadowPalettes.w, X                                                  ; $b359 : $9d, $20, $03
 	sep #ACCU_8                                                  ; $b35c : $e2, $20
 	dec $13                                                  ; $b35e : $c6, $13
 	bne br_01_b347                                                  ; $b360 : $d0, $e5
@@ -7301,7 +7301,7 @@ br_01_b3b1:
 	sta $15                                                  ; $b3b9 : $85, $15
 	jsr Call_01_b3f8.w                                                  ; $b3bb : $20, $f8, $b3
 	lda $15                                                  ; $b3be : $a5, $15
-	sta $0320.w, X                                                  ; $b3c0 : $9d, $20, $03
+	sta wShadowPalettes.w, X                                                  ; $b3c0 : $9d, $20, $03
 	sep #ACCU_8                                                  ; $b3c3 : $e2, $20
 	dec $17                                                  ; $b3c5 : $c6, $17
 	bne br_01_b3b1                                                  ; $b3c7 : $d0, $e8
@@ -7326,7 +7326,7 @@ br_01_b3d5:
 	lda #$7fff.w                                                  ; $b3e4 : $a9, $ff, $7f
 	sec                                                  ; $b3e7 : $38
 	sbc $15                                                  ; $b3e8 : $e5, $15
-	sta $0320.w, X                                                  ; $b3ea : $9d, $20, $03
+	sta wShadowPalettes.w, X                                                  ; $b3ea : $9d, $20, $03
 	dec $17                                                  ; $b3ed : $c6, $17
 	bne br_01_b3d5                                                  ; $b3ef : $d0, $e4
 
@@ -7421,7 +7421,7 @@ br_01_b455:
 	rep #ACCU_8                                                  ; $b47c : $c2, $20
 	lda $22                                                  ; $b47e : $a5, $22
 	plx                                                  ; $b480 : $fa
-	sta $0320.w, X                                                  ; $b481 : $9d, $20, $03
+	sta wShadowPalettes.w, X                                                  ; $b481 : $9d, $20, $03
 	sep #ACCU_8                                                  ; $b484 : $e2, $20
 	dec $19                                                  ; $b486 : $c6, $19
 	bne br_01_b455                                                  ; $b488 : $d0, $cb
@@ -8257,7 +8257,7 @@ Call_01_b9af:
 
 br_01_b9b7:
 	lda $7ff1db.l, X                                                  ; $b9b7 : $bf, $db, $f1, $7f
-	sta $0320.w, X                                                  ; $b9bb : $9d, $20, $03
+	sta wShadowPalettes.w, X                                                  ; $b9bb : $9d, $20, $03
 	dex                                                  ; $b9be : $ca
 	bpl br_01_b9b7                                                  ; $b9bf : $10, $f6
 

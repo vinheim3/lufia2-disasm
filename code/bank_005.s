@@ -16018,7 +16018,7 @@ br_05_eb17:
 	ldx #$01ff.w                                                  ; $eb2c : $a2, $ff, $01
 
 br_05_eb2f:
-	lda $0320.w, X                                                  ; $eb2f : $bd, $20, $03
+	lda wShadowPalettes.w, X                                                  ; $eb2f : $bd, $20, $03
 	sta $7ff1db.l, X                                                  ; $eb32 : $9f, $db, $f1, $7f
 	dex                                                  ; $eb36 : $ca
 	bpl br_05_eb2f                                                  ; $eb37 : $10, $f6

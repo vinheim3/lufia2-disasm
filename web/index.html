@@ -59,10 +59,15 @@
                 data[offs+3] = 0xff;
             }
 
-            let drawRow = function(data, col, pxrow, width, bitp0, bitp1, bitp2, bitp3, hflip) {
+            let drawRow = function(data, col, pxrow, width, bitp0, bitp1, bitp2, bitp3, hflip, palettes) {
                 for (let pxcol = 7; pxcol >= 0; pxcol--) {
                     let color = (bitp0&1) + 2*(bitp1&1) + 4*(bitp2&1) + 8*(bitp3&1);
-                    let [r,g,b] = greyCols[color];
+                    let r,g,b;
+                    if (palettes===undefined) {
+                        [r,g,b] = greyCols[color];
+                    } else {
+                        [r,g,b] = palettes[color];
+                    }
                     bitp0>>=1;
                     bitp1>>=1;
                     bitp2>>=1;
@@ -74,7 +79,7 @@
                 }
             }
 
-            let drawTile = function(data, col, row, width, tileBytes, vflip, hflip) {
+            let drawTile = function(data, col, row, width, tileBytes, vflip, hflip, palettes) {
                 for (let pxrow = 0; pxrow < 8; pxrow++) {
                     let _row;
                     if (vflip) _row = row+7-pxrow;
@@ -85,7 +90,7 @@
                         tileBytes[pxrow*2+1],
                         tileBytes[pxrow*2+16],
                         tileBytes[pxrow*2+17],
-                        hflip,
+                        hflip, palettes,
                     )
                 }
             }
@@ -95,6 +100,7 @@
                     this.memory = new Array(0x10000).fill(0);
                     this.mem7eh = new Array(0x10000).fill(0);
                     this.mem7fh = new Array(0x10000).fill(0);
+                    this.cgram = new Array(0x200).fill(0);
                     this.screenSpec = screenSpec;
                     this.rom = rom;
                 }
@@ -120,6 +126,7 @@
                         let tileIdx = tileVal & 0x3ff;
                         let vflip = tileVal & 0x8000;
                         let hflip = tileVal & 0x4000;
+                        let palette = (tileVal & 0x1c00)>>10;
                         start += 2;
                         let base = this.label_tiledata+tileIdx*0x20;
                         let colAdd = (j >= 2) ? 8 : 0;
@@ -127,7 +134,7 @@
                         drawTile(
                             data, col+colAdd, row+rowAdd, width, 
                             this.mem7eh.slice(base, base+0x20),
-                            vflip, hflip,
+                            vflip, hflip, this.convertedCols.slice(palette*16, (palette+1)*16),
                         );
                     }
                 }
@@ -176,6 +183,15 @@
                                 return;
                             }
                         }
+                    }
+                }
+
+                BG2Palettes(room_idx) {
+                    const palIdx = this.rom[bankConv(0x4f, 0xfa08+room_idx)]-1;
+                    const palAddr = wordIn(this.rom, bankConv(0x4f, 0xfafa+palIdx*2));
+                    const fullPalAddr = bankConv(0x1b, palAddr);
+                    for (let i = 0x30; i < 0x100; i++) {
+                        this.cgram[i] = this.rom[fullPalAddr+i-0x30];
                     }
                 }
 
@@ -237,13 +253,29 @@
                     ctx.putImageData(imgData, 0, 0);
                 }
 
+                CalcColours() {
+                    // convert colours to rgb
+                    let newCols = [];
+                    for (let i = 0; i < 0x200; i+=2) {
+                        let col = wordIn(this.cgram, i);
+                        let r = col&0x1f;
+                        let g = (col>>5)&0x1f;
+                        let b = (col>>10)&0x1f;
+                        newCols.push([r*8, g*8, b*8]);
+                    }
+                    this.convertedCols = newCols;
+                }
+
                 FullRoom(room_idx) {
+                    this.BG2Palettes(room_idx);
+                    this.CalcColours();
+
                     let tileDataDecompIdx = 0x14b+this.rom[bankConv(0x4f, 0xf820)+room_idx-2];
                     this.DecompressData(tileDataDecompIdx, 'mem7eh', 0x4000, 'tiledata');
-                    // this.TileData();
+                    this.TileData();
                     let metatileTilesDecompIdx = 0x130+this.rom[bankConv(0x4f, 0xf730)+room_idx-2];
                     this.DecompressData(metatileTilesDecompIdx, 'mem7fh', 0x8000, 'metatileTiles');
-                    // this.Metatiles();
+                    this.Metatiles();
                     let metatilesDecompIdx = 0x3f+room_idx;
                     this.DecompressData(metatilesDecompIdx, 'mem7fh', 0x0000);
                     this.Map();

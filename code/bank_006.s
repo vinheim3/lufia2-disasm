@@ -4803,7 +4803,7 @@ br_06_a00c:
 
 br_06_a018:
 	lda $b400.w, X                                                  ; $a018 : $bd, $00, $b4
-	sta $0320.w, X                                                  ; $a01b : $9d, $20, $03
+	sta wShadowPalettes.w, X                                                  ; $a01b : $9d, $20, $03
 	inx                                                  ; $a01e : $e8
 	inx                                                  ; $a01f : $e8
 	bne br_06_a018                                                  ; $a020 : $d0, $f6
@@ -5011,7 +5011,7 @@ br_06_a16b:
 
 br_06_a177:
 	lda $b200.w, X                                                  ; $a177 : $bd, $00, $b2
-	sta $0320.w, X                                                  ; $a17a : $9d, $20, $03
+	sta wShadowPalettes.w, X                                                  ; $a17a : $9d, $20, $03
 	inx                                                  ; $a17d : $e8
 	inx                                                  ; $a17e : $e8
 	bne br_06_a177                                                  ; $a17f : $d0, $f6
@@ -11632,7 +11632,7 @@ Call_06_cbbf:
 	stz NMITIMEN.w                                                  ; $cbc2 : $9c, $00, $42
 	stz HDMAEN.w                                                  ; $cbc5 : $9c, $0c, $42
 	ldx #$0000.w                                                  ; $cbc8 : $a2, $00, $00
-	stx $0320.w                                                  ; $cbcb : $8e, $20, $03
+	stx wShadowPalettes.w                                                  ; $cbcb : $8e, $20, $03
 	stz CGADD.w                                                  ; $cbce : $9c, $21, $21
 	ldx #$0320.w                                                  ; $cbd1 : $a2, $20, $03
 	stx $4372.w                                                  ; $cbd4 : $8e, $72, $43
@@ -12168,10 +12168,10 @@ br_06_cfe1:
 	tay                                                  ; $cff7 : $a8
 
 br_06_cff8:
-	lda $0320.w, Y                                                  ; $cff8 : $b9, $20, $03
+	lda wShadowPalettes.w, Y                                                  ; $cff8 : $b9, $20, $03
 	sta $2122.w                                                  ; $cffb : $8d, $22, $21
 	iny                                                  ; $cffe : $c8
-	lda $0320.w, Y                                                  ; $cfff : $b9, $20, $03
+	lda wShadowPalettes.w, Y                                                  ; $cfff : $b9, $20, $03
 	sta $2122.w                                                  ; $d002 : $8d, $22, $21
 	iny                                                  ; $d005 : $c8
 	dec $37                                                  ; $d006 : $c6, $37
@@ -12185,10 +12185,10 @@ br_06_cff8:
 	tay                                                  ; $d011 : $a8
 
 br_06_d012:
-	lda $0320.w, Y                                                  ; $d012 : $b9, $20, $03
+	lda wShadowPalettes.w, Y                                                  ; $d012 : $b9, $20, $03
 	sta $2122.w                                                  ; $d015 : $8d, $22, $21
 	iny                                                  ; $d018 : $c8
-	lda $0320.w, Y                                                  ; $d019 : $b9, $20, $03
+	lda wShadowPalettes.w, Y                                                  ; $d019 : $b9, $20, $03
 	sta $2122.w                                                  ; $d01c : $8d, $22, $21
 	iny                                                  ; $d01f : $c8
 	dec $38                                                  ; $d020 : $c6, $38

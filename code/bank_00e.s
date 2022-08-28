@@ -7135,8 +7135,8 @@ Func_e_b2ee:
 	stz $2127.w                                                  ; $b3be : $9c, $27, $21
 	jsr $83ac7a.l                                                  ; $b3c1 : $22, $7a, $ac, $83
 	rep #ACCU_8                                                  ; $b3c5 : $c2, $20
-	stz $0320.w                                                  ; $b3c7 : $9c, $20, $03
-	stz $0320.w                                                  ; $b3ca : $9c, $20, $03
+	stz wShadowPalettes.w                                                  ; $b3c7 : $9c, $20, $03
+	stz wShadowPalettes.w                                                  ; $b3ca : $9c, $20, $03
 	lda #$7bde.w                                                  ; $b3cd : $a9, $de, $7b
 	sta $0322.w                                                  ; $b3d0 : $8d, $22, $03
 	lda #$6318.w                                                  ; $b3d3 : $a9, $18, $63

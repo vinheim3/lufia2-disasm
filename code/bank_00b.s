@@ -15224,7 +15224,7 @@ br_0b_fbde:
 	dey                                                  ; $fbf0 : $88
 	jsr $bd06.w                                                  ; $fbf1 : $20, $06, $bd
 	asl                                                  ; $fbf4 : $0a
-	bit $0320.w, X                                                  ; $fbf5 : $3c, $20, $03
+	bit wShadowPalettes.w, X                                                  ; $fbf5 : $3c, $20, $03
 	asl $8f                                                  ; $fbf8 : $06, $8f
 	jsr $2089.w                                                  ; $fbfa : $20, $89, $20
 	asl $bd                                                  ; $fbfd : $06, $bd

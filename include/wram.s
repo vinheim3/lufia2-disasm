@@ -537,7 +537,17 @@ wMosaicPixelSize: ; $d0f2
     db
 
 w7fd0f3:
-    ds $100-$f3
+    ds 8-3
+
+wEndBGPaletteSrcAddr: ; $d0f8
+    dw
+
+; offset in shadow palettes to load to, until last BG colour
+wEndBGPaletteDestOffs: ; $d0fa
+    dw
+
+w7fd0fc:
+    ds $100-$fc
 
 ; todo: unknown size
 wPuzzleScriptBitFlags: ; $d100

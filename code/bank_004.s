@@ -1939,9 +1939,9 @@ br_04_8d4f:
 
 
 	rep #ACCU_8                                                  ; $8d54 : $c2, $20
-	lda $7fd0f8.l                                                  ; $8d56 : $af, $f8, $d0, $7f
+	lda wEndBGPaletteSrcAddr.l                                                  ; $8d56 : $af, $f8, $d0, $7f
 	tax                                                  ; $8d5a : $aa
-	lda $7fd0fa.l                                                  ; $8d5b : $af, $fa, $d0, $7f
+	lda wEndBGPaletteDestOffs.l                                                  ; $8d5b : $af, $fa, $d0, $7f
 	tay                                                  ; $8d5f : $a8
 	sep #ACCU_8                                                  ; $8d60 : $e2, $20
 	lda $1282.w                                                  ; $8d62 : $ad, $82, $12
@@ -2014,7 +2014,7 @@ br_04_8d9e:
 	lsr                                                  ; $8df0 : $4a
 	lsr                                                  ; $8df1 : $4a
 	ora $58                                                  ; $8df2 : $05, $58
-	sta $0320.w, Y                                                  ; $8df4 : $99, $20, $03
+	sta wShadowPalettes.w, Y                                                  ; $8df4 : $99, $20, $03
 	sep #ACCU_8                                                  ; $8df7 : $e2, $20
 	inx                                                  ; $8df9 : $e8
 	inx                                                  ; $8dfa : $e8
@@ -2083,9 +2083,9 @@ br_04_8e42:
 	sta $63                                                  ; $8e64 : $85, $63
 
 br_04_8e66:
-	lda $7fd0f8.l                                                  ; $8e66 : $af, $f8, $d0, $7f
+	lda wEndBGPaletteSrcAddr.l                                                  ; $8e66 : $af, $f8, $d0, $7f
 	tax                                                  ; $8e6a : $aa
-	lda $7fd0fa.l                                                  ; $8e6b : $af, $fa, $d0, $7f
+	lda wEndBGPaletteDestOffs.l                                                  ; $8e6b : $af, $fa, $d0, $7f
 	tay                                                  ; $8e6f : $a8
 	lda $1283.w                                                  ; $8e70 : $ad, $83, $12
 	bit #$0040.w                                                  ; $8e73 : $89, $40, $00
@@ -2123,7 +2123,7 @@ br_04_8e94:
 
 br_04_8ea1:
 	ora $56                                                  ; $8ea1 : $05, $56
-	sta $0320.w, Y                                                  ; $8ea3 : $99, $20, $03
+	sta wShadowPalettes.w, Y                                                  ; $8ea3 : $99, $20, $03
 	inx                                                  ; $8ea6 : $e8
 	inx                                                  ; $8ea7 : $e8
 	iny                                                  ; $8ea8 : $c8
@@ -2173,7 +2173,7 @@ br_04_8edb:
 
 br_04_8ee6:
 	ora $56                                                  ; $8ee6 : $05, $56
-	sta $0320.w, Y                                                  ; $8ee8 : $99, $20, $03
+	sta wShadowPalettes.w, Y                                                  ; $8ee8 : $99, $20, $03
 	inx                                                  ; $8eeb : $e8
 	inx                                                  ; $8eec : $e8
 	iny                                                  ; $8eed : $c8

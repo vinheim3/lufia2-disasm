@@ -18160,7 +18160,7 @@ br_22_dc20:
 	.db $00                                                  ; $dc3f : $00
 	and $2d02.w, X                                                  ; $dc40 : $3d, $02, $2d
 	ora ($23)                                                  ; $dc43 : $12, $23
-	tsb $0320.w                                                  ; $dc45 : $0c, $20, $03
+	tsb wShadowPalettes.w                                                  ; $dc45 : $0c, $20, $03
 	trb $1f0f.w                                                  ; $dc48 : $1c, $0f, $1f
 	.db $00                                                  ; $dc4b : $00
 	asl                                                  ; $dc4c : $0a
