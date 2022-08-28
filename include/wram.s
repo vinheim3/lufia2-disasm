@@ -233,7 +233,10 @@ wCurrRoomIdx: ; $05ac
     db
 
 w05ad:
-    ds $b9-$ad
+    ds $b8-$ad
+
+wScriptIdxAfterRoomLoad: ; $05b8
+    db
 
 wRoomMetatilesWide: ; $05b9
     db
@@ -273,7 +276,7 @@ w070a:
     ds $7e-$a
 
 ; todo: unknown size, max $20
-wtodo_SomeFlagsBitfield: ; $077e
+wGlobalFlagsBitfield: ; $077e
     ds $20
 
 w079e:

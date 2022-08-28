@@ -7416,7 +7416,7 @@ Data_4f_fcbc:
 	.dl Data_12_8000
 	.db $f1, $ed, $94
 	.db $ec, $b1, $94
-	.db $bd, $bf, $93
+	.dl Data_13_bfbd
 	.db $f8, $db, $92
 	.db $a8, $bd, $91
 	.db $ae, $b6, $92

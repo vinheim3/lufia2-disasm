@@ -358,9 +358,9 @@ br_05_8247:
 
 
 br_05_825d:
-	lda wtodo_SomeFlagsBitfield.w, Y                                                  ; $825d : $b9, $7e, $07
+	lda wGlobalFlagsBitfield.w, Y                                                  ; $825d : $b9, $7e, $07
 	eor $830a.w, X                                                  ; $8260 : $5d, $0a, $83
-	sta wtodo_SomeFlagsBitfield.w, Y                                                  ; $8263 : $99, $7e, $07
+	sta wGlobalFlagsBitfield.w, Y                                                  ; $8263 : $99, $7e, $07
 	rts                                                  ; $8266 : $60
 
 
@@ -426,7 +426,7 @@ br_05_82aa:
 	bra br_05_82bd                                                  ; $82b8 : $80, $03
 
 br_05_82ba:
-	lda wtodo_SomeFlagsBitfield.w, Y                                                  ; $82ba : $b9, $7e, $07
+	lda wGlobalFlagsBitfield.w, Y                                                  ; $82ba : $b9, $7e, $07
 
 br_05_82bd:
 	and $830a.w, X                                                  ; $82bd : $3d, $0a, $83

@@ -7956,29 +7956,33 @@ br_13_be98:
 	.db $00                                                  ; $bfb5 : $00
 	sbc $1600ff.l, X                                                  ; $bfb6 : $ff, $ff, $00, $16
 	ora $ff02.w                                                  ; $bfba : $0d, $02, $ff
-	phd                                                  ; $bfbd : $0b
-	cop $2d.b                                                  ; $bfbe : $02, $2d
-	.db $00                                                  ; $bfc0 : $00
-	adc $8400.w, Y                                                  ; $bfc1 : $79, $00, $84
-	.db $00                                                  ; $bfc4 : $00
-	bit $2c00.w                                                  ; $bfc5 : $2c, $00, $2c
-	.db $00                                                  ; $bfc8 : $00
-	cpy $00                                                  ; $bfc9 : $c4, $00
-	cmp $ec00.w, Y                                                  ; $bfcb : $d9, $00, $ec
-	.db $00                                                  ; $bfce : $00
-	eor $01, X                                                  ; $bfcf : $55, $01
-	bit $2c00.w                                                  ; $bfd1 : $2c, $00, $2c
-	.db $00                                                  ; $bfd4 : $00
-	bit $2c00.w                                                  ; $bfd5 : $2c, $00, $2c
-	.db $00                                                  ; $bfd8 : $00
-	bit $2c00.w                                                  ; $bfd9 : $2c, $00, $2c
-	.db $00                                                  ; $bfdc : $00
-	bit $2c00.w                                                  ; $bfdd : $2c, $00, $2c
-	.db $00                                                  ; $bfe0 : $00
-	bit $2c00.w                                                  ; $bfe1 : $2c, $00, $2c
-	.db $00                                                  ; $bfe4 : $00
-	bit $2c00.w                                                  ; $bfe5 : $2c, $00, $2c
-	.db $00                                                  ; $bfe8 : $00
+
+
+Data_13_bfbd:
+	.dw $020b
+	.dw $002d
+	.dw $0079
+	.dw $0084
+	.dw $002c
+	.dw $002c
+	.dw @_00c4-Data_13_bfbd
+	.dw $00d9
+	.dw $00ec
+	.dw $0155
+	.dw $002c
+	.dw $002c
+	.dw $002c
+	.dw $002c
+	.dw $002c
+	.dw $002c
+	.dw $002c
+	.dw $002c
+	.dw $002c
+	.dw $002c
+	.dw $002c
+	.dw $002c
+
+;
 	sbc $0f0f00.l, X                                                  ; $bfe9 : $ff, $00, $0f, $0f
 	.db $10, $11                                                  ; $bfed : $10, $11
 
@@ -8011,7 +8015,7 @@ br_13_be98:
 	.db $00                                                  ; $c03d : $00
 	ora ($02, X)                                                  ; $c03e : $01, $02
 	sbc $100f00.l, X                                                  ; $c040 : $ff, $00, $0f, $10
-	bpl br_13_c057                                                  ; $c044 : $10, $11
+	.db $10, $11
 
 	sbc ($05, S), Y                                                  ; $c046 : $f3, $05
 	trb $0104.w                                                  ; $c048 : $1c, $04, $01
@@ -8021,7 +8025,6 @@ br_13_be98:
 	asl $0204.w                                                  ; $c051 : $0e, $04, $02
 	trb $1d0e.w                                                  ; $c054 : $1c, $0e, $1d
 
-br_13_c057:
 	ora $1a21f3.l                                                  ; $c057 : $0f, $f3, $21, $1a
 	tsb $03                                                  ; $c05b : $04, $03
 	jsr $10230f.l                                                  ; $c05d : $22, $0f, $23, $10
@@ -8033,27 +8036,27 @@ br_13_c057:
 	ora #$0504.w                                                  ; $c06c : $09, $04, $05
 	and ($1b, X)                                                  ; $c06f : $21, $1b
 	jsr $09f31c.l                                                  ; $c071 : $22, $1c, $f3, $09
-	bpl br_13_c07b                                                  ; $c075 : $10, $04
+	.db $10, $04
 
 	asl $11                                                  ; $c077 : $06, $11
 	and [$1b]                                                  ; $c079 : $27, $1b
 
-br_13_c07b:
 	plp                                                  ; $c07b : $28
 	.db $f0, $28                                                  ; $c07c : $f0, $28
 
 	phx                                                  ; $c07e : $da
 	.db $00                                                  ; $c07f : $00
-	sbc $1d1801.l, X                                                  ; $c080 : $ff, $01, $18, $1d
-	ora $0221.w, Y                                                  ; $c084 : $19, $21, $02
-	.db $10, $26                                                  ; $c087 : $10, $26
+	.db $ff
 
-	clc                                                  ; $c089 : $18
-	and [$04]                                                  ; $c08a : $27, $04
-	trb $1e1c.w                                                  ; $c08c : $1c, $1c, $1e
-	ora $1905.w, X                                                  ; $c08f : $1d, $05, $19
-	trb $1d1a.w                                                  ; $c092 : $1c, $1a, $1d
-	sbc $1e1900.l, X                                                  ; $c095 : $ff, $00, $19, $1e
+@_00c4:
+	.db $01, $18, $1d, $19, $21 ; bridge to shop
+	.db $02, $10, $26, $18, $27 ; exiting town (old man)
+	.db $04, $1c, $1c, $1e, $1d ; just left of shop
+	.db $05, $19, $1c, $1a, $1d ; just north of bridge in water
+	.db $ff
+
+;
+	.db $00, $19, $1e                                                  ; $c096 : $00, $19, $1e
 	ora ($15, X)                                                  ; $c099 : $01, $15
 	and [$02]                                                  ; $c09b : $27, $02
 	and ($1c, X)                                                  ; $c09d : $21, $1c

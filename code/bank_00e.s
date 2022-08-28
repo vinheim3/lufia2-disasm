@@ -7736,7 +7736,7 @@ br_0e_b73a:
 	bne br_0e_b738                                                  ; $b73f : $d0, $f7
 
 	ldx #$8007.w                                                  ; $b741 : $a2, $07, $80
-	stx $09b7.w                                                  ; $b744 : $8e, $b7, $09
+	stx wCurrScriptAddr.w                                                  ; $b744 : $8e, $b7, $09
 	lda #$85.b                                                  ; $b747 : $a9, $85
 	sta wCurrScriptBank.w                                                  ; $b749 : $8d, $b9, $09
 	ldx #$0180.w                                                  ; $b74c : $a2, $80, $01
@@ -7756,7 +7756,7 @@ Call_0e_b760:
 	ldx #$0b77.w                                                  ; $b769 : $a2, $77, $0b
 	jsr Call_0e_b5fb.l                                                  ; $b76c : $22, $fb, $b5, $8e
 	ldx #$e000.w                                                  ; $b770 : $a2, $00, $e0
-	stx $09b7.w                                                  ; $b773 : $8e, $b7, $09
+	stx wCurrScriptAddr.w                                                  ; $b773 : $8e, $b7, $09
 	lda #$7e.b                                                  ; $b776 : $a9, $7e
 	sta wCurrScriptBank.w                                                  ; $b778 : $8d, $b9, $09
 	ldx #$0180.w                                                  ; $b77b : $a2, $80, $01

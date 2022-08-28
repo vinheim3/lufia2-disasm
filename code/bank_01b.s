@@ -11474,7 +11474,7 @@ br_1b_c15d:
 	sbc $05037f.l, X                                                  ; $c1c6 : $ff, $7f, $03, $05
 	ora ($00, S), Y                                                  ; $c1ca : $13, $00
 	ina                                                  ; $c1cc : $1a
-	jsr $05b8.w                                                  ; $c1cd : $20, $b8, $05
+	jsr wScriptIdxAfterRoomLoad.w                                                  ; $c1cd : $20, $b8, $05
 	ldx $ff1e.w, Y                                                  ; $c1d0 : $be, $1e, $ff
 	and ($5c)                                                  ; $c1d3 : $32, $5c
 	rol $1a1b.w                                                  ; $c1d5 : $2e, $1b, $1a

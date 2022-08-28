@@ -8524,7 +8524,7 @@ br_15_b748:
 	sec                                                  ; $b75c : $38
 	xba                                                  ; $b75d : $eb
 	ora ($e9, X)                                                  ; $b75e : $01, $e9
-	adc $09b7.w, Y                                                  ; $b760 : $79, $b7, $09
+	adc wCurrScriptAddr.w, Y                                                  ; $b760 : $79, $b7, $09
 	stx $01b7.w                                                  ; $b763 : $8e, $b7, $01
 	bvs br_15_b79d                                                  ; $b766 : $70, $35
 

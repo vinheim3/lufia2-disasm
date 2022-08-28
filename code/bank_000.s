@@ -4841,7 +4841,7 @@ Func_0_9cd9:
 	lda wCurrScriptBank.w                                                  ; $9cd9 : $ad, $b9, $09
 	pha                                                  ; $9cdc : $48
 	plb                                                  ; $9cdd : $ab
-	ldy $09b7.w                                                  ; $9cde : $ac, $b7, $09
+	ldy wCurrScriptAddr.w                                                  ; $9cde : $ac, $b7, $09
 	lda $1259.w                                                  ; $9ce1 : $ad, $59, $12
 	beq Func_0_9d00                                                  ; $9ce4 : $f0, $1a
 
@@ -4850,7 +4850,7 @@ Func_0_9cd9:
 
 	rep #ACCU_8                                                  ; $9ceb : $c2, $20
 	lda $1257.w                                                  ; $9ced : $ad, $57, $12
-	sta $09b7.w                                                  ; $9cf0 : $8d, $b7, $09
+	sta wCurrScriptAddr.w                                                  ; $9cf0 : $8d, $b7, $09
 	sep #ACCU_8                                                  ; $9cf3 : $e2, $20
 	lda $1259.w                                                  ; $9cf5 : $ad, $59, $12
 	sta wCurrScriptBank.w                                                  ; $9cf8 : $8d, $b9, $09
@@ -4860,7 +4860,7 @@ Func_0_9cd9:
 
 ; Y -
 Func_0_9d00:
-	sty $09b7.w                                                  ; $9d00 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $9d00 : $8c, $b7, $09
 	stz $0563.w                                                  ; $9d03 : $9c, $63, $05
 	tdc                                                  ; $9d06 : $7b
 	lda $099b.w                                                  ; $9d07 : $ad, $9b, $09
@@ -4918,7 +4918,7 @@ ScriptCommand00h:
 	trb $099b.w                                                  ; $9d56 : $1c, $9b, $09
 	rep #ACCU_8                                                  ; $9d59 : $c2, $20
 	lda $1252.w                                                  ; $9d5b : $ad, $52, $12
-	sta $09b7.w                                                  ; $9d5e : $8d, $b7, $09
+	sta wCurrScriptAddr.w                                                  ; $9d5e : $8d, $b7, $09
 	sep #ACCU_8                                                  ; $9d61 : $e2, $20
 	stz $1254.w                                                  ; $9d63 : $9c, $54, $12
 	brl Func_0_9cd9                                                  ; $9d66 : $82, $70, $ff
@@ -4970,7 +4970,7 @@ PlbTwiceRtl:
 
 
 	stz $1266.w                                                  ; $9db3 : $9c, $66, $12
-	sty $09b7.w                                                  ; $9db6 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $9db6 : $8c, $b7, $09
 	lda #$02.b                                                  ; $9db9 : $a9, $02
 	tsb $099b.w                                                  ; $9dbb : $0c, $9b, $09
 	lda #$01.b                                                  ; $9dbe : $a9, $01
@@ -5070,7 +5070,7 @@ Func_0_9e54:
 	lda TextDictionary.l, X                                                  ; $9e6b : $bf, $00, $ea, $8e
 	clc                                                  ; $9e6f : $18
 	adc #$ea00.w                                                  ; $9e70 : $69, $00, $ea
-	sta $09b7.w                                                  ; $9e73 : $8d, $b7, $09
+	sta wCurrScriptAddr.w                                                  ; $9e73 : $8d, $b7, $09
 	tay                                                  ; $9e76 : $a8
 	sep #ACCU_8                                                  ; $9e77 : $e2, $20
 	lda #$8e.b                                                  ; $9e79 : $a9, $8e
@@ -5116,7 +5116,7 @@ Func_0_9e54:
 	plb                                                  ; $9ebf : $ab
 
 br_00_9ec0:
-	sty $09b7.w                                                  ; $9ec0 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $9ec0 : $8c, $b7, $09
 	sep #ACCU_8                                                  ; $9ec3 : $e2, $20
 	brl Func_0_9d00                                                  ; $9ec5 : $82, $38, $fe
 
@@ -5132,7 +5132,7 @@ br_00_9ec0:
 	lda #$10.b                                                  ; $9edf : $a9, $10
 	tsb $099b.w                                                  ; $9ee1 : $0c, $9b, $09
 	ldy #$0bad.w                                                  ; $9ee4 : $a0, $ad, $0b
-	sty $09b7.w                                                  ; $9ee7 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $9ee7 : $8c, $b7, $09
 	stz wCurrScriptBank.w                                                  ; $9eea : $9c, $b9, $09
 	brl Func_0_9cd9                                                  ; $9eed : $82, $e9, $fd
 
@@ -5150,7 +5150,7 @@ br_00_9ec0:
 br_00_9efe:
 	sta $09af.w                                                  ; $9efe : $8d, $af, $09
 	stz $09b0.w                                                  ; $9f01 : $9c, $b0, $09
-	sty $09b7.w                                                  ; $9f04 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $9f04 : $8c, $b7, $09
 	jsr Call_00_bd38.w                                                  ; $9f07 : $20, $38, $bd
 	jsr Call_00_9ddb.w                                                  ; $9f0a : $20, $db, $9d
 	brl PlbTwiceRtl                                                  ; $9f0d : $82, $a0, $fe
@@ -5247,7 +5247,7 @@ br_00_9f83:
 	rep #ACCU_8                                                  ; $9fb4 : $c2, $20
 	pla                                                  ; $9fb6 : $68
 	jsr YScriptAddrEquA.w                                                  ; $9fb7 : $20, $02, $c1
-	sty $09b7.w                                                  ; $9fba : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $9fba : $8c, $b7, $09
 	sep #ACCU_8                                                  ; $9fbd : $e2, $20
 	lda #$01.b                                                  ; $9fbf : $a9, $01
 	trb $099b.w                                                  ; $9fc1 : $1c, $9b, $09
@@ -5337,7 +5337,7 @@ br_00_a062:
 	clc                                                  ; $a065 : $18
 	adc $58                                                  ; $a066 : $65, $58
 	jsr YScriptAddrEquA.w                                                  ; $a068 : $20, $02, $c1
-	brl ScriptCommand1ch_ExecScript                                                  ; $a06b : $82, $58, $03
+	brl ScriptCommand1ch_Jump                                                  ; $a06b : $82, $58, $03
 
 
 ScriptCommand13h:
@@ -5374,13 +5374,13 @@ TryNextScriptCondition:
 	cmp #$20.b                                                  ; $a096 : $c9, $20
 	bne @br_a09d                                                  ; $a098 : $d0, $03
 
-	brl ExecScriptIfConditionNonZero                                                  ; $a09a : $82, $cc, $01
+	brl JumpIfConditionNonZero                                                  ; $a09a : $82, $cc, $01
 
 @br_a09d:
 	cmp #$30.b                                                  ; $a09d : $c9, $30
 	bne @br_a0a4                                                  ; $a09f : $d0, $03
 
-	brl ExecScriptIfConditionZero                                                  ; $a0a1 : $82, $d3, $01
+	brl JumpIfConditionZero                                                  ; $a0a1 : $82, $d3, $01
 
 @br_a0a4:
 	lda $22                                                  ; $a0a4 : $a5, $22
@@ -5689,44 +5689,46 @@ br_00_a264:
 	brl TryNextScriptCondition                                                  ; $a266 : $82, $0e, $fe
 
 
-ExecScriptIfConditionNonZero:
+JumpIfConditionNonZero:
 	lda wFinalScriptCondition.w                                               ; $a269 : $ad, $67, $12
-	bne _ExecScriptIfConditionSatisifed                                       ; $a26c : $d0, $17
+	bne _JumpIfConditionSatisifed                                       ; $a26c : $d0, $17
 
 	jsr AequNextScriptByte.w                                                  ; $a26e : $20, $b7, $c0
 	jsr AequNextScriptByte.w                                                  ; $a271 : $20, $b7, $c0
 	brl TryNextScriptCondition                                                ; $a274 : $82, $00, $fe
 
 
-ExecScriptIfConditionZero:
+JumpIfConditionZero:
 	lda wFinalScriptCondition.w                                               ; $a277 : $ad, $67, $12
-	beq _ExecScriptIfConditionSatisifed                                       ; $a27a : $f0, $09
+	beq _JumpIfConditionSatisifed                                       ; $a27a : $f0, $09
 
 	jsr AequNextScriptByte.w                                                  ; $a27c : $20, $b7, $c0
 	jsr AequNextScriptByte.w                                                  ; $a27f : $20, $b7, $c0
 	brl TryNextScriptCondition                                                ; $a282 : $82, $f2, $fd
 
-_ExecScriptIfConditionSatisifed:
-	brl ScriptCommand1ch_ExecScript                                           ; $a285 : $82, $3e, $01
+_JumpIfConditionSatisifed:
+	brl ScriptCommand1ch_Jump                                           ; $a285 : $82, $3e, $01
 
 
-;
+ScriptCommand15h_JumpIfGlobalFlagNotSet:
 	jsr AequNextScriptByte.w                                                  ; $a288 : $20, $b7, $c0
 	jsr CheckIfGlobalFlagSet.w                                                  ; $a28b : $20, $1e, $be
-	beq br_00_a293                                                  ; $a28e : $f0, $03
+	beq @skipWord                                                  ; $a28e : $f0, $03
 
-	brl ScriptCommand1ch_ExecScript                                                  ; $a290 : $82, $33, $01
+	brl ScriptCommand1ch_Jump                                                  ; $a290 : $82, $33, $01
 
-br_00_a293:
+@skipWord:
 	jsr AequNextScriptByte.w                                                  ; $a293 : $20, $b7, $c0
 	jsr AequNextScriptByte.w                                                  ; $a296 : $20, $b7, $c0
 	brl Func_0_9d00                                                  ; $a299 : $82, $64, $fa
 
+
+;
 	jsr AequNextScriptByte.w                                                  ; $a29c : $20, $b7, $c0
 	jsr CheckIfGlobalFlagSet.w                                                  ; $a29f : $20, $1e, $be
 	bne br_00_a2a7                                                  ; $a2a2 : $d0, $03
 
-	brl ScriptCommand1ch_ExecScript                                                  ; $a2a4 : $82, $1f, $01
+	brl ScriptCommand1ch_Jump                                                  ; $a2a4 : $82, $1f, $01
 
 br_00_a2a7:
 	jsr AequNextScriptByte.w                                                  ; $a2a7 : $20, $b7, $c0
@@ -5741,7 +5743,7 @@ br_00_a2a7:
 	sta $05ae.w                                                  ; $a2bd : $8d, $ae, $05
 	stz $05b2.w                                                  ; $a2c0 : $9c, $b2, $05
 	jsr AequNextScriptByte.w                                                  ; $a2c3 : $20, $b7, $c0
-	sta $05b8.w                                                  ; $a2c6 : $8d, $b8, $05
+	sta wScriptIdxAfterRoomLoad.w                                                  ; $a2c6 : $8d, $b8, $05
 	jsr AequNextScriptByte.w                                                  ; $a2c9 : $20, $b7, $c0
 	sta $05b0.w                                                  ; $a2cc : $8d, $b0, $05
 	lda #$01.b                                                  ; $a2cf : $a9, $01
@@ -5794,7 +5796,7 @@ br_00_a30a:
 
 ScriptCommand18h_OpenShop:
 	jsr AequNextScriptByte.w                                                  ; $a32b : $20, $b7, $c0
-	sty $09b7.w                                                  ; $a32e : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $a32e : $8c, $b7, $09
 	sta $30                                                  ; $a331 : $85, $30
 	stz $099b.w                                                  ; $a333 : $9c, $9b, $09
 	jsr Call_03_afea.l                                                  ; $a336 : $22, $ea, $af, $83
@@ -5827,7 +5829,7 @@ Call_00_a368:
 	rts                                                  ; $a371 : $60
 
 
-	sty $09b7.w                                                  ; $a372 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $a372 : $8c, $b7, $09
 	lda #$02.b                                                  ; $a375 : $a9, $02
 	sta $30                                                  ; $a377 : $85, $30
 	stz $31                                                  ; $a379 : $64, $31
@@ -5845,9 +5847,9 @@ Call_00_a368:
 	phy                                                  ; $a395 : $5a
 	jsr ExtractOffsetAndBitfieldFromA.w                                                  ; $a396 : $20, $30, $be
 	ldx $56                                                  ; $a399 : $a6, $56
-	lda wtodo_SomeFlagsBitfield.w, X                                                  ; $a39b : $bd, $7e, $07
+	lda wGlobalFlagsBitfield.w, X                                                  ; $a39b : $bd, $7e, $07
 	ora $57                                                  ; $a39e : $05, $57
-	sta wtodo_SomeFlagsBitfield.w, X                                                  ; $a3a0 : $9d, $7e, $07
+	sta wGlobalFlagsBitfield.w, X                                                  ; $a3a0 : $9d, $7e, $07
 	rep #IDX_8                                                  ; $a3a3 : $c2, $10
 	ply                                                  ; $a3a5 : $7a
 	jsr AequNextScriptByte.w                                                  ; $a3a6 : $20, $b7, $c0
@@ -5858,15 +5860,15 @@ Call_00_a368:
 	jsr ExtractOffsetAndBitfieldFromA.w                                                  ; $a3b0 : $20, $30, $be
 	ldx $56                                                  ; $a3b3 : $a6, $56
 	eor #$ff.b                                                  ; $a3b5 : $49, $ff
-	and wtodo_SomeFlagsBitfield.w, X                                                  ; $a3b7 : $3d, $7e, $07
-	sta wtodo_SomeFlagsBitfield.w, X                                                  ; $a3ba : $9d, $7e, $07
+	and wGlobalFlagsBitfield.w, X                                                  ; $a3b7 : $3d, $7e, $07
+	sta wGlobalFlagsBitfield.w, X                                                  ; $a3ba : $9d, $7e, $07
 	rep #IDX_8                                                  ; $a3bd : $c2, $10
 	ply                                                  ; $a3bf : $7a
 	jsr AequNextScriptByte.w                                                  ; $a3c0 : $20, $b7, $c0
 	brl Func_0_9d00                                                  ; $a3c3 : $82, $3a, $f9
 
 
-ScriptCommand1ch_ExecScript:
+ScriptCommand1ch_Jump:
 	jsr AequNextScriptWord.w                                                  ; $a3c6 : $20, $d0, $c0
 	rep #ACCU_8                                                  ; $a3c9 : $c2, $20
 	pha                                                  ; $a3cb : $48
@@ -8539,7 +8541,7 @@ br_00_b6b0:
 	jsr Call_00_cc26.l                                                  ; $b710 : $22, $26, $cc, $80
 	plb                                                  ; $b714 : $ab
 	ply                                                  ; $b715 : $7a
-	sty $09b7.w                                                  ; $b716 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $b716 : $8c, $b7, $09
 	brl PlbTwiceRtl                                                  ; $b719 : $82, $94, $e6
 
 br_00_b71c:
@@ -9335,7 +9337,7 @@ br_00_bcff:
 	jsr AequNextScriptByte.w                                                  ; $bcff : $20, $b7, $c0
 
 br_00_bd02:
-	sty $09b7.w                                                  ; $bd02 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $bd02 : $8c, $b7, $09
 	jsr Call_00_bd38.w                                                  ; $bd05 : $20, $38, $bd
 	lda $09a7.w                                                  ; $bd08 : $ad, $a7, $09
 	bit #$02.b                                                  ; $bd0b : $89, $02
@@ -9472,7 +9474,7 @@ CheckIfGlobalFlagSet:
 	php                                                  ; $be1f : $08
 	jsr ExtractOffsetAndBitfieldFromA.w                                                  ; $be20 : $20, $30, $be
 	ldx $56                                                  ; $be23 : $a6, $56
-	lda wtodo_SomeFlagsBitfield.l, X                                                  ; $be25 : $bf, $7e, $07, $00
+	lda wGlobalFlagsBitfield.l, X                                                  ; $be25 : $bf, $7e, $07, $00
 	and $57                                                  ; $be29 : $25, $57
 	plp                                                  ; $be2b : $28
 	ply                                                  ; $be2c : $7a
@@ -9555,6 +9557,7 @@ Bitfield:
 	rtl                                                  ; $be88 : $6b
 
 
+; A - script ID to check
 GetScriptForRoomLoad:
 	phk                                                  ; $be89 : $4b
 	plb                                                  ; $be8a : $ab
@@ -9563,7 +9566,7 @@ GetScriptForRoomLoad:
 	cpy #$ffff.w                                                  ; $be92 : $c0, $ff, $ff
 	beq @done                                                  ; $be95 : $f0, $17
 
-	sty $09b7.w                                                  ; $be97 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $be97 : $8c, $b7, $09
 	sep #ACCU_8                                                  ; $be9a : $e2, $20
 	jsr Call_00_a368.w                                                  ; $be9c : $20, $68, $a3
 	lda #$40.b                                                  ; $be9f : $a9, $40
@@ -9586,16 +9589,16 @@ GetScriptForRoomLoad:
 	lda $878013.l, X                                                  ; $beb9 : $bf, $13, $80, $87
 	clc                                                  ; $bebd : $18
 	adc #$8000.w                                                  ; $bebe : $69, $00, $80
-	sta $09b7.w                                                  ; $bec1 : $8d, $b7, $09
+	sta wCurrScriptAddr.w                                                  ; $bec1 : $8d, $b7, $09
 	sep #ACCU_8                                                  ; $bec4 : $e2, $20
 	lda $878015.l, X                                                  ; $bec6 : $bf, $15, $80, $87
 	clc                                                  ; $beca : $18
 	adc #$87.b                                                  ; $becb : $69, $87
 	sta wCurrScriptBank.w                                                  ; $becd : $8d, $b9, $09
 	rep #ACCU_8                                                  ; $bed0 : $c2, $20
-	lda $09b7.w                                                  ; $bed2 : $ad, $b7, $09
+	lda wCurrScriptAddr.w                                                  ; $bed2 : $ad, $b7, $09
 	jsr YScriptAddrEquA.w                                                  ; $bed5 : $20, $02, $c1
-	sty $09b7.w                                                  ; $bed8 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $bed8 : $8c, $b7, $09
 	lda wRoomScriptAddr.w                                                  ; $bedb : $ad, $9e, $09
 	pha                                                  ; $bede : $48
 	lda #$8000.w                                                  ; $bedf : $a9, $00, $80
@@ -9812,7 +9815,7 @@ GetScriptForSpokenNPC:
 	lda $54                                                  ; $bfec : $a5, $54
 	ldx #$0006.w                                                  ; $bfee : $a2, $06, $00
 	jsr GetRoomScriptX.l                                                  ; $bff1 : $22, $2e, $c1, $80
-	sty $09b7.w                                                  ; $bff5 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $bff5 : $8c, $b7, $09
 	plp                                                  ; $bff8 : $28
 	rtl                                                  ; $bff9 : $6b
 
@@ -10066,7 +10069,7 @@ GetRoomScriptX:
 	jsr YScriptAddrEquA.w                                                  ; $c140 : $20, $02, $c1
 
 ;
-	lda $0009b8.l                                                  ; $c143 : $af, $b8, $09, $00
+	lda wCurrScriptAddr.l+1                                                  ; $c143 : $af, $b8, $09, $00
 	pha                                                  ; $c147 : $48
 	sep #ACCU_8                                                  ; $c148 : $e2, $20
 	jsr AequNextScriptWord.w                                                  ; $c14a : $20, $d0, $c0
@@ -10075,7 +10078,7 @@ GetRoomScriptX:
 	adc wRoomScriptAddr.w                                                  ; $c150 : $6d, $9e, $09
 	tay                                                  ; $c153 : $a8
 	pla                                                  ; $c154 : $68
-	sta $0009b8.l                                                  ; $c155 : $8f, $b8, $09, $00
+	sta wCurrScriptAddr.l+1                                                  ; $c155 : $8f, $b8, $09, $00
 	tya                                                  ; $c159 : $98
 	jsr YScriptAddrEquA.w                                                  ; $c15a : $20, $02, $c1
 	sep #ACCU_8                                                  ; $c15d : $e2, $20
@@ -10859,7 +10862,7 @@ br_00_c62b:
 
 
 todo_GetsTextLen:
-	sty $09b7.w                                                  ; $c652 : $8c, $b7, $09
+	sty wCurrScriptAddr.w                                                  ; $c652 : $8c, $b7, $09
 	lda wCurrScriptBank.w                                                  ; $c655 : $ad, $b9, $09
 	sta $57                                                  ; $c658 : $85, $57
 	stz $54                                                  ; $c65a : $64, $54
@@ -11024,7 +11027,7 @@ todo_GetsTextLen:
 	sta wCurrScriptBank.w                                                  ; $c73b : $8d, $b9, $09
 	pha                                                  ; $c73e : $48
 	plb                                                  ; $c73f : $ab
-	ldy $09b7.w                                                  ; $c740 : $ac, $b7, $09
+	ldy wCurrScriptAddr.w                                                  ; $c740 : $ac, $b7, $09
 	rts                                                  ; $c743 : $60
 
 
@@ -11182,6 +11185,7 @@ br_00_c824:
 	rts                                                  ; $c824 : $60
 
 
+Func_0_c825:
 	php                                                  ; $c825 : $08
 	rep #ACCU_8|IDX_8                                                  ; $c826 : $c2, $30
 	lda $05b6.w                                                  ; $c828 : $ad, $b6, $05
@@ -11227,7 +11231,7 @@ br_00_c860:
 
 br_00_c86d:
 	ldx #$ff00.w                                                  ; $c86d : $a2, $00, $ff
-	stx $09b7.w                                                  ; $c870 : $8e, $b7, $09
+	stx wCurrScriptAddr.w                                                  ; $c870 : $8e, $b7, $09
 	lda #$7e.b                                                  ; $c873 : $a9, $7e
 	sta wCurrScriptBank.w                                                  ; $c875 : $8d, $b9, $09
 	bra br_00_c8c9                                                  ; $c878 : $80, $4f
@@ -11287,7 +11291,7 @@ br_00_c8d3:
 
 Call_00_c8d5:
 	jsr $848328.l                                                  ; $c8d5 : $22, $28, $83, $84
-	ldy $09b7.w                                                  ; $c8d9 : $ac, $b7, $09
+	ldy wCurrScriptAddr.w                                                  ; $c8d9 : $ac, $b7, $09
 	lda wCurrScriptBank.w                                                  ; $c8dc : $ad, $b9, $09
 	pha                                                  ; $c8df : $48
 	plb                                                  ; $c8e0 : $ab
@@ -11317,7 +11321,7 @@ Call_00_c8d5:
 	sta $7fd087.l                                                  ; $c90c : $8f, $87, $d0, $7f
 	jsr Call_00_c5dd.w                                                  ; $c910 : $20, $dd, $c5
 	jsr Call_00_c784.l                                                  ; $c913 : $22, $84, $c7, $80
-	ldy $09b7.w                                                  ; $c917 : $ac, $b7, $09
+	ldy wCurrScriptAddr.w                                                  ; $c917 : $ac, $b7, $09
 	lda wCurrScriptBank.w                                                  ; $c91a : $ad, $b9, $09
 	pha                                                  ; $c91d : $48
 	plb                                                  ; $c91e : $ab
@@ -11488,14 +11492,14 @@ ScriptCommands:
 	.dw $a041
 	.dw ScriptCommand13h
 	.dw ScriptCommand14h_CheckLogic
-	.dw $a288
+	.dw ScriptCommand15h_JumpIfGlobalFlagNotSet
 	.dw $a2ba
 	.dw $a2e1
 	.dw ScriptCommand18h_OpenShop
 	.dw $a372
 	.dw $a392
 	.dw $a3ac
-	.dw $a3c6
+	.dw ScriptCommand1ch_Jump
 	.dw $a3df
 	.dw $a3ed
 	.dw $a3ff
@@ -13200,7 +13204,7 @@ PuzzleScriptCmdBBh:
 	phb                                                  ; $d6bc : $8b
 	phy                                                  ; $d6bd : $5a
 	ldx #$0004.w                                                  ; $d6be : $a2, $04, $00
-	jsr Call_03_b727.l                                                  ; $d6c1 : $22, $27, $b7, $83
+	jsr StartNPCScriptDueToEntityAtLoc.l                                                  ; $d6c1 : $22, $27, $b7, $83
 	ply                                                  ; $d6c5 : $7a
 	plb                                                  ; $d6c6 : $ab
 	brl ExecPuzzleScriptCmd                                                  ; $d6c7 : $82, $6b, $f5

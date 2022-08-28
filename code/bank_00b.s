@@ -11621,7 +11621,7 @@ Call_0b_dd06:
 	jmp $4d40.w                                                  ; $de1d : $4c, $40, $4d
 
 
-	jsr $05b8.w                                                  ; $de20 : $20, $b8, $05
+	jsr wScriptIdxAfterRoomLoad.w                                                  ; $de20 : $20, $b8, $05
 	sbc $8b2535.l, X                                                  ; $de23 : $ff, $35, $25, $8b
 	asl                                                  ; $de27 : $0a
 	ina                                                  ; $de28 : $1a

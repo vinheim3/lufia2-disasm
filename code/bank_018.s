@@ -134,7 +134,7 @@ br_18_80a7:
 	inc $fd1f.w, X                                                  ; $80cf : $fe, $1f, $fd
 	ora $50                                                  ; $80d2 : $05, $50
 	lda ($2f), Y                                                  ; $80d4 : $b1, $2f
-	dec $05b8.w                                                  ; $80d6 : $ce, $b8, $05
+	dec wScriptIdxAfterRoomLoad.w                                                  ; $80d6 : $ce, $b8, $05
 	.db $62                                                  ; $80d9 : $62
 
 	nop                                                  ; $80da : $ea
