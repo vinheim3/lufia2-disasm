@@ -6184,7 +6184,7 @@ br_4f_f3e8:
 	inc $a3                                                  ; $f406 : $e6, $a3
 	eor ($02), Y                                                  ; $f408 : $51, $02
 	.db $00                                                  ; $f40a : $00
-	cpx $11a3.w                                                  ; $f40b : $ec, $a3, $11
+	cpx wCurrCapMon.w                                                  ; $f40b : $ec, $a3, $11
 	cop $00.b                                                  ; $f40e : $02, $00
 	sbc ($a3)                                                  ; $f410 : $f2, $a3
 	and ($01), Y                                                  ; $f412 : $31, $01

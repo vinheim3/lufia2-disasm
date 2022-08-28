@@ -10016,7 +10016,7 @@ br_1f_b0f8:
 	and [$ca]                                                  ; $b143 : $27, $ca
 	lsr                                                  ; $b145 : $4a
 	sta $9914.w                                                  ; $b146 : $8d, $14, $99
-	jsr wPartCharTypeIdxes.w                                                  ; $b149 : $20, $7b, $0a
+	jsr wPartyCharTypeIdxes.w                                                  ; $b149 : $20, $7b, $0a
 	rol $04                                                  ; $b14c : $26, $04
 	trb $0200.w                                                  ; $b14e : $1c, $00, $02
 	cop $1c.b                                                  ; $b151 : $02, $1c

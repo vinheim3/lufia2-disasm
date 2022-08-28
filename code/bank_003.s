@@ -6371,7 +6371,7 @@ Call_03_a82e:
 	cmp wCurrRoomIdx.w                                                  ; $a8f7 : $cd, $ac, $05
 	bne @cont_a96b                                                  ; $a8fa : $d0, $6f
 
-	lda $089e.w, X                                                  ; $a8fc : $bd, $9e, $08
+	lda wMovableNPCsEntityIds.w, X                                                  ; $a8fc : $bd, $9e, $08
 	bra +                                                  ; $a8ff : $80, $03
 
 @br_a901:
@@ -7184,7 +7184,7 @@ Call_03_addf:
 	lda $8002.w, X                                                  ; $adfc : $bd, $02, $80
 	sta wMovableNPCsRoomIds.w, Y                                                  ; $adff : $99, $5e, $08
 	lda $8003.w, X                                                  ; $ae02 : $bd, $03, $80
-	sta $089e.w, Y                                                  ; $ae05 : $99, $9e, $08
+	sta wMovableNPCsEntityIds.w, Y                                                  ; $ae05 : $99, $9e, $08
 
 @cont_ae08:
 	inx                                                  ; $ae08 : $e8
@@ -7929,7 +7929,7 @@ br_03_b347:
 	sta wMovableNPCsIds.w, X                                                  ; $b36f : $9d, $1e, $08
 	sta wCharacterIds.w, Y                                                  ; $b372 : $99, $fa, $05
 	phx                                                  ; $b375 : $da
-	lda $089e.w, X                                                  ; $b376 : $bd, $9e, $08
+	lda wMovableNPCsEntityIds.w, X                                                  ; $b376 : $bd, $9e, $08
 	cmp #$ff.b                                                  ; $b379 : $c9, $ff
 	bne @br_b394                                                  ; $b37b : $d0, $17
 
@@ -10715,7 +10715,7 @@ Call_03_c652:
 br_03_c65c:
 	phy                                                  ; $c65c : $5a
 	tdc                                                  ; $c65d : $7b
-	lda wPartCharTypeIdxes.w, Y                                                  ; $c65e : $b9, $7b, $0a
+	lda wPartyCharTypeIdxes.w, Y                                                  ; $c65e : $b9, $7b, $0a
 	cmp #$ff.b                                                  ; $c661 : $c9, $ff
 	beq br_03_c684                                                  ; $c663 : $f0, $1f
 
@@ -17352,7 +17352,7 @@ br_03_f338:
 	bra br_03_f338                                                  ; $f395 : $80, $a1
 
 	cop $00.b                                                  ; $f397 : $02, $00
-	ldy $11a3.w, X                                                  ; $f399 : $bc, $a3, $11
+	ldy wCurrCapMon.w, X                                                  ; $f399 : $bc, $a3, $11
 	jsr Call_03_a6e0.w                                                  ; $f39c : $20, $e0, $a6
 	ora ($00, X)                                                  ; $f39f : $01, $00
 	sed                                                  ; $f3a1 : $f8

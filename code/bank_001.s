@@ -56,7 +56,7 @@ Call_01_8000:
 	sta $153c.w                                                  ; $8074 : $8d, $3c, $15
 	ldx #$0003.w                                                  ; $8077 : $a2, $03, $00
 
--	lda wPartCharTypeIdxes.w, X                                                  ; $807a : $bd, $7b, $0a
+-	lda wPartyCharTypeIdxes.w, X                                                  ; $807a : $bd, $7b, $0a
 	sta $153d.w, X                                                  ; $807d : $9d, $3d, $15
 	dex                                                  ; $8080 : $ca
 	bpl -                                                  ; $8081 : $10, $f7
@@ -597,7 +597,7 @@ AddAnEnemySetup:
 	ldx #$00.b                                                  ; $842f : $a2, $00
 
 @loop_8431:
-	lda wPartCharTypeIdxes.w, Y                                                  ; $8431 : $b9, $7b, $0a
+	lda wPartyCharTypeIdxes.w, Y                                                  ; $8431 : $b9, $7b, $0a
 	bmi +                                                  ; $8434 : $30, $01
 	inx                                                  ; $8436 : $e8
 +	dey                                                  ; $8437 : $88
@@ -12564,7 +12564,7 @@ br_01_d5d3:
 	sta $5f                                                  ; $d5dc : $85, $5f
 	lda #$20.b                                                  ; $d5de : $a9, $20
 	sta $0564.w                                                  ; $d5e0 : $8d, $64, $05
-	jsr $808878.l                                                  ; $d5e3 : $22, $78, $88, $80
+	jsr Func_0_8878.l                                                  ; $d5e3 : $22, $78, $88, $80
 	lda $4abe.w                                                  ; $d5e7 : $ad, $be, $4a
 	cmp #$98.b                                                  ; $d5ea : $c9, $98
 	bcc br_01_d5f0                                                  ; $d5ec : $90, $02
@@ -13364,7 +13364,7 @@ Jump_01_dac6:
 	ldx #$0000.w                                                  ; $dacd : $a2, $00, $00
 
 br_01_dad0:
-	cmp wPartCharTypeIdxes.w, X                                                  ; $dad0 : $dd, $7b, $0a
+	cmp wPartyCharTypeIdxes.w, X                                                  ; $dad0 : $dd, $7b, $0a
 	beq br_01_dad8                                                  ; $dad3 : $f0, $03
 
 	inx                                                  ; $dad5 : $e8
@@ -13814,7 +13814,7 @@ Call_01_dde7:
 	sta $5f                                                  ; $de00 : $85, $5f
 	ldx $15fb.w                                                  ; $de02 : $ae, $fb, $15
 	ldy $5d                                                  ; $de05 : $a4, $5d
-	jsr $808878.l                                                  ; $de07 : $22, $78, $88, $80
+	jsr Func_0_8878.l                                                  ; $de07 : $22, $78, $88, $80
 	jsr Call_01_de55.w                                                  ; $de0b : $20, $55, $de
 	bra br_01_de23                                                  ; $de0e : $80, $13
 
@@ -13825,7 +13825,7 @@ br_01_de10:
 	sta $5f                                                  ; $de18 : $85, $5f
 	ldx $15fb.w                                                  ; $de1a : $ae, $fb, $15
 	ldy $5d                                                  ; $de1d : $a4, $5d
-	jsr $808878.l                                                  ; $de1f : $22, $78, $88, $80
+	jsr Func_0_8878.l                                                  ; $de1f : $22, $78, $88, $80
 
 br_01_de23:
 	lda #$20.b                                                  ; $de23 : $a9, $20
@@ -16113,7 +16113,7 @@ br_01_ec90:
 	rep #ACCU_8                                                  ; $eca2 : $c2, $20
 
 br_01_eca4:
-	lda wPartCharTypeIdxes.w, Y                                                  ; $eca4 : $b9, $7b, $0a
+	lda wPartyCharTypeIdxes.w, Y                                                  ; $eca4 : $b9, $7b, $0a
 	and #$00ff.w                                                  ; $eca7 : $29, $ff, $00
 	cmp #$00ff.w                                                  ; $ecaa : $c9, $ff, $00
 	beq br_01_ecb9                                                  ; $ecad : $f0, $0a
@@ -17726,10 +17726,10 @@ AddANewPartyCharA:
 	ldx #$00.b                                                  ; $f725 : $a2, $00
 
 @nextSlot:
-	ldy wPartCharTypeIdxes.w, X                                                  ; $f727 : $bc, $7b, $0a
+	ldy wPartyCharTypeIdxes.w, X                                                  ; $f727 : $bc, $7b, $0a
 	bmi @fillSlot                                                  ; $f72a : $30, $16
 
-	cmp wPartCharTypeIdxes.w, X                                                  ; $f72c : $dd, $7b, $0a
+	cmp wPartyCharTypeIdxes.w, X                                                  ; $f72c : $dd, $7b, $0a
 	beq @alreadyIn                                                  ; $f72f : $f0, $0b
 
 	inx                                                  ; $f731 : $e8
@@ -17748,7 +17748,7 @@ AddANewPartyCharA:
 	rtl                                                  ; $f741 : $6b
 
 @fillSlot:
-	sta wPartCharTypeIdxes.w, X                                                  ; $f742 : $9d, $7b, $0a
+	sta wPartyCharTypeIdxes.w, X                                                  ; $f742 : $9d, $7b, $0a
 	inc wNumPartyChars.w                                                  ; $f745 : $ee, $7a, $0a
 	rep #IDX_8                                                  ; $f748 : $c2, $10
 	jsr Call_01_f78d.w                                                  ; $f74a : $20, $8d, $f7
@@ -17761,7 +17761,7 @@ AddANewPartyCharA:
 	ldx #$00.b                                                  ; $f751 : $a2, $00
 
 br_01_f753:
-	cmp wPartCharTypeIdxes.w, X                                                  ; $f753 : $dd, $7b, $0a
+	cmp wPartyCharTypeIdxes.w, X                                                  ; $f753 : $dd, $7b, $0a
 	beq br_01_f763                                                  ; $f756 : $f0, $0b
 
 	inx                                                  ; $f758 : $e8
@@ -17786,7 +17786,7 @@ br_01_f763:
 
 
 br_01_f76f:
-	lda wPartCharTypeIdxes.w, X                                                  ; $f76f : $bd, $7b, $0a
+	lda wPartyCharTypeIdxes.w, X                                                  ; $f76f : $bd, $7b, $0a
 	sta wNumPartyChars.w, X                                                  ; $f772 : $9d, $7a, $0a
 
 br_01_f775:
@@ -17812,7 +17812,7 @@ Call_01_f78d:
 	ldy #$0000.w                                                  ; $f78f : $a0, $00, $00
 
 @nextSlot:
-	lda wPartCharTypeIdxes.w, Y                                                  ; $f792 : $b9, $7b, $0a
+	lda wPartyCharTypeIdxes.w, Y                                                  ; $f792 : $b9, $7b, $0a
 	bit #$0080.w                                                  ; $f795 : $89, $80, $00
 	bne @br_f7a8                                                  ; $f798 : $d0, $0e
 

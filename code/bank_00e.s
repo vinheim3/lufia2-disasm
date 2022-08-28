@@ -14473,7 +14473,11 @@ br_0e_e421:
 	ora $1b501f.l, X                                                  ; $e44f : $1f, $1f, $50, $1b
 	tcs                                                  ; $e453 : $1b
 	sei                                                  ; $e454 : $78
-	ora $30001f.l, X                                                  ; $e455 : $1f, $1f, $00, $30
+	.db $1f, $1f, $00
+
+
+Data_e_e458:
+	.db $30
 	tya                                                  ; $e459 : $98
 	jsr $2898.w                                                  ; $e45a : $20, $98, $28
 	phb                                                  ; $e45d : $8b
@@ -14485,7 +14489,11 @@ br_0e_e421:
 	tya                                                  ; $e461 : $98
 	sec                                                  ; $e462 : $38
 	lda $28                                                  ; $e463 : $a5, $28
-	lda $f3                                                  ; $e465 : $a5, $f3
+	.db $a5
+
+
+Data_e_e466:
+	.db $f3
 	ora ($57, X)                                                  ; $e467 : $01, $57
 	cop $bb.b                                                  ; $e469 : $02, $bb
 	cop $e7.b                                                  ; $e46b : $02, $e7
@@ -14497,10 +14505,17 @@ br_0e_e421:
 	cmp $4e1f2e.l, X                                                  ; $e47a : $df, $2e, $1f, $4e
 	lda [$61]                                                  ; $e47e : $a7, $61
 	eor [$71]                                                  ; $e480 : $47, $71
-	sbc $ffff7c.l, X                                                  ; $e482 : $ff, $7c, $ff, $ff
+	.db $ff, $7c, $ff
+
+
+Data_e_e485:
+	.db $ff
 	.db $00                                                  ; $e486 : $00
 	tsb $08                                                  ; $e487 : $04, $08
 	.db $00                                                  ; $e489 : $00
+
+
+CapsuleMonstersBaseFeedVals:
 	ora ($02, X)                                                  ; $e48a : $01, $02
 	tsb $08                                                  ; $e48c : $04, $08
 	.db $00                                                  ; $e48e : $00
@@ -14514,21 +14529,28 @@ Call_0e_e491:
 	.db $00                                                  ; $e497 : $00
 	.db $00                                                  ; $e498 : $00
 	.db $00                                                  ; $e499 : $00
+
+
+Data_e_e49a:
 	rol $3200.w                                                  ; $e49a : $2e, $00, $32
 	.db $00                                                  ; $e49d : $00
 	and ($00, S), Y                                                  ; $e49e : $33, $00
 	bit $00, X                                                  ; $e4a0 : $34, $00
 	and $003000.l                                                  ; $e4a2 : $2f, $00, $30, $00
 	and ($00), Y                                                  ; $e4a6 : $31, $00
-	rol $2f00.w                                                  ; $e4a8 : $2e, $00, $2f
-	.db $00                                                  ; $e4ab : $00
-	bmi br_0e_e4ae                                                  ; $e4ac : $30, $00
 
-br_0e_e4ae:
-	and ($00), Y                                                  ; $e4ae : $31, $00
-	and ($00)                                                  ; $e4b0 : $32, $00
-	and ($00, S), Y                                                  ; $e4b2 : $33, $00
-	bit $00, X                                                  ; $e4b4 : $34, $00
+
+CapsuleMonstersFavouriteFruit:
+	.dw ITEM_SECRET_FRUIT
+	.dw ITEM_HOLY_FRUIT
+	.dw ITEM_BREEZE_FRUIT
+	.dw ITEM_CHARM_FRUIT
+	.dw ITEM_DARK_FRUIT
+	.dw ITEM_EARTH_FRUIT
+	.dw ITEM_FLAME_FRUIT
+
+
+Data_e_e4b6:
 	tsb $00                                                  ; $e4b6 : $04, $00
 	cop $00.b                                                  ; $e4b8 : $02, $00
 	tsb $00                                                  ; $e4ba : $04, $00
@@ -14536,11 +14558,18 @@ br_0e_e4ae:
 	cop $00.b                                                  ; $e4be : $02, $00
 	tsb $00                                                  ; $e4c0 : $04, $00
 	ora $00, S                                                  ; $e4c2 : $03, $00
+
+
+Data_e_e4c4:
 	php                                                  ; $e4c4 : $08
 	ora $1a, X                                                  ; $e4c5 : $15, $1a
 	rol                                                  ; $e4c7 : $2a
 	bit $20                                                  ; $e4c8 : $24, $20
-	ora $3140be.l                                                  ; $e4ca : $0f, $be, $40, $31
+	.db $0f
+
+
+Data_e_e4cb:
+	.db $be, $40, $31
 	ora $050d11.l, X                                                  ; $e4ce : $1f, $11, $0d, $05
 	cop $02.b                                                  ; $e4d2 : $02, $02
 	ora ($01, X)                                                  ; $e4d4 : $01, $01
@@ -14613,7 +14642,11 @@ Call_0e_e505:
 	sty $44, X                                                  ; $e531 : $94, $44
 	sta $06, X                                                  ; $e533 : $95, $06
 	stx $c8, Y                                                  ; $e535 : $96, $c8
-	stx $8a, Y                                                  ; $e537 : $96, $8a
+	.db $96
+
+
+Data_e_e538:
+	.db $8a
 	sta [$4c], Y                                                  ; $e539 : $97, $4c
 	tya                                                  ; $e53b : $98
 	asl $d099.w                                                  ; $e53c : $0e, $99, $d0
@@ -14623,7 +14656,11 @@ Call_0e_e505:
 	phx                                                  ; $e548 : $da
 	stz $9cdc.w                                                  ; $e549 : $9c, $dc, $9c
 	dec $e09c.w, X                                                  ; $e54c : $de, $9c, $e0
-	stz $9ce2.w                                                  ; $e54f : $9c, $e2, $9c
+	.db $9c
+
+
+Data_e_e550:
+	.db $e2, $9c
 	cpx $9c                                                  ; $e552 : $e4, $9c
 	inc $9c                                                  ; $e554 : $e6, $9c
 	inx                                                  ; $e556 : $e8

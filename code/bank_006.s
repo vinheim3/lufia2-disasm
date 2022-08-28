@@ -2270,10 +2270,10 @@ br_06_8f78:
 	lda #$00.b                                                  ; $8f7a : $a9, $00
 	xba                                                  ; $8f7c : $eb
 	ldx $04                                                  ; $8f7d : $a6, $04
-	lda wPartCharTypeIdxes.w, X                                                  ; $8f7f : $bd, $7b, $0a
+	lda wPartyCharTypeIdxes.w, X                                                  ; $8f7f : $bd, $7b, $0a
 	asl                                                  ; $8f82 : $0a
 	clc                                                  ; $8f83 : $18
-	adc wPartCharTypeIdxes.w, X                                                  ; $8f84 : $7d, $7b, $0a
+	adc wPartyCharTypeIdxes.w, X                                                  ; $8f84 : $7d, $7b, $0a
 	tax                                                  ; $8f87 : $aa
 	lda $8ee5c4.l, X                                                  ; $8f88 : $bf, $c4, $e5, $8e
 	sta $1b                                                  ; $8f8c : $85, $1b
@@ -2507,7 +2507,7 @@ Call_06_9093:
 
 br_06_9130:
 	ldx $04                                                  ; $9130 : $a6, $04
-	lda wPartCharTypeIdxes.w, X                                                  ; $9132 : $bd, $7b, $0a
+	lda wPartyCharTypeIdxes.w, X                                                  ; $9132 : $bd, $7b, $0a
 	and #$00ff.w                                                  ; $9135 : $29, $ff, $00
 	tax                                                  ; $9138 : $aa
 	phb                                                  ; $9139 : $8b

@@ -37,11 +37,12 @@ idx 42 (metatiles) from 0:eb34, due to 3f+3
 
 idx 132 (metatile tiles) from 0:eca8, due to 130+2
 2 from 4f:f730 + (3-2), 3 from 24
+dest (258e) in 2d at 0:ec9a
 
 idx 2 at 943b (sound-related)
 
 idx 14d (tiledata) from 0:f058, due to 14b+2
-14b from 4f:f820 + (3-2), 3 from room idx
+2 from 4f:f820 + (3-2), 3 from room idx
 
 
 Sprites

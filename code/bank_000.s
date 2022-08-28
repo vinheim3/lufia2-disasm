@@ -1438,6 +1438,7 @@ Call_00_884f:
 	rtl                                                  ; $8877 : $6b
 
 
+Func_0_8878:
 	php                                                  ; $8878 : $08
 	sep #ACCU_8                                                  ; $8879 : $e2, $20
 	rep #IDX_8                                                  ; $887b : $c2, $10
@@ -7956,7 +7957,7 @@ ScriptCommand35h_MoveNPCsRoom:
 
 ;
 	jsr AequNextScriptByte.w                                                  ; $b2e2 : $20, $b7, $c0
-	sta $089e.w, X                                                  ; $b2e5 : $9d, $9e, $08
+	sta wMovableNPCsEntityIds.w, X                                                  ; $b2e5 : $9d, $9e, $08
 	brl Func_0_9d00                                                  ; $b2e8 : $82, $15, $ea
 
 

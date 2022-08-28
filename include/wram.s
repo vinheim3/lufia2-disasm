@@ -285,8 +285,9 @@ wMovableNPCsIds: ; $081e
 wMovableNPCsRoomIds: ; $085e
     ds $40
 
-w089e:
-    ds $de-$9e
+; -$4f
+wMovableNPCsEntityIds: ; $089e
+    ds $40
 
 wMovableNPCsTypeIds: ; $08de
     ds $40
@@ -385,7 +386,7 @@ w0a0c:
 wNumPartyChars: ; $0a7a
     db
 
-wPartCharTypeIdxes: ; $0a7b
+wPartyCharTypeIdxes: ; $0a7b
     ds 4
 
 w0a7f:
@@ -410,13 +411,26 @@ wNotInCode_PlayerHealth: ; $0bbe
     db
 
 w0bbf:
-    ds $11bb-$bbf
+    ds $11a3-$bbf
 
-wCapsuleMonstersAndLevel: ; $11bb
-    ds 7
+; 0 to 6
+wCurrCapMon: ; $11a3
+    db
 
-w11c2:
-    ds $f2-$c2
+w11a4:
+    ds $d-4
+
+wCapsuleMonstersDesiredFood: ; $11ad
+    ds NUM_CAP_MONS*2
+
+wCapsuleMonstersLevel: ; $11bb
+    ds NUM_CAP_MONS
+
+wCapsuleMonstersFedVal: ; $11c2
+    ds NUM_CAP_MONS
+
+w11c9:
+    ds $f2-$c9
 
 wCurrOverworldPlayerX: ; $11f2
     dw
@@ -458,7 +472,13 @@ wSelectedCapsuleMonsterType: ; $14de
     db
 
 w14df:
-    ds $605-$4df
+    ds $54f-$4df
+
+wCapMonsValLeftToFeed: ; $154f
+    db
+
+w1550:
+    ds $605-$550
 
 wAccumulatedBattleExp: ; $1605
     dl
