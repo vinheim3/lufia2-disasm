@@ -8,6 +8,13 @@
         <div id="root">
             <div class="section">
                 <div class="box container is-flex" style="flex-wrap:wrap">
+                    <div class="field">
+                        <label class="label">Room #</label>
+                        <div class="control">
+                            <input class="input" type="text" v-model="room_idx" style="width:30%">
+                            <a class="button" :href="'/?room='+room_idx">Go to new room</a>
+                        </div>
+                    </div>
                     <div v-for="screen of screens" :id="screen.name+' canvases'">
                         <div>{{ screen.name }}</div>
                     </div>
@@ -284,11 +291,13 @@
                         let boxX = metatileX*16;
                         let boxY = metatileY*16;
                         ctx.strokeRect(boxX, boxY, 16, 16);
-                        ctx.fillRect(boxX+16, boxY, 16, 17);
+                        let infoBoxOffs = 16;
+                        if (boxX===width-16) infoBoxOffs = -16;
+                        ctx.fillRect(boxX+infoBoxOffs, boxY, 16, 17);
                         ctx.strokeStyle = 'black';
                         ctx.fillStyle = 'black';
-                        ctx.fillText(metatileX.toString(16), boxX+18, boxY+8);
-                        ctx.fillText(metatileY.toString(16), boxX+18, boxY+16);
+                        ctx.fillText(metatileX.toString(16), boxX+2+infoBoxOffs, boxY+8);
+                        ctx.fillText(metatileY.toString(16), boxX+2+infoBoxOffs, boxY+16);
                         ctx.stroke();
                     });
                 }
@@ -360,20 +369,10 @@
                 data: {
                     uint8view: null,
                     screenMap: {},
+                    room_idx: roomIdx.toString(16),
                     screens: [
-                        // {
-                        //     name: "test",
-                        //     sources: [
-                        //         ["DecompressData", 0x14d, 'mem7eh', 0x4000], // tiledata
-                        //         ["TileData"],
-                        //         ["DecompressData", 0x132, 'mem7fh', 0x258e], // metatile tiles
-                        //         ["Metatiles"],
-                        //         ["DecompressData", 0x42, 'mem7fh', 0x0000], // metatiles
-                        //         ["Map"],
-                        //     ],
-                        // },
                         {
-                            name: "test",
+                            name: `Room ${roomIdx.toString(16)}`,
                             sources: [
                                 ["FullRoom", roomIdx],
                             ],
