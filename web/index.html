@@ -109,13 +109,21 @@
                     return this.screenSpec.name;
                 }
 
-                createCanvas(suffix, width, height) {
+                createCanvas(suffix, width, height, parent) {
+                    let parentEl = document.getElementById(this.screenSpec.name + ' ' + parent);
+                    if (parentEl===null) {
+                        parentEl = document.createElement('div')
+                        parentEl.setAttribute('id', this.screenSpec.name + ' ' + parent);
+
+                        let canvases = document.getElementById(this.screenSpec.name + ' canvases');
+                        canvases.appendChild(parentEl);
+                    }
                     const canvas = document.createElement("canvas");
                     canvas.setAttribute('id', this.screenSpec.name + ' ' + suffix);
                     canvas.setAttribute('width', width);
                     canvas.setAttribute('height', height);
-                    let canvases = document.getElementById(this.screenSpec.name + ' canvases');
-                    canvases.appendChild(canvas);
+                    
+                    parentEl.appendChild(canvas);
                     return canvas;
                 }
 
@@ -197,7 +205,7 @@
 
                 TileData() {
                     // temp
-                    this.createCanvas('data', 128, 440);
+                    this.createCanvas('data', 128, 440, 'fixed');
 
                     let [ctx, imgData, width, height] = this.getCanvas(' data');
                     let data = imgData.data;
@@ -216,7 +224,7 @@
 
                 Metatiles() {
                     // temp
-                    this.createCanvas('metatiles', 256, 640);
+                    this.createCanvas('metatiles', 256, 640, 'fixed');
 
                     let [ctx, imgData, width, height] = this.getCanvas(' metatiles');
                     let data = imgData.data;
@@ -237,7 +245,14 @@
                     let mHigh = this.mem7fh[9];
 
                     // temp
-                    this.createCanvas('map', mWide*16, mHigh*16);
+                    this.createCanvas('map', mWide*16, mHigh*16, 'hoverMap');
+                    this.createCanvas('hovermap', mWide*16, mHigh*16, 'hoverMap');
+                    let parent = document.getElementById(this.name()+' hoverMap');
+                    parent.setAttribute('style', `position:relative;width:${mWide*16};height:${mHigh*16}`);
+                    for (let name of ['map', 'hovermap']) {
+                        let el = document.getElementById(this.name()+' '+name);
+                        el.setAttribute('style', 'position:absolute;top:0;left:0');
+                    }
 
                     let [ctx, imgData, width, height] = this.getCanvas(' map');
                     let data = imgData.data;
@@ -251,6 +266,31 @@
                         }
                     }
                     ctx.putImageData(imgData, 0, 0);
+
+                    // metatile click
+                    let hoverMap = document.getElementById(this.name()+' hovermap');
+                    hoverMap.addEventListener('mousedown', function (e) {
+                        const target = e.target;
+                        const rect = target.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        let metatileX = Math.floor(x/16);
+                        let metatileY = Math.floor(y/16);
+                        let ctx = hoverMap.getContext('2d');
+                        ctx.beginPath();
+                        ctx.clearRect(0,0,width,height)
+                        ctx.strokeStyle = 'white';
+                        ctx.fillStyle = 'white';
+                        let boxX = metatileX*16;
+                        let boxY = metatileY*16;
+                        ctx.strokeRect(boxX, boxY, 16, 16);
+                        ctx.fillRect(boxX+16, boxY, 16, 17);
+                        ctx.strokeStyle = 'black';
+                        ctx.fillStyle = 'black';
+                        ctx.fillText(metatileX.toString(16), boxX+18, boxY+8);
+                        ctx.fillText(metatileY.toString(16), boxX+18, boxY+16);
+                        ctx.stroke();
+                    });
                 }
 
                 CalcColours() {
