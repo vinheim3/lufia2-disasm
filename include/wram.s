@@ -158,7 +158,13 @@ wCurrCharMovePatternIdx: ; $ab
     db
 
 wac:
-    ds $b2-$ac
+    ds $e-$c
+
+wMetatileFragmentCenteredOnTopLeft: ; $ae
+    db
+
+waf:
+    ds $b2-$af
 
 wLoadedInBattleEnemyStruct: ; $b2
     dl
@@ -538,7 +544,14 @@ wRoomMetadataDicts: ; $f000
 .ramsection "Ram 7fh" bank $7f slot 1
 
 w7f2000:
-    ds $d010-$2000
+    ds $d008-$2000
+
+; todo: assuming 2 words for BG1 and BG2
+wBGMetatileOffsets: ; $d008
+    ds 4
+
+w7fd00c:
+    ds $10-$c
 
 ; todo: the wide/high vars seem to be 8 bytes in size
 wOrigRoomMetatilesWide: ; $d010
@@ -551,7 +564,34 @@ wOrigRoomMetatilesHigh: ; $d018
     db
 
 w7fd019:
-    ds $74-$19
+    ds $46-$19
+
+wFragmentCopyMetatileDestCol: ; $d046
+    db
+
+wFragmentCopyMetatileDestRow: ; $d047
+    db
+
+wCurrMetatileFragmentIdx: ; $d048
+    db
+
+w7fd049:
+    ds $a-9
+
+wFragmentCopyMetatileSrcCol: ; $d04a
+    db
+
+wFragmentCopyMetatileSrcRow: ; $d04b
+    db
+
+wFragmentCopyNumMetatileCols: ; $d04c
+    db
+
+wFragmentCopyNumMetatileRows: ; $d04d
+    db
+
+w7fd04e:
+    ds $74-$4e
 
 wPuzzleScriptVars: ; $d074
     ds $20

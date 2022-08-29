@@ -4795,7 +4795,11 @@ PzScriptC2h_Row0_00:
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $01
 		.dw @checkPieceSelectedIs2-PZ_START
 	CALL ARITH_PIECE_1_COORDS, FLAG_PIECE_1_MOVABLE, $ff
+.ifdef HACK
+		.dw Sub_824fd-PZ_START
+.else
 		.dw Sub_8245f-PZ_START
+.endif
 
 @checkPieceSelectedIs2: ; $0204, $822e9
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $02
@@ -4807,13 +4811,21 @@ PzScriptC2h_Row0_00:
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $03
 		.dw @checkPieceSelectedIs4-PZ_START
 	CALL ARITH_PIECE_3_COORDS, FLAG_PIECE_3_MOVABLE, $ff
+.ifdef HACK
+		.dw Sub_824fd-PZ_START
+.else
 		.dw Sub_8245f-PZ_START
+.endif
 
 @checkPieceSelectedIs4: ; $021a, $822ff
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $04
 		.dw @checkPieceSelectedIs5-PZ_START
 	CALL ARITH_PIECE_4_COORDS, FLAG_PIECE_4_MOVABLE, $ff
+.ifdef HACK
+		.dw Sub_824fd-PZ_START
+.else
 		.dw Sub_8245f-PZ_START
+.endif
 
 @checkPieceSelectedIs5: ; $0225, $8230a
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $05
@@ -4843,7 +4855,11 @@ PzScriptC2h_Row0_00:
 	JUMP_IF_VAR_NE, VAR_SELECTED_PIECE, $09
 		.dw @pieceSelectedIs0-PZ_START
 	CALL ARITH_PIECE_9_COORDS, FLAG_PIECE_9_MOVABLE, $ff
+.ifdef HACK
+		.dw Sub_824fd-PZ_START
+.else
 		.dw Sub_824ae-PZ_START
+.endif
 
 @pieceSelectedIs0: ; $025c, $82341
 	CALL $ff
@@ -5173,13 +5189,25 @@ Sub_825a4: ; $04bf, $825a4
 	CALL ARITH_PIECE_0_COORDS, FLAG_PIECE_0_MOVABLE, $ff
 		.dw Sub_825e1_2x2-PZ_START
 	CALL ARITH_PIECE_1_COORDS, FLAG_PIECE_1_MOVABLE, $ff
+.ifdef HACK
+		.dw Sub_82611_1x1-PZ_START
+.else
 		.dw Sub_825ef_1x2-PZ_START
+.endif
 	CALL ARITH_PIECE_2_COORDS, FLAG_PIECE_2_MOVABLE, $ff
 		.dw Sub_825ef_1x2-PZ_START
 	CALL ARITH_PIECE_3_COORDS, FLAG_PIECE_3_MOVABLE, $ff
+.ifdef HACK
+		.dw Sub_82611_1x1-PZ_START
+.else
 		.dw Sub_825ef_1x2-PZ_START
+.endif
 	CALL ARITH_PIECE_4_COORDS, FLAG_PIECE_4_MOVABLE, $ff
+.ifdef HACK
+		.dw Sub_82611_1x1-PZ_START
+.else
 		.dw Sub_825ef_1x2-PZ_START
+.endif
 	CALL ARITH_PIECE_5_COORDS, FLAG_PIECE_5_MOVABLE, $ff
 		.dw Sub_82611_1x1-PZ_START
 	CALL ARITH_PIECE_6_COORDS, FLAG_PIECE_6_MOVABLE, $ff
@@ -5189,7 +5217,11 @@ Sub_825a4: ; $04bf, $825a4
 	CALL ARITH_PIECE_8_COORDS, FLAG_PIECE_8_MOVABLE, $ff
 		.dw Sub_82611_1x1-PZ_START
 	CALL ARITH_PIECE_9_COORDS, FLAG_PIECE_9_MOVABLE, $ff
+.ifdef HACK
+		.dw Sub_82611_1x1-PZ_START
+.else
 		.dw Sub_82600_2x1-PZ_START
+.endif
 	RET
 
 
@@ -5318,16 +5350,28 @@ Sun_826b8: ; $05d3, $826b8
 		.dw @chosenPieceIs2x2-PZ_START
 	MOV_ARITHVAR_DICTVAR, $e0, $eb
 	JUMP_IF_VAR_EQU, $bf, $01
+.ifdef HACK
+		.dw @chosenPieceIs1x1-PZ_START
+.else
 		.dw @chosenPieceIs1x2-PZ_START
+.endif
 	MOV_ARITHVAR_DICTVAR, $e0, $ec
 	JUMP_IF_VAR_EQU, $bf, $02
 		.dw @chosenPieceIs1x2-PZ_START
 	MOV_ARITHVAR_DICTVAR, $e0, $ed
 	JUMP_IF_VAR_EQU, $bf, $03
+.ifdef HACK
+		.dw @chosenPieceIs1x1-PZ_START
+.else
 		.dw @chosenPieceIs1x2-PZ_START
+.endif
 	MOV_ARITHVAR_DICTVAR, $e0, $ee
 	JUMP_IF_VAR_EQU, $bf, $04
+.ifdef HACK
+		.dw @chosenPieceIs1x1-PZ_START
+.else
 		.dw @chosenPieceIs1x2-PZ_START
+.endif
 	MOV_ARITHVAR_DICTVAR, $e0, $ef
 	JUMP_IF_VAR_EQU, $bf, $05
 		.dw @chosenPieceIs1x1-PZ_START
@@ -5342,11 +5386,19 @@ Sun_826b8: ; $05d3, $826b8
 		.dw @chosenPieceIs1x1-PZ_START
 	JUMP_IF_FLAG_SET, $5f
 		.dw @chosenPieceIs2x1-PZ_START
+.ifdef HACK
+	.db $0e, $f3, $58 ; goes into 7f:d048
+.else
 	.db $0e, $f3, $56
+.endif
 	RET
 
 @chosenPieceIs2x1: ; $0620, $82705
+.ifdef HACK
+	.db $0e, $f3, $59
+.else
 	.db $0e, $f3, $57
+.endif
 	RET
 
 @chosenPieceIs2x2: ; $0624, $82709
@@ -17797,7 +17849,7 @@ br_10_fb00:
 	jmp $fc106b.l                                                  ; $fb0f : $5c, $6b, $10, $fc
 
 
-	lda $d008.w                                                  ; $fb13 : $ad, $08, $d0
+	lda wBGMetatileOffsets.w                                                  ; $fb13 : $ad, $08, $d0
 	sed                                                  ; $fb16 : $f8
 
 br_10_fb17:

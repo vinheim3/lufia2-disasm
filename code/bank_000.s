@@ -8433,7 +8433,7 @@ Call_00_b5e6:
 	jsr Call_00_b76a.w                                                  ; $b62b : $20, $6a, $b7
 	phy                                                  ; $b62e : $5a
 	phb                                                  ; $b62f : $8b
-	jsr Call_03_8b6a.l                                                  ; $b630 : $22, $6a, $8b, $83
+	jsr CopyMetatileFragment.l                                                  ; $b630 : $22, $6a, $8b, $83
 	lda wIniDisp.w                                                  ; $b634 : $ad, $83, $05
 	bmi br_00_b641                                                  ; $b637 : $30, $08
 
@@ -8533,7 +8533,7 @@ br_00_b6b0:
 	sta $1273.w                                                  ; $b6fe : $8d, $73, $12
 	phy                                                  ; $b701 : $5a
 	phb                                                  ; $b702 : $8b
-	jsr Call_03_8b6a.l                                                  ; $b703 : $22, $6a, $8b, $83
+	jsr CopyMetatileFragment.l                                                  ; $b703 : $22, $6a, $8b, $83
 	lda wIniDisp.w                                                  ; $b707 : $ad, $83, $05
 	bmi br_00_b71c                                                  ; $b70a : $30, $10
 
@@ -8558,7 +8558,7 @@ br_00_b71c:
 	jsr Call_00_b76a.w                                                  ; $b72d : $20, $6a, $b7
 	phy                                                  ; $b730 : $5a
 	phb                                                  ; $b731 : $8b
-	jsr Call_03_8b6a.l                                                  ; $b732 : $22, $6a, $8b, $83
+	jsr CopyMetatileFragment.l                                                  ; $b732 : $22, $6a, $8b, $83
 	lda $0581.w                                                  ; $b736 : $ad, $81, $05
 	bne br_00_b75e                                                  ; $b739 : $d0, $23
 
@@ -8592,18 +8592,18 @@ Call_00_b76a:
 	jsr AequNextScriptByte.w                                                  ; $b76a : $20, $b7, $c0
 	jsr Call_00_c093.w                                                  ; $b76d : $20, $93, $c0
 	lda $00120a.l                                                  ; $b770 : $af, $0a, $12, $00
-	sta $7fd046.l                                                  ; $b774 : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $b774 : $8f, $46, $d0, $7f
 	lda $00120b.l                                                  ; $b778 : $af, $0b, $12, $00
-	sta $7fd047.l                                                  ; $b77c : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $b77c : $8f, $47, $d0, $7f
 	jsr AequNextScriptByte.w                                                  ; $b780 : $20, $b7, $c0
 	jsr Call_00_c093.w                                                  ; $b783 : $20, $93, $c0
 	rep #ACCU_8                                                  ; $b786 : $c2, $20
 	lda $00120a.l                                                  ; $b788 : $af, $0a, $12, $00
-	sta $7fd04a.l                                                  ; $b78c : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $b78c : $8f, $4a, $d0, $7f
 	lda $00120c.l                                                  ; $b790 : $af, $0c, $12, $00
 	sec                                                  ; $b794 : $38
-	sbc $7fd04a.l                                                  ; $b795 : $ef, $4a, $d0, $7f
-	sta $7fd04c.l                                                  ; $b799 : $8f, $4c, $d0, $7f
+	sbc wFragmentCopyMetatileSrcCol.l                                                  ; $b795 : $ef, $4a, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $b799 : $8f, $4c, $d0, $7f
 	sep #ACCU_8                                                  ; $b79d : $e2, $20
 	lda #$33.b                                                  ; $b79f : $a9, $33
 	sta $7fd05f.l                                                  ; $b7a1 : $8f, $5f, $d0, $7f
@@ -12021,7 +12021,7 @@ br_00_cdd0:
 
 PuzzleScriptCmd0eh:
 	lda #$ff.b                                                  ; $cdd2 : $a9, $ff
-	sta $ae                                                  ; $cdd4 : $85, $ae
+	sta wMetatileFragmentCenteredOnTopLeft                                                  ; $cdd4 : $85, $ae
 	brl Func_0_d03f_2pzByte                                                  ; $cdd6 : $82, $66, $02
 
 
@@ -12029,16 +12029,16 @@ PuzzleScriptCmd7ah:
 	stz $ae                                                  ; $cdd9 : $64, $ae
 	jsr AequPuzzleScriptByte.w                                                  ; $cddb : $20, $b9, $e8
 	jsr Call_00_ea09_0pzByte.w                                                  ; $cdde : $20, $09, $ea
-	sta $7fd046.l                                                  ; $cde1 : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $cde1 : $8f, $46, $d0, $7f
 	xba                                                  ; $cde5 : $eb
-	sta $7fd047.l                                                  ; $cde6 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $cde6 : $8f, $47, $d0, $7f
 	jsr AequPuzzleScriptByte.w                                                  ; $cdea : $20, $b9, $e8
 	jsr ConvertPuzzleScriptCodeIfContainerVar.w                                                  ; $cded : $20, $bc, $e9
 	phy                                                  ; $cdf0 : $5a
-	sta $7fd048.l                                                  ; $cdf1 : $8f, $48, $d0, $7f
-	jsr Call_03_8b40.l                                                  ; $cdf5 : $22, $40, $8b, $83
-	jsr Call_00_d18c_0pzByte.w                                                  ; $cdf9 : $20, $8c, $d1
-	jsr Call_03_8b6a.l                                                  ; $cdfc : $22, $6a, $8b, $83
+	sta wCurrMetatileFragmentIdx.l                                                  ; $cdf1 : $8f, $48, $d0, $7f
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $cdf5 : $22, $40, $8b, $83
+	jsr MaybeAdjustMetatileFragmentDestRow.w                                                  ; $cdf9 : $20, $8c, $d1
+	jsr CopyMetatileFragment.l                                                  ; $cdfc : $22, $6a, $8b, $83
 	lda $7fd05f.l                                                  ; $ce00 : $af, $5f, $d0, $7f
 	tsb $1273.w                                                  ; $ce04 : $0c, $73, $12
 	bit #$22.b                                                  ; $ce07 : $89, $22
@@ -12067,15 +12067,15 @@ PuzzleScriptCmd7ah:
 PuzzleScriptCmd8eh:
 	jsr Call_00_ce5c.w                                                  ; $ce33 : $20, $5c, $ce
 	jsr Call_00_ea09_0pzByte.w                                                  ; $ce36 : $20, $09, $ea
-	sta $7fd04a.l                                                  ; $ce39 : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $ce39 : $8f, $4a, $d0, $7f
 	xba                                                  ; $ce3d : $eb
 	sta $7fd04b.l                                                  ; $ce3e : $8f, $4b, $d0, $7f
 	jsr AequPuzzleScriptByte.w                                                  ; $ce42 : $20, $b9, $e8
 	jsr GetPuzzleScriptVar.w                                                  ; $ce45 : $20, $ed, $e9
-	sta $7fd04c.l                                                  ; $ce48 : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $ce48 : $8f, $4c, $d0, $7f
 	jsr AequPuzzleScriptByte.w                                                  ; $ce4c : $20, $b9, $e8
 	jsr GetPuzzleScriptVar.w                                                  ; $ce4f : $20, $ed, $e9
-	sta $7fd04d.l                                                  ; $ce52 : $8f, $4d, $d0, $7f
+	sta wFragmentCopyNumMetatileRows.l                                                  ; $ce52 : $8f, $4d, $d0, $7f
 	jsr Call_00_d0ba_0pzByte.w                                                  ; $ce56 : $20, $ba, $d0
 	brl ExecPuzzleScriptCmd                                                  ; $ce59 : $82, $d9, $fd
 
@@ -12088,9 +12088,9 @@ Call_00_ce5c:
 	jsr AequPuzzleScriptByte.w                                                  ; $ce65 : $20, $b9, $e8
 	jsr GetPuzzleScriptVar.w                                                  ; $ce68 : $20, $ed, $e9
 	jsr Call_00_ea09_0pzByte.w                                                  ; $ce6b : $20, $09, $ea
-	sta $7fd046.l                                                  ; $ce6e : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $ce6e : $8f, $46, $d0, $7f
 	xba                                                  ; $ce72 : $eb
-	sta $7fd047.l                                                  ; $ce73 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $ce73 : $8f, $47, $d0, $7f
 	jsr AequPuzzleScriptByte.w                                                  ; $ce77 : $20, $b9, $e8
 	jsr GetPuzzleScriptVar.w                                                  ; $ce7a : $20, $ed, $e9
 	rts                                                  ; $ce7d : $60
@@ -12099,17 +12099,17 @@ Call_00_ce5c:
 Call_00_ce7e:
 	jsr Call_00_e92a.w                                                  ; $ce7e : $20, $2a, $e9
 	lda $9f                                                  ; $ce81 : $a5, $9f
-	sta $7fd04a.l                                                  ; $ce83 : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $ce83 : $8f, $4a, $d0, $7f
 	lda $a0                                                  ; $ce87 : $a5, $a0
 	sta $7fd04b.l                                                  ; $ce89 : $8f, $4b, $d0, $7f
 	lda $a1                                                  ; $ce8d : $a5, $a1
 	sec                                                  ; $ce8f : $38
 	sbc $9f                                                  ; $ce90 : $e5, $9f
-	sta $7fd04c.l                                                  ; $ce92 : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $ce92 : $8f, $4c, $d0, $7f
 	lda $a2                                                  ; $ce96 : $a5, $a2
 	sec                                                  ; $ce98 : $38
 	sbc $a0                                                  ; $ce99 : $e5, $a0
-	sta $7fd04d.l                                                  ; $ce9b : $8f, $4d, $d0, $7f
+	sta wFragmentCopyNumMetatileRows.l                                                  ; $ce9b : $8f, $4d, $d0, $7f
 	rts                                                  ; $ce9f : $60
 
 
@@ -12129,7 +12129,7 @@ Call_00_ce7e:
 	lda $0622.w, X                                                  ; $cec1 : $bd, $22, $06
 	and #$fe.b                                                  ; $cec4 : $29, $fe
 	sta $0622.w, X                                                  ; $cec6 : $9d, $22, $06
-	jsr Call_00_ea50_0pzByte.w                                                  ; $cec9 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $cec9 : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $cecc : $82, $66, $fd
 
 	jsr AequPuzzleScriptByte.w                                                  ; $cecf : $20, $b9, $e8
@@ -12166,7 +12166,7 @@ br_00_cef5:
 	and #$fe.b                                                  ; $cf11 : $29, $fe
 	sta $0622.w, X                                                  ; $cf13 : $9d, $22, $06
 	jsr $83d416.l                                                  ; $cf16 : $22, $16, $d4, $83
-	jsr Call_00_ea50_0pzByte.w                                                  ; $cf1a : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $cf1a : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $cf1d : $82, $15, $fd
 
 Call_00_cf20:
@@ -12297,22 +12297,22 @@ Call_00_cffc_3pzByte:
 	jsr AequPuzzleScriptByte.w                                                  ; $d01d : $20, $b9, $e8
 	jsr GetPuzzleScriptVar.w                                                  ; $d020 : $20, $ed, $e9
 	jsr Call_00_ce7e.w                                                  ; $d023 : $20, $7e, $ce
-	lda $7fd04a.l                                                  ; $d026 : $af, $4a, $d0, $7f
-	sta $7fd046.l                                                  ; $d02a : $8f, $46, $d0, $7f
+	lda wFragmentCopyMetatileSrcCol.l                                                  ; $d026 : $af, $4a, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $d02a : $8f, $46, $d0, $7f
 	lda $7fd04b.l                                                  ; $d02e : $af, $4b, $d0, $7f
-	sta $7fd047.l                                                  ; $d032 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $d032 : $8f, $47, $d0, $7f
 	jsr Func_3_8e76.l                                                  ; $d036 : $22, $76, $8e, $83
 	brl ExecPuzzleScriptCmd                                                  ; $d03a : $82, $f8, $fb
 
 
 PuzzleScriptCmd06h:
-	stz $ae                                                  ; $d03d : $64, $ae
+	stz wMetatileFragmentCenteredOnTopLeft                                                  ; $d03d : $64, $ae
 
 Func_0_d03f_2pzByte:
 	jsr SetTargetHardestTrickCoords.w                                                  ; $d03f : $20, $77, $d0
 	jsr AequPuzzleScriptByte.w                                                  ; $d042 : $20, $b9, $e8
 	jsr ConvertPuzzleScriptCodeIfContainerVar.w                                                  ; $d045 : $20, $bc, $e9
-	jsr Call_00_d0ac_0pzByte.w                                                  ; $d048 : $20, $ac, $d0
+	jsr GetCurrMetatileFragmentsDetails.w                                                  ; $d048 : $20, $ac, $d0
 	jsr Call_00_d0ba_0pzByte.w                                                  ; $d04b : $20, $ba, $d0
 	brl ExecPuzzleScriptCmd                                                  ; $d04e : $82, $e4, $fb
 
@@ -12322,7 +12322,7 @@ Func_0_d03f_2pzByte:
 	jsr SetTargetHardestTrickCoords.w                                                  ; $d053 : $20, $77, $d0
 	jsr AequPuzzleScriptByte.w                                                  ; $d056 : $20, $b9, $e8
 	jsr ConvertPuzzleScriptCodeIfContainerVar.w                                                  ; $d059 : $20, $bc, $e9
-	jsr Call_00_d0ac_0pzByte.w                                                  ; $d05c : $20, $ac, $d0
+	jsr GetCurrMetatileFragmentsDetails.w                                                  ; $d05c : $20, $ac, $d0
 	jsr Call_00_d112.w                                                  ; $d05f : $20, $12, $d1
 	brl ExecPuzzleScriptCmd                                                  ; $d062 : $82, $d0, $fb
 
@@ -12331,7 +12331,7 @@ Func_0_d03f_2pzByte:
 	jsr SetTargetHardestTrickCoords.w                                                  ; $d065 : $20, $77, $d0
 	jsr AequPuzzleScriptByte.w                                                  ; $d068 : $20, $b9, $e8
 	jsr GetPuzzleScriptVar.w                                                  ; $d06b : $20, $ed, $e9
-	jsr Call_00_d0ac_0pzByte.w                                                  ; $d06e : $20, $ac, $d0
+	jsr GetCurrMetatileFragmentsDetails.w                                                  ; $d06e : $20, $ac, $d0
 	jsr Call_00_d0ba_0pzByte.w                                                  ; $d071 : $20, $ba, $d0
 	brl ExecPuzzleScriptCmd                                                  ; $d074 : $82, $be, $fb
 
@@ -12343,9 +12343,9 @@ SetTargetHardestTrickCoords:
 
 ; A = target highlighted X in worlds hardest
 ; B = target highlighted Y
-	sta $7fd046.l                                                  ; $d07d : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $d07d : $8f, $46, $d0, $7f
 	xba                                                  ; $d081 : $eb
-	sta $7fd047.l                                                  ; $d082 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $d082 : $8f, $47, $d0, $7f
 	rts                                                  ; $d086 : $60
 
 
@@ -12353,22 +12353,22 @@ SetTargetHardestTrickCoords:
 	stz $ae                                                  ; $d087 : $64, $ae
 	jsr AequPuzzleScriptByte.w                                                  ; $d089 : $20, $b9, $e8
 	jsr ConvertPuzzleScriptCodeIfContainerVar.w                                                  ; $d08c : $20, $bc, $e9
-	sta $7fd046.l                                                  ; $d08f : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $d08f : $8f, $46, $d0, $7f
 	jsr AequPuzzleScriptByte.w                                                  ; $d093 : $20, $b9, $e8
 	jsr ConvertPuzzleScriptCodeIfContainerVar.w                                                  ; $d096 : $20, $bc, $e9
-	sta $7fd047.l                                                  ; $d099 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $d099 : $8f, $47, $d0, $7f
 	jsr AequPuzzleScriptByte.w                                                  ; $d09d : $20, $b9, $e8
 	jsr ConvertPuzzleScriptCodeIfContainerVar.w                                                  ; $d0a0 : $20, $bc, $e9
-	jsr Call_00_d0ac_0pzByte.w                                                  ; $d0a3 : $20, $ac, $d0
+	jsr GetCurrMetatileFragmentsDetails.w                                                  ; $d0a3 : $20, $ac, $d0
 	jsr Call_00_d0ba_0pzByte.w                                                  ; $d0a6 : $20, $ba, $d0
 	brl ExecPuzzleScriptCmd                                                  ; $d0a9 : $82, $89, $fb
 
 
-Call_00_d0ac_0pzByte:
+GetCurrMetatileFragmentsDetails:
 	phy                                                  ; $d0ac : $5a
-	sta $7fd048.l                                                  ; $d0ad : $8f, $48, $d0, $7f
-	jsr Call_03_8b40.l                                                  ; $d0b1 : $22, $40, $8b, $83
-	jsr Call_00_d18c_0pzByte.w                                                  ; $d0b5 : $20, $8c, $d1
+	sta wCurrMetatileFragmentIdx.l                                                  ; $d0ad : $8f, $48, $d0, $7f
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $d0b1 : $22, $40, $8b, $83
+	jsr MaybeAdjustMetatileFragmentDestRow.w                                                  ; $d0b5 : $20, $8c, $d1
 	ply                                                  ; $d0b8 : $7a
 	rts                                                  ; $d0b9 : $60
 
@@ -12392,7 +12392,7 @@ Call_00_d0ba_0pzByte:
 	jsr Call_00_d15b.w                                                  ; $d0dd : $20, $5b, $d1
 
 @cont_d0e0:
-	jsr Call_03_8b6a.l                                                  ; $d0e0 : $22, $6a, $8b, $83
+	jsr CopyMetatileFragment.l                                                  ; $d0e0 : $22, $6a, $8b, $83
 	lda $7fd05f.l                                                  ; $d0e4 : $af, $5f, $d0, $7f
 	tsb $1273.w                                                  ; $d0e8 : $0c, $73, $12
 	bit #$22.b                                                  ; $d0eb : $89, $22
@@ -12421,8 +12421,8 @@ Call_00_d112:
 	phy                                                  ; $d112 : $5a
 	lda $7fd05f.l                                                  ; $d113 : $af, $5f, $d0, $7f
 	tsb $1273.w                                                  ; $d117 : $0c, $73, $12
-	jsr Call_00_d18c_0pzByte.w                                                  ; $d11a : $20, $8c, $d1
-	jsr Call_03_8b6a.l                                                  ; $d11d : $22, $6a, $8b, $83
+	jsr MaybeAdjustMetatileFragmentDestRow.w                                                  ; $d11a : $20, $8c, $d1
+	jsr CopyMetatileFragment.l                                                  ; $d11d : $22, $6a, $8b, $83
 	lda $7fd05f.l                                                  ; $d121 : $af, $5f, $d0, $7f
 	tsb $1273.w                                                  ; $d125 : $0c, $73, $12
 	bit #$22.b                                                  ; $d128 : $89, $22
@@ -12438,11 +12438,11 @@ br_00_d134:
 
 Call_00_d136_0pzByte:
 	rep #ACCU_8                                                  ; $d136 : $c2, $20
-	lda $7fd046.l                                                  ; $d138 : $af, $46, $d0, $7f
+	lda wFragmentCopyMetatileDestCol.l                                                  ; $d138 : $af, $46, $d0, $7f
 	sta $7fd078.l                                                  ; $d13c : $8f, $78, $d0, $7f
-	lda $7fd04a.l                                                  ; $d140 : $af, $4a, $d0, $7f
+	lda wFragmentCopyMetatileSrcCol.l                                                  ; $d140 : $af, $4a, $d0, $7f
 	sta $7fd071.l                                                  ; $d144 : $8f, $71, $d0, $7f
-	lda $7fd04c.l                                                  ; $d148 : $af, $4c, $d0, $7f
+	lda wFragmentCopyNumMetatileCols.l                                                  ; $d148 : $af, $4c, $d0, $7f
 	sta $7fd073.l                                                  ; $d14c : $8f, $73, $d0, $7f
 	sep #ACCU_8                                                  ; $d150 : $e2, $20
 	lda $7fd05f.l                                                  ; $d152 : $af, $5f, $d0, $7f
@@ -12452,33 +12452,33 @@ Call_00_d136_0pzByte:
 
 Call_00_d15b:
 	lda $7fd078.l                                                  ; $d15b : $af, $78, $d0, $7f
-	sta $7fd046.l                                                  ; $d15f : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $d15f : $8f, $46, $d0, $7f
 	sta $8f                                                  ; $d163 : $85, $8f
 	lda $7fd079.l                                                  ; $d165 : $af, $79, $d0, $7f
-	sta $7fd047.l                                                  ; $d169 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $d169 : $8f, $47, $d0, $7f
 	sta $91                                                  ; $d16d : $85, $91
 	lda $7fd075.l                                                  ; $d16f : $af, $75, $d0, $7f
 	sta $7fd05f.l                                                  ; $d173 : $8f, $5f, $d0, $7f
 	rep #ACCU_8                                                  ; $d177 : $c2, $20
 	lda $7fd071.l                                                  ; $d179 : $af, $71, $d0, $7f
-	sta $7fd04a.l                                                  ; $d17d : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $d17d : $8f, $4a, $d0, $7f
 	lda $7fd073.l                                                  ; $d181 : $af, $73, $d0, $7f
-	sta $7fd04c.l                                                  ; $d185 : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $d185 : $8f, $4c, $d0, $7f
 	sep #ACCU_8                                                  ; $d189 : $e2, $20
 	rts                                                  ; $d18b : $60
 
 
-Call_00_d18c_0pzByte:
-	lda $ae                                                  ; $d18c : $a5, $ae
-	beq br_00_d19e                                                  ; $d18e : $f0, $0e
+MaybeAdjustMetatileFragmentDestRow:
+	lda wMetatileFragmentCenteredOnTopLeft                                                  ; $d18c : $a5, $ae
+	beq @done                                                  ; $d18e : $f0, $0e
 
-	lda $7fd047.l                                                  ; $d190 : $af, $47, $d0, $7f
+	lda wFragmentCopyMetatileDestRow.l                                                  ; $d190 : $af, $47, $d0, $7f
 	sec                                                  ; $d194 : $38
-	sbc $7fd04d.l                                                  ; $d195 : $ef, $4d, $d0, $7f
+	sbc wFragmentCopyNumMetatileRows.l                                                  ; $d195 : $ef, $4d, $d0, $7f
 	ina                                                  ; $d199 : $1a
-	sta $7fd047.l                                                  ; $d19a : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $d19a : $8f, $47, $d0, $7f
 
-br_00_d19e:
+@done:
 	rts                                                  ; $d19e : $60
 
 
@@ -12503,7 +12503,7 @@ br_00_d1a7:
 	lda $d6fc.w, X                                                  ; $d1b8 : $bd, $fc, $d6
 	sec                                                  ; $d1bb : $38
 	sbc #$10.b                                                  ; $d1bc : $e9, $10
-	jsr Call_03_8b40.l                                                  ; $d1be : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $d1be : $22, $40, $8b, $83
 	ldx $56                                                  ; $d1c2 : $a6, $56
 	lda $7fd69c.l, X                                                  ; $d1c4 : $bf, $9c, $d6, $7f
 	sta $8f                                                  ; $d1c8 : $85, $8f
@@ -12542,17 +12542,17 @@ br_00_d1e9:
 	lda $d6fc.w, X                                                  ; $d1f5 : $bd, $fc, $d6
 	sec                                                  ; $d1f8 : $38
 	sbc #$10.b                                                  ; $d1f9 : $e9, $10
-	jsr Call_03_8b40.l                                                  ; $d1fb : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $d1fb : $22, $40, $8b, $83
 	ldx $56                                                  ; $d1ff : $a6, $56
 	lda $d69c.w, X                                                  ; $d201 : $bd, $9c, $d6
 	sta $8f                                                  ; $d204 : $85, $8f
-	sta $d046.w                                                  ; $d206 : $8d, $46, $d0
+	sta wFragmentCopyMetatileDestCol.w                                                  ; $d206 : $8d, $46, $d0
 	lda $d6cc.w, X                                                  ; $d209 : $bd, $cc, $d6
 	sec                                                  ; $d20c : $38
-	sbc $d04d.w                                                  ; $d20d : $ed, $4d, $d0
+	sbc wFragmentCopyNumMetatileRows.w                                                  ; $d20d : $ed, $4d, $d0
 	ina                                                  ; $d210 : $1a
 	sta $91                                                  ; $d211 : $85, $91
-	sta $d047.w                                                  ; $d213 : $8d, $47, $d0
+	sta wFragmentCopyMetatileDestRow.w                                                  ; $d213 : $8d, $47, $d0
 	tdc                                                  ; $d216 : $7b
 	lda $56                                                  ; $d217 : $a5, $56
 	jsr $83f750.l                                                  ; $d219 : $22, $50, $f7, $83
@@ -12573,15 +12573,15 @@ Call_00_d227_0pzByte:
 	lda #$7f.b                                                  ; $d22a : $a9, $7f
 	pha                                                  ; $d22c : $48
 	plb                                                  ; $d22d : $ab
-	lda $d046.w                                                  ; $d22e : $ad, $46, $d0
+	lda wFragmentCopyMetatileDestCol.w                                                  ; $d22e : $ad, $46, $d0
 	sta $9f                                                  ; $d231 : $85, $9f
 	clc                                                  ; $d233 : $18
-	adc $d04c.w                                                  ; $d234 : $6d, $4c, $d0
+	adc wFragmentCopyNumMetatileCols.w                                                  ; $d234 : $6d, $4c, $d0
 	sta $a1                                                  ; $d237 : $85, $a1
-	lda $d047.w                                                  ; $d239 : $ad, $47, $d0
+	lda wFragmentCopyMetatileDestRow.w                                                  ; $d239 : $ad, $47, $d0
 	sta $a0                                                  ; $d23c : $85, $a0
 	clc                                                  ; $d23e : $18
-	adc $d04d.w                                                  ; $d23f : $6d, $4d, $d0
+	adc wFragmentCopyNumMetatileRows.w                                                  ; $d23f : $6d, $4d, $d0
 	ina                                                  ; $d242 : $1a
 	sta $a2                                                  ; $d243 : $85, $a2
 	ldx #$002f.w                                                  ; $d245 : $a2, $2f, $00
@@ -12782,7 +12782,7 @@ br_00_d36a:
 
 	sec                                                  ; $d378 : $38
 	sbc #$10.b                                                  ; $d379 : $e9, $10
-	jsr Call_03_8b40.l                                                  ; $d37b : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $d37b : $22, $40, $8b, $83
 	jsr $83f422.l                                                  ; $d37f : $22, $22, $f4, $83
 	sta $91                                                  ; $d383 : $85, $91
 	jsr $83f442.l                                                  ; $d385 : $22, $42, $f4, $83
@@ -12805,7 +12805,7 @@ br_00_d393:
 	lda $7fd6fc.l, X                                                  ; $d3a5 : $bf, $fc, $d6, $7f
 	sec                                                  ; $d3a9 : $38
 	sbc #$10.b                                                  ; $d3aa : $e9, $10
-	jsr Call_03_8b40.l                                                  ; $d3ac : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $d3ac : $22, $40, $8b, $83
 	jsr $83f422.l                                                  ; $d3b0 : $22, $22, $f4, $83
 	sta $91                                                  ; $d3b4 : $85, $91
 	jsr $83f442.l                                                  ; $d3b6 : $22, $42, $f4, $83
@@ -12848,7 +12848,7 @@ PuzzleScriptCmd2ah:
 	sta $7fd6fc.l, X                                                  ; $d3ff : $9f, $fc, $d6, $7f
 	sec                                                  ; $d403 : $38
 	sbc #$10.b                                                  ; $d404 : $e9, $10
-	jsr Call_03_8b40.l                                                  ; $d406 : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $d406 : $22, $40, $8b, $83
 	lda $7fd05f.l                                                  ; $d40a : $af, $5f, $d0, $7f
 	tsb $1273.w                                                  ; $d40e : $0c, $73, $12
 	ldx $56                                                  ; $d411 : $a6, $56
@@ -12938,7 +12938,7 @@ br_00_d4af:
 	jsr Call_03_ab4f.l                                                  ; $d4b9 : $22, $4f, $ab, $83
 	jsr AequPuzzleScriptByte.w                                                  ; $d4bd : $20, $b9, $e8
 	jsr Call_03_d350.l                                                  ; $d4c0 : $22, $50, $d3, $83
-	jsr Call_00_ea50_0pzByte.w                                                  ; $d4c4 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $d4c4 : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $d4c7 : $82, $6b, $f7
 
 	lda $0622.w                                                  ; $d4ca : $ad, $22, $06
@@ -13151,18 +13151,18 @@ br_00_d629:
 	ldx $56                                                  ; $d64a : $a6, $56
 	rep #ACCU_8                                                  ; $d64c : $c2, $20
 	lda $7ef002.l, X                                                  ; $d64e : $bf, $02, $f0, $7e
-	sta $7fd04a.l                                                  ; $d652 : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $d652 : $8f, $4a, $d0, $7f
 	lda $7ef004.l, X                                                  ; $d656 : $bf, $04, $f0, $7e
-	sta $7fd04c.l                                                  ; $d65a : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $d65a : $8f, $4c, $d0, $7f
 	bra br_00_d674                                                  ; $d65e : $80, $14
 
 br_00_d660:
 	ldx $56                                                  ; $d660 : $a6, $56
 	rep #ACCU_8                                                  ; $d662 : $c2, $20
 	lda $7ef006.l, X                                                  ; $d664 : $bf, $06, $f0, $7e
-	sta $7fd04a.l                                                  ; $d668 : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $d668 : $8f, $4a, $d0, $7f
 	lda $7ef008.l, X                                                  ; $d66c : $bf, $08, $f0, $7e
-	sta $7fd04c.l                                                  ; $d670 : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $d670 : $8f, $4c, $d0, $7f
 
 br_00_d674:
 	sep #ACCU_8                                                  ; $d674 : $e2, $20
@@ -13964,7 +13964,7 @@ SignExtendA_dbd2:
 	stz wCurrPuzzleScript                                                  ; $dbe5 : $64, $a7
 	jsr Call_03_ab4f.l                                                  ; $dbe7 : $22, $4f, $ab, $83
 	jsr $83fa12.l                                                  ; $dbeb : $22, $12, $fa, $83
-	jsr Call_00_ea50_0pzByte.w                                                  ; $dbef : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $dbef : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $dbf2 : $82, $40, $f0
 
 	lda #$1c02.w                                                  ; $dbf5 : $a9, $02, $1c
@@ -13973,7 +13973,7 @@ SignExtendA_dbd2:
 	stz wCurrPuzzleScript                                                  ; $dbfd : $64, $a7
 	jsr Call_03_ab4f.l                                                  ; $dbff : $22, $4f, $ab, $83
 	jsr $83fa3f.l                                                  ; $dc03 : $22, $3f, $fa, $83
-	jsr Call_00_ea50_0pzByte.w                                                  ; $dc07 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $dc07 : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $dc0a : $82, $28, $f0
 
 	lda #$1c40.w                                                  ; $dc0d : $a9, $40, $1c
@@ -14005,13 +14005,13 @@ SignExtendA_dbd2:
 	sta $56                                                  ; $dc48 : $85, $56
 	sep #ACCU_8                                                  ; $dc4a : $e2, $20
 	lda $54                                                  ; $dc4c : $a5, $54
-	sta $7fd046.l                                                  ; $dc4e : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $dc4e : $8f, $46, $d0, $7f
 	lda $56                                                  ; $dc52 : $a5, $56
-	sta $7fd047.l                                                  ; $dc54 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $dc54 : $8f, $47, $d0, $7f
 	lda #$10.b                                                  ; $dc58 : $a9, $10
-	sta $7fd04c.l                                                  ; $dc5a : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $dc5a : $8f, $4c, $d0, $7f
 	lda #$02.b                                                  ; $dc5e : $a9, $02
-	sta $7fd04d.l                                                  ; $dc60 : $8f, $4d, $d0, $7f
+	sta wFragmentCopyNumMetatileRows.l                                                  ; $dc60 : $8f, $4d, $d0, $7f
 	phy                                                  ; $dc64 : $5a
 	ldx #$0002.w                                                  ; $dc65 : $a2, $02, $00
 
@@ -14187,7 +14187,7 @@ br_00_ddb2:
 	adc #$4f.b                                                  ; $ddbc : $69, $4f
 	jsr Call_00_bf92.l                                                  ; $ddbe : $22, $92, $bf, $80
 	jsr $8ebb17.l                                                  ; $ddc2 : $22, $17, $bb, $8e
-	jsr Call_00_ea50_0pzByte.w                                                  ; $ddc6 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $ddc6 : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $ddc9 : $82, $69, $ee
 
 	jsr todo_SaveCurrPuzzleScript.w                                                  ; $ddcc : $20, $47, $ea
@@ -14196,7 +14196,7 @@ br_00_ddb2:
 	adc #$4f.b                                                  ; $ddd3 : $69, $4f
 	jsr Call_00_bf92.l                                                  ; $ddd5 : $22, $92, $bf, $80
 	jsr $8ebaf6.l                                                  ; $ddd9 : $22, $f6, $ba, $8e
-	jsr Call_00_ea50_0pzByte.w                                                  ; $dddd : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $dddd : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $dde0 : $82, $52, $ee
 
 	phy                                                  ; $dde3 : $5a
@@ -14239,7 +14239,7 @@ PuzzleScriptCmd67h:
 	jsr Call_00_dfb5_1pzByte.w                                                  ; $de23 : $20, $b5, $df
 	lda #$5c.b                                                  ; $de26 : $a9, $5c
 	jsr Call_03_d350.l                                                  ; $de28 : $22, $50, $d3, $83
-	jsr Call_00_ea50_0pzByte.w                                                  ; $de2c : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $de2c : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $de2f : $82, $03, $ee
 
 	tdc                                                  ; $de32 : $7b
@@ -14250,7 +14250,7 @@ PuzzleScriptCmd67h:
 	jsr Call_03_ab4f.l                                                  ; $de3e : $22, $4f, $ab, $83
 	lda #$5d.b                                                  ; $de42 : $a9, $5d
 	jsr Call_03_d350.l                                                  ; $de44 : $22, $50, $d3, $83
-	jsr Call_00_ea50_0pzByte.w                                                  ; $de48 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $de48 : $20, $50, $ea
 	jsr $83f7d4.l                                                  ; $de4b : $22, $d4, $f7, $83
 	brl ExecPuzzleScriptCmd                                                  ; $de4f : $82, $e3, $ed
 
@@ -14272,7 +14272,7 @@ PuzzleScriptCmd67h:
 	sta $0622.w, X                                                  ; $de7a : $9d, $22, $06
 	tdc                                                  ; $de7d : $7b
 	sta $7fe48e.l, X                                                  ; $de7e : $9f, $8e, $e4, $7f
-	jsr Call_00_ea50_0pzByte.w                                                  ; $de82 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $de82 : $20, $50, $ea
 	jsr $83f7d4.l                                                  ; $de85 : $22, $d4, $f7, $83
 	brl ExecPuzzleScriptCmd                                                  ; $de89 : $82, $a9, $ed
 
@@ -14286,7 +14286,7 @@ br_00_de8c_3pzByte:
 	clc                                                  ; $de9d : $18
 	adc #$4c.b                                                  ; $de9e : $69, $4c
 	jsr Call_03_d350.l                                                  ; $dea0 : $22, $50, $d3, $83
-	jsr Call_00_ea50_0pzByte.w                                                  ; $dea4 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $dea4 : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $dea7 : $82, $8b, $ed
 
 
@@ -14365,7 +14365,7 @@ _Func_0_dec4:
 	jsr AequPuzzleScriptByte.w                                                  ; $df0a : $20, $b9, $e8
 	ldx wCurrPuzzleScript                                                  ; $df0d : $a6, $a7
 	sta wEntityPriorityAttrBits.l, X                                                  ; $df0f : $9f, $16, $e3, $7f
-	jsr Call_00_ea50_0pzByte.w                                                  ; $df13 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $df13 : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $df16 : $82, $1c, $ed
 
 @br_df19:
@@ -14383,7 +14383,7 @@ Func_0_df25:
 	ldx wCurrPuzzleScript                                                  ; $df31 : $a6, $a7
 	jsr AequPuzzleScriptByte.w                                                  ; $df33 : $20, $b9, $e8
 	sta wEntityPriorityAttrBits.l, X                                                  ; $df36 : $9f, $16, $e3, $7f
-	jsr Call_00_ea50_0pzByte.w                                                  ; $df3a : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $df3a : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $df3d : $82, $f5, $ec
 
 
@@ -14402,7 +14402,7 @@ Func_0_df25:
 	phy                                                  ; $df5d : $5a
 	jsr Call_03_f5ea.l                                                  ; $df5e : $22, $ea, $f5, $83
 	ply                                                  ; $df62 : $7a
-	jsr Call_00_ea50_0pzByte.w                                                  ; $df63 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $df63 : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $df66 : $82, $cc, $ec
 
 
@@ -14443,7 +14443,7 @@ br_00_df83:
 	lda $0736.w, X                                                  ; $dfa7 : $bd, $36, $07
 	ora #$10.b                                                  ; $dfaa : $09, $10
 	sta $0736.w, X                                                  ; $dfac : $9d, $36, $07
-	jsr Call_00_ea50_0pzByte.w                                                  ; $dfaf : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $dfaf : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $dfb2 : $82, $80, $ec
 
 
@@ -14457,7 +14457,7 @@ Call_00_dfb5_1pzByte:
 
 Call_00_dfc2_0pzByte:
 	sta $24                                                  ; $dfc2 : $85, $24
-	jsr Call_03_8b40.l                                                  ; $dfc4 : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $dfc4 : $22, $40, $8b, $83
 	jsr $83c108.l                                                  ; $dfc8 : $22, $08, $c1, $83
 	ldx wCurrPuzzleScript                                                  ; $dfcc : $a6, $a7
 	txa                                                  ; $dfce : $8a
@@ -14888,10 +14888,10 @@ Call_00_e28c_2pzByte:
 
 ; eg 15
 	jsr AequPuzzleScriptByte.w                                                  ; $e2a2 : $20, $b9, $e8
-	jsr Call_03_8b40.l                                                  ; $e2a5 : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $e2a5 : $22, $40, $8b, $83
 
 ; eg B=09 A=00
-	lda $7fd04a.l                                                  ; $e2a9 : $af, $4a, $d0, $7f
+	lda wFragmentCopyMetatileSrcCol.l                                                  ; $e2a9 : $af, $4a, $d0, $7f
 	xba                                                  ; $e2ad : $eb
 	lda $7fd04b.l                                                  ; $e2ae : $af, $4b, $d0, $7f
 
@@ -14905,7 +14905,7 @@ Call_00_e28c_2pzByte:
 	sec                                                  ; $e2bc : $38
 
 ; eg 01 01
-	sbc $7fd04c.l                                                  ; $e2bd : $ef, $4c, $d0, $7f
+	sbc wFragmentCopyNumMetatileCols.l                                                  ; $e2bd : $ef, $4c, $d0, $7f
 	rep #ACCU_8                                                  ; $e2c1 : $c2, $20
 	asl                                                  ; $e2c3 : $0a
 	sta $56                                                  ; $e2c4 : $85, $56
@@ -14942,13 +14942,13 @@ Call_00_e2ed:
 	phy                                                  ; $e2ed : $5a
 
 ; eg 1 (so outer loop once)
-	lda $d04d.w                                                  ; $e2ee : $ad, $4d, $d0
+	lda wFragmentCopyNumMetatileRows.w                                                  ; $e2ee : $ad, $4d, $d0
 	sta $5a                                                  ; $e2f1 : $85, $5a
 
 ;
 	stz $5b                                                  ; $e2f3 : $64, $5b
 	rep #ACCU_8                                                  ; $e2f5 : $c2, $20
-	lda $d008.w, X                                                  ; $e2f7 : $bd, $08, $d0
+	lda wBGMetatileOffsets.w, X                                                  ; $e2f7 : $bd, $08, $d0
 	sta $54                                                  ; $e2fa : $85, $54
 	clc                                                  ; $e2fc : $18
 	adc $5d                                                  ; $e2fd : $65, $5d
@@ -14962,7 +14962,7 @@ Call_00_e2ed:
 
 @loop_5a:
 ; eg 1 so loop once
-	lda $d04c.w                                                  ; $e306 : $ad, $4c, $d0
+	lda wFragmentCopyNumMetatileCols.w                                                  ; $e306 : $ad, $4c, $d0
 	and #$00ff.w                                                  ; $e309 : $29, $ff, $00
 	sta $58                                                  ; $e30c : $85, $58
 
@@ -15299,7 +15299,7 @@ PuzzleScriptCmd1ah:
 	ldx #$0006.w                                                  ; $e517 : $a2, $06, $00
 	jsr GetRoomMetadataDictValue.l                                                  ; $e51a : $22, $aa, $bf, $80
 	jsr $83b76e.l                                                  ; $e51e : $22, $6e, $b7, $83
-	jsr Call_00_ea50_0pzByte.w                                                  ; $e522 : $20, $50, $ea
+	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $e522 : $20, $50, $ea
 	ply                                                  ; $e525 : $7a
 	plb                                                  ; $e526 : $ab
 	brl ExecPuzzleScriptCmd                                                  ; $e527 : $82, $0b, $e7
@@ -16086,10 +16086,13 @@ Call_00_ea09_0pzByte:
 	sta $54                                                  ; $ea09 : $85, $54
 	jsr ConvertPuzzleScriptCodeIfContainerVar.w                                                  ; $ea0b : $20, $bc, $e9
 	sta $55                                                  ; $ea0e : $85, $55
+
+;
 	lda $54                                                  ; $ea10 : $a5, $54
 	cmp #$fb.b                                                  ; $ea12 : $c9, $fb
 	bne @br_ea22                                                  ; $ea14 : $d0, $0c
 
+; if fb...
 	ldx wCurrPuzzleScript                                                  ; $ea16 : $a6, $a7
 	lda wtodo_PzScriptVars_d184.l, X                                                  ; $ea18 : $bf, $84, $d1, $7f
 	xba                                                  ; $ea1c : $eb
@@ -16102,6 +16105,7 @@ Call_00_ea09_0pzByte:
 	cmp #$e0.b                                                  ; $ea25 : $c9, $e0
 	bcc @br_ea37                                                  ; $ea27 : $90, $0e
 
+; if e0 to fa
 	sec                                                  ; $ea29 : $38
 	sbc #$e0.b                                                  ; $ea2a : $e9, $e0
 	tax                                                  ; $ea2c : $aa
@@ -16129,7 +16133,7 @@ todo_SaveCurrPuzzleScript:
 	rts                                                  ; $ea4f : $60
 
 
-Call_00_ea50_0pzByte:
+todo_RestoreSavedPuzzleScript:
 	lda wtodo_SavedPuzzleScriptIdx.l                                                  ; $ea50 : $af, $a3, $d2, $7f
 	sta wCurrPuzzleScript                                                  ; $ea54 : $85, $a7
 	jsr Call_03_ab4f.l                                                  ; $ea56 : $22, $4f, $ab, $83
@@ -16260,7 +16264,11 @@ Func_0_eae7:
 	stx wCompressedDataRamDest                                                  ; $eb2e : $86, $60
 	lda #$7f.b                                                  ; $eb30 : $a9, $7f
 	sta wCompressedDataRamDest+2                                                 ; $eb32 : $85, $62
+.ifdef HACK
+	jsr CheckDecompWorldsHardestTilemap.l
+.else
 	jsr DecompressData.l                                                  ; $eb34 : $22, $9d, $8e, $80
+.endif
 	jsr Call_00_ecf2.w                                                  ; $eb38 : $20, $f2, $ec
 	ldy #$0000.w                                                  ; $eb3b : $a0, $00, $00
 	sty $5d                                                  ; $eb3e : $84, $5d
@@ -16364,7 +16372,7 @@ Call_00_ebaa:
 	lda $5d                                                  ; $ebfb : $a5, $5d
 	clc                                                  ; $ebfd : $18
 	adc #$0004.w                                                  ; $ebfe : $69, $04, $00
-	sta $d008.w, X                                                  ; $ec01 : $9d, $08, $d0
+	sta wBGMetatileOffsets.w, X                                                  ; $ec01 : $9d, $08, $d0
 	clc                                                  ; $ec04 : $18
 	adc RDMPYL.l                                                  ; $ec05 : $6f, $16, $42, $00
 	adc RDMPYL.l                                                  ; $ec09 : $6f, $16, $42, $00
@@ -16389,7 +16397,7 @@ Call_00_ec18:
 	lda $d018.w, X                                                  ; $ec25 : $bd, $18, $d0
 	sta WRMPYB.l                                                  ; $ec28 : $8f, $03, $42, $00
 	rep #ACCU_8                                                  ; $ec2c : $c2, $20
-	lda $d008.w, X                                                  ; $ec2e : $bd, $08, $d0
+	lda wBGMetatileOffsets.w, X                                                  ; $ec2e : $bd, $08, $d0
 	tax                                                  ; $ec31 : $aa
 	lda RDMPYL.l                                                  ; $ec32 : $af, $16, $42, $00
 	clc                                                  ; $ec36 : $18
@@ -16499,7 +16507,7 @@ Call_00_ecf2:
 	rep #ACCU_8                                                  ; $ecf2 : $c2, $20
 	lda $2d                                                  ; $ecf4 : $a5, $2d
 	clc                                                  ; $ecf6 : $18
-	adc $58                                                  ; $ecf7 : $65, $58
+	adc wTotalDecompressedBytes                                                  ; $ecf7 : $65, $58
 	sta $2d                                                  ; $ecf9 : $85, $2d
 	sep #ACCU_8                                                  ; $ecfb : $e2, $20
 	rts                                                  ; $ecfd : $60
@@ -16530,7 +16538,7 @@ Call_00_ed0e:
 	lda $d018.w, X                                                  ; $ed24 : $bd, $18, $d0
 	sta WRMPYB.l                                                  ; $ed27 : $8f, $03, $42, $00
 	rep #ACCU_8                                                  ; $ed2b : $c2, $20
-	lda $d008.w, X                                                  ; $ed2d : $bd, $08, $d0
+	lda wBGMetatileOffsets.w, X                                                  ; $ed2d : $bd, $08, $d0
 	tax                                                  ; $ed30 : $aa
 	lda RDMPYL.l                                                  ; $ed31 : $af, $16, $42, $00
 	clc                                                  ; $ed35 : $18
@@ -17864,7 +17872,7 @@ br_00_f5f2:
 	cmp #$3000.w                                                  ; $f5f9 : $c9, $00, $30
 	bne br_00_f601                                                  ; $f5fc : $d0, $03
 
-	ldx $d008.w                                                  ; $f5fe : $ae, $08, $d0
+	ldx wBGMetatileOffsets.w                                                  ; $f5fe : $ae, $08, $d0
 
 br_00_f601:
 	lda $0000.w, X                                                  ; $f601 : $bd, $00, $00
@@ -17942,7 +17950,7 @@ todo_CopyRowOf2x2Metatiles:
 	and #$3000.w                                                  ; $f654 : $29, $00, $30
 	cmp #$3000.w                                                  ; $f657 : $c9, $00, $30
 	bne +                                                  ; $f65a : $d0, $03
-	ldx $d008.w                                                  ; $f65c : $ae, $08, $d0
+	ldx wBGMetatileOffsets.w                                                  ; $f65c : $ae, $08, $d0
 
 ; eg 003b * 8 + 259e (metatile table addr?)
 +	lda $0000.w, X                                                  ; $f65f : $bd, $00, $00
@@ -18054,7 +18062,7 @@ br_00_f6df:
 	cmp #$3000.w                                                  ; $f6e6 : $c9, $00, $30
 	bne br_00_f6ee                                                  ; $f6e9 : $d0, $03
 
-	ldx $d008.w                                                  ; $f6eb : $ae, $08, $d0
+	ldx wBGMetatileOffsets.w                                                  ; $f6eb : $ae, $08, $d0
 
 br_00_f6ee:
 	lda $0000.w, X                                                  ; $f6ee : $bd, $00, $00
@@ -18205,7 +18213,7 @@ Call_00_f734:
 	lda #$7e.b                                                  ; $f7f4 : $a9, $7e
 	sta $2c                                                  ; $f7f6 : $85, $2c
 	rep #ACCU_8                                                  ; $f7f8 : $c2, $20
-	lda $d008.w, X                                                  ; $f7fa : $bd, $08, $d0
+	lda wBGMetatileOffsets.w, X                                                  ; $f7fa : $bd, $08, $d0
 	sta $8d                                                  ; $f7fd : $85, $8d
 	lda RDMPYL.l                                                  ; $f7ff : $af, $16, $42, $00
 	clc                                                  ; $f803 : $18
@@ -18429,7 +18437,7 @@ br_00_f933:
 	and #$00ff.w                                                  ; $f94d : $29, $ff, $00
 	sta $56                                                  ; $f950 : $85, $56
 	sep #ACCU_8                                                  ; $f952 : $e2, $20
-	ldx $d008.w                                                  ; $f954 : $ae, $08, $d0
+	ldx wBGMetatileOffsets.w                                                  ; $f954 : $ae, $08, $d0
 	ldy $d00a.w                                                  ; $f957 : $ac, $0a, $d0
 
 br_00_f95a:
@@ -18911,7 +18919,7 @@ br_00_fbb7:
 	lda $d018.w, X                                                  ; $fbe4 : $bd, $18, $d0
 	sta WRMPYB.l                                                  ; $fbe7 : $8f, $03, $42, $00
 	rep #ACCU_8                                                  ; $fbeb : $c2, $20
-	lda $d008.w                                                  ; $fbed : $ad, $08, $d0
+	lda wBGMetatileOffsets.w                                                  ; $fbed : $ad, $08, $d0
 	tax                                                  ; $fbf0 : $aa
 	lda RDMPYL.l                                                  ; $fbf1 : $af, $16, $42, $00
 	tay                                                  ; $fbf5 : $a8
@@ -18936,7 +18944,60 @@ br_00_fbf6:
 	plb                                                  ; $fc18 : $ab
 	rtl                                                  ; $fc19 : $6b
 
+.ifdef HACK
+CheckDecompWorldsHardestTilemap:
+	jsr DecompressData.l
+	php
+	rep #ACCU_8
+	lda $54
+	cmp #$0101.w
+	bne @return
 
+; top-left
+	lda #$0237.w
+	sta $7f19c8.l
+	sta $7f1b98.l
+	sta $7f1ba4.l
+; top-right
+	ina
+	sta $7f19ca.l
+	sta $7f1b9a.l
+	sta $7f1ba6.l
+; bottom-left
+	lda #$023c.w
+	sta $7f1954.l
+	sta $7f1b24.l
+	sta $7f1b30.l
+; bottom-right
+	ina
+	sta $7f1956.l
+	sta $7f1b26.l
+	sta $7f1b32.l
+; empty
+	lda #$0000.w
+	sta $7f1ab4.l
+	sta $7f1ab6.l
+	sta $7f1ab8.l
+	sta $7f1aba.l
+	sta $7f1b28.l
+	sta $7f1b2a.l
+	sta $7f1b2c.l
+	sta $7f1b2e.l
+	sta $7f1b9c.l
+	sta $7f1b9e.l
+	sta $7f1ba0.l
+	sta $7f1ba2.l
+	sta $7f1c10.l
+	sta $7f1c12.l
+	sta $7f1c14.l
+	sta $7f1c16.l
+
+@return:
+	plp
+	rtl
+
+.org $7faa
+.else
 	tax                                                  ; $fc1a : $aa
 	tax                                                  ; $fc1b : $aa
 	tax                                                  ; $fc1c : $aa
@@ -19737,6 +19798,7 @@ br_00_fbf6:
 	tax                                                  ; $ffa7 : $aa
 	tax                                                  ; $ffa8 : $aa
 	txa                                                  ; $ffa9 : $8a
+.endif
 
 
 MiscVector:

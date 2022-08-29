@@ -2010,6 +2010,17 @@ Data_12_9052:
 	.db $08, $15, $1c
 	.db $09, $05, $25
 	.db $0a, $2f, $09 ; bottom-left of piece 0
+.ifdef HACK
+	.db $0b, $2d, $07 ;
+	.db $0c, $33, $09 ;
+	.db $0d, $2d, $09 ;
+	.db $0e, $2d, $0b ;
+	.db $0f, $33, $0b ;
+	.db $10, $2d, $0d ;
+	.db $11, $33, $0d ;
+	.db $12, $2d, $0f ;
+	.db $13, $33, $0f ; bottom left of piece 9
+.else
 	.db $0b, $2d, $09 ;
 	.db $0c, $33, $09 ;
 	.db $0d, $2d, $0d ;
@@ -2019,6 +2030,7 @@ Data_12_9052:
 	.db $11, $2d, $0f ;
 	.db $12, $33, $0f ;
 	.db $13, $2f, $0b ; bottom left of piece 9
+.endif
 	.db $14, $30, $11 ; hardest trick's buttonn
 	.db $15, $31, $11 ; right of btn
 	.db $16, $2f, $10 ; top-left of button
@@ -2073,8 +2085,9 @@ Data_12_9052:
 	.db $55, $02, $2b, $1c, $02, $04, $ff, $00, $00, $ff
 	.db $56, $02, $2d, $1c, $04, $02, $ff, $00, $00, $ff
 	.db $57, $02, $2d, $1e, $04, $02, $ff, $00, $00, $ff
-	.db $58, $02, $31, $1c, $02, $02, $ff, $00, $00, $ff
-	.db $59, $02, $31, $1e, $02, $02, $ff, $00, $00, $ff
+; id - ?? - src col - src row - num cols - num rows - ?? ?? ?? ??
+	.db $58, $02, $31, $1c, $02, $02, $ff, $00, $00, $ff ; clear 1x1
+	.db $59, $02, $31, $1e, $02, $02, $ff, $00, $00, $ff ; selected 1x1
 	.db $5a, $22, $33, $1c, $04, $04, $ff, $00, $00, $ff
 	.db $5b, $22, $33, $1c, $02, $04, $ff, $00, $00, $ff
 	.db $5c, $22, $33, $1c, $04, $02, $ff, $00, $00, $ff

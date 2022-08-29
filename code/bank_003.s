@@ -1044,11 +1044,11 @@ Call_03_873f:
 
 	rep #ACCU_8                                                  ; $8745 : $c2, $20
 	lda $7ef002.l, X                                                  ; $8747 : $bf, $02, $f0, $7e
-	sta $7fd04a.l                                                  ; $874b : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $874b : $8f, $4a, $d0, $7f
 	lda $7ef004.l, X                                                  ; $874f : $bf, $04, $f0, $7e
-	sta $7fd04c.l                                                  ; $8753 : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $8753 : $8f, $4c, $d0, $7f
 	sep #ACCU_8                                                  ; $8757 : $e2, $20
-	jsr Call_03_8b6a.l                                                  ; $8759 : $22, $6a, $8b, $83
+	jsr CopyMetatileFragment.l                                                  ; $8759 : $22, $6a, $8b, $83
 	jsr Call_03_89ce.w                                                  ; $875d : $20, $ce, $89
 
 br_03_8760:
@@ -1061,11 +1061,11 @@ Call_03_8761:
 
 	rep #ACCU_8                                                  ; $8767 : $c2, $20
 	lda $7ef006.l, X                                                  ; $8769 : $bf, $06, $f0, $7e
-	sta $7fd04a.l                                                  ; $876d : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $876d : $8f, $4a, $d0, $7f
 	lda $7ef008.l, X                                                  ; $8771 : $bf, $08, $f0, $7e
-	sta $7fd04c.l                                                  ; $8775 : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $8775 : $8f, $4c, $d0, $7f
 	sep #ACCU_8                                                  ; $8779 : $e2, $20
-	jsr Call_03_8b6a.l                                                  ; $877b : $22, $6a, $8b, $83
+	jsr CopyMetatileFragment.l                                                  ; $877b : $22, $6a, $8b, $83
 	jsr Call_03_898e.w                                                  ; $877f : $20, $8e, $89
 
 br_03_8782:
@@ -1104,11 +1104,11 @@ Call_03_87a3:
 	ldx #$0026.w                                                  ; $87ac : $a2, $26, $00
 	jsr GetRoomMetadataDictValue.l                                                  ; $87af : $22, $aa, $bf, $80
 	lda $7ef001.l, X                                                  ; $87b3 : $bf, $01, $f0, $7e
-	sta $7fd046.l                                                  ; $87b7 : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $87b7 : $8f, $46, $d0, $7f
 	lda $7ef002.l, X                                                  ; $87bb : $bf, $02, $f0, $7e
-	sta $7fd047.l                                                  ; $87bf : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $87bf : $8f, $47, $d0, $7f
 	lda $7ef003.l, X                                                  ; $87c3 : $bf, $03, $f0, $7e
-	sta $7fd048.l                                                  ; $87c7 : $8f, $48, $d0, $7f
+	sta wCurrMetatileFragmentIdx.l                                                  ; $87c7 : $8f, $48, $d0, $7f
 	rtl                                                  ; $87cb : $6b
 
 
@@ -1198,11 +1198,11 @@ Call_03_8848:
 	ldx #$0002.w                                                  ; $884c : $a2, $02, $00
 	jsr GetRoomMetadataDictValue.l                                                  ; $884f : $22, $aa, $bf, $80
 	lda $7ef001.l, X                                                  ; $8853 : $bf, $01, $f0, $7e
-	sta $7fd046.l                                                  ; $8857 : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $8857 : $8f, $46, $d0, $7f
 	lda $7ef002.l, X                                                  ; $885b : $bf, $02, $f0, $7e
-	sta $7fd047.l                                                  ; $885f : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $885f : $8f, $47, $d0, $7f
 	lda $7ef00d.l, X                                                  ; $8863 : $bf, $0d, $f0, $7e
-	sta $7fd048.l                                                  ; $8867 : $8f, $48, $d0, $7f
+	sta wCurrMetatileFragmentIdx.l                                                  ; $8867 : $8f, $48, $d0, $7f
 	lda $7ef00e.l, X                                                  ; $886b : $bf, $0e, $f0, $7e
 	sta $7fd060.l                                                  ; $886f : $8f, $60, $d0, $7f
 	rts                                                  ; $8873 : $60
@@ -1211,7 +1211,7 @@ Call_03_8848:
 Call_03_8874:
 	lda #$0a.b                                                  ; $8874 : $a9, $0a
 	xba                                                  ; $8876 : $eb
-	lda $7fd048.l                                                  ; $8877 : $af, $48, $d0, $7f
+	lda wCurrMetatileFragmentIdx.l                                                  ; $8877 : $af, $48, $d0, $7f
 	ldx #$0004.w                                                  ; $887b : $a2, $04, $00
 	jsr GetRoomMetadataDictValue.l                                                  ; $887e : $22, $aa, $bf, $80
 	lda $7ef001.l, X                                                  ; $8882 : $bf, $01, $f0, $7e
@@ -1223,14 +1223,14 @@ Call_03_8874:
 Call_03_888c:
 	rep #ACCU_8                                                  ; $888c : $c2, $20
 	lda $7ef006.l, X                                                  ; $888e : $bf, $06, $f0, $7e
-	sta $d04a.w                                                  ; $8892 : $8d, $4a, $d0
+	sta wFragmentCopyMetatileSrcCol.w                                                  ; $8892 : $8d, $4a, $d0
 	lda $7ef008.l, X                                                  ; $8895 : $bf, $08, $f0, $7e
-	sta $d04c.w                                                  ; $8899 : $8d, $4c, $d0
+	sta wFragmentCopyNumMetatileCols.w                                                  ; $8899 : $8d, $4c, $d0
 	sep #ACCU_8                                                  ; $889c : $e2, $20
-	lda $7fd04a.l                                                  ; $889e : $af, $4a, $d0, $7f
+	lda wFragmentCopyMetatileSrcCol.l                                                  ; $889e : $af, $4a, $d0, $7f
 	clc                                                  ; $88a2 : $18
-	adc $7fd04c.l                                                  ; $88a3 : $6f, $4c, $d0, $7f
-	sta $7fd04a.l                                                  ; $88a7 : $8f, $4a, $d0, $7f
+	adc wFragmentCopyNumMetatileCols.l                                                  ; $88a3 : $6f, $4c, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $88a7 : $8f, $4a, $d0, $7f
 	lda $7fd049.l                                                  ; $88ab : $af, $49, $d0, $7f
 	bit #$01.b                                                  ; $88af : $89, $01
 	bne br_03_88ba                                                  ; $88b1 : $d0, $07
@@ -1242,15 +1242,15 @@ Call_03_888c:
 
 
 br_03_88ba:
-	lda $7fd04a.l                                                  ; $88ba : $af, $4a, $d0, $7f
+	lda wFragmentCopyMetatileSrcCol.l                                                  ; $88ba : $af, $4a, $d0, $7f
 	sec                                                  ; $88be : $38
-	sbc $7fd04c.l                                                  ; $88bf : $ef, $4c, $d0, $7f
-	sta $7fd04a.l                                                  ; $88c3 : $8f, $4a, $d0, $7f
+	sbc wFragmentCopyNumMetatileCols.l                                                  ; $88bf : $ef, $4c, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $88c3 : $8f, $4a, $d0, $7f
 
 br_03_88c7:
 	jsr Call_03_8971.w                                                  ; $88c7 : $20, $71, $89
 	jsr Call_03_898e.w                                                  ; $88ca : $20, $8e, $89
-	inc $d04d.w                                                  ; $88cd : $ee, $4d, $d0
+	inc wFragmentCopyNumMetatileRows.w                                                  ; $88cd : $ee, $4d, $d0
 	lda $0005aa.l                                                  ; $88d0 : $af, $aa, $05, $00
 	jsr Call_03_8c8a.l                                                  ; $88d4 : $22, $8a, $8c, $83
 	rts                                                  ; $88d8 : $60
@@ -1259,14 +1259,14 @@ br_03_88c7:
 Call_03_88d9:
 	rep #ACCU_8                                                  ; $88d9 : $c2, $20
 	lda $7ef002.l, X                                                  ; $88db : $bf, $02, $f0, $7e
-	sta $d04a.w                                                  ; $88df : $8d, $4a, $d0
+	sta wFragmentCopyMetatileSrcCol.w                                                  ; $88df : $8d, $4a, $d0
 	lda $7ef004.l, X                                                  ; $88e2 : $bf, $04, $f0, $7e
-	sta $d04c.w                                                  ; $88e6 : $8d, $4c, $d0
+	sta wFragmentCopyNumMetatileCols.w                                                  ; $88e6 : $8d, $4c, $d0
 	sep #ACCU_8                                                  ; $88e9 : $e2, $20
-	lda $7fd04a.l                                                  ; $88eb : $af, $4a, $d0, $7f
+	lda wFragmentCopyMetatileSrcCol.l                                                  ; $88eb : $af, $4a, $d0, $7f
 	sec                                                  ; $88ef : $38
-	sbc $7fd04c.l                                                  ; $88f0 : $ef, $4c, $d0, $7f
-	sta $7fd04a.l                                                  ; $88f4 : $8f, $4a, $d0, $7f
+	sbc wFragmentCopyNumMetatileCols.l                                                  ; $88f0 : $ef, $4c, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $88f4 : $8f, $4a, $d0, $7f
 	lda $7fd049.l                                                  ; $88f8 : $af, $49, $d0, $7f
 	bit #$01.b                                                  ; $88fc : $89, $01
 	bne br_03_8908                                                  ; $88fe : $d0, $08
@@ -1277,15 +1277,15 @@ Call_03_88d9:
 	bra br_03_8915                                                  ; $8906 : $80, $0d
 
 br_03_8908:
-	lda $7fd04a.l                                                  ; $8908 : $af, $4a, $d0, $7f
+	lda wFragmentCopyMetatileSrcCol.l                                                  ; $8908 : $af, $4a, $d0, $7f
 	clc                                                  ; $890c : $18
-	adc $7fd04c.l                                                  ; $890d : $6f, $4c, $d0, $7f
-	sta $7fd04a.l                                                  ; $8911 : $8f, $4a, $d0, $7f
+	adc wFragmentCopyNumMetatileCols.l                                                  ; $890d : $6f, $4c, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $8911 : $8f, $4a, $d0, $7f
 
 br_03_8915:
 	jsr Call_03_8971.w                                                  ; $8915 : $20, $71, $89
 	jsr Call_03_89ce.w                                                  ; $8918 : $20, $ce, $89
-	inc $d04d.w                                                  ; $891b : $ee, $4d, $d0
+	inc wFragmentCopyNumMetatileRows.w                                                  ; $891b : $ee, $4d, $d0
 	lda $0005aa.l                                                  ; $891e : $af, $aa, $05, $00
 	jsr Call_03_8c8a.l                                                  ; $8922 : $22, $8a, $8c, $83
 
@@ -1295,11 +1295,11 @@ br_03_8926:
 
 Call_03_8927:
 	rep #ACCU_8                                                  ; $8927 : $c2, $20
-	lda $7fd046.l                                                  ; $8929 : $af, $46, $d0, $7f
+	lda wFragmentCopyMetatileDestCol.l                                                  ; $8929 : $af, $46, $d0, $7f
 	sta $7fd067.l                                                  ; $892d : $8f, $67, $d0, $7f
-	lda $7fd04a.l                                                  ; $8931 : $af, $4a, $d0, $7f
+	lda wFragmentCopyMetatileSrcCol.l                                                  ; $8931 : $af, $4a, $d0, $7f
 	sta $7fd069.l                                                  ; $8935 : $8f, $69, $d0, $7f
-	lda $7fd04c.l                                                  ; $8939 : $af, $4c, $d0, $7f
+	lda wFragmentCopyNumMetatileCols.l                                                  ; $8939 : $af, $4c, $d0, $7f
 	sta $7fd06b.l                                                  ; $893d : $8f, $6b, $d0, $7f
 	sep #ACCU_8                                                  ; $8941 : $e2, $20
 	lda $7fd05f.l                                                  ; $8943 : $af, $5f, $d0, $7f
@@ -1310,11 +1310,11 @@ Call_03_8927:
 Call_03_894c:
 	rep #ACCU_8                                                  ; $894c : $c2, $20
 	lda $7fd067.l                                                  ; $894e : $af, $67, $d0, $7f
-	sta $7fd046.l                                                  ; $8952 : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $8952 : $8f, $46, $d0, $7f
 	lda $7fd069.l                                                  ; $8956 : $af, $69, $d0, $7f
-	sta $7fd04a.l                                                  ; $895a : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $895a : $8f, $4a, $d0, $7f
 	lda $7fd06b.l                                                  ; $895e : $af, $6b, $d0, $7f
-	sta $7fd04c.l                                                  ; $8962 : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $8962 : $8f, $4c, $d0, $7f
 	sep #ACCU_8                                                  ; $8966 : $e2, $20
 	lda $7fd06d.l                                                  ; $8968 : $af, $6d, $d0, $7f
 	sta $7fd05f.l                                                  ; $896c : $8f, $5f, $d0, $7f
@@ -1326,7 +1326,7 @@ Call_03_8971:
 	jsr $80d227.l                                                  ; $8974 : $22, $27, $d2, $80
 	jsr $80d1e1.l                                                  ; $8978 : $22, $e1, $d1, $80
 	jsr Call_03_894c.w                                                  ; $897c : $20, $4c, $89
-	jsr Call_03_8b6a.l                                                  ; $897f : $22, $6a, $8b, $83
+	jsr CopyMetatileFragment.l                                                  ; $897f : $22, $6a, $8b, $83
 	jsr $80d19f.l                                                  ; $8983 : $22, $9f, $d1, $80
 	jsr Call_03_894c.w                                                  ; $8987 : $20, $4c, $89
 	jsr Call_03_8a0a.w                                                  ; $898a : $20, $0a, $8a
@@ -1337,9 +1337,9 @@ Call_03_898e:
 	phb                                                  ; $898e : $8b
 	phk                                                  ; $898f : $4b
 	plb                                                  ; $8990 : $ab
-	lda $7fd046.l                                                  ; $8991 : $af, $46, $d0, $7f
+	lda wFragmentCopyMetatileDestCol.l                                                  ; $8991 : $af, $46, $d0, $7f
 	xba                                                  ; $8995 : $eb
-	lda $7fd04d.l                                                  ; $8996 : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $8996 : $af, $4d, $d0, $7f
 	cmp #$04.b                                                  ; $899a : $c9, $04
 	bcc br_03_899f                                                  ; $899c : $90, $01
 
@@ -1347,7 +1347,7 @@ Call_03_898e:
 
 br_03_899f:
 	clc                                                  ; $899f : $18
-	adc $7fd047.l                                                  ; $89a0 : $6f, $47, $d0, $7f
+	adc wFragmentCopyMetatileDestRow.l                                                  ; $89a0 : $6f, $47, $d0, $7f
 	jsr XequMetatileOffsRowAColB.w                                                  ; $89a4 : $20, $f7, $f9
 	rep #ACCU_8                                                  ; $89a7 : $c2, $20
 	txa                                                  ; $89a9 : $8a
@@ -1355,7 +1355,7 @@ br_03_899f:
 	adc $7fd008.l, X                                                  ; $89ad : $7f, $08, $d0, $7f
 	tax                                                  ; $89b1 : $aa
 	tdc                                                  ; $89b2 : $7b
-	lda $7fd04c.l                                                  ; $89b3 : $af, $4c, $d0, $7f
+	lda wFragmentCopyNumMetatileCols.l                                                  ; $89b3 : $af, $4c, $d0, $7f
 	and #$00ff.w                                                  ; $89b7 : $29, $ff, $00
 	tay                                                  ; $89ba : $a8
 
@@ -1380,9 +1380,9 @@ Call_03_89ce:
 	and $7fd05f.l                                                  ; $89d3 : $2f, $5f, $d0, $7f
 	beq br_03_8a08                                                  ; $89d7 : $f0, $2f
 
-	lda $7fd046.l                                                  ; $89d9 : $af, $46, $d0, $7f
+	lda wFragmentCopyMetatileDestCol.l                                                  ; $89d9 : $af, $46, $d0, $7f
 	xba                                                  ; $89dd : $eb
-	lda $7fd04d.l                                                  ; $89de : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $89de : $af, $4d, $d0, $7f
 	cmp #$04.b                                                  ; $89e2 : $c9, $04
 	bcc br_03_89e7                                                  ; $89e4 : $90, $01
 
@@ -1390,9 +1390,9 @@ Call_03_89ce:
 
 br_03_89e7:
 	clc                                                  ; $89e7 : $18
-	adc $7fd047.l                                                  ; $89e8 : $6f, $47, $d0, $7f
+	adc wFragmentCopyMetatileDestRow.l                                                  ; $89e8 : $6f, $47, $d0, $7f
 	jsr Call_03_f9d9.w                                                  ; $89ec : $20, $d9, $f9
-	lda $7fd04c.l                                                  ; $89ef : $af, $4c, $d0, $7f
+	lda wFragmentCopyNumMetatileCols.l                                                  ; $89ef : $af, $4c, $d0, $7f
 	cmp #$02.b                                                  ; $89f3 : $c9, $02
 	bcc br_03_89f9                                                  ; $89f5 : $90, $02
 
@@ -1416,7 +1416,7 @@ Call_03_8a0a:
 	phk                                                  ; $8a0b : $4b
 	plb                                                  ; $8a0c : $ab
 	tdc                                                  ; $8a0d : $7b
-	lda $7fd047.l                                                  ; $8a0e : $af, $47, $d0, $7f
+	lda wFragmentCopyMetatileDestRow.l                                                  ; $8a0e : $af, $47, $d0, $7f
 	and #$0f.b                                                  ; $8a12 : $29, $0f
 	xba                                                  ; $8a14 : $eb
 	rep #ACCU_8                                                  ; $8a15 : $c2, $20
@@ -1449,7 +1449,7 @@ br_03_8a24:
 	sta $7fd4fa.l, X                                                  ; $8a4a : $9f, $fa, $d4, $7f
 	lda $54                                                  ; $8a4e : $a5, $54
 	sta $7fd51a.l, X                                                  ; $8a50 : $9f, $1a, $d5, $7f
-	lda $7fd04d.l                                                  ; $8a54 : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $8a54 : $af, $4d, $d0, $7f
 	and #$00ff.w                                                  ; $8a58 : $29, $ff, $00
 	sta $7fd53a.l, X                                                  ; $8a5b : $9f, $3a, $d5, $7f
 	iny                                                  ; $8a5f : $c8
@@ -1471,9 +1471,9 @@ br_03_8a64:
 Call_03_8a6f:
 	sta $54                                                  ; $8a6f : $85, $54
 	stz $55                                                  ; $8a71 : $64, $55
-	lda $7fd046.l                                                  ; $8a73 : $af, $46, $d0, $7f
+	lda wFragmentCopyMetatileDestCol.l                                                  ; $8a73 : $af, $46, $d0, $7f
 	xba                                                  ; $8a77 : $eb
-	lda $7fd047.l                                                  ; $8a78 : $af, $47, $d0, $7f
+	lda wFragmentCopyMetatileDestRow.l                                                  ; $8a78 : $af, $47, $d0, $7f
 	jsr XequMetatileOffsRowAColB.w                                                  ; $8a7c : $20, $f7, $f9
 	rep #ACCU_8                                                  ; $8a7f : $c2, $20
 	txa                                                  ; $8a81 : $8a
@@ -1485,16 +1485,16 @@ Call_03_8a6f:
 	tdc                                                  ; $8a8c : $7b
 	lda wRoomMetatilesWide.w                                                  ; $8a8d : $ad, $b9, $05
 	sec                                                  ; $8a90 : $38
-	sbc $7fd04c.l                                                  ; $8a91 : $ef, $4c, $d0, $7f
+	sbc wFragmentCopyNumMetatileCols.l                                                  ; $8a91 : $ef, $4c, $d0, $7f
 	rep #ACCU_8                                                  ; $8a95 : $c2, $20
 	asl                                                  ; $8a97 : $0a
 	sta $54                                                  ; $8a98 : $85, $54
-	lda $7fd04d.l                                                  ; $8a9a : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $8a9a : $af, $4d, $d0, $7f
 	and #$00ff.w                                                  ; $8a9e : $29, $ff, $00
 	sta $58                                                  ; $8aa1 : $85, $58
 
 br_03_8aa3:
-	lda $7fd04c.l                                                  ; $8aa3 : $af, $4c, $d0, $7f
+	lda wFragmentCopyNumMetatileCols.l                                                  ; $8aa3 : $af, $4c, $d0, $7f
 	and #$00ff.w                                                  ; $8aa7 : $29, $ff, $00
 	sta $56                                                  ; $8aaa : $85, $56
 
@@ -1569,18 +1569,18 @@ Call_03_8af7:
 Call_03_8b0e:
 	phb                                                  ; $8b0e : $8b
 	sep #ACCU_8                                                  ; $8b0f : $e2, $20
-	jsr Call_03_8b40.l                                                  ; $8b11 : $22, $40, $8b, $83
-	lda $7fd047.l                                                  ; $8b15 : $af, $47, $d0, $7f
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $8b11 : $22, $40, $8b, $83
+	lda wFragmentCopyMetatileDestRow.l                                                  ; $8b15 : $af, $47, $d0, $7f
 	sec                                                  ; $8b19 : $38
-	sbc $7fd04d.l                                                  ; $8b1a : $ef, $4d, $d0, $7f
+	sbc wFragmentCopyNumMetatileRows.l                                                  ; $8b1a : $ef, $4d, $d0, $7f
 	ina                                                  ; $8b1e : $1a
-	sta $7fd047.l                                                  ; $8b1f : $8f, $47, $d0, $7f
-	jsr Call_03_8b6a.l                                                  ; $8b23 : $22, $6a, $8b, $83
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $8b1f : $8f, $47, $d0, $7f
+	jsr CopyMetatileFragment.l                                                  ; $8b23 : $22, $6a, $8b, $83
 	jsr Call_03_8a0a.w                                                  ; $8b27 : $20, $0a, $8a
 	jsr Call_03_89ce.w                                                  ; $8b2a : $20, $ce, $89
-	lda $7fd04d.l                                                  ; $8b2d : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $8b2d : $af, $4d, $d0, $7f
 	ina                                                  ; $8b31 : $1a
-	sta $7fd04d.l                                                  ; $8b32 : $8f, $4d, $d0, $7f
+	sta wFragmentCopyNumMetatileRows.l                                                  ; $8b32 : $8f, $4d, $d0, $7f
 	lda $0005aa.l                                                  ; $8b36 : $af, $aa, $05, $00
 	jsr Call_03_8c8a.l                                                  ; $8b3a : $22, $8a, $8c, $83
 	plb                                                  ; $8b3e : $ab
@@ -1588,7 +1588,7 @@ Call_03_8b0e:
 
 
 ; A - dict value to search for
-Call_03_8b40:
+GetMetatileFragmentAsDetails:
 	xba                                                  ; $8b40 : $eb
 	lda #$0a.b                                                  ; $8b41 : $a9, $0a
 	xba                                                  ; $8b43 : $eb
@@ -1598,16 +1598,21 @@ Call_03_8b40:
 
 +	rep #ACCU_8                                                  ; $8b4d : $c2, $20
 	lda $7ef002.l, X                                                  ; $8b4f : $bf, $02, $f0, $7e
-	sta $7fd04a.l                                                  ; $8b53 : $8f, $4a, $d0, $7f
+	sta wFragmentCopyMetatileSrcCol.l                                                  ; $8b53 : $8f, $4a, $d0, $7f
 	lda $7ef004.l, X                                                  ; $8b57 : $bf, $04, $f0, $7e
-	sta $7fd04c.l                                                  ; $8b5b : $8f, $4c, $d0, $7f
+	sta wFragmentCopyNumMetatileCols.l                                                  ; $8b5b : $8f, $4c, $d0, $7f
 	sep #ACCU_8                                                  ; $8b5f : $e2, $20
 	lda $7ef001.l, X                                                  ; $8b61 : $bf, $01, $f0, $7e
 	sta $7fd05f.l                                                  ; $8b65 : $8f, $5f, $d0, $7f
 	rtl                                                  ; $8b69 : $6b
 
 
-Call_03_8b6a:
+.redef METATILE_ROWS_LEFT = $56
+.redef METATILE_COLS_LEFT = $58
+.redef ROOM_METATILES_WIDE = $5a
+.redef BASE_METATILE_SRC_OFFS = $5d
+.redef BASE_METATILE_DEST_OFFS = $60
+CopyMetatileFragment:
 	phb                                                  ; $8b6a : $8b
 	sep #ACCU_8                                                  ; $8b6b : $e2, $20
 	lda #$7f.b                                                  ; $8b6d : $a9, $7f
@@ -1616,7 +1621,7 @@ Call_03_8b6a:
 	tdc                                                  ; $8b71 : $7b
 
 ; eg 2 (height-related?)
-	lda $d04c.w                                                  ; $8b72 : $ad, $4c, $d0
+	lda wFragmentCopyNumMetatileCols.w                                                  ; $8b72 : $ad, $4c, $d0
 	rep #ACCU_8                                                  ; $8b75 : $c2, $20
 	asl                                                  ; $8b77 : $0a
 	sta $54                                                  ; $8b78 : $85, $54
@@ -1628,38 +1633,38 @@ Call_03_8b6a:
 	sbc $54                                                  ; $8b80 : $e5, $54
 	ina                                                  ; $8b82 : $1a
 	ina                                                  ; $8b83 : $1a
-	sta $5a                                                  ; $8b84 : $85, $5a
+	sta ROOM_METATILES_WIDE                                                  ; $8b84 : $85, $5a
 	sep #ACCU_8                                                  ; $8b86 : $e2, $20
 
 	lda wRoomMetatilesWide.l                                                  ; $8b88 : $af, $b9, $05, $00
 	sta WRMPYA.l                                                  ; $8b8c : $8f, $02, $42, $00
 
 ; eg 1e
-	lda $d04b.w                                                  ; $8b90 : $ad, $4b, $d0
+	lda wFragmentCopyMetatileSrcRow.w                                                  ; $8b90 : $ad, $4b, $d0
 	sta WRMPYB.l                                                  ; $8b93 : $8f, $03, $42, $00
 	tdc                                                  ; $8b97 : $7b
 
 ; eg 31 (2d for 2x1 horiz piece)
-	lda $d04a.w                                                  ; $8b98 : $ad, $4a, $d0
+	lda wFragmentCopyMetatileSrcCol.w                                                  ; $8b98 : $ad, $4a, $d0
 	rep #ACCU_8                                                  ; $8b9b : $c2, $20
 	clc                                                  ; $8b9d : $18
 	adc RDMPYL.l                                                  ; $8b9e : $6f, $16, $42, $00
 	asl                                                  ; $8ba2 : $0a
-	sta $5d                                                  ; $8ba3 : $85, $5d
+	sta BASE_METATILE_SRC_OFFS                                                  ; $8ba3 : $85, $5d
 	sep #ACCU_8                                                  ; $8ba5 : $e2, $20
 
 ; eg c (y-related?)
-	lda $d047.w                                                  ; $8ba7 : $ad, $47, $d0
+	lda wFragmentCopyMetatileDestRow.w                                                  ; $8ba7 : $ad, $47, $d0
 	sta WRMPYB.l                                                  ; $8baa : $8f, $03, $42, $00
 	tdc                                                  ; $8bae : $7b
 
 ; eg 31 (x-related)
-	lda $d046.w                                                  ; $8baf : $ad, $46, $d0
+	lda wFragmentCopyMetatileDestCol.w                                                  ; $8baf : $ad, $46, $d0
 	rep #ACCU_8                                                  ; $8bb2 : $c2, $20
 	clc                                                  ; $8bb4 : $18
 	adc RDMPYL.l                                                  ; $8bb5 : $6f, $16, $42, $00
 	asl                                                  ; $8bb9 : $0a
-	sta $60                                                  ; $8bba : $85, $60
+	sta BASE_METATILE_DEST_OFFS                                                  ; $8bba : $85, $60
 	sep #ACCU_8                                                  ; $8bbc : $e2, $20
 
 ; runs for X = 0, 2, 4, 6
@@ -1679,6 +1684,7 @@ Call_03_8b6a:
 	brl @toNextDoubleX                                                  ; $8bd0 : $82, $a3, $00
 
 @br_8bd3:
+; eg always 2 when swapping on world's hardest
 	stx $63                                                  ; $8bd3 : $86, $63
 	stz $65                                                  ; $8bd5 : $64, $65
 	stz $66                                                  ; $8bd7 : $64, $66
@@ -1693,32 +1699,34 @@ Call_03_8b6a:
 
 @connt_8be7:
 ; eg 7fd04d = 2
-	lda $d04d.w                                                  ; $8be7 : $ad, $4d, $d0
-	sta $56                                                  ; $8bea : $85, $56
+	lda wFragmentCopyNumMetatileRows.w                                                  ; $8be7 : $ad, $4d, $d0
+	sta METATILE_ROWS_LEFT                                                  ; $8bea : $85, $56
 	stz $57                                                  ; $8bec : $64, $57
 	rep #ACCU_8                                                  ; $8bee : $c2, $20
 
 ;
-	lda $d008.w, X                                                  ; $8bf0 : $bd, $08, $d0
+	lda wBGMetatileOffsets.w, X                                                  ; $8bf0 : $bd, $08, $d0
 	clc                                                  ; $8bf3 : $18
-	adc $60                                                  ; $8bf4 : $65, $60
+	adc BASE_METATILE_DEST_OFFS                                                  ; $8bf4 : $65, $60
 	tay                                                  ; $8bf6 : $a8
-	lda $d008.w, X                                                  ; $8bf7 : $bd, $08, $d0
+	lda wBGMetatileOffsets.w, X                                                  ; $8bf7 : $bd, $08, $d0
 	clc                                                  ; $8bfa : $18
-	adc $5d                                                  ; $8bfb : $65, $5d
+	adc BASE_METATILE_SRC_OFFS                                                  ; $8bfb : $65, $5d
 	tax                                                  ; $8bfd : $aa
 
-@loop_56:
+@nextMetatileRow:
 ; eg 2
-	lda $d04c.w                                                  ; $8bfe : $ad, $4c, $d0
+	lda wFragmentCopyNumMetatileCols.w                                                  ; $8bfe : $ad, $4c, $d0
 	and #$00ff.w                                                  ; $8c01 : $29, $ff, $00
-	sta $58                                                  ; $8c04 : $85, $58
+	sta METATILE_COLS_LEFT                                                  ; $8c04 : $85, $58
+
+; eg always ff when swapping on world's hardest
 	lda $65                                                  ; $8c06 : $a5, $65
-	beq @brLoop_8c29                                                  ; $8c08 : $f0, $1f
+	beq @_65equ0                                                  ; $8c08 : $f0, $1f
 
-	bmi @brLoop_8c46                                                  ; $8c0a : $30, $3a
+	bmi @_65equFF                                                  ; $8c0a : $30, $3a
 
-@loop_58:
+@nextMetatileCol:
 ; 65 = positive
 ; do (x)&3ff, ie x has the tile idx
 	lda $0000.w, X                                                  ; $8c0c : $bd, $00, $00
@@ -1729,16 +1737,16 @@ Call_03_8b6a:
 	ora $54                                                  ; $8c1a : $05, $54
 	sta $0000.w, Y                                                  ; $8c1c : $99, $00, $00
 
-	dec $58                                                  ; $8c1f : $c6, $58
-	beq @cont_8c63                                                  ; $8c21 : $f0, $40
+	dec METATILE_COLS_LEFT                                                  ; $8c1f : $c6, $58
+	beq @toNextRow                                                  ; $8c21 : $f0, $40
 
 	inx                                                  ; $8c23 : $e8
 	inx                                                  ; $8c24 : $e8
 	iny                                                  ; $8c25 : $c8
 	iny                                                  ; $8c26 : $c8
-	bra @loop_58                                                  ; $8c27 : $80, $e3
+	bra @nextMetatileCol                                                  ; $8c27 : $80, $e3
 
-@brLoop_8c29:
+@_65equ0:
 	lda $0000.w, Y                                                  ; $8c29 : $b9, $00, $00
 	and #$3000.w                                                  ; $8c2c : $29, $00, $30
 	sta $54                                                  ; $8c2f : $85, $54
@@ -1746,16 +1754,16 @@ Call_03_8b6a:
 	and #$cfff.w                                                  ; $8c34 : $29, $ff, $cf
 	ora $54                                                  ; $8c37 : $05, $54
 	sta $0000.w, Y                                                  ; $8c39 : $99, $00, $00
-	dec $58                                                  ; $8c3c : $c6, $58
-	beq @cont_8c63                                                  ; $8c3e : $f0, $23
+	dec METATILE_COLS_LEFT                                                  ; $8c3c : $c6, $58
+	beq @toNextRow                                                  ; $8c3e : $f0, $23
 
 	inx                                                  ; $8c40 : $e8
 	inx                                                  ; $8c41 : $e8
 	iny                                                  ; $8c42 : $c8
 	iny                                                  ; $8c43 : $c8
-	bra @brLoop_8c29                                                  ; $8c44 : $80, $e3
+	bra @_65equ0                                                  ; $8c44 : $80, $e3
 
-@brLoop_8c46:
+@_65equFF:
 	lda $0000.w, X                                                  ; $8c46 : $bd, $00, $00
 	and #$0c00.w                                                  ; $8c49 : $29, $00, $0c
 	sta $54                                                  ; $8c4c : $85, $54
@@ -1763,27 +1771,28 @@ Call_03_8b6a:
 	and #$f3ff.w                                                  ; $8c51 : $29, $ff, $f3
 	ora $54                                                  ; $8c54 : $05, $54
 	sta $0000.w, Y                                                  ; $8c56 : $99, $00, $00
-	dec $58                                                  ; $8c59 : $c6, $58
-	beq @cont_8c63                                                  ; $8c5b : $f0, $06
+
+	dec METATILE_COLS_LEFT                                                  ; $8c59 : $c6, $58
+	beq @toNextRow                                                  ; $8c5b : $f0, $06
 
 	inx                                                  ; $8c5d : $e8
 	inx                                                  ; $8c5e : $e8
 	iny                                                  ; $8c5f : $c8
 	iny                                                  ; $8c60 : $c8
-	bra @brLoop_8c46                                                  ; $8c61 : $80, $e3
+	bra @_65equFF                                                  ; $8c61 : $80, $e3
 
-@cont_8c63:
-	dec $56                                                  ; $8c63 : $c6, $56
+@toNextRow:
+	dec METATILE_ROWS_LEFT                                                  ; $8c63 : $c6, $56
 	beq @toNextDblXFromSaved                                                  ; $8c65 : $f0, $0b
 
 	clc                                                  ; $8c67 : $18
 	tya                                                  ; $8c68 : $98
-	adc $5a                                                  ; $8c69 : $65, $5a
+	adc ROOM_METATILES_WIDE                                                  ; $8c69 : $65, $5a
 	tay                                                  ; $8c6b : $a8
 	txa                                                  ; $8c6c : $8a
-	adc $5a                                                  ; $8c6d : $65, $5a
+	adc ROOM_METATILES_WIDE                                                 ; $8c6d : $65, $5a
 	tax                                                  ; $8c6f : $aa
-	bra @loop_56                                                  ; $8c70 : $80, $8c
+	bra @nextMetatileRow                                                  ; $8c70 : $80, $8c
 
 @toNextDblXFromSaved:
 	sep #ACCU_8                                                  ; $8c72 : $e2, $20
@@ -1816,9 +1825,9 @@ Call_03_8c8a:
 	plb                                                  ; $8c8d : $ab
 	sep #ACCU_8                                                  ; $8c8e : $e2, $20
 	rep #IDX_8                                                  ; $8c90 : $c2, $10
-	lda $7fd046.l                                                  ; $8c92 : $af, $46, $d0, $7f
+	lda wFragmentCopyMetatileDestCol.l                                                  ; $8c92 : $af, $46, $d0, $7f
 	xba                                                  ; $8c96 : $eb
-	lda $7fd047.l                                                  ; $8c97 : $af, $47, $d0, $7f
+	lda wFragmentCopyMetatileDestRow.l                                                  ; $8c97 : $af, $47, $d0, $7f
 	jsr XequMetatileOffsRowAColB.w                                                  ; $8c9b : $20, $f7, $f9
 	stx $54                                                  ; $8c9e : $86, $54
 	rep #ACCU_8                                                  ; $8ca0 : $c2, $20
@@ -1835,7 +1844,7 @@ Call_03_8c8a:
 	tdc                                                  ; $8cb6 : $7b
 	lda wRoomMetatilesWide.w                                                  ; $8cb7 : $ad, $b9, $05
 	sec                                                  ; $8cba : $38
-	sbc $7fd04c.l                                                  ; $8cbb : $ef, $4c, $d0, $7f
+	sbc wFragmentCopyNumMetatileCols.l                                                  ; $8cbb : $ef, $4c, $d0, $7f
 	rep #ACCU_8                                                  ; $8cbf : $c2, $20
 	sta $54                                                  ; $8cc1 : $85, $54
 	asl                                                  ; $8cc3 : $0a
@@ -1848,11 +1857,11 @@ Call_03_8c8a:
 	plb                                                  ; $8cd1 : $ab
 	lda #$7f.b                                                  ; $8cd2 : $a9, $7f
 	sta $62                                                  ; $8cd4 : $85, $62
-	lda $7fd04d.l                                                  ; $8cd6 : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $8cd6 : $af, $4d, $d0, $7f
 	sta $57                                                  ; $8cda : $85, $57
 
 br_03_8cdc:
-	lda $7fd04c.l                                                  ; $8cdc : $af, $4c, $d0, $7f
+	lda wFragmentCopyNumMetatileCols.l                                                  ; $8cdc : $af, $4c, $d0, $7f
 	sta $56                                                  ; $8ce0 : $85, $56
 
 br_03_8ce2:
@@ -2186,9 +2195,9 @@ Call_03_8e85:
 	pha                                                  ; $8e8a : $48
 	plb                                                  ; $8e8b : $ab
 	rep #ACCU_8                                                  ; $8e8c : $c2, $20
-	lda $d046.w                                                  ; $8e8e : $ad, $46, $d0
+	lda wFragmentCopyMetatileDestCol.w                                                  ; $8e8e : $ad, $46, $d0
 	sta wCameraTopLeftX                                                  ; $8e91 : $85, $9f
-	lda $d04c.w                                                  ; $8e93 : $ad, $4c, $d0
+	lda wFragmentCopyNumMetatileCols.w                                                  ; $8e93 : $ad, $4c, $d0
 	clc                                                  ; $8e96 : $18
 	adc wCameraTopLeftX                                                  ; $8e97 : $65, $9f
 	sta wCameraTopLeftY                                                  ; $8e99 : $85, $a1
@@ -2270,7 +2279,7 @@ Call_03_8e85:
 	clc                                                  ; $8f16 : $18
 	adc $838ff0.l, X                                                  ; $8f17 : $7f, $f0, $8f, $83
 	sta $54                                                  ; $8f1b : $85, $54
-	lda $d008.w, X                                                  ; $8f1d : $bd, $08, $d0
+	lda wBGMetatileOffsets.w, X                                                  ; $8f1d : $bd, $08, $d0
 	sta $56                                                  ; $8f20 : $85, $56
 	sep #ACCU_8                                                  ; $8f22 : $e2, $20
 	lda #$7e.b                                                  ; $8f24 : $a9, $7e
@@ -2336,7 +2345,7 @@ Call_03_8e85:
 	and #$3000.w                                                  ; $8f84 : $29, $00, $30
 	cmp #$3000.w                                                  ; $8f87 : $c9, $00, $30
 	bne +                                                  ; $8f8a : $d0, $03
-	ldx $d008.w                                                  ; $8f8c : $ae, $08, $d0
+	ldx wBGMetatileOffsets.w                                                  ; $8f8c : $ae, $08, $d0
 
 ; get metatile idx * 8
 +	lda $0000.w, X                                                  ; $8f8f : $bd, $00, $00
@@ -10346,9 +10355,9 @@ br_03_c3f7:
 	jsr Call_03_bf33.w                                                  ; $c3f7 : $20, $33, $bf
 	tdc                                                  ; $c3fa : $7b
 	lda $8f                                                  ; $c3fb : $a5, $8f
-	sta $7fd046.l                                                  ; $c3fd : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $c3fd : $8f, $46, $d0, $7f
 	lda $91                                                  ; $c401 : $a5, $91
-	sta $7fd047.l                                                  ; $c403 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $c403 : $8f, $47, $d0, $7f
 	jsr Call_03_fb51.l                                                  ; $c407 : $22, $51, $fb, $83
 	bit #$01.b                                                  ; $c40b : $89, $01
 	rts                                                  ; $c40d : $60
@@ -16168,9 +16177,9 @@ br_03_eaea:
 	bne br_03_eb34                                                  ; $eb19 : $d0, $19
 
 	lda $8f                                                  ; $eb1b : $a5, $8f
-	sta $7fd046.l                                                  ; $eb1d : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $eb1d : $8f, $46, $d0, $7f
 	lda $91                                                  ; $eb21 : $a5, $91
-	sta $7fd047.l                                                  ; $eb23 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $eb23 : $8f, $47, $d0, $7f
 	jsr Call_03_fb51.l                                                  ; $eb27 : $22, $51, $fb, $83
 	bit #$20.b                                                  ; $eb2b : $89, $20
 	beq br_03_eb34                                                  ; $eb2d : $f0, $05
@@ -16758,9 +16767,9 @@ br_03_ef50:
 
 	phy                                                  ; $ef58 : $5a
 	lda $8f                                                  ; $ef59 : $a5, $8f
-	sta $7fd046.l                                                  ; $ef5b : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $ef5b : $8f, $46, $d0, $7f
 	lda $91                                                  ; $ef5f : $a5, $91
-	sta $7fd047.l                                                  ; $ef61 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $ef61 : $8f, $47, $d0, $7f
 	lda #$02.b                                                  ; $ef65 : $a9, $02
 	jsr Call_03_f4b4.w                                                  ; $ef67 : $20, $b4, $f4
 	ply                                                  ; $ef6a : $7a
@@ -17427,35 +17436,35 @@ br_03_f3fd:
 
 Call_03_f422:
 	lda $8f                                                  ; $f422 : $a5, $8f
-	sta $7fd046.l                                                  ; $f424 : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $f424 : $8f, $46, $d0, $7f
 	lda $91                                                  ; $f428 : $a5, $91
 	sec                                                  ; $f42a : $38
-	sbc $7fd04d.l                                                  ; $f42b : $ef, $4d, $d0, $7f
+	sbc wFragmentCopyNumMetatileRows.l                                                  ; $f42b : $ef, $4d, $d0, $7f
 	ina                                                  ; $f42f : $1a
-	sta $7fd047.l                                                  ; $f430 : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $f430 : $8f, $47, $d0, $7f
 	rtl                                                  ; $f434 : $6b
 
 
 Call_03_f435:
 	lda $8f                                                  ; $f435 : $a5, $8f
-	sta $7fd046.l                                                  ; $f437 : $8f, $46, $d0, $7f
+	sta wFragmentCopyMetatileDestCol.l                                                  ; $f437 : $8f, $46, $d0, $7f
 	lda $91                                                  ; $f43b : $a5, $91
-	sta $7fd047.l                                                  ; $f43d : $8f, $47, $d0, $7f
+	sta wFragmentCopyMetatileDestRow.l                                                  ; $f43d : $8f, $47, $d0, $7f
 	rts                                                  ; $f441 : $60
 
 
-	lda $7fd046.l                                                  ; $f442 : $af, $46, $d0, $7f
+	lda wFragmentCopyMetatileDestCol.l                                                  ; $f442 : $af, $46, $d0, $7f
 	xba                                                  ; $f446 : $eb
-	lda $7fd047.l                                                  ; $f447 : $af, $47, $d0, $7f
+	lda wFragmentCopyMetatileDestRow.l                                                  ; $f447 : $af, $47, $d0, $7f
 	jsr Call_03_f9b6.w                                                  ; $f44b : $20, $b6, $f9
-	lda $7fd04d.l                                                  ; $f44e : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $f44e : $af, $4d, $d0, $7f
 	cmp #$02.b                                                  ; $f452 : $c9, $02
 	bne br_03_f47d                                                  ; $f454 : $d0, $27
 
 	lda $7e4000.l, X                                                  ; $f456 : $bf, $00, $40, $7e
 	and #$bf.b                                                  ; $f45a : $29, $bf
 	sta $7e4000.l, X                                                  ; $f45c : $9f, $00, $40, $7e
-	lda $7fd04c.l                                                  ; $f460 : $af, $4c, $d0, $7f
+	lda wFragmentCopyNumMetatileCols.l                                                  ; $f460 : $af, $4c, $d0, $7f
 	cmp #$02.b                                                  ; $f464 : $c9, $02
 	bne br_03_f472                                                  ; $f466 : $d0, $0a
 
@@ -17475,7 +17484,7 @@ br_03_f47d:
 	lda $7e4000.l, X                                                  ; $f47d : $bf, $00, $40, $7e
 	and #$f7.b                                                  ; $f481 : $29, $f7
 	sta $7e4000.l, X                                                  ; $f483 : $9f, $00, $40, $7e
-	lda $7fd04c.l                                                  ; $f487 : $af, $4c, $d0, $7f
+	lda wFragmentCopyNumMetatileCols.l                                                  ; $f487 : $af, $4c, $d0, $7f
 	cmp #$02.b                                                  ; $f48b : $c9, $02
 	bne br_03_f499                                                  ; $f48d : $d0, $0a
 
@@ -17652,7 +17661,7 @@ br_03_f5b8:
 Call_03_f5b9:
 	ldx wCurrChar                                                  ; $f5b9 : $a6, $a7
 	lda $7fe5a6.l, X                                                  ; $f5bb : $bf, $a6, $e5, $7f
-	jsr Call_03_8b40.l                                                  ; $f5bf : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $f5bf : $22, $40, $8b, $83
 	jsr Call_03_f7f8.w                                                  ; $f5c3 : $20, $f8, $f7
 	rep #ACCU_8                                                  ; $f5c6 : $c2, $20
 	ldx wCurrEntity                                                  ; $f5c8 : $a6, $a9
@@ -17673,7 +17682,7 @@ Call_03_f5b9:
 Call_03_f5ea:
 	ldx wCurrChar                                                  ; $f5ea : $a6, $a7
 	lda $7fe5a6.l, X                                                  ; $f5ec : $bf, $a6, $e5, $7f
-	jsr Call_03_8b40.l                                                  ; $f5f0 : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $f5f0 : $22, $40, $8b, $83
 	jsr Call_03_f7f8.w                                                  ; $f5f4 : $20, $f8, $f7
 	rep #ACCU_8                                                  ; $f5f7 : $c2, $20
 	ldx wCurrEntity                                                  ; $f5f9 : $a6, $a9
@@ -17714,7 +17723,7 @@ Call_03_f620:
 	lda $54                                                  ; $f636 : $a5, $54
 	sta $7fe5ce.l, X                                                  ; $f638 : $9f, $ce, $e5, $7f
 	lda $7fe5a6.l, X                                                  ; $f63c : $bf, $a6, $e5, $7f
-	jsr Call_03_8b40.l                                                  ; $f640 : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $f640 : $22, $40, $8b, $83
 	jsr Call_03_f422.l                                                  ; $f644 : $22, $22, $f4, $83
 	lda #$f7.b                                                  ; $f648 : $a9, $f7
 	sta $54                                                  ; $f64a : $85, $54
@@ -17862,7 +17871,7 @@ Call_03_f747:
 	rep #ACCU_8                                                  ; $f75b : $c2, $20
 	lda $d5dc.w, Y                                                  ; $f75d : $b9, $dc, $d5
 	jsr Call_03_f784.w                                                  ; $f760 : $20, $84, $f7
-	lda $7fd04d.l                                                  ; $f763 : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $f763 : $af, $4d, $d0, $7f
 	and #$00ff.w                                                  ; $f767 : $29, $ff, $00
 	cmp #$0002.w                                                  ; $f76a : $c9, $02, $00
 	bne br_03_f780                                                  ; $f76d : $d0, $11
@@ -17895,9 +17904,9 @@ Call_03_f784:
 Call_03_f795:
 	lda wCurrChar                                                  ; $f795 : $a5, $a7
 	lda $7fe5a6.l, X                                                  ; $f797 : $bf, $a6, $e5, $7f
-	jsr Call_03_8b40.l                                                  ; $f79b : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $f79b : $22, $40, $8b, $83
 	jsr Call_03_f7f8.w                                                  ; $f79f : $20, $f8, $f7
-	jsr Call_03_8b6a.l                                                  ; $f7a2 : $22, $6a, $8b, $83
+	jsr CopyMetatileFragment.l                                                  ; $f7a2 : $22, $6a, $8b, $83
 	jsr Call_03_f933.w                                                  ; $f7a6 : $20, $33, $f9
 	jsr Call_03_f7df.w                                                  ; $f7a9 : $20, $df, $f7
 	jsr Call_03_f7d4.l                                                  ; $f7ac : $22, $d4, $f7, $83
@@ -17907,7 +17916,7 @@ Call_03_f795:
 Call_03_f7b1:
 	ldx wCurrChar                                                  ; $f7b1 : $a6, $a7
 	lda $7fe5a6.l, X                                                  ; $f7b3 : $bf, $a6, $e5, $7f
-	jsr Call_03_8b40.l                                                  ; $f7b7 : $22, $40, $8b, $83
+	jsr GetMetatileFragmentAsDetails.l                                                  ; $f7b7 : $22, $40, $8b, $83
 	jsr Call_03_f422.l                                                  ; $f7bb : $22, $22, $f4, $83
 	ldx wCurrChar                                                  ; $f7bf : $a6, $a7
 	lda $7fe5ce.l, X                                                  ; $f7c1 : $bf, $ce, $e5, $7f
@@ -17962,12 +17971,12 @@ Call_03_f80d:
 	sta $7e4000.l, X                                                  ; $f81a : $9f, $00, $40, $7e
 	lda $91                                                  ; $f81e : $a5, $91
 	sec                                                  ; $f820 : $38
-	sbc $7fd04d.l                                                  ; $f821 : $ef, $4d, $d0, $7f
+	sbc wFragmentCopyNumMetatileRows.l                                                  ; $f821 : $ef, $4d, $d0, $7f
 	ina                                                  ; $f825 : $1a
 	sta $91                                                  ; $f826 : $85, $91
 	stz $58                                                  ; $f828 : $64, $58
 	stz $59                                                  ; $f82a : $64, $59
-	lda $7fd04d.l                                                  ; $f82c : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $f82c : $af, $4d, $d0, $7f
 	cmp #$02.b                                                  ; $f830 : $c9, $02
 	clc                                                  ; $f832 : $18
 	bne br_03_f857                                                  ; $f833 : $d0, $22
@@ -18052,11 +18061,11 @@ br_03_f89c:
 	sta $d5dc.w, Y                                                  ; $f8ab : $99, $dc, $d5
 	sep #ACCU_8                                                  ; $f8ae : $e2, $20
 	txy                                                  ; $f8b0 : $9b
-	lda $d04a.w                                                  ; $f8b1 : $ad, $4a, $d0
+	lda wFragmentCopyMetatileSrcCol.w                                                  ; $f8b1 : $ad, $4a, $d0
 	xba                                                  ; $f8b4 : $eb
-	lda $d04b.w                                                  ; $f8b5 : $ad, $4b, $d0
+	lda wFragmentCopyMetatileSrcRow.w                                                  ; $f8b5 : $ad, $4b, $d0
 	clc                                                  ; $f8b8 : $18
-	adc $d04d.w                                                  ; $f8b9 : $6d, $4d, $d0
+	adc wFragmentCopyNumMetatileRows.w                                                  ; $f8b9 : $6d, $4d, $d0
 	dea                                                  ; $f8bc : $3a
 	jsr Call_03_f9d9.w                                                  ; $f8bd : $20, $d9, $f9
 	rep #ACCU_8                                                  ; $f8c0 : $c2, $20
@@ -18071,7 +18080,7 @@ br_03_f89c:
 	dec $91                                                  ; $f8d2 : $c6, $91
 	jsr Call_03_f9d4.w                                                  ; $f8d4 : $20, $d4, $f9
 	txy                                                  ; $f8d7 : $9b
-	lda $7fd04a.l                                                  ; $f8d8 : $af, $4a, $d0, $7f
+	lda wFragmentCopyMetatileSrcCol.l                                                  ; $f8d8 : $af, $4a, $d0, $7f
 	xba                                                  ; $f8dc : $eb
 	lda $7fd04b.l                                                  ; $f8dd : $af, $4b, $d0, $7f
 	jsr Call_03_f9d9.w                                                  ; $f8e1 : $20, $d9, $f9
@@ -18146,7 +18155,7 @@ Call_03_f933:
 	clc                                                  ; $f960 : $18
 	adc $58                                                  ; $f961 : $65, $58
 	sta $7fd4fa.l, X                                                  ; $f963 : $9f, $fa, $d4, $7f
-	lda $7fd04d.l                                                  ; $f967 : $af, $4d, $d0, $7f
+	lda wFragmentCopyNumMetatileRows.l                                                  ; $f967 : $af, $4d, $d0, $7f
 	and #$00ff.w                                                  ; $f96b : $29, $ff, $00
 	sta $7fd53a.l, X                                                  ; $f96e : $9f, $3a, $d5, $7f
 	txa                                                  ; $f972 : $8a
@@ -18606,11 +18615,11 @@ Call_03_fbf1:
 
 
 Call_03_fbfe:
-	lda $7fd046.l                                                  ; $fbfe : $af, $46, $d0, $7f
+	lda wFragmentCopyMetatileDestCol.l                                                  ; $fbfe : $af, $46, $d0, $7f
 	xba                                                  ; $fc02 : $eb
-	lda $7fd047.l                                                  ; $fc03 : $af, $47, $d0, $7f
+	lda wFragmentCopyMetatileDestRow.l                                                  ; $fc03 : $af, $47, $d0, $7f
 	clc                                                  ; $fc07 : $18
-	adc $7fd04d.l                                                  ; $fc08 : $6f, $4d, $d0, $7f
+	adc wFragmentCopyNumMetatileRows.l                                                  ; $fc08 : $6f, $4d, $d0, $7f
 	dea                                                  ; $fc0c : $3a
 	dea                                                  ; $fc0d : $3a
 	jsr Call_03_f9b6.w                                                  ; $fc0e : $20, $b6, $f9

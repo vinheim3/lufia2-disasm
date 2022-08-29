@@ -20835,7 +20835,7 @@ br_22_e9c5:
 	asl $07                                                  ; $e9d8 : $06, $07
 	ora $02, S                                                  ; $e9da : $03, $02
 	bit $20, X                                                  ; $e9dc : $34, $20
-	trb $d008.w                                                  ; $e9de : $1c, $08, $d0
+	trb wBGMetatileOffsets.w                                                  ; $e9de : $1c, $08, $d0
 	rts                                                  ; $e9e1 : $60
 
 
