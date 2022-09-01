@@ -404,7 +404,13 @@ wCurrSpellIdx: ; $0a0b
     db
 
 w0a0c:
-    ds $42-$c
+    ds $d-$c
+
+wSpellTextAddr: ; $0a0d
+    dw
+
+w0a0f:
+    ds $42-$f
 
 ; in the form of bank:0000
 wBaseInBattleEnemyScriptAddr: ; $0a42
@@ -422,7 +428,13 @@ wPartyCharTypeIdxes: ; $0a7b
     ds 4
 
 w0a7f:
-    ds $8d-$7f
+    ds $80-$7f
+
+wPtrsToPlayerStructs: ; $0a80
+    ds 8
+
+w0a88:
+    ds $d-8
 
 ; low 9 bits is inventory item, upper 7 bits>>1 = count
 ; since count is bcd, max is 127, though display will render as 27
@@ -443,13 +455,28 @@ wBufferedTextToDisplay: ; $0b77
     db
 
 w0b78:
-    ds $be-$78
+    ds $ad-$78
 
-wNotInCode_PlayerHealth: ; $0bbe
-    db
+wPlayerStructs: ; $0bad
+    .db
+; bbe is player health
+wPlayer1Struct: ; $0bad
+    ds $be
+wPlayer2Struct: ; $0c6b
+    ds $be
+wPlayer3Struct: ; $0d29
+    ds $be
+wPlayer4Struct: ; $0de7
+    ds $be
+wPlayer5Struct: ; $0ea5
+    ds $be
+wPlayer6Struct: ; $0f63
+    ds $be
+wPlayer7Struct: ; $1021
+    ds $be
 
-w0bbf:
-    ds $11a3-$bbf
+w10df:
+    ds $1a3-$df
 
 ; 0 to 6
 wCurrCapMon: ; $11a3

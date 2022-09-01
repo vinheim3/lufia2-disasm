@@ -2502,7 +2502,7 @@ br_17_93e7:
 	rol $9200.w                                                  ; $949e : $2e, $00, $92
 	jsr $bf11.w                                                  ; $94a1 : $20, $11, $bf
 	jsr $5d05.w                                                  ; $94a4 : $20, $05, $5d
-	jsr $0a80.w                                                  ; $94a7 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $94a7 : $20, $80, $0a
 	asl $ee                                                  ; $94aa : $06, $ee
 	jsr $c111.w                                                  ; $94ac : $20, $11, $c1
 	jsr $0406.w                                                  ; $94af : $20, $06, $04
@@ -2984,7 +2984,7 @@ Call_17_9805:
 	ora ($0a)                                                  ; $98b9 : $12, $0a
 	jsr $2085.w                                                  ; $98bb : $20, $85, $20
 	ora ($cd), Y                                                  ; $98be : $11, $cd
-	jsr $0a80.w                                                  ; $98c0 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $98c0 : $20, $80, $0a
 	ora ($14)                                                  ; $98c3 : $12, $14
 	jsr Call_17_a011.w                                                  ; $98c5 : $20, $11, $a0
 	rol $4100.w                                                  ; $98c8 : $2e, $00, $41
@@ -4532,7 +4532,7 @@ br_17_a55c:
 
 br_17_a57f:
 	jsr Call_17_cd11.w                                                  ; $a57f : $20, $11, $cd
-	jsr $0a80.w                                                  ; $a582 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $a582 : $20, $80, $0a
 	ora ($3d), Y                                                  ; $a585 : $11, $3d
 	jsr $2061.w                                                  ; $a587 : $20, $61, $20
 	asl $28                                                  ; $a58a : $06, $28
@@ -4882,7 +4882,7 @@ br_17_a804:
 
 	rol $8400.w                                                  ; $a80f : $2e, $00, $84
 	jsr Call_17_cd11.w                                                  ; $a812 : $20, $11, $cd
-	jsr $0a80.w                                                  ; $a815 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $a815 : $20, $80, $0a
 	ora ($c1), Y                                                  ; $a818 : $11, $c1
 	jsr $6c11.w                                                  ; $a81a : $20, $11, $6c
 	jsr $20ad.w                                                  ; $a81d : $20, $ad, $20
@@ -4893,7 +4893,7 @@ br_17_a804:
 	jsr $f510.w                                                  ; $a828 : $20, $10, $f5
 	rol $8400.w                                                  ; $a82b : $2e, $00, $84
 	jsr Call_17_cd11.w                                                  ; $a82e : $20, $11, $cd
-	jsr $0a80.w                                                  ; $a831 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $a831 : $20, $80, $0a
 	ora ($c1), Y                                                  ; $a834 : $11, $c1
 	jsr $6c11.w                                                  ; $a836 : $20, $11, $6c
 	jsr $20ad.w                                                  ; $a839 : $20, $ad, $20
@@ -4904,7 +4904,7 @@ br_17_a804:
 	jsr $f510.w                                                  ; $a844 : $20, $10, $f5
 	rol $8400.w                                                  ; $a847 : $2e, $00, $84
 	jsr Call_17_cd11.w                                                  ; $a84a : $20, $11, $cd
-	jsr $0a80.w                                                  ; $a84d : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $a84d : $20, $80, $0a
 	ora ($c1), Y                                                  ; $a850 : $11, $c1
 	jsr $6c11.w                                                  ; $a852 : $20, $11, $6c
 	jsr $20ad.w                                                  ; $a855 : $20, $ad, $20
@@ -4915,7 +4915,7 @@ br_17_a804:
 	jsr $f510.w                                                  ; $a860 : $20, $10, $f5
 	rol $8400.w                                                  ; $a863 : $2e, $00, $84
 	jsr Call_17_cd11.w                                                  ; $a866 : $20, $11, $cd
-	jsr $0a80.w                                                  ; $a869 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $a869 : $20, $80, $0a
 	ora ($c1), Y                                                  ; $a86c : $11, $c1
 	jsr $6c11.w                                                  ; $a86e : $20, $11, $6c
 	jsr $20ad.w                                                  ; $a871 : $20, $ad, $20
@@ -4927,7 +4927,7 @@ br_17_a804:
 	jsr $f510.w                                                  ; $a87e : $20, $10, $f5
 	rol $8400.w                                                  ; $a881 : $2e, $00, $84
 	jsr Call_17_cd11.w                                                  ; $a884 : $20, $11, $cd
-	jsr $0a80.w                                                  ; $a887 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $a887 : $20, $80, $0a
 	ora ($c1), Y                                                  ; $a88a : $11, $c1
 	jsr $6c11.w                                                  ; $a88c : $20, $11, $6c
 	jsr $20ad.w                                                  ; $a88f : $20, $ad, $20
@@ -5693,7 +5693,7 @@ br_17_aec5:
 	.db $00                                                  ; $aefb : $00
 	sty $20                                                  ; $aefc : $84, $20
 	ora ($cd), Y                                                  ; $aefe : $11, $cd
-	jsr $0a80.w                                                  ; $af00 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $af00 : $20, $80, $0a
 
 br_17_af03:
 	ora ($3d), Y                                                  ; $af03 : $11, $3d
@@ -5702,7 +5702,7 @@ Call_17_af05:
 	jsr $3b05.w                                                  ; $af05 : $20, $05, $3b
 	jsr $5305.w                                                  ; $af08 : $20, $05, $53
 	rol $8400.w                                                  ; $af0b : $2e, $00, $84
-	jsr $0a80.w                                                  ; $af0e : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $af0e : $20, $80, $0a
 	dec $1120.w                                                  ; $af11 : $ce, $20, $11
 	and $0620.w, X                                                  ; $af14 : $3d, $20, $06
 	rol                                                  ; $af17 : $2a
@@ -5826,7 +5826,7 @@ br_17_affd:
 
 Call_17_b011:
 	ora ($cd), Y                                                  ; $b011 : $11, $cd
-	jsr $0a80.w                                                  ; $b013 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $b013 : $20, $80, $0a
 	ora ($3d), Y                                                  ; $b016 : $11, $3d
 	jsr $20f5.w                                                  ; $b018 : $20, $f5, $20
 	ora ($c1), Y                                                  ; $b01b : $11, $c1
@@ -5835,7 +5835,7 @@ Call_17_b011:
 	.db $00                                                  ; $b022 : $00
 	sty $20                                                  ; $b023 : $84, $20
 	ora ($cd), Y                                                  ; $b025 : $11, $cd
-	jsr $0a80.w                                                  ; $b027 : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $b027 : $20, $80, $0a
 	ora ($3d), Y                                                  ; $b02a : $11, $3d
 	jsr $2097.w                                                  ; $b02c : $20, $97, $20
 	ora ($c1), Y                                                  ; $b02f : $11, $c1
@@ -5846,7 +5846,7 @@ br_17_b034:
 	.db $00                                                  ; $b036 : $00
 	sty $20                                                  ; $b037 : $84, $20
 	ora ($cd), Y                                                  ; $b039 : $11, $cd
-	jsr $0a80.w                                                  ; $b03b : $20, $80, $0a
+	jsr wPtrsToPlayerStructs.w                                                  ; $b03b : $20, $80, $0a
 	ora ($3d), Y                                                  ; $b03e : $11, $3d
 	jsr $2098.w                                                  ; $b040 : $20, $98, $20
 	ora ($c1), Y                                                  ; $b043 : $11, $c1

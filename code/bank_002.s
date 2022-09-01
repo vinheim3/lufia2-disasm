@@ -866,9 +866,13 @@ LoadInventoryItem:
 
 
 Call_02_8526:
-	lda #$858e.w                                                  ; $8526 : $a9, $8e, $85
-	eor $c200a4.l, X                                                  ; $8529 : $5f, $a4, $00, $c2
-	jsr $11a5.w                                                  ; $852d : $20, $a5, $11
+	lda #$8e.b                                                  ; $8526 : $a9, $8e
+	sta $5f                                                  ; $8528 : $85, $5f
+	ldy $00                                                  ; $852a : $a4, $00
+	rep #ACCU_8                                                  ; $852c : $c2, $20
+
+@loop_852e:
+	lda $11                                                  ; $852e : $a5, $11
 	jsr Call_02_854f.w                                                  ; $8530 : $20, $4f, $85
 	lda $11                                                  ; $8533 : $a5, $11
 	clc                                                  ; $8535 : $18
@@ -879,7 +883,7 @@ Call_02_8526:
 	adc #$0080.w                                                  ; $853f : $69, $80, $00
 	sta $11                                                  ; $8542 : $85, $11
 	dec $15                                                  ; $8544 : $c6, $15
-	.db $d0, $e6                                                  ; $8546 : $d0, $e6
+	bne @loop_852e                                                  ; $8546 : $d0, $e6
 
 	sep #ACCU_8                                                  ; $8548 : $e2, $20
 	lda #$08.b                                                  ; $854a : $a9, $08
@@ -4156,7 +4160,7 @@ br_02_9958:
 	rtl                                                  ; $9970 : $6b
 
 
-Call_02_9971:
+SetCurrPlayerStructAddr:
 	phy                                                  ; $9971 : $5a
 	php                                                  ; $9972 : $08
 	rep #ACCU_8|IDX_8                                                  ; $9973 : $c2, $30
@@ -4164,7 +4168,7 @@ Call_02_9971:
 	and #$00ff.w                                                  ; $9977 : $29, $ff, $00
 	asl                                                  ; $997a : $0a
 	tay                                                  ; $997b : $a8
-	lda $0a80.w, Y                                                  ; $997c : $b9, $80, $0a
+	lda wPtrsToPlayerStructs.w, Y                                                  ; $997c : $b9, $80, $0a
 	sta $2a                                                  ; $997f : $85, $2a
 	plp                                                  ; $9981 : $28
 	ply                                                  ; $9982 : $7a
@@ -4194,7 +4198,7 @@ br_02_99a5:
 	txa                                                  ; $99a7 : $8a
 	asl                                                  ; $99a8 : $0a
 	tay                                                  ; $99a9 : $a8
-	lda $0a80.w, Y                                                  ; $99aa : $b9, $80, $0a
+	lda wPtrsToPlayerStructs.w, Y                                                  ; $99aa : $b9, $80, $0a
 	tay                                                  ; $99ad : $a8
 	sep #ACCU_8                                                  ; $99ae : $e2, $20
 	jsr Call_02_99be.w                                                  ; $99b0 : $20, $be, $99
@@ -4298,7 +4302,7 @@ br_02_9a2d:
 	stz $1448.w, X                                                  ; $9a40 : $9e, $48, $14
 	lda $1208.w, Y                                                  ; $9a43 : $b9, $08, $12
 	jsr $868cf5.l                                                  ; $9a46 : $22, $f5, $8c, $86
-	jsr Call_02_9971.w                                                  ; $9a4a : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $9a4a : $20, $71, $99
 	rts                                                  ; $9a4d : $60
 
 
@@ -4790,7 +4794,7 @@ Call_02_9e67:
 	sep #ACCU_8                                                  ; $9e88 : $e2, $20
 	lda $14b3.w                                                  ; $9e8a : $ad, $b3, $14
 	sta $22                                                  ; $9e8d : $85, $22
-	jsr Call_02_9971.w                                                  ; $9e8f : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $9e8f : $20, $71, $99
 	lda #$02.b                                                  ; $9e92 : $a9, $02
 	jsr Call_02_a318.w                                                  ; $9e94 : $20, $18, $a3
 	ldx #$0004.w                                                  ; $9e97 : $a2, $04, $00
@@ -5298,7 +5302,7 @@ br_02_a34a:
 	lda $22                                                  ; $a34c : $a5, $22
 	asl                                                  ; $a34e : $0a
 	tax                                                  ; $a34f : $aa
-	lda $0a80.w, X                                                  ; $a350 : $bd, $80, $0a
+	lda wPtrsToPlayerStructs.w, X                                                  ; $a350 : $bd, $80, $0a
 	sta $2a                                                  ; $a353 : $85, $2a
 	lda $82a36b.l, X                                                  ; $a355 : $bf, $6b, $a3, $82
 	tax                                                  ; $a359 : $aa
@@ -5355,7 +5359,7 @@ br_02_a34a:
 	jsr Func_0_8878.l                                                  ; $a3d0 : $22, $78, $88, $80
 	.db $80, $57                                                  ; $a3d4 : $80, $57
 
-	jsr Call_02_9971.w                                                  ; $a3d6 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $a3d6 : $20, $71, $99
 	jsr Call_02_f9c9.w                                                  ; $a3d9 : $20, $c9, $f9
 	ldx #$308a.w                                                  ; $a3dc : $a2, $8a, $30
 	jsr Call_02_94c0.w                                                  ; $a3df : $20, $c0, $94
@@ -5382,7 +5386,7 @@ br_02_a405:
 	and #$00ff.w                                                  ; $a408 : $29, $ff, $00
 	asl                                                  ; $a40b : $0a
 	tax                                                  ; $a40c : $aa
-	lda $0a80.w, X                                                  ; $a40d : $bd, $80, $0a
+	lda wPtrsToPlayerStructs.w, X                                                  ; $a40d : $bd, $80, $0a
 	sta $2a                                                  ; $a410 : $85, $2a
 	lda $82a425.l, X                                                  ; $a412 : $bf, $25, $a4, $82
 	tax                                                  ; $a416 : $aa
@@ -5734,7 +5738,7 @@ Call_02_a62d:
 	jsr Call_02_838f.w                                                  ; $a641 : $20, $8f, $83
 	lda $14b3.w                                                  ; $a644 : $ad, $b3, $14
 	sta $22                                                  ; $a647 : $85, $22
-	jsr Call_02_9971.w                                                  ; $a649 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $a649 : $20, $71, $99
 	lda #$01.b                                                  ; $a64c : $a9, $01
 	sta $30                                                  ; $a64e : $85, $30
 	jsr Call_02_e746.l                                                  ; $a650 : $22, $46, $e7, $82
@@ -7693,7 +7697,7 @@ Call_02_b2c5:
 
 	lda $14b3.w                                                  ; $b2d0 : $ad, $b3, $14
 	sta $22                                                  ; $b2d3 : $85, $22
-	jsr Call_02_9971.w                                                  ; $b2d5 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $b2d5 : $20, $71, $99
 	rep #ACCU_8                                                  ; $b2d8 : $c2, $20
 	jsr Call_02_f87d.w                                                  ; $b2da : $20, $7d, $f8
 	cmp #$0000.w                                                  ; $b2dd : $c9, $00, $00
@@ -7798,7 +7802,7 @@ br_02_b373:
 	lda $14b3.w                                                  ; $b37f : $ad, $b3, $14
 	asl                                                  ; $b382 : $0a
 	tay                                                  ; $b383 : $a8
-	lda $0a80.w, Y                                                  ; $b384 : $b9, $80, $0a
+	lda wPtrsToPlayerStructs.w, Y                                                  ; $b384 : $b9, $80, $0a
 	tay                                                  ; $b387 : $a8
 	sep #ACCU_8                                                  ; $b388 : $e2, $20
 	lda $000f.w, Y                                                  ; $b38a : $b9, $0f, $00
@@ -7813,7 +7817,7 @@ br_02_b396:
 	stx $151b.w                                                  ; $b399 : $8e, $1b, $15
 	lda $8ed8bb.l, X                                                  ; $b39c : $bf, $bb, $d8, $8e
 	sta $0a03.w                                                  ; $b3a0 : $8d, $03, $0a
-	jsr Call_02_b5ed.w                                                  ; $b3a3 : $20, $ed, $b5
+	jsr SetCurrPlayersSpellsAddr.w                                                  ; $b3a3 : $20, $ed, $b5
 	jsr Call_02_9984.w                                                  ; $b3a6 : $20, $84, $99
 	jsr Call_02_a658.w                                                  ; $b3a9 : $20, $58, $a6
 
@@ -8044,7 +8048,7 @@ br_02_b511:
 	lda #$01.b                                                  ; $b514 : $a9, $01
 	jsr Call_02_a318.w                                                  ; $b516 : $20, $18, $a3
 	jsr $868b55.l                                                  ; $b519 : $22, $55, $8b, $86
-	jsr Call_02_b5ed.w                                                  ; $b51d : $20, $ed, $b5
+	jsr SetCurrPlayersSpellsAddr.w                                                  ; $b51d : $20, $ed, $b5
 	jsr Call_02_ac84.w                                                  ; $b520 : $20, $84, $ac
 	jsr Call_02_9588.w                                                  ; $b523 : $20, $88, $95
 	jsr Call_02_95bf.w                                                  ; $b526 : $20, $bf, $95
@@ -8174,14 +8178,18 @@ br_02_b5eb:
 	rts                                                  ; $b5ec : $60
 
 
-Call_02_b5ed:
+SetCurrPlayersSpellsAddr:
 	rep #ACCU_8                                                  ; $b5ed : $c2, $20
 	lda $151b.w                                                  ; $b5ef : $ad, $1b, $15
 	sta $22                                                  ; $b5f2 : $85, $22
-	jsr Call_02_9971.w                                                  ; $b5f4 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $b5f4 : $20, $71, $99
+
+;
 	ldy $2a                                                  ; $b5f7 : $a4, $2a
 	lda $0013.w, Y                                                  ; $b5f9 : $b9, $13, $00
 	sta $151d.w                                                  ; $b5fc : $8d, $1d, $15
+
+; +96 is spell
 	lda $2a                                                  ; $b5ff : $a5, $2a
 	clc                                                  ; $b601 : $18
 	adc #$0096.w                                                  ; $b602 : $69, $96, $00
@@ -8229,7 +8237,7 @@ br_02_b639:
 	sta $14b3.w                                                  ; $b641 : $8d, $b3, $14
 	asl                                                  ; $b644 : $0a
 	tax                                                  ; $b645 : $aa
-	ldy $0a80.w, X                                                  ; $b646 : $bc, $80, $0a
+	ldy wPtrsToPlayerStructs.w, X                                                  ; $b646 : $bc, $80, $0a
 	sep #ACCU_8                                                  ; $b649 : $e2, $20
 	lda $000f.w, Y                                                  ; $b64b : $b9, $0f, $00
 	bit #$04.b                                                  ; $b64e : $89, $04
@@ -8246,7 +8254,7 @@ br_02_b639:
 	ldx $14b3.w                                                  ; $b668 : $ae, $b3, $14
 	lda $8ed8bb.l, X                                                  ; $b66b : $bf, $bb, $d8, $8e
 	sta $0a03.w                                                  ; $b66f : $8d, $03, $0a
-	jsr Call_02_b5ed.w                                                  ; $b672 : $20, $ed, $b5
+	jsr SetCurrPlayersSpellsAddr.w                                                  ; $b672 : $20, $ed, $b5
 	jsr Call_02_9984.w                                                  ; $b675 : $20, $84, $99
 	jsr Call_02_ac84.w                                                  ; $b678 : $20, $84, $ac
 
@@ -8327,12 +8335,12 @@ Call_02_b6ef:
 	asl                                                  ; $b6f9 : $0a
 	tay                                                  ; $b6fa : $a8
 	rep #ACCU_8                                                  ; $b6fb : $c2, $20
-	lda $0a80.w, X                                                  ; $b6fd : $bd, $80, $0a
+	lda wPtrsToPlayerStructs.w, X                                                  ; $b6fd : $bd, $80, $0a
 	sta $00                                                  ; $b700 : $85, $00
-	lda $0a80.w, Y                                                  ; $b702 : $b9, $80, $0a
-	sta $0a80.w, X                                                  ; $b705 : $9d, $80, $0a
+	lda wPtrsToPlayerStructs.w, Y                                                  ; $b702 : $b9, $80, $0a
+	sta wPtrsToPlayerStructs.w, X                                                  ; $b705 : $9d, $80, $0a
 	lda $00                                                  ; $b708 : $a5, $00
-	sta $0a80.w, Y                                                  ; $b70a : $99, $80, $0a
+	sta wPtrsToPlayerStructs.w, Y                                                  ; $b70a : $99, $80, $0a
 	sep #ACCU_8                                                  ; $b70d : $e2, $20
 	ldx $14af.w                                                  ; $b70f : $ae, $af, $14
 	ldy $14b0.w                                                  ; $b712 : $ac, $b0, $14
@@ -13355,7 +13363,7 @@ Call_02_da13:
 	stz $22                                                  ; $da36 : $64, $22
 
 br_02_da38:
-	jsr Call_02_9971.w                                                  ; $da38 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $da38 : $20, $71, $99
 	ldy $1523.w                                                  ; $da3b : $ac, $23, $15
 	lda ($2a), Y                                                  ; $da3e : $b1, $2a
 	and #$ff.b                                                  ; $da40 : $29, $ff
@@ -14225,7 +14233,7 @@ br_02_dfd9:
 br_02_dfee:
 	lda $14b3.w                                                  ; $dfee : $ad, $b3, $14
 	sta $22                                                  ; $dff1 : $85, $22
-	jsr Call_02_9971.w                                                  ; $dff3 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $dff3 : $20, $71, $99
 	rep #ACCU_8                                                  ; $dff6 : $c2, $20
 	jsr Call_02_f6f2.w                                                  ; $dff8 : $20, $f2, $f6
 	jsr Call_02_f893.w                                                  ; $dffb : $20, $93, $f8
@@ -14479,7 +14487,7 @@ br_02_e170:
 	bcc br_02_e1c9                                                  ; $e191 : $90, $36
 
 	jsr Call_02_983d.w                                                  ; $e193 : $20, $3d, $98
-	jsr Call_02_9971.w                                                  ; $e196 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $e196 : $20, $71, $99
 	jsr Call_02_e1de.w                                                  ; $e199 : $20, $de, $e1
 	bra br_02_e1d9                                                  ; $e19c : $80, $3b
 
@@ -15003,7 +15011,7 @@ Call_02_e4d5:
 
 br_02_e4e8:
 	phx                                                  ; $e4e8 : $da
-	lda $0a80.w, X                                                  ; $e4e9 : $bd, $80, $0a
+	lda wPtrsToPlayerStructs.w, X                                                  ; $e4e9 : $bd, $80, $0a
 	clc                                                  ; $e4ec : $18
 	adc #$0029.w                                                  ; $e4ed : $69, $29, $00
 	sta $2a                                                  ; $e4f0 : $85, $2a
@@ -15071,7 +15079,7 @@ br_02_e550:
 
 br_02_e553:
 	phx                                                  ; $e553 : $da
-	lda $0a80.w, X                                                  ; $e554 : $bd, $80, $0a
+	lda wPtrsToPlayerStructs.w, X                                                  ; $e554 : $bd, $80, $0a
 	sta $2a                                                  ; $e557 : $85, $2a
 	txa                                                  ; $e559 : $8a
 	lsr                                                  ; $e55a : $4a
@@ -15113,7 +15121,7 @@ Call_02_e586:
 
 br_02_e593:
 	phx                                                  ; $e593 : $da
-	lda $0a80.w, X                                                  ; $e594 : $bd, $80, $0a
+	lda wPtrsToPlayerStructs.w, X                                                  ; $e594 : $bd, $80, $0a
 	sta $2a                                                  ; $e597 : $85, $2a
 	jsr Call_02_e5ac.w                                                  ; $e599 : $20, $ac, $e5
 	ldx $2a                                                  ; $e59c : $a6, $2a
@@ -15167,7 +15175,7 @@ Call_02_e5e1:
 
 br_02_e5ee:
 	phx                                                  ; $e5ee : $da
-	lda $0a80.w, X                                                  ; $e5ef : $bd, $80, $0a
+	lda wPtrsToPlayerStructs.w, X                                                  ; $e5ef : $bd, $80, $0a
 	sta $2a                                                  ; $e5f2 : $85, $2a
 	clc                                                  ; $e5f4 : $18
 	adc #$0029.w                                                  ; $e5f5 : $69, $29, $00
@@ -15556,7 +15564,7 @@ br_02_e85e:
 	stz $22                                                  ; $e895 : $64, $22
 
 br_02_e897:
-	jsr Call_02_9971.w                                                  ; $e897 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $e897 : $20, $71, $99
 	jsr Call_02_f846.w                                                  ; $e89a : $20, $46, $f8
 	ldx $2a                                                  ; $e89d : $a6, $2a
 	jsr $81f4d5.l                                                  ; $e89f : $22, $d5, $f4, $81
@@ -15748,7 +15756,7 @@ br_02_e9f6:
 	jsr $868b32.l                                                  ; $ea08 : $22, $32, $8b, $86
 	jsr Call_02_838f.w                                                  ; $ea0c : $20, $8f, $83
 	stz $22                                                  ; $ea0f : $64, $22
-	jsr Call_02_9971.w                                                  ; $ea11 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $ea11 : $20, $71, $99
 	lda $14b3.w                                                  ; $ea14 : $ad, $b3, $14
 	sta $0b51.w                                                  ; $ea17 : $8d, $51, $0b
 	jmp Jump_02_ebf2.w                                                  ; $ea1a : $4c, $f2, $eb
@@ -15828,7 +15836,7 @@ br_02_ea84:
 	jsr $868b32.l                                                  ; $ea84 : $22, $32, $8b, $86
 	jsr Call_02_838f.w                                                  ; $ea88 : $20, $8f, $83
 	stz $22                                                  ; $ea8b : $64, $22
-	jsr Call_02_9971.w                                                  ; $ea8d : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $ea8d : $20, $71, $99
 	plx                                                  ; $ea90 : $fa
 	stz $0b51.w                                                  ; $ea91 : $9c, $51, $0b
 	jmp Jump_02_ebf2.w                                                  ; $ea94 : $4c, $f2, $eb
@@ -16230,7 +16238,7 @@ br_02_ecf3:
 br_02_ecfc:
 	ldx $14b3.w                                                  ; $ecfc : $ae, $b3, $14
 	stx $22                                                  ; $ecff : $86, $22
-	jsr Call_02_9971.w                                                  ; $ed01 : $20, $71, $99
+	jsr SetCurrPlayerStructAddr.w                                                  ; $ed01 : $20, $71, $99
 	lda $31                                                  ; $ed04 : $a5, $31
 	bne br_02_ed13                                                  ; $ed06 : $d0, $0b
 

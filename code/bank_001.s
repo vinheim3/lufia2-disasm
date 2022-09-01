@@ -68,7 +68,7 @@ Call_01_8000:
 	txa                                                  ; $8088 : $8a
 	asl                                                  ; $8089 : $0a
 	tay                                                  ; $808a : $a8
-	lda $0a80.w, Y                                                  ; $808b : $b9, $80, $0a
+	lda wPtrsToPlayerStructs.w, Y                                                  ; $808b : $b9, $80, $0a
 	sta $0a64.w, Y                                                  ; $808e : $99, $64, $0a
 	tay                                                  ; $8091 : $a8
 	sep #ACCU_8                                                  ; $8092 : $e2, $20
@@ -5886,7 +5886,7 @@ br_01_a9ae:
 	adc #$12.b                                                  ; $a9bb : $69, $12
 	sta $1262.w                                                  ; $a9bd : $8d, $62, $12
 	jsr BufferSpellTextDisplay.l                                                  ; $a9c0 : $22, $14, $f4, $81
-	ldy $0a0d.w                                                  ; $a9c4 : $ac, $0d, $0a
+	ldy wSpellTextAddr.w                                                  ; $a9c4 : $ac, $0d, $0a
 	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $a9c7 : $8c, $42, $0a
 	lda #$95.b                                                  ; $a9ca : $a9, $95
 	sta wBaseInBattleEnemyScriptBank.w                                                  ; $a9cc : $8d, $44, $0a
@@ -6662,7 +6662,7 @@ br_01_af5e:
 	adc #$12.b                                                  ; $afa4 : $69, $12
 	sta $1262.w                                                  ; $afa6 : $8d, $62, $12
 	jsr BufferSpellTextDisplay.l                                                  ; $afa9 : $22, $14, $f4, $81
-	ldy $0a0d.w                                                  ; $afad : $ac, $0d, $0a
+	ldy wSpellTextAddr.w                                                  ; $afad : $ac, $0d, $0a
 	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $afb0 : $8c, $42, $0a
 	lda #$95.b                                                  ; $afb3 : $a9, $95
 	sta wBaseInBattleEnemyScriptBank.w                                                  ; $afb5 : $8d, $44, $0a
@@ -16121,7 +16121,7 @@ br_01_eca4:
 	jsr Call_01_f7bd.w                                                  ; $ecb1 : $20, $bd, $f7
 	txa                                                  ; $ecb4 : $8a
 	plx                                                  ; $ecb5 : $fa
-	sta $0a80.w, X                                                  ; $ecb6 : $9d, $80, $0a
+	sta wPtrsToPlayerStructs.w, X                                                  ; $ecb6 : $9d, $80, $0a
 
 br_01_ecb9:
 	iny                                                  ; $ecb9 : $c8
@@ -16160,19 +16160,19 @@ br_01_ecb9:
 	inx                                                  ; $ecec : $e8
 	stz wHitEnemyIdx.w                                                  ; $eced : $9c, $fa, $09
 	ldy #$0bad.w                                                  ; $ecf0 : $a0, $ad, $0b
-	jsr Call_01_ed8e.w                                                  ; $ecf3 : $20, $8e, $ed
+	jsr InitPlayersVars.w                                                  ; $ecf3 : $20, $8e, $ed
 	ldy #$0c6b.w                                                  ; $ecf6 : $a0, $6b, $0c
-	jsr Call_01_ed8e.w                                                  ; $ecf9 : $20, $8e, $ed
+	jsr InitPlayersVars.w                                                  ; $ecf9 : $20, $8e, $ed
 	ldy #$0d29.w                                                  ; $ecfc : $a0, $29, $0d
-	jsr Call_01_ed8e.w                                                  ; $ecff : $20, $8e, $ed
+	jsr InitPlayersVars.w                                                  ; $ecff : $20, $8e, $ed
 	ldy #$0de7.w                                                  ; $ed02 : $a0, $e7, $0d
-	jsr Call_01_ed8e.w                                                  ; $ed05 : $20, $8e, $ed
+	jsr InitPlayersVars.w                                                  ; $ed05 : $20, $8e, $ed
 	ldy #$0ea5.w                                                  ; $ed08 : $a0, $a5, $0e
-	jsr Call_01_ed8e.w                                                  ; $ed0b : $20, $8e, $ed
+	jsr InitPlayersVars.w                                                  ; $ed0b : $20, $8e, $ed
 	ldy #$0f63.w                                                  ; $ed0e : $a0, $63, $0f
-	jsr Call_01_ed8e.w                                                  ; $ed11 : $20, $8e, $ed
+	jsr InitPlayersVars.w                                                  ; $ed11 : $20, $8e, $ed
 	ldy #$1021.w                                                  ; $ed14 : $a0, $21, $10
-	jsr Call_01_ed8e.w                                                  ; $ed17 : $20, $8e, $ed
+	jsr InitPlayersVars.w                                                  ; $ed17 : $20, $8e, $ed
 	sep #ACCU_8                                                  ; $ed1a : $e2, $20
 	lda #$ff.b                                                  ; $ed1c : $a9, $ff
 	sta $0a7f.w                                                  ; $ed1e : $8d, $7f, $0a
@@ -16222,7 +16222,7 @@ br_01_ecb9:
 	rtl                                                  ; $ed8d : $6b
 
 
-Call_01_ed8e:
+InitPlayersVars:
 	sty $b2                                                  ; $ed8e : $84, $b2
 	sep #ACCU_8                                                  ; $ed90 : $e2, $20
 	lda #$7e.b                                                  ; $ed92 : $a9, $7e
@@ -17059,7 +17059,7 @@ LoadItemName:
 	jsr BufferSpellTextDisplay.l                                                  ; $f309 : $22, $14, $f4, $81
 	lda $0b84.w                                                  ; $f30d : $ad, $84, $0b
 	sta $0a0f.w                                                  ; $f310 : $8d, $0f, $0a
-	ldy $0a0d.w                                                  ; $f313 : $ac, $0d, $0a
+	ldy wSpellTextAddr.w                                                  ; $f313 : $ac, $0d, $0a
 	sty wBaseInBattleEnemyScriptAddr.w                                                  ; $f316 : $8c, $42, $0a
 	ldy $0b89.w                                                  ; $f319 : $ac, $89, $0b
 	sep #ACCU_8                                                  ; $f31c : $e2, $20
@@ -17111,7 +17111,7 @@ LoadItemName:
 	lda $0a04.w                                                  ; $f37f : $ad, $04, $0a
 	sta $7ff450.l                                                  ; $f382 : $8f, $50, $f4, $7f
 	sta $0a5d.w                                                  ; $f386 : $8d, $5d, $0a
-	lda $0a0d.w                                                  ; $f389 : $ad, $0d, $0a
+	lda wSpellTextAddr.w                                                  ; $f389 : $ad, $0d, $0a
 	sta wBaseInBattleEnemyScriptAddr.w                                                  ; $f38c : $8d, $42, $0a
 	ldy $0b89.w                                                  ; $f38f : $ac, $89, $0b
 	sep #ACCU_8                                                  ; $f392 : $e2, $20
@@ -17170,7 +17170,7 @@ br_01_f3bb:
 
 
 	jsr LoadCurrSpellDataSrc.w                                                  ; $f3e4 : $20, $46, $f4
-	ldy $0a0d.w                                                  ; $f3e7 : $ac, $0d, $0a
+	ldy wSpellTextAddr.w                                                  ; $f3e7 : $ac, $0d, $0a
 	phb                                                  ; $f3ea : $8b
 	lda #$4895.w                                                  ; $f3eb : $a9, $95, $48
 	plb                                                  ; $f3ee : $ab
@@ -17181,7 +17181,7 @@ br_01_f3bb:
 
 Call_01_f3f4:
 	jsr LoadCurrSpellDataSrc.w                                                  ; $f3f4 : $20, $46, $f4
-	ldy $0a0d.w                                                  ; $f3f7 : $ac, $0d, $0a
+	ldy wSpellTextAddr.w                                                  ; $f3f7 : $ac, $0d, $0a
 	phb                                                  ; $f3fa : $8b
 	lda #$95.b                                                  ; $f3fb : $a9, $95
 	pha                                                  ; $f3fd : $48
@@ -17192,7 +17192,7 @@ Call_01_f3f4:
 
 
 	jsr LoadCurrSpellDataSrc.w                                                  ; $f404 : $20, $46, $f4
-	ldy $0a0d.w                                                  ; $f407 : $ac, $0d, $0a
+	ldy wSpellTextAddr.w                                                  ; $f407 : $ac, $0d, $0a
 	phb                                                  ; $f40a : $8b
 	lda #$95.b                                                  ; $f40b : $a9, $95
 	pha                                                  ; $f40d : $48
@@ -17205,7 +17205,7 @@ Call_01_f3f4:
 BufferSpellTextDisplay:
 ; data bank is 15
 	phb                                                  ; $f414 : $8b
-	lda #$95.b                                                  ; $f415 : $a9, $95
+	lda #:SpellsData.b                                                  ; $f415 : $a9, $95
 	pha                                                  ; $f417 : $48
 	plb                                                  ; $f418 : $ab
 
@@ -17213,7 +17213,7 @@ BufferSpellTextDisplay:
 	jsr LoadCurrSpellDataSrc.w                                                  ; $f419 : $20, $46, $f4
 
 ;
-	ldy $0a0d.w                                                  ; $f41c : $ac, $0d, $0a
+	ldy wSpellTextAddr.w                                                  ; $f41c : $ac, $0d, $0a
 	ldx #$0000.w                                                  ; $f41f : $a2, $00, $00
 
 -	lda $0000.w, Y                                                  ; $f422 : $b9, $00, $00
@@ -17249,7 +17249,7 @@ LoadCurrSpellDataSrc:
 	lda SpellsData.l, X                                                  ; $f450 : $bf, $5b, $fa, $95
 	clc                                                  ; $f454 : $18
 	adc #SpellsData.w                                                  ; $f455 : $69, $5b, $fa
-	sta $0a0d.w                                                  ; $f458 : $8d, $0d, $0a
+	sta wSpellTextAddr.w                                                  ; $f458 : $8d, $0d, $0a
 	sep #ACCU_8                                                  ; $f45b : $e2, $20
 	rts                                                  ; $f45d : $60
 
@@ -17473,7 +17473,7 @@ br_01_f5b9:
 	ldy #$0006.w                                                  ; $f5bd : $a0, $06, $00
 
 br_01_f5c0:
-	ldx $0a80.w, Y                                                  ; $f5c0 : $be, $80, $0a
+	ldx wPtrsToPlayerStructs.w, Y                                                  ; $f5c0 : $be, $80, $0a
 	beq br_01_f5dc                                                  ; $f5c3 : $f0, $17
 
 	lda $000f.w, X                                                  ; $f5c5 : $bd, $0f, $00
@@ -17506,7 +17506,7 @@ br_01_f5ea:
 	ldy #$0006.w                                                  ; $f5ed : $a0, $06, $00
 
 br_01_f5f0:
-	ldx $0a80.w, Y                                                  ; $f5f0 : $be, $80, $0a
+	ldx wPtrsToPlayerStructs.w, Y                                                  ; $f5f0 : $be, $80, $0a
 	beq br_01_f606                                                  ; $f5f3 : $f0, $11
 
 	lda $000f.w, X                                                  ; $f5f5 : $bd, $0f, $00
@@ -17529,7 +17529,7 @@ br_01_f606:
 	ldy #$0006.w                                                  ; $f60b : $a0, $06, $00
 
 br_01_f60e:
-	ldx $0a80.w, Y                                                  ; $f60e : $be, $80, $0a
+	ldx wPtrsToPlayerStructs.w, Y                                                  ; $f60e : $be, $80, $0a
 	beq br_01_f624                                                  ; $f611 : $f0, $11
 
 	lda $000f.w, X                                                  ; $f613 : $bd, $0f, $00
@@ -17552,7 +17552,7 @@ br_01_f624:
 	ldy #$0006.w                                                  ; $f629 : $a0, $06, $00
 
 br_01_f62c:
-	ldx $0a80.w, Y                                                  ; $f62c : $be, $80, $0a
+	ldx wPtrsToPlayerStructs.w, Y                                                  ; $f62c : $be, $80, $0a
 	beq br_01_f634                                                  ; $f62f : $f0, $03
 
 	stz $000f.w, X                                                  ; $f631 : $9e, $0f, $00
@@ -17830,7 +17830,7 @@ Call_01_f78d:
 	asl                                                  ; $f7ac : $0a
 	tax                                                  ; $f7ad : $aa
 	lda wCurrInBattleEnemyIdx.w                                                  ; $f7ae : $ad, $f2, $09
-	sta $0a80.w, X                                                  ; $f7b1 : $9d, $80, $0a
+	sta wPtrsToPlayerStructs.w, X                                                  ; $f7b1 : $9d, $80, $0a
 	iny                                                  ; $f7b4 : $c8
 	cpy #$0004.w                                                  ; $f7b5 : $c0, $04, $00
 	bne @nextSlot                                                  ; $f7b8 : $d0, $d8
@@ -18387,7 +18387,7 @@ br_01_fb0c:
 	bra br_01_fb19                                                  ; $fb14 : $80, $03
 
 br_01_fb16:
-	ldx $0a80.w, Y                                                  ; $fb16 : $be, $80, $0a
+	ldx wPtrsToPlayerStructs.w, Y                                                  ; $fb16 : $be, $80, $0a
 
 br_01_fb19:
 	rts                                                  ; $fb19 : $60

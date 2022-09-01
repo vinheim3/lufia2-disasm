@@ -3803,7 +3803,7 @@ br_23_9482:
 	and $35                                                  ; $9498 : $25, $35
 	rol                                                  ; $949a : $2a
 	php                                                  ; $949b : $08
-	ora $0a0d.w                                                  ; $949c : $0d, $0d, $0a
+	ora wSpellTextAddr.w                                                  ; $949c : $0d, $0d, $0a
 	asl                                                  ; $949f : $0a
 	bpl br_23_9482                                                  ; $94a0 : $10, $e0
 

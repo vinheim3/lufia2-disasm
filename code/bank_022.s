@@ -25048,7 +25048,7 @@ br_22_ff26:
 	.db $00                                                  ; $ff4f : $00
 	ora ($01, X)                                                  ; $ff50 : $01, $01
 	ora ($01, X)                                                  ; $ff52 : $01, $01
-	ora $0a0d.w                                                  ; $ff54 : $0d, $0d, $0a
+	ora wSpellTextAddr.w                                                  ; $ff54 : $0d, $0d, $0a
 	asl                                                  ; $ff57 : $0a
 	.db $00                                                  ; $ff58 : $00
 	.db $00                                                  ; $ff59 : $00

@@ -4603,7 +4603,7 @@ EnemyAttributeIdxToOffsMap:
 	tcs                                                  ; $9eb5 : $1b
 	asl $17, X                                                  ; $9eb6 : $16, $17
 	clc                                                  ; $9eb8 : $18
-	ora $0bad.w, Y                                                  ; $9eb9 : $19, $ad, $0b
+	ora wPlayerStructs.w, Y                                                  ; $9eb9 : $19, $ad, $0b
 	rtl                                                  ; $9ebc : $6b
 
 
@@ -9770,7 +9770,7 @@ Call_05_c168:
 
 
 br_05_c19a:
-	lda $0a80.w, X                                                  ; $c19a : $bd, $80, $0a
+	lda wPtrsToPlayerStructs.w, X                                                  ; $c19a : $bd, $80, $0a
 	tax                                                  ; $c19d : $aa
 	sep #ACCU_8                                                  ; $c19e : $e2, $20
 	rts                                                  ; $c1a0 : $60
@@ -10640,7 +10640,7 @@ br_05_c6f8:
 	ldx #$0006.w                                                  ; $c70b : $a2, $06, $00
 
 br_05_c70e:
-	ldy $0a80.w, X                                                  ; $c70e : $bc, $80, $0a
+	ldy wPtrsToPlayerStructs.w, X                                                  ; $c70e : $bc, $80, $0a
 	beq br_05_c719                                                  ; $c711 : $f0, $06
 
 	phx                                                  ; $c713 : $da
@@ -13590,7 +13590,7 @@ Call_05_da71:
 	ldx #$0008.w                                                  ; $da77 : $a2, $08, $00
 
 br_05_da7a:
-	ldy $0a80.w, X                                                  ; $da7a : $bc, $80, $0a
+	ldy wPtrsToPlayerStructs.w, X                                                  ; $da7a : $bc, $80, $0a
 	beq br_05_da94                                                  ; $da7d : $f0, $15
 
 	sta $0037.w, Y                                                  ; $da7f : $99, $37, $00

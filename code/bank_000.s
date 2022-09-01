@@ -1902,7 +1902,7 @@ Call_00_8b3f:
 	asl                                                  ; $8b44 : $0a
 	rep #ACCU_8                                                  ; $8b45 : $c2, $20
 	tax                                                  ; $8b47 : $aa
-	lda $0a80.w, X                                                  ; $8b48 : $bd, $80, $0a
+	lda wPtrsToPlayerStructs.w, X                                                  ; $8b48 : $bd, $80, $0a
 	sta $60                                                  ; $8b4b : $85, $60
 	sep #ACCU_8                                                  ; $8b4d : $e2, $20
 	lda #$00.b                                                  ; $8b4f : $a9, $00
@@ -10958,7 +10958,7 @@ todo_GetsTextLen:
 	ldx #$0000.w                                                  ; $c6d9 : $a2, $00, $00
 
 @loop_c6dc:
-	lda $0bad.w, X                                                  ; $c6dc : $bd, $ad, $0b
+	lda wPlayerStructs.w, X                                                  ; $c6dc : $bd, $ad, $0b
 	beq @toNextScriptByte_1                                                  ; $c6df : $f0, $07
 
 	inc $56                                                  ; $c6e1 : $e6, $56
