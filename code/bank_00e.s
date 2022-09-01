@@ -8457,40 +8457,38 @@ br_0e_bca6:
 	rtl                                                  ; $bcac : $6b
 
 
+Func_e_bcad:
 	ldy #$0000.w                                                  ; $bcad : $a0, $00, $00
 	ldx #$0002.w                                                  ; $bcb0 : $a2, $02, $00
 
-br_0e_bcb3:
+@loop_bcb3:
 	rep #ACCU_8                                                  ; $bcb3 : $c2, $20
 	lda RoomsChestContents.l-2, X                                                  ; $bcb5 : $bf, $b5, $b8, $91
 	cmp #$ffff.w                                                  ; $bcb9 : $c9, $ff, $ff
 	sep #ACCU_8                                                  ; $bcbc : $e2, $20
-	beq br_0e_bd07                                                  ; $bcbe : $f0, $47
+	beq @cont_bd07                                                  ; $bcbe : $f0, $47
 
 	phx                                                  ; $bcc0 : $da
 	tax                                                  ; $bcc1 : $aa
 
-br_0e_bcc2:
+@loop_bcc2:
 	lda RoomsChestContents.l-2, X                                                  ; $bcc2 : $bf, $b5, $b8, $91
 	cmp #$ff.b                                                  ; $bcc6 : $c9, $ff
-	beq br_0e_bcff                                                  ; $bcc8 : $f0, $35
+	beq @cont_bcff                                                  ; $bcc8 : $f0, $35
 
 	phx                                                  ; $bcca : $da
 	bit #$20.b                                                  ; $bccb : $89, $20
-	bne br_0e_bcf9                                                  ; $bccd : $d0, $2a
+	bne @toLoop_bcc2                                                  ; $bccd : $d0, $2a
 
 	and #$80.b                                                  ; $bccf : $29, $80
-	beq br_0e_bcd5                                                  ; $bcd1 : $f0, $02
-
+	beq +                                                  ; $bcd1 : $f0, $02
 	lda #$01.b                                                  ; $bcd3 : $a9, $01
-
-br_0e_bcd5:
-	sta $7fd4f2.l                                                  ; $bcd5 : $8f, $f2, $d4, $7f
++	sta $7fd4f2.l                                                  ; $bcd5 : $8f, $f2, $d4, $7f
 	lda $91b8b6.l, X                                                  ; $bcd9 : $bf, $b6, $b8, $91
 	sta $7fd4f1.l                                                  ; $bcdd : $8f, $f1, $d4, $7f
 	jsr Func_e_c34f.l                                                  ; $bce1 : $22, $4f, $c3, $8e
 	bit $093b.w, X                                                  ; $bce5 : $3c, $3b, $09
-	beq br_0e_bcf9                                                  ; $bce8 : $f0, $0f
+	beq @toLoop_bcc2                                                  ; $bce8 : $f0, $0f
 
 	tyx                                                  ; $bcea : $bb
 	rep #ACCU_8                                                  ; $bceb : $c2, $20
@@ -8500,38 +8498,35 @@ br_0e_bcd5:
 	iny                                                  ; $bcf7 : $c8
 	iny                                                  ; $bcf8 : $c8
 
-br_0e_bcf9:
+@toLoop_bcc2:
 	plx                                                  ; $bcf9 : $fa
 	inx                                                  ; $bcfa : $e8
 	inx                                                  ; $bcfb : $e8
 	inx                                                  ; $bcfc : $e8
-	bra br_0e_bcc2                                                  ; $bcfd : $80, $c3
+	bra @loop_bcc2                                                  ; $bcfd : $80, $c3
 
-br_0e_bcff:
+@cont_bcff:
 	plx                                                  ; $bcff : $fa
 	inx                                                  ; $bd00 : $e8
 	inx                                                  ; $bd01 : $e8
 	cpx #$01e2.w                                                  ; $bd02 : $e0, $e2, $01
-	bcc br_0e_bcb3                                                  ; $bd05 : $90, $ac
+	bcc @loop_bcb3                                                  ; $bd05 : $90, $ac
 
-br_0e_bd07:
+@cont_bd07:
 	sty $06                                                  ; $bd07 : $84, $06
 	rep #ACCU_8                                                  ; $bd09 : $c2, $20
 	ldy #$0000.w                                                  ; $bd0b : $a0, $00, $00
 
-br_0e_bd0e:
+@loop_bd0e:
 	lda $06                                                  ; $bd0e : $a5, $06
 	lsr                                                  ; $bd10 : $4a
 	sta $04                                                  ; $bd11 : $85, $04
-	jsr $869e3b.l                                                  ; $bd13 : $22, $3b, $9e, $86
+	jsr MultiplyPoolValueWithRNG.l                                                  ; $bd13 : $22, $3b, $9e, $86
 	inc $02                                                  ; $bd17 : $e6, $02
 	jsr Call_0e_bd5e.w                                                  ; $bd19 : $20, $5e, $bd
-	bcs br_0e_bd21                                                  ; $bd1c : $b0, $03
-
+	bcs +                                                  ; $bd1c : $b0, $03
 	jsr Call_0e_bd5e.w                                                  ; $bd1e : $20, $5e, $bd
-
-br_0e_bd21:
-	lda $7ed000.l, X                                                  ; $bd21 : $bf, $00, $d0, $7e
++	lda $7ed000.l, X                                                  ; $bd21 : $bf, $00, $d0, $7e
 	sta $7fd4f1.l                                                  ; $bd25 : $8f, $f1, $d4, $7f
 	sta $092b.w, Y                                                  ; $bd29 : $99, $2b, $09
 	ora #$8000.w                                                  ; $bd2c : $09, $00, $80
@@ -8545,8 +8540,9 @@ br_0e_bd21:
 	iny                                                  ; $bd43 : $c8
 	iny                                                  ; $bd44 : $c8
 	cpy #$0010.w                                                  ; $bd45 : $c0, $10, $00
-	bcc br_0e_bd0e                                                  ; $bd48 : $90, $c4
+	bcc @loop_bd0e                                                  ; $bd48 : $90, $c4
 
+; clear dragon egg count
 	lda #$002b.w                                                  ; $bd4a : $a9, $2b, $00
 	sta wCurrItemIdx.w                                                  ; $bd4d : $8d, $06, $0a
 	sep #ACCU_8                                                  ; $bd50 : $e2, $20
@@ -9132,7 +9128,7 @@ br_0e_c0ad:
 	tdc                                                  ; $c0af : $7b
 	lda $7ef000.l, X                                                  ; $c0b0 : $bf, $00, $f0, $7e
 	sta $7fd4ee.l                                                  ; $c0b4 : $8f, $ee, $d4, $7f
-	jsr $80e898.l                                                  ; $c0b8 : $22, $98, $e8, $80
+	jsr AXequFlagAndBitOfA.l                                                  ; $c0b8 : $22, $98, $e8, $80
 	and $7fe733.l                                                  ; $c0bc : $2f, $33, $e7, $7f
 	beq br_0e_c0c5                                                  ; $c0c0 : $f0, $03
 
@@ -9211,7 +9207,7 @@ br_0e_c13e:
 	sep #ACCU_8                                                  ; $c13e : $e2, $20
 	tdc                                                  ; $c140 : $7b
 	lda $7fd4ee.l                                                  ; $c141 : $af, $ee, $d4, $7f
-	jsr $80e898.l                                                  ; $c145 : $22, $98, $e8, $80
+	jsr AXequFlagAndBitOfA.l                                                  ; $c145 : $22, $98, $e8, $80
 	ora $7fe733.l                                                  ; $c149 : $0f, $33, $e7, $7f
 	sta $7fe733.l                                                  ; $c14d : $8f, $33, $e7, $7f
 
@@ -9470,12 +9466,9 @@ br_0e_c331:
 Call_0e_c338:
 	lda RoomsChestContents.l-2, X                                                  ; $c338 : $bf, $b5, $b8, $91
 	and #$80.b                                                  ; $c33c : $29, $80
-	beq br_0e_c342                                                  ; $c33e : $f0, $02
-
+	beq +                                                  ; $c33e : $f0, $02
 	lda #$01.b                                                  ; $c340 : $a9, $01
-
-br_0e_c342:
-	sta $7fd4f2.l                                                  ; $c342 : $8f, $f2, $d4, $7f
++	sta $7fd4f2.l                                                  ; $c342 : $8f, $f2, $d4, $7f
 	lda RoomsChestContents.l-1, X                                                  ; $c346 : $bf, $b6, $b8, $91
 	sta $7fd4f1.l                                                  ; $c34a : $8f, $f1, $d4, $7f
 	rtl                                                  ; $c34e : $6b
@@ -9484,10 +9477,10 @@ br_0e_c342:
 Func_e_c34f:
 	tdc                                                  ; $c34f : $7b
 	lda $7fd4f1.l                                                  ; $c350 : $af, $f1, $d4, $7f
-	jsr $80e898.l                                                  ; $c354 : $22, $98, $e8, $80
+	jsr AXequFlagAndBitOfA.l                                                  ; $c354 : $22, $98, $e8, $80
 	sta $54                                                  ; $c358 : $85, $54
 	lda $7fd4f2.l                                                  ; $c35a : $af, $f2, $d4, $7f
-	beq br_0e_c36a                                                  ; $c35e : $f0, $0a
+	beq @cont_c36a                                                  ; $c35e : $f0, $0a
 
 	rep #ACCU_8                                                  ; $c360 : $c2, $20
 	txa                                                  ; $c362 : $8a
@@ -9496,7 +9489,7 @@ Func_e_c34f:
 	tax                                                  ; $c367 : $aa
 	sep #ACCU_8                                                  ; $c368 : $e2, $20
 
-br_0e_c36a:
+@cont_c36a:
 	lda $54                                                  ; $c36a : $a5, $54
 	rtl                                                  ; $c36c : $6b
 

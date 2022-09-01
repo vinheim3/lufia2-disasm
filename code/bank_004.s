@@ -1421,9 +1421,9 @@ br_04_8974:
 	clc                                                  ; $898a : $18
 	adc #$c8.b                                                  ; $898b : $69, $c8
 	jsr $80be1a.l                                                  ; $898d : $22, $1a, $be, $80
-	lda wGlobalFlagsBitfield.l, X                                                  ; $8991 : $bf, $7e, $07, $00
+	lda wEventFlags.l, X                                                  ; $8991 : $bf, $7e, $07, $00
 	ora $57                                                  ; $8995 : $05, $57
-	sta wGlobalFlagsBitfield.l, X                                                  ; $8997 : $9f, $7e, $07, $00
+	sta wEventFlags.l, X                                                  ; $8997 : $9f, $7e, $07, $00
 	plx                                                  ; $899b : $fa
 	rep #ACCU_8                                                  ; $899c : $c2, $20
 

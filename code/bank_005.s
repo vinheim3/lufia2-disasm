@@ -336,10 +336,10 @@ Call_05_821c:
 
 
 br_05_823d:
-	lda $079e.w, X                                                  ; $823d : $bd, $9e, $07
+	lda wEventRegisters.w, X                                                  ; $823d : $bd, $9e, $07
 	clc                                                  ; $8240 : $18
 	adc $54                                                  ; $8241 : $65, $54
-	sta $079e.w, X                                                  ; $8243 : $9d, $9e, $07
+	sta wEventRegisters.w, X                                                  ; $8243 : $9d, $9e, $07
 	rts                                                  ; $8246 : $60
 
 
@@ -358,9 +358,9 @@ br_05_8247:
 
 
 br_05_825d:
-	lda wGlobalFlagsBitfield.w, Y                                                  ; $825d : $b9, $7e, $07
+	lda wEventFlags.w, Y                                                  ; $825d : $b9, $7e, $07
 	eor $830a.w, X                                                  ; $8260 : $5d, $0a, $83
-	sta wGlobalFlagsBitfield.w, Y                                                  ; $8263 : $99, $7e, $07
+	sta wEventFlags.w, Y                                                  ; $8263 : $99, $7e, $07
 	rts                                                  ; $8266 : $60
 
 
@@ -426,7 +426,7 @@ br_05_82aa:
 	bra br_05_82bd                                                  ; $82b8 : $80, $03
 
 br_05_82ba:
-	lda wGlobalFlagsBitfield.w, Y                                                  ; $82ba : $b9, $7e, $07
+	lda wEventFlags.w, Y                                                  ; $82ba : $b9, $7e, $07
 
 br_05_82bd:
 	and $830a.w, X                                                  ; $82bd : $3d, $0a, $83
@@ -446,7 +446,7 @@ br_05_82bd:
 	bra br_05_82e4                                                  ; $82df : $80, $03
 
 br_05_82e1:
-	lda $079e.w, X                                                  ; $82e1 : $bd, $9e, $07
+	lda wEventRegisters.w, X                                                  ; $82e1 : $bd, $9e, $07
 
 br_05_82e4:
 	sta $23                                                  ; $82e4 : $85, $23

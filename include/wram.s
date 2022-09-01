@@ -296,12 +296,11 @@ wCharacterYsDiv16s: ; 06e2
 w070a:
     ds $7e-$a
 
-; todo: unknown size, max $20
-wGlobalFlagsBitfield: ; $077e
+wEventFlags: ; $077e
     ds $20
 
-w079e:
-    ds $81e-$79e
+wEventRegisters: ; $079e
+    ds $80
 
 wMovableNPCsIds: ; $081e
     ds $40

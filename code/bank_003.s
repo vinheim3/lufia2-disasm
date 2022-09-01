@@ -2567,7 +2567,7 @@ br_03_90bc:
 	lda #$09.b                                                  ; $90d8 : $a9, $09
 	jsr Call_03_9e1b.w                                                  ; $90da : $20, $1b, $9e
 	sta $58                                                  ; $90dd : $85, $58
-	jsr $80e898.l                                                  ; $90df : $22, $98, $e8, $80
+	jsr AXequFlagAndBitOfA.l                                                  ; $90df : $22, $98, $e8, $80
 	lda $7fe75e.l, X                                                  ; $90e3 : $bf, $5e, $e7, $7f
 	bit $55                                                  ; $90e7 : $24, $55
 	bne br_03_9116                                                  ; $90e9 : $d0, $2b
@@ -7211,9 +7211,9 @@ Call_03_addf:
 	lda #$ff.b                                                  ; $ae17 : $a9, $ff
 
 br_03_ae19:
-	stz wGlobalFlagsBitfield.w, X                                                  ; $ae19 : $9e, $7e, $07
+	stz wEventFlags.w, X                                                  ; $ae19 : $9e, $7e, $07
 	stz $077f.w, X                                                  ; $ae1c : $9e, $7f, $07
-	stz $079e.w, X                                                  ; $ae1f : $9e, $9e, $07
+	stz wEventRegisters.w, X                                                  ; $ae1f : $9e, $9e, $07
 	stz $079f.w, X                                                  ; $ae22 : $9e, $9f, $07
 	stz $07be.w, X                                                  ; $ae25 : $9e, $be, $07
 	stz $07bf.w, X                                                  ; $ae28 : $9e, $bf, $07
@@ -8129,7 +8129,7 @@ br_03_b500:
 Call_03_b503:
 	tdc                                                  ; $b503 : $7b
 	lda wCurrRoomIdx.w                                                  ; $b504 : $ad, $ac, $05
-	jsr $80e898.l                                                  ; $b507 : $22, $98, $e8, $80
+	jsr AXequFlagAndBitOfA.l                                                  ; $b507 : $22, $98, $e8, $80
 	ora $097b.w, X                                                  ; $b50b : $1d, $7b, $09
 	sta $097b.w, X                                                  ; $b50e : $9d, $7b, $09
 	rts                                                  ; $b511 : $60

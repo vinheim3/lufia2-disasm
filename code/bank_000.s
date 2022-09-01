@@ -5318,14 +5318,14 @@ Call_00_a019:
 	jsr AequNextScriptByte.w                                                  ; $a048 : $20, $b7, $c0
 	sta $54                                                  ; $a04b : $85, $54
 	ldx $56                                                  ; $a04d : $a6, $56
-	lda $079e.w, X                                                  ; $a04f : $bd, $9e, $07
-	inc $079e.w, X                                                  ; $a052 : $fe, $9e, $07
+	lda wEventRegisters.w, X                                                  ; $a04f : $bd, $9e, $07
+	inc wEventRegisters.w, X                                                  ; $a052 : $fe, $9e, $07
 	cmp $54                                                  ; $a055 : $c5, $54
 	bcc br_00_a05f                                                  ; $a057 : $90, $06
 
 	lda $54                                                  ; $a059 : $a5, $54
 	dea                                                  ; $a05b : $3a
-	sta $079e.w, X                                                  ; $a05c : $9d, $9e, $07
+	sta wEventRegisters.w, X                                                  ; $a05c : $9d, $9e, $07
 
 br_00_a05f:
 	rep #ACCU_8                                                  ; $a05f : $c2, $20
@@ -5611,7 +5611,7 @@ Func_0_a1f6:
 	lda #$00.b                                                  ; $a1fa : $a9, $00
 	xba                                                  ; $a1fc : $eb
 	tax                                                  ; $a1fd : $aa
-	lda $079e.w, X                                                  ; $a1fe : $bd, $9e, $07
+	lda wEventRegisters.w, X                                                  ; $a1fe : $bd, $9e, $07
 	sta $54                                                  ; $a201 : $85, $54
 	stz $55                                                  ; $a203 : $64, $55
 	jsr AequNextScriptByte.w                                                  ; $a205 : $20, $b7, $c0
@@ -5847,9 +5847,9 @@ Call_00_a368:
 	phy                                                  ; $a395 : $5a
 	jsr ExtractOffsetAndBitfieldFromA.w                                                  ; $a396 : $20, $30, $be
 	ldx $56                                                  ; $a399 : $a6, $56
-	lda wGlobalFlagsBitfield.w, X                                                  ; $a39b : $bd, $7e, $07
+	lda wEventFlags.w, X                                                  ; $a39b : $bd, $7e, $07
 	ora $57                                                  ; $a39e : $05, $57
-	sta wGlobalFlagsBitfield.w, X                                                  ; $a3a0 : $9d, $7e, $07
+	sta wEventFlags.w, X                                                  ; $a3a0 : $9d, $7e, $07
 	rep #IDX_8                                                  ; $a3a3 : $c2, $10
 	ply                                                  ; $a3a5 : $7a
 	jsr AequNextScriptByte.w                                                  ; $a3a6 : $20, $b7, $c0
@@ -5860,8 +5860,8 @@ Call_00_a368:
 	jsr ExtractOffsetAndBitfieldFromA.w                                                  ; $a3b0 : $20, $30, $be
 	ldx $56                                                  ; $a3b3 : $a6, $56
 	eor #$ff.b                                                  ; $a3b5 : $49, $ff
-	and wGlobalFlagsBitfield.w, X                                                  ; $a3b7 : $3d, $7e, $07
-	sta wGlobalFlagsBitfield.w, X                                                  ; $a3ba : $9d, $7e, $07
+	and wEventFlags.w, X                                                  ; $a3b7 : $3d, $7e, $07
+	sta wEventFlags.w, X                                                  ; $a3ba : $9d, $7e, $07
 	rep #IDX_8                                                  ; $a3bd : $c2, $10
 	ply                                                  ; $a3bf : $7a
 	jsr AequNextScriptByte.w                                                  ; $a3c0 : $20, $b7, $c0
@@ -5887,7 +5887,7 @@ ScriptCommand1ch_Jump:
 	jsr AequNextScriptByte.w                                                  ; $a3e0 : $20, $b7, $c0
 	tax                                                  ; $a3e3 : $aa
 	jsr AequNextScriptByte.w                                                  ; $a3e4 : $20, $b7, $c0
-	sta $079e.w, X                                                  ; $a3e7 : $9d, $9e, $07
+	sta wEventRegisters.w, X                                                  ; $a3e7 : $9d, $9e, $07
 	brl Func_0_9d00                                                  ; $a3ea : $82, $13, $f9
 
 	tdc                                                  ; $a3ed : $7b
@@ -5895,8 +5895,8 @@ ScriptCommand1ch_Jump:
 	tax                                                  ; $a3f1 : $aa
 	jsr AequNextScriptByte.w                                                  ; $a3f2 : $20, $b7, $c0
 	clc                                                  ; $a3f5 : $18
-	adc $079e.w, X                                                  ; $a3f6 : $7d, $9e, $07
-	sta $079e.w, X                                                  ; $a3f9 : $9d, $9e, $07
+	adc wEventRegisters.w, X                                                  ; $a3f6 : $7d, $9e, $07
+	sta wEventRegisters.w, X                                                  ; $a3f9 : $9d, $9e, $07
 	brl Func_0_9d00                                                  ; $a3fc : $82, $01, $f9
 
 	tdc                                                  ; $a3ff : $7b
@@ -5904,10 +5904,10 @@ ScriptCommand1ch_Jump:
 	tax                                                  ; $a403 : $aa
 	jsr AequNextScriptByte.w                                                  ; $a404 : $20, $b7, $c0
 	sec                                                  ; $a407 : $38
-	sbc $079e.w, X                                                  ; $a408 : $fd, $9e, $07
+	sbc wEventRegisters.w, X                                                  ; $a408 : $fd, $9e, $07
 	eor #$ff.b                                                  ; $a40b : $49, $ff
 	ina                                                  ; $a40d : $1a
-	sta $079e.w, X                                                  ; $a40e : $9d, $9e, $07
+	sta wEventRegisters.w, X                                                  ; $a40e : $9d, $9e, $07
 	brl Func_0_9d00                                                  ; $a411 : $82, $ec, $f8
 
 	tdc                                                  ; $a414 : $7b
@@ -7057,7 +7057,7 @@ br_00_ac45:
 	brl Func_0_9d00                                                  ; $ac67 : $82, $96, $f0
 
 	phy                                                  ; $ac6a : $5a
-	jsr $8ebcad.l                                                  ; $ac6b : $22, $ad, $bc, $8e
+	jsr Func_e_bcad.l                                                  ; $ac6b : $22, $ad, $bc, $8e
 	ply                                                  ; $ac6f : $7a
 	brl Func_0_9d00                                                  ; $ac70 : $82, $8d, $f0
 
@@ -9474,7 +9474,7 @@ CheckIfGlobalFlagSet:
 	php                                                  ; $be1f : $08
 	jsr ExtractOffsetAndBitfieldFromA.w                                                  ; $be20 : $20, $30, $be
 	ldx $56                                                  ; $be23 : $a6, $56
-	lda wGlobalFlagsBitfield.l, X                                                  ; $be25 : $bf, $7e, $07, $00
+	lda wEventFlags.l, X                                                  ; $be25 : $bf, $7e, $07, $00
 	and $57                                                  ; $be29 : $25, $57
 	plp                                                  ; $be2b : $28
 	ply                                                  ; $be2c : $7a
