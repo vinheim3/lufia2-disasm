@@ -3999,16 +3999,16 @@ Call_02_9855:
 
 Call_02_9867:
 	rep #ACCU_8                                                  ; $9867 : $c2, $20
-	lda $0b55.w                                                  ; $9869 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $9869 : $ad, $55, $0b
 	clc                                                  ; $986c : $18
 	adc $09bd.w                                                  ; $986d : $6d, $bd, $09
-	sta $0b55.w                                                  ; $9870 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $9870 : $8d, $55, $0b
 	sep #ACCU_8                                                  ; $9873 : $e2, $20
 	lda $0b57.w                                                  ; $9875 : $ad, $57, $0b
 	adc $09bf.w                                                  ; $9878 : $6d, $bf, $09
 	sta $0b57.w                                                  ; $987b : $8d, $57, $0b
 	rep #ACCU_8                                                  ; $987e : $c2, $20
-	lda $0b55.w                                                  ; $9880 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $9880 : $ad, $55, $0b
 	sec                                                  ; $9883 : $38
 	sbc #$967f.w                                                  ; $9884 : $e9, $7f, $96
 	sep #ACCU_8                                                  ; $9887 : $e2, $20
@@ -4017,7 +4017,7 @@ Call_02_9867:
 	bcc br_02_989c                                                  ; $988e : $90, $0c
 
 	ldx #$967f.w                                                  ; $9890 : $a2, $7f, $96
-	stx $0b55.w                                                  ; $9893 : $8e, $55, $0b
+	stx wCasinoCoins.w                                                  ; $9893 : $8e, $55, $0b
 	lda #$98.b                                                  ; $9896 : $a9, $98
 	sta $0b57.w                                                  ; $9898 : $8d, $57, $0b
 	sec                                                  ; $989b : $38
@@ -4027,10 +4027,10 @@ br_02_989c:
 
 
 	rep #ACCU_8                                                  ; $989d : $c2, $20
-	lda $0b55.w                                                  ; $989f : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $989f : $ad, $55, $0b
 	sec                                                  ; $98a2 : $38
 	sbc $09bd.w                                                  ; $98a3 : $ed, $bd, $09
-	sta $0b55.w                                                  ; $98a6 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $98a6 : $8d, $55, $0b
 	sep #ACCU_8                                                  ; $98a9 : $e2, $20
 	lda $0b57.w                                                  ; $98ab : $ad, $57, $0b
 	sbc $09bf.w                                                  ; $98ae : $ed, $bf, $09
@@ -4040,7 +4040,7 @@ br_02_989c:
 
 Call_02_98b5:
 	rep #ACCU_8                                                  ; $98b5 : $c2, $20
-	lda $0b55.w                                                  ; $98b7 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $98b7 : $ad, $55, $0b
 	sec                                                  ; $98ba : $38
 	sbc $09bd.w                                                  ; $98bb : $ed, $bd, $09
 	sep #ACCU_8                                                  ; $98be : $e2, $20
@@ -7035,35 +7035,33 @@ Call_02_ae6f:
 	jsr $81efdf.l                                                  ; $ae6f : $22, $df, $ef, $81
 	lda $0a62.w                                                  ; $ae73 : $ad, $62, $0a
 	cmp #$01.b                                                  ; $ae76 : $c9, $01
-	beq br_02_ae85                                                  ; $ae78 : $f0, $0b
+	beq @br_ae85                                                  ; $ae78 : $f0, $0b
 
 	cmp #$02.b                                                  ; $ae7a : $c9, $02
-	beq br_02_ae99                                                  ; $ae7c : $f0, $1b
+	beq @br_ae99                                                  ; $ae7c : $f0, $1b
 
 	cmp #$26.b                                                  ; $ae7e : $c9, $26
-	beq br_02_aeb2                                                  ; $ae80 : $f0, $30
+	beq @br_aeb2                                                  ; $ae80 : $f0, $30
 
 	jmp Jump_02_aefe.w                                                  ; $ae82 : $4c, $fe, $ae
 
-
-br_02_ae85:
+@br_ae85:
 	lda $09a7.w                                                  ; $ae85 : $ad, $a7, $09
 	bit #$10.b                                                  ; $ae88 : $89, $10
-	bne br_02_aefe                                                  ; $ae8a : $d0, $72
+	bne Jump_02_aefe                                                  ; $ae8a : $d0, $72
 
 	lda #$02.b                                                  ; $ae8c : $a9, $02
 	jsr todo_SoundRelated_953b.l                                                  ; $ae8e : $22, $3b, $95, $80
 	jsr Call_02_af8e.w                                                  ; $ae92 : $20, $8e, $af
-	bcc br_02_aed8                                                  ; $ae95 : $90, $41
+	bcc @br_aed8                                                  ; $ae95 : $90, $41
 
 	clc                                                  ; $ae97 : $18
 	rts                                                  ; $ae98 : $60
 
-
-br_02_ae99:
+@br_ae99:
 	lda $09a7.w                                                  ; $ae99 : $ad, $a7, $09
 	bit #$08.b                                                  ; $ae9c : $89, $08
-	bne br_02_aefe                                                  ; $ae9e : $d0, $5e
+	bne Jump_02_aefe                                                  ; $ae9e : $d0, $5e
 
 	lda #$02.b                                                  ; $aea0 : $a9, $02
 	sta $09c9.w                                                  ; $aea2 : $8d, $c9, $09
@@ -7071,33 +7069,32 @@ br_02_ae99:
 	ldx #$0008.w                                                  ; $aea7 : $a2, $08, $00
 	ldy #$0009.w                                                  ; $aeaa : $a0, $09, $00
 	jsr Call_02_89bc.w                                                  ; $aead : $20, $bc, $89
-	bra br_02_aed8                                                  ; $aeb0 : $80, $26
+	bra @br_aed8                                                  ; $aeb0 : $80, $26
 
-br_02_aeb2:
+@br_aeb2:
 	lda #$89.b                                                  ; $aeb2 : $a9, $89
 	jsr todo_SoundRelated_953b.l                                                  ; $aeb4 : $22, $3b, $95, $80
-	jsr $8eb7e2.l                                                  ; $aeb8 : $22, $e2, $b7, $8e
+	jsr AequNumChestsLeftInRoom.l                                                  ; $aeb8 : $22, $e2, $b7, $8e
 	cmp #$00.b                                                  ; $aebc : $c9, $00
-	beq br_02_aed6                                                  ; $aebe : $f0, $16
+	beq @done                                                  ; $aebe : $f0, $16
 
 	sta $04                                                  ; $aec0 : $85, $04
 	lda #$5a.b                                                  ; $aec2 : $a9, $5a
 	jsr Call_02_9353.w                                                  ; $aec4 : $20, $53, $93
 
-br_02_aec7:
+@loop_aec7:
 	lda #$8a.b                                                  ; $aec7 : $a9, $8a
 	jsr todo_SoundRelated_953b.l                                                  ; $aec9 : $22, $3b, $95, $80
 	lda #$10.b                                                  ; $aecd : $a9, $10
 	jsr Call_02_9353.w                                                  ; $aecf : $20, $53, $93
 	dec $04                                                  ; $aed2 : $c6, $04
-	bne br_02_aec7                                                  ; $aed4 : $d0, $f1
+	bne @loop_aec7                                                  ; $aed4 : $d0, $f1
 
-br_02_aed6:
+@done:
 	clc                                                  ; $aed6 : $18
 	rts                                                  ; $aed7 : $60
 
-
-br_02_aed8:
+@br_aed8:
 	jsr Call_02_aef3.w                                                  ; $aed8 : $20, $f3, $ae
 	jsr $868b55.l                                                  ; $aedb : $22, $55, $8b, $86
 	jsr $868b32.l                                                  ; $aedf : $22, $32, $8b, $86
@@ -7120,7 +7117,6 @@ Call_02_aef3:
 
 
 Jump_02_aefe:
-br_02_aefe:
 	sec                                                  ; $aefe : $38
 	rts                                                  ; $aeff : $60
 

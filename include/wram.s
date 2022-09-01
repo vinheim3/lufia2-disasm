@@ -431,7 +431,13 @@ wInventoryItemsAndCounts: ; $0a8d
     ds $c0
 
 w0b4d:
-    ds $77-$4d
+    ds $55-$4d
+
+wCasinoCoins: ; $0b55
+    dl
+
+w0b58:
+    ds $77-$58
 
 ; todo: unknown size
 wBufferedTextToDisplay: ; $0b77

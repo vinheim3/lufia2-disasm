@@ -6299,7 +6299,7 @@ br_00_a6c5:
 	pha                                                  ; $a6cf : $48
 	lda #$09.b                                                  ; $a6d0 : $a9, $09
 	sta $070a.w, X                                                  ; $a6d2 : $9d, $0a, $07
-	jsr $83d416.l                                                  ; $a6d5 : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $a6d5 : $22, $16, $d4, $83
 	pla                                                  ; $a6d9 : $68
 	plx                                                  ; $a6da : $fa
 	sta $070a.w, X                                                  ; $a6db : $9d, $0a, $07
@@ -6396,7 +6396,7 @@ Call_00_a74d:
 
 	lda #$09.b                                                  ; $a785 : $a9, $09
 	sta $070a.w, X                                                  ; $a787 : $9d, $0a, $07
-	jsr $83d416.l                                                  ; $a78a : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $a78a : $22, $16, $d4, $83
 
 br_00_a78e:
 	ply                                                  ; $a78e : $7a
@@ -6439,7 +6439,7 @@ br_00_a7c5:
 	sta $0622.w, X                                                  ; $a7d0 : $9d, $22, $06
 	jsr Call_04_82d5.l                                                  ; $a7d3 : $22, $d5, $82, $84
 	phx                                                  ; $a7d7 : $da
-	jsr $83d416.l                                                  ; $a7d8 : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $a7d8 : $22, $16, $d4, $83
 	plx                                                  ; $a7dc : $fa
 
 br_00_a7dd:
@@ -6465,7 +6465,7 @@ br_00_a7f2:
 	sta $070a.w, X                                                  ; $a7ff : $9d, $0a, $07
 	lda #$00.b                                                  ; $a802 : $a9, $00
 	sta $7fe3c6.l, X                                                  ; $a804 : $9f, $c6, $e3, $7f
-	jsr $83d416.l                                                  ; $a808 : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $a808 : $22, $16, $d4, $83
 	brl Func_0_9d00                                                  ; $a80c : $82, $f1, $f4
 
 	lda $1269.w                                                  ; $a80f : $ad, $69, $12
@@ -6610,7 +6610,7 @@ br_00_a8f5:
 	bit #$08.b                                                  ; $a917 : $89, $08
 	bne br_00_a91f                                                  ; $a919 : $d0, $04
 
-	jsr $83d416.l                                                  ; $a91b : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $a91b : $22, $16, $d4, $83
 
 br_00_a91f:
 	jsr $83aa30.l                                                  ; $a91f : $22, $30, $aa, $83
@@ -7307,7 +7307,7 @@ br_00_adfb:
 	bne br_00_ae1e                                                  ; $ae11 : $d0, $0b
 
 	rep #ACCU_8                                                  ; $ae13 : $c2, $20
-	lda $0b55.w                                                  ; $ae15 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $ae15 : $ad, $55, $0b
 	cmp $54                                                  ; $ae18 : $c5, $54
 	sep #ACCU_8                                                  ; $ae1a : $e2, $20
 	bcc br_00_ae21                                                  ; $ae1c : $90, $03
@@ -12165,7 +12165,7 @@ br_00_cef5:
 	lda $0622.w, X                                                  ; $cf0e : $bd, $22, $06
 	and #$fe.b                                                  ; $cf11 : $29, $fe
 	sta $0622.w, X                                                  ; $cf13 : $9d, $22, $06
-	jsr $83d416.l                                                  ; $cf16 : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $cf16 : $22, $16, $d4, $83
 	jsr todo_RestoreSavedPuzzleScript.w                                                  ; $cf1a : $20, $50, $ea
 	brl ExecPuzzleScriptCmd                                                  ; $cf1d : $82, $15, $fd
 
@@ -13144,7 +13144,7 @@ br_00_d629:
 	stx $56                                                  ; $d63a : $86, $56
 	tyx                                                  ; $d63c : $bb
 	jsr $8ec338.l                                                  ; $d63d : $22, $38, $c3, $8e
-	jsr $8ec34f.l                                                  ; $d641 : $22, $4f, $c3, $8e
+	jsr Func_e_c34f.l                                                  ; $d641 : $22, $4f, $c3, $8e
 	and $093b.w, X                                                  ; $d645 : $3d, $3b, $09
 	beq br_00_d660                                                  ; $d648 : $f0, $16
 
@@ -14131,7 +14131,7 @@ br_00_dd06:
 	sta $0736.w, X                                                  ; $dd48 : $9d, $36, $07
 	lda #$09.b                                                  ; $dd4b : $a9, $09
 	sta $070a.w, X                                                  ; $dd4d : $9d, $0a, $07
-	jsr $83d416.l                                                  ; $dd50 : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $dd50 : $22, $16, $d4, $83
 	jsr $83f9a5.l                                                  ; $dd54 : $22, $a5, $f9, $83
 	lda $7e4000.l, X                                                  ; $dd58 : $bf, $00, $40, $7e
 	and #$f7.b                                                  ; $dd5c : $29, $f7
@@ -14482,7 +14482,7 @@ br_00_dff0:
 	sta $0736.w, X                                                  ; $dff7 : $9d, $36, $07
 	lda #$09.b                                                  ; $dffa : $a9, $09
 	sta $070a.w, X                                                  ; $dffc : $9d, $0a, $07
-	jsr $83d416.l                                                  ; $dfff : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $dfff : $22, $16, $d4, $83
 	rts                                                  ; $e003 : $60
 
 

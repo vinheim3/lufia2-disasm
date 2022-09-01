@@ -322,7 +322,7 @@ br_04_825a:
 
 br_04_825c:
 	jsr $83a9ba.l                                                  ; $825c : $22, $ba, $a9, $83
-	jsr $83d416.l                                                  ; $8260 : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $8260 : $22, $16, $d4, $83
 	jsr $83aa30.l                                                  ; $8264 : $22, $30, $aa, $83
 	ldx $a7                                                  ; $8268 : $a6, $a7
 	lda wCharacterMovementDirs.w                                                  ; $826a : $ad, $92, $06
@@ -356,7 +356,7 @@ br_04_8299:
 	sta $070a.w, X                                                  ; $82ad : $9d, $0a, $07
 	tya                                                  ; $82b0 : $98
 	sta $7fe5a6.l, X                                                  ; $82b1 : $9f, $a6, $e5, $7f
-	jsr $83d416.l                                                  ; $82b5 : $22, $16, $d4, $83
+	jsr Call_03_d416.l                                                  ; $82b5 : $22, $16, $d4, $83
 
 br_04_82b9:
 	lda $09a7.w                                                  ; $82b9 : $ad, $a7, $09
@@ -5363,7 +5363,7 @@ Call_04_a421:
 	rep #ACCU_8|IDX_8                                                  ; $a422 : $c2, $30
 	lda #$0022.w                                                  ; $a424 : $a9, $22, $00
 	jsr Call_04_a607.w                                                  ; $a427 : $20, $07, $a6
-	lda $0b55.w                                                  ; $a42a : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $a42a : $ad, $55, $0b
 	clc                                                  ; $a42d : $18
 	adc $69e4.w                                                  ; $a42e : $6d, $e4, $69
 	bcc br_04_a43a                                                  ; $a431 : $90, $07
@@ -5373,17 +5373,17 @@ Call_04_a421:
 	rep #ACCU_8                                                  ; $a438 : $c2, $20
 
 br_04_a43a:
-	sta $0b55.w                                                  ; $a43a : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $a43a : $8d, $55, $0b
 	lda $0b57.w                                                  ; $a43d : $ad, $57, $0b
 	and #$00ff.w                                                  ; $a440 : $29, $ff, $00
 	cmp #$0098.w                                                  ; $a443 : $c9, $98, $00
 	bmi br_04_a453                                                  ; $a446 : $30, $0b
 
 	lda #$967f.w                                                  ; $a448 : $a9, $7f, $96
-	cmp $0b55.w                                                  ; $a44b : $cd, $55, $0b
+	cmp wCasinoCoins.w                                                  ; $a44b : $cd, $55, $0b
 	bcs br_04_a453                                                  ; $a44e : $b0, $03
 
-	sta $0b55.w                                                  ; $a450 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $a450 : $8d, $55, $0b
 
 br_04_a453:
 	plp                                                  ; $a453 : $28
@@ -6279,7 +6279,7 @@ br_04_aa23:
 	bne br_04_aaaf                                                  ; $aa61 : $d0, $4c
 
 	jsr Call_04_a39b.w                                                  ; $aa63 : $20, $9b, $a3
-	lda $0b55.w                                                  ; $aa66 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $aa66 : $ad, $55, $0b
 	ora $0b57.w                                                  ; $aa69 : $0d, $57, $0b
 	sep #ACCU_8                                                  ; $aa6c : $e2, $20
 	bne br_04_aa9f                                                  ; $aa6e : $d0, $2f
@@ -6644,17 +6644,17 @@ br_04_acac:
 	lda $0b57.w                                                  ; $acb5 : $ad, $57, $0b
 	bne br_04_acd5                                                  ; $acb8 : $d0, $1b
 
-	lda $0b55.w                                                  ; $acba : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $acba : $ad, $55, $0b
 	clc                                                  ; $acbd : $18
 	adc $69e0.w                                                  ; $acbe : $6d, $e0, $69
 	sec                                                  ; $acc1 : $38
 	sbc $0b                                                  ; $acc2 : $e5, $0b
 	bcs br_04_acd5                                                  ; $acc4 : $b0, $0f
 
-	lda $0b55.w                                                  ; $acc6 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $acc6 : $ad, $55, $0b
 	clc                                                  ; $acc9 : $18
 	adc $69e0.w                                                  ; $acca : $6d, $e0, $69
-	sta $0b55.w                                                  ; $accd : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $accd : $8d, $55, $0b
 	sta $0b                                                  ; $acd0 : $85, $0b
 	stz $69e0.w                                                  ; $acd2 : $9c, $e0, $69
 
@@ -6693,8 +6693,8 @@ br_04_acd5:
 	bmi br_04_ad2b                                                  ; $ad1b : $30, $0e
 
 	clc                                                  ; $ad1d : $18
-	adc $0b55.w                                                  ; $ad1e : $6d, $55, $0b
-	sta $0b55.w                                                  ; $ad21 : $8d, $55, $0b
+	adc wCasinoCoins.w                                                  ; $ad1e : $6d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $ad21 : $8d, $55, $0b
 	bcc br_04_ad41                                                  ; $ad24 : $90, $1b
 
 	inc $0b57.w                                                  ; $ad26 : $ee, $57, $0b
@@ -6705,10 +6705,10 @@ br_04_ad2b:
 	sec                                                  ; $ad2d : $38
 	sbc $69e0.w                                                  ; $ad2e : $ed, $e0, $69
 	sta $00                                                  ; $ad31 : $85, $00
-	lda $0b55.w                                                  ; $ad33 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $ad33 : $ad, $55, $0b
 	sec                                                  ; $ad36 : $38
 	sbc $00                                                  ; $ad37 : $e5, $00
-	sta $0b55.w                                                  ; $ad39 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $ad39 : $8d, $55, $0b
 	bcs br_04_ad41                                                  ; $ad3c : $b0, $03
 
 	dec $0b57.w                                                  ; $ad3e : $ce, $57, $0b
@@ -8495,7 +8495,7 @@ br_04_b862:
 	rep #ACCU_8                                                  ; $b862 : $c2, $20
 	jsr Call_04_b4d9.w                                                  ; $b864 : $20, $d9, $b4
 	jsr Call_04_c69c.w                                                  ; $b867 : $20, $9c, $c6
-	lda $0b55.w                                                  ; $b86a : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $b86a : $ad, $55, $0b
 	sec                                                  ; $b86d : $38
 	sbc #$000a.w                                                  ; $b86e : $e9, $0a, $00
 	bcs br_04_b886                                                  ; $b871 : $b0, $13
@@ -8508,12 +8508,12 @@ br_04_b862:
 
 br_04_b87c:
 	sta $0b57.w                                                  ; $b87c : $8d, $57, $0b
-	lda $0b55.w                                                  ; $b87f : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $b87f : $ad, $55, $0b
 	sec                                                  ; $b882 : $38
 	sbc #$000a.w                                                  ; $b883 : $e9, $0a, $00
 
 br_04_b886:
-	sta $0b55.w                                                  ; $b886 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $b886 : $8d, $55, $0b
 	jsr Call_04_c819.w                                                  ; $b889 : $20, $19, $c8
 	jsr Call_04_af11.w                                                  ; $b88c : $20, $11, $af
 	sep #ACCU_8                                                  ; $b88f : $e2, $20
@@ -9640,7 +9640,7 @@ Call_04_c028:
 	nop                                                  ; $c035 : $ea
 	lda RDMPYL.l                                                  ; $c036 : $af, $16, $42, $00
 	sta $00                                                  ; $c03a : $85, $00
-	lda $0b55.w                                                  ; $c03c : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $c03c : $ad, $55, $0b
 	sec                                                  ; $c03f : $38
 	sbc $00                                                  ; $c040 : $e5, $00
 	bcs br_04_c04f                                                  ; $c042 : $b0, $0b
@@ -9648,12 +9648,12 @@ Call_04_c028:
 	dec $0b57.w                                                  ; $c044 : $ce, $57, $0b
 	bmi br_04_c054                                                  ; $c047 : $30, $0b
 
-	lda $0b55.w                                                  ; $c049 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $c049 : $ad, $55, $0b
 	sec                                                  ; $c04c : $38
 	sbc $00                                                  ; $c04d : $e5, $00
 
 br_04_c04f:
-	sta $0b55.w                                                  ; $c04f : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $c04f : $8d, $55, $0b
 	bra br_04_c08d                                                  ; $c052 : $80, $39
 
 br_04_c054:
@@ -9713,12 +9713,12 @@ br_04_c0c5:
 	lda $0b57.w                                                  ; $c0db : $ad, $57, $0b
 	bne br_04_c111                                                  ; $c0de : $d0, $31
 
-	lda $0b55.w                                                  ; $c0e0 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $c0e0 : $ad, $55, $0b
 	sec                                                  ; $c0e3 : $38
 	sbc $600c.w                                                  ; $c0e4 : $ed, $0c, $60
 	bcs br_04_c111                                                  ; $c0e7 : $b0, $28
 
-	lda $0b55.w                                                  ; $c0e9 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $c0e9 : $ad, $55, $0b
 	beq br_04_c10c                                                  ; $c0ec : $f0, $1e
 
 	sta $004204.l                                                  ; $c0ee : $8f, $04, $42, $00
@@ -9862,10 +9862,10 @@ Call_04_c1e8:
 	lda #$000a.w                                                  ; $c1f1 : $a9, $0a, $00
 	sta $600a.w                                                  ; $c1f4 : $8d, $0a, $60
 	jsr Call_04_a5df.w                                                  ; $c1f7 : $20, $df, $a5
-	lda $0b55.w                                                  ; $c1fa : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $c1fa : $ad, $55, $0b
 	clc                                                  ; $c1fd : $18
 	adc $600c.w                                                  ; $c1fe : $6d, $0c, $60
-	sta $0b55.w                                                  ; $c201 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $c201 : $8d, $55, $0b
 	bcc br_04_c209                                                  ; $c204 : $90, $03
 
 	inc $0b57.w                                                  ; $c206 : $ee, $57, $0b
@@ -9882,10 +9882,10 @@ Call_04_c20a:
 	lda #$000a.w                                                  ; $c213 : $a9, $0a, $00
 	sta $600a.w                                                  ; $c216 : $8d, $0a, $60
 	jsr Call_04_a5df.w                                                  ; $c219 : $20, $df, $a5
-	lda $0b55.w                                                  ; $c21c : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $c21c : $ad, $55, $0b
 	sec                                                  ; $c21f : $38
 	sbc $600c.w                                                  ; $c220 : $ed, $0c, $60
-	sta $0b55.w                                                  ; $c223 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $c223 : $8d, $55, $0b
 	bcs br_04_c22b                                                  ; $c226 : $b0, $03
 
 	dec $0b57.w                                                  ; $c228 : $ce, $57, $0b
@@ -11138,7 +11138,7 @@ br_04_ca93:
 	beq br_04_caef                                                  ; $cab1 : $f0, $3c
 
 	rep #ACCU_8                                                  ; $cab3 : $c2, $20
-	lda $0b55.w                                                  ; $cab5 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $cab5 : $ad, $55, $0b
 	ora $0b57.w                                                  ; $cab8 : $0d, $57, $0b
 	sep #ACCU_8                                                  ; $cabb : $e2, $20
 	bne br_04_cae9                                                  ; $cabd : $d0, $2a
@@ -12260,17 +12260,17 @@ br_04_d21b:
 	lda $0b57.w                                                  ; $d21d : $ad, $57, $0b
 	bne br_04_d23f                                                  ; $d220 : $d0, $1d
 
-	lda $0b55.w                                                  ; $d222 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $d222 : $ad, $55, $0b
 	clc                                                  ; $d225 : $18
 	adc $7e69e0.l                                                  ; $d226 : $6f, $e0, $69, $7e
 	sec                                                  ; $d22a : $38
 	sbc $0b                                                  ; $d22b : $e5, $0b
 	bcs br_04_d23f                                                  ; $d22d : $b0, $10
 
-	lda $0b55.w                                                  ; $d22f : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $d22f : $ad, $55, $0b
 	clc                                                  ; $d232 : $18
 	adc $7e69e0.l                                                  ; $d233 : $6f, $e0, $69, $7e
-	sta $0b55.w                                                  ; $d237 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $d237 : $8d, $55, $0b
 	sta $0b                                                  ; $d23a : $85, $0b
 	stz $69e0.w                                                  ; $d23c : $9c, $e0, $69
 
@@ -12348,8 +12348,8 @@ br_04_d249:
 	bmi br_04_d2cd                                                  ; $d2bd : $30, $0e
 
 	clc                                                  ; $d2bf : $18
-	adc $0b55.w                                                  ; $d2c0 : $6d, $55, $0b
-	sta $0b55.w                                                  ; $d2c3 : $8d, $55, $0b
+	adc wCasinoCoins.w                                                  ; $d2c0 : $6d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $d2c3 : $8d, $55, $0b
 	bcc br_04_d2e4                                                  ; $d2c6 : $90, $1c
 
 	inc $0b57.w                                                  ; $d2c8 : $ee, $57, $0b
@@ -12360,10 +12360,10 @@ br_04_d2cd:
 	sec                                                  ; $d2cf : $38
 	sbc $7e69e0.l                                                  ; $d2d0 : $ef, $e0, $69, $7e
 	sta $00                                                  ; $d2d4 : $85, $00
-	lda $0b55.w                                                  ; $d2d6 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $d2d6 : $ad, $55, $0b
 	sec                                                  ; $d2d9 : $38
 	sbc $00                                                  ; $d2da : $e5, $00
-	sta $0b55.w                                                  ; $d2dc : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $d2dc : $8d, $55, $0b
 	bcs br_04_d2e4                                                  ; $d2df : $b0, $03
 
 	dec $0b57.w                                                  ; $d2e1 : $ce, $57, $0b
@@ -13682,7 +13682,7 @@ br_04_db69:
 	lda $0b57.w                                                  ; $db6e : $ad, $57, $0b
 	bne br_04_db7f                                                  ; $db71 : $d0, $0c
 
-	lda $0b55.w                                                  ; $db73 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $db73 : $ad, $55, $0b
 	sec                                                  ; $db76 : $38
 	sbc #$000a.w                                                  ; $db77 : $e9, $0a, $00
 	bcs br_04_db7f                                                  ; $db7a : $b0, $03
@@ -14820,7 +14820,7 @@ Call_04_e2a8:
 	bra br_04_e30b                                                  ; $e2cc : $80, $3d
 
 br_04_e2ce:
-	lda $0b55.w                                                  ; $e2ce : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $e2ce : $ad, $55, $0b
 	sec                                                  ; $e2d1 : $38
 	sbc #$000a.w                                                  ; $e2d2 : $e9, $0a, $00
 	bcs br_04_e2ea                                                  ; $e2d5 : $b0, $13
@@ -14837,10 +14837,10 @@ br_04_e2ce:
 
 
 br_04_e2ea:
-	lda $0b55.w                                                  ; $e2ea : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $e2ea : $ad, $55, $0b
 	sec                                                  ; $e2ed : $38
 	sbc #$000a.w                                                  ; $e2ee : $e9, $0a, $00
-	sta $0b55.w                                                  ; $e2f1 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $e2f1 : $8d, $55, $0b
 	sep #ACCU_8                                                  ; $e2f4 : $e2, $20
 	lda #$20.b                                                  ; $e2f6 : $a9, $20
 	sta $0564.w                                                  ; $e2f8 : $8d, $64, $05
@@ -17548,7 +17548,7 @@ br_04_f460:
 	lda $0b57.w                                                  ; $f460 : $ad, $57, $0b
 	bne br_04_f471                                                  ; $f463 : $d0, $0c
 
-	lda $0b55.w                                                  ; $f465 : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $f465 : $ad, $55, $0b
 	sec                                                  ; $f468 : $38
 	sbc $71b6.w                                                  ; $f469 : $ed, $b6, $71
 	bcs br_04_f471                                                  ; $f46c : $b0, $03
@@ -17977,7 +17977,7 @@ br_04_f729:
 
 
 Call_04_f74e:
-	lda $0b55.w                                                  ; $f74e : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $f74e : $ad, $55, $0b
 	sec                                                  ; $f751 : $38
 	sbc $71b6.w                                                  ; $f752 : $ed, $b6, $71
 	bcs br_04_f76a                                                  ; $f755 : $b0, $13
@@ -17994,10 +17994,10 @@ Call_04_f74e:
 
 
 br_04_f76a:
-	lda $0b55.w                                                  ; $f76a : $ad, $55, $0b
+	lda wCasinoCoins.w                                                  ; $f76a : $ad, $55, $0b
 	sec                                                  ; $f76d : $38
 	sbc $71b6.w                                                  ; $f76e : $ed, $b6, $71
-	sta $0b55.w                                                  ; $f771 : $8d, $55, $0b
+	sta wCasinoCoins.w                                                  ; $f771 : $8d, $55, $0b
 	sep #ACCU_8                                                  ; $f774 : $e2, $20
 	lda #$30.b                                                  ; $f776 : $a9, $30
 	sta $0564.w                                                  ; $f778 : $8d, $64, $05
