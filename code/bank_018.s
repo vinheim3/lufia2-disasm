@@ -3,8 +3,8 @@
 .bank $018 slot 2
 .org $0
 
-Data_18_8000:
-	.dl Data_18_80ab-Data_18_8000
+SPCSamplesData:
+	.dl Data_18_80ab-SPCSamplesData
 	.db $19, $07, $00
 	.db $21, $10, $00
 	.db $c1, $17, $00

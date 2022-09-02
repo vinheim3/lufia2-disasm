@@ -3412,7 +3412,7 @@ Call_00_93d6:
 	ldx #$ffff.w                                                  ; $93e9 : $a2, $ff, $ff
 	stx $0590.w                                                  ; $93ec : $8e, $90, $05
 	stx $0592.w                                                  ; $93ef : $8e, $92, $05
-	jsr Call_00_9703.w                                                  ; $93f2 : $20, $03, $97
+	jsr CopyFirst20hSamplesToSPC.w                                                  ; $93f2 : $20, $03, $97
 	stz $0588.w                                                  ; $93f5 : $9c, $88, $05
 	plb                                                  ; $93f8 : $ab
 	plp                                                  ; $93f9 : $28
@@ -3466,6 +3466,8 @@ Call_00_941a:
 	sta wCompressedDataRamDest+2                                                  ; $9439 : $85, $62
 	jsr DecompressData.l                                                  ; $943b : $22, $9d, $8e, $80
 	rep #ACCU_8                                                  ; $943f : $c2, $20
+
+; text here must be "S2" ($3253 in little-endian)
 	lda $7e2022.l                                                  ; $9441 : $af, $22, $20, $7e
 	cmp #$3253.w                                                  ; $9445 : $c9, $53, $32
 	sep #ACCU_8                                                  ; $9448 : $e2, $20
@@ -3491,7 +3493,7 @@ Call_00_941a:
 	lda #$ff.b                                                  ; $9467 : $a9, $ff
 	trb $0588.w                                                  ; $9469 : $1c, $88, $05
 	beq +                                                  ; $946c : $f0, $03
-	jsr Call_00_9703.w                                                  ; $946e : $20, $03, $97
+	jsr CopyFirst20hSamplesToSPC.w                                                  ; $946e : $20, $03, $97
 +	ldx $0584.w                                                  ; $9471 : $ae, $84, $05
 	stx APUIO0.w                                                  ; $9474 : $8e, $40, $21
 	lda #$11.b                                                  ; $9477 : $a9, $11
@@ -3515,7 +3517,7 @@ Call_00_941a:
 	jsr SetAPUIO2and3toA.w                                                  ; $9496 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9499 : $20, $0a, $9a
 	pla                                                  ; $949c : $68
-	jsr Call_00_9886.w                                                  ; $949d : $20, $86, $98
+	jsr CopySampleHeaderAndDataToSPC.w                                                  ; $949d : $20, $86, $98
 	inc $54                                                  ; $94a0 : $e6, $54
 	inx                                                  ; $94a2 : $e8
 	cpx #$0020.w                                                  ; $94a3 : $e0, $20, $00
@@ -3575,7 +3577,7 @@ Call_00_941a:
 	jsr SetAPUIO2and3toA.w                                                  ; $94f5 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $94f8 : $20, $0a, $9a
 	pla                                                  ; $94fb : $68
-	jsr Call_00_9886.w                                                  ; $94fc : $20, $86, $98
+	jsr CopySampleHeaderAndDataToSPC.w                                                  ; $94fc : $20, $86, $98
 
 @cont_94ff:
 	plx                                                  ; $94ff : $fa
@@ -3584,13 +3586,16 @@ Call_00_941a:
 	bne @loop_94bc                                                  ; $9504 : $d0, $b6
 
 @cont_9506:
+; copy from 7e:2020 to spc ram 4400
 	ldx #$2020.w                                                  ; $9506 : $a2, $20, $20
 	stx $5d                                                  ; $9509 : $86, $5d
 	lda #$7e.b                                                  ; $950b : $a9, $7e
 	sta $5f                                                  ; $950d : $85, $5f
 	ldx #$4400.w                                                  ; $950f : $a2, $00, $44
 	stx $56                                                  ; $9512 : $86, $56
-	jsr Call_00_9911.l                                                  ; $9514 : $22, $11, $99, $80
+	jsr CopySoundDataToSPC.l                                                  ; $9514 : $22, $11, $99, $80
+
+;
 	lda #$12.b                                                  ; $9518 : $a9, $12
 	jsr SetAPUIO2and3toA.w                                                  ; $951a : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $951d : $20, $0a, $9a
@@ -3932,7 +3937,7 @@ Call_00_96f2:
 	rtl                                                  ; $9702 : $6b
 
 
-Call_00_9703:
+CopyFirst20hSamplesToSPC:
 	pha                                                  ; $9703 : $48
 	phx                                                  ; $9704 : $da
 	phy                                                  ; $9705 : $5a
@@ -3940,7 +3945,7 @@ Call_00_9703:
 	sep #ACCU_8                                                  ; $9707 : $e2, $20
 	rep #IDX_8                                                  ; $9709 : $c2, $10
 
-; writes 5800 to spc ram 9c (dest addr)
+; writes 5800 to spc ram 9c (dest addr of 1st sample)
 	ldx #$5800.w                                                  ; $970b : $a2, $00, $58
 	stx APUIO0.w                                                  ; $970e : $8e, $40, $21
 	lda #$11.b                                                  ; $9711 : $a9, $11
@@ -3954,11 +3959,11 @@ Call_00_9703:
 	jsr SetAPUIO2and3toA.w                                                  ; $9720 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9723 : $20, $0a, $9a
 
-; loop $20 times, with increasing A (loads $20 songs and/or sound effects)
+; Copy 1st $20 sequential samples to SPC
 	ldx #$0020.w                                                  ; $9726 : $a2, $20, $00
 	lda #$00.b                                                  ; $9729 : $a9, $00
 -	pha                                                  ; $972b : $48
-	jsr Call_00_9886.w                                                  ; $972c : $20, $86, $98
+	jsr CopySampleHeaderAndDataToSPC.w                                                  ; $972c : $20, $86, $98
 	pla                                                  ; $972f : $68
 	ina                                                  ; $9730 : $1a
 	dex                                                  ; $9731 : $ca
@@ -3994,7 +3999,7 @@ Call_00_9747:
 	jsr SetAPUIO2and3toA.w                                                  ; $975e : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9761 : $20, $0a, $9a
 	lda $54                                                  ; $9764 : $a5, $54
-	jsr todo_Copy8bytesToSPC.w                                                  ; $9766 : $20, $a5, $98
+	jsr CopySampleHeaderToSPC.w                                                  ; $9766 : $20, $a5, $98
 	stx $058c.w                                                  ; $9769 : $8e, $8c, $05
 	sty $0589.w                                                  ; $976c : $8c, $89, $05
 	lda $5f                                                  ; $976f : $a5, $5f
@@ -4168,7 +4173,8 @@ br_00_9868:
 	rts                                                  ; $9885 : $60
 
 
-Call_00_9886:
+; A - sample idx
+CopySampleHeaderAndDataToSPC:
 	phx                                                  ; $9886 : $da
 	phy                                                  ; $9887 : $5a
 	php                                                  ; $9888 : $08
@@ -4183,13 +4189,13 @@ Call_00_9886:
 
 ;
 	pla                                                  ; $9895 : $68
-	jsr todo_Copy8bytesToSPC.w                                                  ; $9896 : $20, $a5, $98
+	jsr CopySampleHeaderToSPC.w                                                  ; $9896 : $20, $a5, $98
 	lda $5f                                                  ; $9899 : $a5, $5f
 	pha                                                  ; $989b : $48
 
 ;
 	plb                                                  ; $989c : $ab
-	jsr todo_CopyNon8bytesToSPC.w                                                  ; $989d : $20, $45, $99
+	jsr CopyChunkOfDataToSPC.w                                                  ; $989d : $20, $45, $99
 	plb                                                  ; $98a0 : $ab
 	plp                                                  ; $98a1 : $28
 	ply                                                  ; $98a2 : $7a
@@ -4197,9 +4203,9 @@ Call_00_9886:
 	rts                                                  ; $98a4 : $60
 
 
-; A - todo: table idx
-; Returns full data len (excluding 8 bytes) in X
-todo_Copy8bytesToSPC:
+; A - sample idx
+; Returns full data len (excluding 8 bytes of header) in X
+CopySampleHeaderToSPC:
 	sep #ACCU_8                                                  ; $98a5 : $e2, $20
 	rep #IDX_8                                                  ; $98a7 : $c2, $10
 
@@ -4227,7 +4233,7 @@ todo_Copy8bytesToSPC:
 	stz wSPCDataSrc                                                  ; $98be : $64, $5d
 
 ; Y (src addr) from long table entry, shift a bit if in next bank
-	lda Data_18_8000.l, X                                                  ; $98c0 : $bf, $00, $80, $98
+	lda SPCSamplesData.l, X                                                  ; $98c0 : $bf, $00, $80, $98
 	asl                                                  ; $98c4 : $0a
 	php                                                  ; $98c5 : $08
 	lsr                                                  ; $98c6 : $4a
@@ -4237,9 +4243,9 @@ todo_Copy8bytesToSPC:
 	sep #ACCU_8                                                  ; $98cc : $e2, $20
 
 ; Get bank from long table entry, shifting in above bit
-	lda Data_18_8000.l+2, X                                                  ; $98ce : $bf, $02, $80, $98
+	lda SPCSamplesData.l+2, X                                                  ; $98ce : $bf, $02, $80, $98
 	rol                                                  ; $98d2 : $2a
-	adc #:Data_18_8000.b                                                  ; $98d3 : $69, $98
+	adc #:SPCSamplesData.b                                                  ; $98d3 : $69, $98
 	sta wSPCDataSrc+2                                                  ; $98d5 : $85, $5f
 
 ; Get byte from src into B...
@@ -4294,45 +4300,48 @@ todo_Copy8bytesToSPC:
 	rts                                                  ; $9910 : $60
 
 
-Call_00_9911:
+CopySoundDataToSPC:
 	php                                                  ; $9911 : $08
 	phb                                                  ; $9912 : $8b
 	rep #ACCU_8                                                  ; $9913 : $c2, $20
+
+;
 	lda $56                                                  ; $9915 : $a5, $56
 	sta APUIO0.w                                                  ; $9917 : $8d, $40, $21
-	ldy $5d                                                  ; $991a : $a4, $5d
-	stz $5d                                                  ; $991c : $64, $5d
-	lda [$5d], Y                                                  ; $991e : $b7, $5d
+	ldy wSPCDataSrc                                                  ; $991a : $a4, $5d
+	stz wSPCDataSrc                                                  ; $991c : $64, $5d
+
+; 1st 2 bytes is length
+	lda [wSPCDataSrc], Y                                                  ; $991e : $b7, $5d
 	tax                                                  ; $9920 : $aa
 	sep #ACCU_8                                                  ; $9921 : $e2, $20
 	iny                                                  ; $9923 : $c8
-	bne br_00_992b                                                  ; $9924 : $d0, $05
+	bne +                                                  ; $9924 : $d0, $05
 
 	ldy #$8000.w                                                  ; $9926 : $a0, $00, $80
-	inc $5f                                                  ; $9929 : $e6, $5f
+	inc wSPCDataSrc+2                                                  ; $9929 : $e6, $5f
 
-br_00_992b:
-	iny                                                  ; $992b : $c8
-	bne br_00_9933                                                  ; $992c : $d0, $05
++	iny                                                  ; $992b : $c8
+	bne +                                                  ; $992c : $d0, $05
 
 	ldy #$8000.w                                                  ; $992e : $a0, $00, $80
-	inc $5f                                                  ; $9931 : $e6, $5f
+	inc wSPCDataSrc+2                                                  ; $9931 : $e6, $5f
 
-br_00_9933:
-	lda #$01.b                                                  ; $9933 : $a9, $01
+; copy rest to SPC
++	lda #$01.b                                                  ; $9933 : $a9, $01
 	jsr SetAPUIO2and3toA.w                                                  ; $9935 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9938 : $20, $0a, $9a
-	lda $5f                                                  ; $993b : $a5, $5f
+	lda wSPCDataSrc+2                                                  ; $993b : $a5, $5f
 	pha                                                  ; $993d : $48
 	plb                                                  ; $993e : $ab
-	jsr todo_CopyNon8bytesToSPC.w                                                  ; $993f : $20, $45, $99
+	jsr CopyChunkOfDataToSPC.w                                                  ; $993f : $20, $45, $99
 	plb                                                  ; $9942 : $ab
 	plp                                                  ; $9943 : $28
 	rtl                                                  ; $9944 : $6b
 
 
 ; Y - points to after 8 bytes sent to SPC
-todo_CopyNon8bytesToSPC:
+CopyChunkOfDataToSPC:
 ; Send SPC an $ff to start, and wait for it to send it back
 	lda #$ff.b                                                  ; $9945 : $a9, $ff
 	sta APUIO2.l                                                  ; $9947 : $8f, $42, $21, $00

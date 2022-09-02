@@ -7,3 +7,6 @@ __pycache__/
 *.srm
 *.sym
 temp.s
+
+spc/initialSPC.bin
+spc/original/*
