@@ -68,11 +68,26 @@ wSavedCurrCompressedRamDest: ; $5a
 w5c:
     ds $d-$c
 
-wCompressedDataRomSrc: ; $5d
-    ds 3
+.union
 
-wCompressedDataRamDest: ; $60
-    ds 3
+    wCompressedDataRomSrc: ; $5d
+        dl
+
+    wCompressedDataRamDest: ; $60
+        dl
+
+.nextu
+
+    wSPCDataSrc: ; $5d
+        dl
+
+    wSPCDataWord: ; $60
+        dw
+
+    wSPCDataCtr: ; $62
+        db
+
+.endu
 
 wCompressedDataEndRamAddr: ; $63
     dw
