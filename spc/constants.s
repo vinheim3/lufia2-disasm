@@ -20,9 +20,15 @@
 .define COUNTER_1 = $fe
 
 ; DSP regs
+.define VOL_L = $00
+.define VOL_R = $01
 .define PITCH_L = $02
+.define SCRN = $04
+.define ADSR_1 = $05
+.define ADSR_2 = $06
 .define MVOL_L = $0c
 .define EFB = $0d
+.define COEF = $0f
 .define MVOL_R = $1c
 .define EVOL_L = $2c
 .define PMON = $2d
@@ -32,7 +38,15 @@
 .define EON = $4d
 .define KOF = $5c ; 1 bit for each voice
 .define DIR = $5d
+.define FLG = $6c
 .define ESA = $6d
 .define EDL = $7d
 
 .define NUM_SW_CHANNELS = $10
+
+; wMusicAndSEControl
+.define CHN_NO_NEW_SAMPLES = $80
+.define CHN_NEG_VOL_R = $40
+.define CHN_NEG_VOL_L = $20
+.define CHN_USES_SE = $02
+.define CHN_USES_MUSIC = $01

@@ -51,8 +51,8 @@ Begin:
 	mov $a3, A                                                  ; $0347 : $c4, $a3
 	mov $a4, A                                                  ; $0349 : $c4, $a4
 	mov $a0, A                                                  ; $034b : $c4, $a0
-	mov $95, A                                                  ; $034d : $c4, $95
-	mov $96, A                                                  ; $034f : $c4, $96
+	mov wChnBitflagToKON, A                                                  ; $034d : $c4, $95
+	mov wChnBitflagToKOF, A                                                  ; $034f : $c4, $96
 	mov !$08d0, A                                                  ; $0351 : $c5, $d0, $08
 	mov A, #$ff                                                  ; $0354 : $e8, $ff
 	mov $9a, A                                                  ; $0356 : $c4, $9a
@@ -92,7 +92,7 @@ NextSndCommand:
 @loop_0388:
 	bbc $9b.0, @cont_039f                                                  ; $0388 : $13, $9b, $14
 
-;
+; counter 0 used for sound updating
 	mov A, COUNTER_0                                                  ; $038b : $e4, $fd
 	beq @cont_039f                                                  ; $038d : $f0, $10
 
@@ -103,7 +103,7 @@ NextSndCommand:
 	asl $1c                                                  ; $0396 : $0b, $1c
 
 @brLoop_0398:
-	call !Func_35fb                                                  ; $0398 : $3f, $fb, $35
+	call !UpdateSound                                                  ; $0398 : $3f, $fb, $35
 	dec $1c                                                  ; $039b : $8b, $1c
 	bne @brLoop_0398                                                  ; $039d : $d0, $f9
 
@@ -113,7 +113,7 @@ NextSndCommand:
 	beq +                                                  ; $03a1 : $f0, $03
 	call !Func_3c3e                                                  ; $03a3 : $3f, $3e, $3c
 
-; To proceed, 2 should be a non-0 command, and 3 should be 0
+; To process a SNES command, 2 should be the non-0 command, and 3 should be 0
 +	mov A, PORT_2                                                  ; $03a6 : $e4, $f6
 	beq @loop_0388                                                  ; $03a8 : $f0, $de
 
@@ -131,15 +131,15 @@ NextSndCommand:
 	jmp [!@cmdHandlers+X]                                                  ; $03b5 : $1f, $b8, $03
 
 @cmdHandlers:
-	.dw CommandHandler01h
+	.dw CommandHandler01h_LoadSnesData
 	.dw CommandHandler02h
 	.dw CommandHandler03h
-	.dw CommandHandler04h
+	.dw CommandHandler04h_PlaySoundEffect
 	.dw CommandHandler05h
 	.dw CommandHandler06h
 	.dw CommandHandler07h
 	.dw CommandHandler08h
-	.dw CommandHandler09h
+	.dw CommandHandler09h_SetDspMVOL
 	.dw CommandHandler0ah
 	.dw CommandHandler0bh
 	.dw CommandHandler0ch
@@ -147,9 +147,9 @@ NextSndCommand:
 	.dw CommandHandler0eh
 	.dw CommandHandler0fh
 	.dw CommandHandler10h
-	.dw CommandHandler11h
-	.dw CommandHandler12h
-	.dw CommandHandler13h
+	.dw CommandHandler11h_SetSampleDestAddr
+	.dw CommandHandler12h_GetSampleDestAddr
+	.dw CommandHandler13h_SetSampleIdx
 	.dw CommandHandler14h_LoadFullSample
 	.dw CommandHandler15h
 	.dw CommandHandler16h
@@ -161,7 +161,7 @@ NextSndCommand:
 	.dw CommandHandler1ch
 	.dw CommandHandler1dh_LoadSampleHeader
 	.dw CommandHandler1eh
-	.dw CommandHandler1fh
+	.dw CommandHandler1fh_SetDspCOEF
 	.dw CommandHandler20h
 	.dw CommandHandler21h
 
@@ -171,7 +171,7 @@ CommandHandler02h:
 	clr1 $9b.2                                                  ; $03fc : $52, $9b
 	mov A, #$ff                                                  ; $03fe : $e8, $ff
 	mov !$08ca, A                                                  ; $0400 : $c5, $ca, $08
-	jmp !Func_3560                                                  ; $0403 : $5f, $60, $35
+	jmp !InitSoundFile                                                  ; $0403 : $5f, $60, $35
 
 
 CommandHandler03h:
@@ -199,7 +199,7 @@ CommandHandler07h:
 	clr1 $9b.2                                                  ; $0422 : $52, $9b
 	mov A, #$00                                                  ; $0424 : $e8, $00
 	mov !$08ca, A                                                  ; $0426 : $c5, $ca, $08
-	jmp !Func_3560                                                  ; $0429 : $5f, $60, $35
+	jmp !InitSoundFile                                                  ; $0429 : $5f, $60, $35
 
 
 CommandHandler08h:
@@ -208,11 +208,11 @@ CommandHandler08h:
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $0432 : $5f, $85, $03
 
 
-CommandHandler09h:
-	mov A, PORT_0                                                  ; $0435 : $e4, $f4
-	mov !$08c3, A                                                  ; $0437 : $c5, $c3, $08
-	call !Call_00_3fb4                                                  ; $043a : $3f, $b4, $3f
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $043d : $5f, $85, $03
+CommandHandler09h_SetDspMVOL:
+	mov A, PORT_0                                                             ; $0435 : $e4, $f4
+	mov !wMvol, A                                                             ; $0437 : $c5, $c3, $08
+	call !SetDspMVOL                                                          ; $043a : $3f, $b4, $3f
+	jmp !WaitForSNESthenNextSndCmd                                            ; $043d : $5f, $85, $03
 
 
 CommandHandler0bh:
@@ -242,7 +242,7 @@ CommandHandler18h:
 CommandHandler1ah:
 	mov A, PORT_0                                                  ; $045e : $e4, $f4
 	mov X, PORT_1                                                  ; $0460 : $f8, $f5
-	mov !$0723+X, A                                                  ; $0462 : $d5, $23, $07
+	mov !w0723+X, A                                                  ; $0462 : $d5, $23, $07
 	call !Func_3ffd                                                  ; $0465 : $3f, $fd, $3f
 	jmp !NextSndCommand                                                  ; $0468 : $5f, $88, $03
 
@@ -253,7 +253,7 @@ CommandHandler1bh:
 	adc A, #$08                                                  ; $046e : $88, $08
 	mov X, A                                                  ; $0470 : $5d
 	mov A, PORT_0                                                  ; $0471 : $e4, $f4
-	mov !$0723+X, A                                                  ; $0473 : $d5, $23, $07
+	mov !w0723+X, A                                                  ; $0473 : $d5, $23, $07
 	call !Func_3ffd                                                  ; $0476 : $3f, $fd, $3f
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $0479 : $5f, $85, $03
 
@@ -273,18 +273,19 @@ CommandHandler10h:
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $048b : $5f, $85, $03
 
 
-CommandHandler11h:
-	movw YA, PORT_0                                                  ; $048e : $ba, $f4
-	movw $9c, YA                                                  ; $0490 : $da, $9c
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $0492 : $5f, $85, $03
+CommandHandler11h_SetSampleDestAddr:
+	movw YA, PORT_0                                                           ; $048e : $ba, $f4
+	movw wCurrSampleDestAddr, YA                                              ; $0490 : $da, $9c
+	jmp !WaitForSNESthenNextSndCmd                                            ; $0492 : $5f, $85, $03
 
 
-CommandHandler13h:
-	mov A, PORT_0                                                  ; $0495 : $e4, $f4
-	asl A                                                  ; $0497 : $1c
-	asl A                                                  ; $0498 : $1c
-	mov $9e, A                                                  ; $0499 : $c4, $9e
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $049b : $5f, $85, $03
+CommandHandler13h_SetSampleIdx:
+; Save the *4 value
+	mov A, PORT_0                                                             ; $0495 : $e4, $f4
+	asl A                                                                     ; $0497 : $1c
+	asl A                                                                     ; $0498 : $1c
+	mov wCurrSampleIdxTimes4, A                                               ; $0499 : $c4, $9e
+	jmp !WaitForSNESthenNextSndCmd                                            ; $049b : $5f, $85, $03
 
 
 CommandHandler15h:
@@ -295,92 +296,99 @@ CommandHandler15h:
 
 
 CommandHandler14h_LoadFullSample:
-	call !LoadSNESSampleHeader                                                  ; $04a9 : $3f, $b8, $04
+	call !LoadSNESSampleHeader                                                ; $04a9 : $3f, $b8, $04
 	call !WaitUntilSNESReady                                                  ; $04ac : $3f, $ee, $05
-	jmp !LoadInSNESSampleData                                                  ; $04af : $5f, $ba, $05
+	jmp !LoadInSNESSampleData                                                 ; $04af : $5f, $ba, $05
 
 
 CommandHandler1dh_LoadSampleHeader:
-	call !LoadSNESSampleHeader                                                  ; $04b2 : $3f, $b8, $04
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $04b5 : $5f, $85, $03
+	call !LoadSNESSampleHeader                                                ; $04b2 : $3f, $b8, $04
+	jmp !WaitForSNESthenNextSndCmd                                            ; $04b5 : $5f, $85, $03
 
 
 ; todo: 9e is sample idx, 9c.w is sample location
 LoadSNESSampleHeader:
 	call !WaitUntilSNESReady                                                  ; $04b8 : $3f, $ee, $05
 
-; While SNES is looping through its bytes, copy the 8 bytes to
-; 08,09,04,05,8d2-8d5 offset by 9e
-	mov Y, #$08                                                  ; $04bb : $8d, $08
-	call !GetNextOfSNES8bytes                                                  ; $04bd : $3f, $17, $05
-	mov $08, A                                                  ; $04c0 : $c4, $08
-	call !GetNextOfSNES8bytes                                                  ; $04c2 : $3f, $17, $05
-	mov $09, A                                                  ; $04c5 : $c4, $09
-	call !GetNextOfSNES8bytes                                                  ; $04c7 : $3f, $17, $05
-	mov $04, A                                                  ; $04ca : $c4, $04
-	call !GetNextOfSNES8bytes                                                  ; $04cc : $3f, $17, $05
-	mov $05, A                                                  ; $04cf : $c4, $05
-	mov X, $9e                                                  ; $04d1 : $f8, $9e
-	call !GetNextOfSNES8bytes                                                  ; $04d3 : $3f, $17, $05
-	mov !$08d2+X, A                                                  ; $04d6 : $d5, $d2, $08
-	call !GetNextOfSNES8bytes                                                  ; $04d9 : $3f, $17, $05
-	mov !$08d3+X, A                                                  ; $04dc : $d5, $d3, $08
-	call !GetNextOfSNES8bytes                                                  ; $04df : $3f, $17, $05
-	mov !$08d4+X, A                                                  ; $04e2 : $d5, $d4, $08
-	call !GetNextOfSNES8bytes                                                  ; $04e5 : $3f, $17, $05
-	mov !$08d5+X, A                                                  ; $04e8 : $d5, $d5, $08
-
-; 9c is dest low byte, 200+x = sample start/loop in DIR
-	mov A, $9c                                                  ; $04eb : $e4, $9c
-	mov !$0200+X, A                                                  ; $04ed : $d5, $00, $02
-	mov $0c, A                                                  ; $04f0 : $c4, $0c
-	clrc                                                  ; $04f2 : $60
-	adc A, $08                                                  ; $04f3 : $84, $08
-	mov $9c, A                                                  ; $04f5 : $c4, $9c
-
-; 9d is dest high byte
-	mov A, $9d                                                  ; $04f7 : $e4, $9d
-	mov !$0201+X, A                                                  ; $04f9 : $d5, $01, $02
-	mov $0d, A                                                  ; $04fc : $c4, $0d
-	adc A, $09                                                  ; $04fe : $84, $09
-	mov $9d, A                                                  ; $0500 : $c4, $9d
+; While SNES is looping through its bytes, copy those 8 bytes
+; The 1st 4 bytes are 2 words for data length, and loop offset from the data start
+	mov Y, #$08                                                               ; $04bb : $8d, $08
+	call !GetNextOfSNES8bytes                                                 ; $04bd : $3f, $17, $05
+	mov wCurrSampleDataLen, A                                                 ; $04c0 : $c4, $08
+	call !GetNextOfSNES8bytes                                                 ; $04c2 : $3f, $17, $05
+	mov wCurrSampleDataLen+1, A                                               ; $04c5 : $c4, $09
+	call !GetNextOfSNES8bytes                                                 ; $04c7 : $3f, $17, $05
+	mov wCurrSampleLoopStartOffs, A                                           ; $04ca : $c4, $04
+	call !GetNextOfSNES8bytes                                                 ; $04cc : $3f, $17, $05
+	mov wCurrSampleLoopStartOffs+1, A                                         ; $04cf : $c4, $05
 
 ;
-	movw YA, $0c                                                  ; $0502 : $ba, $0c
-	addw YA, $04                                                  ; $0504 : $7a, $04
-	mov !$0202+X, A                                                  ; $0506 : $d5, $02, $02
-	mov A, Y                                                  ; $0509 : $dd
-	mov !$0203+X, A                                                  ; $050a : $d5, $03, $02
-	clrc                                                  ; $050d : $60
-	adc $9e, #$04                                                  ; $050e : $98, $04, $9e
+	mov X, wCurrSampleIdxTimes4                                                  ; $04d1 : $f8, $9e
+	call !GetNextOfSNES8bytes                                                  ; $04d3 : $3f, $17, $05
+	mov !wSamplesMetadata.adsr_1+X, A                                                  ; $04d6 : $d5, $d2, $08
+	call !GetNextOfSNES8bytes                                                  ; $04d9 : $3f, $17, $05
+	mov !wSamplesMetadata.adsr_2+X, A                                                  ; $04dc : $d5, $d3, $08
+	call !GetNextOfSNES8bytes                                                  ; $04df : $3f, $17, $05
+	mov !wSamplesMetadata.b3+X, A                                                  ; $04e2 : $d5, $d4, $08
+	call !GetNextOfSNES8bytes                                                  ; $04e5 : $3f, $17, $05
+	mov !wSamplesMetadata.b4+X, A                                                  ; $04e8 : $d5, $d5, $08
+
+; In source dir, set the current dest as the sample location
+	mov A, wCurrSampleDestAddr                                                ; $04eb : $e4, $9c
+	mov !wSourceDir+X, A                                                      ; $04ed : $d5, $00, $02
+	mov wSnesDataDestAddr, A                                                  ; $04f0 : $c4, $0c
+
+; Add the curr sample's length to dest for next sample
+	clrc                                                                      ; $04f2 : $60
+	adc A, wCurrSampleDataLen                                                 ; $04f3 : $84, $08
+	mov wCurrSampleDestAddr, A                                                ; $04f5 : $c4, $9c
+
+; Repeat above for high byte
+	mov A, wCurrSampleDestAddr+1                                              ; $04f7 : $e4, $9d
+	mov !wSourceDir+1+X, A                                                    ; $04f9 : $d5, $01, $02
+	mov wSnesDataDestAddr+1, A                                                ; $04fc : $c4, $0d
+
+	adc A, wCurrSampleDataLen+1                                               ; $04fe : $84, $09
+	mov wCurrSampleDestAddr+1, A                                              ; $0500 : $c4, $9d
+
+; In source dir, calculate the loop start address from dest+offset
+	movw YA, wSnesDataDestAddr                                                ; $0502 : $ba, $0c
+	addw YA, wCurrSampleLoopStartOffs                                         ; $0504 : $7a, $04
+	mov !wSourceDir+2+X, A                                                    ; $0506 : $d5, $02, $02
+	mov A, Y                                                                  ; $0509 : $dd
+	mov !wSourceDir+3+X, A                                                    ; $050a : $d5, $03, $02
+
+; Get next sample metadata offset
+	clrc                                                                      ; $050d : $60
+	adc wCurrSampleIdxTimes4, #_sizeof_SampleMetadata                         ; $050e : $98, $04, $9e
 
 ; Wait until SNES sends the 'end' byte
--	cmp PORT_2, #$ff                                                  ; $0511 : $78, $ff, $f6
-	bne -                                                  ; $0514 : $d0, $fb
+-	cmp PORT_2, #$ff                                                          ; $0511 : $78, $ff, $f6
+	bne -                                                                     ; $0514 : $d0, $fb
 
-	ret                                                  ; $0516 : $6f
+	ret                                                                       ; $0516 : $6f
 
 
 ; Y - loop idx from 8 down to 1 (corresponds with SNES' loop idx)
 GetNextOfSNES8bytes:
 ; Wait until SNES sends us the same loop idx
-	mov A, Y                                                  ; $0517 : $dd
--	cmp A, PORT_2                                                  ; $0518 : $64, $f6
-	bne -                                                  ; $051a : $d0, $fc
+	mov A, Y                                                                  ; $0517 : $dd
+-	cmp A, PORT_2                                                             ; $0518 : $64, $f6
+	bne -                                                                     ; $051a : $d0, $fc
 
 ; Get data byte and push
-	mov A, PORT_0                                                  ; $051c : $e4, $f4
-	push A                                                  ; $051e : $2d
+	mov A, PORT_0                                                             ; $051c : $e4, $f4
+	push A                                                                    ; $051e : $2d
 
 ; Send loop idx with bit 7 set so SNES knows we received it
-	mov A, Y                                                  ; $051f : $dd
-	or A, #$80                                                  ; $0520 : $08, $80
-	mov PORT_2, A                                                  ; $0522 : $c4, $f6
+	mov A, Y                                                                  ; $051f : $dd
+	or A, #$80                                                                ; $0520 : $08, $80
+	mov PORT_2, A                                                             ; $0522 : $c4, $f6
 
 ; To next loop idx
-	dec Y                                                  ; $0524 : $dc
-	pop A                                                  ; $0525 : $ae
-	ret                                                  ; $0526 : $6f
+	dec Y                                                                     ; $0524 : $dc
+	pop A                                                                     ; $0525 : $ae
+	ret                                                                       ; $0526 : $6f
 
 
 CommandHandler1eh:
@@ -388,11 +396,11 @@ CommandHandler1eh:
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $052a : $5f, $85, $03
 
 
-CommandHandler1fh:
-	mov A, PORT_0                                                  ; $052d : $e4, $f4
-	mov !$08c7, A                                                  ; $052f : $c5, $c7, $08
-	call !Call_00_3fc2                                                  ; $0532 : $3f, $c2, $3f
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $0535 : $5f, $85, $03
+CommandHandler1fh_SetDspCOEF:
+	mov A, PORT_0                                                             ; $052d : $e4, $f4
+	mov !w8COEFValsIdx, A                                                     ; $052f : $c5, $c7, $08
+	call !SetDspCOEF                                                          ; $0532 : $3f, $c2, $3f
+	jmp !WaitForSNESthenNextSndCmd                                            ; $0535 : $5f, $85, $03
 
 
 CommandHandler20h:
@@ -405,14 +413,14 @@ CommandHandler20h:
 
 CommandHandler21h:
 	mov A, PORT_0                                                  ; $0545 : $e4, $f4
-	call !Call_00_3a0a                                                  ; $0547 : $3f, $0a, $3a
+	call !todo_MvolRelated_3a0a                                                  ; $0547 : $3f, $0a, $3a
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $054a : $5f, $85, $03
 
 
-CommandHandler12h:
-	movw YA, $9c                                                  ; $054d : $ba, $9c
-	movw PORT_0, YA                                                  ; $054f : $da, $f4
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $0551 : $5f, $85, $03
+CommandHandler12h_GetSampleDestAddr:
+	movw YA, wCurrSampleDestAddr                                              ; $054d : $ba, $9c
+	movw PORT_0, YA                                                           ; $054f : $da, $f4
+	jmp !WaitForSNESthenNextSndCmd                                            ; $0551 : $5f, $85, $03
 
 
 CommandHandler16h:
@@ -480,77 +488,78 @@ CommandHandler1ch:
 	jmp !NextSndCommand                                                  ; $05b0 : $5f, $88, $03
 
 
-CommandHandler01h:
-	movw YA, PORT_0                                                  ; $05b3 : $ba, $f4
-	movw $0c, YA                                                  ; $05b5 : $da, $0c
+CommandHandler01h_LoadSnesData:
+; Word param is the dest addr to coppy to
+	movw YA, PORT_0                                                           ; $05b3 : $ba, $f4
+	movw wSnesDataDestAddr, YA                                                ; $05b5 : $da, $0c
 	call !WaitUntilSNESReady                                                  ; $05b7 : $3f, $ee, $05
 
-; $0c.w - dest addr
+; wSnesDataDestAddr.w - dest addr
 LoadInSNESSampleData:
 ; Wait until SNES sends us $ff, then send it back
-	mov A, #$ff                                                  ; $05ba : $e8, $ff
--	cmp A, PORT_2                                                  ; $05bc : $64, $f6
-	bne -                                                  ; $05be : $d0, $fc
+	mov A, #$ff                                                               ; $05ba : $e8, $ff
+-	cmp A, PORT_2                                                             ; $05bc : $64, $f6
+	bne -                                                                     ; $05be : $d0, $fc
 
-	mov PORT_2, A                                                  ; $05c0 : $c4, $f6
+	mov PORT_2, A                                                             ; $05c0 : $c4, $f6
 
-;
-	mov Y, #$00                                                  ; $05c2 : $8d, $00
+; Y = a loop counter
+	mov Y, #$00                                                               ; $05c2 : $8d, $00
 
 @nextBytePair:
-	mov A, Y                                                  ; $05c4 : $dd
-	and A, #$7f                                                  ; $05c5 : $28, $7f
+	mov A, Y                                                                  ; $05c4 : $dd
+	and A, #$7f                                                               ; $05c5 : $28, $7f
 
 @waitForSnesLoopCtr:
 ; End once $ff read from port 3
-	cmp PORT_3, #$ff                                                  ; $05c7 : $78, $ff, $f7
-	bne @notEnd                                                  ; $05ca : $d0, $03
+	cmp PORT_3, #$ff                                                          ; $05c7 : $78, $ff, $f7
+	bne @notEnd                                                               ; $05ca : $d0, $03
 
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $05cc : $5f, $85, $03
+	jmp !WaitForSNESthenNextSndCmd                                            ; $05cc : $5f, $85, $03
 
 @notEnd:
-	cmp A, PORT_2                                                  ; $05cf : $64, $f6
-	bne @waitForSnesLoopCtr                                                  ; $05d1 : $d0, $f4
+; Loop until SNES sends us the same loopp counter
+	cmp A, PORT_2                                                             ; $05cf : $64, $f6
+	bne @waitForSnesLoopCtr                                                   ; $05d1 : $d0, $f4
 
 ; X = loop counter
-	mov A, Y                                                  ; $05d3 : $dd
-	mov X, A                                                  ; $05d4 : $5d
+	mov A, Y                                                                  ; $05d3 : $dd
+	mov X, A                                                                  ; $05d4 : $5d
 
-; put 1st data byte here
-	mov A, PORT_0                                                  ; $05d5 : $e4, $f4
-	mov [$0c]+Y, A                                                  ; $05d7 : $d7, $0c
-	inc Y                                                  ; $05d9 : $fc
-	bne +                                                  ; $05da : $d0, $02
-	inc $0d                                                  ; $05dc : $ab, $0d
+; Read in 1st data byte
+	mov A, PORT_0                                                             ; $05d5 : $e4, $f4
+	mov [wSnesDataDestAddr]+Y, A                                              ; $05d7 : $d7, $0c
+	inc Y                                                                     ; $05d9 : $fc
+	bne +                                                                     ; $05da : $d0, $02
+	inc wSnesDataDestAddr+1                                                   ; $05dc : $ab, $0d
 
-; put 2nd data byte here
-+	mov A, PORT_1                                                  ; $05de : $e4, $f5
-	mov [$0c]+Y, A                                                  ; $05e0 : $d7, $0c
-	inc Y                                                  ; $05e2 : $fc
-	bne +                                                  ; $05e3 : $d0, $02
-	inc $0d                                                  ; $05e5 : $ab, $0d
+; Read in 2nd data byte
++	mov A, PORT_1                                                             ; $05de : $e4, $f5
+	mov [wSnesDataDestAddr]+Y, A                                              ; $05e0 : $d7, $0c
+	inc Y                                                                     ; $05e2 : $fc
+	bne +                                                                     ; $05e3 : $d0, $02
+	inc wSnesDataDestAddr+1                                                   ; $05e5 : $ab, $0d
 
-; send SNES back the loop counter with bit 7 set to say we've processed it
-+	mov A, X                                                  ; $05e7 : $7d
-	or A, #$80                                                  ; $05e8 : $08, $80
-	mov PORT_2, A                                                  ; $05ea : $c4, $f6
-	bra @nextBytePair                                                  ; $05ec : $2f, $d6
+; Send SNES back the loop counter with bit 7 set to say we've processed it
++	mov A, X                                                                  ; $05e7 : $7d
+	or A, #$80                                                                ; $05e8 : $08, $80
+	mov PORT_2, A                                                             ; $05ea : $c4, $f6
+	bra @nextBytePair                                                         ; $05ec : $2f, $d6
 
 
 WaitUntilSNESReady:
 ; Send SNES a $cdef signal, saying we're done (and can receive new data)
-	mov PORT_2, #$cd                                                  ; $05ee : $8f, $cd, $f6
-	mov PORT_3, #$ef                                                  ; $05f1 : $8f, $ef, $f7
+	mov PORT_2, #$cd                                                          ; $05ee : $8f, $cd, $f6
+	mov PORT_3, #$ef                                                          ; $05f1 : $8f, $ef, $f7
 
 ; Wait until they clear our IO ports
--	mov A, PORT_2                                                  ; $05f4 : $e4, $f6
-	bne -                                                  ; $05f6 : $d0, $fc
--	mov A, PORT_3                                                  ; $05f8 : $e4, $f7
-	bne -                                                  ; $05fa : $d0, $fc
+-	mov A, PORT_2                                                             ; $05f4 : $e4, $f6
+	bne -                                                                     ; $05f6 : $d0, $fc
+-	mov A, PORT_3                                                             ; $05f8 : $e4, $f7
+	bne -                                                                     ; $05fa : $d0, $fc
 
 ; Then clear their IO ports
-	mov A, #$00                                                  ; $05fc : $e8, $00
-	mov PORT_2, A                                                  ; $05fe : $c4, $f6
-	mov PORT_3, A                                                  ; $0600 : $c4, $f7
-	ret                                                  ; $0602 : $6f
-
+	mov A, #$00                                                               ; $05fc : $e8, $00
+	mov PORT_2, A                                                             ; $05fe : $c4, $f6
+	mov PORT_3, A                                                             ; $0600 : $c4, $f7
+	ret                                                                       ; $0602 : $6f

@@ -62,8 +62,8 @@ br_00_806d:
 	lda #$81.b                                                  ; $8070 : $a9, $81
 	sta NMITIMEN.w                                                  ; $8072 : $8d, $00, $42
 	jsr Call_00_91df.w                                                  ; $8075 : $20, $df, $91
-	jsr Call_00_9528.l                                                  ; $8078 : $22, $28, $95, $80
-	jsr Call_00_95d2.l                                                  ; $807c : $22, $d2, $95, $80
+	jsr todo_SendSPCCommand03h.l                                                  ; $8078 : $22, $28, $95, $80
+	jsr todo_SendSPCCommand05h.l                                                  ; $807c : $22, $d2, $95, $80
 	jsr Call_00_93d6.l                                                  ; $8080 : $22, $d6, $93, $80
 
 br_00_8084:
@@ -3422,7 +3422,7 @@ Call_00_93d6:
 	rtl                                                  ; $93fd : $6b
 
 
-Call_00_93fe:
+DecompCopyDataToSPC_SendSPCCmd02h:
 	pha                                                  ; $93fe : $48
 	phx                                                  ; $93ff : $da
 	phy                                                  ; $9400 : $5a
@@ -3430,14 +3430,14 @@ Call_00_93fe:
 	phb                                                  ; $9402 : $8b
 	sep #ACCU_8                                                  ; $9403 : $e2, $20
 	rep #IDX_8                                                  ; $9405 : $c2, $10
-	jsr Call_00_941a.w                                                  ; $9407 : $20, $1a, $94
-	bcs br_00_9414                                                  ; $940a : $b0, $08
+	jsr DecompressAndCopyDataToSPC.w                                                  ; $9407 : $20, $1a, $94
+	bcs @done                                                  ; $940a : $b0, $08
 
-	lda #$02.b                                                  ; $940c : $a9, $02
+	lda #APUCMD_02.b                                                  ; $940c : $a9, $02
 	jsr SetAPUIO2and3toA.w                                                  ; $940e : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9411 : $20, $0a, $9a
 
-br_00_9414:
+@done:
 	plb                                                  ; $9414 : $ab
 	plp                                                  ; $9415 : $28
 	ply                                                  ; $9416 : $7a
@@ -3446,14 +3446,15 @@ br_00_9414:
 	rtl                                                  ; $9419 : $6b
 
 
-Call_00_941a:
+; A - decompress data idx
+DecompressAndCopyDataToSPC:
 	sep #ACCU_8                                                  ; $941a : $e2, $20
 	rep #IDX_8                                                  ; $941c : $c2, $10
 	pha                                                  ; $941e : $48
 	phk                                                  ; $941f : $4b
 	plb                                                  ; $9420 : $ab
-	jsr Call_00_9528.l                                                  ; $9421 : $22, $28, $95, $80
-	jsr Call_00_95d2.l                                                  ; $9425 : $22, $d2, $95, $80
+	jsr todo_SendSPCCommand03h.l                                                  ; $9421 : $22, $28, $95, $80
+	jsr todo_SendSPCCommand05h.l                                                  ; $9425 : $22, $d2, $95, $80
 	pla                                                  ; $9429 : $68
 	cmp #$64.b                                                  ; $942a : $c9, $64
 	bcs @done                                                  ; $942c : $b0, $1e
@@ -3484,7 +3485,7 @@ Call_00_941a:
 	sta $0588.w                                                  ; $9454 : $8d, $88, $05
 	ldx #$5800.w                                                  ; $9457 : $a2, $00, $58
 	stx APUIO0.w                                                  ; $945a : $8e, $40, $21
-	lda #$11.b                                                  ; $945d : $a9, $11
+	lda #APUCMD_SET_SAMPLE_DEST.b                                                  ; $945d : $a9, $11
 	jsr SetAPUIO2and3toA.w                                                  ; $945f : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9462 : $20, $0a, $9a
 	bra @cont_947f                                                  ; $9465 : $80, $18
@@ -3496,7 +3497,7 @@ Call_00_941a:
 	jsr CopyFirst20hSamplesToSPC.w                                                  ; $946e : $20, $03, $97
 +	ldx $0584.w                                                  ; $9471 : $ae, $84, $05
 	stx APUIO0.w                                                  ; $9474 : $8e, $40, $21
-	lda #$11.b                                                  ; $9477 : $a9, $11
+	lda #APUCMD_SET_SAMPLE_DEST.b                                                  ; $9477 : $a9, $11
 	jsr SetAPUIO2and3toA.w                                                  ; $9479 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $947c : $20, $0a, $9a
 
@@ -3513,7 +3514,7 @@ Call_00_941a:
 	pha                                                  ; $948e : $48
 	lda $54                                                  ; $948f : $a5, $54
 	sta APUIO0.w                                                  ; $9491 : $8d, $40, $21
-	lda #$13.b                                                  ; $9494 : $a9, $13
+	lda #APUCMD_SET_SAMPLE_IDX.b                                                  ; $9494 : $a9, $13
 	jsr SetAPUIO2and3toA.w                                                  ; $9496 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9499 : $20, $0a, $9a
 	pla                                                  ; $949c : $68
@@ -3573,7 +3574,7 @@ Call_00_941a:
 	inc $58                                                  ; $94ed : $e6, $58
 	pha                                                  ; $94ef : $48
 	sta APUIO0.w                                                  ; $94f0 : $8d, $40, $21
-	lda #$13.b                                                  ; $94f3 : $a9, $13
+	lda #APUCMD_SET_SAMPLE_IDX.b                                                  ; $94f3 : $a9, $13
 	jsr SetAPUIO2and3toA.w                                                  ; $94f5 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $94f8 : $20, $0a, $9a
 	pla                                                  ; $94fb : $68
@@ -3596,7 +3597,7 @@ Call_00_941a:
 	jsr CopySoundDataToSPC.l                                                  ; $9514 : $22, $11, $99, $80
 
 ;
-	lda #$12.b                                                  ; $9518 : $a9, $12
+	lda #APUCMD_GET_SAMPLE_DEST.b                                                  ; $9518 : $a9, $12
 	jsr SetAPUIO2and3toA.w                                                  ; $951a : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $951d : $20, $0a, $9a
 	ldx APUIO0.w                                                  ; $9520 : $ae, $40, $21
@@ -3605,14 +3606,14 @@ Call_00_941a:
 	rts                                                  ; $9527 : $60
 
 
-Call_00_9528:
+todo_SendSPCCommand03h:
 	php                                                  ; $9528 : $08
 	phb                                                  ; $9529 : $8b
 	pha                                                  ; $952a : $48
 	sep #ACCU_8                                                  ; $952b : $e2, $20
 	phk                                                  ; $952d : $4b
 	plb                                                  ; $952e : $ab
-	lda #$03.b                                                  ; $952f : $a9, $03
+	lda #APUCMD_03.b                                                  ; $952f : $a9, $03
 	jsr SetAPUIO2and3toA.w                                                  ; $9531 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9534 : $20, $0a, $9a
 	pla                                                  ; $9537 : $68
@@ -3626,15 +3627,17 @@ todo_SoundRelated_953b:
 	php                                                  ; $953c : $08
 	sep #ACCU_8                                                  ; $953d : $e2, $20
 	rep #IDX_8                                                  ; $953f : $c2, $10
+
+; only $8f sound idxes
 	cmp #$8f.b                                                  ; $9541 : $c9, $8f
-	bcs br_00_9551                                                  ; $9543 : $b0, $0c
+	bcs @done                                                  ; $9543 : $b0, $0c
 
 	sta APUIO0.l                                                  ; $9545 : $8f, $40, $21, $00
-	lda #$04.b                                                  ; $9549 : $a9, $04
+	lda #APUCMD_PLAY_SOUND_EFFECT.b                                                  ; $9549 : $a9, $04
 	jsr SetAPUIO2and3toA.w                                                  ; $954b : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $954e : $20, $0a, $9a
 
-br_00_9551:
+@done:
 	plp                                                  ; $9551 : $28
 	pla                                                  ; $9552 : $68
 	rtl                                                  ; $9553 : $6b
@@ -3665,7 +3668,7 @@ br_00_9564:
 	php                                                  ; $956b : $08
 	sep #ACCU_8                                                  ; $956c : $e2, $20
 	sta APUIO0.l                                                  ; $956e : $8f, $40, $21, $00
-	lda #$04.b                                                  ; $9572 : $a9, $04
+	lda #APUCMD_PLAY_SOUND_EFFECT.b                                                  ; $9572 : $a9, $04
 	jsr SetAPUIO2and3toA.w                                                  ; $9574 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9577 : $20, $0a, $9a
 	plp                                                  ; $957a : $28
@@ -3678,7 +3681,7 @@ Call_00_957d:
 	plb                                                  ; $957e : $ab
 	pha                                                  ; $957f : $48
 	sta APUIO0.w                                                  ; $9580 : $8d, $40, $21
-	lda #$19.b                                                  ; $9583 : $a9, $19
+	lda #APUCMD_19.b                                                  ; $9583 : $a9, $19
 	jsr SetAPUIO2and3toA.w                                                  ; $9585 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9588 : $20, $0a, $9a
 	xba                                                  ; $958b : $eb
@@ -3704,12 +3707,12 @@ Call_00_957d:
 
 br_00_95a6:
 	sta APUIO0.w                                                  ; $95a6 : $8d, $40, $21
-	lda #$13.b                                                  ; $95a9 : $a9, $13
+	lda #APUCMD_SET_SAMPLE_IDX.b                                                  ; $95a9 : $a9, $13
 	jsr SetAPUIO2and3toA.w                                                  ; $95ab : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $95ae : $20, $0a, $9a
 	ldy $0586.w                                                  ; $95b1 : $ac, $86, $05
 	sty APUIO0.w                                                  ; $95b4 : $8c, $40, $21
-	lda #$11.b                                                  ; $95b7 : $a9, $11
+	lda #APUCMD_SET_SAMPLE_DEST.b                                                  ; $95b7 : $a9, $11
 	jsr SetAPUIO2and3toA.w                                                  ; $95b9 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $95bc : $20, $0a, $9a
 	ldy #$0000.w                                                  ; $95bf : $a0, $00, $00
@@ -3729,10 +3732,10 @@ br_00_95cf:
 	rts                                                  ; $95d1 : $60
 
 
-Call_00_95d2:
+todo_SendSPCCommand05h:
 	php                                                  ; $95d2 : $08
 	sep #ACCU_8                                                  ; $95d3 : $e2, $20
-	lda #$05.b                                                  ; $95d5 : $a9, $05
+	lda #APUCMD_05.b                                                  ; $95d5 : $a9, $05
 	jsr SetAPUIO2and3toA.w                                                  ; $95d7 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $95da : $20, $0a, $9a
 	plp                                                  ; $95dd : $28
@@ -3741,7 +3744,7 @@ Call_00_95d2:
 
 	php                                                  ; $95df : $08
 	sep #ACCU_8                                                  ; $95e0 : $e2, $20
-	lda #$1e.b                                                  ; $95e2 : $a9, $1e
+	lda #APUCMD_1e.b                                                  ; $95e2 : $a9, $1e
 	jsr SetAPUIO2and3toA.w                                                  ; $95e4 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $95e7 : $20, $0a, $9a
 	lda APUIO0.l                                                  ; $95ea : $af, $40, $21, $00
@@ -3752,7 +3755,7 @@ Call_00_95d2:
 Call_00_95f0:
 	php                                                  ; $95f0 : $08
 	sep #ACCU_8                                                  ; $95f1 : $e2, $20
-	lda #$0f.b                                                  ; $95f3 : $a9, $0f
+	lda #APUCMD_0f.b                                                  ; $95f3 : $a9, $0f
 	jsr SetAPUIO2and3toA.w                                                  ; $95f5 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $95f8 : $20, $0a, $9a
 	lda APUIO0.l                                                  ; $95fb : $af, $40, $21, $00
@@ -3763,7 +3766,7 @@ Call_00_95f0:
 	php                                                  ; $9601 : $08
 	sep #ACCU_8                                                  ; $9602 : $e2, $20
 	sta APUIO0.l                                                  ; $9604 : $8f, $40, $21, $00
-	lda #$0b.b                                                  ; $9608 : $a9, $0b
+	lda #APUCMD_0b.b                                                  ; $9608 : $a9, $0b
 	jsr SetAPUIO2and3toA.w                                                  ; $960a : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $960d : $20, $0a, $9a
 	plp                                                  ; $9610 : $28
@@ -3773,7 +3776,7 @@ Call_00_95f0:
 	php                                                  ; $9612 : $08
 	sep #ACCU_8                                                  ; $9613 : $e2, $20
 	sta APUIO0.l                                                  ; $9615 : $8f, $40, $21, $00
-	lda #$0c.b                                                  ; $9619 : $a9, $0c
+	lda #APUCMD_0c.b                                                  ; $9619 : $a9, $0c
 	jsr SetAPUIO2and3toA.w                                                  ; $961b : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $961e : $20, $0a, $9a
 	plp                                                  ; $9621 : $28
@@ -3784,7 +3787,7 @@ Call_00_9623:
 	php                                                  ; $9623 : $08
 	sep #ACCU_8                                                  ; $9624 : $e2, $20
 	sta APUIO0.l                                                  ; $9626 : $8f, $40, $21, $00
-	lda #$0d.b                                                  ; $962a : $a9, $0d
+	lda #APUCMD_0d.b                                                  ; $962a : $a9, $0d
 	jsr SetAPUIO2and3toA.w                                                  ; $962c : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $962f : $20, $0a, $9a
 	plp                                                  ; $9632 : $28
@@ -3794,7 +3797,7 @@ Call_00_9623:
 Func_0_9634:
 	php                                                  ; $9634 : $08
 	sep #ACCU_8                                                  ; $9635 : $e2, $20
-	lda #$18.b                                                  ; $9637 : $a9, $18
+	lda #APUCMD_18.b                                                  ; $9637 : $a9, $18
 	jsr SetAPUIO2and3toA.w                                                  ; $9639 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $963c : $20, $0a, $9a
 	lda APUIO0.w                                                  ; $963f : $ad, $40, $21
@@ -3805,7 +3808,7 @@ Func_0_9634:
 	php                                                  ; $9644 : $08
 	sep #ACCU_8                                                  ; $9645 : $e2, $20
 	sta APUIO0.l                                                  ; $9647 : $8f, $40, $21, $00
-	lda #$09.b                                                  ; $964b : $a9, $09
+	lda #APUCMD_SET_DSP_MVOL.b                                                  ; $964b : $a9, $09
 	jsr SetAPUIO2and3toA.w                                                  ; $964d : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9650 : $20, $0a, $9a
 	plp                                                  ; $9653 : $28
@@ -3822,7 +3825,7 @@ Func_0_9634:
 	sta APUIO0.l                                                  ; $965f : $8f, $40, $21, $00
 	txa                                                  ; $9663 : $8a
 	sta APUIO1.l                                                  ; $9664 : $8f, $41, $21, $00
-	lda #$1a.b                                                  ; $9668 : $a9, $1a
+	lda #APUCMD_1a.b                                                  ; $9668 : $a9, $1a
 	jsr SetAPUIO2and3toA.w                                                  ; $966a : $20, $fd, $99
 
 br_00_966d:
@@ -3835,7 +3838,7 @@ br_00_966d:
 	sta APUIO0.l                                                  ; $9672 : $8f, $40, $21, $00
 	txa                                                  ; $9676 : $8a
 	sta APUIO1.l                                                  ; $9677 : $8f, $41, $21, $00
-	lda #$1b.b                                                  ; $967b : $a9, $1b
+	lda #APUCMD_1b.b                                                  ; $967b : $a9, $1b
 	jsr SetAPUIO2and3toA.w                                                  ; $967d : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9680 : $20, $0a, $9a
 	plp                                                  ; $9683 : $28
@@ -3844,7 +3847,7 @@ br_00_966d:
 
 	php                                                  ; $9685 : $08
 	sep #ACCU_8                                                  ; $9686 : $e2, $20
-	lda #$15.b                                                  ; $9688 : $a9, $15
+	lda #APUCMD_15.b                                                  ; $9688 : $a9, $15
 	jsr SetAPUIO2and3toA.w                                                  ; $968a : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $968d : $20, $0a, $9a
 	plp                                                  ; $9690 : $28
@@ -3854,24 +3857,24 @@ br_00_966d:
 Call_00_9692:
 	php                                                  ; $9692 : $08
 	sep #ACCU_8                                                  ; $9693 : $e2, $20
-	lda #$06.b                                                  ; $9695 : $a9, $06
+	lda #APUCMD_06.b                                                  ; $9695 : $a9, $06
 	jsr SetAPUIO2and3toA.w                                                  ; $9697 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $969a : $20, $0a, $9a
 	plp                                                  ; $969d : $28
 	rtl                                                  ; $969e : $6b
 
 
-Call_00_969f:
+DecompCopyDataToSPC_SendSPCCmd07h:
 	pha                                                  ; $969f : $48
 	phx                                                  ; $96a0 : $da
 	phy                                                  ; $96a1 : $5a
 	php                                                  ; $96a2 : $08
 	phb                                                  ; $96a3 : $8b
 	sep #ACCU_8                                                  ; $96a4 : $e2, $20
-	jsr Call_00_941a.w                                                  ; $96a6 : $20, $1a, $94
+	jsr DecompressAndCopyDataToSPC.w                                                  ; $96a6 : $20, $1a, $94
 	bcs br_00_96b3                                                  ; $96a9 : $b0, $08
 
-	lda #$07.b                                                  ; $96ab : $a9, $07
+	lda #APUCMD_07.b                                                  ; $96ab : $a9, $07
 	jsr SetAPUIO2and3toA.w                                                  ; $96ad : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $96b0 : $20, $0a, $9a
 
@@ -3906,7 +3909,7 @@ Call_00_96cc:
 	php                                                  ; $96cc : $08
 	sep #ACCU_8                                                  ; $96cd : $e2, $20
 	sta APUIO0.l                                                  ; $96cf : $8f, $40, $21, $00
-	lda #$0a.b                                                  ; $96d3 : $a9, $0a
+	lda #APUCMD_0a.b                                                  ; $96d3 : $a9, $0a
 	jsr SetAPUIO2and3toA.w                                                  ; $96d5 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $96d8 : $20, $0a, $9a
 	plp                                                  ; $96db : $28
@@ -3918,7 +3921,7 @@ Call_00_96cc:
 	sep #ACCU_8                                                  ; $96df : $e2, $20
 	eor #$ff.b                                                  ; $96e1 : $49, $ff
 	sta APUIO0.l                                                  ; $96e3 : $8f, $40, $21, $00
-	lda #$10.b                                                  ; $96e7 : $a9, $10
+	lda #APUCMD_10.b                                                  ; $96e7 : $a9, $10
 	jsr SetAPUIO2and3toA.w                                                  ; $96e9 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $96ec : $20, $0a, $9a
 	plp                                                  ; $96ef : $28
@@ -3929,7 +3932,7 @@ Call_00_96cc:
 Call_00_96f2:
 	php                                                  ; $96f2 : $08
 	sep #ACCU_8                                                  ; $96f3 : $e2, $20
-	lda #$08.b                                                  ; $96f5 : $a9, $08
+	lda #APUCMD_08.b                                                  ; $96f5 : $a9, $08
 	jsr SetAPUIO2and3toA.w                                                  ; $96f7 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $96fa : $20, $0a, $9a
 	lda APUIO0.l                                                  ; $96fd : $af, $40, $21, $00
@@ -3948,14 +3951,14 @@ CopyFirst20hSamplesToSPC:
 ; writes 5800 to spc ram 9c (dest addr of 1st sample)
 	ldx #$5800.w                                                  ; $970b : $a2, $00, $58
 	stx APUIO0.w                                                  ; $970e : $8e, $40, $21
-	lda #$11.b                                                  ; $9711 : $a9, $11
+	lda #APUCMD_SET_SAMPLE_DEST.b                                                  ; $9711 : $a9, $11
 	jsr SetAPUIO2and3toA.w                                                  ; $9713 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9716 : $20, $0a, $9a
 
 ; 0*4 put in spc ram 9e
 	lda #$00.b                                                  ; $9719 : $a9, $00
 	sta APUIO0.w                                                  ; $971b : $8d, $40, $21
-	lda #$13.b                                                  ; $971e : $a9, $13
+	lda #APUCMD_SET_SAMPLE_IDX.b                                                  ; $971e : $a9, $13
 	jsr SetAPUIO2and3toA.w                                                  ; $9720 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9723 : $20, $0a, $9a
 
@@ -3970,7 +3973,7 @@ CopyFirst20hSamplesToSPC:
 	bne -                                                  ; $9732 : $d0, $f7
 
 ; reads back value from spc ram 9c
-	lda #$12.b                                                  ; $9734 : $a9, $12
+	lda #APUCMD_GET_SAMPLE_DEST.b                                                  ; $9734 : $a9, $12
 	jsr SetAPUIO2and3toA.w                                                  ; $9736 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9739 : $20, $0a, $9a
 
@@ -3988,14 +3991,14 @@ CopyFirst20hSamplesToSPC:
 Call_00_9747:
 	sep #ACCU_8                                                  ; $9747 : $e2, $20
 	rep #IDX_8                                                  ; $9749 : $c2, $10
-	jsr Call_00_99f4.w                                                  ; $974b : $20, $f4, $99
+	jsr SendEndByteToSPC.w                                                  ; $974b : $20, $f4, $99
 	sta $54                                                  ; $974e : $85, $54
-	lda #$12.b                                                  ; $9750 : $a9, $12
+	lda #APUCMD_GET_SAMPLE_DEST.b                                                  ; $9750 : $a9, $12
 	jsr SetAPUIO2and3toA.w                                                  ; $9752 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9755 : $20, $0a, $9a
 	ldx APUIO0.w                                                  ; $9758 : $ae, $40, $21
 	phx                                                  ; $975b : $da
-	lda #$1d.b                                                  ; $975c : $a9, $1d
+	lda #APUCMD_LOAD_SAMPLE_HEADER.b                                                  ; $975c : $a9, $1d
 	jsr SetAPUIO2and3toA.w                                                  ; $975e : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9761 : $20, $0a, $9a
 	lda $54                                                  ; $9764 : $a5, $54
@@ -4006,7 +4009,7 @@ Call_00_9747:
 	sta $058b.w                                                  ; $9771 : $8d, $8b, $05
 	plx                                                  ; $9774 : $fa
 	stx APUIO0.w                                                  ; $9775 : $8e, $40, $21
-	lda #$16.b                                                  ; $9778 : $a9, $16
+	lda #APUCMD_16.b                                                  ; $9778 : $a9, $16
 	jsr SetAPUIO2and3toA.w                                                  ; $977a : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $977d : $20, $0a, $9a
 	lda #$ff.b                                                  ; $9780 : $a9, $ff
@@ -4023,7 +4026,7 @@ Call_00_9747:
 	rep #IDX_8                                                  ; $978d : $c2, $10
 	phk                                                  ; $978f : $4b
 	plb                                                  ; $9790 : $ab
-	jsr Call_00_99f4.w                                                  ; $9791 : $20, $f4, $99
+	jsr SendEndByteToSPC.w                                                  ; $9791 : $20, $f4, $99
 	lda $058e.w                                                  ; $9794 : $ad, $8e, $05
 	bmi br_00_97d1                                                  ; $9797 : $30, $38
 
@@ -4055,7 +4058,7 @@ br_00_97af:
 	beq br_00_97d4                                                  ; $97c2 : $f0, $10
 
 	sta APUIO0.w                                                  ; $97c4 : $8d, $40, $21
-	lda #$04.b                                                  ; $97c7 : $a9, $04
+	lda #APUCMD_PLAY_SOUND_EFFECT.b                                                  ; $97c7 : $a9, $04
 	jsr SetAPUIO2and3toA.w                                                  ; $97c9 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $97cc : $20, $0a, $9a
 	bra br_00_97d4                                                  ; $97cf : $80, $03
@@ -4097,7 +4100,7 @@ br_00_97f5:
 	pha                                                  ; $97fa : $48
 	plb                                                  ; $97fb : $ab
 	ldy $0589.w                                                  ; $97fc : $ac, $89, $05
-	lda #$17.b                                                  ; $97ff : $a9, $17
+	lda #APUCMD_17.b                                                  ; $97ff : $a9, $17
 	jsr SetAPUIO2and3toA.w                                                  ; $9801 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9804 : $20, $0a, $9a
 	lda #$ff.b                                                  ; $9807 : $a9, $ff
@@ -4183,7 +4186,7 @@ CopySampleHeaderAndDataToSPC:
 	pha                                                  ; $988c : $48
 
 ;
-	lda #$14.b                                                  ; $988d : $a9, $14
+	lda #APUCMD_LOAD_FULL_SAMPLE.b                                                  ; $988d : $a9, $14
 	jsr SetAPUIO2and3toA.w                                                  ; $988f : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9892 : $20, $0a, $9a
 
@@ -4233,71 +4236,71 @@ CopySampleHeaderToSPC:
 	stz wSPCDataSrc                                                  ; $98be : $64, $5d
 
 ; Y (src addr) from long table entry, shift a bit if in next bank
-	lda SPCSamplesData.l, X                                                  ; $98c0 : $bf, $00, $80, $98
-	asl                                                  ; $98c4 : $0a
-	php                                                  ; $98c5 : $08
-	lsr                                                  ; $98c6 : $4a
-	ora #BANK_START.w                                                  ; $98c7 : $09, $00, $80
-	tay                                                  ; $98ca : $a8
-	plp                                                  ; $98cb : $28
-	sep #ACCU_8                                                  ; $98cc : $e2, $20
+	lda SPCSamplesData.l, X                                                   ; $98c0 : $bf, $00, $80, $98
+	asl                                                                       ; $98c4 : $0a
+	php                                                                       ; $98c5 : $08
+	lsr                                                                       ; $98c6 : $4a
+	ora #BANK_START.w                                                         ; $98c7 : $09, $00, $80
+	tay                                                                       ; $98ca : $a8
+	plp                                                                       ; $98cb : $28
+	sep #ACCU_8                                                               ; $98cc : $e2, $20
 
 ; Get bank from long table entry, shifting in above bit
-	lda SPCSamplesData.l+2, X                                                  ; $98ce : $bf, $02, $80, $98
-	rol                                                  ; $98d2 : $2a
-	adc #:SPCSamplesData.b                                                  ; $98d3 : $69, $98
-	sta wSPCDataSrc+2                                                  ; $98d5 : $85, $5f
+	lda SPCSamplesData.l+2, X                                                 ; $98ce : $bf, $02, $80, $98
+	rol                                                                       ; $98d2 : $2a
+	adc #:SPCSamplesData.b                                                    ; $98d3 : $69, $98
+	sta wSPCDataSrc+2                                                         ; $98d5 : $85, $5f
 
 ; Get byte from src into B...
-	phy                                                  ; $98d7 : $5a
-	lda [wSPCDataSrc], Y                                                  ; $98d8 : $b7, $5d
-	xba                                                  ; $98da : $eb
-	iny                                                  ; $98db : $c8
-	bne +                                                  ; $98dc : $d0, $05
+	phy                                                                       ; $98d7 : $5a
+	lda [wSPCDataSrc], Y                                                      ; $98d8 : $b7, $5d
+	xba                                                                       ; $98da : $eb
+	iny                                                                       ; $98db : $c8
+	bne +                                                                     ; $98dc : $d0, $05
 
 ; Inc'ing bank if past the end
-	inc wSPCDataSrc+2                                                  ; $98de : $e6, $5f
-	ldy #BANK_START.w                                                  ; $98e0 : $a0, $00, $80
+	inc wSPCDataSrc+2                                                         ; $98de : $e6, $5f
+	ldy #BANK_START.w                                                         ; $98e0 : $a0, $00, $80
 
 ; Get 2nd, with the word loaded put in X (data len)
-+	lda [wSPCDataSrc], Y                                                  ; $98e3 : $b7, $5d
-	xba                                                  ; $98e5 : $eb
-	tax                                                  ; $98e6 : $aa
++	lda [wSPCDataSrc], Y                                                      ; $98e3 : $b7, $5d
+	xba                                                                       ; $98e5 : $eb
+	tax                                                                       ; $98e6 : $aa
 
 ; Point Y to the 1st byte again, push the data len and copy 8 bytes
-	ply                                                  ; $98e7 : $7a
-	phx                                                  ; $98e8 : $da
-	ldx #$0008.w                                                  ; $98e9 : $a2, $08, $00
+	ply                                                                       ; $98e7 : $7a
+	phx                                                                       ; $98e8 : $da
+	ldx #$0008.w                                                              ; $98e9 : $a2, $08, $00
 
 @nextByte:
 ; Send data byte in IO0, and loop idx in IO2
-	lda [wSPCDataSrc], Y                                                  ; $98ec : $b7, $5d
-	sta APUIO0.w                                                  ; $98ee : $8d, $40, $21
-	txa                                                  ; $98f1 : $8a
-	sta APUIO2.w                                                  ; $98f2 : $8d, $42, $21
+	lda [wSPCDataSrc], Y                                                      ; $98ec : $b7, $5d
+	sta APUIO0.w                                                              ; $98ee : $8d, $40, $21
+	txa                                                                       ; $98f1 : $8a
+	sta APUIO2.w                                                              ; $98f2 : $8d, $42, $21
 
 ; Wait until SPC sends back the loop idx with bit 7 set
-	ora #$80.b                                                  ; $98f5 : $09, $80
--	cmp APUIO2.w                                                  ; $98f7 : $cd, $42, $21
-	bne -                                                  ; $98fa : $d0, $fb
+	ora #$80.b                                                                ; $98f5 : $09, $80
+-	cmp APUIO2.w                                                              ; $98f7 : $cd, $42, $21
+	bne -                                                                     ; $98fa : $d0, $fb
 
 ; To next src addr, inc'ing bank if past the end
-	iny                                                  ; $98fc : $c8
-	bne +                                                  ; $98fd : $d0, $05
+	iny                                                                       ; $98fc : $c8
+	bne +                                                                     ; $98fd : $d0, $05
 
-	inc wSPCDataSrc+2                                                 ; $98ff : $e6, $5f
-	ldy #BANK_START.w                                                  ; $9901 : $a0, $00, $80
+	inc wSPCDataSrc+2                                                         ; $98ff : $e6, $5f
+	ldy #BANK_START.w                                                         ; $9901 : $a0, $00, $80
 
-+	dex                                                  ; $9904 : $ca
-	bne @nextByte                                                  ; $9905 : $d0, $e5
++	dex                                                                       ; $9904 : $ca
+	bne @nextByte                                                             ; $9905 : $d0, $e5
 
 ; Send last byte for SPC to exit the loading routine
 ; Wait until SPC done after, and return data len copied in X
-	plx                                                  ; $9907 : $fa
-	lda #$ff.b                                                  ; $9908 : $a9, $ff
-	sta APUIO2.w                                                  ; $990a : $8d, $42, $21
-	jsr WaitUntilSPCdone.w                                                  ; $990d : $20, $0a, $9a
-	rts                                                  ; $9910 : $60
+	plx                                                                       ; $9907 : $fa
+	lda #$ff.b                                                                ; $9908 : $a9, $ff
+	sta APUIO2.w                                                              ; $990a : $8d, $42, $21
+	jsr WaitUntilSPCdone.w                                                    ; $990d : $20, $0a, $9a
+	rts                                                                       ; $9910 : $60
 
 
 CopySoundDataToSPC:
@@ -4328,7 +4331,7 @@ CopySoundDataToSPC:
 	inc wSPCDataSrc+2                                                  ; $9931 : $e6, $5f
 
 ; copy rest to SPC
-+	lda #$01.b                                                  ; $9933 : $a9, $01
++	lda #APUCMD_LOAD_SNES_DATA.b                                                  ; $9933 : $a9, $01
 	jsr SetAPUIO2and3toA.w                                                  ; $9935 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $9938 : $20, $0a, $9a
 	lda wSPCDataSrc+2                                                  ; $993b : $a5, $5f
@@ -4343,75 +4346,75 @@ CopySoundDataToSPC:
 ; Y - points to after 8 bytes sent to SPC
 CopyChunkOfDataToSPC:
 ; Send SPC an $ff to start, and wait for it to send it back
-	lda #$ff.b                                                  ; $9945 : $a9, $ff
-	sta APUIO2.l                                                  ; $9947 : $8f, $42, $21, $00
+	lda #$ff.b                                                                ; $9945 : $a9, $ff
+	sta APUIO2.l                                                              ; $9947 : $8f, $42, $21, $00
 
--	cmp APUIO2.l                                                  ; $994b : $cf, $42, $21, $00
-	bne -                                                  ; $994f : $d0, $fa
+-	cmp APUIO2.l                                                              ; $994b : $cf, $42, $21, $00
+	bne -                                                                     ; $994f : $d0, $fa
 
-;
-	stz wSPCDataCtr                                                  ; $9951 : $64, $62
+; SNES and SPC start with counter = 0
+	stz wSPCDataCtr                                                           ; $9951 : $64, $62
 
-; read data byte into $60
-	lda $0000.w, Y                                                  ; $9953 : $b9, $00, $00
-	sta wSPCDataWord                                                  ; $9956 : $85, $60
-	iny                                                  ; $9958 : $c8
-	bne +                                                  ; $9959 : $d0, $03
-	jsr SetNextBankForSPCDataSrc.w                                                  ; $995b : $20, $da, $97
+; Read 1st byte of pair to send
+	lda $0000.w, Y                                                            ; $9953 : $b9, $00, $00
+	sta wSPCDataWord                                                          ; $9956 : $85, $60
+	iny                                                                       ; $9958 : $c8
+	bne +                                                                     ; $9959 : $d0, $03
+	jsr SetNextBankForSPCDataSrc.w                                            ; $995b : $20, $da, $97
 
-; read data byte into $61
-+	lda $0000.w, Y                                                  ; $995e : $b9, $00, $00
-	sta wSPCDataWord+1                                                 ; $9961 : $85, $61
-	iny                                                  ; $9963 : $c8
-	bne @brLoop_9969                                                  ; $9964 : $d0, $03
+; Read 2nd byte of pair to send
++	lda $0000.w, Y                                                            ; $995e : $b9, $00, $00
+	sta wSPCDataWord+1                                                        ; $9961 : $85, $61
+	iny                                                                       ; $9963 : $c8
+	bne @next2bytes                                                           ; $9964 : $d0, $03
 
-	jsr SetNextBankForSPCDataSrc.w                                                  ; $9966 : $20, $da, $97
+	jsr SetNextBankForSPCDataSrc.w                                            ; $9966 : $20, $da, $97
 
-@brLoop_9969:
-; send 2 bytes through IO0/1
-	lda wSPCDataWord                                                  ; $9969 : $a5, $60
-	sta APUIO0.l                                                  ; $996b : $8f, $40, $21, $00
-	lda wSPCDataWord+1                                                  ; $996f : $a5, $61
-	sta APUIO1.l                                                  ; $9971 : $8f, $41, $21, $00
+@next2bytes:
+; Send 2 bytes through IO0/1
+	lda wSPCDataWord                                                          ; $9969 : $a5, $60
+	sta APUIO0.l                                                              ; $996b : $8f, $40, $21, $00
+	lda wSPCDataWord+1                                                        ; $996f : $a5, $61
+	sta APUIO1.l                                                              ; $9971 : $8f, $41, $21, $00
 
-; send SPC the data ctr
-	lda wSPCDataCtr                                                  ; $9975 : $a5, $62
-	and #$7f.b                                                  ; $9977 : $29, $7f
-	sta APUIO2.l                                                  ; $9979 : $8f, $42, $21, $00
+; Send SPC the data ctr they expect
+	lda wSPCDataCtr                                                           ; $9975 : $a5, $62
+	and #$7f.b                                                                ; $9977 : $29, $7f
+	sta APUIO2.l                                                              ; $9979 : $8f, $42, $21, $00
 
-; read data byte into $60
-	lda $0000.w, Y                                                  ; $997d : $b9, $00, $00
-	sta wSPCDataWord                                                  ; $9980 : $85, $60
-	iny                                                  ; $9982 : $c8
-	bne +                                                  ; $9983 : $d0, $03
-	jsr SetNextBankForSPCDataSrc.w                                                  ; $9985 : $20, $da, $97
+; Read 1st byte of pair to send
+	lda $0000.w, Y                                                            ; $997d : $b9, $00, $00
+	sta wSPCDataWord                                                          ; $9980 : $85, $60
+	iny                                                                       ; $9982 : $c8
+	bne +                                                                     ; $9983 : $d0, $03
+	jsr SetNextBankForSPCDataSrc.w                                            ; $9985 : $20, $da, $97
 
-; read data byte into $61
-+	lda $0000.w, Y                                                  ; $9988 : $b9, $00, $00
-	sta wSPCDataWord+1                                                  ; $998b : $85, $61
-	iny                                                  ; $998d : $c8
-	bne +                                                  ; $998e : $d0, $03
-	jsr SetNextBankForSPCDataSrc.w                                                  ; $9990 : $20, $da, $97
+; Read 2nd byte of pair to send
++	lda $0000.w, Y                                                            ; $9988 : $b9, $00, $00
+	sta wSPCDataWord+1                                                        ; $998b : $85, $61
+	iny                                                                       ; $998d : $c8
+	bne +                                                                     ; $998e : $d0, $03
+	jsr SetNextBankForSPCDataSrc.w                                            ; $9990 : $20, $da, $97
 
-; wait until SPC sends us back the prev data ctr with bit 7 set
-+	lda wSPCDataCtr                                                  ; $9993 : $a5, $62
-	ora #$80.b                                                  ; $9995 : $09, $80
--	cmp APUIO2.l                                                  ; $9997 : $cf, $42, $21, $00
-	bne -                                                  ; $999b : $d0, $fa
+; Wait until SPC sends us back the prev data ctr with bit 7 set
++	lda wSPCDataCtr                                                           ; $9993 : $a5, $62
+	ora #$80.b                                                                ; $9995 : $09, $80
+-	cmp APUIO2.l                                                              ; $9997 : $cf, $42, $21, $00
+	bne -                                                                     ; $999b : $d0, $fa
 
-; keep looping while 2+ bytes left, as we're copying in pairs
-	inc wSPCDataCtr                                                  ; $999d : $e6, $62
-	inc wSPCDataCtr                                                  ; $999f : $e6, $62
-	cpx #$0003.w                                                  ; $99a1 : $e0, $03, $00
-	dex                                                  ; $99a4 : $ca
-	dex                                                  ; $99a5 : $ca
-	bcs @brLoop_9969                                                  ; $99a6 : $b0, $c1
+; Keep looping while 2+ bytes left, as we're copying in pairs
+	inc wSPCDataCtr                                                           ; $999d : $e6, $62
+	inc wSPCDataCtr                                                           ; $999f : $e6, $62
+	cpx #$0003.w                                                              ; $99a1 : $e0, $03, $00
+	dex                                                                       ; $99a4 : $ca
+	dex                                                                       ; $99a5 : $ca
+	bcs @next2bytes                                                           ; $99a6 : $b0, $c1
 
 ; Send SPC an $ff to indicate we're done
-	lda #$ff.b                                                  ; $99a8 : $a9, $ff
-	sta APUIO3.l                                                  ; $99aa : $8f, $43, $21, $00
-	jsr WaitUntilSPCdone.w                                                  ; $99ae : $20, $0a, $9a
-	rts                                                  ; $99b1 : $60
+	lda #$ff.b                                                                ; $99a8 : $a9, $ff
+	sta APUIO3.l                                                              ; $99aa : $8f, $43, $21, $00
+	jsr WaitUntilSPCdone.w                                                    ; $99ae : $20, $0a, $9a
+	rts                                                                       ; $99b1 : $60
 
 
 Call_00_99b2:
@@ -4436,7 +4439,7 @@ br_00_99c7:
 
 	pha                                                  ; $99ca : $48
 	sta APUIO0.w                                                  ; $99cb : $8d, $40, $21
-	lda #$1f.b                                                  ; $99ce : $a9, $1f
+	lda #APUCMD_SET_DSP_COEF.b                                                  ; $99ce : $a9, $1f
 	jsr SetAPUIO2and3toA.w                                                  ; $99d0 : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $99d3 : $20, $0a, $9a
 	pla                                                  ; $99d6 : $68
@@ -4445,7 +4448,7 @@ br_00_99c7:
 
 	pha                                                  ; $99d8 : $48
 	sta APUIO0.w                                                  ; $99d9 : $8d, $40, $21
-	lda #$20.b                                                  ; $99dc : $a9, $20
+	lda #APUCMD_20.b                                                  ; $99dc : $a9, $20
 	jsr SetAPUIO2and3toA.w                                                  ; $99de : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $99e1 : $20, $0a, $9a
 	pla                                                  ; $99e4 : $68
@@ -4454,57 +4457,57 @@ br_00_99c7:
 
 	pha                                                  ; $99e6 : $48
 	sta APUIO0.w                                                  ; $99e7 : $8d, $40, $21
-	lda #$21.b                                                  ; $99ea : $a9, $21
+	lda #APUCMD_21.b                                                  ; $99ea : $a9, $21
 	jsr SetAPUIO2and3toA.w                                                  ; $99ec : $20, $fd, $99
 	jsr WaitUntilSPCdone.w                                                  ; $99ef : $20, $0a, $9a
 	pla                                                  ; $99f2 : $68
 	rtl                                                  ; $99f3 : $6b
 
 
-Call_00_99f4:
-	xba                                                  ; $99f4 : $eb
-	lda #$ff.b                                                  ; $99f5 : $a9, $ff
-	sta APUIO3.l                                                  ; $99f7 : $8f, $43, $21, $00
-	xba                                                  ; $99fb : $eb
-	rts                                                  ; $99fc : $60
+SendEndByteToSPC:
+	xba                                                                       ; $99f4 : $eb
+	lda #$ff.b                                                                ; $99f5 : $a9, $ff
+	sta APUIO3.l                                                              ; $99f7 : $8f, $43, $21, $00
+	xba                                                                       ; $99fb : $eb
+	rts                                                                       ; $99fc : $60
 
 
 SetAPUIO2and3toA:
-	php                                                  ; $99fd : $08
-	sep #ACCU_8                                                  ; $99fe : $e2, $20
-	sta APUIO2.l                                                  ; $9a00 : $8f, $42, $21, $00
-	sta APUIO3.l                                                  ; $9a04 : $8f, $43, $21, $00
-	plp                                                  ; $9a08 : $28
-	rts                                                  ; $9a09 : $60
+	php                                                                       ; $99fd : $08
+	sep #ACCU_8                                                               ; $99fe : $e2, $20
+	sta APUIO2.l                                                              ; $9a00 : $8f, $42, $21, $00
+	sta APUIO3.l                                                              ; $9a04 : $8f, $43, $21, $00
+	plp                                                                       ; $9a08 : $28
+	rts                                                                       ; $9a09 : $60
 
 
 WaitUntilSPCdone:
-	php                                                  ; $9a0a : $08
-	sep #ACCU_8                                                  ; $9a0b : $e2, $20
+	php                                                                       ; $9a0a : $08
+	sep #ACCU_8                                                               ; $9a0b : $e2, $20
 
 ; Wait until SPC sends a done signal
-	lda #$cd.b                                                  ; $9a0d : $a9, $cd
--	cmp APUIO2.l                                                  ; $9a0f : $cf, $42, $21, $00
-	bne -                                                  ; $9a13 : $d0, $fa
+	lda #$cd.b                                                                ; $9a0d : $a9, $cd
+-	cmp APUIO2.l                                                              ; $9a0f : $cf, $42, $21, $00
+	bne -                                                                     ; $9a13 : $d0, $fa
 
-	lda #$ef.b                                                  ; $9a15 : $a9, $ef
--	cmp APUIO3.l                                                  ; $9a17 : $cf, $43, $21, $00
-	bne -                                                  ; $9a1b : $d0, $fa
+	lda #$ef.b                                                                ; $9a15 : $a9, $ef
+-	cmp APUIO3.l                                                              ; $9a17 : $cf, $43, $21, $00
+	bne -                                                                     ; $9a1b : $d0, $fa
 
 ; Clear their IO2/3 ports
-	tdc                                                  ; $9a1d : $7b
-	sta APUIO2.l                                                  ; $9a1e : $8f, $42, $21, $00
-	sta APUIO3.l                                                  ; $9a22 : $8f, $43, $21, $00
+	tdc                                                                       ; $9a1d : $7b
+	sta APUIO2.l                                                              ; $9a1e : $8f, $42, $21, $00
+	sta APUIO3.l                                                              ; $9a22 : $8f, $43, $21, $00
 
 ; Then wait for SPC to clear our IO2/3 ports
--	lda APUIO2.l                                                  ; $9a26 : $af, $42, $21, $00
-	bne -                                                  ; $9a2a : $d0, $fa
+-	lda APUIO2.l                                                              ; $9a26 : $af, $42, $21, $00
+	bne -                                                                     ; $9a2a : $d0, $fa
 
--	lda APUIO3.l                                                  ; $9a2c : $af, $43, $21, $00
-	bne -                                                  ; $9a30 : $d0, $fa
+-	lda APUIO3.l                                                              ; $9a2c : $af, $43, $21, $00
+	bne -                                                                     ; $9a30 : $d0, $fa
 
-	plp                                                  ; $9a32 : $28
-	rts                                                  ; $9a33 : $60
+	plp                                                                       ; $9a32 : $28
+	rts                                                                       ; $9a33 : $60
 
 
 ;
@@ -5845,9 +5848,11 @@ br_00_a2a7:
 	sta $09ac.w                                                  ; $a2db : $8d, $ac, $09
 	brl PlbTwiceRtl                                                  ; $a2de : $82, $cf, $fa
 
+
+;
 	phy                                                  ; $a2e1 : $5a
 	lda #$04.b                                                  ; $a2e2 : $a9, $04
-	jsr Call_00_93fe.l                                                  ; $a2e4 : $22, $fe, $93, $80
+	jsr DecompCopyDataToSPC_SendSPCCmd02h.l                                                  ; $a2e4 : $22, $fe, $93, $80
 	stz $0582.w                                                  ; $a2e8 : $9c, $82, $05
 	lda #$c1.b                                                  ; $a2eb : $a9, $c1
 	sta $0581.w                                                  ; $a2ed : $8d, $81, $05
@@ -5873,7 +5878,7 @@ br_00_a30a:
 	bne br_00_a30a                                                  ; $a30d : $d0, $fb
 
 	lda $099d.w                                                  ; $a30f : $ad, $9d, $09
-	jsr Call_00_969f.l                                                  ; $a312 : $22, $9f, $96, $80
+	jsr DecompCopyDataToSPC_SendSPCCmd07h.l                                                  ; $a312 : $22, $9f, $96, $80
 	ply                                                  ; $a316 : $7a
 	jsr $848311.l                                                  ; $a317 : $22, $11, $83, $84
 	jsr WaitUntilNmiServiced.w                                                  ; $a31b : $20, $0b, $bf
@@ -8790,6 +8795,8 @@ ScriptCommand49h:
 	sta $09ad.w                                                  ; $b843 : $8d, $ad, $09
 	brl Func_0_9d00                                                  ; $b846 : $82, $b7, $e4
 
+
+;
 	jsr AequNextScriptByte.w                                                  ; $b849 : $20, $b7, $c0
 	cmp $099d.w                                                  ; $b84c : $cd, $9d, $09
 	beq br_00_b86e                                                  ; $b84f : $f0, $1d
@@ -8801,7 +8808,7 @@ ScriptCommand49h:
 	bne br_00_b86e                                                  ; $b85d : $d0, $0f
 
 	lda $099d.w                                                  ; $b85f : $ad, $9d, $09
-	jsr Call_00_93fe.l                                                  ; $b862 : $22, $fe, $93, $80
+	jsr DecompCopyDataToSPC_SendSPCCmd02h.l                                                  ; $b862 : $22, $fe, $93, $80
 	jsr $848328.l                                                  ; $b866 : $22, $28, $83, $84
 	jsr $848311.l                                                  ; $b86a : $22, $11, $83, $84
 
@@ -8816,12 +8823,14 @@ br_00_b86e:
 	sta $099d.w                                                  ; $b881 : $8d, $9d, $09
 	brl Func_0_9d00                                                  ; $b884 : $82, $79, $e4
 
+
+;
 	jsr AequNextScriptByte.w                                                  ; $b887 : $20, $b7, $c0
 	cmp $099d.w                                                  ; $b88a : $cd, $9d, $09
 	beq br_00_b89a                                                  ; $b88d : $f0, $0b
 
 	sta $099d.w                                                  ; $b88f : $8d, $9d, $09
-	jsr Call_00_969f.l                                                  ; $b892 : $22, $9f, $96, $80
+	jsr DecompCopyDataToSPC_SendSPCCmd07h.l                                                  ; $b892 : $22, $9f, $96, $80
 	jsr $848311.l                                                  ; $b896 : $22, $11, $83, $84
 
 br_00_b89a:
@@ -8838,7 +8847,7 @@ br_00_b8ab:
 	jsr YequPrevScriptAddr.w                                                  ; $b8ab : $20, $ec, $c0
 	brl PlbTwiceRtl                                                  ; $b8ae : $82, $ff, $e4
 
-	jsr Call_00_9528.l                                                  ; $b8b1 : $22, $28, $95, $80
+	jsr todo_SendSPCCommand03h.l                                                  ; $b8b1 : $22, $28, $95, $80
 	lda #$ff.b                                                  ; $b8b5 : $a9, $ff
 	sta $099d.w                                                  ; $b8b7 : $8d, $9d, $09
 	brl Func_0_9d00                                                  ; $b8ba : $82, $43, $e4

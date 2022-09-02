@@ -76,3 +76,21 @@ InBattleEnemyData:
 
 joypad is udlr (r = 1)
 seems to be $100 rooms
+
+
+Decompressed data idxes
+-----------------------
+0 to 3e - sound data
+3f to 12f - room metatiles
+130 to 14a - metatile tiles
+14b to ~15f - tile data
+160 to 16f -
+163 to 171 -
+165 to 174 -
+166 to 175 -
+
+Sound file format
+-----------------
+$4400 - filename
+$4410-$4417 - music channels in use. bit 7 prevents setting new samples
+$4420-$442f - offsets in file for channel's sections

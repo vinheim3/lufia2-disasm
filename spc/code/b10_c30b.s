@@ -3,195 +3,168 @@
 .bank 1 slot 2
 .org 0
 
-Data_09d2:
-	cmp X, !$3901                                                  ; $09d2 : $1e, $01, $39
-	tcall 0                                                  ; $09d5 : $01
-	eor A, $01+X                                                  ; $09d6 : $54, $01
-	bbs $01.4, -$45                                                  ; $09d8 : $83, $01, $bb
+SoundEffectsPtrs:
+	.dw @sound_00h-SoundEffectsPtrs
+	.dw $0139
+	.dw $0154
+	.dw $0183
+	.dw $01bb
+	.dw $01da
+	.dw $01f3
+	.dw $020c
+	.dw $0225
+	.dw $023e
+	.dw $0257
+	.dw $0270
+	.dw $02a4
+	.dw $02e3
+	.dw $0411
+	.dw $0440
+	.dw $0483
+	.dw $04bd
+	.dw $0501
+	.dw $052b
+	.dw $059b
+	.dw $05e7
+	.dw $061b
+	.dw wMusicAndSESndByteSrcHi+8
+	.dw $0661
+	.dw $06a6
+	.dw $06f2
+	.dw $0723
+	.dw $0781
+	.dw $07b8
+	.dw $07e6
+	.dw $082a
+	.dw $085d
+	.dw $0879
+	.dw $08a6
+	.dw $0922
+	.dw $094f
+	.dw $096b
+	.dw $0994
+	.dw $0a2d
+	.dw $0a43
+	.dw $0afe
+	.dw $0b8c
+	.dw $0c14
+	.dw $0c9c
+	.dw $0d41
+	.dw $0d9c
+	.dw $0e55
+	.dw $0ebf
+	.dw $0f16
+	.dw $0f42
+	.dw $0f96
+	.dw $0feb
+	.dw $1035
+	.dw $106a
+	.dw $1089
+	.dw $10e3
+	.dw $1115
+	.dw $114a
+	.dw $117f
+	.dw $11c8
+	.dw $11eb
+	.dw $121a
+	.dw $1242
+	.dw $1265
+	.dw $1281
+	.dw $12b5
+	.dw $12e9
+	.dw $12f4
+	.dw $1331
+	.dw $1347
+	.dw $135d
+	.dw $1373
+	.dw $1389
+	.dw $139f
+	.dw $13b5
+	.dw $13c0
+	.dw $13cb
+	.dw $13fe
+	.dw $1418
+	.dw $1436
+	.dw $1468
+	.dw $14b4
+	.dw $151b
+	.dw $1557
+	.dw $158b
+	.dw $15be
+	.dw $1606
+	.dw $162e
+	.dw $1660
+	.dw $1694
+	.dw $16f4
+	.dw $1752
+	.dw $182f
+	.dw $18d1
+	.dw $19ba
+	.dw $19d3
+	.dw $19ec
+	.dw $1a05
+	.dw $1a1e
+	.dw $1a37
+	.dw $1a42
+	.dw $1ab4
+	.dw $1b6f
+	.dw $1be6
+	.dw $1c38
+	.dw $1d87
+	.dw $1db7
+	.dw $1ea9
+	.dw $1eec
+	.dw $1f2f
+	.dw $1f97
+	.dw $2022
+	.dw $20e7
+	.dw $2117
+	.dw $213a
+	.dw $21d7
+	.dw $2274
+	.dw $2286
+	.dw $231d
+	.dw $2375
+	.dw $23a9
+	.dw $23c3
+	.dw $23f4
+	.dw $2413
+	.dw $24c9
+	.dw $250a
+	.dw $2566
+	.dw $25a5
+	.dw $25eb
+	.dw $26f4
+	.dw $2729
+	.dw $2772
+	.dw $27c2
+	.dw $2814
+	.dw $28ad
+	.dw $28fb
+	.dw $2932
+	.dw $299e
+	.dw $2a0a
+	.dw $2a39
+	.dw $2a58
+	.dw $2af9
 
-	tcall 0                                                  ; $09db : $01
-	movw $01, YA                                                  ; $09dc : $da, $01
-	bbc $01.7, br_00_09ed                                                  ; $09de : $f3, $01, $0c
+@sound_00h:
+	.db $01 ; num channels used
+	.db $07 ; channel to use
+	.dw @@chn7-@sound_00h
 
-	set1 $25.0                                                  ; $09e1 : $02, $25
-	set1 $3e.0                                                  ; $09e3 : $02, $3e
-	set1 $57.0                                                  ; $09e5 : $02, $57
-	set1 $70.0                                                  ; $09e7 : $02, $70
-	set1 $a4.0                                                  ; $09e9 : $02, $a4
-	set1 $e3.0                                                  ; $09eb : $02, $e3
-
-br_00_09ed:
-	set1 $11.0                                                  ; $09ed : $02, $11
-	or A, $40                                                  ; $09ef : $04, $40
-	or A, $83                                                  ; $09f1 : $04, $83
-	or A, $bd                                                  ; $09f3 : $04, $bd
-	or A, $01                                                  ; $09f5 : $04, $01
-	or A, !$052b                                                  ; $09f7 : $05, $2b, $05
-	dec $05+X                                                  ; $09fa : $9b, $05
-	mov A, [$05+X]                                                  ; $09fc : $e7, $05
-	asl $06+X                                                  ; $09fe : $1b, $06
-	lsr $06                                                  ; $0a00 : $4b, $06
-	tcall 6                                                  ; $0a02 : $61
-	or A, (X)                                                  ; $0a03 : $06
-	sbc A, (X)                                                  ; $0a04 : $a6
-	or A, (X)                                                  ; $0a05 : $06
-	clr1 $06.7                                                  ; $0a06 : $f2, $06
-	bbs $07.1, -$7f                                                  ; $0a08 : $23, $07, $81
-
-	or A, [$b8+X]                                                  ; $0a0b : $07, $b8
-	or A, [$e6+X]                                                  ; $0a0d : $07, $e6
-	or A, [$2a+X]                                                  ; $0a0f : $07, $2a
-	or A, #$5d                                                  ; $0a11 : $08, $5d
-	or A, #$79                                                  ; $0a13 : $08, $79
-	or A, #$a6                                                  ; $0a15 : $08, $a6
-	or A, #$22                                                  ; $0a17 : $08, $22
-	or $09, $4f                                                  ; $0a19 : $09, $4f, $09
-	ror $09                                                  ; $0a1c : $6b, $09
-	adc A, $09+X                                                  ; $0a1e : $94, $09
-	push A                                                  ; $0a20 : $2d
-	or1 c, $0a43.0                                                  ; $0a21 : $0a, $43, $0a
-	dbnz Y, br_00_0a30                                                  ; $0a24 : $fe, $0a
-
-br_00_0a26:
-	dec !$140b                                                  ; $0a26 : $8c, $0b, $14
-	asl !$0c9c                                                  ; $0a29 : $0c, $9c, $0c
-	tcall 4                                                  ; $0a2c : $41
-	push PSW                                                  ; $0a2d : $0d
-	dec A                                                  ; $0a2e : $9c
-	push PSW                                                  ; $0a2f : $0d
-
-br_00_0a30:
-	eor A, !$bf0e+X                                                  ; $0a30 : $55, $0e, $bf
-	tset1 !$0f16                                                  ; $0a33 : $0e, $16, $0f
-	set1 $0f.2                                                  ; $0a36 : $42, $0f
-	adc A, !$eb0f+Y                                                  ; $0a38 : $96, $0f, $eb
-	brk                                                  ; $0a3b : $0f
-
-
-	and A, !$6a10+X                                                  ; $0a3c : $35, $10, $6a
-	bpl -$77                                                  ; $0a3f : $10, $89
-
-	bpl br_00_0a26                                                  ; $0a41 : $10, $e3
-
-	bpl $15                                                  ; $0a43 : $10, $15
-
-	tcall 1                                                  ; $0a45 : $11
-	and1 c, $1f11.3                                                  ; $0a46 : $4a, $11, $7f
-	tcall 1                                                  ; $0a49 : $11
-	cmp X, #$11                                                  ; $0a4a : $c8, $11
-	mov Y, $11                                                  ; $0a4c : $eb, $11
-	decw $12                                                  ; $0a4e : $1a, $12
-	set1 $12.2                                                  ; $0a50 : $42, $12
-	cmp A, !$8112                                                  ; $0a52 : $65, $12, $81
-	clr1 $b5.0                                                  ; $0a55 : $12, $b5
-	clr1 $e9.0                                                  ; $0a57 : $12, $e9
-	clr1 $f4.0                                                  ; $0a59 : $12, $f4
-	clr1 $31.0                                                  ; $0a5b : $12, $31
-	bbc $47.0, br_00_0a73                                                  ; $0a5d : $13, $47, $13
-
-	mov X, A                                                  ; $0a60 : $5d
-	bbc $73.0, br_00_0a77                                                  ; $0a61 : $13, $73, $13
-
-	adc $9f, $13                                                  ; $0a64 : $89, $13, $9f
-	bbc $b5.0, $13                                                  ; $0a67 : $13, $b5, $13
-
-	di                                                  ; $0a6a : $c0
-	bbc $cb.0, $13                                                  ; $0a6b : $13, $cb, $13
-
-	dbnz Y, $13                                                  ; $0a6e : $fe, $13
-
-	or $36, #$14                                                  ; $0a70 : $18, $14, $36
-
-br_00_0a73:
-	or A, $68+X                                                  ; $0a73 : $14, $68
-	or A, $b4+X                                                  ; $0a75 : $14, $b4
-
-br_00_0a77:
-	or A, $1b+X                                                  ; $0a77 : $14, $1b
-	or A, !$1557+X                                                  ; $0a79 : $15, $57, $15
-	dec $15                                                  ; $0a7c : $8b, $15
-	das A                                                  ; $0a7e : $be
-	or A, !$1606+X                                                  ; $0a7f : $15, $06, $16
-	cbne $16, br_00_0ae5                                                  ; $0a82 : $2e, $16, $60
-
-	or A, !$1694+Y                                                  ; $0a85 : $16, $94, $16
-	mov A, $16+X                                                  ; $0a88 : $f4, $16
-	clr1 $17.2                                                  ; $0a8a : $52, $17
-	bra br_00_0aa6                                                  ; $0a8c : $2f, $18
-
-	tcall 13                                                  ; $0a8e : $d1
-	or $19, #$ba                                                  ; $0a8f : $18, $ba, $19
-	bbc $19.6, -$14                                                  ; $0a92 : $d3, $19, $ec
-
-	or (X), (Y)                                                  ; $0a95 : $19
-
-br_00_0a96:
-	or A, !$1e1a                                                  ; $0a96 : $05, $1a, $1e
-	decw $37                                                  ; $0a99 : $1a, $37
-	decw $42                                                  ; $0a9b : $1a, $42
-	decw $b4                                                  ; $0a9d : $1a, $b4
-	decw $6f                                                  ; $0a9f : $1a, $6f
-	asl $e6+X                                                  ; $0aa1 : $1b, $e6
-	asl $38+X                                                  ; $0aa3 : $1b, $38
-	asl A                                                  ; $0aa5 : $1c
-
-br_00_0aa6:
-	adc A, [$1d+X]                                                  ; $0aa6 : $87, $1d
-	sbc A, [$1d]+Y                                                  ; $0aa8 : $b7, $1d
-	sbc $ec, $1e                                                  ; $0aaa : $a9, $1e, $ec
-	cmp X, !$1f2f                                                  ; $0aad : $1e, $2f, $1f
-	adc A, [$1f]+Y                                                  ; $0ab0 : $97, $1f
-	set1 $20.1                                                  ; $0ab2 : $22, $20
-	mov A, [$20+X]                                                  ; $0ab4 : $e7, $20
-	or A, [$21]+Y                                                  ; $0ab6 : $17, $21
-	incw $21                                                  ; $0ab8 : $3a, $21
-	mov [$21]+Y, A                                                  ; $0aba : $d7, $21
-	cmp A, $22+X                                                  ; $0abc : $74, $22
-	adc A, (X)                                                  ; $0abe : $86
-	set1 $1d.1                                                  ; $0abf : $22, $1d
-	bbs $75.1, $23                                                  ; $0ac1 : $23, $75, $23
-
-	sbc $c3, $23                                                  ; $0ac4 : $a9, $23, $c3
-	bbs $f4.1, $23                                                  ; $0ac7 : $23, $f4, $23
-
-	bbc $24.0, br_00_0a96                                                  ; $0aca : $13, $24, $c9
-
-	and A, $0a                                                  ; $0acd : $24, $0a
-	and A, !$2566                                                  ; $0acf : $25, $66, $25
-	sbc A, !$eb25                                                  ; $0ad2 : $a5, $25, $eb
-	and A, !$26f4                                                  ; $0ad5 : $25, $f4, $26
-	and $72, $27                                                  ; $0ad8 : $29, $27, $72
-	and A, [$c2+X]                                                  ; $0adb : $27, $c2
-	and A, [$14+X]                                                  ; $0add : $27, $14
-	and A, #$ad                                                  ; $0adf : $28, $ad
-	and A, #$fb                                                  ; $0ae1 : $28, $fb
-	and A, #$32                                                  ; $0ae3 : $28, $32
-
-br_00_0ae5:
-	and $29, $9e                                                  ; $0ae5 : $29, $9e, $29
-	or1 c, $192a.1                                                  ; $0ae8 : $0a, $2a, $39
-	or1 c, /$0a58.1                                                  ; $0aeb : $2a, $58, $2a
-	mov X, $2a+Y                                                  ; $0aee : $f9, $2a
-	tcall 0                                                  ; $0af0 : $01
-	or A, [$04+X]                                                  ; $0af1 : $07, $04
-	nop                                                  ; $0af3 : $00
-	clr1 $00.7                                                  ; $0af4 : $f2, $00
-	setp                                                  ; $0af6 : $40
-	tcall 15                                                  ; $0af7 : $f1
-	nop                                                  ; $0af8 : $00
-	setp                                                  ; $0af9 : $40
-	mov A, [$00]+Y                                                  ; $0afa : $f7, $00
-	brk                                                  ; $0afc : $0f
+@@chn7:
+	.db $f2, $00, $40
+	.db $f1, $00, $40
+	.db $f7, $00, $0f
+	.db $3d, $02, $02, $78
+	.db $be
+	.db $3f, $02, $01, $78
+	.db $fe
+	.db $00, $00, $00, $00 ; n/a
 
 
-	inc X                                                  ; $0afd : $3d
-	set1 $02.0                                                  ; $0afe : $02, $02
-	cmp $3f, #$be                                                  ; $0b00 : $78, $be, $3f
-	set1 $01.0                                                  ; $0b03 : $02, $01
-	cmp $00, #$fe                                                  ; $0b05 : $78, $fe, $00
-	nop                                                  ; $0b08 : $00
-	nop                                                  ; $0b09 : $00
-	nop                                                  ; $0b0a : $00
+; sound_01h
 	tcall 0                                                  ; $0b0b : $01
 	or A, [$04+X]                                                  ; $0b0c : $07, $04
 	nop                                                  ; $0b0e : $00
@@ -8702,138 +8675,170 @@ br_00_354f:
 	mov (X), A                                                  ; $355f : $c6
 
 
-Func_3560:
+InitSoundFile:
 	call !WaitUntilSNESReady                                                  ; $3560 : $3f, $ee, $05
+
+;
 	mov A, #$00                                                  ; $3563 : $e8, $00
 	mov !$00a1, A                                                  ; $3565 : $c5, $a1, $00
 	mov !$00a5, A                                                  ; $3568 : $c5, $a5, $00
 	mov !$00a3, A                                                  ; $356b : $c5, $a3, $00
-	mov $18, #$10                                                  ; $356e : $8f, $10, $18
-	mov $19, #$44                                                  ; $3571 : $8f, $44, $19
-	mov X, #$00                                                  ; $3574 : $cd, $00
-	mov Y, #$00                                                  ; $3576 : $8d, $00
 
-@loop_3578:
-	mov A, $3d+X                                                  ; $3578 : $f4, $3d
-	and A, #$02                                                  ; $357a : $28, $02
-	mov $3d+X,A                                                  ; $357c : $d4, $3d
-	mov A, [$18]+Y                                                  ; $357e : $f7, $18
-	cmp A, #$ff                                                  ; $3580 : $68, $ff
-	beq @cont_358c                                                  ; $3582 : $f0, $08
+; Get pointer to channels in use for music
+	mov wSndFileSrc, #<wSoundFileChnsInUse                                    ; $356e : $8f, $10, $18
+	mov wSndFileSrc+1, #>wSoundFileChnsInUse                                  ; $3571 : $8f, $44, $19
 
-	and A, #$80                                                  ; $3584 : $28, $80
-	or A, #$01                                                  ; $3586 : $08, $01
-	or A, $3d+X                                                  ; $3588 : $14, $3d
-	mov $3d+X,A                                                  ; $358a : $d4, $3d
+; X and Y = snd hw channel
+	mov X, #$00                                                               ; $3574 : $cd, $00
+	mov Y, #$00                                                               ; $3576 : $8d, $00
 
-@cont_358c:
-	inc X                                                  ; $358c : $3d
-	inc Y                                                  ; $358d : $fc
-	cmp Y, #$08                                                  ; $358e : $ad, $08
-	bne @loop_3578                                                  ; $3590 : $d0, $e6
+@nextHwChannel_1:
+; Clear that sound effects use this channel
+	mov A, wMusicAndSEControl+X                                               ; $3578 : $f4, $3d
+	and A, #CHN_USES_SE                                                       ; $357a : $28, $02
+	mov wMusicAndSEControl+X,A                                                ; $357c : $d4, $3d
 
-	mov Y, #$10                                                  ; $3592 : $8d, $10
-	mov X, #$00                                                  ; $3594 : $cd, $00
+; Ignore channel if byte read = $ff
+	mov A, [wSndFileSrc]+Y                                                    ; $357e : $f7, $18
+	cmp A, #$ff                                                               ; $3580 : $68, $ff
+	beq @toNextHwChannel                                                      ; $3582 : $f0, $08
 
-@loop_3596:
+; From above byte, get bit 7 and set bit 0 (music in use)
+	and A, #$80                                                               ; $3584 : $28, $80
+	or A, #$01                                                                ; $3586 : $08, $01
+	or A, wMusicAndSEControl+X                                                ; $3588 : $14, $3d
+	mov wMusicAndSEControl+X,A                                                ; $358a : $d4, $3d
+
+@toNextHwChannel:
+; Stop once all 8 hardware channels processed
+	inc X                                                                     ; $358c : $3d
+	inc Y                                                                     ; $358d : $fc
+	cmp Y, #$08                                                               ; $358e : $ad, $08
+	bne @nextHwChannel_1                                                      ; $3590 : $d0, $e6
+
+; Point Y at section offsets per channel
+	mov Y, #(wSoundFileChnSectionOffs-wSoundFileChnsInUse)                    ; $3592 : $8d, $10
+	mov X, #$00                                                               ; $3594 : $cd, $00
+
+@nextHwChannel_2:
+;
 	call !InitSndChnX                                                  ; $3596 : $3f, $30, $3f
 	mov A, #$01                                                  ; $3599 : $e8, $01
-	mov $1d+X,A                                                  ; $359b : $d4, $1d
+	mov wCtrTilProcessingChnsMusicBytes+X,A                                                  ; $359b : $d4, $1d
 	mov A, #$00                                                  ; $359d : $e8, $00
 	mov $8d+X,A                                                  ; $359f : $d4, $8d
-	mov A, [$18]+Y                                                  ; $35a1 : $f7, $18
-	mov !$0603+X, A                                                  ; $35a3 : $d5, $03, $06
-	mov $10, A                                                  ; $35a6 : $c4, $10
-	inc Y                                                  ; $35a8 : $fc
-	mov A, [$18]+Y                                                  ; $35a9 : $f7, $18
-	clrc                                                  ; $35ab : $60
-	adc A, #$44                                                  ; $35ac : $88, $44
-	mov !$0613+X, A                                                  ; $35ae : $d5, $13, $06
-	mov $11, A                                                  ; $35b1 : $c4, $11
-	inc Y                                                  ; $35b3 : $fc
-	call !Call_00_3b28                                                  ; $35b4 : $3f, $28, $3b
-	push Y                                                  ; $35b7 : $6d
-	mov A, #$00                                                  ; $35b8 : $e8, $00
-	call !Call_00_420f                                                  ; $35ba : $3f, $0f, $42
-	pop Y                                                  ; $35bd : $ee
-	inc X                                                  ; $35be : $3d
-	cmp X, #$08                                                  ; $35bf : $c8, $08
-	beq @cont_35c6                                                  ; $35c1 : $f0, $03
 
-	jmp !@loop_3596                                                  ; $35c3 : $5f, $96, $35
+; Get low byte of the channel's 1st section
+	mov A, [wSndFileSrc]+Y                                                    ; $35a1 : $f7, $18
+	mov !wMusicAndSESectionsPtrLo+X, A                                        ; $35a3 : $d5, $03, $06
+	mov wPtrToSndChnsSectionPtrs, A                                           ; $35a6 : $c4, $10
+	inc Y                                                                     ; $35a8 : $fc
 
-@cont_35c6:
-	call !Call_00_3f90                                                  ; $35c6 : $3f, $90, $3f
-	call !Call_00_3fa8                                                  ; $35c9 : $3f, $a8, $3f
+; Get high byte of above
+	mov A, [wSndFileSrc]+Y                                                    ; $35a9 : $f7, $18
+	clrc                                                                      ; $35ab : $60
+	adc A, #>wSoundFileStart                                                  ; $35ac : $88, $44
+	mov !wMusicAndSESectionsPtrHi+X, A                                        ; $35ae : $d5, $13, $06
+	mov wPtrToSndChnsSectionPtrs+1, A                                         ; $35b1 : $c4, $11
+
+; Save the initial section's src addr
+	inc Y                                                                     ; $35b3 : $fc
+	call !SetChannelXsNextSectionPtr                                          ; $35b4 : $3f, $28, $3b
+
+; Set curr channel's sample to 0
+	push Y                                                                    ; $35b7 : $6d
+	mov A, #$00                                                               ; $35b8 : $e8, $00
+	call !AssignSampleToSndChannel                                            ; $35ba : $3f, $0f, $42
+	pop Y                                                                     ; $35bd : $ee
+
+	inc X                                                                     ; $35be : $3d
+	cmp X, #$08                                                               ; $35bf : $c8, $08
+	beq @afterInitChannels                                                    ; $35c1 : $f0, $03
+
+	jmp !@nextHwChannel_2                                                     ; $35c3 : $5f, $96, $35
+
+@afterInitChannels:
+	call !SetDspPMON                                                  ; $35c6 : $3f, $90, $3f
+	call !SetDspNON                                                  ; $35c9 : $3f, $a8, $3f
 	mov A, !$4419                                                  ; $35cc : $e5, $19, $44
 	mov !$08c9, A                                                  ; $35cf : $c5, $c9, $08
 	mov A, #$50                                                  ; $35d2 : $e8, $50
 	mov !$08c8, A                                                  ; $35d4 : $c5, $c8, $08
 	mov A, #$00                                                  ; $35d7 : $e8, $00
-	mov !$08c7, A                                                  ; $35d9 : $c5, $c7, $08
-	call !Call_00_3fc2                                                  ; $35dc : $3f, $c2, $3f
-	call !Call_00_42c4                                                  ; $35df : $3f, $c4, $42
+	mov !w8COEFValsIdx, A                                                  ; $35d9 : $c5, $c7, $08
+	call !SetDspCOEF                                                  ; $35dc : $3f, $c2, $3f
+	call !todo_EchoRelated_42c4                                                  ; $35df : $3f, $c4, $42
 	mov A, #$54                                                  ; $35e2 : $e8, $54
-	call !Call_00_3a0a                                                  ; $35e4 : $3f, $0a, $3a
+	call !todo_MvolRelated_3a0a                                                  ; $35e4 : $3f, $0a, $3a
 	mov CTRL_REG, #$00                                                  ; $35e7 : $8f, $00, $f1
 	mov A, !$4403                                                  ; $35ea : $e5, $03, $44
 	mov TIMER_0, A                                                  ; $35ed : $c4, $fa
-	mov $fb, #$7d                                                  ; $35ef : $8f, $7d, $fb
+	mov TIMER_1, #$7d                                                  ; $35ef : $8f, $7d, $fb
 	mov CTRL_REG, #$03                                                  ; $35f2 : $8f, $03, $f1
 	or $9b, #$01                                                  ; $35f5 : $18, $01, $9b
 	jmp !NextSndCommand                                                  ; $35f8 : $5f, $88, $03
 
 
-Func_35fb:
-	mov X, #$00                                                  ; $35fb : $cd, $00
+UpdateSound:
+	mov X, #$00                                                               ; $35fb : $cd, $00
 
-@loop_35fd:
-	mov A, $3d+X                                                  ; $35fd : $f4, $3d
-	and A, #$01                                                  ; $35ff : $28, $01
-	beq @cont_3636                                                  ; $3601 : $f0, $33
+@nextHwSndChannel:
+; Skip channel if not in use
+	mov A, wMusicAndSEControl+X                                               ; $35fd : $f4, $3d
+	and A, #CHN_USES_MUSIC                                                    ; $35ff : $28, $01
+	beq @toNextHwSndChannel                                                   ; $3601 : $f0, $33
 
-	mov A, $2d+X                                                  ; $3603 : $f4, $2d
-	beq @cont_3614                                                  ; $3605 : $f0, $0d
+; Skip ending sound effects channel if no counter set to end it...
+	mov A, wCtrTilProcessingChnsSEBytes+X                                     ; $3603 : $f4, $2d
+	beq @processMusicForChn                                                   ; $3605 : $f0, $0d
 
-	dec $2d+X                                                  ; $3607 : $9b, $2d
-	bne @cont_3614                                                  ; $3609 : $d0, $09
+; If that counter isn't yet 0...
+	dec wCtrTilProcessingChnsSEBytes+X                                        ; $3607 : $9b, $2d
+	bne @processMusicForChn                                                   ; $3609 : $d0, $09
 
-	mov A, $3d+X                                                  ; $360b : $f4, $3d
-	and A, #$02                                                  ; $360d : $28, $02
-	bne @cont_3614                                                  ; $360f : $d0, $03
+; And if the channel does not have a sound effect attached
+	mov A, wMusicAndSEControl+X                                               ; $360b : $f4, $3d
+	and A, #CHN_USES_SE                                                       ; $360d : $28, $02
+	bne @processMusicForChn                                                   ; $360f : $d0, $03
 
-	call !Call_00_3b8f                                                  ; $3611 : $3f, $8f, $3b
+	call !SetThatChnShouldStop                                                ; $3611 : $3f, $8f, $3b
 
-@cont_3614:
-	dec $1d+X                                                  ; $3614 : $9b, $1d
-	bne @cont_3636                                                  ; $3616 : $d0, $1e
+@processMusicForChn:
+; Skip music if the counter til processing it isn't 0
+	dec wCtrTilProcessingChnsMusicBytes+X                                     ; $3614 : $9b, $1d
+	bne @toNextHwSndChannel                                                   ; $3616 : $d0, $1e
 
-	call !ProcessChannelsSndBytes                                                  ; $3618 : $3f, $91, $36
-	mov A, $3d+X                                                  ; $361b : $f4, $3d
-	bmi @cont_3636                                                  ; $361d : $30, $17
+; Skip attaching a new sample to the channel if capability disabled for channel...
+; (through bit 7, ie CHN_NO_NEW_SAMPLES)
+	call !ProcessChannelsSndBytes                                             ; $3618 : $3f, $91, $36
+	mov A, wMusicAndSEControl+X                                               ; $361b : $f4, $3d
+	bmi @toNextHwSndChannel                                                   ; $361d : $30, $17
 
-	and A, #$02                                                  ; $361f : $28, $02
-	bne @cont_3636                                                  ; $3621 : $d0, $13
+; If sound effects are currently in use for the channel
+	and A, #CHN_USES_SE                                                       ; $361f : $28, $02
+	bne @toNextHwSndChannel                                                   ; $3621 : $d0, $13
 
-	mov A, !$4342+X                                                  ; $3623 : $f5, $42, $43
+;
+	mov A, !MusicBitfieldMap+X                                                  ; $3623 : $f5, $42, $43
 	and A, $b7                                                  ; $3626 : $24, $b7
-	beq @cont_3636                                                  ; $3628 : $f0, $0c
+	beq @toNextHwSndChannel                                                  ; $3628 : $f0, $0c
 
 	eor A, #$ff                                                  ; $362a : $48, $ff
 	and A, $b7                                                  ; $362c : $24, $b7
 	mov $b7, A                                                  ; $362e : $c4, $b7
-	mov A, !$0713+X                                                  ; $3630 : $f5, $13, $07
-	call !Call_00_420f                                                  ; $3633 : $3f, $0f, $42
+	mov A, !wMusicNewSampleIdxToSet+X                                                  ; $3630 : $f5, $13, $07
+	call !AssignSampleToSndChannel                                                  ; $3633 : $3f, $0f, $42
 
-@cont_3636:
-	inc X                                                  ; $3636 : $3d
-	cmp X, #$08                                                  ; $3637 : $c8, $08
-	bne @loop_35fd                                                  ; $3639 : $d0, $c2
+@toNextHwSndChannel:
+	inc X                                                                     ; $3636 : $3d
+	cmp X, #$08                                                               ; $3637 : $c8, $08
+	bne @nextHwSndChannel                                                     ; $3639 : $d0, $c2
 
-	call !Call_00_4018                                                  ; $363b : $3f, $18, $40
-	call !UpdateAllPitchDspRegs                                                  ; $363e : $3f, $ef, $40
-	call !Call_00_3f08                                                  ; $3641 : $3f, $08, $3f
-	ret                                                  ; $3644 : $6f
+; Finally update hardware regs
+	call !UpdateAllVolAndEchoVol                                              ; $363b : $3f, $18, $40
+	call !UpdateAllPitchDspRegs                                               ; $363e : $3f, $ef, $40
+	call !UpdateKON_KOF                                                       ; $3641 : $3f, $08, $3f
+	ret                                                                       ; $3644 : $6f
 
 
 _CommandHandler03h:
@@ -8843,44 +8848,45 @@ _CommandHandler03h:
 	mov $a1, #$00                                                  ; $364b : $8f, $00, $a1
 	mov $a5, #$00                                                  ; $364e : $8f, $00, $a5
 	mov $a3, #$00                                                  ; $3651 : $8f, $00, $a3
-	call !Call_00_3fa8                                                  ; $3654 : $3f, $a8, $3f
-	call !Call_00_3f90                                                  ; $3657 : $3f, $90, $3f
-	call !Call_00_3f9c                                                  ; $365a : $3f, $9c, $3f
+	call !SetDspNON                                                  ; $3654 : $3f, $a8, $3f
+	call !SetDspPMON                                                  ; $3657 : $3f, $90, $3f
+	call !SetDspEON                                                  ; $365a : $3f, $9c, $3f
 	mov A, #$00                                                  ; $365d : $e8, $00
-	call !Call_00_3a0a                                                  ; $365f : $3f, $0a, $3a
+	call !todo_MvolRelated_3a0a                                                  ; $365f : $3f, $0a, $3a
 	mov $9a, #$ff                                                  ; $3662 : $8f, $ff, $9a
 	mov X, #$07                                                  ; $3665 : $cd, $07
 
-br_00_3667:
-	mov A, $3d+X                                                  ; $3667 : $f4, $3d
+@loop_3667:
+	mov A, wMusicAndSEControl+X                                                  ; $3667 : $f4, $3d
 	and A, #$01                                                  ; $3669 : $28, $01
-	beq br_00_3676                                                  ; $366b : $f0, $09
+	beq @cont_3676                                                  ; $366b : $f0, $09
 
-	mov A, $3d+X                                                  ; $366d : $f4, $3d
-	and A, #$02                                                  ; $366f : $28, $02
-	bne br_00_3676                                                  ; $3671 : $d0, $03
+	mov A, wMusicAndSEControl+X                                                  ; $366d : $f4, $3d
+	and A, #CHN_USES_SE                                                  ; $366f : $28, $02
+	bne @cont_3676                                                  ; $3671 : $d0, $03
 
-	call !Call_00_3b8f                                                  ; $3673 : $3f, $8f, $3b
+	call !SetThatChnShouldStop                                                  ; $3673 : $3f, $8f, $3b
 
-br_00_3676:
-	mov A, $3d+X                                                  ; $3676 : $f4, $3d
-	and A, #$02                                                  ; $3678 : $28, $02
-	mov $3d+X,A                                                  ; $367a : $d4, $3d
+@cont_3676:
+	mov A, wMusicAndSEControl+X                                                  ; $3676 : $f4, $3d
+	and A, #CHN_USES_SE                                                  ; $3678 : $28, $02
+	mov wMusicAndSEControl+X,A                                                  ; $367a : $d4, $3d
 	dec X                                                  ; $367c : $1d
-	bpl br_00_3667                                                  ; $367d : $10, $e8
+	bpl @loop_3667                                                  ; $367d : $10, $e8
 
 	mov A, #$00                                                  ; $367f : $e8, $00
-	mov $95, A                                                  ; $3681 : $c4, $95
-	call !Call_00_3f08                                                  ; $3683 : $3f, $08, $3f
+	mov wChnBitflagToKON, A                                                  ; $3681 : $c4, $95
+	call !UpdateKON_KOF                                                  ; $3683 : $3f, $08, $3f
 	mov A, !$08ce                                                  ; $3686 : $e5, $ce, $08
 	or A, #$20                                                  ; $3689 : $08, $20
-	mov DSP_REG_ADDR, #$6c                                                  ; $368b : $8f, $6c, $f2
+	mov DSP_REG_ADDR, #FLG                                                  ; $368b : $8f, $6c, $f2
 	mov DSP_REG_DATA, A                                                  ; $368e : $c4, $f3
 	ret                                                  ; $3690 : $6f
 
 
 ; X - software sound channel
 ProcessChannelsSndBytes:
+; Set curr sound byte src from channels pointer
 	mov A, !wMusicAndSESndByteSrcLo+X                                                  ; $3691 : $f5, $33, $06
 	mov wCurrSndChnSndByteSrc, A                                                  ; $3694 : $c4, $18
 	mov A, !wMusicAndSESndByteSrcHi+X                                                  ; $3696 : $f5, $43, $06
@@ -8945,7 +8951,7 @@ ProcessChannelsSndBytes:
 
 @afterSndByte:
 	mov A, wMusicAndSEControl+X                                                  ; $36f5 : $f4, $3d
-	and A, #$02                                                  ; $36f7 : $28, $02
+	and A, #CHN_USES_SE                                                  ; $36f7 : $28, $02
 	bne @end_3716                                                  ; $36f9 : $d0, $1b
 
 	mov A, !w0763+X                                                  ; $36fb : $f5, $63, $07
@@ -8954,7 +8960,7 @@ ProcessChannelsSndBytes:
 	mov A, wMusicAndSEControl+X                                                  ; $3700 : $f4, $3d
 	bmi @br_3721                                                  ; $3702 : $30, $1d
 
-	mov A, w002d+X                                                  ; $3704 : $f4, $2d
+	mov A, wCtrTilProcessingChnsSEBytes+X                                                  ; $3704 : $f4, $2d
 	beq @br_3710                                                  ; $3706 : $f0, $08
 
 	mov A, !w0783+X                                                  ; $3708 : $f5, $83, $07
@@ -8963,17 +8969,17 @@ ProcessChannelsSndBytes:
 
 @br_3710:
 	call !CalcSndChnXsBasePitch                                                  ; $3710 : $3f, $bf, $41
-	call !Call_00_3b74                                                  ; $3713 : $3f, $74, $3b
+	call !SetThatChnShouldStart                                                  ; $3713 : $3f, $74, $3b
 
 @end_3716:
 	mov A, !w0753+X                                                  ; $3716 : $f5, $53, $07
-	mov w001d+X,A                                                  ; $3719 : $d4, $1d
+	mov wCtrTilProcessingChnsMusicBytes+X,A                                                  ; $3719 : $d4, $1d
 	mov A, !w0763+X                                                  ; $371b : $f5, $63, $07
-	mov w002d+X,A                                                  ; $371e : $d4, $2d
+	mov wCtrTilProcessingChnsSEBytes+X,A                                                  ; $371e : $d4, $2d
 	ret                                                  ; $3720 : $6f
 
 @br_3721:
-	call !Call_00_3b74                                                  ; $3721 : $3f, $74, $3b
+	call !SetThatChnShouldStart                                                  ; $3721 : $3f, $74, $3b
 	mov Y, #$00                                                  ; $3724 : $8d, $00
 
 @loop_3726:
@@ -8994,11 +9000,11 @@ ProcessChannelsSndBytes:
 	mov A, !$3c2c+Y                                                  ; $373d : $f6, $2c, $3c
 	mov !w0733+X, A                                                  ; $3740 : $d5, $33, $07
 	mov A, !$3c35+Y                                                  ; $3743 : $f6, $35, $3c
-	call !Call_00_420f                                                  ; $3746 : $3f, $0f, $42
+	call !AssignSampleToSndChannel                                                  ; $3746 : $3f, $0f, $42
 	mov A, !w0753+X                                                  ; $3749 : $f5, $53, $07
-	mov w001d+X,A                                                  ; $374c : $d4, $1d
+	mov wCtrTilProcessingChnsMusicBytes+X,A                                                  ; $374c : $d4, $1d
 	mov A, !w0763+X                                                  ; $374e : $f5, $63, $07
-	mov w002d+X,A                                                  ; $3751 : $d4, $2d
+	mov wCtrTilProcessingChnsSEBytes+X,A                                                  ; $3751 : $d4, $2d
 
 @done:
 	ret                                                  ; $3753 : $6f
@@ -9014,78 +9020,83 @@ ProcessChannelsSndBytes:
 
 SoundByteHandlerF0h:
 	pop X                                                  ; $375d : $ce
-	call !Call_00_3b12                                                  ; $375e : $3f, $12, $3b
+	call !SetSndByteDelayAndAequNextByte                                                  ; $375e : $3f, $12, $3b
 	push A                                                  ; $3761 : $2d
-	mov A, !$0883+X                                                  ; $3762 : $f5, $83, $08
-	bne br_00_376d                                                  ; $3765 : $d0, $06
+	mov A, !w0883+X                                                  ; $3762 : $f5, $83, $08
+	bne +                                                  ; $3765 : $d0, $06
 
-	mov !$07e3+X, A                                                  ; $3767 : $d5, $e3, $07
-	mov !$0833+X, A                                                  ; $376a : $d5, $33, $08
+	mov !w07e3+X, A                                                  ; $3767 : $d5, $e3, $07
+	mov !w0833+X, A                                                  ; $376a : $d5, $33, $08
 
-br_00_376d:
-	pop A                                                  ; $376d : $ae
-	mov !$0883+X, A                                                  ; $376e : $d5, $83, $08
++	pop A                                                  ; $376d : $ae
+	mov !w0883+X, A                                                  ; $376e : $d5, $83, $08
 	mov A, #$03                                                  ; $3771 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3773 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3773 : $5f, $07, $3b
 
 
 SoundByteHandlerF1h:
 	pop X                                                  ; $3776 : $ce
-	call !Call_00_3b12                                                  ; $3777 : $3f, $12, $3b
-	mov !$0723+X, A                                                  ; $377a : $d5, $23, $07
+	call !SetSndByteDelayAndAequNextByte                                                  ; $3777 : $3f, $12, $3b
+	mov !w0723+X, A                                                  ; $377a : $d5, $23, $07
 	call !Func_3ffd                                                  ; $377d : $3f, $fd, $3f
 	mov A, #$03                                                  ; $3780 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3782 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3782 : $5f, $07, $3b
 
 
 SoundByteHandlerF2h:
 	pop X                                                  ; $3785 : $ce
-	call !Call_00_3b12                                                  ; $3786 : $3f, $12, $3b
+	call !SetSndByteDelayAndAequNextByte                                                  ; $3786 : $3f, $12, $3b
 	mov !w0733+X, A                                                  ; $3789 : $d5, $33, $07
 	mov A, #$03                                                  ; $378c : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $378e : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $378e : $5f, $07, $3b
 
 
-SoundByteHandlerF3h:
-	pop X                                                  ; $3791 : $ce
-	call !Call_00_3b12                                                  ; $3792 : $3f, $12, $3b
-	mov A, #$02                                                  ; $3795 : $e8, $02
-	jmp !Jump_00_3b07                                                  ; $3797 : $5f, $07, $3b
+SoundByteHandlerF3h_SetDelay:
+; Just set ctr til next snd byte, and skip past it and the $f3 command
+	pop X                                                                     ; $3791 : $ce
+	call !SetSndByteDelayAndAequNextByte                                      ; $3792 : $3f, $12, $3b
+	mov A, #$02                                                               ; $3795 : $e8, $02
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                          ; $3797 : $5f, $07, $3b
 
 
 SoundByteHandlerF4h:
 	pop X                                                  ; $379a : $ce
-	call !Call_00_3b12                                                  ; $379b : $3f, $12, $3b
+	call !SetSndByteDelayAndAequNextByte                                                  ; $379b : $3f, $12, $3b
 	mov CTRL_REG, #$00                                                  ; $379e : $8f, $00, $f1
 	mov TIMER_0, A                                                  ; $37a1 : $c4, $fa
-	mov $fb, #$7d                                                  ; $37a3 : $8f, $7d, $fb
+	mov TIMER_1, #$7d                                                  ; $37a3 : $8f, $7d, $fb
 	mov CTRL_REG, #$03                                                  ; $37a6 : $8f, $03, $f1
 	mov A, #$03                                                  ; $37a9 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $37ab : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $37ab : $5f, $07, $3b
 
 
-SoundByteHandlerF6h:
-	pop X                                                  ; $37ae : $ce
-	call !Call_00_3b12                                                  ; $37af : $3f, $12, $3b
-	mov !wMusicAndSEPitchMult+X, A                                                  ; $37b2 : $d5, $c3, $07
-	mov A, #$03                                                  ; $37b5 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $37b7 : $5f, $07, $3b
+SoundByteHandlerF6h_SetDelayAndPitchMult:
+; Set ctr til next snd byte, pitch mult, the skip those bytes and the $f6 cmd
+	pop X                                                                     ; $37ae : $ce
+	call !SetSndByteDelayAndAequNextByte                                      ; $37af : $3f, $12, $3b
+	mov !wMusicAndSEPitchMult+X, A                                            ; $37b2 : $d5, $c3, $07
+
+	mov A, #$03                                                               ; $37b5 : $e8, $03
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                          ; $37b7 : $5f, $07, $3b
 
 
-SoundByteHandlerF7h:
-	pop X                                                  ; $37ba : $ce
-	call !Call_00_3b12                                                  ; $37bb : $3f, $12, $3b
-	mov !$0713+X, A                                                  ; $37be : $d5, $13, $07
-	mov A, $3d+X                                                  ; $37c1 : $f4, $3d
-	and A, #$02                                                  ; $37c3 : $28, $02
-	bne br_00_37cd                                                  ; $37c5 : $d0, $06
+SoundByteHandlerF7h_SetDelayAndSampleIdx:
+; Next byte is delay, byte after is the next sample idx
+	pop X                                                                     ; $37ba : $ce
+	call !SetSndByteDelayAndAequNextByte                                      ; $37bb : $3f, $12, $3b
+	mov !wMusicNewSampleIdxToSet+X, A                                         ; $37be : $d5, $13, $07
 
-	mov A, !$0713+X                                                  ; $37c7 : $f5, $13, $07
-	call !Call_00_420f                                                  ; $37ca : $3f, $0f, $42
+; Attach sample already if no sound effects in use
+	mov A, wMusicAndSEControl+X                                               ; $37c1 : $f4, $3d
+	and A, #CHN_USES_SE                                                       ; $37c3 : $28, $02
+	bne +                                                                     ; $37c5 : $d0, $06
 
-br_00_37cd:
-	mov A, #$03                                                  ; $37cd : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $37cf : $5f, $07, $3b
+	mov A, !wMusicNewSampleIdxToSet+X                                         ; $37c7 : $f5, $13, $07
+	call !AssignSampleToSndChannel                                            ; $37ca : $3f, $0f, $42
+
+; Skip past the $f7, delay byte and sample idx
++	mov A, #$03                                                               ; $37cd : $e8, $03
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                          ; $37cf : $5f, $07, $3b
 
 
 SoundByteHandlerFBh:
@@ -9093,22 +9104,22 @@ SoundByteHandlerFBh:
 	push X                                                  ; $37d3 : $4d
 	mov A, X                                                  ; $37d4 : $7d
 	mov Y, A                                                  ; $37d5 : $fd
-	mov A, !$0673+X                                                  ; $37d6 : $f5, $73, $06
-	beq br_00_37e5                                                  ; $37d9 : $f0, $0a
+	mov A, !w0673+X                                                  ; $37d6 : $f5, $73, $06
+	beq @br_37e5                                                  ; $37d9 : $f0, $0a
 
-	mov A, !$0683+X                                                  ; $37db : $f5, $83, $06
-	bne br_00_380d                                                  ; $37de : $d0, $2d
+	mov A, !w0683+X                                                  ; $37db : $f5, $83, $06
+	bne @cont_380d                                                  ; $37de : $d0, $2d
 
 	mov A, X                                                  ; $37e0 : $7d
 	clrc                                                  ; $37e1 : $60
 	adc A, #$10                                                  ; $37e2 : $88, $10
 	mov X, A                                                  ; $37e4 : $5d
 
-br_00_37e5:
-	mov A, !$0603+Y                                                  ; $37e5 : $f6, $03, $06
+@br_37e5:
+	mov A, !wMusicAndSESectionsPtrLo+Y                                                  ; $37e5 : $f6, $03, $06
 	mov !$0653+X, A                                                  ; $37e8 : $d5, $53, $06
-	mov A, !$0613+Y                                                  ; $37eb : $f6, $13, $06
-	mov !$0673+X, A                                                  ; $37ee : $d5, $73, $06
+	mov A, !wMusicAndSESectionsPtrHi+Y                                                  ; $37eb : $f6, $13, $06
+	mov !w0673+X, A                                                  ; $37ee : $d5, $73, $06
 	mov A, !wMusicAndSESndByteSrcLo+Y                                                  ; $37f1 : $f6, $33, $06
 	clrc                                                  ; $37f4 : $60
 	adc A, #$01                                                  ; $37f5 : $88, $01
@@ -9117,14 +9128,14 @@ br_00_37e5:
 	adc A, #$00                                                  ; $37fd : $88, $00
 	mov !$06b3+X, A                                                  ; $37ff : $d5, $b3, $06
 	mov A, #$fe                                                  ; $3802 : $e8, $fe
-	mov !$06d3+X, A                                                  ; $3804 : $d5, $d3, $06
+	mov !w06d3+X, A                                                  ; $3804 : $d5, $d3, $06
 	mov A, !wMusicAndSEBaseNote+Y                                                  ; $3807 : $f6, $23, $06
 	mov !$06f3+X, A                                                  ; $380a : $d5, $f3, $06
 
-br_00_380d:
+@cont_380d:
 	pop X                                                  ; $380d : $ce
 	mov A, #$01                                                  ; $380e : $e8, $01
-	jmp !Jump_00_3b07                                                  ; $3810 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3810 : $5f, $07, $3b
 
 
 SoundByteHandlerFCh:
@@ -9132,43 +9143,43 @@ SoundByteHandlerFCh:
 	push X                                                  ; $3814 : $4d
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $3815 : $f7, $18
 	dec A                                                  ; $3817 : $9c
-	beq br_00_3865                                                  ; $3818 : $f0, $4b
+	beq @br_3865                                                  ; $3818 : $f0, $4b
 
 	mov $10, A                                                  ; $381a : $c4, $10
 	mov A, X                                                  ; $381c : $7d
 	mov Y, A                                                  ; $381d : $fd
-	mov A, !$0683+X                                                  ; $381e : $f5, $83, $06
-	beq br_00_3828                                                  ; $3821 : $f0, $05
+	mov A, !w0683+X                                                  ; $381e : $f5, $83, $06
+	beq @cont_3828                                                  ; $3821 : $f0, $05
 
 	mov A, X                                                  ; $3823 : $7d
 	clrc                                                  ; $3824 : $60
 	adc A, #$10                                                  ; $3825 : $88, $10
 	mov X, A                                                  ; $3827 : $5d
 
-br_00_3828:
-	mov A, !$06d3+X                                                  ; $3828 : $f5, $d3, $06
+@cont_3828:
+	mov A, !w06d3+X                                                  ; $3828 : $f5, $d3, $06
 	cmp A, #$ff                                                  ; $382b : $68, $ff
-	beq br_00_3843                                                  ; $382d : $f0, $14
+	beq @br_3843                                                  ; $382d : $f0, $14
 
 	cmp A, #$fe                                                  ; $382f : $68, $fe
-	beq br_00_383e                                                  ; $3831 : $f0, $0b
+	beq @br_383e                                                  ; $3831 : $f0, $0b
 
 	dec A                                                  ; $3833 : $9c
-	mov !$06d3+X, A                                                  ; $3834 : $d5, $d3, $06
-	bne br_00_3843                                                  ; $3837 : $d0, $0a
+	mov !w06d3+X, A                                                  ; $3834 : $d5, $d3, $06
+	bne @br_3843                                                  ; $3837 : $d0, $0a
 
-	mov !$0673+X, A                                                  ; $3839 : $d5, $73, $06
-	bra br_00_3865                                                  ; $383c : $2f, $27
+	mov !w0673+X, A                                                  ; $3839 : $d5, $73, $06
+	bra @br_3865                                                  ; $383c : $2f, $27
 
-br_00_383e:
+@br_383e:
 	mov A, $10                                                  ; $383e : $e4, $10
-	mov !$06d3+X, A                                                  ; $3840 : $d5, $d3, $06
+	mov !w06d3+X, A                                                  ; $3840 : $d5, $d3, $06
 
-br_00_3843:
+@br_3843:
 	mov A, !$0653+X                                                  ; $3843 : $f5, $53, $06
-	mov !$0603+Y, A                                                  ; $3846 : $d6, $03, $06
-	mov A, !$0673+X                                                  ; $3849 : $f5, $73, $06
-	mov !$0613+Y, A                                                  ; $384c : $d6, $13, $06
+	mov !wMusicAndSESectionsPtrLo+Y, A                                                  ; $3846 : $d6, $03, $06
+	mov A, !w0673+X                                                  ; $3849 : $f5, $73, $06
+	mov !wMusicAndSESectionsPtrHi+Y, A                                                  ; $384c : $d6, $13, $06
 	mov A, !$0693+X                                                  ; $384f : $f5, $93, $06
 	mov !wMusicAndSESndByteSrcLo+Y, A                                                  ; $3852 : $d6, $33, $06
 	mov A, !$06b3+X                                                  ; $3855 : $f5, $b3, $06
@@ -9178,13 +9189,13 @@ br_00_3843:
 	pop X                                                  ; $3861 : $ce
 	jmp !ProcessChannelsSndBytes                                                  ; $3862 : $5f, $91, $36
 
-
-br_00_3865:
+@br_3865:
 	pop X                                                  ; $3865 : $ce
 	mov A, #$02                                                  ; $3866 : $e8, $02
-	jmp !Jump_00_3b07                                                  ; $3868 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3868 : $5f, $07, $3b
 
 
+; unused?
 	ret                                                  ; $386b : $6f
 
 
@@ -9193,71 +9204,66 @@ SoundByteHandlerFDh:
 	mov A, #$00                                                  ; $386d : $e8, $00
 	mov !wMusicAndSEBaseNote+X, A                                                  ; $386f : $d5, $23, $06
 	inc $8d+X                                                  ; $3872 : $bb, $8d
-	mov A, !$0603+X                                                  ; $3874 : $f5, $03, $06
+	mov A, !wMusicAndSESectionsPtrLo+X                                                  ; $3874 : $f5, $03, $06
 	clrc                                                  ; $3877 : $60
 	adc A, #$02                                                  ; $3878 : $88, $02
 	mov $10, A                                                  ; $387a : $c4, $10
-	mov !$0603+X, A                                                  ; $387c : $d5, $03, $06
-	mov A, !$0613+X                                                  ; $387f : $f5, $13, $06
+	mov !wMusicAndSESectionsPtrLo+X, A                                                  ; $387c : $d5, $03, $06
+	mov A, !wMusicAndSESectionsPtrHi+X                                                  ; $387f : $f5, $13, $06
 	adc A, #$00                                                  ; $3882 : $88, $00
 	mov $11, A                                                  ; $3884 : $c4, $11
-	mov !$0613+X, A                                                  ; $3886 : $d5, $13, $06
+	mov !wMusicAndSESectionsPtrHi+X, A                                                  ; $3886 : $d5, $13, $06
 	mov Y, #$00                                                  ; $3889 : $8d, $00
 	mov A, [$10]+Y                                                  ; $388b : $f7, $10
 	cmp A, #$ff                                                  ; $388d : $68, $ff
-	bne br_00_38b7                                                  ; $388f : $d0, $26
+	bne @br_38b7                                                  ; $388f : $d0, $26
 
-	mov A, $3d+X                                                  ; $3891 : $f4, $3d
+	mov A, wMusicAndSEControl+X                                                  ; $3891 : $f4, $3d
 	and A, #$fe                                                  ; $3893 : $28, $fe
-	mov $3d+X,A                                                  ; $3895 : $d4, $3d
+	mov wMusicAndSEControl+X,A                                                  ; $3895 : $d4, $3d
 	mov Y, #$07                                                  ; $3897 : $8d, $07
 	mov A, #$00                                                  ; $3899 : $e8, $00
 
-br_00_389b:
-	or A, !$003d+Y                                                  ; $389b : $16, $3d, $00
+-	or A, !$003d+Y                                                  ; $389b : $16, $3d, $00
 	dec Y                                                  ; $389e : $dc
-	bpl br_00_389b                                                  ; $389f : $10, $fa
+	bpl -                                                  ; $389f : $10, $fa
 
 	and A, #$01                                                  ; $38a1 : $28, $01
-	bne br_00_38ab                                                  ; $38a3 : $d0, $06
+	bne @cont_38ab                                                  ; $38a3 : $d0, $06
 
 	mov A, $9b                                                  ; $38a5 : $e4, $9b
 	and A, #$fe                                                  ; $38a7 : $28, $fe
 	mov $9b, A                                                  ; $38a9 : $c4, $9b
 
-br_00_38ab:
-	mov A, $3d+X                                                  ; $38ab : $f4, $3d
-	and A, #$02                                                  ; $38ad : $28, $02
-	mov $3d+X,A                                                  ; $38af : $d4, $3d
-	bne br_00_38b6                                                  ; $38b1 : $d0, $03
+@cont_38ab:
+	mov A, wMusicAndSEControl+X                                                  ; $38ab : $f4, $3d
+	and A, #CHN_USES_SE                                                  ; $38ad : $28, $02
+	mov wMusicAndSEControl+X,A                                                  ; $38af : $d4, $3d
+	bne +                                                  ; $38b1 : $d0, $03
+	call !SetThatChnShouldStop                                                  ; $38b3 : $3f, $8f, $3b
++	ret                                                  ; $38b6 : $6f
 
-	call !Call_00_3b8f                                                  ; $38b3 : $3f, $8f, $3b
-
-br_00_38b6:
-	ret                                                  ; $38b6 : $6f
-
-
-br_00_38b7:
-	call !Call_00_3b28                                                  ; $38b7 : $3f, $28, $3b
+@br_38b7:
+	call !SetChannelXsNextSectionPtr                                                  ; $38b7 : $3f, $28, $3b
 	jmp !ProcessChannelsSndBytes                                                  ; $38ba : $5f, $91, $36
 
 
-SoundByteHandlerFEh:
+SoundByteHandlerFEh_End:
 	pop X                                                  ; $38bd : $ce
 	mov A, #$00                                                  ; $38be : $e8, $00
-	mov $3d+X,A                                                  ; $38c0 : $d4, $3d
-	mov !$0883+X, A                                                  ; $38c2 : $d5, $83, $08
+	mov wMusicAndSEControl+X,A                                                  ; $38c0 : $d4, $3d
+	mov !w0883+X, A                                                  ; $38c2 : $d5, $83, $08
 	mov A, #$80                                                  ; $38c5 : $e8, $80
 	mov !wMusicAndSEPitchMult+X, A                                                  ; $38c7 : $d5, $c3, $07
 	mov A, #$20                                                  ; $38ca : $e8, $20
-	mov !$0813+X, A                                                  ; $38cc : $d5, $13, $08
+	mov !w0813+X, A                                                  ; $38cc : $d5, $13, $08
 	mov A, #$10                                                  ; $38cf : $e8, $10
-	mov !$0863+X, A                                                  ; $38d1 : $d5, $63, $08
-	call !Call_00_3b8f                                                  ; $38d4 : $3f, $8f, $3b
+	mov !w0863+X, A                                                  ; $38d1 : $d5, $63, $08
+	call !SetThatChnShouldStop                                                  ; $38d4 : $3f, $8f, $3b
 	ret                                                  ; $38d7 : $6f
 
 
-SoundByteHandlerFFh:
+SoundByteHandlerFFh_MoreCtrlCodes:
 ; Next sound byte points to another set of handlers
 	mov A, [wCurrSndChnSndByteSrc]+Y                                          ; $38d8 : $f7, $18
 	inc Y                                                                     ; $38da : $fc
@@ -9271,7 +9277,7 @@ SoundByteHandlerFF00h:
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $38e1 : $f7, $18
 	mov !$08c9, A                                                  ; $38e3 : $c5, $c9, $08
 	mov A, #$03                                                  ; $38e6 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $38e8 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $38e8 : $5f, $07, $3b
 
 
 SoundByteHandlerFF01h:
@@ -9281,76 +9287,74 @@ SoundByteHandlerFF01h:
 	mov DSP_REG_ADDR, #$0d                                                  ; $38f1 : $8f, $0d, $f2
 	mov DSP_REG_DATA, A                                                  ; $38f4 : $c4, $f3
 	mov A, #$03                                                  ; $38f6 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $38f8 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $38f8 : $5f, $07, $3b
 
 
 SoundByteHandlerFF02h:
 	pop X                                                  ; $38fb : $ce
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $38fc : $f7, $18
-	mov !$08c7, A                                                  ; $38fe : $c5, $c7, $08
+	mov !w8COEFValsIdx, A                                                  ; $38fe : $c5, $c7, $08
 	push X                                                  ; $3901 : $4d
-	call !Call_00_3fc2                                                  ; $3902 : $3f, $c2, $3f
+	call !SetDspCOEF                                                  ; $3902 : $3f, $c2, $3f
 	pop X                                                  ; $3905 : $ce
 	mov A, #$03                                                  ; $3906 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3908 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3908 : $5f, $07, $3b
 
 
 SoundByteHandlerFF03h:
 	pop X                                                  ; $390b : $ce
-	mov A, !$4342+X                                                  ; $390c : $f5, $42, $43
+	mov A, !MusicBitfieldMap+X                                                  ; $390c : $f5, $42, $43
 	cmp X, #$08                                                  ; $390f : $c8, $08
-	bcc br_00_3919                                                  ; $3911 : $90, $06
+	bcc @br_3919                                                  ; $3911 : $90, $06
 
 	or A, $a4                                                  ; $3913 : $04, $a4
 	mov $a4, A                                                  ; $3915 : $c4, $a4
-	bra br_00_391d                                                  ; $3917 : $2f, $04
+	bra +                                                  ; $3917 : $2f, $04
 
-br_00_3919:
+@br_3919:
 	or A, $a3                                                  ; $3919 : $04, $a3
 	mov $a3, A                                                  ; $391b : $c4, $a3
 
-br_00_391d:
-	call !Call_00_3f9c                                                  ; $391d : $3f, $9c, $3f
++	call !SetDspEON                                                  ; $391d : $3f, $9c, $3f
 	mov A, #$03                                                  ; $3920 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3922 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3922 : $5f, $07, $3b
 
 
 SoundByteHandlerFF04h:
 	pop X                                                  ; $3925 : $ce
 	mov A, !$4352+X                                                  ; $3926 : $f5, $52, $43
 	cmp X, #$08                                                  ; $3929 : $c8, $08
-	bcc br_00_3933                                                  ; $392b : $90, $06
+	bcc @br_3933                                                  ; $392b : $90, $06
 
 	and A, $a4                                                  ; $392d : $24, $a4
 	mov $a4, A                                                  ; $392f : $c4, $a4
-	bra br_00_3937                                                  ; $3931 : $2f, $04
+	bra +                                                  ; $3931 : $2f, $04
 
-br_00_3933:
+@br_3933:
 	and A, $a3                                                  ; $3933 : $24, $a3
 	mov $a3, A                                                  ; $3935 : $c4, $a3
 
-br_00_3937:
-	call !Call_00_3f9c                                                  ; $3937 : $3f, $9c, $3f
++	call !SetDspEON                                                  ; $3937 : $3f, $9c, $3f
 	mov A, #$03                                                  ; $393a : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $393c : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $393c : $5f, $07, $3b
 
 
 SoundByteHandlerFF05h:
 	pop X                                                  ; $393f : $ce
 	mov A, #$03                                                  ; $3940 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3942 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3942 : $5f, $07, $3b
 
 
 SoundByteHandlerFF06h:
 	pop X                                                  ; $3945 : $ce
 	mov A, #$03                                                  ; $3946 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3948 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3948 : $5f, $07, $3b
 
 
 SoundByteHandlerFF07h:
 	pop X                                                  ; $394b : $ce
 	mov A, #$03                                                  ; $394c : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $394e : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $394e : $5f, $07, $3b
 
 
 SoundByteHandlerFF08h:
@@ -9362,7 +9366,7 @@ SoundByteHandlerFF08h:
 	or A, $12                                                  ; $395c : $04, $12
 	mov DSP_REG_DATA, A                                                  ; $395e : $c4, $f3
 	mov A, #$03                                                  ; $3960 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3962 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3962 : $5f, $07, $3b
 
 
 SoundByteHandlerFF09h:
@@ -9378,13 +9382,13 @@ SoundByteHandlerFF09h:
 	or A, #$80                                                  ; $3976 : $08, $80
 	mov DSP_REG_DATA, A                                                  ; $3978 : $c4, $f3
 	mov A, #$03                                                  ; $397a : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $397c : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $397c : $5f, $07, $3b
 
 
 SoundByteHandlerFF0Ah:
 	pop X                                                  ; $397f : $ce
 	call !Call_00_39c2                                                  ; $3980 : $3f, $c2, $39
-	inc $f2                                                  ; $3983 : $ab, $f2
+	inc DSP_REG_ADDR                                                  ; $3983 : $ab, $f2
 	mov A, $12                                                  ; $3985 : $e4, $12
 	xcn A                                                  ; $3987 : $9f
 	asl A                                                  ; $3988 : $1c
@@ -9395,13 +9399,13 @@ SoundByteHandlerFF0Ah:
 	or A, $12                                                  ; $3991 : $04, $12
 	mov DSP_REG_DATA, A                                                  ; $3993 : $c4, $f3
 	mov A, #$03                                                  ; $3995 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3997 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3997 : $5f, $07, $3b
 
 
 SoundByteHandlerFF0Bh:
 	pop X                                                  ; $399a : $ce
 	call !Call_00_39c2                                                  ; $399b : $3f, $c2, $39
-	inc $f2                                                  ; $399e : $ab, $f2
+	inc DSP_REG_ADDR                                                  ; $399e : $ab, $f2
 	mov A, $12                                                  ; $39a0 : $e4, $12
 	and A, #$1f                                                  ; $39a2 : $28, $1f
 	mov $12, A                                                  ; $39a4 : $c4, $12
@@ -9410,7 +9414,7 @@ SoundByteHandlerFF0Bh:
 	or A, $12                                                  ; $39aa : $04, $12
 	mov DSP_REG_DATA, A                                                  ; $39ac : $c4, $f3
 	mov A, #$03                                                  ; $39ae : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $39b0 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $39b0 : $5f, $07, $3b
 
 
 SoundByteHandlerFF0Ch:
@@ -9418,9 +9422,9 @@ SoundByteHandlerFF0Ch:
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $39b4 : $f7, $18
 	and A, #$1f                                                  ; $39b6 : $28, $1f
 	or A, #$80                                                  ; $39b8 : $08, $80
-	mov !$07d3+X, A                                                  ; $39ba : $d5, $d3, $07
+	mov !w07d3+X, A                                                  ; $39ba : $d5, $d3, $07
 	mov A, #$03                                                  ; $39bd : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $39bf : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $39bf : $5f, $07, $3b
 
 
 Call_00_39c2:
@@ -9428,13 +9432,12 @@ Call_00_39c2:
 	mov $12, A                                                  ; $39c4 : $c4, $12
 	mov A, X                                                  ; $39c6 : $7d
 	cmp A, #$08                                                  ; $39c7 : $68, $08
-	bcc br_00_39ce                                                  ; $39c9 : $90, $03
+	bcc +                                                  ; $39c9 : $90, $03
 
 	setc                                                  ; $39cb : $80
 	sbc A, #$08                                                  ; $39cc : $a8, $08
 
-br_00_39ce:
-	xcn A                                                  ; $39ce : $9f
++	xcn A                                                  ; $39ce : $9f
 	clrc                                                  ; $39cf : $60
 	adc A, #$05                                                  ; $39d0 : $88, $05
 	mov DSP_REG_ADDR, A                                                  ; $39d2 : $c4, $f2
@@ -9444,41 +9447,42 @@ br_00_39ce:
 SoundByteHandlerFF0Dh:
 	pop X                                                  ; $39d5 : $ce
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $39d6 : $f7, $18
-	call !Call_00_3a0a                                                  ; $39d8 : $3f, $0a, $3a
+	call !todo_MvolRelated_3a0a                                                  ; $39d8 : $3f, $0a, $3a
 	mov !$08c6, A                                                  ; $39db : $c5, $c6, $08
 	mov !$08c5, A                                                  ; $39de : $c5, $c5, $08
 	mov A, #$03                                                  ; $39e1 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $39e3 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $39e3 : $5f, $07, $3b
 
 
 SoundByteHandlerFF0Eh:
 	pop X                                                  ; $39e6 : $ce
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $39e7 : $f7, $18
-	mov Y, !$08c3                                                  ; $39e9 : $ec, $c3, $08
+	mov Y, !wMvol                                                  ; $39e9 : $ec, $c3, $08
 	mul YA                                                  ; $39ec : $cf
 	asl A                                                  ; $39ed : $1c
 	mov A, Y                                                  ; $39ee : $dd
 	rol A                                                  ; $39ef : $3c
 	mov !$08c5, A                                                  ; $39f0 : $c5, $c5, $08
 	mov A, #$03                                                  ; $39f3 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $39f5 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $39f5 : $5f, $07, $3b
 
 
 SoundByteHandlerFF0Fh:
 	pop X                                                  ; $39f8 : $ce
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $39f9 : $f7, $18
-	mov Y, !$08c3                                                  ; $39fb : $ec, $c3, $08
+	mov Y, !wMvol                                                  ; $39fb : $ec, $c3, $08
 	mul YA                                                  ; $39fe : $cf
 	asl A                                                  ; $39ff : $1c
 	mov A, Y                                                  ; $3a00 : $dd
 	rol A                                                  ; $3a01 : $3c
 	mov !$08c6, A                                                  ; $3a02 : $c5, $c6, $08
 	mov A, #$03                                                  ; $3a05 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3a07 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3a07 : $5f, $07, $3b
 
 
-Call_00_3a0a:
-	mov Y, !$08c3                                                  ; $3a0a : $ec, $c3, $08
+; A -
+todo_MvolRelated_3a0a:
+	mov Y, !wMvol                                                  ; $3a0a : $ec, $c3, $08
 	mul YA                                                  ; $3a0d : $cf
 	asl A                                                  ; $3a0e : $1c
 	mov A, Y                                                  ; $3a0f : $dd
@@ -9497,140 +9501,136 @@ SoundByteHandlerFF10h:
 	and A, #$e0                                                  ; $3a22 : $28, $e0
 	or A, $10                                                  ; $3a24 : $04, $10
 	mov !$08ce, A                                                  ; $3a26 : $c5, $ce, $08
-	mov DSP_REG_ADDR, #$6c                                                  ; $3a29 : $8f, $6c, $f2
+	mov DSP_REG_ADDR, #FLG                                                  ; $3a29 : $8f, $6c, $f2
 	mov DSP_REG_DATA, A                                                  ; $3a2c : $c4, $f3
 	mov A, #$03                                                  ; $3a2e : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3a30 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3a30 : $5f, $07, $3b
 
 
 SoundByteHandlerFF11h:
 	pop X                                                  ; $3a33 : $ce
-	mov A, !$4342+X                                                  ; $3a34 : $f5, $42, $43
+	mov A, !MusicBitfieldMap+X                                                  ; $3a34 : $f5, $42, $43
 	cmp X, #$08                                                  ; $3a37 : $c8, $08
-	bcc br_00_3a41                                                  ; $3a39 : $90, $06
+	bcc @br_3a41                                                  ; $3a39 : $90, $06
 
 	or A, $a2                                                  ; $3a3b : $04, $a2
 	mov $a2, A                                                  ; $3a3d : $c4, $a2
-	bra br_00_3a45                                                  ; $3a3f : $2f, $04
+	bra +                                                  ; $3a3f : $2f, $04
 
-br_00_3a41:
+@br_3a41:
 	or A, $a1                                                  ; $3a41 : $04, $a1
 	mov $a1, A                                                  ; $3a43 : $c4, $a1
 
-br_00_3a45:
-	call !Call_00_3fa8                                                  ; $3a45 : $3f, $a8, $3f
++	call !SetDspNON                                                  ; $3a45 : $3f, $a8, $3f
 	mov A, #$03                                                  ; $3a48 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3a4a : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3a4a : $5f, $07, $3b
 
 
 SoundByteHandlerFF12h:
 	pop X                                                  ; $3a4d : $ce
-	mov A, !$4352+X                                                  ; $3a4e : $f5, $52, $43
+	mov A, !MusicBitmaskMap+X                                                  ; $3a4e : $f5, $52, $43
 	cmp X, #$08                                                  ; $3a51 : $c8, $08
-	bcc br_00_3a5b                                                  ; $3a53 : $90, $06
+	bcc @br_3a5b                                                  ; $3a53 : $90, $06
 
 	and A, $a2                                                  ; $3a55 : $24, $a2
 	mov $a2, A                                                  ; $3a57 : $c4, $a2
-	bra br_00_3a5f                                                  ; $3a59 : $2f, $04
+	bra +                                                  ; $3a59 : $2f, $04
 
-br_00_3a5b:
+@br_3a5b:
 	and A, $a1                                                  ; $3a5b : $24, $a1
 	mov $a1, A                                                  ; $3a5d : $c4, $a1
 
-br_00_3a5f:
-	call !Call_00_3fa8                                                  ; $3a5f : $3f, $a8, $3f
++	call !SetDspNON                                                  ; $3a5f : $3f, $a8, $3f
 	mov A, #$03                                                  ; $3a62 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3a64 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3a64 : $5f, $07, $3b
 
 
 SoundByteHandlerFF13h:
 	pop X                                                  ; $3a67 : $ce
-	mov A, !$4342+X                                                  ; $3a68 : $f5, $42, $43
+	mov A, !MusicBitfieldMap+X                                                  ; $3a68 : $f5, $42, $43
 	cmp X, #$08                                                  ; $3a6b : $c8, $08
-	bcc br_00_3a75                                                  ; $3a6d : $90, $06
+	bcc @br_3a75                                                  ; $3a6d : $90, $06
 
 	or A, $a6                                                  ; $3a6f : $04, $a6
 	mov $a6, A                                                  ; $3a71 : $c4, $a6
-	bra br_00_3a79                                                  ; $3a73 : $2f, $04
+	bra +                                                  ; $3a73 : $2f, $04
 
-br_00_3a75:
+@br_3a75:
 	or A, $a5                                                  ; $3a75 : $04, $a5
 	mov $a5, A                                                  ; $3a77 : $c4, $a5
 
-br_00_3a79:
-	call !Call_00_3f90                                                  ; $3a79 : $3f, $90, $3f
++	call !SetDspPMON                                                  ; $3a79 : $3f, $90, $3f
 	mov A, #$03                                                  ; $3a7c : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3a7e : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3a7e : $5f, $07, $3b
 
 
 SoundByteHandlerFF14h:
 	pop X                                                  ; $3a81 : $ce
-	mov A, !$4352+X                                                  ; $3a82 : $f5, $52, $43
+	mov A, !MusicBitmaskMap+X                                                  ; $3a82 : $f5, $52, $43
 	cmp X, #$08                                                  ; $3a85 : $c8, $08
-	bcc br_00_3a8f                                                  ; $3a87 : $90, $06
+	bcc @br_3a8f                                                  ; $3a87 : $90, $06
 
 	and A, $a6                                                  ; $3a89 : $24, $a6
 	mov $a6, A                                                  ; $3a8b : $c4, $a6
-	bra br_00_3a93                                                  ; $3a8d : $2f, $04
+	bra +                                                  ; $3a8d : $2f, $04
 
-br_00_3a8f:
+@br_3a8f:
 	and A, $a5                                                  ; $3a8f : $24, $a5
 	mov $a5, A                                                  ; $3a91 : $c4, $a5
 
-br_00_3a93:
-	call !Call_00_3f90                                                  ; $3a93 : $3f, $90, $3f
++	call !SetDspPMON                                                  ; $3a93 : $3f, $90, $3f
 	mov A, #$03                                                  ; $3a96 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3a98 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3a98 : $5f, $07, $3b
 
 
 SoundByteHandlerFF15h:
 	pop X                                                  ; $3a9b : $ce
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $3a9c : $f7, $18
-	mov !$0863+X, A                                                  ; $3a9e : $d5, $63, $08
+	mov !w0863+X, A                                                  ; $3a9e : $d5, $63, $08
 	mov A, #$03                                                  ; $3aa1 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3aa3 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3aa3 : $5f, $07, $3b
 
 
 SoundByteHandlerFF16h:
 	pop X                                                  ; $3aa6 : $ce
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $3aa7 : $f7, $18
-	mov !$0813+X, A                                                  ; $3aa9 : $d5, $13, $08
+	mov !w0813+X, A                                                  ; $3aa9 : $d5, $13, $08
 	mov A, #$03                                                  ; $3aac : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3aae : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3aae : $5f, $07, $3b
 
 
 SoundByteHandlerFF17h:
 	pop X                                                  ; $3ab1 : $ce
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $3ab2 : $f7, $18
-	mov !$0843+X, A                                                  ; $3ab4 : $d5, $43, $08
+	mov !w0843+X, A                                                  ; $3ab4 : $d5, $43, $08
 	mov A, #$03                                                  ; $3ab7 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3ab9 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3ab9 : $5f, $07, $3b
 
 
 SoundByteHandlerFF18h:
 	pop X                                                  ; $3abc : $ce
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $3abd : $f7, $18
-	mov !$07f3+X, A                                                  ; $3abf : $d5, $f3, $07
+	mov !w07f3+X, A                                                  ; $3abf : $d5, $f3, $07
 	mov A, #$03                                                  ; $3ac2 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3ac4 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3ac4 : $5f, $07, $3b
 
 
 SoundByteHandlerFF19h:
 	pop X                                                  ; $3ac7 : $ce
-	mov A, $3d+X                                                  ; $3ac8 : $f4, $3d
+	mov A, wMusicAndSEControl+X                                                  ; $3ac8 : $f4, $3d
 	or A, #$20                                                  ; $3aca : $08, $20
-	mov $3d+X,A                                                  ; $3acc : $d4, $3d
+	mov wMusicAndSEControl+X,A                                                  ; $3acc : $d4, $3d
 	mov A, #$03                                                  ; $3ace : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3ad0 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3ad0 : $5f, $07, $3b
 
 
 SoundByteHandlerFF1Ah:
 	pop X                                                  ; $3ad3 : $ce
-	mov A, $3d+X                                                  ; $3ad4 : $f4, $3d
+	mov A, wMusicAndSEControl+X                                                  ; $3ad4 : $f4, $3d
 	or A, #$40                                                  ; $3ad6 : $08, $40
-	mov $3d+X,A                                                  ; $3ad8 : $d4, $3d
+	mov wMusicAndSEControl+X,A                                                  ; $3ad8 : $d4, $3d
 	mov A, #$03                                                  ; $3ada : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3adc : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3adc : $5f, $07, $3b
 
 
 SoundByteHandlerFF1Bh:
@@ -9639,21 +9639,21 @@ SoundByteHandlerFF1Bh:
 	and A, #$9f                                                  ; $3ae3 : $28, $9f
 	mov !$003d+X, A                                                  ; $3ae5 : $d5, $3d, $00
 	mov A, #$03                                                  ; $3ae8 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3aea : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3aea : $5f, $07, $3b
 
 
 SoundByteHandlerFF1Ch:
 	pop X                                                  ; $3aed : $ce
 	set1 $98.4                                                  ; $3aee : $82, $98
 	mov A, #$03                                                  ; $3af0 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3af2 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3af2 : $5f, $07, $3b
 
 
 SoundByteHandlerFF1Dh:
 	pop X                                                  ; $3af5 : $ce
 	set1 $98.3                                                  ; $3af6 : $62, $98
 	mov A, #$03                                                  ; $3af8 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3afa : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3afa : $5f, $07, $3b
 
 
 SoundByteHandlerFF1Eh:
@@ -9661,24 +9661,24 @@ SoundByteHandlerFF1Eh:
 	clr1 $98.3                                                  ; $3afe : $72, $98
 	clr1 $98.4                                                  ; $3b00 : $92, $98
 	mov A, #$03                                                  ; $3b02 : $e8, $03
-	jmp !Jump_00_3b07                                                  ; $3b04 : $5f, $07, $3b
+	jmp !MaybeContinueAfterAddingAontoChnsSndByteSrc                                                  ; $3b04 : $5f, $07, $3b
 
 
-Jump_00_3b07:
+MaybeContinueAfterAddingAontoChnsSndByteSrc:
 	call !AddAontoChannelsSndByteSrc                                                  ; $3b07 : $3f, $1a, $3b
-	mov A, $1d+X                                                  ; $3b0a : $f4, $1d
-	beq br_00_3b0f                                                  ; $3b0c : $f0, $01
+	mov A, wCtrTilProcessingChnsMusicBytes+X                                                  ; $3b0a : $f4, $1d
+	beq @processSndBytes                                                  ; $3b0c : $f0, $01
 
 	ret                                                  ; $3b0e : $6f
 
-
-br_00_3b0f:
+@processSndBytes:
 	jmp !ProcessChannelsSndBytes                                                  ; $3b0f : $5f, $91, $36
 
 
-Call_00_3b12:
+SetSndByteDelayAndAequNextByte:
+; 1st byte is counter til next data byte read, then return byte after in A
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $3b12 : $f7, $18
-	mov $1d+X,A                                                  ; $3b14 : $d4, $1d
+	mov wCtrTilProcessingChnsMusicBytes+X,A                                                  ; $3b14 : $d4, $1d
 	inc Y                                                  ; $3b16 : $fc
 	mov A, [wCurrSndChnSndByteSrc]+Y                                                  ; $3b17 : $f7, $18
 	ret                                                  ; $3b19 : $6f
@@ -9695,36 +9695,46 @@ AddAontoChannelsSndByteSrc:
 	ret                                                                       ; $3b27 : $6f
 
 
-Call_00_3b28:
-	push Y                                                  ; $3b28 : $6d
+SetChannelXsNextSectionPtr:
+; Preserve the curr section offset
+	push Y                                                                    ; $3b28 : $6d
 
-br_00_3b29:
-	mov Y, #$00                                                  ; $3b29 : $8d, $00
-	mov A, [$10]+Y                                                  ; $3b2b : $f7, $10
-	bpl br_00_3b4b                                                  ; $3b2d : $10, $1c
+@nextSectionDataByte:
+; If bit 7 clear on the 1st byte read, jump
+	mov Y, #$00                                                               ; $3b29 : $8d, $00
+	mov A, [wPtrToSndChnsSectionPtrs]+Y                                       ; $3b2b : $f7, $10
+	bpl @setNextAddr                                                          ; $3b2d : $10, $1c
 
-	and A, #$7f                                                  ; $3b2f : $28, $7f
-	mov !wMusicAndSEBaseNote+X, A                                                  ; $3b31 : $d5, $23, $06
-	mov A, !$0603+X                                                  ; $3b34 : $f5, $03, $06
-	clrc                                                  ; $3b37 : $60
-	adc A, #$01                                                  ; $3b38 : $88, $01
-	mov !$0603+X, A                                                  ; $3b3a : $d5, $03, $06
-	mov $10, A                                                  ; $3b3d : $c4, $10
-	mov A, !$0613+X                                                  ; $3b3f : $f5, $13, $06
-	adc A, #$00                                                  ; $3b42 : $88, $00
-	mov !$0613+X, A                                                  ; $3b44 : $d5, $13, $06
-	mov $11, A                                                  ; $3b47 : $c4, $11
-	bra br_00_3b29                                                  ; $3b49 : $2f, $de
+; Otherwise, the non-bit 7 set value is the channel's base note
+	and A, #$7f                                                               ; $3b2f : $28, $7f
+	mov !wMusicAndSEBaseNote+X, A                                             ; $3b31 : $d5, $23, $06
 
-br_00_3b4b:
-	clrc                                                  ; $3b4b : $60
-	adc A, #$44                                                  ; $3b4c : $88, $44
-	mov !wMusicAndSESndByteSrcHi+X, A                                                  ; $3b4e : $d5, $43, $06
-	inc Y                                                  ; $3b51 : $fc
-	mov A, [$10]+Y                                                  ; $3b52 : $f7, $10
-	mov !wMusicAndSESndByteSrcLo+X, A                                                  ; $3b54 : $d5, $33, $06
-	pop Y                                                  ; $3b57 : $ee
-	ret                                                  ; $3b58 : $6f
+; Add 1 to sections offset ptr to skip the processed byte
+	mov A, !wMusicAndSESectionsPtrLo+X                                        ; $3b34 : $f5, $03, $06
+	clrc                                                                      ; $3b37 : $60
+	adc A, #<1                                                                ; $3b38 : $88, $01
+	mov !wMusicAndSESectionsPtrLo+X, A                                        ; $3b3a : $d5, $03, $06
+	mov wPtrToSndChnsSectionPtrs, A                                           ; $3b3d : $c4, $10
+
+	mov A, !wMusicAndSESectionsPtrHi+X                                        ; $3b3f : $f5, $13, $06
+	adc A, #>1                                                                ; $3b42 : $88, $00
+	mov !wMusicAndSESectionsPtrHi+X, A                                        ; $3b44 : $d5, $13, $06
+	mov wPtrToSndChnsSectionPtrs+1, A                                         ; $3b47 : $c4, $11
+
+; Keep reading to find the next section addr
+	bra @nextSectionDataByte                                                  ; $3b49 : $2f, $de
+
+@setNextAddr:
+; Simply read big-endian word, channel src addr is that + file start
+	clrc                                                                      ; $3b4b : $60
+	adc A, #>wSoundFileStart                                                  ; $3b4c : $88, $44
+	mov !wMusicAndSESndByteSrcHi+X, A                                         ; $3b4e : $d5, $43, $06
+	inc Y                                                                     ; $3b51 : $fc
+
+	mov A, [wPtrToSndChnsSectionPtrs]+Y                                       ; $3b52 : $f7, $10
+	mov !wMusicAndSESndByteSrcLo+X, A                                         ; $3b54 : $d5, $33, $06
+	pop Y                                                                     ; $3b57 : $ee
+	ret                                                                       ; $3b58 : $6f
 
 
 Call_00_3b59:
@@ -9741,33 +9751,32 @@ Call_00_3b59:
 	ret                                                  ; $3b73 : $6f
 
 
-Call_00_3b74:
-	mov A, !$4342+X                                                  ; $3b74 : $f5, $42, $43
-	or A, $95                                                  ; $3b77 : $04, $95
+; X - curr sound channel being processed
+SetThatChnShouldStart:
+	mov A, !MusicBitfieldMap+X                                                  ; $3b74 : $f5, $42, $43
+	or A, wChnBitflagToKON                                                  ; $3b77 : $04, $95
 	cmp X, #$08                                                  ; $3b79 : $c8, $08
-	bcs br_00_3b7f                                                  ; $3b7b : $b0, $02
-
+	bcs +                                                  ; $3b7b : $b0, $02
 	and A, $9a                                                  ; $3b7d : $24, $9a
-
-br_00_3b7f:
-	mov $95, A                                                  ; $3b7f : $c4, $95
-	mov A, !$4342+X                                                  ; $3b81 : $f5, $42, $43
++	mov wChnBitflagToKON, A                                                  ; $3b7f : $c4, $95
+	mov A, !MusicBitfieldMap+X                                                  ; $3b81 : $f5, $42, $43
 	or A, $a0                                                  ; $3b84 : $04, $a0
 	cmp X, #$08                                                  ; $3b86 : $c8, $08
-	bcs br_00_3b8c                                                  ; $3b88 : $b0, $02
-
+	bcs +                                                  ; $3b88 : $b0, $02
 	and A, $9a                                                  ; $3b8a : $24, $9a
-
-br_00_3b8c:
-	mov $a0, A                                                  ; $3b8c : $c4, $a0
++	mov $a0, A                                                  ; $3b8c : $c4, $a0
 	ret                                                  ; $3b8e : $6f
 
 
-Call_00_3b8f:
-	mov A, !$4342+X                                                  ; $3b8f : $f5, $42, $43
-	or A, $96                                                  ; $3b92 : $04, $96
-	mov $96, A                                                  ; $3b94 : $c4, $96
-	mov A, !$4342+X                                                  ; $3b96 : $f5, $42, $43
+; X - curr sound channel being processed
+SetThatChnShouldStop:
+;
+	mov A, !MusicBitfieldMap+X                                                  ; $3b8f : $f5, $42, $43
+	or A, wChnBitflagToKOF                                                  ; $3b92 : $04, $96
+	mov wChnBitflagToKOF, A                                                  ; $3b94 : $c4, $96
+
+;
+	mov A, !MusicBitfieldMap+X                                                  ; $3b96 : $f5, $42, $43
 	eor A, #$ff                                                  ; $3b99 : $48, $ff
 	and A, $a0                                                  ; $3b9b : $24, $a0
 	mov $a0, A                                                  ; $3b9d : $c4, $a0
@@ -9778,19 +9787,19 @@ SoundByteFXHandlers:
 	.dw SoundByteHandlerF0h
 	.dw SoundByteHandlerF1h
 	.dw SoundByteHandlerF2h
-	.dw SoundByteHandlerF3h
+	.dw SoundByteHandlerF3h_SetDelay
 	.dw SoundByteHandlerF4h
 	.dw InvalidSoundFXhByte
-	.dw SoundByteHandlerF6h
-	.dw SoundByteHandlerF7h
+	.dw SoundByteHandlerF6h_SetDelayAndPitchMult
+	.dw SoundByteHandlerF7h_SetDelayAndSampleIdx
 	.dw InvalidSoundFXhByte
 	.dw InvalidSoundFXhByte
 	.dw InvalidSoundFXhByte
 	.dw SoundByteHandlerFBh
 	.dw SoundByteHandlerFCh
 	.dw SoundByteHandlerFDh
-	.dw SoundByteHandlerFEh
-	.dw SoundByteHandlerFFh
+	.dw SoundByteHandlerFEh_End
+	.dw SoundByteHandlerFFh_MoreCtrlCodes
 
 
 InvalidSoundFXhByte:
@@ -9861,10 +9870,10 @@ InvalidSoundFFhByte:
 	push PSW                                                  ; $3c2a : $0d
 	or A, #$40                                                  ; $3c2b : $08, $40
 	setp                                                  ; $3c2d : $40
-	bmi br_00_3c60                                                  ; $3c2e : $30, $30
+	.db $30, $30
 
 	and A, !$4840+Y                                                  ; $3c30 : $36, $40, $48
-	bvc br_00_3c75                                                  ; $3c33 : $50, $40
+	.db $50, $40
 
 	nop                                                  ; $3c35 : $00
 
@@ -9882,250 +9891,278 @@ Func_3c3e:
 	call !Call_00_3c61                                                  ; $3c44 : $3f, $61, $3c
 	call !Call_00_3c93                                                  ; $3c47 : $3f, $93, $3c
 	call !UpdateAllPitchDspRegs                                                  ; $3c4a : $3f, $ef, $40
-	call !Call_00_4018                                                  ; $3c4d : $3f, $18, $40
-	call !Call_00_3f08                                                  ; $3c50 : $3f, $08, $3f
+	call !UpdateAllVolAndEchoVol                                                  ; $3c4d : $3f, $18, $40
+	call !UpdateKON_KOF                                                  ; $3c50 : $3f, $08, $3f
 	ret                                                  ; $3c53 : $6f
 
 
 Func_3c54:
 	mov A, $b9                                                  ; $3c54 : $e4, $b9
-	beq br_00_3c60                                                  ; $3c56 : $f0, $08
+	beq @done                                                  ; $3c56 : $f0, $08
 
 	dec A                                                  ; $3c58 : $9c
 	mov $b9, A                                                  ; $3c59 : $c4, $b9
-	bne br_00_3c60                                                  ; $3c5b : $d0, $03
+	bne @done                                                  ; $3c5b : $d0, $03
 
-	call !Call_00_3f9c                                                  ; $3c5d : $3f, $9c, $3f
+	call !SetDspEON                                                  ; $3c5d : $3f, $9c, $3f
 
-br_00_3c60:
+@done:
 	ret                                                  ; $3c60 : $6f
 
 
 Call_00_3c61:
-	bbc $9b.2, br_00_3c7c                                                  ; $3c61 : $53, $9b, $18
+	bbc $9b.2, @br_3c7c                                                  ; $3c61 : $53, $9b, $18
 
 	mov A, !$08ca                                                  ; $3c64 : $e5, $ca, $08
 	setc                                                  ; $3c67 : $80
 	sbc A, !$08cb                                                  ; $3c68 : $a5, $cb, $08
 	mov !$08ca, A                                                  ; $3c6b : $c5, $ca, $08
-	bcs br_00_3c92                                                  ; $3c6e : $b0, $22
+	bcs @done                                                  ; $3c6e : $b0, $22
 
 	mov A, #$00                                                  ; $3c70 : $e8, $00
 	mov !$08ca, A                                                  ; $3c72 : $c5, $ca, $08
-
-br_00_3c75:
 	clr1 $9b.2                                                  ; $3c75 : $52, $9b
 	call !_CommandHandler03h                                                  ; $3c77 : $3f, $45, $36
-	bra br_00_3c92                                                  ; $3c7a : $2f, $16
+	bra @done                                                  ; $3c7a : $2f, $16
 
-br_00_3c7c:
-	bbc $9b.3, br_00_3c92                                                  ; $3c7c : $73, $9b, $13
+@br_3c7c:
+	bbc $9b.3, @done                                                  ; $3c7c : $73, $9b, $13
 
 	mov A, !$08ca                                                  ; $3c7f : $e5, $ca, $08
 	clrc                                                  ; $3c82 : $60
 	adc A, !$08cb                                                  ; $3c83 : $85, $cb, $08
 	mov !$08ca, A                                                  ; $3c86 : $c5, $ca, $08
-	bcc br_00_3c92                                                  ; $3c89 : $90, $07
+	bcc @done                                                  ; $3c89 : $90, $07
 
 	mov A, #$ff                                                  ; $3c8b : $e8, $ff
 	mov !$08ca, A                                                  ; $3c8d : $c5, $ca, $08
 	clr1 $9b.3                                                  ; $3c90 : $72, $9b
 
-br_00_3c92:
+@done:
 	ret                                                  ; $3c92 : $6f
 
 
 Call_00_3c93:
 	mov X, #$0f                                                  ; $3c93 : $cd, $0f
 
-br_00_3c95:
-	mov A, !$0883+X                                                  ; $3c95 : $f5, $83, $08
-	bne br_00_3c9d                                                  ; $3c98 : $d0, $03
+@loop_3c95:
+	mov A, !w0883+X                                                  ; $3c95 : $f5, $83, $08
+	bne @br_3c9d                                                  ; $3c98 : $d0, $03
 
-	jmp !Jump_00_3d00                                                  ; $3c9a : $5f, $00, $3d
+	jmp !@cont_3d00                                                  ; $3c9a : $5f, $00, $3d
 
-
-br_00_3c9d:
-	mov A, !$0803+X                                                  ; $3c9d : $f5, $03, $08
+@br_3c9d:
+	mov A, !w0803+X                                                  ; $3c9d : $f5, $03, $08
 	clrc                                                  ; $3ca0 : $60
-	adc A, !$07f3+X                                                  ; $3ca1 : $95, $f3, $07
+	adc A, !w07f3+X                                                  ; $3ca1 : $95, $f3, $07
 	mov Y, A                                                  ; $3ca4 : $fd
 	and A, #$01                                                  ; $3ca5 : $28, $01
-	mov !$0803+X, A                                                  ; $3ca7 : $d5, $03, $08
+	mov !w0803+X, A                                                  ; $3ca7 : $d5, $03, $08
 	mov A, Y                                                  ; $3caa : $dd
 	lsr A                                                  ; $3cab : $5c
 	clrc                                                  ; $3cac : $60
-	adc A, !$07e3+X                                                  ; $3cad : $95, $e3, $07
-	mov !$07e3+X, A                                                  ; $3cb0 : $d5, $e3, $07
+	adc A, !w07e3+X                                                  ; $3cad : $95, $e3, $07
+	mov !w07e3+X, A                                                  ; $3cb0 : $d5, $e3, $07
 	and A, #$7f                                                  ; $3cb3 : $28, $7f
 	mov Y, A                                                  ; $3cb5 : $fd
 	mov A, !$437a+Y                                                  ; $3cb6 : $f6, $7a, $43
 	mov Y, A                                                  ; $3cb9 : $fd
-	mov A, !$0813+X                                                  ; $3cba : $f5, $13, $08
+	mov A, !w0813+X                                                  ; $3cba : $f5, $13, $08
 	mul YA                                                  ; $3cbd : $cf
-	mov A, !$07e3+X                                                  ; $3cbe : $f5, $e3, $07
-	bmi br_00_3cc6                                                  ; $3cc1 : $30, $03
+	mov A, !w07e3+X                                                  ; $3cbe : $f5, $e3, $07
+	bmi @br_3cc6                                                  ; $3cc1 : $30, $03
 
 	mov A, Y                                                  ; $3cc3 : $dd
-	bra br_00_3cc9                                                  ; $3cc4 : $2f, $03
+	bra +                                                  ; $3cc4 : $2f, $03
 
-br_00_3cc6:
+@br_3cc6:
 	mov A, Y                                                  ; $3cc6 : $dd
 	or A, #$80                                                  ; $3cc7 : $08, $80
 
-br_00_3cc9:
-	mov !$0823+X, A                                                  ; $3cc9 : $d5, $23, $08
-	mov A, !$0863+X                                                  ; $3ccc : $f5, $63, $08
-	beq br_00_3d00                                                  ; $3ccf : $f0, $2f
++	mov !w0823+X, A                                                  ; $3cc9 : $d5, $23, $08
+	mov A, !w0863+X                                                  ; $3ccc : $f5, $63, $08
+	beq @cont_3d00                                                  ; $3ccf : $f0, $2f
 
-	mov A, !$0853+X                                                  ; $3cd1 : $f5, $53, $08
+	mov A, !w0853+X                                                  ; $3cd1 : $f5, $53, $08
 	clrc                                                  ; $3cd4 : $60
-	adc A, !$0843+X                                                  ; $3cd5 : $95, $43, $08
+	adc A, !w0843+X                                                  ; $3cd5 : $95, $43, $08
 	mov Y, A                                                  ; $3cd8 : $fd
 	and A, #$01                                                  ; $3cd9 : $28, $01
-	mov !$0853+X, A                                                  ; $3cdb : $d5, $53, $08
+	mov !w0853+X, A                                                  ; $3cdb : $d5, $53, $08
 	mov A, Y                                                  ; $3cde : $dd
 	lsr A                                                  ; $3cdf : $5c
 	clrc                                                  ; $3ce0 : $60
-	adc A, !$0833+X                                                  ; $3ce1 : $95, $33, $08
-	mov !$0833+X, A                                                  ; $3ce4 : $d5, $33, $08
+	adc A, !w0833+X                                                  ; $3ce1 : $95, $33, $08
+	mov !w0833+X, A                                                  ; $3ce4 : $d5, $33, $08
 	and A, #$7f                                                  ; $3ce7 : $28, $7f
 	mov Y, A                                                  ; $3ce9 : $fd
 	mov A, !$437a+Y                                                  ; $3cea : $f6, $7a, $43
 	mov Y, A                                                  ; $3ced : $fd
-	mov A, !$0863+X                                                  ; $3cee : $f5, $63, $08
+	mov A, !w0863+X                                                  ; $3cee : $f5, $63, $08
 	mul YA                                                  ; $3cf1 : $cf
-	mov A, !$0833+X                                                  ; $3cf2 : $f5, $33, $08
-	bmi br_00_3cfa                                                  ; $3cf5 : $30, $03
+	mov A, !w0833+X                                                  ; $3cf2 : $f5, $33, $08
+	bmi @br_3cfa                                                  ; $3cf5 : $30, $03
 
 	mov A, Y                                                  ; $3cf7 : $dd
-	bra br_00_3cfd                                                  ; $3cf8 : $2f, $03
+	bra +                                                  ; $3cf8 : $2f, $03
 
-br_00_3cfa:
+@br_3cfa:
 	mov A, Y                                                  ; $3cfa : $dd
 	or A, #$80                                                  ; $3cfb : $08, $80
 
-br_00_3cfd:
-	mov !$0873+X, A                                                  ; $3cfd : $d5, $73, $08
++	mov !w0873+X, A                                                  ; $3cfd : $d5, $73, $08
 
-Jump_00_3d00:
-br_00_3d00:
+@cont_3d00:
 	dec X                                                  ; $3d00 : $1d
-	bpl br_00_3c95                                                  ; $3d01 : $10, $92
+	bpl @loop_3c95                                                  ; $3d01 : $10, $92
 
 	ret                                                  ; $3d03 : $6f
 
 
-CommandHandler04h:
-	mov A, PORT_0                                                  ; $3d04 : $e4, $f4
-	push A                                                  ; $3d06 : $2d
+CommandHandler04h_PlaySoundEffect:
+; A = sound effect idx
+	mov A, PORT_0                                                             ; $3d04 : $e4, $f4
+	push A                                                                    ; $3d06 : $2d
 	call !WaitUntilSNESReady                                                  ; $3d07 : $3f, $ee, $05
-	mov $10, #<Data_09d2                                                  ; $3d0a : $8f, $d2, $10
-	mov $11, #>Data_09d2                                                  ; $3d0d : $8f, $09, $11
-	pop A                                                  ; $3d10 : $ae
-	asl A                                                  ; $3d11 : $1c
-	bcc +                                                 ; $3d12 : $90, $02
-	inc $11                                                  ; $3d14 : $ab, $11
-+	mov Y, A                                                  ; $3d16 : $fd
-	mov A, [$10]+Y                                                  ; $3d17 : $f7, $10
-	clrc                                                  ; $3d19 : $60
-	adc A, #<Data_09d2                                                  ; $3d1a : $88, $d2
-	mov $18, A                                                  ; $3d1c : $c4, $18
-	inc Y                                                  ; $3d1e : $fc
-	mov A, [$10]+Y                                                  ; $3d1f : $f7, $10
-	adc A, #>Data_09d2                                                  ; $3d21 : $88, $09
-	mov $19, A                                                  ; $3d23 : $c4, $19
+
+; Y = addr of sound effect data
+	mov wPtrToSoundEffectSrc, #<SoundEffectsPtrs                              ; $3d0a : $8f, $d2, $10
+	mov wPtrToSoundEffectSrc+1, #>SoundEffectsPtrs                            ; $3d0d : $8f, $09, $11
+	pop A                                                                     ; $3d10 : $ae
+	asl A                                                                     ; $3d11 : $1c
+	bcc +                                                                     ; $3d12 : $90, $02
+	inc wPtrToSoundEffectSrc+1                                                ; $3d14 : $ab, $11
++	mov Y, A                                                                  ; $3d16 : $fd
+
+; Read table entry to get sound effect src addr
+	mov A, [wPtrToSoundEffectSrc]+Y                                           ; $3d17 : $f7, $10
+	clrc                                                                      ; $3d19 : $60
+	adc A, #<SoundEffectsPtrs                                                 ; $3d1a : $88, $d2
+	mov wSoundEffectSrc, A                                                    ; $3d1c : $c4, $18
+	inc Y                                                                     ; $3d1e : $fc
+
+	mov A, [wPtrToSoundEffectSrc]+Y                                           ; $3d1f : $f7, $10
+	adc A, #>SoundEffectsPtrs                                                 ; $3d21 : $88, $09
+	mov wSoundEffectSrc+1, A                                                  ; $3d23 : $c4, $19
+
+;
 	mov $14, #$00                                                  ; $3d25 : $8f, $00, $14
 
-br_00_3d28:
+@loop_3d28:
 	mov X, #$00                                                  ; $3d28 : $cd, $00
 	mov A, $14                                                  ; $3d2a : $e4, $14
 
-br_00_3d2c:
+@loop_3d2c:
 	cmp A, !$00ae+X                                                  ; $3d2c : $75, $ae, $00
-	beq br_00_3d38                                                  ; $3d2f : $f0, $07
+	beq @br_3d38                                                  ; $3d2f : $f0, $07
 
 	inc X                                                  ; $3d31 : $3d
 	cmp X, #$08                                                  ; $3d32 : $c8, $08
-	bne br_00_3d2c                                                  ; $3d34 : $d0, $f6
+	bne @loop_3d2c                                                  ; $3d34 : $d0, $f6
 
-	bra br_00_3d41                                                  ; $3d36 : $2f, $09
+	bra @cont_3d41                                                  ; $3d36 : $2f, $09
 
-br_00_3d38:
+@br_3d38:
 	mov A, $14                                                  ; $3d38 : $e4, $14
 	inc A                                                  ; $3d3a : $bc
 	mov $14, A                                                  ; $3d3b : $c4, $14
 	cmp A, #$10                                                  ; $3d3d : $68, $10
-	bne br_00_3d28                                                  ; $3d3f : $d0, $e7
+	bne @loop_3d28                                                  ; $3d3f : $d0, $e7
 
-br_00_3d41:
+@cont_3d41:
 	mov A, $14                                                  ; $3d41 : $e4, $14
 	mov !$08d1, A                                                  ; $3d43 : $c5, $d1, $08
-	mov Y, #$00                                                  ; $3d46 : $8d, $00
-	mov A, [$18]+Y                                                  ; $3d48 : $f7, $18
-	inc Y                                                  ; $3d4a : $fc
-	mov $15, A                                                  ; $3d4b : $c4, $15
-	inc A                                                  ; $3d4d : $bc
-	mov $14, A                                                  ; $3d4e : $c4, $14
+
+; Read next byte (num channels), +1 is an offset that points to the 1st channel's data
+	mov Y, #$00                                                               ; $3d46 : $8d, $00
+	mov A, [wSoundEffectSrc]+Y                                                ; $3d48 : $f7, $18
+	inc Y                                                                     ; $3d4a : $fc
+	mov wNumChannelsLeftForSndEffect, A                                       ; $3d4b : $c4, $15
+	inc A                                                                     ; $3d4d : $bc
+	mov wSndEffectOffsetToChnData, A                                          ; $3d4e : $c4, $14
+
+;
 	push Y                                                  ; $3d50 : $6d
 	call !Call_00_3e78                                                  ; $3d51 : $3f, $78, $3e
 	pop Y                                                  ; $3d54 : $ee
 
-Jump_00_3d55:
-	mov A, [$18]+Y                                                  ; $3d55 : $f7, $18
+@nextSndChn:
+	mov A, [wSoundEffectSrc]+Y                                                  ; $3d55 : $f7, $18
 	mov X, A                                                  ; $3d57 : $5d
 	mov A, #$01                                                  ; $3d58 : $e8, $01
 	mov $45+X,A                                                  ; $3d5a : $d4, $45
-	mov A, #$02                                                  ; $3d5c : $e8, $02
-	or A, $3d+X                                                  ; $3d5e : $14, $3d
-	mov $3d+X,A                                                  ; $3d60 : $d4, $3d
-	and A, #$01                                                  ; $3d62 : $28, $01
+
+;
+	mov A, #CHN_USES_SE                                                  ; $3d5c : $e8, $02
+	or A, wMusicAndSEControl+X                                                  ; $3d5e : $14, $3d
+	mov wMusicAndSEControl+X,A                                                  ; $3d60 : $d4, $3d
+
+;
+	and A, #CHN_USES_MUSIC                                                  ; $3d62 : $28, $01
 	beq +                                                 ; $3d64 : $f0, $03
-	call !Call_00_3b8f                                                  ; $3d66 : $3f, $8f, $3b
+	call !SetThatChnShouldStop                                                  ; $3d66 : $3f, $8f, $3b
+
+;
 +	mov A, !$08d1                                                  ; $3d69 : $e5, $d1, $08
 	mov !$00ae+X, A                                                  ; $3d6c : $d5, $ae, $00
-	push Y                                                  ; $3d6f : $6d
-	mov Y, $14                                                  ; $3d70 : $eb, $14
-	mov A, [$18]+Y                                                  ; $3d72 : $f7, $18
-	clrc                                                  ; $3d74 : $60
-	adc A, $18                                                  ; $3d75 : $84, $18
-	mov !$063b+X, A                                                  ; $3d77 : $d5, $3b, $06
-	inc Y                                                  ; $3d7a : $fc
-	mov A, [$18]+Y                                                  ; $3d7b : $f7, $18
-	adc A, $19                                                  ; $3d7d : $84, $19
-	mov !$064b+X, A                                                  ; $3d7f : $d5, $4b, $06
-	inc Y                                                  ; $3d82 : $fc
-	mov $14, Y                                                  ; $3d83 : $cb, $14
+
+; Get pointer to sound data
+	push Y                                                                    ; $3d6f : $6d
+	mov Y, wSndEffectOffsetToChnData                                          ; $3d70 : $eb, $14
+
+; Next word is offset from sound effect to save the channel's address' low byte
+	mov A, [wSoundEffectSrc]+Y                                                ; $3d72 : $f7, $18
+	clrc                                                                      ; $3d74 : $60
+	adc A, wSoundEffectSrc                                                    ; $3d75 : $84, $18
+	mov !wMusicAndSESndByteSrcLo+8+X, A                                       ; $3d77 : $d5, $3b, $06
+	inc Y                                                                     ; $3d7a : $fc
+
+; Repeat for high byte
+	mov A, [wSoundEffectSrc]+Y                                                ; $3d7b : $f7, $18
+	adc A, wSoundEffectSrc+1                                                  ; $3d7d : $84, $19
+	mov !wMusicAndSESndByteSrcHi+8+X, A                                       ; $3d7f : $d5, $4b, $06
+	inc Y                                                                     ; $3d82 : $fc
+	mov wSndEffectOffsetToChnData, Y                                          ; $3d83 : $cb, $14
+
+;
 	pop Y                                                  ; $3d85 : $ee
 	mov A, $a7                                                  ; $3d86 : $e4, $a7
 	eor A, #$ff                                                  ; $3d88 : $48, $ff
-	or A, !$434a+X                                                  ; $3d8a : $15, $4a, $43
+	or A, !SoundEffectBitfieldMap+X                                                  ; $3d8a : $15, $4a, $43
 	eor A, #$ff                                                  ; $3d8d : $48, $ff
 	mov $a7, A                                                  ; $3d8f : $c4, $a7
-	mov A, !$435a+X                                                  ; $3d91 : $f5, $5a, $43
+	mov A, !SoundEffectBitmaskMap+X                                                  ; $3d91 : $f5, $5a, $43
 	and A, $a4                                                  ; $3d94 : $24, $a4
 	mov $a4, A                                                  ; $3d96 : $c4, $a4
+
+;
 	push X                                                  ; $3d98 : $4d
 	mov A, X                                                  ; $3d99 : $7d
 	clrc                                                  ; $3d9a : $60
 	adc A, #$08                                                  ; $3d9b : $88, $08
 	mov X, A                                                  ; $3d9d : $5d
 	call !InitSndChnX                                                  ; $3d9e : $3f, $30, $3f
+
+;
 	mov A, #$01                                                  ; $3da1 : $e8, $01
-	mov $1d+X,A                                                  ; $3da3 : $d4, $1d
+	mov wCtrTilProcessingChnsMusicBytes+X,A                                                  ; $3da3 : $d4, $1d
 	mov A, #$00                                                  ; $3da5 : $e8, $00
-	mov $2d+X,A                                                  ; $3da7 : $d4, $2d
+	mov wCtrTilProcessingChnsSEBytes+X,A                                                  ; $3da7 : $d4, $2d
+
+;
 	pop X                                                  ; $3da9 : $ce
 	inc Y                                                  ; $3daa : $fc
-	dec $15                                                  ; $3dab : $8b, $15
-	beq br_00_3db2                                                  ; $3dad : $f0, $03
+	dec wNumChannelsLeftForSndEffect                                                  ; $3dab : $8b, $15
+	beq @cont_3db2                                                  ; $3dad : $f0, $03
 
-	jmp !Jump_00_3d55                                                  ; $3daf : $5f, $55, $3d
+	jmp !@nextSndChn                                                  ; $3daf : $5f, $55, $3d
 
-br_00_3db2:
-	call !Call_00_3f9c                                                  ; $3db2 : $3f, $9c, $3f
-	call !Call_00_3fa8                                                  ; $3db5 : $3f, $a8, $3f
-	call !Call_00_3f90                                                  ; $3db8 : $3f, $90, $3f
+@cont_3db2:
+	call !SetDspEON                                                  ; $3db2 : $3f, $9c, $3f
+	call !SetDspNON                                                  ; $3db5 : $3f, $a8, $3f
+	call !SetDspPMON                                                  ; $3db8 : $3f, $90, $3f
+
+;
 	mov A, #$02                                                  ; $3dbb : $e8, $02
 	or A, $9b                                                  ; $3dbd : $04, $9b
 	mov $9b, A                                                  ; $3dbf : $c4, $9b
@@ -10135,35 +10172,34 @@ br_00_3db2:
 Call_00_3dc4:
 	mov A, $9b                                                  ; $3dc4 : $e4, $9b
 	and A, #$02                                                  ; $3dc6 : $28, $02
-	bne br_00_3dcd                                                  ; $3dc8 : $d0, $03
+	bne @br_3dcd                                                  ; $3dc8 : $d0, $03
 
-	jmp !Jump_00_3e2b                                                  ; $3dca : $5f, $2b, $3e
+	jmp !@done                                                  ; $3dca : $5f, $2b, $3e
 
-
-br_00_3dcd:
+@br_3dcd:
 	mov $b8, $a7                                                  ; $3dcd : $fa, $a7, $b8
 	mov X, #$08                                                  ; $3dd0 : $cd, $08
 
-br_00_3dd2:
-	mov A, $3d+X                                                  ; $3dd2 : $f4, $3d
-	beq br_00_3e1b                                                  ; $3dd4 : $f0, $45
+@bigLoop_3dd2:
+	mov A, wMusicAndSEControl+X                                                  ; $3dd2 : $f4, $3d
+	beq @cont_3e1b                                                  ; $3dd4 : $f0, $45
 
-	mov A, $2d+X                                                  ; $3dd6 : $f4, $2d
-	beq br_00_3de1                                                  ; $3dd8 : $f0, $07
+	mov A, wCtrTilProcessingChnsSEBytes+X                                                  ; $3dd6 : $f4, $2d
+	beq @cont_3de1                                                  ; $3dd8 : $f0, $07
 
-	dec $2d+X                                                  ; $3dda : $9b, $2d
-	bne br_00_3de1                                                  ; $3ddc : $d0, $03
+	dec wCtrTilProcessingChnsSEBytes+X                                                  ; $3dda : $9b, $2d
+	bne @cont_3de1                                                  ; $3ddc : $d0, $03
 
-	call !Call_00_3b8f                                                  ; $3dde : $3f, $8f, $3b
+	call !SetThatChnShouldStop                                                  ; $3dde : $3f, $8f, $3b
 
-br_00_3de1:
-	dec $1d+X                                                  ; $3de1 : $9b, $1d
-	bne br_00_3e1b                                                  ; $3de3 : $d0, $36
+@cont_3de1:
+	dec wCtrTilProcessingChnsMusicBytes+X                                                  ; $3de1 : $9b, $1d
+	bne @cont_3e1b                                                  ; $3de3 : $d0, $36
 
 	call !ProcessChannelsSndBytes                                                  ; $3de5 : $3f, $91, $36
-	mov A, $3d+X                                                  ; $3de8 : $f4, $3d
+	mov A, wMusicAndSEControl+X                                                  ; $3de8 : $f4, $3d
 	and A, #$01                                                  ; $3dea : $28, $01
-	bne br_00_3e1b                                                  ; $3dec : $d0, $2d
+	bne @cont_3e1b                                                  ; $3dec : $d0, $2d
 
 	call !Call_00_3ebe                                                  ; $3dee : $3f, $be, $3e
 	mov A, $a6+X                                                  ; $3df1 : $f4, $a6
@@ -10173,75 +10209,74 @@ br_00_3de1:
 	push X                                                  ; $3df9 : $4d
 	mov X, #$07                                                  ; $3dfa : $cd, $07
 
-br_00_3dfc:
+@loop_3dfc:
 	mov A, $ae+X                                                  ; $3dfc : $f4, $ae
-	bmi br_00_3e04                                                  ; $3dfe : $30, $04
+	bmi @br_3e04                                                  ; $3dfe : $30, $04
 
 	cmp A, $10                                                  ; $3e00 : $64, $10
-	beq br_00_3e1a                                                  ; $3e02 : $f0, $16
+	beq @cont_3e1a                                                  ; $3e02 : $f0, $16
 
-br_00_3e04:
+@br_3e04:
 	dec X                                                  ; $3e04 : $1d
-	bpl br_00_3dfc                                                  ; $3e05 : $10, $f5
+	bpl @loop_3dfc                                                  ; $3e05 : $10, $f5
 
 	mov X, #$07                                                  ; $3e07 : $cd, $07
 
-br_00_3e09:
+@loop_3e09:
 	mov A, $ae+X                                                  ; $3e09 : $f4, $ae
-	bpl br_00_3e17                                                  ; $3e0b : $10, $0a
+	bpl @cont_3e17                                                  ; $3e0b : $10, $0a
 
 	and A, #$7f                                                  ; $3e0d : $28, $7f
 	cmp A, $10                                                  ; $3e0f : $64, $10
-	bne br_00_3e17                                                  ; $3e11 : $d0, $04
+	bne @cont_3e17                                                  ; $3e11 : $d0, $04
 
 	mov A, #$00                                                  ; $3e13 : $e8, $00
 	mov $ae+X,A                                                  ; $3e15 : $d4, $ae
 
-br_00_3e17:
+@cont_3e17:
 	dec X                                                  ; $3e17 : $1d
-	bpl br_00_3e09                                                  ; $3e18 : $10, $ef
+	bpl @loop_3e09                                                  ; $3e18 : $10, $ef
 
-br_00_3e1a:
+@cont_3e1a:
 	pop X                                                  ; $3e1a : $ce
 
-br_00_3e1b:
+@cont_3e1b:
 	inc X                                                  ; $3e1b : $3d
-	cmp X, #$10                                                  ; $3e1c : $c8, $10
-	bne br_00_3dd2                                                  ; $3e1e : $d0, $b2
+	cmp X, #NUM_SW_CHANNELS                                                  ; $3e1c : $c8, $10
+	bne @bigLoop_3dd2                                                  ; $3e1e : $d0, $b2
 
 	cmp $b8, $a7                                                  ; $3e20 : $69, $a7, $b8
-	beq br_00_3e2b                                                  ; $3e23 : $f0, $06
+	beq @done                                                  ; $3e23 : $f0, $06
 
-	call !Call_00_3fa8                                                  ; $3e25 : $3f, $a8, $3f
-	call !Call_00_3f90                                                  ; $3e28 : $3f, $90, $3f
+	call !SetDspNON                                                  ; $3e25 : $3f, $a8, $3f
+	call !SetDspPMON                                                  ; $3e28 : $3f, $90, $3f
 
-Jump_00_3e2b:
-br_00_3e2b:
+@done:
 	ret                                                  ; $3e2b : $6f
 
 
-Call_00_3e2c:
-	call !Call_00_3fa8                                                  ; $3e2c : $3f, $a8, $3f
-	call !Call_00_3f90                                                  ; $3e2f : $3f, $90, $3f
-	ret                                                  ; $3e32 : $6f
+SetDspNON_PMON:
+	call !SetDspNON                                                           ; $3e2c : $3f, $a8, $3f
+	call !SetDspPMON                                                          ; $3e2f : $3f, $90, $3f
+	ret                                                                       ; $3e32 : $6f
 
 
 CommandHandler05h:
 	mov X, #$08                                                  ; $3e33 : $cd, $08
 
-br_00_3e35:
-	mov A, $3d+X                                                  ; $3e35 : $f4, $3d
+@loop_3e35:
+	mov A, wMusicAndSEControl+X                                                  ; $3e35 : $f4, $3d
 	and A, #$01                                                  ; $3e37 : $28, $01
 	beq +                                                 ; $3e39 : $f0, $06
 
 	call !Call_00_3ebe                                                  ; $3e3b : $3f, $be, $3e
-	call !Call_00_3b8f                                                  ; $3e3e : $3f, $8f, $3b
+	call !SetThatChnShouldStop                                                  ; $3e3e : $3f, $8f, $3b
 
 +	inc X                                                  ; $3e41 : $3d
-	cmp X, #$10                                                  ; $3e42 : $c8, $10
-	bne br_00_3e35                                                  ; $3e44 : $d0, $ef
+	cmp X, #NUM_SW_CHANNELS                                                  ; $3e42 : $c8, $10
+	bne @loop_3e35                                                  ; $3e44 : $d0, $ef
 
-	call !Call_00_3e2c                                                  ; $3e46 : $3f, $2c, $3e
+	call !SetDspNON_PMON                                                  ; $3e46 : $3f, $2c, $3e
 	mov A, !$009b                                                  ; $3e49 : $e5, $9b, $00
 	and A, #$fd                                                  ; $3e4c : $28, $fd
 	mov !$009b, A                                                  ; $3e4e : $c5, $9b, $00
@@ -10250,19 +10285,19 @@ br_00_3e35:
 
 
 CommandHandler19h:
-	mov $10, #<Data_09d2                                                  ; $3e57 : $8f, $d2, $10
-	mov $11, #>Data_09d2                                                  ; $3e5a : $8f, $09, $11
+	mov wPtrToSoundEffectSrc, #<SoundEffectsPtrs                                                  ; $3e57 : $8f, $d2, $10
+	mov wPtrToSoundEffectSrc+1, #>SoundEffectsPtrs                                                  ; $3e5a : $8f, $09, $11
 	mov A, PORT_0                                                  ; $3e5d : $e4, $f4
 	asl A                                                  ; $3e5f : $1c
 	mov Y, A                                                  ; $3e60 : $fd
-	mov A, [$10]+Y                                                  ; $3e61 : $f7, $10
+	mov A, [wPtrToSoundEffectSrc]+Y                                                  ; $3e61 : $f7, $10
 	clrc                                                  ; $3e63 : $60
-	adc A, #<Data_09d2                                                  ; $3e64 : $88, $d2
-	mov $18, A                                                  ; $3e66 : $c4, $18
+	adc A, #<SoundEffectsPtrs                                                  ; $3e64 : $88, $d2
+	mov wSoundEffectSrc, A                                                  ; $3e66 : $c4, $18
 	inc Y                                                  ; $3e68 : $fc
-	mov A, [$10]+Y                                                  ; $3e69 : $f7, $10
-	adc A, #>Data_09d2                                                  ; $3e6b : $88, $09
-	mov $19, A                                                  ; $3e6d : $c4, $19
+	mov A, [wPtrToSoundEffectSrc]+Y                                                  ; $3e69 : $f7, $10
+	adc A, #>SoundEffectsPtrs                                                  ; $3e6b : $88, $09
+	mov wSoundEffectSrc+1, A                                                  ; $3e6d : $c4, $19
 	call !WaitUntilSNESReady                                                  ; $3e6f : $3f, $ee, $05
 	call !Call_00_3e78                                                  ; $3e72 : $3f, $78, $3e
 	jmp !NextSndCommand                                                  ; $3e75 : $5f, $88, $03
@@ -10271,56 +10306,55 @@ CommandHandler19h:
 Call_00_3e78:
 	mov $b8, $a7                                                  ; $3e78 : $fa, $a7, $b8
 	mov Y, #$00                                                  ; $3e7b : $8d, $00
-	mov A, [$18]+Y                                                  ; $3e7d : $f7, $18
+	mov A, [wSoundEffectSrc]+Y                                                  ; $3e7d : $f7, $18
 	mov $17, A                                                  ; $3e7f : $c4, $17
 	inc Y                                                  ; $3e81 : $fc
 
-br_00_3e82:
-	mov A, [$18]+Y                                                  ; $3e82 : $f7, $18
+@loop_3e82:
+	mov A, [wSoundEffectSrc]+Y                                                  ; $3e82 : $f7, $18
 	inc Y                                                  ; $3e84 : $fc
 	mov X, A                                                  ; $3e85 : $5d
 	mov A, !$00ae+X                                                  ; $3e86 : $f5, $ae, $00
-	beq br_00_3eae                                                  ; $3e89 : $f0, $23
+	beq @cont_3eae                                                  ; $3e89 : $f0, $23
 
 	mov $16, A                                                  ; $3e8b : $c4, $16
 	mov X, #$08                                                  ; $3e8d : $cd, $08
 
-br_00_3e8f:
-	mov A, $3d+X                                                  ; $3e8f : $f4, $3d
+@loop_3e8f:
+	mov A, wMusicAndSEControl+X                                                  ; $3e8f : $f4, $3d
 	and A, #$01                                                  ; $3e91 : $28, $01
-	beq br_00_3ea9                                                  ; $3e93 : $f0, $14
+	beq @cont_3ea9                                                  ; $3e93 : $f0, $14
 
 	mov A, !$00a6+X                                                  ; $3e95 : $f5, $a6, $00
 	and A, #$7f                                                  ; $3e98 : $28, $7f
 	cmp A, $16                                                  ; $3e9a : $64, $16
-	bne br_00_3ea9                                                  ; $3e9c : $d0, $0b
+	bne @cont_3ea9                                                  ; $3e9c : $d0, $0b
 
 	mov A, #$00                                                  ; $3e9e : $e8, $00
 	mov !$00a6+X, A                                                  ; $3ea0 : $d5, $a6, $00
 	call !Call_00_3ebe                                                  ; $3ea3 : $3f, $be, $3e
-	call !Call_00_3b8f                                                  ; $3ea6 : $3f, $8f, $3b
+	call !SetThatChnShouldStop                                                  ; $3ea6 : $3f, $8f, $3b
 
-br_00_3ea9:
+@cont_3ea9:
 	inc X                                                  ; $3ea9 : $3d
-	cmp X, #$10                                                  ; $3eaa : $c8, $10
-	bne br_00_3e8f                                                  ; $3eac : $d0, $e1
+	cmp X, #NUM_SW_CHANNELS                                                  ; $3eaa : $c8, $10
+	bne @loop_3e8f                                                  ; $3eac : $d0, $e1
 
-br_00_3eae:
+@cont_3eae:
 	dec $17                                                  ; $3eae : $8b, $17
-	bne br_00_3e82                                                  ; $3eb0 : $d0, $d0
+	bne @loop_3e82                                                  ; $3eb0 : $d0, $d0
 
 	cmp $b8, $a7                                                  ; $3eb2 : $69, $a7, $b8
-	beq br_00_3ebd                                                  ; $3eb5 : $f0, $06
+	beq +                                                  ; $3eb5 : $f0, $06
 
-	call !Call_00_3e2c                                                  ; $3eb7 : $3f, $2c, $3e
-	call !Call_00_3f08                                                  ; $3eba : $3f, $08, $3f
+	call !SetDspNON_PMON                                                  ; $3eb7 : $3f, $2c, $3e
+	call !UpdateKON_KOF                                                  ; $3eba : $3f, $08, $3f
 
-br_00_3ebd:
-	ret                                                  ; $3ebd : $6f
++	ret                                                  ; $3ebd : $6f
 
 
 Call_00_3ebe:
-	mov A, !$4352+X                                                  ; $3ebe : $f5, $52, $43
+	mov A, !MusicBitmaskMap+X                                                  ; $3ebe : $f5, $52, $43
 	mov $10, A                                                  ; $3ec1 : $c4, $10
 	and A, !$00a2                                                  ; $3ec3 : $25, $a2, $00
 	mov !$00a2, A                                                  ; $3ec6 : $c5, $a2, $00
@@ -10330,66 +10364,67 @@ Call_00_3ebe:
 	mov A, !$00a6                                                  ; $3ed1 : $e5, $a6, $00
 	and A, $10                                                  ; $3ed4 : $24, $10
 	mov !$00a6, A                                                  ; $3ed6 : $c5, $a6, $00
-	mov A, !$4342+X                                                  ; $3ed9 : $f5, $42, $43
+	mov A, !MusicBitfieldMap+X                                                  ; $3ed9 : $f5, $42, $43
 	mov $10, A                                                  ; $3edc : $c4, $10
 	or A, $a7                                                  ; $3ede : $04, $a7
 	mov $a7, A                                                  ; $3ee0 : $c4, $a7
 	cmp A, #$ff                                                  ; $3ee2 : $68, $ff
-	bne br_00_3eee                                                  ; $3ee4 : $d0, $08
+	bne @cont_3eee                                                  ; $3ee4 : $d0, $08
 
 	mov A, !$009b                                                  ; $3ee6 : $e5, $9b, $00
 	and A, #$fd                                                  ; $3ee9 : $28, $fd
 	mov !$009b, A                                                  ; $3eeb : $c5, $9b, $00
 
-br_00_3eee:
+@cont_3eee:
 	mov A, $35+X                                                  ; $3eee : $f4, $35
 	and A, #$01                                                  ; $3ef0 : $28, $01
-	beq br_00_3efa                                                  ; $3ef2 : $f0, $06
+	beq @cont_3efa                                                  ; $3ef2 : $f0, $06
 
 	mov A, $b7                                                  ; $3ef4 : $e4, $b7
 	or A, $10                                                  ; $3ef6 : $04, $10
 	mov $b7, A                                                  ; $3ef8 : $c4, $b7
 
-br_00_3efa:
+@cont_3efa:
 	mov A, $35+X                                                  ; $3efa : $f4, $35
 	and A, #$fd                                                  ; $3efc : $28, $fd
 	mov $35+X,A                                                  ; $3efe : $d4, $35
 	mov A, #$00                                                  ; $3f00 : $e8, $00
-	mov $3d+X,A                                                  ; $3f02 : $d4, $3d
+	mov wMusicAndSEControl+X,A                                                  ; $3f02 : $d4, $3d
 	mov $b9, #$04                                                  ; $3f04 : $8f, $04, $b9
 	ret                                                  ; $3f07 : $6f
 
 
-Call_00_3f08:
-	mov A, $96                                                  ; $3f08 : $e4, $96
-	beq br_00_3f15                                                  ; $3f0a : $f0, $09
+UpdateKON_KOF:
+; If there are any bits to set for KOF, do so and wait some cycles
+	mov A, wChnBitflagToKOF                                                   ; $3f08 : $e4, $96
+	beq @afterKofCheck                                                        ; $3f0a : $f0, $09
 
-	mov DSP_REG_ADDR, #$5c                                                  ; $3f0c : $8f, $5c, $f2
-	mov DSP_REG_DATA, A                                                  ; $3f0f : $c4, $f3
-	mov Y, #$40                                                  ; $3f11 : $8d, $40
+	mov DSP_REG_ADDR, #KOF                                                    ; $3f0c : $8f, $5c, $f2
+	mov DSP_REG_DATA, A                                                       ; $3f0f : $c4, $f3
 
-br_00_3f13:
-	dbnz Y, br_00_3f13                                                  ; $3f13 : $fe, $fe
+	mov Y, #$40                                                               ; $3f11 : $8d, $40
+-	dbnz Y, -                                                                 ; $3f13 : $fe, $fe
 
-br_00_3f15:
-	mov A, $95                                                  ; $3f15 : $e4, $95
-	beq br_00_3f29                                                  ; $3f17 : $f0, $10
+@afterKofCheck:
+; Repeat above, but for KON, first clearing KOF
+	mov A, wChnBitflagToKON                                                   ; $3f15 : $e4, $95
+	beq @clearBitsToKonOrKof                                                  ; $3f17 : $f0, $10
 
-	mov DSP_REG_ADDR, #$5c                                                  ; $3f19 : $8f, $5c, $f2
-	mov DSP_REG_DATA, #$00                                                  ; $3f1c : $8f, $00, $f3
-	mov Y, #$40                                                  ; $3f1f : $8d, $40
+	mov DSP_REG_ADDR, #KOF                                                    ; $3f19 : $8f, $5c, $f2
+	mov DSP_REG_DATA, #$00                                                    ; $3f1c : $8f, $00, $f3
 
-br_00_3f21:
-	dbnz Y, br_00_3f21                                                  ; $3f21 : $fe, $fe
+	mov Y, #$40                                                               ; $3f1f : $8d, $40
+-	dbnz Y, -                                                                 ; $3f21 : $fe, $fe
 
-	mov DSP_REG_ADDR, #$4c                                                  ; $3f23 : $8f, $4c, $f2
-	mov DSP_REG_DATA, $95                                                  ; $3f26 : $fa, $95, $f3
+	mov DSP_REG_ADDR, #KON                                                    ; $3f23 : $8f, $4c, $f2
+	mov DSP_REG_DATA, wChnBitflagToKON                                        ; $3f26 : $fa, $95, $f3
 
-br_00_3f29:
-	mov A, #$00                                                  ; $3f29 : $e8, $00
-	mov $95, A                                                  ; $3f2b : $c4, $95
-	mov $96, A                                                  ; $3f2d : $c4, $96
-	ret                                                  ; $3f2f : $6f
+@clearBitsToKonOrKof:
+; Finally clear these pending vars
+	mov A, #$00                                                               ; $3f29 : $e8, $00
+	mov wChnBitflagToKON, A                                                   ; $3f2b : $c4, $95
+	mov wChnBitflagToKOF, A                                                   ; $3f2d : $c4, $96
+	ret                                                                       ; $3f2f : $6f
 
 
 InitSndChnX:
@@ -10401,123 +10436,105 @@ InitSndChnX:
 	mov !w0793+X, A                                                  ; $3f3e : $d5, $93, $07
 	mov !w07a3+X, A                                                  ; $3f41 : $d5, $a3, $07
 	mov !w07b3+X, A                                                  ; $3f44 : $d5, $b3, $07
-	mov !$0853+X, A                                                  ; $3f47 : $d5, $53, $08
-	mov !$0803+X, A                                                  ; $3f4a : $d5, $03, $08
-	mov !$0883+X, A                                                  ; $3f4d : $d5, $83, $08
-	mov !$0673+X, A                                                  ; $3f50 : $d5, $73, $06
-	mov !$0683+X, A                                                  ; $3f53 : $d5, $83, $06
-	mov !$06d3+X, A                                                  ; $3f56 : $d5, $d3, $06
-	mov !$06e3+X, A                                                  ; $3f59 : $d5, $e3, $06
-	mov $2d+X,A                                                  ; $3f5c : $d4, $2d
+	mov !w0853+X, A                                                  ; $3f47 : $d5, $53, $08
+	mov !w0803+X, A                                                  ; $3f4a : $d5, $03, $08
+	mov !w0883+X, A                                                  ; $3f4d : $d5, $83, $08
+	mov !w0673+X, A                                                  ; $3f50 : $d5, $73, $06
+	mov !w0683+X, A                                                  ; $3f53 : $d5, $83, $06
+	mov !w06d3+X, A                                                  ; $3f56 : $d5, $d3, $06
+	mov !w06e3+X, A                                                  ; $3f59 : $d5, $e3, $06
+	mov wCtrTilProcessingChnsSEBytes+X,A                                                  ; $3f5c : $d4, $2d
 	mov A, #$87                                                  ; $3f5e : $e8, $87
-	mov !$07d3+X, A                                                  ; $3f60 : $d5, $d3, $07
+	mov !w07d3+X, A                                                  ; $3f60 : $d5, $d3, $07
 	mov A, #$70                                                  ; $3f63 : $e8, $70
-	mov !$0723+X, A                                                  ; $3f65 : $d5, $23, $07
+	mov !w0723+X, A                                                  ; $3f65 : $d5, $23, $07
 	mov A, #$80                                                  ; $3f68 : $e8, $80
 	mov !wMusicAndSEPitchMult+X, A                                                  ; $3f6a : $d5, $c3, $07
 	mov A, #$20                                                  ; $3f6d : $e8, $20
-	mov !$0843+X, A                                                  ; $3f6f : $d5, $43, $08
+	mov !w0843+X, A                                                  ; $3f6f : $d5, $43, $08
 	mov A, #$20                                                  ; $3f72 : $e8, $20
-	mov !$07f3+X, A                                                  ; $3f74 : $d5, $f3, $07
+	mov !w07f3+X, A                                                  ; $3f74 : $d5, $f3, $07
 	mov A, #$00                                                  ; $3f77 : $e8, $00
-	mov !$0823+X, A                                                  ; $3f79 : $d5, $23, $08
-	mov !$0873+X, A                                                  ; $3f7c : $d5, $73, $08
-	mov !$07e3+X, A                                                  ; $3f7f : $d5, $e3, $07
-	mov !$0833+X, A                                                  ; $3f82 : $d5, $33, $08
+	mov !w0823+X, A                                                  ; $3f79 : $d5, $23, $08
+	mov !w0873+X, A                                                  ; $3f7c : $d5, $73, $08
+	mov !w07e3+X, A                                                  ; $3f7f : $d5, $e3, $07
+	mov !w0833+X, A                                                  ; $3f82 : $d5, $33, $08
 	mov A, #$10                                                  ; $3f85 : $e8, $10
-	mov !$0863+X, A                                                  ; $3f87 : $d5, $63, $08
+	mov !w0863+X, A                                                  ; $3f87 : $d5, $63, $08
 	mov A, #$20                                                  ; $3f8a : $e8, $20
-	mov !$0813+X, A                                                  ; $3f8c : $d5, $13, $08
+	mov !w0813+X, A                                                  ; $3f8c : $d5, $13, $08
 	ret                                                  ; $3f8f : $6f
 
 
-Call_00_3f90:
+SetDspPMON:
 	mov A, $a5                                                  ; $3f90 : $e4, $a5
 	and A, $a7                                                  ; $3f92 : $24, $a7
 	or A, $a6                                                  ; $3f94 : $04, $a6
-	mov DSP_REG_ADDR, #$2d                                                  ; $3f96 : $8f, $2d, $f2
+	mov DSP_REG_ADDR, #PMON                                                  ; $3f96 : $8f, $2d, $f2
 	mov DSP_REG_DATA, A                                                  ; $3f99 : $c4, $f3
 	ret                                                  ; $3f9b : $6f
 
 
-Call_00_3f9c:
+SetDspEON:
 	mov A, $a3                                                  ; $3f9c : $e4, $a3
 	and A, $a7                                                  ; $3f9e : $24, $a7
 	or A, $a4                                                  ; $3fa0 : $04, $a4
-	mov DSP_REG_ADDR, #$4d                                                  ; $3fa2 : $8f, $4d, $f2
+	mov DSP_REG_ADDR, #EON                                                  ; $3fa2 : $8f, $4d, $f2
 	mov DSP_REG_DATA, A                                                  ; $3fa5 : $c4, $f3
 	ret                                                  ; $3fa7 : $6f
 
 
-Call_00_3fa8:
+SetDspNON:
 	mov A, $a1                                                  ; $3fa8 : $e4, $a1
 	and A, $a7                                                  ; $3faa : $24, $a7
 	or A, $a2                                                  ; $3fac : $04, $a2
-	mov DSP_REG_ADDR, #$3d                                                  ; $3fae : $8f, $3d, $f2
+	mov DSP_REG_ADDR, #NON                                                  ; $3fae : $8f, $3d, $f2
 	mov DSP_REG_DATA, A                                                  ; $3fb1 : $c4, $f3
 	ret                                                  ; $3fb3 : $6f
 
 
-Call_00_3fb4:
-	mov A, !$08c3                                                  ; $3fb4 : $e5, $c3, $08
-	mov DSP_REG_ADDR, #$1c                                                  ; $3fb7 : $8f, $1c, $f2
-	mov DSP_REG_DATA, A                                                  ; $3fba : $c4, $f3
-	mov DSP_REG_ADDR, #$0c                                                  ; $3fbc : $8f, $0c, $f2
-	mov DSP_REG_DATA, A                                                  ; $3fbf : $c4, $f3
-	ret                                                  ; $3fc1 : $6f
+SetDspMVOL:
+	mov A, !wMvol                                                             ; $3fb4 : $e5, $c3, $08
+	mov DSP_REG_ADDR, #MVOL_R                                                 ; $3fb7 : $8f, $1c, $f2
+	mov DSP_REG_DATA, A                                                       ; $3fba : $c4, $f3
+	mov DSP_REG_ADDR, #MVOL_L                                                 ; $3fbc : $8f, $0c, $f2
+	mov DSP_REG_DATA, A                                                       ; $3fbf : $c4, $f3
+	ret                                                                       ; $3fc1 : $6f
 
 
-Call_00_3fc2:
-	mov A, !$08c7                                                  ; $3fc2 : $e5, $c7, $08
-	asl A                                                  ; $3fc5 : $1c
-	asl A                                                  ; $3fc6 : $1c
-	asl A                                                  ; $3fc7 : $1c
-	mov X, A                                                  ; $3fc8 : $5d
-	mov Y, #$0f                                                  ; $3fc9 : $8d, $0f
+SetDspCOEF:
+; X = pointer to 1 of 4 8 COEF vals based on this ram var
+	mov A, !w8COEFValsIdx                                                     ; $3fc2 : $e5, $c7, $08
+	asl A                                                                     ; $3fc5 : $1c
+	asl A                                                                     ; $3fc6 : $1c
+	asl A                                                                     ; $3fc7 : $1c
+	mov X, A                                                                  ; $3fc8 : $5d
 
-br_00_3fcb:
-	mov A, !$3fdd+X                                                  ; $3fcb : $f5, $dd, $3f
-	mov DSP_REG_ADDR, Y                                                  ; $3fce : $cb, $f2
-	mov DSP_REG_DATA, A                                                  ; $3fd0 : $c4, $f3
+; Y to point to each channel's COEF addr
+	mov Y, #COEF                                                              ; $3fc9 : $8d, $0f
 
-br_00_3fd2:
-	inc X                                                  ; $3fd2 : $3d
-	mov A, Y                                                  ; $3fd3 : $dd
-	clrc                                                  ; $3fd4 : $60
-	adc A, #$10                                                  ; $3fd5 : $88, $10
-	mov Y, A                                                  ; $3fd7 : $fd
-	cmp A, #$8f                                                  ; $3fd8 : $68, $8f
-	bne br_00_3fcb                                                  ; $3fda : $d0, $ef
+@nextHwSndChn:
+; Read in 1 of 8 coef vals for each channel using table below
+	mov A, !@coefVals+X                                                       ; $3fcb : $f5, $dd, $3f
+	mov DSP_REG_ADDR, Y                                                       ; $3fce : $cb, $f2
+	mov DSP_REG_DATA, A                                                       ; $3fd0 : $c4, $f3
+	inc X                                                                     ; $3fd2 : $3d
 
-	ret                                                  ; $3fdc : $6f
+; Go to next hardware sound channel
+	mov A, Y                                                                  ; $3fd3 : $dd
+	clrc                                                                      ; $3fd4 : $60
+	adc A, #$10                                                               ; $3fd5 : $88, $10
+	mov Y, A                                                                  ; $3fd7 : $fd
+	cmp A, #$80|COEF                                                          ; $3fd8 : $68, $8f
+	bne @nextHwSndChn                                                         ; $3fda : $d0, $ef
 
+	ret                                                                       ; $3fdc : $6f
 
-	reti                                                  ; $3fdd : $7f
-
-
-	nop                                                  ; $3fde : $00
-
-br_00_3fdf:
-	nop                                                  ; $3fdf : $00
-	nop                                                  ; $3fe0 : $00
-	nop                                                  ; $3fe1 : $00
-	nop                                                  ; $3fe2 : $00
-	nop                                                  ; $3fe3 : $00
-	nop                                                  ; $3fe4 : $00
-	asl !$2b21                                                  ; $3fe5 : $0c, $21, $2b
-	rol $13                                                  ; $3fe8 : $2b, $13
-	dbnz Y, br_00_3fdf                                                  ; $3fea : $fe, $f3
-
-	mov X, $58+Y                                                  ; $3fec : $f9, $58
-	mov A, (X)+                                                 ; $3fee : $bf
-	mov $f0+X,Y                                                  ; $3fef : $db, $f0
-	dbnz Y, $07                                                  ; $3ff1 : $fe, $07
-
-	asl !$340c                                                  ; $3ff3 : $0c, $0c, $34
-	bbc $00.1, br_00_3fd2                                                  ; $3ff6 : $33, $00, $d9
-
-	mov A, !$fc01                                                  ; $3ff9 : $e5, $01, $fc
-	.db $eb
+@coefVals:
+	.db $7f, $00, $00, $00, $00, $00, $00, $00
+	.db $0c, $21, $2b, $2b, $13, $fe, $f3, $f9
+	.db $58, $bf, $db, $f0, $fe, $07, $0c, $0c
+	.db $34, $33, $00, $d9, $e5, $01, $fc, $eb
 
 
 Func_3ffd:
@@ -10529,180 +10546,187 @@ Func_3ffd:
 	asl A                                                  ; $400a : $1c
 	inc A                                                  ; $400b : $bc
 	mul YA                                                  ; $400c : $cf
-	mov A, !$0723+X                                                  ; $400d : $f5, $23, $07
+	mov A, !w0723+X                                                  ; $400d : $f5, $23, $07
 	asl A                                                  ; $4010 : $1c
 	inc A                                                  ; $4011 : $bc
 	mul YA                                                  ; $4012 : $cf
 	mov A, Y                                                  ; $4013 : $dd
-	mov !$08b3+X, A                                                  ; $4014 : $d5, $b3, $08
+	mov !w08b3+X, A                                                  ; $4014 : $d5, $b3, $08
 	ret                                                  ; $4017 : $6f
 
 
-Call_00_4018:
+UpdateAllVolAndEchoVol:
 	mov X, #$00                                                  ; $4018 : $cd, $00
 
-Jump_00_401a:
-	mov A, $3d+X                                                  ; $401a : $f4, $3d
-	and A, #$01                                                  ; $401c : $28, $01
-	bne br_00_4023                                                  ; $401e : $d0, $03
+@nextSndChn:
+; Skip channel if it doesn't use music
+	mov A, wMusicAndSEControl+X                                                  ; $401a : $f4, $3d
+	and A, #CHN_USES_MUSIC                                                  ; $401c : $28, $01
+	bne @br_4023                                                  ; $401e : $d0, $03
 
-	jmp !Jump_00_40ba                                                  ; $4020 : $5f, $ba, $40
+	jmp !@toNextSndChn                                                  ; $4020 : $5f, $ba, $40
 
+@br_4023:
+	mov A, wMusicAndSEControl+X                                                  ; $4023 : $f4, $3d
+	and A, #CHN_USES_SE                                                  ; $4025 : $28, $02
+	beq @br_402c                                                  ; $4027 : $f0, $03
 
-br_00_4023:
-	mov A, $3d+X                                                  ; $4023 : $f4, $3d
-	and A, #$02                                                  ; $4025 : $28, $02
-	beq br_00_402c                                                  ; $4027 : $f0, $03
+	jmp !@toNextSndChn                                                  ; $4029 : $5f, $ba, $40
 
-	jmp !Jump_00_40ba                                                  ; $4029 : $5f, $ba, $40
-
-
-br_00_402c:
+@br_402c:
 	cmp X, #$08                                                  ; $402c : $c8, $08
-	bcs br_00_403b                                                  ; $402e : $b0, $0b
+	bcs @br_403b                                                  ; $402e : $b0, $0b
 
-	mov A, !$08b3+X                                                  ; $4030 : $f5, $b3, $08
+	mov A, !w08b3+X                                                  ; $4030 : $f5, $b3, $08
 	mov Y, !$08ca                                                  ; $4033 : $ec, $ca, $08
 	mul YA                                                  ; $4036 : $cf
 	mov $10, Y                                                  ; $4037 : $cb, $10
-	bra br_00_4040                                                  ; $4039 : $2f, $05
+	bra +                                                  ; $4039 : $2f, $05
 
-br_00_403b:
-	mov A, !$08b3+X                                                  ; $403b : $f5, $b3, $08
+@br_403b:
+	mov A, !w08b3+X                                                  ; $403b : $f5, $b3, $08
 	mov $10, A                                                  ; $403e : $c4, $10
 
-br_00_4040:
-	mov A, !$0873+X                                                  ; $4040 : $f5, $73, $08
-	beq br_00_406a                                                  ; $4043 : $f0, $25
++	mov A, !w0873+X                                                  ; $4040 : $f5, $73, $08
+	beq @cont_406a                                                  ; $4043 : $f0, $25
 
-	mov A, !$0883+X                                                  ; $4045 : $f5, $83, $08
-	beq br_00_406a                                                  ; $4048 : $f0, $20
+	mov A, !w0883+X                                                  ; $4045 : $f5, $83, $08
+	beq @cont_406a                                                  ; $4048 : $f0, $20
 
 	asl A                                                  ; $404a : $1c
 	mov Y, $10                                                  ; $404b : $eb, $10
 	mul YA                                                  ; $404d : $cf
 	push X                                                  ; $404e : $4d
-	mov A, !$0873+X                                                  ; $404f : $f5, $73, $08
+	mov A, !w0873+X                                                  ; $404f : $f5, $73, $08
 	asl A                                                  ; $4052 : $1c
 	mul YA                                                  ; $4053 : $cf
 	pop X                                                  ; $4054 : $ce
-	bcc br_00_4060                                                  ; $4055 : $90, $09
+	bcc @br_4060                                                  ; $4055 : $90, $09
 
 	mov A, Y                                                  ; $4057 : $dd
 	eor A, #$ff                                                  ; $4058 : $48, $ff
 	inc A                                                  ; $405a : $bc
 	clrc                                                  ; $405b : $60
 	adc A, $10                                                  ; $405c : $84, $10
-	bra br_00_4068                                                  ; $405e : $2f, $08
+	bra @cont_4068                                                  ; $405e : $2f, $08
 
-br_00_4060:
+@br_4060:
 	mov A, Y                                                  ; $4060 : $dd
 	clrc                                                  ; $4061 : $60
 	adc A, $10                                                  ; $4062 : $84, $10
-	bpl br_00_4068                                                  ; $4064 : $10, $02
+	bpl @cont_4068                                                  ; $4064 : $10, $02
 
 	mov A, #$7f                                                  ; $4066 : $e8, $7f
 
-br_00_4068:
+@cont_4068:
 	mov $10, A                                                  ; $4068 : $c4, $10
 
-br_00_406a:
-	bbs $99.0, br_00_4083                                                  ; $406a : $03, $99, $16
+@cont_406a:
+;
+	bbs $99.0, @br_4083                                                  ; $406a : $03, $99, $16
 
+;
 	mov A, !w0733+X                                                  ; $406d : $f5, $33, $07
 	cmp A, #$40                                                  ; $4070 : $68, $40
-	beq br_00_4083                                                  ; $4072 : $f0, $0f
+	beq @br_4083                                                  ; $4072 : $f0, $0f
 
 	mov Y, $10                                                  ; $4074 : $eb, $10
 	asl A                                                  ; $4076 : $1c
 	mul YA                                                  ; $4077 : $cf
-	mov $13, Y                                                  ; $4078 : $cb, $13
+	mov wChnRightVol, Y                                                  ; $4078 : $cb, $13
 	mov A, Y                                                  ; $407a : $dd
 	sbc A, $10                                                  ; $407b : $a4, $10
 	eor A, #$ff                                                  ; $407d : $48, $ff
-	mov $12, A                                                  ; $407f : $c4, $12
-	bra br_00_408a                                                  ; $4081 : $2f, $07
+	mov wChnLeftVol, A                                                  ; $407f : $c4, $12
+	bra @cont_408a                                                  ; $4081 : $2f, $07
 
-br_00_4083:
+@br_4083:
 	mov A, $10                                                  ; $4083 : $e4, $10
 	lsr A                                                  ; $4085 : $5c
-	mov $12, A                                                  ; $4086 : $c4, $12
-	mov $13, A                                                  ; $4088 : $c4, $13
+	mov wChnLeftVol, A                                                  ; $4086 : $c4, $12
+	mov wChnRightVol, A                                                  ; $4088 : $c4, $13
 
-br_00_408a:
-	bbs $99.0, br_00_40a3                                                  ; $408a : $03, $99, $16
+@cont_408a:
+;
+	bbs $99.0, @setChnsVol                                                  ; $408a : $03, $99, $16
 
-	mov A, $3d+X                                                  ; $408d : $f4, $3d
-	and A, #$20                                                  ; $408f : $28, $20
-	beq br_00_4098                                                  ; $4091 : $f0, $05
+; Make left volume negative if flag set for channel
+	mov A, wMusicAndSEControl+X                                               ; $408d : $f4, $3d
+	and A, #CHN_NEG_VOL_L                                                     ; $408f : $28, $20
+	beq +                                                                     ; $4091 : $f0, $05
 
-	eor $12, #$ff                                                  ; $4093 : $58, $ff, $12
-	inc $12                                                  ; $4096 : $ab, $12
+	eor wChnLeftVol, #$ff                                                     ; $4093 : $58, $ff, $12
+	inc wChnLeftVol                                                           ; $4096 : $ab, $12
 
-br_00_4098:
-	mov A, $3d+X                                                  ; $4098 : $f4, $3d
-	and A, #$40                                                  ; $409a : $28, $40
-	beq br_00_40a3                                                  ; $409c : $f0, $05
+; Repeat above for right volume
++	mov A, wMusicAndSEControl+X                                               ; $4098 : $f4, $3d
+	and A, #CHN_NEG_VOL_R                                                     ; $409a : $28, $40
+	beq @setChnsVol                                                           ; $409c : $f0, $05
 
-	eor $13, #$ff                                                  ; $409e : $58, $ff, $13
-	inc $13                                                  ; $40a1 : $ab, $13
+	eor wChnRightVol, #$ff                                                    ; $409e : $58, $ff, $13
+	inc wChnRightVol                                                          ; $40a1 : $ab, $13
 
-br_00_40a3:
-	cmp X, #$08                                                  ; $40a3 : $c8, $08
-	bcc br_00_40ae                                                  ; $40a5 : $90, $07
+@setChnsVol:
+; If X is for sound effects...
+	cmp X, #$08                                                               ; $40a3 : $c8, $08
+	bcc @setHwChnsVol                                                         ; $40a5 : $90, $07
 
-	mov A, X                                                  ; $40a7 : $7d
-	setc                                                  ; $40a8 : $80
-	sbc A, #$08                                                  ; $40a9 : $a8, $08
-	xcn A                                                  ; $40ab : $9f
-	bra br_00_40b0                                                  ; $40ac : $2f, $02
+; -8 to set the relevant hardware channel's volume
+	mov A, X                                                                  ; $40a7 : $7d
+	setc                                                                      ; $40a8 : $80
+	sbc A, #$08                                                               ; $40a9 : $a8, $08
+	xcn A                                                                     ; $40ab : $9f
+	bra +                                                                     ; $40ac : $2f, $02
 
-br_00_40ae:
-	mov A, X                                                  ; $40ae : $7d
-	xcn A                                                  ; $40af : $9f
+@setHwChnsVol:
+; A points to channel's VOL_L
+	mov A, X                                                                  ; $40ae : $7d
+	xcn A                                                                     ; $40af : $9f
 
-br_00_40b0:
-	mov DSP_REG_ADDR, A                                                  ; $40b0 : $c4, $f2
-	mov DSP_REG_DATA, $12                                                  ; $40b2 : $fa, $12, $f3
-	inc $f2                                                  ; $40b5 : $ab, $f2
-	mov DSP_REG_DATA, $13                                                  ; $40b7 : $fa, $13, $f3
+; Set VOL_L
++	mov DSP_REG_ADDR, A                                                       ; $40b0 : $c4, $f2
+	mov DSP_REG_DATA, wChnLeftVol                                             ; $40b2 : $fa, $12, $f3
 
-Jump_00_40ba:
-	inc X                                                  ; $40ba : $3d
-	cmp X, #$10                                                  ; $40bb : $c8, $10
-	beq br_00_40c2                                                  ; $40bd : $f0, $03
+; Set VOL_R
+	inc DSP_REG_ADDR                                                          ; $40b5 : $ab, $f2
+	mov DSP_REG_DATA, wChnRightVol                                            ; $40b7 : $fa, $13, $f3
 
-	jmp !Jump_00_401a                                                  ; $40bf : $5f, $1a, $40
+@toNextSndChn:
+	inc X                                                                     ; $40ba : $3d
+	cmp X, #NUM_SW_CHANNELS                                                   ; $40bb : $c8, $10
+	beq @afterProcessingSndChns                                               ; $40bd : $f0, $03
 
+	jmp !@nextSndChn                                                          ; $40bf : $5f, $1a, $40
 
-br_00_40c2:
+@afterProcessingSndChns:
+;
 	mov A, !$08c5                                                  ; $40c2 : $e5, $c5, $08
 	mov Y, !$08ca                                                  ; $40c5 : $ec, $ca, $08
 	mul YA                                                  ; $40c8 : $cf
 	mov A, Y                                                  ; $40c9 : $dd
-	bbs $99.0, br_00_40d3                                                  ; $40ca : $03, $99, $06
-
-	bbc $98.3, br_00_40d3                                                  ; $40cd : $73, $98, $03
+	bbs $99.0, @setEvolR                                                  ; $40ca : $03, $99, $06
+	bbc $98.3, @setEvolR                                                  ; $40cd : $73, $98, $03
 
 	eor A, #$ff                                                  ; $40d0 : $48, $ff
 	inc A                                                  ; $40d2 : $bc
 
-br_00_40d3:
-	mov DSP_REG_ADDR, #$3c                                                  ; $40d3 : $8f, $3c, $f2
+@setEvolR:
+	mov DSP_REG_ADDR, #EVOL_R                                                 ; $40d3 : $8f, $3c, $f2
 	mov DSP_REG_DATA, A                                                  ; $40d6 : $c4, $f3
+
+;
 	mov A, !$08c6                                                  ; $40d8 : $e5, $c6, $08
 	mov Y, !$08ca                                                  ; $40db : $ec, $ca, $08
 	mul YA                                                  ; $40de : $cf
 	mov A, Y                                                  ; $40df : $dd
-	bbs $99.0, br_00_40e9                                                  ; $40e0 : $03, $99, $06
-
-	bbc $98.4, br_00_40e9                                                  ; $40e3 : $93, $98, $03
+	bbs $99.0, @setEvolL                                                  ; $40e0 : $03, $99, $06
+	bbc $98.4, @setEvolL                                                  ; $40e3 : $93, $98, $03
 
 	eor A, #$ff                                                  ; $40e6 : $48, $ff
 	inc A                                                  ; $40e8 : $bc
 
-br_00_40e9:
-	mov DSP_REG_ADDR, #$2c                                                  ; $40e9 : $8f, $2c, $f2
+@setEvolL:
+	mov DSP_REG_ADDR, #EVOL_L                                                  ; $40e9 : $8f, $2c, $f2
 	mov DSP_REG_DATA, A                                                  ; $40ec : $c4, $f3
 	ret                                                  ; $40ee : $6f
 
@@ -10713,7 +10737,7 @@ UpdateAllPitchDspRegs:
 @nextSndChn:
 ; If bit 0 clear, the struct is not in use, try next channel
 	mov A, wMusicAndSEControl+X                                               ; $40f1 : $f4, $3d
-	and A, #$01                                                               ; $40f3 : $28, $01
+	and A, #CHN_USES_MUSIC                                                    ; $40f3 : $28, $01
 	bne @structInUse                                                          ; $40f5 : $d0, $03
 
 	jmp !@toNextSndChn                                                        ; $40f7 : $5f, $87, $41
@@ -10721,7 +10745,7 @@ UpdateAllPitchDspRegs:
 @structInUse:
 ; If bit 1 set, sound effects are using the channel, try next channel
 	mov A, wMusicAndSEControl+X                                               ; $40fa : $f4, $3d
-	and A, #$02                                                               ; $40fc : $28, $02
+	and A, #CHN_USES_SE                                                       ; $40fc : $28, $02
 	beq @structNotOverridden                                                  ; $40fe : $f0, $03
 
 	jmp !@toNextSndChn                                                        ; $4100 : $5f, $87, $41
@@ -10785,11 +10809,11 @@ UpdateAllPitchDspRegs:
 
 @afterBasePitchSet:
 ; todo: envelope stuff
-	mov A, !$0883+X                                                  ; $4145 : $f5, $83, $08
+	mov A, !w0883+X                                                  ; $4145 : $f5, $83, $08
 	beq @toNextSndChn                                                  ; $4148 : $f0, $3d
 
 	mov Y, A                                                  ; $414a : $fd
-	mov A, !$0823+X                                                  ; $414b : $f5, $23, $08
+	mov A, !w0823+X                                                  ; $414b : $f5, $23, $08
 	asl A                                                  ; $414e : $1c
 	mul YA                                                  ; $414f : $cf
 	mov $11, Y                                                  ; $4150 : $cb, $11
@@ -10805,7 +10829,7 @@ UpdateAllPitchDspRegs:
 	mov A, Y                                                  ; $4161 : $dd
 	adc A, #$00                                                  ; $4162 : $88, $00
 	mov $13, A                                                  ; $4164 : $c4, $13
-	mov A, !$0823+X                                                  ; $4166 : $f5, $23, $08
+	mov A, !w0823+X                                                  ; $4166 : $f5, $23, $08
 	bmi @br_417a                                                  ; $4169 : $30, $0f
 
 	mov A, $12                                                  ; $416b : $e4, $12
@@ -10843,7 +10867,7 @@ UpdateAllPitchDspRegs:
 ; If bit 1 clear (no sound effects), jump to get music data
 	push X                                                                    ; $4193 : $4d
 	mov A, wMusicAndSEControl+X                                               ; $4194 : $f4, $3d
-	and A, #$02                                                               ; $4196 : $28, $02
+	and A, #CHN_USES_SE                                                       ; $4196 : $28, $02
 	beq @useMusic                                                             ; $4198 : $f0, $07
 
 ; X += 8 to use sound effect data
@@ -10856,7 +10880,7 @@ UpdateAllPitchDspRegs:
 @useMusic:
 ; If bit 0 clear (no music), skip channel
 	mov A, wMusicAndSEControl+X                                               ; $41a1 : $f4, $3d
-	and A, #$01                                                               ; $41a3 : $28, $01
+	and A, #CHN_USES_MUSIC                                                    ; $41a3 : $28, $01
 	beq @toNextHwSndChn                                                       ; $41a5 : $f0, $0c
 
 @updatePitch:
@@ -10922,26 +10946,26 @@ CalcSndChnXsBasePitch:
 	mov wBaseMusicAndSEPitchLow+X,A                                           ; $41e4 : $d4, $4d
 
 ; save 8a3*hi in 12
-	mov A, !$08a3+X                                                  ; $41e6 : $f5, $a3, $08
+	mov A, !w08a3+X                                                  ; $41e6 : $f5, $a3, $08
 	mov Y, wBaseMusicAndSEPitchHigh+X                                                  ; $41e9 : $fb, $5d
 	mul YA                                                  ; $41eb : $cf
 	movw $12, YA                                                  ; $41ec : $da, $12
 
 ; save >(8a3*lo) in stack
-	mov A, !$08a3+X                                                  ; $41ee : $f5, $a3, $08
+	mov A, !w08a3+X                                                  ; $41ee : $f5, $a3, $08
 	mov Y, wBaseMusicAndSEPitchLow+X                                                  ; $41f1 : $fb, $4d
 	mul YA                                                  ; $41f3 : $cf
 	push Y                                                  ; $41f4 : $6d
 
 ; add on 893*lo to $12
-	mov A, !$0893+X                                                  ; $41f5 : $f5, $93, $08
+	mov A, !w0893+X                                                  ; $41f5 : $f5, $93, $08
 	mov Y, wBaseMusicAndSEPitchLow+X                                                  ; $41f8 : $fb, $4d
 	mul YA                                                  ; $41fa : $cf
 	addw YA, $12                                                  ; $41fb : $7a, $12
 	movw $12, YA                                                  ; $41fd : $da, $12
 
 ; do <893*hi as hi, combined with 8a3*lo as lo
-	mov A, !$0893+X                                                  ; $41ff : $f5, $93, $08
+	mov A, !w0893+X                                                  ; $41ff : $f5, $93, $08
 	mov Y, wBaseMusicAndSEPitchHigh+X                                                  ; $4202 : $fb, $5d
 	mul YA                                                  ; $4204 : $cf
 	mov Y, A                                                  ; $4205 : $fd
@@ -10955,42 +10979,54 @@ CalcSndChnXsBasePitch:
 	ret                                                  ; $420e : $6f
 
 
-Call_00_420f:
-	mov $10, A                                                  ; $420f : $c4, $10
-	mov A, X                                                  ; $4211 : $7d
-	cmp A, #$08                                                  ; $4212 : $68, $08
-	bcc br_00_4219                                                  ; $4214 : $90, $03
+; A - src num
+; X - curr snd channel
+AssignSampleToSndChannel:
+	mov wPreservedSrcNum, A                                                   ; $420f : $c4, $10
 
-	setc                                                  ; $4216 : $80
-	sbc A, #$08                                                  ; $4217 : $a8, $08
+; If X is a sound effect, X = the music idx (-8)
+	mov A, X                                                                  ; $4211 : $7d
+	cmp A, #$08                                                               ; $4212 : $68, $08
+	bcc +                                                                     ; $4214 : $90, $03
 
-br_00_4219:
-	xcn A                                                  ; $4219 : $9f
-	clrc                                                  ; $421a : $60
-	adc A, #$04                                                  ; $421b : $88, $04
-	mov DSP_REG_ADDR, A                                                  ; $421d : $c4, $f2
-	mov A, $10                                                  ; $421f : $e4, $10
-	mov DSP_REG_DATA, $10                                                  ; $4221 : $fa, $10, $f3
-	asl A                                                  ; $4224 : $1c
-	asl A                                                  ; $4225 : $1c
-	mov Y, A                                                  ; $4226 : $fd
-	mov A, !$08d2+Y                                                  ; $4227 : $f6, $d2, $08
-	inc $f2                                                  ; $422a : $ab, $f2
-	mov DSP_REG_DATA, A                                                  ; $422c : $c4, $f3
-	mov A, !$08d3+Y                                                  ; $422e : $f6, $d3, $08
-	inc $f2                                                  ; $4231 : $ab, $f2
-	mov DSP_REG_DATA, A                                                  ; $4233 : $c4, $f3
-	mov A, !$08d4+Y                                                  ; $4235 : $f6, $d4, $08
-	mov !$0893+X, A                                                  ; $4238 : $d5, $93, $08
-	mov A, !$08d5+Y                                                  ; $423b : $f6, $d5, $08
-	mov !$08a3+X, A                                                  ; $423e : $d5, $a3, $08
+	setc                                                                      ; $4216 : $80
+	sbc A, #$08                                                               ; $4217 : $a8, $08
+
+; Put in high nybble, +SCRN to get the source num for the channel
++	xcn A                                                                     ; $4219 : $9f
+	clrc                                                                      ; $421a : $60
+	adc A, #SCRN                                                              ; $421b : $88, $04
+	mov DSP_REG_ADDR, A                                                       ; $421d : $c4, $f2
+
+; Y = 4*src num (SampleMetadata.sizeof), set the channel's src num
+	mov A, wPreservedSrcNum                                                   ; $421f : $e4, $10
+	mov DSP_REG_DATA, wPreservedSrcNum                                        ; $4221 : $fa, $10, $f3
+	asl A                                                                     ; $4224 : $1c
+	asl A                                                                     ; $4225 : $1c
+	mov Y, A                                                                  ; $4226 : $fd
+
+; Set channel's ADSR_1
+	mov A, !wSamplesMetadata.adsr_1+Y                                         ; $4227 : $f6, $d2, $08
+	inc DSP_REG_ADDR                                                          ; $422a : $ab, $f2
+	mov DSP_REG_DATA, A                                                       ; $422c : $c4, $f3
+
+; Set channel's ADSR_2
+	mov A, !wSamplesMetadata.adsr_2+Y                                         ; $422e : $f6, $d3, $08
+	inc DSP_REG_ADDR                                                          ; $4231 : $ab, $f2
+	mov DSP_REG_DATA, A                                                       ; $4233 : $c4, $f3
+
+;
+	mov A, !wSamplesMetadata.b3+Y                                                  ; $4235 : $f6, $d4, $08
+	mov !w0893+X, A                                                  ; $4238 : $d5, $93, $08
+	mov A, !wSamplesMetadata.b4+Y                                                  ; $423b : $f6, $d5, $08
+	mov !w08a3+X, A                                                  ; $423e : $d5, $a3, $08
 	ret                                                  ; $4241 : $6f
 
 
 Func_4242:
 	mov A, #$00                                                  ; $4242 : $e8, $00
 	mov CTRL_REG, A                                                  ; $4244 : $c4, $f1
-	mov DSP_REG_ADDR, #$6c                                                  ; $4246 : $8f, $6c, $f2
+	mov DSP_REG_ADDR, #FLG                                                  ; $4246 : $8f, $6c, $f2
 	mov DSP_REG_DATA, #$e0                                                  ; $4249 : $8f, $e0, $f3
 	mov X, #$00                                                  ; $424c : $cd, $00
 
@@ -11049,49 +11085,48 @@ Func_4242:
 
 ;
 	mov CTRL_REG, #$00                                                  ; $4297 : $8f, $00, $f1
-	mov DSP_REG_ADDR, #$6c                                                  ; $429a : $8f, $6c, $f2
+	mov DSP_REG_ADDR, #FLG                                                  ; $429a : $8f, $6c, $f2
 	mov A, #$20                                                  ; $429d : $e8, $20
 	mov DSP_REG_DATA, A                                                  ; $429f : $c4, $f3
 	mov !$08ce, A                                                  ; $42a1 : $c5, $ce, $08
 	mov A, #$70                                                  ; $42a4 : $e8, $70
-	mov !$08c3, A                                                  ; $42a6 : $c5, $c3, $08
-	call !Call_00_3fb4                                                  ; $42a9 : $3f, $b4, $3f
+	mov !wMvol, A                                                  ; $42a6 : $c5, $c3, $08
+	call !SetDspMVOL                                                  ; $42a9 : $3f, $b4, $3f
 	mov A, #$54                                                  ; $42ac : $e8, $54
-	call !Call_00_3a0a                                                  ; $42ae : $3f, $0a, $3a
+	call !todo_MvolRelated_3a0a                                                  ; $42ae : $3f, $0a, $3a
 	mov A, #$50                                                  ; $42b1 : $e8, $50
 	mov !$08c8, A                                                  ; $42b3 : $c5, $c8, $08
 	mov A, #$00                                                  ; $42b6 : $e8, $00
-	mov !$08c7, A                                                  ; $42b8 : $c5, $c7, $08
+	mov !w8COEFValsIdx, A                                                  ; $42b8 : $c5, $c7, $08
 	mov A, #$00                                                  ; $42bb : $e8, $00
 	mov !$08c9, A                                                  ; $42bd : $c5, $c9, $08
-	call !Call_00_3fc2                                                  ; $42c0 : $3f, $c2, $3f
+	call !SetDspCOEF                                                  ; $42c0 : $3f, $c2, $3f
 	ret                                                  ; $42c3 : $6f
 
 
-Call_00_42c4:
+todo_EchoRelated_42c4:
 	mov A, #$00                                                  ; $42c4 : $e8, $00
-	mov DSP_REG_ADDR, #$4d                                                  ; $42c6 : $8f, $4d, $f2
+	mov DSP_REG_ADDR, #EON                                                  ; $42c6 : $8f, $4d, $f2
 	mov DSP_REG_DATA, A                                                  ; $42c9 : $c4, $f3
-	mov DSP_REG_ADDR, #$3c                                                  ; $42cb : $8f, $3c, $f2
+	mov DSP_REG_ADDR, #EVOL_R                                                  ; $42cb : $8f, $3c, $f2
 	mov DSP_REG_DATA, A                                                  ; $42ce : $c4, $f3
-	mov DSP_REG_ADDR, #$2c                                                  ; $42d0 : $8f, $2c, $f2
+	mov DSP_REG_ADDR, #EVOL_L                                                  ; $42d0 : $8f, $2c, $f2
 	mov DSP_REG_DATA, A                                                  ; $42d3 : $c4, $f3
 	mov A, !$08ce                                                  ; $42d5 : $e5, $ce, $08
 	or A, #$20                                                  ; $42d8 : $08, $20
-	mov DSP_REG_ADDR, #$6c                                                  ; $42da : $8f, $6c, $f2
+	mov DSP_REG_ADDR, #FLG                                                  ; $42da : $8f, $6c, $f2
 	mov DSP_REG_DATA, A                                                  ; $42dd : $c4, $f3
-	mov DSP_REG_ADDR, #$7d                                                  ; $42df : $8f, $7d, $f2
+	mov DSP_REG_ADDR, #EDL                                                  ; $42df : $8f, $7d, $f2
 	mov A, !$08c9                                                  ; $42e2 : $e5, $c9, $08
 	mov DSP_REG_DATA, A                                                  ; $42e5 : $c4, $f3
-	mov DSP_REG_ADDR, #$6d                                                  ; $42e7 : $8f, $6d, $f2
+	mov DSP_REG_ADDR, #ESA                                                  ; $42e7 : $8f, $6d, $f2
 	mov A, !$08c9                                                  ; $42ea : $e5, $c9, $08
-	bne br_00_42f3                                                  ; $42ed : $d0, $04
+	bne @br_42f3                                                  ; $42ed : $d0, $04
 
 	mov DSP_REG_DATA, #$00                                                  ; $42ef : $8f, $00, $f3
 	ret                                                  ; $42f2 : $6f
 
-
-br_00_42f3:
+@br_42f3:
 	asl A                                                  ; $42f3 : $1c
 	asl A                                                  ; $42f4 : $1c
 	asl A                                                  ; $42f5 : $1c
@@ -11106,23 +11141,23 @@ br_00_42f3:
 	asl A                                                  ; $4305 : $1c
 	mov X, A                                                  ; $4306 : $5d
 
-br_00_4307:
+@loop_4307:
 	mov Y, #$00                                                  ; $4307 : $8d, $00
 	mov A, #$00                                                  ; $4309 : $e8, $00
 
-br_00_430b:
-	mov [$18]+Y, A                                                  ; $430b : $d7, $18
+-	mov [$18]+Y, A                                                  ; $430b : $d7, $18
 	inc Y                                                  ; $430d : $fc
-	bne br_00_430b                                                  ; $430e : $d0, $fb
+	bne -                                                  ; $430e : $d0, $fb
 
 	inc $19                                                  ; $4310 : $ab, $19
 	dec X                                                  ; $4312 : $1d
-	bne br_00_4307                                                  ; $4313 : $d0, $f2
+	bne @loop_4307                                                  ; $4313 : $d0, $f2
 
+; no reset, no mute, allow echo to write to external ram
 	mov A, !$08ce                                                  ; $4315 : $e5, $ce, $08
 	and A, #$1f                                                  ; $4318 : $28, $1f
 	mov !$08ce, A                                                  ; $431a : $c5, $ce, $08
-	mov DSP_REG_ADDR, #$6c                                                  ; $431d : $8f, $6c, $f2
+	mov DSP_REG_ADDR, #FLG                                                  ; $431d : $8f, $6c, $f2
 	mov DSP_REG_DATA, A                                                  ; $4320 : $c4, $f3
 	ret                                                  ; $4322 : $6f
 
@@ -11139,21 +11174,19 @@ InitialNonChnDSPRegData:
 	.db KOF, $00
 	.db PMON, $00
 	.db NON, $00
-	.db DIR, >$200
+	.db DIR, >wSourceDir
 	.db EON, $00
 	.db EFB, $00
 	.db EVOL_R, $00
-	.db EVOL_L, $000
+	.db EVOL_L, $00
 	.db $ff
 
 
-;
-	tcall 0                                                  ; $4342 : $01
-	set1 $04.0                                                  ; $4343 : $02, $04
-	or A, #$10                                                  ; $4345 : $08, $10
-	clrp                                                  ; $4347 : $20
-	setp                                                  ; $4348 : $40
-	setc                                                  ; $4349 : $80
+MusicBitfieldMap:
+	.db $01, $02, $04, $08, $10, $20, $40, $80
+
+
+SoundEffectBitfieldMap:
 	tcall 0                                                  ; $434a : $01
 	set1 $04.0                                                  ; $434b : $02, $04
 	or A, #$10                                                  ; $434d : $08, $10
@@ -11162,6 +11195,9 @@ InitialNonChnDSPRegData:
 
 br_00_4351:
 	setc                                                  ; $4351 : $80
+
+
+MusicBitmaskMap:
 	dbnz Y, br_00_4351                                                  ; $4352 : $fe, $fd
 
 	mov Y, $f7+X                                                  ; $4354 : $fb, $f7
@@ -11173,6 +11209,7 @@ br_00_4359:
 	reti                                                  ; $4359 : $7f
 
 
+SoundEffectBitmaskMap:
 	dbnz Y, br_00_4359                                                  ; $435a : $fe, $fd
 
 	mov Y, $f7+X                                                  ; $435c : $fb, $f7
