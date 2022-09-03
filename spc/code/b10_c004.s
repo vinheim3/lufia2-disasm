@@ -27,38 +27,38 @@ Begin:
 ;
 	mov X, #$07                                                  ; $0318 : $cd, $07
 	mov A, #$00                                                  ; $031a : $e8, $00
--	mov !$00ae+X, A                                                  ; $031c : $d5, $ae, $00
+-	mov !w00ae+X, A                                                  ; $031c : $d5, $ae, $00
 	dec X                                                  ; $031f : $1d
 	bpl -                                                  ; $0320 : $10, $fa
 
 ;
-	mov !$08d1, A                                                  ; $0322 : $c5, $d1, $08
-	call !Func_4242                                                  ; $0325 : $3f, $42, $42
+	mov !w08d1, A                                                  ; $0322 : $c5, $d1, $08
+	call !ResetSoundRegs                                                  ; $0325 : $3f, $42, $42
 	mov A, #$ff                                                  ; $0328 : $e8, $ff
-	mov !$08cc, A                                                  ; $032a : $c5, $cc, $08
+	mov !w08cc, A                                                  ; $032a : $c5, $cc, $08
 	mov A, #$ff                                                  ; $032d : $e8, $ff
-	mov !$08cd, A                                                  ; $032f : $c5, $cd, $08
+	mov !w08cd, A                                                  ; $032f : $c5, $cd, $08
 	mov A, #$ff                                                  ; $0332 : $e8, $ff
-	mov !$08ca, A                                                  ; $0334 : $c5, $ca, $08
+	mov !wEchoVolMult, A                                                  ; $0334 : $c5, $ca, $08
 	mov A, #$00                                                  ; $0337 : $e8, $00
-	mov $b9, A                                                  ; $0339 : $c4, $b9
-	mov $b7, A                                                  ; $033b : $c4, $b7
+	mov w00b9, A                                                  ; $0339 : $c4, $b9
+	mov w00b7, A                                                  ; $033b : $c4, $b7
 	mov $b6, A                                                  ; $033d : $c4, $b6
-	mov $a1, A                                                  ; $033f : $c4, $a1
-	mov $a2, A                                                  ; $0341 : $c4, $a2
-	mov $a5, A                                                  ; $0343 : $c4, $a5
-	mov $a6, A                                                  ; $0345 : $c4, $a6
-	mov $a3, A                                                  ; $0347 : $c4, $a3
-	mov $a4, A                                                  ; $0349 : $c4, $a4
-	mov $a0, A                                                  ; $034b : $c4, $a0
+	mov w00a1, A                                                  ; $033f : $c4, $a1
+	mov w00a2, A                                                  ; $0341 : $c4, $a2
+	mov w00a5, A                                                  ; $0343 : $c4, $a5
+	mov w00a6, A                                                  ; $0345 : $c4, $a6
+	mov w00a3, A                                                  ; $0347 : $c4, $a3
+	mov w00a4, A                                                  ; $0349 : $c4, $a4
+	mov wChnBitfieldsStarted, A                                                  ; $034b : $c4, $a0
 	mov wChnBitflagToKON, A                                                  ; $034d : $c4, $95
 	mov wChnBitflagToKOF, A                                                  ; $034f : $c4, $96
-	mov !$08d0, A                                                  ; $0351 : $c5, $d0, $08
+	mov !w08d0, A                                                  ; $0351 : $c5, $d0, $08
 	mov A, #$ff                                                  ; $0354 : $e8, $ff
-	mov $9a, A                                                  ; $0356 : $c4, $9a
-	mov $a7, A                                                  ; $0358 : $c4, $a7
+	mov wChnBitfieldCanStart, A                                                  ; $0356 : $c4, $9a
+	mov w00a7, A                                                  ; $0358 : $c4, $a7
 	mov A, #$04                                                  ; $035a : $e8, $04
-	mov !$08cb, A                                                  ; $035c : $c5, $cb, $08
+	mov !wAdjustToEchoVolMult, A                                                  ; $035c : $c5, $cb, $08
 
 ; Set key off for each voice, to slowly fade them out
 	mov DSP_REG_ADDR, #KOF                                                    ; $035f : $8f, $5c, $f2
@@ -90,14 +90,14 @@ WaitForSNESthenNextSndCmd:
 
 NextSndCommand:
 @loop_0388:
-	bbc $9b.0, @cont_039f                                                  ; $0388 : $13, $9b, $14
+	bbc w009b.0, @cont_039f                                                  ; $0388 : $13, $9b, $14
 
 ; counter 0 used for sound updating
 	mov A, COUNTER_0                                                  ; $038b : $e4, $fd
 	beq @cont_039f                                                  ; $038d : $f0, $10
 
 	mov $1c, A                                                  ; $038f : $c4, $1c
-	mov X, !$08d0                                                  ; $0391 : $e9, $d0, $08
+	mov X, !w08d0                                                  ; $0391 : $e9, $d0, $08
 	beq @brLoop_0398                                                  ; $0394 : $f0, $02
 
 	asl $1c                                                  ; $0396 : $0b, $1c
@@ -111,7 +111,7 @@ NextSndCommand:
 ;
 	mov A, COUNTER_1                                                  ; $039f : $e4, $fe
 	beq +                                                  ; $03a1 : $f0, $03
-	call !Func_3c3e                                                  ; $03a3 : $3f, $3e, $3c
+	call !UpdateFrame                                                  ; $03a3 : $3f, $3e, $3c
 
 ; To process a SNES command, 2 should be the non-0 command, and 3 should be 0
 +	mov A, PORT_2                                                  ; $03a6 : $e4, $f6
@@ -146,7 +146,7 @@ NextSndCommand:
 	.dw CommandHandler0dh
 	.dw CommandHandler0eh
 	.dw CommandHandler0fh
-	.dw CommandHandler10h
+	.dw CommandHandler10h_SetStartableChannels
 	.dw CommandHandler11h_SetSampleDestAddr
 	.dw CommandHandler12h_GetSampleDestAddr
 	.dw CommandHandler13h_SetSampleIdx
@@ -160,17 +160,17 @@ NextSndCommand:
 	.dw CommandHandler1bh
 	.dw CommandHandler1ch
 	.dw CommandHandler1dh_LoadSampleHeader
-	.dw CommandHandler1eh
+	.dw CommandHandler1eh_GetChnBitfieldsStarted
 	.dw CommandHandler1fh_SetDspCOEF
-	.dw CommandHandler20h
-	.dw CommandHandler21h
+	.dw CommandHandler20h_SetEchoFeedback
+	.dw CommandHandler21h_SetBaseEvolFromMvol
 
 
 CommandHandler02h:
-	clr1 $9b.3                                                  ; $03fa : $72, $9b
-	clr1 $9b.2                                                  ; $03fc : $52, $9b
+	clr1 w009b.3                                                  ; $03fa : $72, $9b
+	clr1 w009b.2                                                  ; $03fc : $52, $9b
 	mov A, #$ff                                                  ; $03fe : $e8, $ff
-	mov !$08ca, A                                                  ; $0400 : $c5, $ca, $08
+	mov !wEchoVolMult, A                                                  ; $0400 : $c5, $ca, $08
 	jmp !InitSoundFile                                                  ; $0403 : $5f, $60, $35
 
 
@@ -184,27 +184,27 @@ CommandHandler0ah:
 	mov A, #$00                                                  ; $040e : $e8, $00
 	mov X, PORT_0                                                  ; $0410 : $f8, $f4
 	div YA, X                                                  ; $0412 : $9e
-	mov !$08cb, A                                                  ; $0413 : $c5, $cb, $08
+	mov !wAdjustToEchoVolMult, A                                                  ; $0413 : $c5, $cb, $08
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $0416 : $5f, $85, $03
 
 
 CommandHandler06h:
-	set1 $9b.2                                                  ; $0419 : $42, $9b
-	clr1 $9b.3                                                  ; $041b : $72, $9b
+	set1 w009b.2                                                  ; $0419 : $42, $9b
+	clr1 w009b.3                                                  ; $041b : $72, $9b
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $041d : $5f, $85, $03
 
 
 CommandHandler07h:
-	set1 $9b.3                                                  ; $0420 : $62, $9b
-	clr1 $9b.2                                                  ; $0422 : $52, $9b
+	set1 w009b.3                                                  ; $0420 : $62, $9b
+	clr1 w009b.2                                                  ; $0422 : $52, $9b
 	mov A, #$00                                                  ; $0424 : $e8, $00
-	mov !$08ca, A                                                  ; $0426 : $c5, $ca, $08
+	mov !wEchoVolMult, A                                                  ; $0426 : $c5, $ca, $08
 	jmp !InitSoundFile                                                  ; $0429 : $5f, $60, $35
 
 
 CommandHandler08h:
-	mov PORT_0, $8d                                                  ; $042c : $fa, $8d, $f4
-	mov PORT_1, $a0                                                  ; $042f : $fa, $a0, $f5
+	mov PORT_0, w008d                                                  ; $042c : $fa, $8d, $f4
+	mov PORT_1, wChnBitfieldsStarted                                                  ; $042f : $fa, $a0, $f5
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $0432 : $5f, $85, $03
 
 
@@ -217,24 +217,24 @@ CommandHandler09h_SetDspMVOL:
 
 CommandHandler0bh:
 	mov A, PORT_0                                                  ; $0440 : $e4, $f4
-	mov !$08cc, A                                                  ; $0442 : $c5, $cc, $08
+	mov !w08cc, A                                                  ; $0442 : $c5, $cc, $08
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $0445 : $5f, $85, $03
 
 
 CommandHandler0ch:
 	mov A, PORT_0                                                  ; $0448 : $e4, $f4
-	mov !$08cd, A                                                  ; $044a : $c5, $cd, $08
+	mov !w08cd, A                                                  ; $044a : $c5, $cd, $08
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $044d : $5f, $85, $03
 
 
 CommandHandler0dh:
 	mov A, PORT_0                                                  ; $0450 : $e4, $f4
-	mov $99, A                                                  ; $0452 : $c4, $99
+	mov w0099, A                                                  ; $0452 : $c4, $99
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $0454 : $5f, $85, $03
 
 
 CommandHandler18h:
-	mov A, $99                                                  ; $0457 : $e4, $99
+	mov A, w0099                                                  ; $0457 : $e4, $99
 	mov PORT_0, A                                                  ; $0459 : $c4, $f4
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $045b : $5f, $85, $03
 
@@ -259,18 +259,18 @@ CommandHandler1bh:
 
 
 CommandHandler0eh:
-	call !Func_4242                                                  ; $047c : $3f, $42, $42
+	call !ResetSoundRegs                                                  ; $047c : $3f, $42, $42
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $047f : $5f, $85, $03
 
 
 CommandHandler0fh:
-	mov PORT_0, $9b                                                  ; $0482 : $fa, $9b, $f4
+	mov PORT_0, w009b                                                  ; $0482 : $fa, $9b, $f4
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $0485 : $5f, $85, $03
 
 
-CommandHandler10h:
-	mov $9a, PORT_0                                                  ; $0488 : $fa, $f4, $9a
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $048b : $5f, $85, $03
+CommandHandler10h_SetStartableChannels:
+	mov wChnBitfieldCanStart, PORT_0                                          ; $0488 : $fa, $f4, $9a
+	jmp !WaitForSNESthenNextSndCmd                                            ; $048b : $5f, $85, $03
 
 
 CommandHandler11h_SetSampleDestAddr:
@@ -289,9 +289,9 @@ CommandHandler13h_SetSampleIdx:
 
 
 CommandHandler15h:
-	mov A, !$08d0                                                  ; $049e : $e5, $d0, $08
+	mov A, !w08d0                                                  ; $049e : $e5, $d0, $08
 	eor A, #$ff                                                  ; $04a1 : $48, $ff
-	mov !$08d0, A                                                  ; $04a3 : $c5, $d0, $08
+	mov !w08d0, A                                                  ; $04a3 : $c5, $d0, $08
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $04a6 : $5f, $85, $03
 
 
@@ -306,7 +306,6 @@ CommandHandler1dh_LoadSampleHeader:
 	jmp !WaitForSNESthenNextSndCmd                                            ; $04b5 : $5f, $85, $03
 
 
-; todo: 9e is sample idx, 9c.w is sample location
 LoadSNESSampleHeader:
 	call !WaitUntilSNESReady                                                  ; $04b8 : $3f, $ee, $05
 
@@ -322,16 +321,16 @@ LoadSNESSampleHeader:
 	call !GetNextOfSNES8bytes                                                 ; $04cc : $3f, $17, $05
 	mov wCurrSampleLoopStartOffs+1, A                                         ; $04cf : $c4, $05
 
-;
-	mov X, wCurrSampleIdxTimes4                                                  ; $04d1 : $f8, $9e
-	call !GetNextOfSNES8bytes                                                  ; $04d3 : $3f, $17, $05
-	mov !wSamplesMetadata.adsr_1+X, A                                                  ; $04d6 : $d5, $d2, $08
-	call !GetNextOfSNES8bytes                                                  ; $04d9 : $3f, $17, $05
-	mov !wSamplesMetadata.adsr_2+X, A                                                  ; $04dc : $d5, $d3, $08
-	call !GetNextOfSNES8bytes                                                  ; $04df : $3f, $17, $05
-	mov !wSamplesMetadata.b3+X, A                                                  ; $04e2 : $d5, $d4, $08
-	call !GetNextOfSNES8bytes                                                  ; $04e5 : $3f, $17, $05
-	mov !wSamplesMetadata.b4+X, A                                                  ; $04e8 : $d5, $d5, $08
+; Next 4 bytes determine the adsr and pitch multiplier settings per song
+	mov X, wCurrSampleIdxTimes4                                               ; $04d1 : $f8, $9e
+	call !GetNextOfSNES8bytes                                                 ; $04d3 : $3f, $17, $05
+	mov !wSamplesMetadata.adsr_1+X, A                                         ; $04d6 : $d5, $d2, $08
+	call !GetNextOfSNES8bytes                                                 ; $04d9 : $3f, $17, $05
+	mov !wSamplesMetadata.adsr_2+X, A                                         ; $04dc : $d5, $d3, $08
+	call !GetNextOfSNES8bytes                                                 ; $04df : $3f, $17, $05
+	mov !wSamplesMetadata.pitchMultHi+X, A                                    ; $04e2 : $d5, $d4, $08
+	call !GetNextOfSNES8bytes                                                 ; $04e5 : $3f, $17, $05
+	mov !wSamplesMetadata.pitchMultLo+X, A                                    ; $04e8 : $d5, $d5, $08
 
 ; In source dir, set the current dest as the sample location
 	mov A, wCurrSampleDestAddr                                                ; $04eb : $e4, $9c
@@ -391,9 +390,9 @@ GetNextOfSNES8bytes:
 	ret                                                                       ; $0526 : $6f
 
 
-CommandHandler1eh:
-	mov PORT_0, $a0                                                  ; $0527 : $fa, $a0, $f4
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $052a : $5f, $85, $03
+CommandHandler1eh_GetChnBitfieldsStarted:
+	mov PORT_0, wChnBitfieldsStarted                                          ; $0527 : $fa, $a0, $f4
+	jmp !WaitForSNESthenNextSndCmd                                            ; $052a : $5f, $85, $03
 
 
 CommandHandler1fh_SetDspCOEF:
@@ -403,18 +402,18 @@ CommandHandler1fh_SetDspCOEF:
 	jmp !WaitForSNESthenNextSndCmd                                            ; $0535 : $5f, $85, $03
 
 
-CommandHandler20h:
-	mov A, PORT_0                                                  ; $0538 : $e4, $f4
-	mov !$08c8, A                                                  ; $053a : $c5, $c8, $08
-	mov DSP_REG_ADDR, #$0d                                                  ; $053d : $8f, $0d, $f2
-	mov DSP_REG_DATA, A                                                  ; $0540 : $c4, $f3
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $0542 : $5f, $85, $03
+CommandHandler20h_SetEchoFeedback:
+	mov A, PORT_0                                                             ; $0538 : $e4, $f4
+	mov !wEchoFeedback, A                                                     ; $053a : $c5, $c8, $08
+	mov DSP_REG_ADDR, #EFB                                                    ; $053d : $8f, $0d, $f2
+	mov DSP_REG_DATA, A                                                       ; $0540 : $c4, $f3
+	jmp !WaitForSNESthenNextSndCmd                                            ; $0542 : $5f, $85, $03
 
 
-CommandHandler21h:
-	mov A, PORT_0                                                  ; $0545 : $e4, $f4
-	call !todo_MvolRelated_3a0a                                                  ; $0547 : $3f, $0a, $3a
-	jmp !WaitForSNESthenNextSndCmd                                                  ; $054a : $5f, $85, $03
+CommandHandler21h_SetBaseEvolFromMvol:
+	mov A, PORT_0                                                             ; $0545 : $e4, $f4
+	call !SetBaseEvolFromMvol                                                 ; $0547 : $3f, $0a, $3a
+	jmp !WaitForSNESthenNextSndCmd                                            ; $054a : $5f, $85, $03
 
 
 CommandHandler12h_GetSampleDestAddr:
@@ -425,8 +424,8 @@ CommandHandler12h_GetSampleDestAddr:
 
 CommandHandler16h:
 	movw YA, PORT_0                                                  ; $0554 : $ba, $f4
-	movw $a8, YA                                                  ; $0556 : $da, $a8
-	mov $ad, #$ff                                                  ; $0558 : $8f, $ff, $ad
+	movw w00a8, YA                                                  ; $0556 : $da, $a8
+	mov w00ad, #$ff                                                  ; $0558 : $8f, $ff, $ad
 	jmp !WaitForSNESthenNextSndCmd                                                  ; $055b : $5f, $85, $03
 
 
@@ -455,15 +454,15 @@ CommandHandler17h:
 	mov A, Y                                                  ; $057a : $dd
 	mov X, A                                                  ; $057b : $5d
 	mov A, PORT_0                                                  ; $057c : $e4, $f4
-	mov [$a8]+Y, A                                                  ; $057e : $d7, $a8
+	mov [w00a8]+Y, A                                                  ; $057e : $d7, $a8
 	inc Y                                                  ; $0580 : $fc
 	bne +                                                  ; $0581 : $d0, $02
-	inc $a9                                                  ; $0583 : $ab, $a9
+	inc w00a8+1                                                  ; $0583 : $ab, $a9
 +	mov A, PORT_1                                                  ; $0585 : $e4, $f5
-	mov [$a8]+Y, A                                                  ; $0587 : $d7, $a8
+	mov [w00a8]+Y, A                                                  ; $0587 : $d7, $a8
 	inc Y                                                  ; $0589 : $fc
 	bne +                                                  ; $058a : $d0, $02
-	inc $a9                                                  ; $058c : $ab, $a9
+	inc w00a8+1                                                  ; $058c : $ab, $a9
 +	mov A, X                                                  ; $058e : $7d
 	or A, #$80                                                  ; $058f : $08, $80
 	mov PORT_2, A                                                  ; $0591 : $c4, $f6
@@ -473,18 +472,18 @@ CommandHandler17h:
 CommandHandler1ch:
 	mov Y, #$00                                                  ; $0595 : $8d, $00
 	mov A, PORT_0                                                  ; $0597 : $e4, $f4
-	mov [$a8]+Y, A                                                  ; $0599 : $d7, $a8
+	mov [w00a8]+Y, A                                                  ; $0599 : $d7, $a8
 	inc Y                                                  ; $059b : $fc
 	mov A, PORT_1                                                  ; $059c : $e4, $f5
-	mov [$a8]+Y, A                                                  ; $059e : $d7, $a8
+	mov [w00a8]+Y, A                                                  ; $059e : $d7, $a8
 	call !WaitUntilSNESReady                                                  ; $05a0 : $3f, $ee, $05
-	mov A, $a8                                                  ; $05a3 : $e4, $a8
+	mov A, w00a8                                                  ; $05a3 : $e4, $a8
 	clrc                                                  ; $05a5 : $60
 	adc A, #$02                                                  ; $05a6 : $88, $02
-	mov $a8, A                                                  ; $05a8 : $c4, $a8
-	mov A, $a9                                                  ; $05aa : $e4, $a9
+	mov w00a8, A                                                  ; $05a8 : $c4, $a8
+	mov A, w00a8+1                                                  ; $05aa : $e4, $a9
 	adc A, #$00                                                  ; $05ac : $88, $00
-	mov $a9, A                                                  ; $05ae : $c4, $a9
+	mov w00a8+1, A                                                  ; $05ae : $c4, $a9
 	jmp !NextSndCommand                                                  ; $05b0 : $5f, $88, $03
 
 

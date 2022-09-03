@@ -7,6 +7,7 @@
 ;STx:  Writing '1' here will activate timer X, writing '0' disables the timer.
 .define CTRL_REG = $f1
 .define _CTRL_TIMER_1 = $02
+.define _CTRL_TIMER_0 = $01
 
 .define DSP_REG_ADDR = $f2
 .define DSP_REG_DATA = $f3
@@ -14,8 +15,8 @@
 .define PORT_1 = $f5
 .define PORT_2 = $f6
 .define PORT_3 = $f7
-.define TIMER_0 = $fa
-.define TIMER_1 = $fb
+.define TIMER_0 = $fa ; used for updating the music
+.define TIMER_1 = $fb ; used for updating once per frame
 .define COUNTER_0 = $fd
 .define COUNTER_1 = $fe
 
@@ -38,7 +39,13 @@
 .define EON = $4d
 .define KOF = $5c ; 1 bit for each voice
 .define DIR = $5d
+
 .define FLG = $6c
+.define _RESET = $80
+.define _MUTE = $40
+.define _ECHO_DISABLE = $20
+.define _NOISE_CLK = $1f
+
 .define ESA = $6d
 .define EDL = $7d
 

@@ -91,6 +91,10 @@ Decompressed data idxes
 
 Sound file format
 -----------------
-$4400 - filename
+$4400 - "S2"
+$4402 -
+$4403 - ?? tempo-related
+$4404 - filename
 $4410-$4417 - music channels in use. bit 7 prevents setting new samples
+$4419 - echo delay
 $4420-$442f - offsets in file for channel's sections
